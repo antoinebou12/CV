@@ -6,13 +6,22 @@ on:
       - main
       - master
     paths:
-      - 'cv/**'
+      - 'cv-en/**'
+      - 'cv-fr/**'
+      - 'build_cv.py'
+      - 'Dockerfile.cv'
+      - 'requirements.txt'
       - '.github/workflows/compile-cv.yml'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   compile:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,26 +29,102 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          root_file: cv/resume.tex
-          latexmk_use_xelatex: true
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-          working_dir: cv
+          python-version: '3.11'
+          cache: 'pip'
 
-      - name: Move PDF to root
+      - name: Install Python dependencies
         run: |
-          mv cv/resume.pdf cv.pdf || true
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Commit PDF
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Verify Docker is running
+        run: |
+          docker info
+          docker version
+
+      - name: Verify required files exist
+        run: |
+          if [ ! -f "build_cv.py" ]; then
+            echo "Error: build_cv.py not found"
+            exit 1
+          fi
+          if [ ! -f "Dockerfile.cv" ]; then
+            echo "Error: Dockerfile.cv not found"
+            exit 1
+          fi
+          if [ ! -d "cv-en" ]; then
+            echo "Error: cv-en directory not found"
+            exit 1
+          fi
+          if [ ! -d "cv-fr" ]; then
+            echo "Error: cv-fr directory not found"
+            exit 1
+          fi
+          echo "All required files and directories found"
+
+      - name: Build both CVs using Python script
+        id: build
+        run: |
+          python build_cv.py --all --rebuild --verbose
+        continue-on-error: false
+
+      - name: Verify PDFs were created
+        run: |
+          if [ ! -f "cv-en/resume.pdf" ]; then
+            echo "Error: cv-en/resume.pdf was not created"
+            exit 1
+          fi
+          if [ ! -f "cv-fr/resume.pdf" ]; then
+            echo "Error: cv-fr/resume.pdf was not created"
+            exit 1
+          fi
+          
+          # Check PDF file sizes (should be > 0)
+          en_size=$(stat -f%z cv-en/resume.pdf 2>/dev/null || stat -c%s cv-en/resume.pdf 2>/dev/null || echo "0")
+          fr_size=$(stat -f%z cv-fr/resume.pdf 2>/dev/null || stat -c%s cv-fr/resume.pdf 2>/dev/null || echo "0")
+          
+          if [ "$en_size" -eq 0 ]; then
+            echo "Error: cv-en/resume.pdf is empty"
+            exit 1
+          fi
+          if [ "$fr_size" -eq 0 ]; then
+            echo "Error: cv-fr/resume.pdf is empty"
+            exit 1
+          fi
+          
+          echo "English CV size: $en_size bytes"
+          echo "French CV size: $fr_size bytes"
+          echo "PDFs verified successfully"
+
+      - name: Commit PDFs
+        if: success()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add cv.pdf
+          
+          # Check if there are any changes
+          git add cv-en/resume.pdf cv-fr/resume.pdf
+          
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "No changes to commit - PDFs are up to date"
           else
-            git commit -m "Auto-compile CV PDF [skip ci]"
+            git commit -m "Auto-compile CV PDFs [skip ci]"
             git push
+            echo "PDFs committed successfully"
           fi
+
+      - name: Upload PDFs as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdfs
+          path: |
+            cv-en/resume.pdf
+            cv-fr/resume.pdf
+          retention-days: 7
