@@ -1,0 +1,45 @@
+name: Compile LaTeX CV
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'cv/**'
+      - '.github/workflows/compile-cv.yml'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: cv/resume.tex
+          latexmk_use_xelatex: true
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+          working_dir: cv
+
+      - name: Move PDF to root
+        run: |
+          mv cv/resume.pdf cv.pdf || true
+
+      - name: Commit PDF
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add cv.pdf
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-compile CV PDF [skip ci]"
+            git push
+          fi
