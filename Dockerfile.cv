@@ -19,11 +19,13 @@ ENV CV_LANG=${LANG}
 COPY cv-${LANG}/ /cv/
 
 # Compile the CV
-RUN xelatex -interaction=nonstopmode -halt-on-error resume.tex || true
+# Use -halt-on-error to stop on errors, but allow non-fatal warnings
+RUN xelatex -interaction=nonstopmode -halt-on-error resume.tex
 
 # Output the compiled PDF
 VOLUME ["/cv/output"]
 
 # Default command (can be overridden)
 # Output PDF to /cv/output if volume is mounted, otherwise to /cv/
-CMD ["sh", "-c", "xelatex -interaction=nonstopmode -halt-on-error resume.tex && if [ -d /cv/output ]; then cp resume.pdf /cv/output/; fi"]
+# Check if PDF was created successfully before copying
+CMD ["sh", "-c", "xelatex -interaction=nonstopmode -halt-on-error resume.tex && if [ -f resume.pdf ] && [ -s resume.pdf ]; then if [ -d /cv/output ]; then cp resume.pdf /cv/output/; fi; exit 0; else echo 'Error: PDF was not created or is empty' >&2; exit 1; fi"]

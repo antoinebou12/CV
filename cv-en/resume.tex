@@ -7,6 +7,11 @@
 % Configure page margins with geometry
 \geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
 
+% Improve text wrapping to reduce overfull/underfull hbox warnings
+\emergencystretch=3em
+\hbadness=10000
+\hfuzz=0.5pt
+
 % Specify the location of the included fonts
 \fontdir[fonts/]
 
@@ -28,7 +33,7 @@
 \setbool{acvSectionColorHighlight}{true}
 
 % If you would like to change the social information separator from a pipe (|) to something else
-\renewcommand{\acvHeaderSocialSep}{\ \textbar\ }
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 
 
 %-------------------------------------------------------------------------------
@@ -39,10 +44,10 @@
 % \photo[rectangle,edge,right]{./examples/profile}
 \name{Antoine}{Boucher}
 \position{Software Engineer — Backend / Platform / DevSecOps}
-\address{Montréal, QC, Canada}
+\address{443 Notre-Dame Est, Montréal, QC, Canada}
 
 \mobile{+14384918831}
-\email{antoine.boucher012@gmail.com}
+\email{antoine.bou13@gmail.com}
 % \dateofbirth{March 12st, 1998}
 \homepage{antoineboucher.info} 
 \github{github.com/antoinebou12}
@@ -89,7 +94,7 @@
 \input{latex/skills.tex}
 \input{latex/experience.tex}
 \input{latex/education.tex}
-% \input{latex/publications.tex}
+\input{latex/publications.tex}
 \input{latex/achievements.tex}
 \input{latex/projects.tex}
 % \input{latex/interests.tex}
