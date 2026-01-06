@@ -1,0 +1,46 @@
+# Traefik Dynamic Configuration
+http:
+  routers:
+    # CV Site Router
+    cv-site:
+      rule: "Host(`localhost`) && PathPrefix(`/`)"
+      entryPoints:
+        - web
+      service: cv-site
+      priority: 10
+
+    # Linktree Site Router
+    linktree-site:
+      rule: "Host(`localhost`) && PathPrefix(`/linktree`)"
+      entryPoints:
+        - web
+      service: linktree-site
+      middlewares:
+        - linktree-stripprefix
+      priority: 20
+
+    # Traefik API Router
+    traefik-api:
+      rule: "Host(`localhost`) && PathPrefix(`/api`)"
+      entryPoints:
+        - web
+      service: api@internal
+      priority: 50
+
+  services:
+    cv-site:
+      loadBalancer:
+        servers:
+          - url: "http://cv-site:80"
+
+    linktree-site:
+      loadBalancer:
+        servers:
+          - url: "http://linktree-site:80"
+
+  middlewares:
+    # Strip /linktree prefix
+    linktree-stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/linktree"

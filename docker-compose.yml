@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # CV Site - Serves index.html and root assets
+  cv-site:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+      - ./configs/nginx/cv-site.conf:/etc/nginx/conf.d/cv-site.conf:ro
+    ports:
+      - "8080:80"
+    networks:
+      - cv-network
+    depends_on:
+      - traefik
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cv-site.rule=Host(`localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.cv-site.entrypoints=web"
+      - "traefik.http.services.cv-site.loadbalancer.server.port=80"
+
+  # Linktree Site - Serves linktree directory
+  linktree-site:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+      - ./configs/nginx/linktree-site.conf:/etc/nginx/conf.d/linktree-site.conf:ro
+    ports:
+      - "8081:80"
+    networks:
+      - cv-network
+    depends_on:
+      - traefik
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linktree-site.rule=Host(`localhost`) && PathPrefix(`/linktree`)"
+      - "traefik.http.routers.linktree-site.entrypoints=web"
+      - "traefik.http.services.linktree-site.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.linktree-stripprefix.stripprefix.prefixes=/linktree"
+      - "traefik.http.routers.linktree-site.middlewares=linktree-stripprefix"
+
+  # Traefik - Reverse Proxy and Ingress Controller
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--metrics.prometheus=true"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./configs/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./configs/traefik/dynamic.yml:/etc/traefik/dynamic/dynamic.yml:ro
+    networks:
+      - cv-network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+
+networks:
+  cv-network:
+    driver: bridge

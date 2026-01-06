@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configs
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+data:
+  cv-site.conf: |
+    server {
+        listen 80;
+        server_name _;
+        
+        root /usr/share/nginx/html;
+        index index.html index-en.html index-fr.html;
+        
+        access_log /var/log/nginx/cv-site-access.log combined;
+        error_log /var/log/nginx/cv-site-error.log warn;
+        
+        gzip on;
+        gzip_vary on;
+        gzip_min_length 1024;
+        gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+        
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        
+        location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+        
+        location = / {
+            set $lang "en";
+            if ($http_accept_language ~* "^fr") {
+                set $lang "fr";
+            }
+            return 302 /index-$lang.html;
+        }
+        
+        location / {
+            try_files $uri $uri/ /index-en.html;
+        }
+        
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        location /nginx_status {
+            stub_status on;
+            access_log off;
+            allow 127.0.0.1;
+            allow 10.0.0.0/8;
+            deny all;
+        }
+    }
+  linktree-site.conf: |
+    server {
+        listen 80;
+        server_name _;
+        
+        root /usr/share/nginx/html/linktree;
+        index index.html;
+        
+        access_log /var/log/nginx/linktree-access.log combined;
+        error_log /var/log/nginx/linktree-error.log warn;
+        
+        gzip on;
+        gzip_vary on;
+        gzip_min_length 1024;
+        gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+        
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        
+        location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+        
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+        
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        location /nginx_status {
+            stub_status on;
+            access_log off;
+            allow 127.0.0.1;
+            allow 10.0.0.0/8;
+            deny all;
+        }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+data:
+  traefik.yml: |
+    api:
+      dashboard: true
+      insecure: true
+    
+    entryPoints:
+      web:
+        address: ":80"
+    
+    providers:
+      kubernetesIngress: {}
+      kubernetesCRD: {}
+    
+    metrics:
+      prometheus:
+        entryPoint: web
+        addEntryPointsLabels: true
+        addServicesLabels: true
+        addRoutersLabels: true
+    
+    accessLog: {}
+    
+    log:
+      level: INFO

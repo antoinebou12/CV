@@ -1,0 +1,29 @@
+# Traefik Static Configuration
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: cv-network
+  file:
+    filename: /etc/traefik/dynamic/dynamic.yml
+    watch: true
+
+metrics:
+  prometheus:
+    entryPoint: web
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    addRoutersLabels: true
+
+accessLog: {}
+
+log:
+  level: INFO

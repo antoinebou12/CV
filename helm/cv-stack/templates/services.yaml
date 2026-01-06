@@ -1,0 +1,66 @@
+{{- if .Values.cvSite.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: cv-site
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cv-site
+spec:
+  type: {{ .Values.cvSite.service.type }}
+  ports:
+  - port: {{ .Values.cvSite.service.port }}
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    {{- include "cv-stack.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: cv-site
+{{- end }}
+---
+{{- if .Values.linktreeSite.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: linktree-site
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: linktree-site
+spec:
+  type: {{ .Values.linktreeSite.service.type }}
+  ports:
+  - port: {{ .Values.linktreeSite.service.port }}
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    {{- include "cv-stack.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: linktree-site
+{{- end }}
+---
+{{- if .Values.traefik.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: traefik
+spec:
+  type: {{ .Values.traefik.service.type }}
+  ports:
+  - port: {{ .Values.traefik.service.ports.web }}
+    targetPort: 80
+    protocol: TCP
+    name: web
+  - port: {{ .Values.traefik.service.ports.admin }}
+    targetPort: 8080
+    protocol: TCP
+    name: admin
+  selector:
+    {{- include "cv-stack.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: traefik
+{{- end }}

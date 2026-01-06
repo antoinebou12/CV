@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "dockerfile",
+    "docker-compose",
+    "github-actions",
+    "kubernetes"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchPackageNames": ["*"],
+      "groupName": "docker dependencies"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["*"],
+      "groupName": "github actions"
+    },
+    {
+      "matchManagers": ["kubernetes"],
+      "matchPackageNames": ["*"],
+      "groupName": "kubernetes manifests"
+    }
+  ],
+  "schedule": [
+    "before 10am on monday"
+  ],
+  "timezone": "America/Montreal",
+  "automerge": false,
+  "automergeType": "pr",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "labels": [
+    "dependencies",
+    "renovate"
+  ],
+  "commitMessagePrefix": "chore:",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}"
+}

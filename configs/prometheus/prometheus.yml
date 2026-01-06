@@ -1,0 +1,60 @@
+# Prometheus Configuration
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'cv-stack'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: ['alertmanager:9093']
+
+# Load rules once and periodically evaluate them
+rule_files:
+  # - "rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+
+  # Traefik metrics
+  - job_name: 'traefik'
+    static_configs:
+      - targets: ['traefik:80']
+        labels:
+          service: 'traefik'
+    metrics_path: '/metrics'
+
+  # CV Site Nginx metrics
+  - job_name: 'cv-site-nginx'
+    static_configs:
+      - targets: ['cv-site:80']
+        labels:
+          service: 'cv-site'
+          site: 'cv'
+    metrics_path: '/nginx_status'
+
+  # Linktree Site Nginx metrics
+  - job_name: 'linktree-site-nginx'
+    static_configs:
+      - targets: ['linktree-site:80']
+        labels:
+          service: 'linktree-site'
+          site: 'linktree'
+    metrics_path: '/nginx_status'
+
+  # Nginx access logs (requires nginx-prometheus-exporter or similar)
+  # Uncomment if using nginx-prometheus-exporter
+  # - job_name: 'nginx-exporter'
+  #   static_configs:
+  #     - targets: ['nginx-exporter:9113']
+  #       labels:
+  #         service: 'nginx-exporter'

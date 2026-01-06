@@ -1,0 +1,29 @@
+# Dockerfile for LaTeX CV Compilation
+# Usage: docker build --build-arg LANG=en -t cv-builder .
+#        docker build --build-arg LANG=fr -t cv-builder .
+FROM texlive/texlive:latest
+
+# Set working directory
+WORKDIR /cv
+
+# Install additional dependencies if needed
+RUN apt-get update && apt-get install -y \
+    fonts-roboto \
+    && rm -rf /var/lib/apt/lists/*
+
+# Accept language argument (default to 'en')
+ARG LANG=en
+ENV CV_LANG=${LANG}
+
+# Copy CV source files based on language
+COPY cv-${LANG}/ /cv/
+
+# Compile the CV
+RUN xelatex -interaction=nonstopmode -halt-on-error resume.tex || true
+
+# Output the compiled PDF
+VOLUME ["/cv/output"]
+
+# Default command (can be overridden)
+# Output PDF to /cv/output if volume is mounted, otherwise to /cv/
+CMD ["sh", "-c", "xelatex -interaction=nonstopmode -halt-on-error resume.tex && if [ -d /cv/output ]; then cp resume.pdf /cv/output/; fi"]

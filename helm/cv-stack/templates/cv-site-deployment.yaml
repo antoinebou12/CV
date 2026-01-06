@@ -1,0 +1,60 @@
+{{- if .Values.cvSite.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv-site
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "cv-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cv-site
+spec:
+  replicas: {{ .Values.cvSite.replicas }}
+  selector:
+    matchLabels:
+      {{- include "cv-stack.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: cv-site
+  template:
+    metadata:
+      labels:
+        {{- include "cv-stack.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: cv-site
+    spec:
+      containers:
+      - name: nginx
+        image: "{{ .Values.cvSite.image.repository }}:{{ .Values.cvSite.image.tag }}"
+        imagePullPolicy: {{ .Values.cvSite.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: static-content
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+        resources:
+          {{- toYaml .Values.cvSite.resources | nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: static-content
+        hostPath:
+          path: /path/to/root
+          type: Directory
+      - name: nginx-config
+        configMap:
+          name: nginx-configs
+          items:
+          - key: cv-site.conf
+            path: cv-site.conf
+{{- end }}
