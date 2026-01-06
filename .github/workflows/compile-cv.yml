@@ -71,7 +71,7 @@ jobs:
       - name: Build both CVs using Python script
         id: build
         run: |
-          python build_cv.py --all --rebuild --verbose
+          python build_cv.py --all --rebuild --verbose --ci
         continue-on-error: false
 
       - name: Verify PDFs were created

@@ -28,11 +28,31 @@ jobs:
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
+      
+      - name: Prepare static files
+        run: |
+          mkdir -p _site
+          # Copy HTML files
+          for file in index.html index-en.html index-fr.html 404.html; do
+            [ -f "$file" ] && cp "$file" _site/
+          done
+          # Copy image and asset files
+          for file in *.png *.jpg *.jpeg *.ico *.webmanifest *.xml antoine.jpeg; do
+            [ -f "$file" ] && cp "$file" _site/ 2>/dev/null || true
+          done
+          # Copy directories
+          [ -d "linktree" ] && cp -r linktree _site/
+          [ -d "papers" ] && cp -r papers _site/
+          # List what we're deploying
+          echo "Files to deploy:"
+          find _site -type f | head -20
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: _site
       
       - name: Deploy to GitHub Pages
         id: deployment
