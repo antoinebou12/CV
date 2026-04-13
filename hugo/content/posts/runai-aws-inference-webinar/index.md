@@ -1,5 +1,5 @@
 ---
-post_kind: conference-recap
+post_kind: conference
 title: "Run:ai on AWS — webinar notes (inference & autoscaling)"
 date: 2022-09-06T10:00:00-04:00
 description: Sketches from the Run:ai webinar on scaling ML inference on AWS — dashboards, CLI, and cluster view.

@@ -27,6 +27,10 @@ This project includes:
 
 See [CV Compilation](./cv-compilation.md) for detailed instructions.
 
+### Hugo blog (navigation and header)
+
+The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, CV link, mobile drawer, dark mode). See **[Hugo navigation](./hugo-navigation.md)** for where to edit config, i18n, and behavior.
+
 ## GitHub Actions Workflows
 
 The project uses two main workflows:

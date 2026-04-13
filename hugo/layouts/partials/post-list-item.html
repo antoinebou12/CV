@@ -1,26 +1,74 @@
 {{- $p := . -}}
-<section
-  class="post-list-item relative my-10 border-b border-black/5 pb-10 last:border-b-0 last:pb-0 dark:border-white/10"
+{{- $rawKind := $p.Params.post_kind | default "article" -}}
+{{- $kind := cond (eq $rawKind "conference-recap") "conference" $rawKind -}}
+{{- $thumbURL := partial "post-list-thumb-url.html" $p -}}
+{{- $teaser := $p.Description | default "" -}}
+{{- if eq $teaser "" -}}
+  {{- $teaser = $p.Summary | plainify | chomp -}}
+{{- end -}}
+<article
+  class="post-list-card not-prose relative flex h-full flex-col overflow-hidden rounded-xl border border-black/10 bg-black/[0.02] shadow-sm dark:border-white/12 dark:bg-white/[0.03]{{ if eq $kind "conference" }} post-list-card--conference{{ end }}"
+  data-sort-date="{{ $p.Date.Unix }}"
+  data-sort-title="{{ $p.Title | plainify | htmlEscape }}"
 >
-  {{- if gt $p.Weight 0 -}}
-  <span class="mb-1 inline-block text-xs font-medium tracking-wider text-orange-500"
-    >Featured</span
+  {{- if eq $kind "conference" -}}
+  <span
+    class="pointer-events-none absolute left-3 top-3 z-[3] rounded-full border border-orange-500/45 bg-orange-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/15 dark:text-orange-100"
+    >{{- i18n "searchPillConference" -}}</span
   >
-  {{- end -}}
-  <h2 class="my-0! text-xl!">{{- $p.Title -}}</h2>
-  <time class="mt-1 block text-xs antialiased opacity-60"
-    >{{- $p.Date | time.Format ":date_medium" -}}</time
-  >
-  {{- with $p.Description -}}
-  <p
-    class="relative z-10 mt-2 max-w-3xl text-sm leading-relaxed text-black/65 dark:text-white/65"
-  >
-    {{- . -}}
-  </p>
   {{- end -}}
   <a
-    class="absolute inset-0 text-[0px]"
-    href="{{- $p.Permalink -}}"
-    >{{- $p.Title -}}</a
+    class="post-list-card-hitbox absolute inset-0 z-[1]"
+    href="{{ $p.Permalink }}"
+    aria-label="{{ $p.Title | plainify | htmlEscape }}"
+  ></a>
+  {{- if gt $p.Weight 0 -}}
+  <span
+    class="pointer-events-none absolute right-3 top-3 z-[3] rounded-full bg-orange-500/95 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white"
+    >{{- i18n "postListFeatured" -}}</span
   >
-</section>
+  {{- end -}}
+  <div class="post-list-card-stack pointer-events-none relative z-[2] flex min-h-0 flex-1 flex-col">
+    {{- with $thumbURL -}}
+    <div class="post-list-card-media aspect-[16/10] w-full shrink-0 overflow-hidden bg-black/10 dark:bg-white/10">
+      <img
+        src="{{ . }}"
+        alt=""
+        width="480"
+        height="300"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    </div>
+    {{- end -}}
+    <div class="post-list-card-body flex min-h-0 flex-1 flex-col p-4 pt-4">
+      {{- $terms := $p.GetTerms "tags" -}}
+      {{- if gt (len $terms) 0 -}}
+      <div class="post-list-card-tags mb-2 flex flex-wrap gap-1.5">
+        {{- range first 5 $terms -}}
+        <span
+          class="rounded-full border border-black/10 bg-black/[0.04] px-2 py-0.5 text-[11px] text-black/70 dark:border-white/15 dark:bg-white/[0.06] dark:text-white/75"
+          >{{- .Title -}}</span
+        >
+        {{- end -}}
+      </div>
+      {{- end -}}
+      <h2 class="post-list-card-title my-0 text-lg font-semibold leading-snug text-black dark:text-white">
+        {{- $p.Title -}}
+      </h2>
+      <time
+        class="post-list-card-time mt-1 block text-xs tabular-nums text-black/55 dark:text-white/55"
+        datetime="{{ $p.Date.Format "2006-01-02" }}"
+        >{{- $p.Date | time.Format ":date_medium" -}}</time
+      >
+      {{- with $teaser -}}
+      <p
+        class="post-list-card-desc mt-2 text-sm leading-relaxed text-black/70 dark:text-white/70"
+      >
+        {{- . -}}
+      </p>
+      {{- end -}}
+    </div>
+  </div>
+</article>

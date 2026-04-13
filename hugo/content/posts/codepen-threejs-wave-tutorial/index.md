@@ -1,8 +1,8 @@
 ---
 post_kind: tutorial
 title: "Three.js 3D wave animation (CodePen tutorial)"
-date: 2024-01-07T10:00:00-04:00
-description: Step-by-step wave motion with a grid of cubes in Three.js — with an embedded CodePen.
+date: 2016-01-07T12:00:00-04:00
+description: Grid of cubes with a simple wave motion in Three.js — step-by-step CodePen tutorial, typical of the WebGL curiosity posts from ~2016.
 tags:
     - Three.js
     - WebGL
@@ -18,7 +18,7 @@ tags:
 
 ### Introduction
 
-This walkthrough builds a **3D wave animation** with **Three.js**: a scene, camera, renderer, a grid of cubes, and a simple waving motion. Use the embed above to experiment live.
+This walkthrough builds a **3D wave animation** with **Three.js**: scene, camera, WebGL renderer, a grid of cubes, and a simple undulating motion — the sort of “look, WebGL in the browser” demo that fit right in with 2016 Three.js + CodePen articles. Use the embed above to tweak it live.
 
 #### Setting Up the Scene
 First, let's set up the basic components of any Three.js scene: the scene itself, a camera, and a WebGL renderer. Add the following code to initialize these components:
@@ -180,4 +180,4 @@ These event listeners enable users to rotate the camera and zoom in and out, enh
 
 Wrap up the tutorial with a conclusion that encourages readers to experiment with the code and learn more about Three.js.
 
-Congratulations on creating your 3D wave animation with Three.js! Feel free to experiment with the code on CodePen and try different animations and interactions. Three.js offers a vast world of possibilities for 3D graphics and animations in the browser.
+You now have a basic animated wave in Three.js. Fork the pen and push the motion, materials, or camera — same pipeline people have been iterating on since these kinds of tutorials were the default intro to WebGL in the browser.

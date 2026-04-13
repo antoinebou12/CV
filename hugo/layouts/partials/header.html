@@ -7,23 +7,24 @@
       href="{{ site.Home.Permalink }}"
       >{{ site.Title }}</a
     >
-    <div
-      class="btn-dark text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
-      role="button"
-      aria-label="Dark"
-    ></div>
+    <button
+      type="button"
+      class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
+      aria-label="{{ i18n "navThemeToggle" }}"
+      aria-pressed="false"
+    ></button>
     {{- $cvRoot := site.BaseURL | strings.TrimSuffix "/blog/" | strings.TrimSuffix "/blog" | strings.TrimSuffix "blog/" | strings.TrimSuffix "blog" -}}
     {{- $cvRoot = strings.TrimSuffix "/" $cvRoot -}}
     {{- $cvFile := cond (eq site.Language.Lang "fr") "index-fr.html" "index-en.html" -}}
     {{- $cvURL := printf "%s/%s" $cvRoot $cvFile -}}
     <div
-      class="hidden items-center gap-1 text-sm font-semibold tracking-wide text-(--fg) ltr:ml-5 rtl:mr-5 lg:flex"
+      class="hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) ltr:ml-8 rtl:mr-8 lg:flex"
       aria-label="{{ i18n "langCvNav" }}"
     >
       {{- $sorted := sort .AllTranslations "Lang" -}}
       {{- range $i, $p := $sorted -}}
         {{- if gt $i 0 -}}
-          <span class="opacity-40 px-1" aria-hidden="true">|</span>
+          <span class="opacity-40 px-2" aria-hidden="true">|</span>
         {{- end -}}
         {{- if eq $p.Lang $.Lang -}}
           <span class="opacity-60">{{ $p.Lang | upper }}</span>
@@ -31,16 +32,20 @@
           <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ $p.Lang | upper }}</a>
         {{- end -}}
       {{- end -}}
-      <span class="opacity-40 px-1" aria-hidden="true">|</span>
+      <span class="opacity-40 px-2" aria-hidden="true">|</span>
       <a class="underline-offset-4 hover:underline" href="{{ $cvURL }}">{{ i18n "cvLink" }}</a>
     </div>
   </div>
 
-  <div
-    class="btn-menu relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
-    role="button"
-    aria-label="Menu"
-  ></div>
+  <button
+    type="button"
+    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
+    aria-label="{{ i18n "navMenuOpen" }}"
+    aria-expanded="false"
+    aria-controls="site-nav-panel"
+    data-menu-open="{{ i18n "navMenuOpen" }}"
+    data-menu-close="{{ i18n "navMenuClose" }}"
+  ></button>
 
   {{- $bg_color := $.Scratch.Get "bg_color" -}}
 
@@ -53,17 +58,49 @@
 
     // mobile menu
     const btnMenu = document.querySelector('.btn-menu');
+    const navPanel = document.getElementById('site-nav-panel');
+    const menuOpenLabel = btnMenu.dataset.menuOpen;
+    const menuCloseLabel = btnMenu.dataset.menuClose;
+
+    const setMenuOpen = (open) => {
+      if (open) {
+        htmlClass.add('open');
+      } else {
+        htmlClass.remove('open');
+      }
+      btnMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btnMenu.setAttribute('aria-label', open ? menuCloseLabel : menuOpenLabel);
+    };
+
     btnMenu.addEventListener('click', () => {
-      htmlClass.toggle('open');
+      setMenuOpen(!htmlClass.contains('open'));
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && htmlClass.contains('open')) {
+        setMenuOpen(false);
+      }
+    });
+
+    if (navPanel) {
+      navPanel.addEventListener('click', (e) => {
+        if (e.target.closest('a')) {
+          setMenuOpen(false);
+        }
+      });
+    }
 
     // dark theme
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     const lightBg = '{{- $bg_color -}}'.replace(/"/g, '');
+    const btnDark = document.querySelector('.btn-dark');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? "rgb(0 0 0 / 85%)" : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
       localStorage.setItem('dark', isDark);
+      if (btnDark) {
+        btnDark.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      }
     };
 
     // init
@@ -81,13 +118,13 @@
     });
 
     // manual switch
-    const btnDark = document.querySelector('.btn-dark');
     btnDark.addEventListener('click', () => {
       setDark(localStorage.getItem('dark') !== 'true');
     });
   </script>
 
   <div
+    id="site-nav-panel"
     class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"
   >
     {{- $cvRoot := site.BaseURL | strings.TrimSuffix "/blog/" | strings.TrimSuffix "/blog" | strings.TrimSuffix "blog/" | strings.TrimSuffix "blog" -}}
@@ -95,7 +132,7 @@
     {{- $cvFile := cond (eq site.Language.Lang "fr") "index-fr.html" "index-en.html" -}}
     {{- $cvURL := printf "%s/%s" $cvRoot $cvFile -}}
     <nav
-      class="mb-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-base font-semibold lg:hidden"
+      class="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base font-semibold lg:hidden"
       aria-label="{{ i18n "langCvNav" }}"
     >
       {{- $sorted := sort .AllTranslations "Lang" -}}
@@ -112,15 +149,16 @@
       <span class="opacity-40">|</span>
       <a class="underline-offset-4 hover:underline" href="{{ $cvURL }}">{{ i18n "cvLink" }}</a>
     </nav>
-    {{- $url := .RelPermalink -}}
     {{- with site.Menus.main -}}
     <nav
       class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse"
+      aria-label="{{ i18n "navMainSections" }}"
     >
       {{- range . -}}
       <a
         class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal"
         href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
+        {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
         >{{- .Name -}}</a
       >
       {{- end -}}
@@ -130,6 +168,7 @@
     {{- with $.Scratch.Get "social_list" -}}
     <nav
       class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
+      aria-label="{{ i18n "navSocial" }}"
     >
       {{- range . -}}
       <a

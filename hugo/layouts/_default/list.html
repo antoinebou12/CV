@@ -26,13 +26,14 @@
 {{- $sorted := sort $pages "Date" "desc" -}}
 {{- $tutorials := slice -}}
 {{- $articles := slice -}}
-{{- $recaps := slice -}}
+{{- $conferences := slice -}}
 {{- range $sorted -}}
-{{- $k := .Params.post_kind | default "article" -}}
+{{- $raw := .Params.post_kind | default "article" -}}
+{{- $k := cond (eq $raw "conference-recap") "conference" $raw -}}
 {{- if eq $k "tutorial" -}}
 {{- $tutorials = $tutorials | append . -}}
-{{- else if eq $k "conference-recap" -}}
-{{- $recaps = $recaps | append . -}}
+{{- else if eq $k "conference" -}}
+{{- $conferences = $conferences | append . -}}
 {{- else -}}
 {{- $articles = $articles | append . -}}
 {{- end -}}
@@ -47,6 +48,21 @@
 </div>
 {{- end -}}
 
+<div class="post-list-sort-toolbar not-prose mb-10 flex flex-wrap items-center gap-3 border-b border-black/10 pb-4 dark:border-white/15">
+  <label for="post-list-sort-select" class="text-sm font-medium text-black/80 dark:text-white/80"
+    >{{- i18n "sortLabel" -}}</label
+  >
+  <select
+    id="post-list-sort-select"
+    class="rounded-lg border border-black/15 bg-white/90 px-3 py-2 text-sm text-black shadow-sm outline-none ring-0 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/30 dark:border-white/20 dark:bg-black/40 dark:text-white"
+  >
+    <option value="date-desc">{{ i18n "sortDateDesc" }}</option>
+    <option value="date-asc">{{ i18n "sortDateAsc" }}</option>
+    <option value="title-asc">{{ i18n "sortTitleAsc" }}</option>
+    <option value="title-desc">{{ i18n "sortTitleDesc" }}</option>
+  </select>
+</div>
+
 <div class="post-kind-stack space-y-14">
   {{- if gt (len $tutorials) 0 -}}
   <section class="post-kind-group" aria-labelledby="post-kind-tutorials">
@@ -56,7 +72,7 @@
     >
       {{- i18n "postKindTutorial" -}}
     </h2>
-    <div class="post-kind-group-items">
+    <div class="post-card-grid" data-post-sort-cards>
       {{- range $tutorials -}}
       {{- partial "post-list-item.html" . -}}
       {{- end -}}
@@ -72,7 +88,7 @@
     >
       {{- i18n "postKindArticle" -}}
     </h2>
-    <div class="post-kind-group-items">
+    <div class="post-card-grid" data-post-sort-cards>
       {{- range $articles -}}
       {{- partial "post-list-item.html" . -}}
       {{- end -}}
@@ -80,22 +96,59 @@
   </section>
   {{- end -}}
 
-  {{- if gt (len $recaps) 0 -}}
-  <section class="post-kind-group" aria-labelledby="post-kind-recaps">
+  {{- if gt (len $conferences) 0 -}}
+  <section class="post-kind-group" aria-labelledby="post-kind-conferences">
     <h2
-      id="post-kind-recaps"
+      id="post-kind-conferences"
       class="mb-6 border-b border-black/10 pb-2 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
     >
-      {{- i18n "postKindConferenceRecap" -}}
+      {{- i18n "postKindConference" -}}
     </h2>
-    <div class="post-kind-group-items">
-      {{- range $recaps -}}
+    <div class="post-card-grid post-card-grid--conference" data-post-sort-cards>
+      {{- range $conferences -}}
       {{- partial "post-list-item.html" . -}}
       {{- end -}}
     </div>
   </section>
   {{- end -}}
 </div>
+
+<script>
+  (function () {
+    var sel = document.getElementById("post-list-sort-select");
+    if (!sel) return;
+    function cmpTitle(a, b, dir) {
+      var ta = (a.getAttribute("data-sort-title") || "").toLowerCase();
+      var tb = (b.getAttribute("data-sort-title") || "").toLowerCase();
+      if (ta < tb) return dir === "asc" ? -1 : 1;
+      if (ta > tb) return dir === "asc" ? 1 : -1;
+      return 0;
+    }
+    function sortGrid(grid, mode) {
+      var cards = Array.prototype.slice.call(grid.querySelectorAll(".post-list-card"));
+      if (!cards.length) return;
+      cards.sort(function (a, b) {
+        var da = parseInt(a.getAttribute("data-sort-date") || "0", 10);
+        var db = parseInt(b.getAttribute("data-sort-date") || "0", 10);
+        if (mode === "date-desc") return db - da;
+        if (mode === "date-asc") return da - db;
+        if (mode === "title-asc") return cmpTitle(a, b, "asc");
+        if (mode === "title-desc") return cmpTitle(a, b, "desc");
+        return 0;
+      });
+      cards.forEach(function (c) {
+        grid.appendChild(c);
+      });
+    }
+    function apply() {
+      var mode = sel.value;
+      document.querySelectorAll("[data-post-sort-cards]").forEach(function (g) {
+        sortGrid(g, mode);
+      });
+    }
+    sel.addEventListener("change", apply);
+  })();
+</script>
 
 {{- else -}}
 
@@ -104,11 +157,9 @@
 {{- else -}}
 {{- $paginator := .Paginate $pages -}}
 {{- range $index, $page := $paginator.Pages -}}
-
 {{- if and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) -}}
 {{- partial "post-list-intro.html" $ -}}
 {{- end -}}
-
 {{- with $.Content -}}
 {{- if and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) -}}
 <div class="mb-10">
@@ -116,9 +167,12 @@
 </div>
 {{- end -}}
 {{- end -}}
-
-{{- partial "post-list-item.html" $page -}}
 {{- end -}}
+<div class="post-card-grid">
+{{- range $paginator.Pages -}}
+{{- partial "post-list-item.html" . -}}
+{{- end -}}
+</div>
 
 {{- if gt $paginator.TotalPages 1 -}}
 <nav class="mt-14 flex">

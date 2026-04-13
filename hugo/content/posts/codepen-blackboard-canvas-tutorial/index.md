@@ -1,8 +1,8 @@
 ---
 post_kind: tutorial
 title: "HTML5 Canvas blackboard (CodePen tutorial)"
-date: 2024-01-07T10:00:00-04:00
-description: Build a simple interactive blackboard with drawing, image import, and erase — live demo on CodePen.
+date: 2016-01-07T11:00:00-04:00
+description: Interactive canvas blackboard with drawing, image import, and erase — CodePen demo, in the spirit of 2016-era Canvas tutorials.
 tags:
     - Canvas
     - JavaScript
@@ -18,7 +18,7 @@ tags:
 
 ## Introduction
 
-This tutorial will guide you through creating a simple, interactive blackboard using HTML5 Canvas and JavaScript. You will learn how to implement drawing capabilities, image import, and erasing features, making it an ideal project for those interested in web development and interactive web applications. Check out the live example on CodePen to see what we'll be building.
+This tutorial walks through a simple interactive blackboard with **HTML5 Canvas** and plain JavaScript: drawing, pulling in images via the File API, and clearing the board. It matches the kind of step-by-step CodePen write-up that was everywhere around 2016. Use the embed above to see the finished behavior.
 
 
 ## Setting Up the Canvas
@@ -242,5 +242,5 @@ Describe how to use the File Reader API to load images and draw them on the canv
 
 Wrap up the tutorial by encouraging readers to experiment with the code and explore more features they can add. Mention that the tutorial provides a basic foundation for creating interactive canvas-based web applications.
 
-Congratulations on creating your interactive blackboard! Feel free to experiment with the code on CodePen and try adding more features like different brush types or undo/redo functionality. The HTML5 Canvas and JavaScript offer endless possibilities for creating engaging web experiences.
+You now have a working blackboard on Canvas. Fork it on CodePen and extend it — extra brushes, undo, or pressure sensitivity are natural next steps; the APIs are the same ones we have been using since this style of tutorial was current.
 

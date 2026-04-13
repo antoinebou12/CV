@@ -1,0 +1,24 @@
+{{- $p := . -}}
+{{- $r := "" -}}
+{{- with $p.Params.images -}}
+  {{- $n := index . 0 -}}
+  {{- if $n -}}
+    {{- with $p.Resources.GetMatch $n -}}
+      {{- $r = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $r -}}
+  {{- with ($p.Resources.Match "featured*") -}}
+    {{- if gt (len .) 0 -}}
+      {{- $r = index . 0 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $r -}}
+  {{- $imgs := sort ($p.Resources.ByType "image") "Name" "asc" -}}
+  {{- if gt (len $imgs) 0 -}}
+    {{- $r = index $imgs 0 -}}
+  {{- end -}}
+{{- end -}}
+{{- return $r -}}

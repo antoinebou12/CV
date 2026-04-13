@@ -1,4 +1,27 @@
 {{ define "main" }}
+{{- $tagsProject := slice -}}
+{{- $tagsRecipe := slice -}}
+{{- $tagsConference := slice -}}
+{{- $tagsArticle := slice -}}
+{{- $tagsTutorial := slice -}}
+{{- range site.Taxonomies.tags.Alphabetical -}}
+  {{- if gt (len (where .Pages "Section" "projects")) 0 -}}
+    {{- $tagsProject = $tagsProject | append . -}}
+  {{- end -}}
+  {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}
+    {{- $tagsRecipe = $tagsRecipe | append . -}}
+  {{- end -}}
+  {{- $postPages := where .Pages "Section" "posts" -}}
+  {{- if gt (len (where $postPages "Params.post_kind" "conference-recap")) 0 -}}
+    {{- $tagsConference = $tagsConference | append . -}}
+  {{- end -}}
+  {{- if gt (len (where $postPages "Params.post_kind" "article")) 0 -}}
+    {{- $tagsArticle = $tagsArticle | append . -}}
+  {{- end -}}
+  {{- if gt (len (where $postPages "Params.post_kind" "tutorial")) 0 -}}
+    {{- $tagsTutorial = $tagsTutorial | append . -}}
+  {{- end -}}
+{{- end -}}
 <article>
   <header class="mb-10">
     <h1 class="my-0! pb-2">{{ .Title }}</h1>
@@ -6,24 +29,104 @@
   </header>
 
   {{- if gt (len site.Taxonomies.tags) 0 -}}
-  <section class="not-prose mb-10" aria-labelledby="site-search-tags-heading">
-    <h2 id="site-search-tags-heading" class="mb-3 text-sm font-semibold text-black/80 dark:text-white/80">
+  <section class="not-prose mb-10 space-y-8" aria-labelledby="site-search-tags-heading">
+    <h2 id="site-search-tags-heading" class="mb-0 text-sm font-semibold text-black/80 dark:text-white/80">
       {{ i18n "searchBrowseTags" }}
     </h2>
-    <div class="flex flex-wrap gap-2">
-      {{- range site.Taxonomies.tags.Alphabetical -}}
-      <a
-        href="{{ .Page.RelPermalink }}"
-        class="site-search-tag-chip inline-block rounded border px-2 py-1 text-xs no-underline transition-opacity hover:opacity-90"
-        data-tag-name="{{ htmlEscape .Page.Title }}"
-        >{{- .Page.Title -}}</a>
-      {{- end -}}
+
+    {{- if gt (len $tagsProject) 0 -}}
+    <div class="space-y-3">
+      <h3 class="m-0 text-xs font-semibold uppercase tracking-wider text-black/55 dark:text-white/55">
+        {{ i18n "searchTagsProjects" }}
+      </h3>
+      <div class="flex flex-wrap gap-3">
+        {{- range $tagsProject -}}
+        <a
+          href="{{ .Page.RelPermalink }}"
+          class="site-search-tag-chip inline-block rounded border px-2.5 py-1.5 text-xs no-underline transition-opacity hover:opacity-90"
+          data-tag-name="{{ htmlEscape .Page.Title }}"
+          >{{- .Page.Title -}}</a>
+        {{- end -}}
+      </div>
     </div>
+    {{- end -}}
+
+    {{- if gt (len $tagsRecipe) 0 -}}
+    <div class="space-y-3">
+      <h3 class="m-0 text-xs font-semibold uppercase tracking-wider text-black/55 dark:text-white/55">
+        {{ i18n "searchTagsRecipes" }}
+      </h3>
+      <div class="flex flex-wrap gap-3">
+        {{- range $tagsRecipe -}}
+        <a
+          href="{{ .Page.RelPermalink }}"
+          class="site-search-tag-chip inline-block rounded border px-2.5 py-1.5 text-xs no-underline transition-opacity hover:opacity-90"
+          data-tag-name="{{ htmlEscape .Page.Title }}"
+          >{{- .Page.Title -}}</a>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{- if gt (len $tagsConference) 0 -}}
+    <div class="space-y-3">
+      <h3 class="m-0 text-xs font-semibold uppercase tracking-wider text-black/55 dark:text-white/55">
+        {{ i18n "searchTagsConference" }}
+      </h3>
+      <div class="flex flex-wrap gap-3">
+        {{- range $tagsConference -}}
+        <a
+          href="{{ .Page.RelPermalink }}"
+          class="site-search-tag-chip inline-block rounded border px-2.5 py-1.5 text-xs no-underline transition-opacity hover:opacity-90"
+          data-tag-name="{{ htmlEscape .Page.Title }}"
+          >{{- .Page.Title -}}</a>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{- if gt (len $tagsArticle) 0 -}}
+    <div class="space-y-3">
+      <h3 class="m-0 text-xs font-semibold uppercase tracking-wider text-black/55 dark:text-white/55">
+        {{ i18n "searchTagsArticles" }}
+      </h3>
+      <div class="flex flex-wrap gap-3">
+        {{- range $tagsArticle -}}
+        <a
+          href="{{ .Page.RelPermalink }}"
+          class="site-search-tag-chip inline-block rounded border px-2.5 py-1.5 text-xs no-underline transition-opacity hover:opacity-90"
+          data-tag-name="{{ htmlEscape .Page.Title }}"
+          >{{- .Page.Title -}}</a>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
+
+    {{- if gt (len $tagsTutorial) 0 -}}
+    <div class="space-y-3">
+      <h3 class="m-0 text-xs font-semibold uppercase tracking-wider text-black/55 dark:text-white/55">
+        {{ i18n "searchTagsTutorials" }}
+      </h3>
+      <div class="flex flex-wrap gap-3">
+        {{- range $tagsTutorial -}}
+        <a
+          href="{{ .Page.RelPermalink }}"
+          class="site-search-tag-chip inline-block rounded border px-2.5 py-1.5 text-xs no-underline transition-opacity hover:opacity-90"
+          data-tag-name="{{ htmlEscape .Page.Title }}"
+          >{{- .Page.Title -}}</a>
+        {{- end -}}
+      </div>
+    </div>
+    {{- end -}}
   </section>
   {{- end -}}
 
-  <div class="not-prose mb-8">
-    <label class="sr-only" for="site-search-input">{{ i18n "searchPlaceholder" }}</label>
+  <div class="not-prose relative mb-8">
+    <label
+      class="absolute m-[-1px] h-px w-px overflow-hidden border-0 p-0 [clip:rect(0,0,0,0)]"
+      for="site-search-input"
+      >{{ i18n "searchInputLabel" }}</label
+    >
     <input
       id="site-search-input"
       type="search"
@@ -35,6 +138,17 @@
     <p id="site-search-status" class="mt-2 min-h-[1.25rem] text-xs text-black/50 dark:text-white/50" aria-live="polite"></p>
   </div>
 
+  <div class="site-search-sort-row not-prose mb-6">
+    <label for="site-search-sort">{{ i18n "searchSortLabel" }}</label>
+    <select id="site-search-sort" class="min-w-[11rem]">
+      <option value="relevance">{{ i18n "searchSortRelevance" }}</option>
+      <option value="date-desc">{{ i18n "searchSortDateDesc" }}</option>
+      <option value="date-asc">{{ i18n "searchSortDateAsc" }}</option>
+      <option value="title-asc">{{ i18n "searchSortTitleAsc" }}</option>
+      <option value="title-desc">{{ i18n "searchSortTitleDesc" }}</option>
+    </select>
+  </div>
+
   <ul id="site-search-results" class="not-prose m-0 list-none space-y-6 p-0"></ul>
 </article>
 
@@ -42,7 +156,21 @@
 {{- with site.Home.OutputFormats.Get "json" -}}
   {{- $jsonURL = .Permalink -}}
 {{- end -}}
-<div id="site-search-config" class="hidden" data-index-url="{{ $jsonURL | htmlEscape }}" data-msg-empty="{{ i18n "searchNoResults" | htmlEscape }}" data-msg-loading="{{ i18n "searchLoading" | htmlEscape }}" data-msg-short="{{ i18n "searchTypeMore" | htmlEscape }}" data-msg-failed="{{ i18n "searchFailed" | htmlEscape }}" hidden></div>
+<div
+  id="site-search-config"
+  class="hidden"
+  data-index-url="{{ $jsonURL | htmlEscape }}"
+  data-msg-empty="{{ i18n "searchNoResults" | htmlEscape }}"
+  data-msg-loading="{{ i18n "searchLoading" | htmlEscape }}"
+  data-msg-short="{{ i18n "searchTypeMore" | htmlEscape }}"
+  data-msg-failed="{{ i18n "searchFailed" | htmlEscape }}"
+  data-pill-project="{{ i18n "searchPillProject" | htmlEscape }}"
+  data-pill-recipe="{{ i18n "searchPillRecipe" | htmlEscape }}"
+  data-pill-article="{{ i18n "searchPillArticle" | htmlEscape }}"
+  data-pill-tutorial="{{ i18n "searchPillTutorial" | htmlEscape }}"
+  data-pill-conference="{{ i18n "searchPillConference" | htmlEscape }}"
+  hidden
+></div>
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js" defer></script>
 <script defer>
@@ -56,11 +184,21 @@
     const loadingMsg = (cfg && cfg.dataset.msgLoading) || "";
     const typeMoreMsg = (cfg && cfg.dataset.msgShort) || "";
     const failedMsg = (cfg && cfg.dataset.msgFailed) || "";
+    const pillLabels = {
+      project: (cfg && cfg.dataset.pillProject) || "Project",
+      recipe: (cfg && cfg.dataset.pillRecipe) || "Recipe",
+      article: (cfg && cfg.dataset.pillArticle) || "Article",
+      tutorial: (cfg && cfg.dataset.pillTutorial) || "Tutorial",
+      conference: (cfg && cfg.dataset.pillConference) || "Conference",
+    };
+
+    const sortSel = document.getElementById("site-search-sort");
 
     if (!indexURL || !input || !list) return;
 
     let fuse = null;
     let ready = false;
+    let lastHits = [];
 
     function esc(s) {
       const d = document.createElement("div");
@@ -103,36 +241,44 @@
     function renderTagRow(item) {
       const refs = Array.isArray(item.tag_refs) ? item.tag_refs : null;
       if (refs && refs.length) {
-        return refs
-          .map((ref) => {
-            const name = ref.name != null ? String(ref.name) : "";
-            const url = ref.permalink != null ? String(ref.permalink) : "";
-            if (!name) return "";
-            const style = tagChipStyle(name);
-            const inner = url
-              ? '<a href="' +
-                esc(url) +
-                '" class="mr-1 mb-1 inline-block rounded border px-2 py-0.5 text-xs no-underline transition-opacity hover:opacity-90" style="' +
-                esc(style) +
-                '">' +
-                esc(name) +
-                "</a>"
-              : '<span class="mr-1 mb-1 inline-block rounded border border-black/10 bg-black/5 px-2 py-0.5 text-xs dark:border-white/15 dark:bg-white/10">' +
-                esc(name) +
-                "</span>";
-            return inner;
-          })
-          .join("");
+        return (
+          '<div class="flex flex-wrap gap-1.5">' +
+          refs
+            .map((ref) => {
+              const name = ref.name != null ? String(ref.name) : "";
+              const url = ref.permalink != null ? String(ref.permalink) : "";
+              if (!name) return "";
+              const style = tagChipStyle(name);
+              const inner = url
+                ? '<a href="' +
+                  esc(url) +
+                  '" class="inline-block rounded border px-2 py-0.5 text-xs no-underline transition-opacity hover:opacity-90" style="' +
+                  esc(style) +
+                  '">' +
+                  esc(name) +
+                  "</a>"
+                : '<span class="inline-block rounded border border-black/10 bg-black/5 px-2 py-0.5 text-xs dark:border-white/15 dark:bg-white/10">' +
+                  esc(name) +
+                  "</span>";
+              return inner;
+            })
+            .join("") +
+          "</div>"
+        );
       }
       const tags = Array.isArray(item.tags) ? item.tags : [];
-      return tags
-        .map(
-          (t) =>
-            '<span class="mr-1 mb-1 inline-block rounded bg-black/5 px-2 py-0.5 text-xs dark:bg-white/10">' +
-            esc(String(t)) +
-            "</span>"
-        )
-        .join("");
+      return (
+        '<div class="flex flex-wrap gap-1.5">' +
+        tags
+          .map(
+            (t) =>
+              '<span class="inline-block rounded bg-black/5 px-2 py-0.5 text-xs dark:bg-white/10">' +
+              esc(String(t)) +
+              "</span>"
+          )
+          .join("") +
+        "</div>"
+      );
     }
 
     function paintStaticTagChips() {
@@ -144,30 +290,123 @@
 
     paintStaticTagChips();
 
-    function render(items) {
+    function typePillLabel(item) {
+      const sec = item.section != null ? String(item.section) : "";
+      const pk = item.post_kind != null ? String(item.post_kind) : "";
+      if (sec === "projects") return pillLabels.project;
+      if (sec === "recipes") return pillLabels.recipe;
+      if (sec === "posts") {
+        if (pk === "conference-recap") return pillLabels.conference;
+        if (pk === "tutorial") return pillLabels.tutorial;
+        return pillLabels.article;
+      }
+      return pillLabels.article;
+    }
+
+    function applySortHits(hits, mode) {
+      const copy = hits.slice();
+      if (mode === "relevance") {
+        return copy.sort(function (a, b) {
+          return (a.score != null ? a.score : 1) - (b.score != null ? b.score : 1);
+        });
+      }
+      function titleCmp(a, b, dir) {
+        const ta = (a.item && a.item.title ? String(a.item.title) : "").toLowerCase();
+        const tb = (b.item && b.item.title ? String(b.item.title) : "").toLowerCase();
+        if (ta < tb) return dir === "asc" ? -1 : 1;
+        if (ta > tb) return dir === "asc" ? 1 : -1;
+        return 0;
+      }
+      return copy.sort(function (a, b) {
+        const da = a.item && a.item.date_unix != null ? Number(a.item.date_unix) : 0;
+        const db = b.item && b.item.date_unix != null ? Number(b.item.date_unix) : 0;
+        if (mode === "date-desc") return db - da;
+        if (mode === "date-asc") return da - db;
+        if (mode === "title-asc") return titleCmp(a, b, "asc");
+        if (mode === "title-desc") return titleCmp(a, b, "desc");
+        return 0;
+      });
+    }
+
+    function buildExcerpt(item) {
+      const sum = (item.summary != null ? String(item.summary) : "").trim();
+      if (sum) return { html: esc(sum), suffix: sum.length > 280 ? "…" : "" };
+
+      let body = (item.content != null ? String(item.content) : "").trim().replace(/\s+/g, " ");
+      const title = (item.title != null ? String(item.title) : "").trim();
+      if (title.length > 0 && body.length >= title.length) {
+        const head = body.slice(0, title.length);
+        if (head.toLowerCase() === title.toLowerCase()) {
+          body = body.slice(title.length).trim();
+        }
+      }
+      if (body.startsWith("—") || body.startsWith("–") || body.startsWith("-")) {
+        body = body.replace(/^[\s—–-]+/, "").trim();
+      }
+      const max = 220;
+      if (!body) return { html: "", suffix: "" };
+      if (body.length <= max) return { html: esc(body), suffix: "" };
+      return { html: esc(body.slice(0, max)), suffix: "…" };
+    }
+
+    function renderHits(hits) {
       list.innerHTML = "";
-      if (!items.length) {
+      if (!hits.length) {
         statusEl.textContent = emptyMsg;
         return;
       }
       statusEl.textContent = "";
+      const mode = sortSel && sortSel.value ? sortSel.value : "relevance";
+      const items = applySortHits(hits, mode);
+      const pillCls =
+        "shrink-0 rounded-full border border-black/15 bg-black/[0.04] px-2.5 py-0.5 text-xs font-medium text-black/80 dark:border-white/20 dark:bg-white/[0.06] dark:text-white/85";
       for (const hit of items) {
         const item = hit.item;
         const li = document.createElement("li");
-        li.className = "m-0 rounded-lg border border-black/8 bg-black/[0.02] p-4 dark:border-white/10 dark:bg-white/[0.04]";
+        const thumb = item.thumb && String(item.thumb).trim() ? String(item.thumb).trim() : "";
+        const pill = typePillLabel(item);
+        const isConference = pill === pillLabels.conference;
+        li.className =
+          "site-search-result m-0 rounded-xl border p-4 shadow-sm " +
+          (isConference
+            ? "border-orange-500/35 bg-gradient-to-br from-orange-500/[0.08] to-black/[0.02] dark:border-orange-400/30 dark:from-orange-400/[0.1] dark:to-white/[0.04] "
+            : "border-black/8 bg-black/[0.02] dark:border-white/10 dark:bg-white/[0.04] ") +
+          (thumb ? "has-thumb " : "");
         const tagStr = renderTagRow(item);
-        li.innerHTML =
-          '<h2 class="mt-0 mb-1 text-lg font-semibold"><a class="no-underline hover:underline" href="' +
+        const ex = buildExcerpt(item);
+        const metaRow =
+          '<div class="mb-2 flex flex-wrap items-center gap-2">' +
+          '<span class="' +
+          pillCls +
+          '">' +
+          esc(pill) +
+          "</span>" +
+          (item.date
+            ? '<time class="text-xs tabular-nums opacity-60">' + esc(item.date) + "</time>"
+            : "") +
+          "</div>";
+        const titleBlock =
+          '<h2 class="my-0 mb-2 text-lg font-semibold leading-snug">' +
+          '<a class="text-inherit no-underline hover:underline" href="' +
           esc(item.permalink) +
           '">' +
           esc(item.title) +
-          "</a></h2>" +
-          (item.date ? '<p class="mb-2 text-xs opacity-60">' + esc(item.date) + "</p>" : "") +
-          (tagStr ? '<p class="mb-2 text-xs leading-relaxed">' + tagStr + "</p>" : "") +
-          '<p class="mb-0 text-sm leading-relaxed opacity-80">' +
-          esc(item.summary || (item.content || "").slice(0, 220)) +
-          (item.summary || item.content ? "…" : "") +
-          "</p>";
+          "</a></h2>";
+        const tagsBlock = tagStr ? '<div class="mb-2">' + tagStr + "</div>" : "";
+        const excerptBlock =
+          ex.html || ex.suffix
+            ? '<p class="mb-0 text-sm leading-relaxed opacity-80">' + ex.html + ex.suffix + "</p>"
+            : "";
+        const bodyInner = metaRow + titleBlock + tagsBlock + excerptBlock;
+        const thumbBlock = thumb
+          ? '<div class="site-search-result-thumb"><a href="' +
+            esc(item.permalink) +
+            '" class="block" tabindex="-1" aria-hidden="true"><img src="' +
+            esc(thumb) +
+            '" alt="" width="176" height="110" loading="lazy" decoding="async" /></a></div>'
+          : "";
+        li.innerHTML =
+          thumbBlock + '<div class="site-search-result-body not-prose">' + bodyInner + "</div>";
         list.appendChild(li);
       }
     }
@@ -177,11 +416,17 @@
       const term = q.trim();
       if (term.length < 2) {
         list.innerHTML = "";
+        lastHits = [];
         statusEl.textContent = term.length ? typeMoreMsg : "";
         return;
       }
-      const results = fuse.search(term, { limit: 25 });
-      render(results);
+      lastHits = fuse.search(term, { limit: 25 });
+      renderHits(lastHits);
+    }
+
+    function rerenderSort() {
+      if (!ready || !lastHits.length) return;
+      renderHits(lastHits);
     }
 
     fetch(indexURL)
@@ -196,10 +441,11 @@
           ignoreLocation: true,
           minMatchCharLength: 2,
           keys: [
-            { name: "title", weight: 0.45 },
-            { name: "tags", weight: 0.28 },
-            { name: "summary", weight: 0.15 },
-            { name: "content", weight: 0.12 },
+            { name: "title", weight: 0.42 },
+            { name: "tags", weight: 0.26 },
+            { name: "summary", weight: 0.14 },
+            { name: "content", weight: 0.1 },
+            { name: "section", weight: 0.08 },
           ],
         });
         ready = true;
@@ -212,6 +458,7 @@
 
     statusEl.textContent = loadingMsg;
     input.addEventListener("input", () => runQuery(input.value));
+    if (sortSel) sortSel.addEventListener("change", () => rerenderSort());
   })();
 </script>
 {{ end }}

@@ -1,8 +1,8 @@
 ---
 post_kind: tutorial
 title: "Custom countdown timer (HTML, CSS, JavaScript)"
-date: 2024-02-01T10:00:00-04:00
-description: Minutes input, start/reset, display, and optional sound when the timer hits zero.
+date: 2016-02-01T10:00:00-04:00
+description: Minutes input, start/reset, on-screen display, and optional sound at zero — a small vanilla HTML/CSS/JS timer in the style of mid-2010s tutorials.
 tags:
     - JavaScript
     - HTML
@@ -12,7 +12,7 @@ tags:
     - Frontend
 ---
 
-Sure, let's create a tutorial for implementing a custom timer using HTML, CSS, and JavaScript. This tutorial will guide you through creating an interactive timer where users can set a time in minutes, and the timer counts down to zero, playing a sound when finished.
+This is a straight DOM-and-`setInterval` countdown: minutes in, tick down, start and reset, and a short audio clip when it hits zero — the sort of thing that showed up in every “learn JavaScript” blog around 2016 before frameworks swallowed the front page.
 
 ### Tutorial: Building a Custom Countdown Timer
 
@@ -84,4 +84,4 @@ $(function() {
 - Test the timer in different browsers to ensure cross-browser compatibility.
 
 ### Conclusion
-You now have a functioning custom countdown timer with start and reset functionalities. It can be further customized and styled to fit the needs of your specific project or website. Remember to test thoroughly to ensure it works seamlessly for all users.
+You end up with a working countdown, start/reset, and optional alarm. The pattern is old but transparent: easy to adapt, and still fine for static sites or embedded widgets without a build step.

@@ -1,8 +1,8 @@
 ---
 post_kind: tutorial
 title: "Date range picker web component (jQuery + plugin)"
-date: 2024-02-05T10:00:00-04:00
-description: Custom `<daterangepicker-two-input>`-style element with jQuery, Moment, and the Date Range Picker plugin.
+date: 2016-02-05T10:00:00-04:00
+description: Custom `<daterangepicker-two-input>` element with jQuery, Moment.js, and the Date Range Picker plugin — the kind of range UI that dominated Bootstrap-era admin screens around 2016.
 tags:
     - JavaScript
     - jQuery
@@ -12,12 +12,12 @@ tags:
     - Frontend
 ---
 
-Sure, I can help you create a tutorial for a custom HTML element that implements a date range picker using JavaScript, jQuery, and the Date Range Picker plugin. This element will consist of two input fields for selecting a start and end date.
+This walkthrough is from the jQuery-and-Moment era: you wrap two text inputs in a custom element `<daterangepicker-two-input>`, register it with `customElements.define`, and hand the container off to the Date Range Picker plugin. Newer stacks usually reach for native `<input type="date">`, flatpickr, or framework date components — but plenty of dashboards shipped in the mid-2010s (and many still in maintenance) look exactly like this.
 
 ### Tutorial: Creating a Custom Date Range Picker Element
 
 #### Introduction
-In this tutorial, we'll build a custom HTML element `<daterangepicker-two-input>` using JavaScript, which allows users to pick a date range. This component will be useful for applications like hotel booking systems, event planning websites, or any platform requiring a date range selection.
+You end up with a small reusable tag that opens the familiar range calendar UI (check-in / check-out style) while keeping the markup consistent across pages.
 
 #### Prerequisites
 - Basic knowledge of HTML, CSS, and JavaScript
@@ -112,11 +112,11 @@ Use your custom element in the HTML body:
 Test your custom element in various browsers to ensure compatibility and fix any bugs that arise.
 
 #### Conclusion
-You have now created a custom date range picker element that can be reused across different web pages or applications. This element enhances UI experience and is highly customizable as per your styling and functionality requirements.
+That’s the skeleton: one custom element, the plugin bound to the inner container, and CSS however your product needs it.
 
 #### Further Enhancements
-- Add more customization options for the date range picker.
-- Implement additional validation or specific date formats if needed.
-- Style the element to match your application's theme.
+- Expose picker options as attributes or properties on the element.
+- Tighten validation and locale-specific formats (Moment still handled most of that in this stack).
+- Match whatever design system the rest of the app used in 2019–2021.
 
-This tutorial provides a foundation for creating custom HTML elements using JavaScript and third-party libraries. You can build upon this foundation to create more complex and interactive web components.
+If you’re maintaining something built this way, the moving parts are still the same: jQuery for DOM/plugin glue, Moment for parsing (the plugin depended on it for years), and the range picker for the actual UI.

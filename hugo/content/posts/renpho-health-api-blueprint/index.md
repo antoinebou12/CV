@@ -2,7 +2,8 @@
 post_kind: article
 title: "Renpho scale, Home Assistant, and reverse-engineering the API"
 date: 2021-10-10T10:00:00-04:00
-description: Forking hass-renpho, using APKLeaks, and wiring Renpho metrics into a personal health dashboard.
+lastmod: 2026-04-13T12:00:00-04:00
+description: Forking hass-renpho, surfacing Renpho API endpoints with APKLeaks, and wiring bio-impedance metrics into a Home Assistant Lovelace health dashboard.
 tags:
     - Health
     - Renpho
@@ -18,25 +19,21 @@ images:
 
 ## Inspiration from Bryan Johnson’s "Blueprint Protocol"
 
-The journey into personal health tracking for me began with Bryan Johnson’s "Blueprint Protocol". It's a manifesto for self-quantification that resonates deeply with my own aspirations in fitness and well-being. Inspired by his dedication, I embarked on a mission to fine-tune my understanding of my body through the detailed data collection of my Renpho scale.
+Personal health tracking, for me, started with Bryan Johnson’s "Blueprint Protocol"—a push for self-quantification that matched how I already thought about fitness. I wanted the same granularity for my own body, and a Renpho scale with bio-impedance turned out to be a practical way to get a steady stream of numbers beyond simple weight.
 
 ![Blueprint Protocol Inspiration](images/blueprint.jpg)
 
-## Forking the Hass-Renpho App
+## Forking hass-renpho and the Home Assistant ecosystem
 
-After discovering the `hass-renpho` app – an initiative to integrate Renpho's scale data into Home Assistant – I noticed that the project was dormant. With the original developer away, I took the helm, forking the repository with the intent to incorporate a broader spectrum of metrics.
+I found `hass-renpho`, a custom integration that pulls Renpho scale data into Home Assistant. The project had gone quiet, and with the original maintainer unavailable I forked it to extend support for more of the metrics the hardware exposes.
 
-![Hass-Renpho Weight](images/health-dashboard-metrics.jpeg)
+That fork dragged me through the normal Home Assistant custom-component path: installing via HACS, configuring credentials, and iterating on entities. Along the way I talked with the original maintainer where it made sense—suggesting fixes, sharing what I was seeing in the API, and trying to keep the integration useful for anyone else running a Renpho at home.
 
-![Integrated Health Dashboard](images/health-dashboard-metrics.jpeg)
+![Home Assistant dashboard showing Renpho vitals, weight history, and body-composition gauges](images/health-dashboard-metrics.jpeg)
 
-## Embracing the Open-Source Community
+## Reverse engineering and APKLeaks
 
-My foray into the world of open-source was enlightening. Learning to navigate the Home Assistant's HACS store, I delved into custom component installation, and soon, I was in dialogue with the original project maintainer, suggesting enhancements and expanding the project's scope.
-
-## Reverse Engineering and APKLeaks
-
-Armed with APKLeaks, I decompiled the Renpho app, uncovering the hidden layers of API endpoints. This pivotal step allowed me to extract and utilize data more effectively, adding a new dimension to my fitness regimen.
+The mobile app does not publish an official API document, so the next step was to learn what the Android client actually calls. **APKLeaks** scans the packaged APK for strings—URLs, keys, and other clues—rather than fully decompiling the app into readable source. Running it on the Renpho APK surfaced the HTTP endpoints and enough context to line those calls up with the JSON payloads I cared about (weight, BMI, BMR, body age, fat and muscle estimates, water, protein, visceral-fat indices, and the rest of the bio-impedance-derived fields). In Home Assistant those show up as entities and feed Lovelace cards—gauges for composition, history graphs for weight, and simple entity rows for the “extra” metrics.
 
 ```shell
 # Simple PyPi installation
@@ -47,40 +44,21 @@ cd apkleaks/
 pip3 install -r requirements.txt
 ```
 
-Explore the tools:
+Further reading:
+
 - [APKLeaks on GitHub](https://github.com/dwisiswant0/apkleaks)
 - [APKLeaks in-depth analysis](https://www.whiteoaksecurity.com/blog/apkleaks-discover-leaks-within-apk-files/)
 
-## Integrating Comprehensive Health Tools
+## Dashboard, context, and measurement habits
 
-The integration went beyond just the Renpho app. Google Health and MyFitnessPal became staples in my routine for tracking activity and dietary intake, painting a complete picture of my health.
+Renpho data is only part of the picture. I still use tools like Google Health and MyFitnessPal for activity and food so the scale readings sit next to diet and movement, not in a vacuum.
 
-![Integrated Health Dashboard](images/detailed-metrics-integration.jpeg)
+![Lovelace layout with additional composition metrics and supporting integrations](images/detailed-metrics-integration.jpeg)
 
-## The Nuances of Measuring Fitness
+Day-to-day swings taught me to treat the numbers as trends, not verdicts. Clothing alone can move the needle by about a kilogram on a bad day; hydration and digestion matter too. Measuring at a consistent time (for me, mornings, similar conditions) keeps the series usable when I look at the history card in HA.
 
-With every data point—from the daily fluctuations in weight to the precise body fat percentage—I gained a deeper understanding of how my body responds to my lifestyle choices.
+This started as a technical side project and became a steady habit: the dashboard is a single place to see weight trajectory, composition estimates, and the supporting stats the integration exposes—enough to decide whether training or sleep changes are showing up where I expect.
 
-## The Weight of Clothing and Other Considerations
+## Community and what works for you
 
-During my data collection, I realized external factors like clothing could significantly affect my readings. A heavy hoodie might add up to 2.2 lbs, while the body's waste could weigh anywhere between 2-4 lbs. These insights led to more accurate and consistent measurements.
-
-## Routine Measurements and Diet
-
-Taking a leaf out of Bryan's book, I started closely monitoring not only my physical metrics but also my nutritional intake, ensuring my meal prep was in sync with my body's needs.
-
-## The Impact of Knowledge on Fitness
-
-Knowledge is power, especially when it comes to fitness. Understanding the data helped me to make informed decisions, leading to a more balanced and healthier lifestyle.
-
-## A Community Effort
-
-My journey is just one part of a larger narrative within the open-source community. It's a collaborative effort that continues to grow, with each of us contributing to a collective knowledge base that enhances our health and fitness.
-
-## The Philosophical Shift
-
-This technological venture has morphed into a philosophical shift, where fitness and data-driven insights forge a path to better health.
-
-## Inviting Your Stories and Strategies
-
-Now, I turn to you, the community. How do you leverage technology in your health and fitness journey? What strategies and tools have you found indispensable? Let's share our experiences and learn from each other.
+None of this would be as practical without the Home Assistant and open-source integration ecosystem—forks, issues, and small patches add up. If you are quantifying your own health, I am curious what actually stuck for you: dedicated hardware, phone-only apps, or something self-hosted like this? Share what you use and what you ignore; the useful part is rarely the gadget alone, but how consistently the data fits your routine.

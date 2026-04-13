@@ -1,11 +1,17 @@
 {{- $out := slice -}}
 {{- $postPages := where site.RegularPages "Section" "posts" -}}
 {{- $projectPages := where site.RegularPages "Section" "projects" -}}
-{{- $pages := union $postPages $projectPages -}}
+{{- $recipePages := where site.RegularPages "Section" "recipes" -}}
+{{- $pages := union (union $postPages $projectPages) $recipePages -}}
 {{- range $pages -}}
   {{- if not .Draft -}}
     {{- $tags := .Params.tags | default slice -}}
-    {{- $summary := .Summary | plainify | chomp -}}
+    {{- $desc := .Description | default "" | plainify | chomp -}}
+    {{- $fromSummary := .Summary | plainify | chomp -}}
+    {{- $summary := $desc -}}
+    {{- if eq $summary "" -}}
+      {{- $summary = $fromSummary -}}
+    {{- end -}}
     {{- $plain := .Plain | plainify | chomp -}}
     {{- $content := $plain -}}
     {{- if gt (len $plain) 12000 -}}
@@ -15,7 +21,12 @@
     {{- range .GetTerms "tags" -}}
       {{- $tagRefs = $tagRefs | append (dict "name" .Title "permalink" .Permalink) -}}
     {{- end -}}
-    {{- $postKind := .Params.post_kind | default "article" -}}
+    {{- $postKind := "" -}}
+    {{- if eq .Section "posts" -}}
+      {{- $rawPK := .Params.post_kind | default "article" -}}
+      {{- $postKind = cond (eq $rawPK "conference-recap") "conference" $rawPK -}}
+    {{- end -}}
+    {{- $thumb := partial "post-list-thumb-url.html" . -}}
     {{- $out = $out | append (dict
       "title" .Title
       "permalink" .Permalink
@@ -24,7 +35,10 @@
       "tags" $tags
       "tag_refs" $tagRefs
       "post_kind" $postKind
+      "section" .Section
       "date" (.Date.Format "2006-01-02")
+      "date_unix" .Date.Unix
+      "thumb" $thumb
     ) -}}
   {{- end -}}
 {{- end -}}

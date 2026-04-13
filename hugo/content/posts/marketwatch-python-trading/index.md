@@ -1,35 +1,56 @@
 ---
 post_kind: article
 title: "Python library for MarketWatch virtual trading"
-date: 2022-09-06T10:00:00-04:00
-description: Python package to automate watchlists, games, portfolio, and trades on MarketWatch’s virtual stock game.
+date: 2026-04-13T10:00:00-04:00
+description: "PyPI package `marketwatch`—a Python client for MarketWatch’s virtual stock game (watchlists, games, portfolio, orders, leaderboard)."
 tags:
     - Python
     - MarketWatch
     - Trading
     - Finance
     - Automation
+    - Open Source
+    - PyPI
 images:
     - featured.png
 ---
 
-🎉 Exciting news for traders and Python enthusiasts! We're thrilled to announce the launch of our new Python library tailored for interacting with the MarketWatch virtual trading platform. 🐍🚀
+I published **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI: a small Python client for the [MarketWatch](https://www.marketwatch.com) **virtual stock game** (paper trading), not live brokerage access. If you want to script watchlists, pull game or portfolio data, or experiment with automation against the game, it wraps the flows in a straightforward API.
 
-**Documentation:** [Click here to view the documentation](https://lnkd.in/g2SYc4YH)
-**Package:** [Access the package here](https://lnkd.in/gttFQk5p)
+## Links
 
-**Key Features:**
-- **Creating Watchlists:** Easily monitor your favorite stocks.
-- **Accessing Game Details:** Get comprehensive information on your trading games.
-- **Portfolio Management:** View and manage your portfolio efficiently.
-- **Stock Transactions:** Facilitate buying and selling of stocks with ease.
-- **Leaderboard Insights:** Keep track of your position in the trading community.
+- **Package:** [pypi.org/project/marketwatch](https://pypi.org/project/marketwatch/)
+- **Documentation:** [antoinebou12.github.io/marketwatch](https://antoinebou12.github.io/marketwatch/)
+- **Source & issues:** [github.com/antoinebou12/marketwatch](https://github.com/antoinebou12/marketwatch)
 
-**Use Cases:**
-Whether you're looking to automate your trading strategies, develop sophisticated trading bots, or simply enhance your trading experience, this Python library is an invaluable tool.
+## What it can do
 
-![A screenshot showing the library in action](https://mw3.wsj.net/mw5/content/logos/mw_logo_social.png)
+- Create and manage **watchlists**
+- Read **game** details and settings
+- Inspect **portfolio**, positions, and pending orders
+- **Buy** and **sell** (in-game)
+- Fetch the **leaderboard** for a game
 
-Join our growing community of traders and developers! If you have any questions or feedback, feel free to reach out through our [GitHub repository](https://github.com/antoinebou12/marketwatch).
+Useful if you are exploring automated strategies or small bots **inside the game’s rules**—see the docs for method names and return shapes.
 
-Dive into the world of automated trading with our new Python library. We're excited to see what you'll build with it! Thanks for your support! 🚀
+## Quick start
+
+```bash
+pip install marketwatch
+```
+
+```python
+from marketwatch import MarketWatch
+
+mw = MarketWatch("your_username", "your_password")
+mw.get_games()
+mw.get_price("AAPL")
+```
+
+For login edge cases, every method, and examples for orders and watchlists, use the [documentation](https://antoinebou12.github.io/marketwatch/).
+
+![Featured image for the MarketWatch Python library post](./featured.png)
+
+Automation can conflict with a platform’s terms or rate limits; use the library responsibly and check MarketWatch’s own rules if you rely on it for anything non-trivial.
+
+Questions or bugs are welcome on [GitHub](https://github.com/antoinebou12/marketwatch).

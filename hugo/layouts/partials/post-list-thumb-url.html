@@ -1,0 +1,11 @@
+{{- $thumb := "" -}}
+{{- with partial "featured-image-resource.html" . -}}
+  {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
+    {{- $thumb = .Permalink -}}
+  {{- else -}}
+    {{- with .Resize "480x" -}}
+      {{- $thumb = .Permalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $thumb -}}

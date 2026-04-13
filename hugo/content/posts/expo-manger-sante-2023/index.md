@@ -1,5 +1,5 @@
 ---
-post_kind: conference-recap
+post_kind: conference
 title: "Expo Manger Santé 2023 — olives, kiosks, and discoveries"
 date: 2022-09-06T10:00:00-04:00
 description: Two days at Montreal’s health-food expo — sales on the olive kiosk, neighbors like Mate Libre, and standout products.

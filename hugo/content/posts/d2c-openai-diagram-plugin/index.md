@@ -23,6 +23,8 @@ Plugin URL: https://lnkd.in/exVNZMnT
 
 D2COpenAIPlugin is a plugin for ChatGPT that enables users to generate diagrams using PlantUML, Mermaid, D2. This plugin enhances the capabilities of ChatGPT by providing a seamless way to create diverse and creative diagrams.
 
+For a **prompt-in-the-chat** workflow (AIPRM template, cache hit/miss sequence examples, and canvas-tool tips), see **[Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})** — complementary to this plugin-based approach.
+
 ![1692387139389.jpeg](images/1692387139389.jpeg)
 
 🤖 ChatGPT UML Plugins - DEMO

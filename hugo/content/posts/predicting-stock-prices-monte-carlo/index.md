@@ -12,7 +12,9 @@ canonicalURL: "https://medium.com/@antoine.boucher012/predicting-stock-prices-wi
 
 ## Introduction
 
-In the world of finance, accurately predicting stock prices is a critical task. With the advent of advanced computational techniques, we can leverage powerful algorithms like Monte Carlo simulations and Markov chains to forecast future stock prices. This article explores how to implement these methods using Python, along with the visualization and evaluation of their performance.
+In finance, decisions are rarely about a single “forecast” price: they are about **ranges**, **tail risk**, and **how wrong** simple models can be. This article walks through a **Monte Carlo path simulation** in Python: we estimate drift and volatility from historical closes, simulate many future price paths (a geometric Brownian–style discrete step), and summarize the result as a **distribution**—the right object for risk-style questions (bands, percentiles, coverage against a hold-out period).
+
+**Markov chain Monte Carlo (MCMC)**, as in Landauskas and Valakevičius’s paper on stock price modelling, is a different tool: it **draws samples** from a distribution that need not be a simple Gaussian—for example one built from a **kernel density estimate** of observed prices—whereas the code below assumes lognormal shocks from estimated drift and volatility. A practical workflow is **MCMC (or other inference) for the law of the data**, then **forward Monte Carlo** for multi-step scenarios. This post implements the forward GBM-style step explicitly; see the references and the linked work-in-progress below if you want to push toward paper-style MCMC.
 
 ## Step 1: Setting Up the Environment
 
@@ -83,38 +85,33 @@ def get\_financial\_statements\_lists():
 
 ## Step 3: Splitting Data into Training and Testing Sets
 
-Next, we’ll fetch the historical stock prices for a given symbol and split the data into training and testing sets:
+Next, we’ll fetch the historical stock prices for a given symbol and split the data into training and testing sets. We keep **two** frames: **before** January 2023 (used to estimate the model and run simulations) and **from** January 2023 onward (hold-out for comparing simulated ranges to realized prices).
 
 stock\_symbol = "AAPL"  
 stock\_prices = get\_historical\_price\_full\_stock(stock\_symbol)  
 data = pd.DataFrame(stock\_prices\['historical'\])  
   
-\# Splitting the data  
-january\_2023\_index = data\[(data\['date'\] < '2023-01-01')\].index  
-prices\_after\_january\_2023 = data.drop(january\_2023\_index)  
+def prepare\_price\_frame(df):  
+    df = df.rename(columns={  
+        'open': 'Open',  
+        'high': 'High',  
+        'low': 'Low',  
+        'close': 'Close',  
+        'volume': 'Volume',  
+    })  
+    required\_columns = \['date', 'Open', 'High', 'Low', 'Close', 'Volume'\]  
+    return df\[required\_columns\].sort\_values(by=\['date'\], ascending=True).reset\_index(drop=True)  
   
-\# Assuming prices\_after\_january\_2023 is your DataFrame  
-prices\_after\_january\_2023 = prices\_after\_january\_2023.rename(columns={  
-    'open': 'Open',  
-    'high': 'High',  
-    'low': 'Low',  
-    'close': 'Close',  
-    'volume': 'Volume'  \# Only if you have a volume column  
-})  
-  
-\# Drop any additional columns that are not required  
-required\_columns = \['date', 'Open', 'High', 'Low', 'Close', 'Volume'\]  
-prices\_after\_january\_2023 = prices\_after\_january\_2023\[required\_columns\]  
-  
-\# sort by date ascending  
-prices\_after\_january\_2023 = prices\_after\_january\_2023.sort\_values(by=\['date'\], ascending=True)
+prices\_before\_january\_2023 = prepare\_price\_frame(data\[data\['date'\] < '2023-01-01'\])  
+prices\_after\_january\_2023 = prepare\_price\_frame(data\[data\['date'\] >= '2023-01-01'\])  
 
 plt.figure(figsize=(10, 6))  
 plt.title('Stock Prices')  
 plt.xlabel('Date')  
 plt.ylabel('Price')  
-plt.plot(prices\_before\_january\_2023\['date'\], prices\_before\_january\_2023\['Close'\])  
-plt.plot(prices\_after\_january\_2023\['date'\], prices\_after\_january\_2023\['Close'\])  
+plt.plot(prices\_before\_january\_2023\['date'\], prices\_before\_january\_2023\['Close'\], label='Train (before Jan 2023)')  
+plt.plot(prices\_after\_january\_2023\['date'\], prices\_after\_january\_2023\['Close'\], label='Hold-out (from Jan 2023)')  
+plt.legend()  
 plt.show()
 
 Press enter or click to view image in full size
@@ -125,15 +122,13 @@ Press enter or click to view image in full size
 
 ![](./img-002.png)
 
-## Step 4: Monte Carlo Simulation
+## Step 4: Monte Carlo Simulation (Forward Paths and Risk Bands)
 
-We will perform a Monte Carlo simulation to predict future stock prices:
+The function below is **Monte Carlo simulation** of a **constant-parameter** model: we estimate mean and variance of **log returns** on the training window, build a daily **drift** and **volatility**, then draw many independent Gaussian shocks and propagate price forward. That is **not** MCMC; there is no Markov chain sampling a posterior here. It is the kind of **forward scenario** engine you might run **after** inference. By contrast, [Landauskas and Valakevičius (*Intellectual Economics*, 2011)](https://ojs.mruni.eu/ojs/intellectual-economics/article/view/817) use **MCMC to sample** from a distribution shaped by a **kernel density estimate** of prices (piecewise-linear proposals)—a way to stay close to the empirical law of the data with few parametric assumptions. Our GBM shortcut is simpler; the paper is the reference when you want the data-driven sampling step.
 
-## Get Antoine Boucher’s stories in your inbox
+For a work-in-progress that extends this line of thought (batch experiments, richer risk views, and moving closer to paper-style MCMC), see this [LinkedIn experiment (WIP)](https://lnkd.in/eTUeTsAS).
 
-Join Medium for free to get updates from this writer.
-
-Remember me for faster sign in
+The useful outputs for risk are **distributions**: percentiles of terminal price, **prediction-style bands** (for example 5th–95th percentile paths), and **coverage** checks against a hold-out (did realized prices sit where the simulated mass was?).
 
 def monte\_carlo\_simulation(data, days, iterations):  
     if isinstance(data, pd.Series):  
@@ -155,8 +150,6 @@ def monte\_carlo\_simulation(data, days, iterations):
         current\_price = future\_prices\[t\]  
     return future\_prices
 
-## Get Antoine Boucher’s stories in your inbox
-
 Press enter or click to view image in full size
 
 ![](./img-003.png)
@@ -171,46 +164,53 @@ simulation\_days = 364
 mc\_iterations = 1000  
 mc\_prices = monte\_carlo\_simulation(prices\_before\_january\_2023\['Close'\], simulation\_days, mc\_iterations)  
   
-\# Last closing price repeated for each iteration  
-last\_close\_price = np.full((1, mc\_iterations), prices\_before\_january\_2023\['Close'\].iloc\[-1\])  
-  
-\# Combine the last closing price with the Monte Carlo simulation prices  
+last\_train\_close = prices\_before\_january\_2023\['Close'\].iloc\[-1\]  
+last\_close\_price = np.full((1, mc\_iterations), last\_train\_close)  
 mc\_prices\_combined = np.concatenate((last\_close\_price, mc\_prices), axis=0)  
   
-\# Adjust the periods in the date range to match the number of rows in mc\_prices\_combined  
 last\_date = prices\_before\_january\_2023\['date'\].iloc\[-1\]  
 simulated\_dates = pd.date\_range(start=last\_date, periods=simulation\_days + 1)  
   
-\# Visualizing the Monte Carlo simulation alongside historical data  
+\# Percentiles across paths at each future step (risk band)  
+p05 = np.percentile(mc\_prices\_combined, 5, axis=1)  
+p50 = np.percentile(mc\_prices\_combined, 50, axis=1)  
+p95 = np.percentile(mc\_prices\_combined, 95, axis=1)  
+mean\_path = mc\_prices\_combined.mean(axis=1)  
+  
+\# Terminal distribution at the last simulated step (VaR-style summaries)  
+terminal\_prices = mc\_prices\_combined\[simulation\_days, :]  
+mean\_terminal\_price = float(np.mean(terminal\_prices))  
+q5, q50, q95 = np.percentile(terminal\_prices, \[5, 50, 95\])  
+terminal\_return = terminal\_prices / last\_train\_close - 1.0  
+ret\_q5, ret\_q50, ret\_q95 = np.percentile(terminal\_return, \[5, 50, 95\])  
+  
+horizon\_idx = min(simulation\_days, len(prices\_after\_january\_2023) - 1)  
+real\_price = float(prices\_after\_january\_2023\['Close'\].iloc\[horizon\_idx\])  
+real\_date = prices\_after\_january\_2023\['date'\].iloc\[horizon\_idx\]  
+in\_90\_band = q5 <= real\_price <= q95  
+  
+print(f"Simulated horizon: {simulation\_days} trading days after {last\_date}")  
+print(f"Mean terminal price: ${mean\_terminal\_price:.2f}")  
+print(f"Terminal price percentiles (5 / 50 / 95): ${q5:.2f} / ${q50:.2f} / ${q95:.2f}")  
+print(f"Terminal simple return vs last train close — 5th / 50th / 95th %ile: {ret\_q5\*100:.2f}% / {ret\_q50\*100:.2f}% / {ret\_q95\*100:.2f}%")  
+print(f"Hold-out price at aligned step ({real\_date}): ${real\_price:.2f}")  
+print(f"Realized price inside simulated 5–95% band: {in\_90\_band}")  
+  
 plt.figure(figsize=(10, 6))  
-  
-\# Plot historical data  
-plt.plot(pd.to\_datetime(prices\_before\_january\_2023\['date'\]), prices\_before\_january\_2023\['Close'\], label='Before January 2023', linewidth=2)  
-plt.plot(pd.to\_datetime(prices\_after\_january\_2023\['date'\]), prices\_after\_january\_2023\['Close'\], label='After January 2023', linewidth=2)  
-  
-\# Taking average of all simulations on the 365th day  
-future\_price\_mcmc = np.mean(mc\_prices\_combined\[364, :\])  
-print(f"Average future price after 364 days: ${future\_price\_mcmc:.2f}")  
-print(f"Date of simulation: {simulated\_dates\[364\].date()}")  
-simulated\_date = simulated\_dates\[364\].date()  
-real\_price = prices\_after\_january\_2023\['Close'\]\[18\]  
-real\_date = prices\_after\_january\_2023\['date'\]\[18\]  
-print(f"Real price on {real\_date}: ${real\_price:.2f}")  
-print(f"Price difference: ${future\_price\_mcmc - real\_price:.2f}")  
-print(f"Price difference percentage: {(future\_price\_mcmc - real\_price) / real\_price \* 100:.2f}%")  
-print(f"Model accuracy: {100 - abs((future\_price\_mcmc - real\_price) / real\_price \* 100):.2f}%")  
-  
-\# Plot Monte Carlo simulations mean  
-plt.plot(simulated\_dates, mc\_prices\_combined.mean(axis=1), label='Monte Carlo Mean', linewidth=3)  
-  
-\# Plot each simulation path  
 for i in range(mc\_iterations):  
-    plt.plot(simulated\_dates, mc\_prices\_combined\[:, i\], linewidth=0.5, color='gray', alpha=0.01)  
+    plt.plot(simulated\_dates, mc\_prices\_combined\[:, i\], linewidth=0.5, color='gray', alpha=0.02)  
+plt.fill\_between(simulated\_dates, p05, p95, alpha=0.25, label='5th–95th percentile band')  
+plt.plot(simulated\_dates, p50, label='Median path', linewidth=2, color='C0')  
+plt.plot(simulated\_dates, mean\_path, label='Mean path', linewidth=2, linestyle='--', color='C1')  
+plt.plot(pd.to\_datetime(prices\_before\_january\_2023\['date'\]), prices\_before\_january\_2023\['Close'\], label='Train (before Jan 2023)', linewidth=2, color='black')  
+plt.plot(pd.to\_datetime(prices\_after\_january\_2023\['date'\]), prices\_after\_january\_2023\['Close'\], label='Hold-out (from Jan 2023)', linewidth=2, color='green')  
+plt.axvline(pd.to\_datetime(real\_date), color='red', linestyle=':', linewidth=1, alpha=0.8, label='Hold-out step aligned to horizon')  
+plt.scatter(\[pd.to\_datetime(real\_date)\], \[real\_price\], color='red', s=40, zorder=5, label='Realized (aligned)')  
   
-plt.title('Monte Carlo Simulation of Stock Prices')  
+plt.title('Monte Carlo Simulation of Stock Prices (with percentile band)')  
 plt.xlabel('Date')  
 plt.ylabel('Price')  
-plt.legend()  
+plt.legend(loc='upper left', fontsize=8)  
 plt.show()
 
 Press enter or click to view image in full size
@@ -231,18 +231,16 @@ Press enter or click to view image in full size
 
 ## Conclusion
 
-Monte Carlo simulations modeling provides a robust framework for predicting future stock prices. By backtesting various strategies, we can evaluate their performance and make informed decisions.
+Forward **Monte Carlo** gives you a **distribution** of future prices under an assumed dynamics—ideal for **percentile bands**, **tail behaviour**, and **coverage** checks against data you held out. That is a different step from **MCMC**, which is about **sampling** from a flexible model of the data (as in Landauskas and Valakevičius’s KDE-driven approach) before or alongside forward simulation. A practical pipeline is: **fit or sample the distribution that matches history**, then **push scenarios forward with Monte Carlo**. Combined with strategy **backtesting**, you separate “how wide is model risk?” from “does a rule make money?”
 
-## GitHub - AlgoETS/MarkokChainMonteCarlo: MarkokChainMonteCarlo Stratification Algo
-
-### MarkokChainMonteCarlo Stratification Algo . Contribute to AlgoETS/MarkokChainMonteCarlo development by creating an…
+Related exploratory code: [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMonteCarlo) (stratification / MCMC-oriented experiments).
 
 ## Reference
 
+*   Landauskas, M. & Valakevičius, E. (2011). [*Modelling of Stock Prices by Markov Chain Monte Carlo Method*](https://ojs.mruni.eu/ojs/intellectual-economics/article/view/817) — *Intellectual Economics*, Vol. 5 No. 2 (article page); [PDF download](https://ojs.mruni.eu/ojs/intellectual-economics/article/download/817/774/1511).
+*   [Semantic Scholar index](https://www.semanticscholar.org/paper/MODELLING-OF-STOCK-PRICES-BY-THE-MARKOV-CHAIN-MONTE-Landauskas-Valakevi%C4%8Dius/ced26fa31b2306e747d69de10b77aaf3b9704e7a) for the same paper.
 *   [Neural Networks in Finance: Markov Chain Monte Carlo (MCMC) and Stochastic Volatility Modeling](/analytics-vidhya/neural-networks-in-finance-markov-chain-monte-carlo-mcmc-and-stochastic-volatility-modelling-3f4f148c3046)
 *   [Monte Carlo Simulation Basics](https://www.investopedia.com/articles/investing/112514/monte-carlo-simulation-basics.asp)
-*   [https://www.semanticscholar.org/paper/MODELLING-OF-STOCK-PRICES-BY-THE-MARKOV-CHAIN-MONTE-Landauskas-Valakevi%C4%8Dius/ced26fa31b2306e747d69de10b77aaf3b9704e7a](https://www.semanticscholar.org/paper/MODELLING-OF-STOCK-PRICES-BY-THE-MARKOV-CHAIN-MONTE-Landauskas-Valakevi%C4%8Dius/ced26fa31b2306e747d69de10b77aaf3b9704e7a)
-*   [https://www3.mruni.eu/ojs/intellectual-economics/article/download/817/774](https://www3.mruni.eu/ojs/intellectual-economics/article/download/817/774)
 
 ---
 

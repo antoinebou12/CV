@@ -1,27 +1,54 @@
 ---
 post_kind: article
-title: Using Vector Databases to Find Similar Movies Algorithm (Part 1)
-date: 2024-05-14T14:00:00-04:00
+title: "Exploring movie similarities with vector search algorithms"
+date: 2026-04-13T12:00:00-04:00
+lastmod: 2026-04-13T12:00:00-04:00
 tags:
     - PostgreSQL
     - pgvector
+    - Qdrant
     - Embeddings
     - Python
     - NLP
+    - MovieLens
+    - FastAPI
+    - Recommender systems
 canonicalURL: "https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d"
+aliases:
+    - /posts/dense-sparse-vectors-qdrant-movielens/
 ---
 
-## Overview
+This article walks through a data analysis thread we ran on **movie similarity**: embeddings, nearest-neighbor search in PostgreSQL, and a second track with **Qdrant** and **MovieLens** (dense text vectors plus sparse rating vectors for collaborative-style recommendations). Below are a few **GIF visualizations** from that work; if you care about data science and want to see how these ideas show up in hands-on projects, the links at the end point to the course repo, the original Medium write-up, and our Discord.
 
-This project demonstrates the power of Embedding combined with vector databases to efficiently find similar movies based on their descriptions and metadata. By utilizing technologies such as PostgreSQL with pgvector and advanced NLP models, this project offers a robust solution for similarity searches in large datasets.
+Topics: Data science, machine learning, vector search, recommender systems.
 
-## Understanding Vector Querying and Cosine Similarity
+## Visualizations
 
-### Vector Querying with pgvector
+Add your GIFs in this folder as `movie-similarities-1.gif`, `movie-similarities-2.gif`, and `movie-similarities-3.gif`, or edit the paths below to match your filenames.
+
+![Movie similarity visualization 1](./movie-similarities-1.gif)
+
+![Movie similarity visualization 2](./movie-similarities-2.gif)
+
+![Movie similarity visualization 3](./movie-similarities-3.gif)
+
+## Code, write-up, and community
+
+- **GitHub (course / notebooks):** [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding)
+- **Medium (original pgvector article):** [Using vector databases to find similar movies (Part 1)](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d)
+- **Discord:** [discord.gg/Mgf6STuvzZ](https://discord.gg/Mgf6STuvzZ)
+
+---
+
+## Part 1 — PostgreSQL, pgvector, and similar movies
+
+This project demonstrates how **embeddings** and a **vector database** (PostgreSQL with pgvector) support similarity search over movie descriptions and metadata, using NLP models to encode text and compare titles in vector space.
+
+## Understanding vector querying and cosine similarity
+
+### Vector querying with pgvector
 
 Pgvector is a PostgreSQL extension that facilitates efficient storage and querying of high-dimensional vectors. In this project, we leverage pgvector to handle vector data derived from movie embeddings. These embeddings represent the semantic content of movie descriptions and metadata, allowing for advanced querying capabilities like nearest neighbor searches.
-
-## Get Antoine Boucher’s stories in your inbox
 
 Pgvector supports several distance metrics, including cosine similarity (denoted as `<=>` in SQL). By utilizing this function, we can perform fast cosine distance calculations directly within SQL queries, which is critical for efficient similarity searches. Here's how you can find similar movies based on cosine similarity:
 
@@ -640,12 +667,55 @@ Press enter or click to view image in full size
 
 ![](./img-011.png)
 
+## Part 2 — Qdrant, MovieLens, and dense + sparse vectors
+
+Above we stored **dense** movie embeddings in PostgreSQL and ran nearest-neighbor search in SQL. Here we use the same core idea—**similarity in vector space**—with **Qdrant** and **MovieLens**, and add a second mode that is not about text semantics: **sparse vectors** built from user ratings for collaborative-style recommendations.
+
+The code described here comes from a small **FastAPI** teaching project (`movie_recommendation`): seed scripts under `app/seed/` (for example `load_movielens_100k_to_qdrant.py` and `load_movielens_1m_to_qdrant.py`) load MovieLens into Qdrant collections; the API uses `app/services/recommend.py`, `app/utils/embedding.py`, and `app/services/qdrant.py`.
+
+### Three collections (MovieLens 100K example)
+
+The 100K loader creates:
+
+- **`movielens_100k_movies`** — dense vectors (384 dimensions, cosine) for semantic search over movie text.
+- **`movielens_100k_users`** — dense user profiles (same embedding space as used in the seed pipeline).
+- **`movielens_100k_ratings`** — **sparse** vectors named `ratings`: each dimension is a **movie id**, each value is a **rating**, so a user is a sparse vector over items they rated.
+
+That split is the main design lesson: one engine (Qdrant), two different vector “meanings.”
+
+### Dense path: “something like this title”
+
+`create_embedding` in `app/utils/embedding.py` uses `sentence-transformers/all-MiniLM-L6-v2`: tokenize, mean-pool the last hidden state, return a single embedding. For a query string, the service **preprocesses** text, embeds it, and calls `client.search` on the **movies** collection with `query_vector` as a plain dense vector.
+
+Conceptually this matches Part 1: **encode text → nearest movies by cosine similarity**—only the storage and API are Qdrant instead of pgvector.
+
+### Sparse path: users like you
+
+`recommend_movies` builds a **`NamedSparseVector`**: indices are movie ids, values are the user’s ratings. Qdrant searches the **`{prefix}_ratings`** collection (the seed script registers the sparse vector under the name `ratings`). Neighbors are **similar users** in rating space. The app then **aggregates** those neighbors’ ratings for movies the current user has not rated and returns top-scoring titles (resolving ids via a scroll over the movies collection).
+
+So the second mode is **collaborative filtering** expressed as vector search—not retrieval from plot summaries, but from overlapping taste.
+
+### FastAPI surface
+
+`app/main.py` mounts routers that expose these flows to a simple HTML UI. The interesting logic for readers of this post is in the service layer: dense search vs sparse neighbor aggregation.
+
+### Where to start in the SimilityVectorEmbedding course repo
+
+If you are working through **[AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding)** in parallel, the **`qdrant/0.simple.ipynb`** notebook is the minimal Qdrant + `movies.json` exercise; it sits alongside the PostgreSQL track and matches the mental model “embed documents, upsert, query” before you add MovieLens scale and hybrid sparse+dense patterns.
+
+### Qdrant summary
+
+- **Similar movies by text:** dense embeddings and cosine search on a movies collection.
+- **Similar taste:** sparse rating vectors, nearest users in rating space, then aggregate their ratings for unseen items.
+
+Qdrant adds a convenient way to mix **dense and sparse** vectors in one system alongside the pgvector workflow in Part 1.
+
 ## Conclusion
 
-This project showcases how combining vector databases like pgvector with advanced NLP models can provide efficient and effective solutions for finding similar movies based on their descriptions and metadata. By leveraging various embeddings and distance metrics, we can perform robust similarity searches and gain deeper insights into movie relationships.
+Together, **pgvector** and **Qdrant** illustrate two practical ways to explore movie relationships: semantic similarity from embeddings, and (with MovieLens) collaborative patterns via sparse vectors—plus the usual levers of model choice and distance metrics in SQL or vector engines.
 
-[https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json)
+Dataset reference: [movies.json in SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json).
 
 ---
 
-*Originally published on [Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d).*
+*The PostgreSQL / pgvector sections were [originally published on Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d); this page now also includes the Qdrant + MovieLens follow-up in one place.*

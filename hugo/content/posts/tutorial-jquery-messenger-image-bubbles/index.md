@@ -1,8 +1,8 @@
 ---
 post_kind: tutorial
 title: "Draggable, sortable image bubbles (Messenger-style)"
-date: 2024-01-07T10:00:00-04:00
-description: Rounded image tiles with jQuery UI drag-and-drop and sortable lists.
+date: 2016-01-07T10:00:00-04:00
+description: Messenger-style circular image tiles with jQuery UI — drag-and-drop and sortable lists, straight out of the jQuery-heavy tutorial blogs of ~2016.
 tags:
     - jQuery
     - jQuery UI
@@ -15,7 +15,7 @@ tags:
 ### Tutorial: Creating Draggable and Sortable Images with jQuery
 
 #### Introduction
-In this tutorial, we'll learn how to create draggable and sortable images with a rounded shape using jQuery, jQuery UI, and CSS. This is a great way to add interactive elements to your web pages.
+This walkthrough uses jQuery and jQuery UI to build circular “bubble” avatars you can drag and reorder — the same ingredients that showed up in countless demos when Messenger-style circles and sortable lists were everywhere (roughly the ES5 + jQuery era, ~2016). Handy for legacy pages or if you want the recipe in one place.
 
 #### Prerequisites
 - Basic knowledge of HTML, CSS, and JavaScript
@@ -100,4 +100,4 @@ $(document).ready(function() {
 });
 ```
 
-By following these steps, you can create a webpage with images that can be dragged and sorted. This can be a fun way to enhance user interaction on your site.
+Following these steps gives you draggable, sortable circular images on a page — jQuery UI all the way, but it still behaves the same in any browser where you include the libraries.

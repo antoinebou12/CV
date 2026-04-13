@@ -1,53 +1,105 @@
 ---
 post_kind: article
-title: "Sequence diagrams with ChatGPT and AIPRM"
+title: "Diagram prompts with ChatGPT and AIPRM (PlantUML, Mermaid, and more)"
 date: 2022-09-06T10:00:00-04:00
-description: Using AIPRM prompts with ChatGPT for PlantUML and Mermaid sequence diagrams (React, FastAPI, Redis, MongoDB).
+description: "AIPRM prompt template for diagram type, elements, purpose, and tool — plus PlantUML and Mermaid sequence examples (React, FastAPI, Redis, MongoDB, cache hit/miss)."
+translationKey: chatgpt-airprm-sequence-diagrams
 tags:
     - ChatGPT
     - AIPRM
     - PlantUML
     - Mermaid
+    - Draw.io
+    - Lucidchart
+    - Creately
+    - Gliffy
     - UML
     - FastAPI
     - Redis
     - MongoDB
+    - Diagram tools
 images:
     - featured.jpeg
 ---
 
-## Introduction to Sequence Diagrams
+The [AIPRM](https://www.aiprm.com/) browser extension gives you reusable prompt templates inside ChatGPT. Combined with a small **structured prompt** (diagram type, what to draw, why, and which tool), you get consistent output whether you want text-first formats like **PlantUML** or **Mermaid**, or a recipe for redrawing the same flow in a canvas tool.
 
-Sequence diagrams are a type of UML diagram that show how objects operate with one another and in what order. They are a key tool in software development for understanding system behavior and designing communication between components.
+**[Full article in French]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})** (same slug — you can also switch to **FR** in the site header).
 
-## Frontend-Backend Communication with Caching
+## AIPRM prompt template (copy and adapt)
 
-This sequence diagram illustrates the process of a user request being handled by a React frontend, processed by a FastAPI backend, with caching implemented via Redis, and data persistence through MongoDB.
+Fill one line per dimension. You can paste the block below into ChatGPT (with or without AIPRM) and edit the bracketed values.
+
+```text
+[DIAGRAM TYPE] - Sequence | Use Case | Class | Activity | Component | State | Object | Deployment | Timing | Network | Wireframe | Archimate | Gantt | MindMap | WBS | JSON | YAML
+
+[ELEMENT TYPE] - Actors | Messages | Objects | Classes | Interfaces | Components | States | Nodes | Edges | Links | Frames | Constraints | Entities | Relationships | Tasks | Events | Modules
+
+[PURPOSE] - Communication | Planning | Design | Analysis | Modeling | Documentation | Implementation | Testing | Debugging
+(optional: add your stack or scenario, e.g. "Communication: React server frontend — FastAPI backend — Redis cache — MongoDB database")
+
+[DIAGRAMMING TOOL] - PlantUML | Mermaid | Draw.io | Lucidchart | Creately | Gliffy
+```
+
+### Example: sequence diagram for a cached API stack
+
+```text
+[DIAGRAM TYPE] - Sequence
+[ELEMENT TYPE] - Messages
+[PURPOSE] - Communication Frontend React Server - Backend FastAPI - Cache Redis - Database MongoDB
+[DIAGRAMMING TOOL] - PlantUML
+```
+
+## Public AIPRM link
+
+I published a prompt you can add from the AIPRM library here: [AIPRM prompt (LinkedIn)](https://lnkd.in/gcV25_BY). Use it as a starting point, then narrow `[PURPOSE]` and `[DIAGRAMMING TOOL]` for your team’s stack and deliverables.
+
+## Introduction to sequence diagrams
+
+Sequence diagrams are a type of UML diagram that show how parts of a system exchange **messages** over time. They are useful for onboarding, design reviews, and documenting request paths (especially when a cache or database sits on the critical path).
+
+## Frontend–backend communication with caching
+
+The figure below is a concrete example: a user request flows through a **React** frontend and **FastAPI** backend, with **Redis** as a cache and **MongoDB** as the system of record. The source listings that follow include both a **cache hit** and a **cache miss** branch.
 
 ![Frontend-Backend Communication with Caching](images/frontend-backend-caching.jpeg)
 
-## Creating Diagrams with AIPRM and ChatGPT
-
-Below are tutorials on how to create diagrams using the AIPRM Chrome extension with ChatGPT for various diagramming tools.
-
-### PlantUML
+## PlantUML (cache hit and cache miss)
 
 ```plantuml
 @startuml
-User -> ReactServer: Sends Request
-ReactServer -> FastAPIServer: Forwards Request
-FastAPIServer -> RedisCache: Check Cache
-RedisCache --> FastAPIServer: Found Data
-FastAPIServer -> ReactServer: Sends Response from Cache
-ReactServer -> User: Returns Response
+actor User
+participant "ReactServer" as RS
+participant "FastAPIServer" as API
+participant "RedisCache" as R
+database "MongoDB" as M
+
+User -> RS: Sends Request
+RS -> API: Forwards Request
+
+alt Cache hit
+  API -> R: Check Cache
+  R --> API: Found Data
+  API -> RS: Sends Response from Cache
+  RS -> User: Returns Response from Cache
+else Cache miss
+  API -> R: Get Data from Cache
+  R --> API: Data Not Found
+  API -> M: Get Data from DB
+  M --> API: Returns Data
+  API -> R: Save Data in Cache
+  R --> API: Data Saved
+  API -> RS: Sends Response
+  RS -> User: Returns Response
+end
 @enduml
 ```
 
-### Mermaid
+## Mermaid (cache hit and cache miss)
 
 ```mermaid
 sequenceDiagram
-    participant User
+    actor User
     participant ReactServer
     participant FastAPIServer
     participant RedisCache
@@ -55,16 +107,37 @@ sequenceDiagram
 
     User->>ReactServer: Sends Request
     ReactServer->>FastAPIServer: Forwards Request
-    FastAPIServer->>RedisCache: Check Cache
-    RedisCache-->>FastAPIServer: Found Data
-    FastAPIServer->>ReactServer: Sends Response from Cache
-    ReactServer->>User: Returns Response
+
+    alt Cache hit
+        FastAPIServer->>RedisCache: Check Cache
+        RedisCache-->>FastAPIServer: Found Data
+        FastAPIServer->>ReactServer: Sends Response from Cache
+        ReactServer->>User: Returns Response from Cache
+    else Cache miss
+        FastAPIServer->>RedisCache: Get Data from Cache
+        RedisCache-->>FastAPIServer: Data Not Found
+        FastAPIServer->>MongoDB: Get Data from DB
+        MongoDB-->>FastAPIServer: Returns Data
+        FastAPIServer->>RedisCache: Save Data in Cache
+        RedisCache-->>FastAPIServer: Data Saved
+        FastAPIServer->>ReactServer: Sends Response
+        ReactServer->>User: Returns Response
+    end
 ```
 
-### Draw.io, Lucidchart, Creately, and Gliffy
+## Draw.io, Lucidchart, Creately, and Gliffy
 
-For graphical tools like Draw.io, Lucidchart, Creately, and Gliffy, you can follow the interactive tutorials on their respective websites to recreate the sequence diagram based on the example provided.
+These tools are **canvas-first**: the fastest path is often to generate **PlantUML or Mermaid** in ChatGPT, then:
+
+- **Export** from a PlantUML server or CLI to **SVG** or **PNG** and **import** that graphic into your diagram tool as a baseline layer, or
+- Ask ChatGPT (using your template) for a **numbered list of lifelines and messages** in order, and recreate them with the tool’s shapes and connectors.
+
+That avoids blank-canvas syndrome while keeping the diagram editable for styling and annotations your team expects.
 
 ## Conclusion
 
-Understanding and creating sequence diagrams is essential for software development and communication. Using tools like AIPRM with ChatGPT can streamline this process and enhance your diagramming skills.
+Structured prompts make diagramming repeatable: you choose the **diagram type**, the **elements** to emphasize, the **purpose** (and context), and the **tool** so the model’s answer matches how you will ship the artifact. AIPRM simply makes that workflow one click away once the template lives in your library.
+
+---
+
+*Hashtags for sharing:* #ChatGPT #diagram #UML #software #designtools #PlantUML #Mermaid #Drawio #Lucidchart #Creately #Gliffy
