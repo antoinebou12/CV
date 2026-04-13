@@ -58,11 +58,38 @@ jobs:
 
       - name: Build Hugo blog
         run: |
-          ROOT="${{ steps.pages.outputs.base_url }}"
-          ROOT="${ROOT%/}"
-          HUGO_BASE="${ROOT}/blog/"
-          echo "Hugo baseURL: ${HUGO_BASE}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          PAGES_ROOT="${{ steps.pages.outputs.base_url }}"
+          PAGES_ROOT="${PAGES_ROOT%/}"
+          HUGO_BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/blog/"
+          echo "configure-pages base_url (reference): ${PAGES_ROOT}"
+          echo "Hugo baseURL (used for build): ${HUGO_BASE}"
+          if [ -n "${PAGES_ROOT}" ] && [ "${PAGES_ROOT}" != "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}" ]; then
+            echo "::warning::configure-pages base_url differs from derived site root; using derived URL for Hugo -b"
+          fi
           hugo --gc --minify -s hugo -d "${GITHUB_WORKSPACE}/_site/blog" -b "${HUGO_BASE}"
+
+      - name: Verify blog nav uses project path prefix
+        run: |
+          REPO="${GITHUB_REPOSITORY#*/}"
+          INDEX="${GITHUB_WORKSPACE}/_site/blog/index.html"
+          if [ ! -f "${INDEX}" ]; then
+            echo "Missing ${INDEX}"
+            exit 1
+          fi
+          if ! grep -q "href=/${REPO}/blog/posts/" "${INDEX}"; then
+            echo "Expected Posts nav href containing /${REPO}/blog/posts/ in blog index"
+            exit 1
+          fi
+          if ! grep -q "href=/${REPO}/blog/search/" "${INDEX}"; then
+            echo "Expected Search nav href containing /${REPO}/blog/search/ in blog index"
+            exit 1
+          fi
+          if grep -q 'href=/blog/posts/' "${INDEX}" || grep -q 'href=/blog/search/' "${INDEX}"; then
+            echo "Found bare /blog/ links (missing /${REPO}/ prefix); Hugo baseURL is wrong for GitHub Pages project site"
+            exit 1
+          fi
+          echo "Blog nav path prefix OK for repo ${REPO}"
 
       - name: List deploy tree
         run: |

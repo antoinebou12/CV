@@ -120,7 +120,7 @@
       {{- range . -}}
       <a
         class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal"
-        href="{{- .URL -}}"
+        href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
         >{{- .Name -}}</a
       >
       {{- end -}}
