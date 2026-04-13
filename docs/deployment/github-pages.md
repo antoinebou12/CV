@@ -13,6 +13,14 @@ Before the deployment workflow can run, you need to enable GitHub Pages in your 
 
 Once enabled, the workflow will automatically deploy your site when you push to the `main` or `master` branch.
 
+### Project site URL and repo name
+
+For this repository (`antoinebou12/CV`), the GitHub Pages project URL is:
+
+`https://antoinebou12.github.io/CV/`
+
+The Hugo blog is deployed under **`/CV/blog/`** (the first path segment must match the **repository name** on GitHub exactly, including casing). It is **not** at `https://antoinebou12.github.io/blog/`.
+
 ## Alternative: Manual Setup
 
 If you prefer to deploy from a branch instead:
@@ -23,4 +31,6 @@ If you prefer to deploy from a branch instead:
    - **Folder**: `/ (root)`
 3. Click **Save**
 
-This will serve your `index.html` directly from the root of your repository.
+This serves files **as they exist on that branch**. It will **not** include the Hugo blog at `/blog/` unless you commit a pre-built `blog/` tree (or change the workflow), because the default pipeline builds the blog only on the runner into `_site/blog/` and never commits it to `main`.
+
+For this project, use **GitHub Actions** as the Pages source so `deploy.yml` can publish the full `_site` output.

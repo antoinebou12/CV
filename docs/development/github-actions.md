@@ -102,22 +102,30 @@ If loop occurs:
    - Uses `actions/configure-pages@v4`
    - Configures GitHub Pages environment
 
-3. **Upload artifact**
-   - Uses `actions/upload-pages-artifact@v3`
-   - Uploads entire repository root
-   - Serves `index.html` and all assets
+3. **Setup Hugo**
+   - Uses `peaceiris/actions-hugo@v3` (extended, pinned version)
 
-4. **Deploy to GitHub Pages**
+4. **Prepare `_site`, build Hugo, verify**
+   - Copies root static files (`index.html`, assets, `linktree/`, `papers/`) into `_site/`
+   - Runs `hugo` with output directory `_site/blog/` and a production `baseURL` of `https://<username>.github.io/<repo>/blog/`
+   - Verifies `blog/index.html` contains menu links prefixed with `/<repo>/blog/`
+
+5. **Upload artifact**
+   - Uses `actions/upload-pages-artifact@v3`
+   - Uploads the **`_site`** directory (not the raw repository root)
+   - Published site root contains `index.html`, copied folders, and **`blog/`** (Hugo output)
+
+6. **Deploy to GitHub Pages**
    - Uses `actions/deploy-pages@v4`
-   - Deploys artifact to GitHub Pages
-   - Makes site live at `https://<username>.github.io/<repo>`
+   - Deploys that artifact to GitHub Pages
+   - Makes the site live at `https://<username>.github.io/<repo>` (project site)
 
 ### Configuration
 
 **File**: `.github/workflows/deploy.yml`
 
 Key settings:
-- **Path**: `.` (entire repository root)
+- **Artifact path**: `_site` (built on the runner; includes `blog/` from Hugo)
 - **Environment**: `github-pages`
 - **Permissions**: `pages: write`, `id-token: write`
 
@@ -141,12 +149,13 @@ Key settings:
 3. Wait a few minutes for DNS propagation
 4. Clear browser cache
 
-#### 404 Errors
+#### 404 Errors (e.g. `/CV/blog/`)
 
 **Check**:
-1. File paths are correct (relative paths)
-2. `index-en.html` or `index-fr.html` is in repository root
-3. All assets are included in artifact
+1. **Pages build type**: Repository **Settings → Pages** must use **GitHub Actions** (API: `build_type: workflow`), not **Deploy from a branch**. Branch deployment serves only files committed on `main`; the Hugo blog exists only inside the CI-built `_site/blog`, so `/blog/` 404s if Pages is still `legacy` branch mode.
+2. The latest **Deploy to GitHub Pages** workflow finished successfully (including **Deploy to GitHub Pages** step).
+3. The URL path matches the **exact GitHub repository name** (e.g. `https://<user>.github.io/CV/blog/` for repo `CV`).
+4. Root HTML and assets are copied into `_site` in the workflow; Hugo output is under `_site/blog/`.
 
 ## Workflow Permissions
 
@@ -207,11 +216,7 @@ args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
 ### Change Deployment Path
 
-Edit `.github/workflows/deploy.yml`:
-```yaml
-with:
-  path: './dist'  # Deploy from specific directory
-```
+Edit `.github/workflows/deploy.yml` (keep `upload-pages-artifact` in sync with wherever the workflow gathers files, currently `_site`).
 
 ### Add Additional Steps
 
