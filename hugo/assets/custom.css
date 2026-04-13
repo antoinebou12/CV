@@ -1,3 +1,38 @@
+/*
+ * Site CSS overrides (concatenated after themes/paper/assets/main.css in layouts/partials/head.html).
+ * Do not hand-edit the compiled theme main.css — rebuild from themes/paper/assets/app.css
+ * (npm install && npm run build:css in hugo/themes/paper). Tailwind preflight in the build output
+ * uses :not(#\#) selectors; that is normal generated CSS, not something to “fix” in main.min.css.
+ */
+
+/* --- Full viewport + desktop content width --- */
+main.prose {
+  min-height: calc(100dvh - 9rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --w: calc(min(760px, 100vw - 4rem) + 32px * 2);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --w: calc(min(800px, 100vw - 4rem) + 32px * 2);
+  }
+}
+
+/* Single posts + search: match blog list column width */
+main:has(> article) {
+  --w: calc(min(1040px, 100vw - 4rem) + 32px * 2);
+}
+
 /* Post card grids (home / posts list / tag lists) */
 .post-card-grid {
   display: grid;
