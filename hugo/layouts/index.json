@@ -27,12 +27,19 @@
       {{- $postKind = cond (eq $rawPK "conference-recap") "conference" $rawPK -}}
     {{- end -}}
     {{- $thumb := partial "post-list-thumb-url.html" . -}}
+    {{- $tagsText := "" -}}
+    {{- range $i, $t := $tags -}}
+      {{- if gt $i 0 -}}{{ $tagsText = print $tagsText " " }}{{ end -}}
+      {{- $tagsText = print $tagsText $t -}}
+    {{- end -}}
     {{- $out = $out | append (dict
+      "id" .Permalink
       "title" .Title
       "permalink" .Permalink
       "summary" $summary
       "content" $content
       "tags" $tags
+      "tags_text" $tagsText
       "tag_refs" $tagRefs
       "post_kind" $postKind
       "section" .Section

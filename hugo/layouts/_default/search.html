@@ -1,27 +1,5 @@
 {{ define "main" }}
-{{- $tagsProject := slice -}}
-{{- $tagsRecipe := slice -}}
-{{- $tagsConference := slice -}}
-{{- $tagsArticle := slice -}}
-{{- $tagsTutorial := slice -}}
-{{- range site.Taxonomies.tags.Alphabetical -}}
-  {{- if gt (len (where .Pages "Section" "projects")) 0 -}}
-    {{- $tagsProject = $tagsProject | append . -}}
-  {{- end -}}
-  {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}
-    {{- $tagsRecipe = $tagsRecipe | append . -}}
-  {{- end -}}
-  {{- $postPages := where .Pages "Section" "posts" -}}
-  {{- if gt (len (where $postPages "Params.post_kind" "conference-recap")) 0 -}}
-    {{- $tagsConference = $tagsConference | append . -}}
-  {{- end -}}
-  {{- if gt (len (where $postPages "Params.post_kind" "article")) 0 -}}
-    {{- $tagsArticle = $tagsArticle | append . -}}
-  {{- end -}}
-  {{- if gt (len (where $postPages "Params.post_kind" "tutorial")) 0 -}}
-    {{- $tagsTutorial = $tagsTutorial | append . -}}
-  {{- end -}}
-{{- end -}}
+{{- $sortedTags := sort site.Taxonomies.tags.Alphabetical "Count" "desc" -}}
 <article class="site-search-page">
   <header class="site-search-page-header mb-12 md:mb-16">
     <h1 class="my-0! pb-2 text-3xl font-bold tracking-tight md:text-4xl">{{ .Title }}</h1>
@@ -57,8 +35,8 @@
         <option value="relevance">{{ i18n "searchSortRelevance" }}</option>
         <option value="date-desc">{{ i18n "searchSortDateDesc" }}</option>
         <option value="date-asc">{{ i18n "searchSortDateAsc" }}</option>
-        <option value="title-asc">{{ i18n "searchSortTitleAsc" }}</option>
-        <option value="title-desc">{{ i18n "searchSortTitleDesc" }}</option>
+        <option value="title-asc">{{ i18n "sortTitleAsc" }}</option>
+        <option value="title-desc">{{ i18n "sortTitleDesc" }}</option>
       </select>
     </div>
 
@@ -66,99 +44,44 @@
   </div>
 
   {{- if gt (len site.Taxonomies.tags) 0 -}}
-  <section class="site-search-tags-section not-prose mb-12 space-y-8 md:mb-16 md:space-y-10" aria-labelledby="site-search-tags-heading">
-    <h2 id="site-search-tags-heading" class="site-search-tags-section-title mb-0 text-lg font-semibold text-black/90 dark:text-white/90">
-      {{ i18n "searchBrowseTags" }}
-    </h2>
-
-    {{- if gt (len $tagsProject) 0 -}}
+  <section class="site-search-tags-section not-prose mb-12 md:mb-16" aria-labelledby="site-search-tags-heading">
     <div class="site-search-tag-card">
-      <h3 class="site-search-tag-card-title">
-        {{ i18n "searchTagsProjects" }}
-      </h3>
-      <div class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $tagsProject -}}
+      <div class="mb-5 flex flex-wrap items-end justify-between gap-4">
+        <h2 id="site-search-tags-heading" class="site-search-tags-section-title mb-0 text-lg font-semibold text-black/90 dark:text-white/90">
+          {{ i18n "searchBrowseTags" }}
+        </h2>
+        <div class="site-search-browse-toolbar flex flex-wrap items-center gap-2">
+          <label for="site-search-browse-filter" class="text-sm font-medium text-black/70 dark:text-white/70">{{ i18n "searchBrowseFilterLabel" }}</label>
+          <select
+            id="site-search-browse-filter"
+            class="site-search-sort-select min-w-[10rem] rounded-lg border border-black/15 bg-white/90 py-2 pl-3 pr-8 text-sm dark:border-white/20 dark:bg-black/40"
+          >
+            <option value="all">{{ i18n "searchBrowseFilterAll" }}</option>
+            <option value="project">{{ i18n "searchTagsProjects" }}</option>
+            <option value="recipe">{{ i18n "searchTagsRecipes" }}</option>
+            <option value="blog">{{ i18n "searchBrowseFilterBlog" }}</option>
+          </select>
+        </div>
+      </div>
+      <div id="site-search-tag-chips" class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
+        {{- range $sortedTags -}}
+        {{- $filters := slice -}}
+        {{- if gt (len (where .Pages "Section" "projects")) 0 -}}{{- $filters = $filters | append "project" -}}{{- end -}}
+        {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}{{- $filters = $filters | append "recipe" -}}{{- end -}}
+        {{- if gt (len (where .Pages "Section" "posts")) 0 -}}{{- $filters = $filters | append "blog" -}}{{- end -}}
         <a
           href="{{ .Page.RelPermalink }}"
           class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
           data-tag-name="{{ htmlEscape .Page.Title }}"
+          data-browse-filters="{{ delimit $filters " " }}"
           >{{- .Page.Title -}}</a>
         {{- end -}}
       </div>
     </div>
-    {{- end -}}
-
-    {{- if gt (len $tagsRecipe) 0 -}}
-    <div class="site-search-tag-card">
-      <h3 class="site-search-tag-card-title">
-        {{ i18n "searchTagsRecipes" }}
-      </h3>
-      <div class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $tagsRecipe -}}
-        <a
-          href="{{ .Page.RelPermalink }}"
-          class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-          data-tag-name="{{ htmlEscape .Page.Title }}"
-          >{{- .Page.Title -}}</a>
-        {{- end -}}
-      </div>
-    </div>
-    {{- end -}}
-
-    {{- if gt (len $tagsConference) 0 -}}
-    <div class="site-search-tag-card">
-      <h3 class="site-search-tag-card-title">
-        {{ i18n "searchTagsConference" }}
-      </h3>
-      <div class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $tagsConference -}}
-        <a
-          href="{{ .Page.RelPermalink }}"
-          class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-          data-tag-name="{{ htmlEscape .Page.Title }}"
-          >{{- .Page.Title -}}</a>
-        {{- end -}}
-      </div>
-    </div>
-    {{- end -}}
-
-    {{- if gt (len $tagsArticle) 0 -}}
-    <div class="site-search-tag-card">
-      <h3 class="site-search-tag-card-title">
-        {{ i18n "searchTagsArticles" }}
-      </h3>
-      <div class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $tagsArticle -}}
-        <a
-          href="{{ .Page.RelPermalink }}"
-          class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-          data-tag-name="{{ htmlEscape .Page.Title }}"
-          >{{- .Page.Title -}}</a>
-        {{- end -}}
-      </div>
-    </div>
-    {{- end -}}
-
-    {{- if gt (len $tagsTutorial) 0 -}}
-    <div class="site-search-tag-card">
-      <h3 class="site-search-tag-card-title">
-        {{ i18n "searchTagsTutorials" }}
-      </h3>
-      <div class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $tagsTutorial -}}
-        <a
-          href="{{ .Page.RelPermalink }}"
-          class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-          data-tag-name="{{ htmlEscape .Page.Title }}"
-          >{{- .Page.Title -}}</a>
-        {{- end -}}
-      </div>
-    </div>
-    {{- end -}}
   </section>
   {{- end -}}
 
-  <ul id="site-search-results" class="not-prose m-0 list-none p-0 post-card-grid"></ul>
+  <ul id="site-search-results" class="not-prose m-0 list-none space-y-8 p-0 md:space-y-10"></ul>
 </article>
 
 {{- $jsonURL := "" -}}
@@ -202,10 +125,12 @@
     };
 
     const sortSel = document.getElementById("site-search-sort");
+    const browseFilter = document.getElementById("site-search-browse-filter");
 
     if (!indexURL || !input || !list) return;
 
-    let fuse = null;
+    let miniSearch = null;
+    const docById = new Map();
     let ready = false;
     let lastHits = [];
 
@@ -252,8 +177,9 @@
     const tagSpanCls =
       "inline-flex min-h-9 items-center rounded-md border border-black/10 bg-black/[0.06] px-2.5 py-1 text-sm dark:border-white/15 dark:bg-white/[0.08]";
 
-    function renderTagRow(item) {
-      const refs = Array.isArray(item.tag_refs) ? item.tag_refs : null;
+    function renderTagRow(item, maxTags) {
+      const cap = maxTags != null ? maxTags : 4;
+      const refs = Array.isArray(item.tag_refs) ? item.tag_refs.slice(0, cap) : null;
       if (refs && refs.length) {
         return (
           '<div class="flex flex-wrap gap-2 md:gap-2.5">' +
@@ -280,7 +206,7 @@
           "</div>"
         );
       }
-      const tags = Array.isArray(item.tags) ? item.tags : [];
+      const tags = Array.isArray(item.tags) ? item.tags.slice(0, cap) : [];
       return (
         '<div class="flex flex-wrap gap-2 md:gap-2.5">' +
         tags
@@ -300,7 +226,22 @@
       });
     }
 
+    function applyBrowseFilter() {
+      if (!browseFilter) return;
+      const v = browseFilter.value || "all";
+      document.querySelectorAll(".site-search-tag-chip[data-browse-filters]").forEach((el) => {
+        const raw = el.getAttribute("data-browse-filters") || "";
+        const parts = raw.trim() ? raw.trim().split(/\s+/) : [];
+        const ok = v === "all" || parts.indexOf(v) !== -1;
+        el.style.display = ok ? "" : "none";
+      });
+    }
+
     paintStaticTagChips();
+    if (browseFilter) {
+      browseFilter.addEventListener("change", applyBrowseFilter);
+      applyBrowseFilter();
+    }
 
     function typePillLabel(item) {
       const sec = item.section != null ? String(item.section) : "";
@@ -308,7 +249,7 @@
       if (sec === "projects") return pillLabels.project;
       if (sec === "recipes") return pillLabels.recipe;
       if (sec === "posts") {
-        if (pk === "conference-recap") return pillLabels.conference;
+        if (pk === "conference-recap" || pk === "conference") return pillLabels.conference;
         if (pk === "tutorial") return pillLabels.tutorial;
         return pillLabels.article;
       }
@@ -319,7 +260,7 @@
       const copy = hits.slice();
       if (mode === "relevance") {
         return copy.sort(function (a, b) {
-          return (b.score != null ? b.score : 1) - (a.score != null ? a.score : 1);
+          return (b.score != null ? b.score : 0) - (a.score != null ? a.score : 0);
         });
       }
       function titleCmp(a, b, dir) {
@@ -370,54 +311,61 @@
       statusEl.textContent = "";
       const mode = sortSel && sortSel.value ? sortSel.value : "relevance";
       const items = applySortHits(hits, mode);
+      const pillCls =
+        "shrink-0 rounded-full border border-black/15 bg-black/[0.04] px-3 py-1 text-sm font-medium text-black/85 dark:border-white/20 dark:bg-white/[0.06] dark:text-white/88";
 
       for (const item of items) {
         const li = document.createElement("li");
-        li.className = "flex";
         const thumb = item.thumb && String(item.thumb).trim() ? String(item.thumb).trim() : "";
         const pill = typePillLabel(item);
-        const isConf = item.post_kind === 'conference-recap' || item.post_kind === 'conference';
-        const isTut = item.post_kind === 'tutorial';
-        
-        let badgeClasses = 'border-zinc-500/30 bg-zinc-600/80 text-white dark:bg-zinc-300/80 dark:text-black';
-        if (isConf) badgeClasses = 'border-orange-500/40 bg-orange-500/80 text-white';
-        else if (isTut) badgeClasses = 'border-blue-500/40 bg-blue-500/80 text-white';
-        
-        const confClass = isConf ? ' post-list-card-inner--conference' : '';
-        const tagHTML = renderTagRow(item);
+        const isConference = pill === pillLabels.conference;
+        li.className =
+          "site-search-result m-0 rounded-2xl border p-6 shadow-md md:p-8 " +
+          (isConference
+            ? "border-orange-500/35 bg-gradient-to-br from-orange-500/[0.08] to-black/[0.02] dark:border-orange-400/30 dark:from-orange-400/[0.1] dark:to-white/[0.04] "
+            : "border-black/10 bg-black/[0.02] dark:border-white/12 dark:bg-white/[0.04] ") +
+          (thumb ? "has-thumb " : "");
+        const tagStr = renderTagRow(item, 4);
         const ex = buildExcerpt(item);
-
-        const cardThumb = thumb ? `
-          <div class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]">
-            <div class="aspect-video w-full">
-              <img src="${esc(thumb)}" alt="" width="720" height="405" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" />
-            </div>
-          </div>` : '';
-
-        const cardTags = tagHTML ? `<div class="post-list-card-tags flex flex-wrap gap-2 mb-2">${tagHTML}</div>` : '';
-        const cardDesc = ex.html || ex.suffix ? `<p class="post-list-card-desc mt-1 text-sm leading-relaxed text-black/70 dark:text-white/70">${ex.html}${ex.suffix}</p>` : '';
-        const cardDate = item.date ? `<time class="post-list-card-time block text-xs tabular-nums text-black/55 dark:text-white/55">${esc(item.date)}</time>` : '';
-
-        li.innerHTML = `
-          <article class="post-list-card group w-full h-full not-prose">
-            <a href="${esc(item.permalink)}" class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/5 bg-white/60 shadow-[0_4px_24px_rgb(0,0,0,0.03)] backdrop-blur-md outline-none ring-0 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] dark:border-white/10 dark:bg-black/40 dark:shadow-[0_4px_24px_rgb(255,255,255,0.02)] dark:hover:shadow-[0_12px_40px_rgb(255,255,255,0.06)]${confClass}">
-              <span class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${badgeClasses}">${esc(pill)}</span>
-              ${cardThumb}
-              <div class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6">
-                 ${cardTags}
-                 <h2 class="post-list-card-title my-0 text-lg font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-xl">${esc(item.title)}</h2>
-                 ${cardDate}
-                 ${cardDesc}
-              </div>
-            </a>
-          </article>
-        `;
+        const metaRow =
+          '<div class="mb-3 flex flex-wrap items-center gap-2.5">' +
+          '<span class="' +
+          pillCls +
+          '">' +
+          esc(pill) +
+          "</span>" +
+          (item.date
+            ? '<time class="text-sm tabular-nums opacity-65">' + esc(item.date) + "</time>"
+            : "") +
+          "</div>";
+        const titleBlock =
+          '<h2 class="my-0 mb-3 text-xl font-semibold leading-snug tracking-tight md:text-2xl">' +
+          '<a class="text-inherit no-underline hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80" href="' +
+          esc(item.permalink) +
+          '">' +
+          esc(item.title) +
+          "</a></h2>";
+        const tagsBlock = tagStr ? '<div class="mb-3">' + tagStr + "</div>" : "";
+        const excerptBlock =
+          ex.html || ex.suffix
+            ? '<p class="mb-0 text-base leading-relaxed opacity-85">' + ex.html + ex.suffix + "</p>"
+            : "";
+        const bodyInner = metaRow + titleBlock + tagsBlock + excerptBlock;
+        const thumbBlock = thumb
+          ? '<div class="site-search-result-thumb"><a href="' +
+            esc(item.permalink) +
+            '" class="block" tabindex="-1" aria-hidden="true"><img src="' +
+            esc(thumb) +
+            '" alt="" width="280" height="210" loading="lazy" decoding="async" /></a></div>'
+          : "";
+        li.innerHTML =
+          thumbBlock + '<div class="site-search-result-body not-prose">' + bodyInner + "</div>";
         list.appendChild(li);
       }
     }
 
     function runQuery(q) {
-      if (!ready || !fuse) return;
+      if (!ready || !miniSearch) return;
       const term = q.trim();
       if (term.length < 2) {
         list.innerHTML = "";
@@ -425,8 +373,12 @@
         statusEl.textContent = term.length ? typeMoreMsg : "";
         return;
       }
-      lastHits = fuse.search(term, { prefix: true, fuzzy: 0.2 });
-      if (lastHits.length > 25) lastHits = lastHits.slice(0, 25);
+      const raw = miniSearch.search(term);
+      lastHits = raw.slice(0, 25).map(function (r) {
+        const doc = docById.get(r.id);
+        if (!doc) return null;
+        return Object.assign({}, doc, { score: r.score });
+      }).filter(Boolean);
       renderHits(lastHits);
     }
 
@@ -436,33 +388,50 @@
     }
 
     fetch(indexURL)
-      .then((r) => {
+      .then(function (r) {
         if (!r.ok) throw new Error(String(r.status));
         return r.json();
       })
-      .then((data) => {
-        fuse = new MiniSearch({
-          idField: 'permalink',
-          fields: ['title', 'summary', 'content', 'tags', 'section'],
-          storeFields: ['title', 'summary', 'content', 'tags', 'section', 'permalink', 'date', 'date_unix', 'thumb', 'post_kind', 'tag_refs'],
-          searchOptions: {
-            boost: { title: 3, tags: 2, summary: 1.5, content: 1 },
-            fuzzy: 0.2,
-            prefix: true
-          }
+      .then(function (data) {
+        data.forEach(function (d) {
+          docById.set(d.id, d);
         });
-        fuse.addAll(data);
+        miniSearch = new MiniSearch({
+          idField: "id",
+          fields: ["title", "tags_text", "summary", "content", "section"],
+          storeFields: [
+            "title",
+            "summary",
+            "content",
+            "tags",
+            "tags_text",
+            "tag_refs",
+            "permalink",
+            "date",
+            "date_unix",
+            "thumb",
+            "post_kind",
+            "section",
+          ],
+          searchOptions: {
+            fuzzy: 0.2,
+            prefix: true,
+          },
+        });
+        miniSearch.addAll(data);
         ready = true;
         statusEl.textContent = "";
         runQuery(input.value);
       })
-      .catch(() => {
+      .catch(function () {
         statusEl.textContent = failedMsg;
       });
 
     statusEl.textContent = loadingMsg;
-    input.addEventListener("input", () => runQuery(input.value));
-    if (sortSel) sortSel.addEventListener("change", () => rerenderSort());
+    input.addEventListener("input", function () {
+      runQuery(input.value);
+    });
+    if (sortSel) sortSel.addEventListener("change", rerenderSort);
   })();
 </script>
 {{ end }}

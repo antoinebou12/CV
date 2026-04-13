@@ -9,8 +9,8 @@ tags:
     - IA
     - Cédille
     - Arctiq
-    - Conférence
-    - Éducation
+    - Conference
+    - Education
 images:
     - featured.jpeg
 ---

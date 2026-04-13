@@ -12,7 +12,7 @@ tags:
     - Proxmox
     - Terraform
     - Cloudflare
-    - Home lab
+    - Homelab
 images:
     - featured.jpeg
 ---

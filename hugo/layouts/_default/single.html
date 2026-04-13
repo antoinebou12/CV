@@ -68,11 +68,11 @@
 
   <!-- Post Tags -->
   {{- if .Params.tags -}}
-  <footer class="mt-12 flex flex-wrap">
+  <footer class="mt-12 flex flex-wrap gap-2">
     {{- range .Params.tags -}} {{- $href := print (absURL "tags/") (urlize .)
     -}}
     <a
-      class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]"
+      class="rounded-full border border-black/10 bg-black/[0.04] px-2.5 py-1 text-[11px] font-medium leading-none text-black/75 no-underline backdrop-blur-sm transition-colors hover:border-black/18 hover:bg-black/[0.07] dark:border-white/15 dark:bg-white/[0.06] dark:text-white/80 dark:hover:border-white/22 dark:hover:bg-white/[0.1]"
       href="{{- $href -}}"
       >{{- . -}}</a
     >

@@ -9,7 +9,7 @@ tags:
     - Linear algebra
     - WebAssembly
     - Scientific computing
-    - Open source
+    - Open Source
 ---
 
 ## What it is

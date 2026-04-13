@@ -10,8 +10,8 @@ tags:
     - ERC-20
     - OpenZeppelin
     - Blockchain
-    - Conférence
-    - Éducation
+    - Conference
+    - Education
     - Byzantium
 images:
     - featured.png

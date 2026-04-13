@@ -12,7 +12,7 @@ tags:
     - Chatwoot
     - ManyChat
     - Kommunicate
-    - Open source
+    - Open Source
 ---
 
 These notes come from comparing options for **website live chat**, **chatbots**, and a **shared support inbox**. The products below are not interchangeable: some are full communications stacks, others are marketing automation, and one is an open-source helpdesk. **Pricing, channels, and features change often**—treat this as orientation, then confirm on each vendor’s site.

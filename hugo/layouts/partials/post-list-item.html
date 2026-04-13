@@ -8,7 +8,11 @@
 {{- end -}}
 {{- $titleID := printf "post-title-%s" (md5 $p.Permalink) -}}
 {{- $badgeLabel := i18n "searchPillArticle" -}}
-{{- if eq $kind "conference" -}}
+{{- if eq $p.Section "projects" -}}
+{{- $badgeLabel = i18n "searchPillProject" -}}
+{{- else if eq $p.Section "recipes" -}}
+{{- $badgeLabel = i18n "searchPillRecipe" -}}
+{{- else if eq $kind "conference" -}}
 {{- $badgeLabel = i18n "searchPillConference" -}}
 {{- else if eq $kind "tutorial" -}}
 {{- $badgeLabel = i18n "searchPillTutorial" -}}
@@ -24,7 +28,7 @@
     aria-labelledby="{{ $titleID }}"
   >
     <span
-      class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm {{ if eq $kind "conference" }}border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100{{ else if eq $kind "tutorial" }}border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100{{ else }}border-zinc-400/35 bg-zinc-500/12 text-zinc-800 dark:border-zinc-500/40 dark:bg-zinc-600/25 dark:text-zinc-100{{ end }}"
+      class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm {{ if eq $p.Section "projects" }}border-emerald-500/40 bg-emerald-500/12 text-emerald-950 dark:border-emerald-400/45 dark:bg-emerald-400/15 dark:text-emerald-100{{ else if eq $p.Section "recipes" }}border-amber-500/40 bg-amber-500/12 text-amber-950 dark:border-amber-400/45 dark:bg-amber-400/15 dark:text-amber-100{{ else if eq $kind "conference" }}border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100{{ else if eq $kind "tutorial" }}border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100{{ else }}border-zinc-400/35 bg-zinc-500/12 text-zinc-800 dark:border-zinc-500/40 dark:bg-zinc-600/25 dark:text-zinc-100{{ end }}"
       >{{- $badgeLabel -}}</span
     >
     {{- if gt $p.Weight 0 -}}
@@ -37,12 +41,12 @@
     <div
       class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"
     >
-      <div class="aspect-video w-full">
+      <div class="aspect-[4/3] w-full">
         <img
           src="{{ . }}"
           alt=""
-          width="1280"
-          height="720"
+          width="720"
+          height="540"
           loading="lazy"
           decoding="async"
           class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"

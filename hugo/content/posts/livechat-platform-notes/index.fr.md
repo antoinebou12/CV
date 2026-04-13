@@ -12,7 +12,7 @@ tags:
     - Chatwoot
     - ManyChat
     - Kommunicate
-    - Open source
+    - Open Source
 ---
 
 Ces notes viennent d’une comparaison pour le **chat en direct sur site web**, les **chatbots** et une **boîte de réception partagée** pour le support. Les produits ci-dessous ne sont pas interchangeables : certains sont des piles de communications complètes, d’autres de l’automatisation marketing, et l’un est une solution open source de type helpdesk. **Les tarifs, canaux et fonctionnalités évoluent souvent**—utilisez ce texte comme repère, puis vérifiez sur le site de chaque éditeur.

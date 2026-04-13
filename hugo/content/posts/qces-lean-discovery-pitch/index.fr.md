@@ -10,7 +10,7 @@ tags:
     - BMC
     - Lean Startup
     - Pitch
-    - Éducation
+    - Education
 ---
 
 **[Version anglaise]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}})** — même sujet, même fil d’URL.
