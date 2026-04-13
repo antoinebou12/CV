@@ -43,12 +43,12 @@
     </nav>
     {{- with site.Menus.main -}}
     <nav
-      class="lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse"
+      class="lg:flex lg:flex-row lg:items-center lg:gap-2 rtl:gap-reverse"
       aria-label="{{ i18n "navMainSections" }}"
     >
       {{- range . -}}
       <a
-        class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal"
+        class="block text-center text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} lg:bg-black/5 lg:dark:bg-white/10{{ end }}"
         href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
         {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
         >{{- .Name -}}</a

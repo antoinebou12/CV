@@ -41,43 +41,63 @@
 
   {{- if gt (len site.Taxonomies.tags) 0 -}}
   <section class="site-search-tags-section not-prose mb-12 md:mb-16" aria-labelledby="site-search-tags-heading">
-    <details class="site-search-tag-card group rounded-2xl border border-black/10 bg-white/40 p-6 shadow-[0_4px_24px_rgb(0_0_0_/4%)] backdrop-blur-md outline-none dark:border-white/10 dark:bg-black/20 open:pb-8">
-      <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-lg text-black/90 list-none dark:text-white/90 [&::-webkit-details-marker]:hidden">
-        <span class="flex items-center gap-2">
-          {{ i18n "searchBrowseTags" }}
-          <span class="text-sm font-normal opacity-60">({{ len $sortedTags }})</span>
-        </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180 opacity-60"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </summary>
-      <div class="mt-6 border-t border-black/10 pt-6 dark:border-white/10 flex flex-col gap-6">
-        <div class="site-search-browse-toolbar flex flex-wrap items-center gap-2">
-          <label for="site-search-browse-filter" class="text-sm font-medium text-black/70 dark:text-white/70">{{ i18n "searchBrowseFilterLabel" }}</label>
-          <select
-            id="site-search-browse-filter"
-            class="site-search-sort-select min-w-[10rem] rounded-lg border border-black/15 bg-white/90 py-2 pl-3 pr-8 text-sm dark:border-white/20 dark:bg-black/40"
-          >
-            <option value="all">{{ i18n "searchBrowseFilterAll" }}</option>
-            <option value="project">{{ i18n "searchTagsProjects" }}</option>
-            <option value="recipe">{{ i18n "searchTagsRecipes" }}</option>
-            <option value="blog">{{ i18n "searchBrowseFilterBlog" }}</option>
-          </select>
-        </div>
-        <div id="site-search-tag-chips" class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-          {{- range $sortedTags -}}
-          {{- $filters := slice -}}
-          {{- if gt (len (where .Pages "Section" "projects")) 0 -}}{{- $filters = $filters | append "project" -}}{{- end -}}
-          {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}{{- $filters = $filters | append "recipe" -}}{{- end -}}
-          {{- if gt (len (where .Pages "Section" "posts")) 0 -}}{{- $filters = $filters | append "blog" -}}{{- end -}}
-          <a
-            href="{{ .Page.RelPermalink }}"
-            class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-            data-tag-name="{{ htmlEscape .Page.Title }}"
-            data-browse-filters="{{ delimit $filters " " }}"
-            >{{- .Page.Title -}}</a>
-          {{- end -}}
-        </div>
+    <div class="site-search-tag-card rounded-2xl border border-black/10 bg-white/40 p-6 shadow-[0_4px_24px_rgb(0_0_0_/4%)] backdrop-blur-md outline-none dark:border-white/10 dark:bg-black/20">
+      <div class="mb-5 flex items-center gap-2 font-semibold text-lg text-black/90 dark:text-white/90">
+        {{ i18n "searchBrowseTags" }}
+        <span class="text-sm font-normal opacity-60">({{ len $sortedTags }})</span>
       </div>
-    </details>
+      
+      {{- $projectTags := slice -}}
+      {{- $recipeTags := slice -}}
+      {{- $blogTags := slice -}}
+      {{- range $sortedTags -}}
+        {{- $projectsCount := len (where .Pages "Section" "projects") -}}
+        {{- $recipesCount := len (where .Pages "Section" "recipes") -}}
+        {{- $blogCount := len (where .Pages "Section" "posts") -}}
+        {{- if and (ge $projectsCount $recipesCount) (ge $projectsCount $blogCount) (gt $projectsCount 0) -}}
+          {{- $projectTags = $projectTags | append . -}}
+        {{- else if and (ge $recipesCount $projectsCount) (ge $recipesCount $blogCount) (gt $recipesCount 0) -}}
+          {{- $recipeTags = $recipeTags | append . -}}
+        {{- else if gt $blogCount 0 -}}
+          {{- $blogTags = $blogTags | append . -}}
+        {{- end -}}
+      {{- end -}}
+
+      <div class="flex flex-col gap-8 md:flex-row md:flex-wrap">
+        {{- if gt (len $projectTags) 0 -}}
+        <div class="flex-1 min-w-[280px]">
+          <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchTagsProjects" | default "Project Topics" }}</h3>
+          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+            {{- range $projectTags -}}
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if gt (len $recipeTags) 0 -}}
+        <div class="flex-1 min-w-[280px]">
+          <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchTagsRecipes" | default "Recipe Topics" }}</h3>
+          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+            {{- range $recipeTags -}}
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+
+        {{- if gt (len $blogTags) 0 -}}
+        <div class="flex-1 min-w-[280px]">
+          <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchBrowseFilterBlog" | default "Article Topics" }}</h3>
+          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+            {{- range $blogTags -}}
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            {{- end -}}
+          </div>
+        </div>
+        {{- end -}}
+      </div>
+    </div>
   </section>
   {{- end -}}
 
@@ -226,22 +246,7 @@
       });
     }
 
-    function applyBrowseFilter() {
-      if (!browseFilter) return;
-      const v = browseFilter.value || "all";
-      document.querySelectorAll(".site-search-tag-chip[data-browse-filters]").forEach((el) => {
-        const raw = el.getAttribute("data-browse-filters") || "";
-        const parts = raw.trim() ? raw.trim().split(/\s+/) : [];
-        const ok = v === "all" || parts.indexOf(v) !== -1;
-        el.style.display = ok ? "" : "none";
-      });
-    }
-
     paintStaticTagChips();
-    if (browseFilter) {
-      browseFilter.addEventListener("change", applyBrowseFilter);
-      applyBrowseFilter();
-    }
 
     function typePillLabel(item) {
       const sec = item.section != null ? String(item.section) : "";
@@ -343,7 +348,7 @@
 
         li.innerHTML = `
           <article class="post-list-card group w-full h-full not-prose">
-            <a href="${esc(item.permalink)}" class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/10 bg-white/40 shadow-[0_4px_24px_rgb(0_0_0_/6%)] backdrop-blur-md outline-none ring-0 transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-xl dark:border-white/12 dark:bg-black/40 dark:shadow-[0_4px_28px_rgb(0_0_0_/35%)] dark:hover:shadow-2xl${confClass}">
+            <a href="${esc(item.permalink)}" class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/15 bg-white/90 shadow-lg outline-none ring-0 backdrop-blur-md transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl dark:border-white/15 dark:bg-black/70${confClass}">
               <span class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm ${badgeClasses}">${esc(pill)}</span>
               ${cardThumb}
               <div class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6">
