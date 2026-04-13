@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: Multiple Technical Indicators Backtesting on Multiple Tickers using Python
 date: 2024-05-30T15:00:00-04:00
 tags:

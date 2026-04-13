@@ -1,0 +1,26 @@
+{{- $p := . -}}
+<section
+  class="post-list-item relative my-10 border-b border-black/5 pb-10 last:border-b-0 last:pb-0 dark:border-white/10"
+>
+  {{- if gt $p.Weight 0 -}}
+  <span class="mb-1 inline-block text-xs font-medium tracking-wider text-orange-500"
+    >Featured</span
+  >
+  {{- end -}}
+  <h2 class="my-0! text-xl!">{{- $p.Title -}}</h2>
+  <time class="mt-1 block text-xs antialiased opacity-60"
+    >{{- $p.Date | time.Format ":date_medium" -}}</time
+  >
+  {{- with $p.Description -}}
+  <p
+    class="relative z-10 mt-2 max-w-3xl text-sm leading-relaxed text-black/65 dark:text-white/65"
+  >
+    {{- . -}}
+  </p>
+  {{- end -}}
+  <a
+    class="absolute inset-0 text-[0px]"
+    href="{{- $p.Permalink -}}"
+    >{{- $p.Title -}}</a
+  >
+</section>

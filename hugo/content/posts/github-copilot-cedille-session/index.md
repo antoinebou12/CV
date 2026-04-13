@@ -1,4 +1,5 @@
 ---
+post_kind: conference-recap
 title: "GitHub Copilot session at Cédille (with GitHub & Arctiq)"
 date: 2022-09-06T10:00:00-04:00
 description: Short English summary of a school/industry session on Copilot Chat, notebooks, and GitHub Next — full write-up in French.

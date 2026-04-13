@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Python library for MarketWatch virtual trading"
 date: 2022-09-06T10:00:00-04:00
 description: Python package to automate watchlists, games, portfolio, and trades on MarketWatch’s virtual stock game.

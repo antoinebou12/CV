@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: Using Vector Databases to Find Similar Movies Algorithm (Part 1)
 date: 2024-05-14T14:00:00-04:00
 tags:

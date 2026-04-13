@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "LiDAR apartment scan with Rhino on iPhone"
 date: 2024-01-02T10:00:00-04:00
 description: Using Rhino’s iPhone app and LiDAR to scan rooms and reason about layout, furniture, and space.

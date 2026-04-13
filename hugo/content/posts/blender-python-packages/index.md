@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: A Method to Install Python Packages for Add-ons & Plugins in Blender (Windows, Blender 4.2+)
 date: 2025-02-08T12:00:00-04:00
 tags:

@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: "Date range picker web component (jQuery + plugin)"
 date: 2024-02-05T10:00:00-04:00
 description: Custom `<daterangepicker-two-input>`-style element with jQuery, Moment, and the Date Range Picker plugin.

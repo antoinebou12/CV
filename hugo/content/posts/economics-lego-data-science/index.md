@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: Economics of LEGO Sets with Data Science
 date: 2024-05-30T12:00:00-04:00
 tags:

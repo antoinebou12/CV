@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Snapchat Lens Creator"
 date: 2022-09-06T10:00:00-04:00
 description: Building Snapchat lenses for personal projects and Fiverr clients (2017–2020).

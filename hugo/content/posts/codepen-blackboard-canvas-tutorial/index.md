@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: "HTML5 Canvas blackboard (CodePen tutorial)"
 date: 2024-01-07T10:00:00-04:00
 description: Build a simple interactive blackboard with drawing, image import, and erase — live demo on CodePen.

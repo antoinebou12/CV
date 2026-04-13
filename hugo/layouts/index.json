@@ -1,6 +1,8 @@
 {{- $out := slice -}}
-{{- $sections := site.Params.mainSections | default (slice "posts") -}}
-{{- range where site.RegularPages "Type" "in" $sections -}}
+{{- $postPages := where site.RegularPages "Section" "posts" -}}
+{{- $projectPages := where site.RegularPages "Section" "projects" -}}
+{{- $pages := union $postPages $projectPages -}}
+{{- range $pages -}}
   {{- if not .Draft -}}
     {{- $tags := .Params.tags | default slice -}}
     {{- $summary := .Summary | plainify | chomp -}}
@@ -9,12 +11,19 @@
     {{- if gt (len $plain) 12000 -}}
       {{- $content = slicestr $plain 0 12000 -}}
     {{- end -}}
+    {{- $tagRefs := slice -}}
+    {{- range .GetTerms "tags" -}}
+      {{- $tagRefs = $tagRefs | append (dict "name" .Title "permalink" .Permalink) -}}
+    {{- end -}}
+    {{- $postKind := .Params.post_kind | default "article" -}}
     {{- $out = $out | append (dict
       "title" .Title
       "permalink" .Permalink
       "summary" $summary
       "content" $content
       "tags" $tags
+      "tag_refs" $tagRefs
+      "post_kind" $postKind
       "date" (.Date.Format "2006-01-02")
     ) -}}
   {{- end -}}

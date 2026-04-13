@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: "Custom countdown timer (HTML, CSS, JavaScript)"
 date: 2024-02-01T10:00:00-04:00
 description: Minutes input, start/reset, display, and optional sound when the timer hits zero.

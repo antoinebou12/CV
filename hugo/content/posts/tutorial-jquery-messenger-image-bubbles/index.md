@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: "Draggable, sortable image bubbles (Messenger-style)"
 date: 2024-01-07T10:00:00-04:00
 description: Rounded image tiles with jQuery UI drag-and-drop and sortable lists.

@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together
 date: 2024-05-14T18:00:00-04:00
 tags:

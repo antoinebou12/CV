@@ -1,4 +1,5 @@
 ---
+post_kind: conference-recap
 title: "Les nouveautés de GitHub Copilot"
 date: 2022-09-06T10:00:00-04:00
 description: Session à Cédille avec GitHub et Arctiq — Copilot Chat, /createNotebook, et GitHub Next.

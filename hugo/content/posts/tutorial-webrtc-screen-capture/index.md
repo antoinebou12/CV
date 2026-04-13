@@ -1,4 +1,5 @@
 ---
+post_kind: tutorial
 title: "Screen capture in the browser (getDisplayMedia)"
 date: 2024-02-10T10:00:00-04:00
 description: Start/stop screen sharing with the Screen Capture API, a video element, and simple logging.

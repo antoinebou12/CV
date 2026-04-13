@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Renpho scale, Home Assistant, and reverse-engineering the API"
 date: 2021-10-10T10:00:00-04:00
 description: Forking hass-renpho, using APKLeaks, and wiring Renpho metrics into a personal health dashboard.

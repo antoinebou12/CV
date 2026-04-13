@@ -280,6 +280,7 @@ This is a personal CV/resume project. For suggestions or improvements, please op
 
 ### Recent Updates
 
+- ✅ CV index: Conferences section with Graphquon logos (2024 + 2025); moved out of certifications list
 - ✅ Added Graphquon 2024 and 2025 conference entries
 - ✅ Updated Snapchat Lens statistics (13.80M plays, 20.21M views)
 - ✅ Added DasherControl project

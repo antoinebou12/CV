@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Create a portfolio with Hugo (week 1)"
 date: 2024-01-06T10:00:00-04:00
 description: Starting a Hugo-based portfolio — themes, data-heavy pages, and tying in Substack.

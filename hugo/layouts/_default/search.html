@@ -5,6 +5,23 @@
     <p class="mb-0 text-sm opacity-70">{{ i18n "searchIntro" }}</p>
   </header>
 
+  {{- if gt (len site.Taxonomies.tags) 0 -}}
+  <section class="not-prose mb-10" aria-labelledby="site-search-tags-heading">
+    <h2 id="site-search-tags-heading" class="mb-3 text-sm font-semibold text-black/80 dark:text-white/80">
+      {{ i18n "searchBrowseTags" }}
+    </h2>
+    <div class="flex flex-wrap gap-2">
+      {{- range site.Taxonomies.tags.Alphabetical -}}
+      <a
+        href="{{ .Page.RelPermalink }}"
+        class="site-search-tag-chip inline-block rounded border px-2 py-1 text-xs no-underline transition-opacity hover:opacity-90"
+        data-tag-name="{{ htmlEscape .Page.Title }}"
+        >{{- .Page.Title -}}</a>
+      {{- end -}}
+    </div>
+  </section>
+  {{- end -}}
+
   <div class="not-prose mb-8">
     <label class="sr-only" for="site-search-input">{{ i18n "searchPlaceholder" }}</label>
     <input
@@ -51,6 +68,82 @@
       return d.innerHTML;
     }
 
+    function tagHue(name) {
+      let h = 0;
+      const s = String(name);
+      for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+      return ((h % 360) + 360) % 360;
+    }
+
+    function tagChipStyle(name) {
+      const h = tagHue(name);
+      const dark = document.documentElement.classList.contains("dark");
+      if (dark) {
+        return (
+          "background:hsl(" +
+          h +
+          ",42%,24%);color:hsl(" +
+          h +
+          ",25%,96%);border-color:hsl(" +
+          h +
+          ",35%,38%)"
+        );
+      }
+      return (
+        "background:hsl(" +
+        h +
+        ",55%,91%);color:hsl(" +
+        h +
+        ",50%,20%);border-color:hsl(" +
+        h +
+        ",45%,72%)"
+      );
+    }
+
+    function renderTagRow(item) {
+      const refs = Array.isArray(item.tag_refs) ? item.tag_refs : null;
+      if (refs && refs.length) {
+        return refs
+          .map((ref) => {
+            const name = ref.name != null ? String(ref.name) : "";
+            const url = ref.permalink != null ? String(ref.permalink) : "";
+            if (!name) return "";
+            const style = tagChipStyle(name);
+            const inner = url
+              ? '<a href="' +
+                esc(url) +
+                '" class="mr-1 mb-1 inline-block rounded border px-2 py-0.5 text-xs no-underline transition-opacity hover:opacity-90" style="' +
+                esc(style) +
+                '">' +
+                esc(name) +
+                "</a>"
+              : '<span class="mr-1 mb-1 inline-block rounded border border-black/10 bg-black/5 px-2 py-0.5 text-xs dark:border-white/15 dark:bg-white/10">' +
+                esc(name) +
+                "</span>";
+            return inner;
+          })
+          .join("");
+      }
+      const tags = Array.isArray(item.tags) ? item.tags : [];
+      return tags
+        .map(
+          (t) =>
+            '<span class="mr-1 mb-1 inline-block rounded bg-black/5 px-2 py-0.5 text-xs dark:bg-white/10">' +
+            esc(String(t)) +
+            "</span>"
+        )
+        .join("");
+    }
+
+    function paintStaticTagChips() {
+      document.querySelectorAll(".site-search-tag-chip").forEach((el) => {
+        const name = el.getAttribute("data-tag-name") || el.textContent.trim();
+        el.setAttribute("style", tagChipStyle(name));
+      });
+    }
+
+    paintStaticTagChips();
+
     function render(items) {
       list.innerHTML = "";
       if (!items.length) {
@@ -62,10 +155,7 @@
         const item = hit.item;
         const li = document.createElement("li");
         li.className = "m-0 rounded-lg border border-black/8 bg-black/[0.02] p-4 dark:border-white/10 dark:bg-white/[0.04]";
-        const tags = Array.isArray(item.tags) ? item.tags : [];
-        const tagStr = tags
-          .map((t) => '<span class="mr-1 inline-block rounded bg-black/5 px-2 py-0.5 text-xs dark:bg-white/10">' + esc(String(t)) + "</span>")
-          .join("");
+        const tagStr = renderTagRow(item);
         li.innerHTML =
           '<h2 class="mt-0 mb-1 text-lg font-semibold"><a class="no-underline hover:underline" href="' +
           esc(item.permalink) +

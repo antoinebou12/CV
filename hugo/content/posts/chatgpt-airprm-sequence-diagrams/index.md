@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Sequence diagrams with ChatGPT and AIPRM"
 date: 2022-09-06T10:00:00-04:00
 description: Using AIPRM prompts with ChatGPT for PlantUML and Mermaid sequence diagrams (React, FastAPI, Redis, MongoDB).

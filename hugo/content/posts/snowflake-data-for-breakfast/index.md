@@ -1,4 +1,5 @@
 ---
+post_kind: conference-recap
 title: Snowflake Data-for-Breakfast Conference Insights
 date: 2022-09-06T10:00:00-04:00
 tags:

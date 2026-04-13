@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "My journey in software engineering"
 date: 2023-12-30T10:00:00-04:00
 description: Short note — experiences and lessons from working in software engineering (draft for a longer series).

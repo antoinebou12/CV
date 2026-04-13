@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: Predicting Stock Prices with Monte Carlo Simulations
 date: 2024-05-14T09:00:00-04:00
 tags:

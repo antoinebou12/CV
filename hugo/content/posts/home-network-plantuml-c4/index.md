@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Network architecture — Lucidchart to PlantUML C4"
 description: Moving home-network diagrams to PlantUML C4, Cloudflare DNS, Terraform, and Kubernetes on Proxmox / XCP-ng.
 date: 2022-09-06T10:00:00-04:00

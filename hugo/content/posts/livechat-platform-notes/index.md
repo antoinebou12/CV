@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: "Live chat platforms — quick notes (3CX, ManyChat, Kommunicate, Chatwoot)"
 date: 2022-09-06T10:00:00-04:00
 description: Links and pointers collected while comparing live-chat and bot options for websites.

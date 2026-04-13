@@ -1,4 +1,5 @@
 ---
+post_kind: article
 title: A Journey to AWS Certified Cloud Practitioner
 date: 2024-05-14T16:00:00-04:00
 tags:

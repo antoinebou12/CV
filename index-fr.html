@@ -380,6 +380,24 @@
       left: 0;
       z-index: -1;
     }
+
+    .conference-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .conference-row img {
+      flex-shrink: 0;
+      max-height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .conference-row .conference-text {
+      flex: 1;
+      min-width: 0;
+    }
   </style>
   <style type="text/css" media="print">
     body {
@@ -405,7 +423,8 @@
     .contact-item,
     .publication,
     .skills,
-    .interests {
+    .interests,
+    .conference-row {
       page-break-inside: avoid;
     }
 
@@ -1081,6 +1100,28 @@
             </div>
           </div>
         </div>
+        <!-- CONFÉRENCES -->
+        <div class="box">
+          <h2><i class="fas fa-chalkboard-teacher ico"></i> Conférences</h2>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="conference-row">
+                <img src="images/graphquon-logo.png" alt="Logo Graphquon">
+                <div class="conference-text">
+                  <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (15–16 nov. 2025) — Présentateur, atelier annuel Québec-Ontario Pre-SIGGRAPH, Université de Toronto
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="conference-row">
+                <img src="images/graphquon-logo.png" alt="Logo Graphquon">
+                <div class="conference-text">
+                  <a href="https://graphquon.github.io/"><strong>Graphquon 2024</strong></a> (sep. 2024 – nov. 2024) — Site web officiel de la conférence et <a href="https://chatgpt.com/g/g-B1Bfoq5qh-uml-diagram-expert">plugin ChatGPT (expert diagrammes UML)</a> pour l’atelier annuel Québec-Ontario Pre-SIGGRAPH
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
         <!-- CERTIFICATIONS & PROGRAMMES -->
         <div class="box">
           <h2><i class="fas fa-trophy ico"></i> Certifications & Programmes</h2>
@@ -1090,7 +1131,6 @@
             <li class="list-group-item">AWS Cloud Quest (Data Analytics, Networking, Cloud Practitioner, Machine Learning, Serverless Developer, Solutions Architect)</li>
             <li class="list-group-item"><a href="https://www.udemy.com/certificate/UC-0eafdbf0-41f4-465c-a7fd-ea5fc5a0d4d0/">Ultimate AWS Certified Cloud Practitioner CLF-C02</a> (Udemy, mars 2024)</li>
             <li class="list-group-item">RGPD (Wandrian, mai 2019)</li>
-            <li class="list-group-item"><a href="https://www.dgp.toronto.edu/graphquon/">Graphquon 2025</a> (15-16 Nov 2025) — Présentateur à Atelier annuel Québec-Ontario Pre-SIGGRAPH, Université de Toronto</li>
           </ul>
         </div>
         <!-- PUBLICATIONS -->

@@ -68,6 +68,10 @@ jobs:
             echo "::warning::configure-pages base_url differs from derived site root; using derived URL for Hugo -b"
           fi
           hugo --gc --minify -s hugo -d "${GITHUB_WORKSPACE}/_site/blog" -b "${HUGO_BASE}"
+          # Same favicon as CV (site root); keep a copy under /blog/ for old /blog/favicon.ico links
+          if [ -f "${GITHUB_WORKSPACE}/favicon.ico" ]; then
+            cp -f "${GITHUB_WORKSPACE}/favicon.ico" "${GITHUB_WORKSPACE}/_site/blog/favicon.ico"
+          fi
 
       - name: Verify blog nav uses project path prefix
         run: |
