@@ -3,6 +3,7 @@ post_kind: article
 title: Creating a professional résumé with JSON Resume
 date: 2022-09-10T10:00:00-04:00
 description: Use the JSON Resume schema and npm tooling to publish HTML, PDF, or embedded CV data.
+translationKey: professional-resume-json-resume
 tags:
     - JSON Resume
     - npm

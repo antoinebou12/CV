@@ -3,6 +3,7 @@ post_kind: article
 title: "Compiler pipeline, language genealogy, and why grammars matter"
 date: 2026-04-13T15:40:00-04:00
 description: Study notes from a programming-languages text — compiler stages, a timeline of major languages, parse trees, ambiguity (operators and dangling else), and attribute grammars for types.
+translationKey: compiler-design-textbook-figures
 tags:
     - Compilers
     - Programming languages
@@ -60,3 +61,5 @@ Syntax alone does not carry **types** or **meaning**. **Attribute grammars** dec
 ---
 
 If you are revisiting the same chapters: the through-line is **pipeline first**, then **history for context**, then **formal syntax** (trees), then **where syntax breaks** (ambiguity), then **how semantics attach** (attributes). These scans are my own study aid; the original figures and prose belong to the respective textbook and publisher.
+
+**Related:** course notes on the **software life cycle** — [GOALS, waterfall, verification vs validation]({{< ref "/posts/software-engineering-textbook-figures/index.md" >}}).

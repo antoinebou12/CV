@@ -2,6 +2,8 @@
 post_kind: article
 title: A Journey to AWS Certified Cloud Practitioner
 date: 2024-05-14T16:00:00-04:00
+description: Two-week study plan — Udemy, AWS Skill Builder, Cloud Quest, Escape Room, and Pearson VUE tips (extra time, Credly badge).
+translationKey: aws-certified-cloud-practitioner
 tags:
     - AWS
     - Certification

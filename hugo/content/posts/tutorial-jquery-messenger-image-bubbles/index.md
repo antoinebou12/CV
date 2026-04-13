@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "Draggable, sortable image bubbles (Messenger-style)"
 date: 2016-01-07T10:00:00-04:00
 description: Messenger-style circular image tiles with jQuery UI — drag-and-drop and sortable lists, straight out of the jQuery-heavy tutorial blogs of ~2016.
+translationKey: tutorial-jquery-messenger-image-bubbles
 tags:
     - jQuery
     - jQuery UI

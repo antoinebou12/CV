@@ -3,6 +3,7 @@ post_kind: article
 title: "GPT-4 vs GPT-3.5 — capabilities and API cost framing"
 date: 2023-04-10T10:00:00-04:00
 description: Notes on GPT-4 and GPT-3.5-turbo use cases, strengths, and thinking about chatbot API costs at scale.
+translationKey: gpt4-api-costs-overview
 tags:
     - AI
     - GPT-4

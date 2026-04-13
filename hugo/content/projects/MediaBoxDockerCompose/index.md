@@ -1,68 +1,42 @@
 ---
-title: "MediaBoxDockerCompose"
+title: "Media box (Docker Compose)"
+linkTitle: "MediaBoxDockerCompose"
 date: 2024-01-01T12:00:00Z
-description: "An all-in-one Docker Compose solution for your media management needs."
+description: "Docker Compose stack for downloads, *Arr automation, Plex/Jellyfin, and ops dashboards—config lives in the repo."
 draft: false
+tags: ["Docker", "Docker Compose", "Homelab", "Plex", "Sonarr", "Radarr", "Jellyfin"]
 ---
 
-## MediaBoxDockerCompose
+[![GitHub last commit](https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose)](https://github.com/antoinebou12/MediaBoxDockerCompose)
 
-MediaBoxDockerCompose is a comprehensive Docker Compose project that integrates various tools for downloading, organizing, and playing media content. It simplifies setting up a complete media center with automated processes for TV shows, movies, music, and more.
+[Repository](https://github.com/antoinebou12/MediaBoxDockerCompose) · [MIT License](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE)
 
-### Docker Containers
+Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with **Plex** or **Jellyfin**, with optional request and monitoring UIs. Configuration is meant to live under a shared `ROOT` tree on disk as in the repo’s `docker-compose.yml`.
 
-This project includes a suite of Docker containers for various media management tasks:
+## What’s in the stack
 
-- **Deluge, Jackett, NZBGet**: For torrenting and NZB management.
-- **Sonarr, Radarr, Lidarr, Bazarr**: For automatic downloading of TV shows, movies, music, and subtitles.
-- **Plex, Jellyfin, Ombi, Tautulli**: Media servers and management tools.
-- **Netdata, Dashmachine, Filebrowser**: Administration and monitoring tools.
-- **Prowlarr, Readarr, Whisparr, Stash, Jellyseerr**: Additional utilities for media management.
+Grouped roughly by role (see the [compose file](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml) for images and volumes):
 
-### Installation
+- **Download clients & indexers** — Deluge, NZBGet, Jackett, NZBHydra2, Prowlarr  
+- **Automation** — Sonarr, Radarr, Lidarr, Bazarr, CouchPotato; Readarr (books); Whisparr; Tdarr (transcoding)  
+- **Libraries & requests** — Plex, Jellyfin, Ombi, Jellyseerr, Tautulli  
+- **Extras** — Stash (specialized library organizer)  
+- **Ops** — Netdata, Dashmachine, Filebrowser  
 
-1. Ensure Docker and Docker Compose are installed on your system.
-2. Clone or download this repository.
+## Quick start
 
-### Usage
+1. Install [Docker](https://docs.docker.com/get-docker/) and Compose on the host.  
+2. Clone the repo and configure environment variables (see the repo `.env` and paths like `ROOT`).  
+3. From the project directory:
 
-1. Navigate to the cloned/downloaded directory.
-2. Customize the configuration files.
-3. Start the containers with `docker-compose up -d`.
-4. Access the services via their web interfaces.
+```bash
+git clone https://github.com/antoinebou12/MediaBoxDockerCompose.git
+cd MediaBoxDockerCompose
+docker compose up -d
+```
 
-### Administration Tools
+If your setup still uses the older CLI, `docker-compose up -d` matches what the [README](https://github.com/antoinebou12/MediaBoxDockerCompose#readme) describes.
 
-Monitor and manage your setup using tools like Netdata, FileBrowser, and Wireguard.
+## Documentation
 
-### Torrenting Tools
-
-Deluge, NZBGet, and Jackett are included for handling torrent and NZB files.
-
-### Automatic Downloaders
-
-Automate your downloads with Sonarr, Radarr, Lidarr, and Bazarr.
-
-### Media and Player Services
-
-Manage and play your media with Plex, Jellyfin, Ombi, and Tautulli.
-
-### Web Portal
-
-Access everything through the Dashmachine portal for ease of use.
-
-### Backup and Restore
-
-Detailed steps for backing up and restoring configurations for each service.
-
-### Contributing
-
-Guidelines for contributing to the project and how to make pull requests.
-
-### License
-
-This project is licensed under the MIT License - with a link to the full license text.
-
----
-
-With MediaBoxDockerCompose, setting up and managing a home media center becomes straightforward, automated, and efficient. It's the perfect solution for enthusiasts and professionals alike looking to streamline their media experience.
+Default **ports**, **credentials**, **backup/restore** notes, and **contributing** are maintained in the [README](https://github.com/antoinebou12/MediaBoxDockerCompose#readme) so this page stays a short overview rather than a second copy of the manual.

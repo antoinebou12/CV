@@ -3,6 +3,7 @@ post_kind: article
 title: "My journey in software engineering"
 date: 2023-12-30T10:00:00-04:00
 description: Reflections on growing as a software engineer across backend systems, platform work, and DevSecOps — what stuck and what I optimize for now.
+translationKey: software-engineering-journey
 tags:
     - Software engineering
     - Career

@@ -1,25 +1,42 @@
 ---
-title: "MediaBoxDockerCompose"
+title: "Media center (Docker Compose)"
+linkTitle: "MediaBoxDockerCompose"
 date: 2024-01-01T12:00:00Z
-description: "Docker Compose tout-en-un pour télécharger, organiser et lire vos médias."
+description: "Stack Docker Compose pour téléchargements, suite *Arr, Plex/Jellyfin et supervision — la config est dans le dépôt."
 draft: false
+tags: ["Docker", "Docker Compose", "Homelab", "Plex", "Sonarr", "Radarr", "Jellyfin"]
 ---
 
-## MediaBoxDockerCompose
+[![GitHub last commit](https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose)](https://github.com/antoinebou12/MediaBoxDockerCompose)
 
-Projet Docker Compose qui regroupe des outils de téléchargement, d’organisation et de lecture (séries, films, musique, etc.) pour monter un media center avec peu de friction.
+[Dépôt](https://github.com/antoinebou12/MediaBoxDockerCompose) · [Licence MIT](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE)
 
-### Conteneurs (aperçu)
+Stack média en Docker Compose : récupération (torrents et Usenet), chaîne *Arr, sous-titres, lecture avec **Plex** ou **Jellyfin**, demandes et supervision. Les volumes et chemins suivent le `docker-compose.yml` du dépôt (variable `ROOT`, etc.).
 
-- **Deluge, Jackett, NZBGet** — torrents et NZB  
-- **Sonarr, Radarr, Lidarr, Bazarr** — téléchargement automatique et sous-titres  
-- **Plex, Jellyfin, Ombi, Tautulli** — serveurs et suivi  
-- **Netdata, Dashmachine, Filebrowser** — admin et supervision  
-- **Prowlarr, Readarr, Whisparr, Stash, Jellyseerr** — utilitaires complémentaires  
+## Contenu de la stack
 
-### Installation et usage
+Regroupement par rôle (détails dans le [fichier compose](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml)) :
 
-1. Installer Docker et Docker Compose.  
-2. Cloner ou télécharger le dépôt.  
-3. Adapter les fichiers de configuration.  
-4. Lancer la stack selon la doc du [dépôt GitHub](https://github.com/antoinebou12/MediaBoxDockerCompose) (instructions détaillées en anglais).
+- **Clients et indexeurs** — Deluge, NZBGet, Jackett, NZBHydra2, Prowlarr  
+- **Automatisation** — Sonarr, Radarr, Lidarr, Bazarr, CouchPotato ; Readarr (livres) ; Whisparr ; Tdarr (transcodage)  
+- **Bibliothèques et demandes** — Plex, Jellyfin, Ombi, Jellyseerr, Tautulli  
+- **Complément** — Stash (organisateur de bibliothèque spécialisé)  
+- **Exploitation** — Netdata, Dashmachine, Filebrowser  
+
+## Démarrage rapide
+
+1. Installer [Docker](https://docs.docker.com/get-docker/) et Compose sur la machine.  
+2. Cloner le dépôt et renseigner les variables d’environnement (fichier `.env` du dépôt, chemins type `ROOT`).  
+3. Depuis le dossier du projet :
+
+```bash
+git clone https://github.com/antoinebou12/MediaBoxDockerCompose.git
+cd MediaBoxDockerCompose
+docker compose up -d
+```
+
+L’ancienne commande `docker-compose up -d` reste valable ; le [README](https://github.com/antoinebou12/MediaBoxDockerCompose#readme) du dépôt décrit la procédure en anglais.
+
+## Documentation
+
+**Ports**, **identifiants par défaut**, **sauvegarde / restauration** et **contribution** sont documentés dans le [README](https://github.com/antoinebou12/MediaBoxDockerCompose#readme) pour éviter de dupliquer le manuel sur ce site.

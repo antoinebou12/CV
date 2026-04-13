@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "Responsive step progress bar (jQuery + CSS)"
 date: 2024-02-12T10:00:00-04:00
 description: Multi-step indicator with numbered nodes, connectors, and responsive label text.
+translationKey: tutorial-jquery-step-progress-bar
 tags:
     - jQuery
     - CSS

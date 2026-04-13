@@ -3,6 +3,7 @@ post_kind: article
 title: "ChatGPT plugin with FastAPI — implementation outline"
 date: 2024-06-01T10:00:00-04:00
 description: Checklist for a minimal ChatGPT plugin — FastAPI service, OpenAPI schema, auth, and hosting.
+translationKey: fastapi-chatgpt-plugin-overview
 tags:
     - ChatGPT
     - OpenAI

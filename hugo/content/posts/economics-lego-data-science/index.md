@@ -2,6 +2,8 @@
 post_kind: article
 title: Economics of LEGO Sets with Data Science
 date: 2024-05-30T12:00:00-04:00
+description: LEGO trends, pricing, and themes from Rebrickable data and a BrickEconomy scraper — Pandas, charts, and linear regression on set 001-1.
+translationKey: economics-lego-data-science
 tags:
     - LEGO
     - Data Science

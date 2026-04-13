@@ -2,6 +2,8 @@
 post_kind: article
 title: Expérimentation des indicateurs technique avec Python et Backtesting
 date: 2024-05-14T20:00:00-04:00
+description: Rapport sur BatchBacktesting — APIs, stratégies EMA/MACD et analyse des résultats sur actions et crypto.
+translationKey: experimentation-indicateurs-backtesting
 tags:
     - Python
     - Backtesting

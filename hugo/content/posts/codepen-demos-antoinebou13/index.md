@@ -3,6 +3,7 @@ post_kind: article
 title: "CodePen demos (collection)"
 date: 2024-01-10T10:00:00-04:00
 description: Quick links to interactive pens on CodePen — canvas, Three.js, UI widgets, and more.
+translationKey: codepen-demos-antoinebou13
 tags:
     - CodePen
     - Frontend

@@ -4,6 +4,7 @@ title: "Renpho scale, Home Assistant, and reverse-engineering the API"
 date: 2021-10-10T10:00:00-04:00
 lastmod: 2026-04-13T12:00:00-04:00
 description: Forking hass-renpho, surfacing Renpho API endpoints with APKLeaks, and wiring bio-impedance metrics into a Home Assistant Lovelace health dashboard.
+translationKey: renpho-health-api-blueprint
 tags:
     - Health
     - Renpho

@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "Custom countdown timer (HTML, CSS, JavaScript)"
 date: 2016-02-01T10:00:00-04:00
 description: Minutes input, start/reset, on-screen display, and optional sound at zero — a small vanilla HTML/CSS/JS timer in the style of mid-2010s tutorials.
+translationKey: tutorial-custom-countdown-timer
 tags:
     - JavaScript
     - HTML

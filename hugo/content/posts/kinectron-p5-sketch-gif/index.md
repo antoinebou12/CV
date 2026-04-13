@@ -3,6 +3,7 @@ post_kind: article
 title: "Kinectron + p5.js — sketch controls and GIF export"
 date: 2024-03-15T10:00:00-04:00
 description: Wire up Kinectron with p5.js, play/stop the sketch, and save output as a GIF (Kinect v2 or Azure Kinect DK).
+translationKey: kinectron-p5-sketch-gif
 tags:
     - Kinect
     - Kinectron

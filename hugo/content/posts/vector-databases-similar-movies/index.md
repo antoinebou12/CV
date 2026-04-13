@@ -3,6 +3,10 @@ post_kind: article
 title: "Exploring movie similarities with vector search algorithms"
 date: 2026-04-13T12:00:00-04:00
 lastmod: 2026-04-13T12:00:00-04:00
+description: "Movie similarity with pgvector and SQL, Qdrant with MovieLens dense and sparse vectors, and LangChain + Ollama RAG over the same catalog—embeddings, kNN, and grounded answers."
+translationKey: vector-databases-similar-movies
+images:
+    - featured.png
 tags:
     - PostgreSQL
     - pgvector
@@ -13,28 +17,35 @@ tags:
     - MovieLens
     - FastAPI
     - Recommender systems
+    - RAG
+    - LangChain
+    - Ollama
+    - Machine learning
 canonicalURL: "https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d"
 aliases:
     - /posts/dense-sparse-vectors-qdrant-movielens/
+    - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-This article walks through a data analysis thread we ran on **movie similarity**: embeddings, nearest-neighbor search in PostgreSQL, and a second track with **Qdrant** and **MovieLens** (dense text vectors plus sparse rating vectors for collaborative-style recommendations). Below are a few **GIF visualizations** from that work; if you care about data science and want to see how these ideas show up in hands-on projects, the links at the end point to the course repo, the original Medium write-up, and our Discord.
-
-Topics: Data science, machine learning, vector search, recommender systems.
+This is a single walkthrough of a **movie similarity** thread: **Part 1** stores embeddings in **PostgreSQL + pgvector** and runs nearest-neighbor search in SQL; **Part 2** uses **Qdrant** with **MovieLens** (dense text vectors for semantic search and sparse rating vectors for collaborative-style recommendations); **Part 3** turns the same pgvector-backed catalog into the retrieval layer for a small **RAG** pipeline with **LangChain** and **Ollama**. Below are short GIFs from that work (`movie-similarities-1.gif` … `3.gif` in this page bundle).
 
 ## Visualizations
 
-Add your GIFs in this folder as `movie-similarities-1.gif`, `movie-similarities-2.gif`, and `movie-similarities-3.gif`, or edit the paths below to match your filenames.
-
 ![Movie similarity visualization 1](./movie-similarities-1.gif)
+
+*Part 1 — pgvector / SQL: exploring similar movies from embeddings and distance metrics.*
 
 ![Movie similarity visualization 2](./movie-similarities-2.gif)
 
+*Part 2 — Qdrant + MovieLens: dense movie search or sparse user–rating neighborhoods (depending on your recording).*
+
 ![Movie similarity visualization 3](./movie-similarities-3.gif)
 
-## Code, write-up, and community
+*Part 3 — Grounded Q&A: question → retrieve rows → LLM answer tied to your catalog.*
 
-- **GitHub (course / notebooks):** [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding)
+## Resources
+
+- **GitHub (course / notebooks):** [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding) — includes `postgres/3.LLMS.ipynb` for Part 3
 - **Medium (original pgvector article):** [Using vector databases to find similar movies (Part 1)](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d)
 - **Discord:** [discord.gg/Mgf6STuvzZ](https://discord.gg/Mgf6STuvzZ)
 
@@ -60,8 +71,6 @@ LIMIT 10;
 ### Cosine Similarity
 
 Cosine similarity measures the cosine of the angle between two vectors. This metric is widely used in NLP to assess how similar two documents (or in this case, movie descriptions) are irrespective of their size.
-
-Press enter or click to view image in full size
 
 ![](./img-001.png)
 
@@ -486,8 +495,6 @@ similar\_movies\_roberta = find\_similar\_movies\_sql(query\_movie\_title, thres
 similar\_movies\_e5\_large = find\_similar\_movies\_sql(query\_movie\_title, threshold=0, return\_n=25, distance\_function='<=>', embedding\_type='e5\_large')  
 plot\_compare\_similar\_movies\_embedding(\[similar\_movies\_bart, similar\_movies\_gte, similar\_movies\_MiniLM, similar\_movies\_roberta, similar\_movies\_e5\_large\], "Cosine Similarity")
 
-Press enter or click to view image in full size
-
 ![](./img-002.png)
 
 ## Python
@@ -500,8 +507,6 @@ similar\_movies\_cosine\_roberta = find\_similar\_movies(query\_movie\_title, th
 similar\_movies\_cosine\_e5\_large = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='cosine\_similarity', embedding\_type='e5\_large')  
 plot\_compare\_similar\_movies\_embedding(\[similar\_movies\_cosine\_bart, similar\_movies\_cosine\_gte, similar\_movies\_cosine\_MiniLM, similar\_movies\_cosine\_roberta, similar\_movies\_cosine\_e5\_large\], "Cosine Similarity")
 
-Press enter or click to view image in full size
-
 ![](./img-003.png)
 
 \# For L2 Distance (Euclidean Distance)  
@@ -511,8 +516,6 @@ similar\_movies\_l2\_MiniLM = find\_similar\_movies(query\_movie\_title, thresho
 similar\_movies\_l2\_roberta = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='euclidean\_distance', embedding\_type='roberta')  
 similar\_movies\_l2\_e5\_large = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='euclidean\_distance', embedding\_type='e5\_large')  
 plot\_compare\_similar\_movies\_embedding(\[similar\_movies\_l2\_bart, similar\_movies\_l2\_gte, similar\_movies\_l2\_MiniLM, similar\_movies\_l2\_roberta, similar\_movies\_l2\_e5\_large\], "L2 Distance (Euclidean Distance)")
-
-Press enter or click to view image in full size
 
 ![](./img-004.png)
 
@@ -524,8 +527,6 @@ similar\_movies\_inner\_roberta = find\_similar\_movies(query\_movie\_title, thr
 similar\_movies\_inner\_e5\_large = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='inner\_product', embedding\_type='e5\_large')  
 plot\_compare\_similar\_movies\_embedding(\[similar\_movies\_inner\_bart, similar\_movies\_inner\_gte, similar\_movies\_inner\_MiniLM, similar\_movies\_inner\_roberta, similar\_movies\_inner\_e5\_large\], "Inner Product")
 
-Press enter or click to view image in full size
-
 ![](./img-005.png)
 
 \# For Jaccard Distance  
@@ -535,8 +536,6 @@ similar\_movies\_jaccard\_MiniLM = find\_similar\_movies(query\_movie\_title, th
 similar\_movies\_jaccard\_roberta = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='jaccard\_distance', embedding\_type='roberta')  
 similar\_movies\_jaccard\_e5\_large = find\_similar\_movies(query\_movie\_title, threshold=0, distance\_function='jaccard\_distance', embedding\_type='e5\_large')  
 plot\_compare\_similar\_movies\_embedding(\[similar\_movies\_jaccard\_bart, similar\_movies\_jaccard\_gte, similar\_movies\_jaccard\_MiniLM, similar\_movies\_jaccard\_roberta, similar\_movies\_jaccard\_e5\_large\], "Jaccard Distance")
-
-Press enter or click to view image in full size
 
 ![](./img-006.png)
 
@@ -647,23 +646,13 @@ plot\_similarity\_distribution(similar\_movies\_MiniLM, 'Cosine Similarity MiniL
 plot\_similarity\_distribution(similar\_movies\_roberta, 'Cosine Similarity RoBERTa')  
 plot\_similarity\_distribution(similar\_movies\_e5\_large, 'Cosine Similarity e5-large')
 
-Press enter or click to view image in full size
-
 ![](./img-007.png)
-
-Press enter or click to view image in full size
 
 ![](./img-008.png)
 
-Press enter or click to view image in full size
-
 ![](./img-009.png)
 
-Press enter or click to view image in full size
-
 ![](./img-010.png)
-
-Press enter or click to view image in full size
 
 ![](./img-011.png)
 
@@ -710,12 +699,58 @@ If you are working through **[AlgoETS/SimilityVectorEmbedding](https://github.co
 
 Qdrant adds a convenient way to mix **dense and sparse** vectors in one system alongside the pgvector workflow in Part 1.
 
+## Part 3 — Grounding movie Q&A with LangChain, Ollama, and pgvector
+
+The same rows you load in Part 1 can back a small **retrieve-then-generate** flow: embed the user’s question, pull the nearest movies in SQL, then let a **local LLM** explain the hits with **LangChain** and **Ollama**. The reference notebook is **`postgres/3.LLMS.ipynb`** in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding).
+
+### Why not only a general-purpose chat model?
+
+A prompt like “movies similar to *The Incredibles*” against the open web does not guarantee answers from *your* catalog. The notebook contrasts that with answers constrained to rows in your `movies` table—the same idea as RAG: **ground the model in evidence you control**.
+
+### Pipeline at a glance
+
+```mermaid
+flowchart LR
+  Q[User question] --> E[HuggingFaceEmbeddings]
+  E --> SQL[SQL with pgvector kNN]
+  SQL --> Rows[Top movie rows]
+  Rows --> LLM[Ollama LLM via LangChain]
+  LLM --> A[Natural language answer]
+```
+
+### Retrieval: question to SQL + vectors
+
+1. **Embedding the question** — `HuggingFaceEmbeddings` with `sentence-transformers/all-MiniLM-L12-v2` (`embed_query`).
+2. **Similarity in SQL** — The notebook builds a query that orders by cosine-style distance on `embedding_MiniLM`, e.g. using the pgvector `<=>` operator and `1 - (embedding_MiniLM <=> ARRAY[...]::vector) AS cosine_similarity`, with `ORDER BY cosine_similarity DESC` and `LIMIT 5`.
+
+This mirrors Part 1: same vectors and `<=>` idea, but the **query vector** comes from free text instead of an existing movie row.
+
+### Generation: schema-aware prompting + Ollama
+
+The notebook wires **LangChain**: a `ChatPromptTemplate` describes the `movies` table (including embedding columns), asks for PostgreSQL-friendly behavior, and instructs the model to return question, SQL, formatted results, and a short natural-language answer. The runnable chain uses **`Ollama(model="llama2:13b-chat")`** and `StrOutputParser()`.
+
+`ConversationBufferMemory` is created in the notebook; the demonstrated flow is still essentially **one-shot** invocations per question.
+
+### What goes wrong in practice (and why it matters)
+
+The saved notebook output is useful because it is messy:
+
+- **SQLAlchemy / LangChain** warns that it does not recognize the `vector` type on embedding columns when reflecting the schema.
+- The LLM sometimes emits **SQL that does not match pgvector semantics** (for example treating embeddings like scalars with `@>` or `ANY(...)` in ways that are not valid for your schema).
+- **Ollama** can **time out** under load (`llama2:13b-chat` is heavy); one of the parallel test questions fails with a runner timeout.
+
+Those issues are normal teaching points: RAG is not only “embed and search”—you need validation, fallbacks, smaller models, or hybrid retrieval when the generator drifts from executable SQL.
+
+### Running Part 3 yourself
+
+You need PostgreSQL with pgvector, movie rows populated as in **Part 1** above, **Ollama** with the chosen model pulled, and the Python stack from the notebook (`langchain`, `langchain-community`, `langchain-huggingface`, `psycopg2`, etc.). Adjust connection strings and model names to match your environment.
+
 ## Conclusion
 
-Together, **pgvector** and **Qdrant** illustrate two practical ways to explore movie relationships: semantic similarity from embeddings, and (with MovieLens) collaborative patterns via sparse vectors—plus the usual levers of model choice and distance metrics in SQL or vector engines.
+**pgvector** (Part 1) gives you transparent SQL and metrics over movie embeddings; **Qdrant** with MovieLens (Part 2) shows dense semantic search and sparse collaborative-style vectors in one engine; **LangChain + Ollama** (Part 3) shows how that same catalog becomes retrieval for grounded natural-language answers. Together they cover vector search, recommender-style signals, and a minimal RAG stack you can reproduce from the course repo.
 
 Dataset reference: [movies.json in SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json).
 
 ---
 
-*The PostgreSQL / pgvector sections were [originally published on Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d); this page now also includes the Qdrant + MovieLens follow-up in one place.*
+*The PostgreSQL / pgvector sections were [originally published on Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d); this page also includes the Qdrant + MovieLens material and the LangChain + Ollama RAG notebook in one place.*

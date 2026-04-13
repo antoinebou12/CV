@@ -2,6 +2,8 @@
 post_kind: conference
 title: Snowflake Data-for-Breakfast Conference Insights
 date: 2022-09-06T10:00:00-04:00
+description: Notes from the Snowflake Data-for-Breakfast conference on the Snowflake Cloud Data Platform, data warehousing, integration, and analytics—including a strong keynote from Infostrux.
+translationKey: snowflake-data-for-breakfast
 tags:
     - Conference
     - Snowflake

@@ -2,6 +2,7 @@
 title: Champignons Bella Farcis aux Œufs avec Fromage de Chèvre et Épinards
 description: Un délicieux plat végétarien facile à préparer.
 date: 2024-01-05
+translationKey: champignon
 ---
 
 # Champignons Bella Farcis aux Œufs avec Fromage de Chèvre et Épinards

@@ -2,6 +2,8 @@
 post_kind: article
 title: Predicting Stock Prices with Monte Carlo Simulations
 date: 2024-05-14T09:00:00-04:00
+description: Monte Carlo path simulation in Python from historical returns—risk bands, quantiles, and hold-out coverage checks.
+translationKey: predicting-stock-prices-monte-carlo
 tags:
     - Python
     - Finance

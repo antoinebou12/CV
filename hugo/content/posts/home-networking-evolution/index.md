@@ -3,6 +3,7 @@ post_kind: article
 title: "Networking evolution — building a home network lab"
 date: 2021-09-06T10:00:00-04:00
 description: Docker on repurposed hardware, bash automation, Caddy, WireGuard, Proxmox VMs, and diagramming the setup.
+translationKey: home-networking-evolution
 tags:
     - Networking
     - Homelab

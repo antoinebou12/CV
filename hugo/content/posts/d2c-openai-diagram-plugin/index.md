@@ -3,6 +3,7 @@ post_kind: article
 title: "D2C OpenAI plugin — diagrams with PlantUML, Mermaid, and D2"
 date: 2022-09-06T10:00:00-04:00
 description: ChatGPT plugin to generate PlantUML, Mermaid, and D2 diagrams from conversation.
+translationKey: d2c-openai-diagram-plugin
 tags:
     - ChatGPT
     - OpenAI

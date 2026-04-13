@@ -2,6 +2,7 @@
 title: Egg-Stuffed Bella Mushrooms with Goat Cheese and Spinach
 description: A delicious vegetarian dish that's easy to make.
 date: 2024-01-05
+translationKey: champignon
 ---
 
 # Egg-Stuffed Bella Mushrooms with Goat Cheese and Spinach

@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "Three.js 3D wave animation (CodePen tutorial)"
 date: 2016-01-07T12:00:00-04:00
 description: Grid of cubes with a simple wave motion in Three.js — step-by-step CodePen tutorial, typical of the WebGL curiosity posts from ~2016.
+translationKey: codepen-threejs-wave-tutorial
 tags:
     - Three.js
     - WebGL

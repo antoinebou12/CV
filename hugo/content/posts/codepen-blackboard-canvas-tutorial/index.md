@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "HTML5 Canvas blackboard (CodePen tutorial)"
 date: 2016-01-07T11:00:00-04:00
 description: Interactive canvas blackboard with drawing, image import, and erase — CodePen demo, in the spirit of 2016-era Canvas tutorials.
+translationKey: codepen-blackboard-canvas-tutorial
 tags:
     - Canvas
     - JavaScript

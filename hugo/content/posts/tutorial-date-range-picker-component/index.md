@@ -3,6 +3,7 @@ post_kind: tutorial
 title: "Date range picker web component (jQuery + plugin)"
 date: 2016-02-05T10:00:00-04:00
 description: Custom `<daterangepicker-two-input>` element with jQuery, Moment.js, and the Date Range Picker plugin — the kind of range UI that dominated Bootstrap-era admin screens around 2016.
+translationKey: tutorial-date-range-picker-component
 tags:
     - JavaScript
     - jQuery

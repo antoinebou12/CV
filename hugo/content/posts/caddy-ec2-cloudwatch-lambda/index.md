@@ -2,6 +2,8 @@
 post_kind: article
 title: Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together
 date: 2024-05-14T18:00:00-04:00
+description: Caddy on EC2, logs to CloudWatch, Python shipping scripts, and Step Functions plus Lambda for a low-cost ops dashboard.
+translationKey: caddy-ec2-cloudwatch-lambda
 tags:
     - AWS
     - Caddy

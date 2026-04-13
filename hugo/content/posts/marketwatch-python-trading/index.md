@@ -3,6 +3,7 @@ post_kind: article
 title: "Python library for MarketWatch virtual trading"
 date: 2026-04-13T10:00:00-04:00
 description: "PyPI package `marketwatch`—a Python client for MarketWatch’s virtual stock game (watchlists, games, portfolio, orders, leaderboard)."
+translationKey: marketwatch-python-trading
 tags:
     - Python
     - MarketWatch
