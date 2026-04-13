@@ -1,6 +1,6 @@
 # Hugo blog: header and navigation
 
-The static blog under [`hugo/`](../../hugo/) uses the [hugo-paper](https://github.com/nanxiaobei/hugo-paper) theme with a **custom header** that wires the blog to the root HTML CVs and bilingual content.
+The static blog under [`hugo/`](../../hugo/) uses the [hugo-paper](https://github.com/nanxiaobei/hugo-paper) theme with a **custom header** for bilingual language switching, the main menu, and dark mode. The repository still publishes standalone HTML résumés at the site root (`index-en.html`, `index-fr.html`); they are not linked from the blog header.
 
 ## Files to edit
 
@@ -8,7 +8,7 @@ The static blog under [`hugo/`](../../hugo/) uses the [hugo-paper](https://githu
 |--------|----------|
 | Header markup, mobile menu script, theme toggle | [`hugo/layouts/partials/header.html`](../../hugo/layouts/partials/header.html) |
 | Primary nav links (per language) | [`hugo/hugo.toml`](../../hugo/hugo.toml) — `[[languages.<lang>.menus.main]]` |
-| Translatable strings (CV label, nav landmarks, a11y labels) | [`hugo/i18n/en.toml`](../../hugo/i18n/en.toml), [`hugo/i18n/fr.toml`](../../hugo/i18n/fr.toml) |
+| Translatable strings (nav landmarks, a11y labels) | [`hugo/i18n/en.toml`](../../hugo/i18n/en.toml), [`hugo/i18n/fr.toml`](../../hugo/i18n/fr.toml) |
 
 ## Main menu (`hugo.toml`)
 
@@ -20,17 +20,9 @@ Entries use Hugo’s [menu system](https://gohugo.io/content-management/menus/).
 
 Add or reorder items by duplicating an `[[languages.en.menus.main]]` (or `fr`) stanza and adjusting `name`, `pageRef`, and `weight`.
 
-## CV link and `baseURL`
+## `baseURL` (production)
 
-The header builds a URL to the **repository root** HTML CV (`index-en.html` / `index-fr.html`), not under `/blog/`.
-
-Logic (see `header.html`):
-
-1. Start from `site.BaseURL`.
-2. Strip trailing `blog`, `/blog/`, etc., so the root matches the GitHub Pages site root next to the `blog/` subtree.
-3. Append `index-en.html` or `index-fr.html` according to `site.Language.Lang`.
-
-Production `baseURL` is set in CI (see [GitHub Actions](./github-actions.md)); local default is in `hugo.toml`. If you change hosting paths, keep this trim logic in sync with where the CV files are published.
+Production `baseURL` is set in CI (see [GitHub Actions](./github-actions.md)) and must match the **canonical hostname** visitors use (for this site: `https://antoineboucher.info/<repo>/blog/`). If `baseURL` pointed only at `*.github.io` while pages are opened on a custom domain, stylesheets with Subresource Integrity and preloaded images would target `github.io` while inline CSS uses relative `./*.svg` URLs on the page origin—mixed origins break CSS and produce “preloaded but not used” warnings. Local default is in `hugo.toml`.
 
 ## Mobile menu (Paper theme)
 
@@ -59,7 +51,7 @@ Also in `header.html`’s inline script:
 
 ## Accessibility notes
 
-- Language + CV cluster uses `aria-label` from **`langCvNav`**.
+- Language switcher uses `aria-label` from **`langCvNav`**.
 - Primary section links use **`navMainSections`**; social icons use **`navSocial`**.
 - Current location: **`aria-current="page"`** when `IsMenuCurrent` or `HasMenuCurrent` matches for that menu entry.
 

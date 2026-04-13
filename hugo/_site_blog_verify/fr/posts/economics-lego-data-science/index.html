@@ -1,0 +1,278 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Économie des boîtes LEGO avec science des données - Antoine Boucher</title><meta name=theme-color><meta name=description content="Passionné de données et de LEGO, j’ai exploré l’univers LEGO avec des données historiques : tendances, prix et caractéristiques des boîtes dans le temps. À partir des jeux Rebrickable et d’outils comme Pandas, Matplotlib et Scikit-Learn, voici un parcours sur l’histoire et l’économie des sets LEGO.
+Vue d’ensemble des jeux de données
+Les fichiers utilisés couvrent sets, pièces et thèmes :
+
+colors.csv : couleurs LEGO (ID, noms, RGB, transparence).
+inventories.csv : inventaires (ID, versions, numéros de set).
+inventory_parts.csv : pièces par inventaire (quantités, couleurs, pièces de rechange).
+inventory_sets.csv : lien inventaires ↔ sets.
+part_categories.csv : catégories de pièces.
+part_relationships.csv : relations entre pièces.
+parts.csv : pièces (numéros, noms, catégories).
+sets.csv : sets (numéros, noms, années, thèmes, nombre de pièces).
+themes.csv : thèmes (ID, noms, thèmes parents).
+
+"><meta name=author content="Antoine Boucher"><link rel="preload stylesheet" as=style href=https://antoineboucher.info/CV/blog/main.min.a6e10e435b6983e921b226437ff7fed380aa6b060ee3984f131b7f279d3ab6dd.css integrity="sha256-puEOQ1tpg+khsiZDf/f+04CqawYO45hPExt/J506tt0="><link rel=preload as=image href=https://antoineboucher.info/CV/blog/theme.svg><link rel=preload as=image href=https://antoineboucher.info/CV/blog/github.svg><link rel=preload as=image href=https://antoineboucher.info/CV/blog/rss.svg><script defer src=https://antoineboucher.info/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=https://antoineboucher.info/CV/favicon.ico><link rel=apple-touch-icon href=https://antoineboucher.info/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Économie des boîtes LEGO avec science des données"><meta itemprop=description content="Tendances, prix et thèmes LEGO à partir de données Rebrickable et d’un scraper BrickEconomy — Pandas, visualisations et régression."><meta itemprop=datePublished content="2024-05-30T12:00:00-04:00"><meta itemprop=dateModified content="2024-05-30T12:00:00-04:00"><meta itemprop=wordCount content="2348"><meta itemprop=keywords content="LEGO,Data Science,Pandas,Scraping,Playwright"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/posts/economics-lego-data-science/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Économie des boîtes LEGO avec science des données"><meta property="og:description" content="Tendances, prix et thèmes LEGO à partir de données Rebrickable et d’un scraper BrickEconomy — Pandas, visualisations et régression."><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-05-30T12:00:00-04:00"><meta property="article:modified_time" content="2024-05-30T12:00:00-04:00"><meta property="article:tag" content="LEGO"><meta property="article:tag" content="Data Science"><meta property="article:tag" content="Pandas"><meta property="article:tag" content="Scraping"><meta property="article:tag" content="Playwright"><meta name=twitter:card content="summary"><meta name=twitter:title content="Économie des boîtes LEGO avec science des données"><meta name=twitter:description content="Tendances, prix et thèmes LEGO à partir de données Rebrickable et d’un scraper BrickEconomy — Pandas, visualisations et régression."><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/posts/economics-lego-data-science/></head><body class="bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><header class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center"><div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto"><a class="-translate-y-[1px] text-2xl font-medium" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false></button><div class="hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) ltr:ml-8 rtl:mr-8 lg:flex" aria-label="Langue et CV"><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/posts/economics-lego-data-science/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-60>FR</span><span class="opacity-40 px-2" aria-hidden=true>|</span>
+<a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/index-fr.html>CV</a></div></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel"),menuOpenLabel=btnMenu.dataset.menuOpen,menuCloseLabel=btnMenu.dataset.menuClose,setMenuOpen=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?menuCloseLabel:menuOpenLabel)};btnMenu.addEventListener("click",()=>{setMenuOpen(!htmlClass.contains("open"))}),document.addEventListener("keydown",e=>{e.key==="Escape"&&htmlClass.contains("open")&&setMenuOpen(!1)}),navPanel&&navPanel.addEventListener("click",e=>{e.target.closest("a")&&setMenuOpen(!1)});const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script><div id=site-nav-panel class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"><nav class="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base font-semibold lg:hidden" aria-label="Langue et CV"><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/posts/economics-lego-data-science/>EN</a><span class=opacity-40>|</span><span class=opacity-60>FR</span><span class=opacity-40>|</span>
+<a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/index-fr.html>CV</a></nav><nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse" aria-label="Sections du site"><a class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal" href=/CV/blog/fr/posts/ aria-current=page>Articles</a><a class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal" href=/CV/blog/fr/projects/>Projets</a><a class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></header><main class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16"><article><header class=mb-14><h1 class="my-0! pb-2.5">Économie des boîtes LEGO avec science des données</h1><div class="text-xs antialiased opacity-60"><time>30 mai 2024</time></div></header><section><p>Passionné de données et de LEGO, j’ai exploré l’univers LEGO avec des données historiques : tendances, prix et caractéristiques des boîtes dans le temps. À partir des jeux <strong>Rebrickable</strong> et d’outils comme <strong>Pandas</strong>, <strong>Matplotlib</strong> et <strong>Scikit-Learn</strong>, voici un parcours sur l’histoire et l’économie des sets LEGO.</p><h2 id=vue-densemble-des-jeux-de-données>Vue d’ensemble des jeux de données</h2><p>Les fichiers utilisés couvrent sets, pièces et thèmes :</p><ul><li><strong>colors.csv</strong> : couleurs LEGO (ID, noms, RGB, transparence).</li><li><strong>inventories.csv</strong> : inventaires (ID, versions, numéros de set).</li><li><strong>inventory_parts.csv</strong> : pièces par inventaire (quantités, couleurs, pièces de rechange).</li><li><strong>inventory_sets.csv</strong> : lien inventaires ↔ sets.</li><li><strong>part_categories.csv</strong> : catégories de pièces.</li><li><strong>part_relationships.csv</strong> : relations entre pièces.</li><li><strong>parts.csv</strong> : pièces (numéros, noms, catégories).</li><li><strong>sets.csv</strong> : sets (numéros, noms, années, thèmes, nombre de pièces).</li><li><strong>themes.csv</strong> : thèmes (ID, noms, thèmes parents).</li></ul><p><img src=/CV/blog/posts/economics-lego-data-science/img-001.png alt></p><h2 id=analyse-des-sets--tendances-dans-le-temps>Analyse des sets : tendances dans le temps</h2><p>Nombre de sets publiés par année et nombre moyen de pièces par set.</p><p>sets.groupby(&lsquo;year&rsquo;)[&rsquo;name&rsquo;].nunique().plot(kind=&lsquo;bar&rsquo;)<br>plt.title(&ldquo;The Numbers of Sets by Year&rdquo;)<br>plt.xlabel(&ldquo;Year&rdquo;)<br>plt.ylabel(&ldquo;Numbers&rdquo;)<br>plt.show()</p><p>parts_by_year = sets[[&lsquo;year&rsquo;, &rsquo;num_parts&rsquo;]].groupby(&lsquo;year&rsquo;, as_index=False).mean()<br>parts_by_year.plot(x=&lsquo;year&rsquo;, y=&lsquo;num_parts&rsquo;, color=&ldquo;purple&rdquo;)<br>plt.title(&ldquo;Average Number of Parts by Year&rdquo;)<br>plt.xlabel(&ldquo;Year&rdquo;)<br>plt.ylabel(&ldquo;Parts&rdquo;)<br>plt.show()</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-002.png alt></p><p><img src=/CV/blog/posts/economics-lego-data-science/img-003.png alt></p><h2 id=thèmes--top-10>Thèmes : top 10</h2><p>Les dix thèmes avec le plus grand nombre de sets.</p><p>set_themes = sets[&ldquo;theme_id&rdquo;].value_counts()<br>set_themes = pd.DataFrame({&ldquo;id&rdquo;: set_themes.index, &ldquo;count&rdquo;: set_themes.values})<br>set_themes = pd.merge(set_themes, themes, on=&ldquo;id&rdquo;)<br>set_themes_no_parent = set_themes[pd.isnull(set_themes[&ldquo;parent_id&rdquo;])]<br>set_themes_top_10 = set_themes_no_parent.sort_values(by=[&ldquo;count&rdquo;], ascending=False)[:10]<br>top_10 = set_themes_top_10[&ldquo;count&rdquo;]<br>top_10.index = set_themes_top_10[&ldquo;name&rdquo;]<br>top_10.plot.bar(color=&ldquo;gold&rdquo;, rot=30)<br>plt.title(&ldquo;Top 10 Themes That Have Most Sets&rdquo;)<br>plt.show()</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-004.png alt></p><h2 id=collecte-avec-un-scraper>Collecte avec un scraper</h2><p>Pour l’historique et les prix, j’ai développé un scraper (<strong>Playwright</strong>, <strong>asyncio</strong>, <strong>pydantic</strong>, <strong>aiohttp</strong>). Les données Rebrickable ne couvraient pas l’historique de prix voulu ; <strong>BrickEconomy</strong> fournit détails et prix historiques sur les sets. Le scraper automatise la collecte pour alimenter l’analyse.</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-005.png alt></p><h2 id=mise-en-place-de-lenvironnement>Mise en place de l’environnement</h2><p>First, we need to install the required packages:</p><p>!pip install playwright asyncio pydantic aiohttp<br>!playwright install</p><h3 id=imports-and-initial-setup>Imports and Initial Setup</h3><p>The necessary libraries are imported, and the initial setup is done. Playwright is used for web scraping, asyncio for asynchronous programming, pydantic for data validation, and aiohttp for asynchronous HTTP requests.</p><p>import csv<br>from pydantic import BaseModel<br>from typing import Dict, List, Optional<br>from playwright.async_api import async_playwright<br>import asyncio<br>import json<br>import re<br>from datetime import datetime</p><h3 id=data-models>Data Models</h3><p>We define data models using pydantic to structure the data we will scrape. These models help ensure the data is clean and well-organized.</p><p>class SetDetails(BaseModel):<br>name: str<br>value: str</p><p>class HistoryEntry(BaseModel):<br>date: datetime<br>number: float<br>tooltip: Optional[str]<br>annotation: Optional[str]<br>annotationText: Optional[str]</p><p>class NewEntry(BaseModel):<br>date: datetime<br>value1: float<br>value2: float<br>value3: float<br>value4: float<br>description: Optional[str] = None</p><p>class LegoSet(BaseModel):<br>details: List[SetDetails]<br>pricing: List[SetDetails]<br>quick_buy: List[SetDetails]<br>set_predictions: List[SetDetails]<br>set_facts: str<br>subtheme_analysis: List[SetDetails]</p><h3 id=scraper-class>Scraper Class</h3><p>The <code>LegoAPI</code> class is responsible for scraping the data from BrickEconomy. It initializes with a list of LEGO set numbers, navigates to the BrickEconomy website, and extracts the required information.</p><p>class LegoAPI:<br>root_url = &ldquo;<a href=https://www.brickeconomy.com>https://www.brickeconomy.com</a>&rdquo;</p><pre><code>def \_\_init\_\_(self, set\_list):  
+    self.set\_list = set\_list  
+    self.output\_file = &quot;lego\_sets.csv&quot;  
+
+async def start(self):  
+    try:  
+        with open(self.set\_list, &quot;r&quot;) as f:  
+            set\_list = \[line.rstrip() for line in f.readlines()\]  
+    except Exception as e:  
+        print(&quot;Error opening input file&quot;)  
+        raise e  
+
+    async with async\_playwright() as p:  
+        browser = await p.chromium.launch(headless=False)  
+        page = await browser.new\_page()  
+
+        for set\_num in set\_list:  
+            search\_url = f&quot;{self.root\_url}/search?query={set\_num}&quot;  
+            await page.wait\_for\_load\_state(&quot;load&quot;)  
+            await page.goto(search\_url)  
+
+            try:  
+                possible\_links = await page.query\_selector\_all(  
+                    &quot;#ContentPlaceHolder1\_ctlSetsOverview\_GridViewSets &gt; tbody &gt; tr:nth-child(2) &gt; td.ctlsets-left &gt; div.mb-5 &gt; h4 &gt; a&quot;  
+                )  
+            except Exception as e:  
+                raise ValueError(f&quot;Error parsing HTML: {e}&quot;)  
+
+            if not possible\_links:  
+                raise ValueError(f&quot;No links found for set number: {set\_num}&quot;)  
+
+            for link in possible\_links:  
+                href = await link.get\_attribute(&quot;href&quot;)  
+                print(href)  
+                test\_num = href.split(&quot;/&quot;)\[2\].split(&quot;-&quot;)\[0\]  
+                print(test\_num)  
+                if str(test\_num) in str(set\_num):  
+                    set\_details = href.split(&quot;/&quot;)\[2:4\]  
+                    await page.goto(self.root\_url + href)  
+                    await page.wait\_for\_load\_state(&quot;load&quot;)  
+                    await self.parse\_history(page, set\_num)  
+                    await self.parse\_set(page, set\_details)  
+
+        await browser.close()
+</code></pre><p><strong>Initialization and Input Handling:</strong></p><ul><li>The constructor (<code>__init__</code>) initializes the class with a list of LEGO set numbers and the output file name.</li><li>The <code>start</code> method reads the set numbers from a file and starts the Playwright browser.</li></ul><p><strong>Navigation and Data Extraction:</strong></p><ul><li>For each set number, the scraper navigates to the search results page on BrickEconomy.</li><li>It extracts links to individual set pages and checks if the set number matches.</li><li>The scraper then navigates to the set’s page and calls methods to parse historical data and set details.</li></ul><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-006.png alt></p><p>The data is in a script data at the end of the html</p><h3 id=parsing-historical-data>Parsing Historical Data</h3><p>La méthode <code>parse_history</code> extrait l’historique de prix depuis la page du set.</p><pre><code>async def parse\_history(self, page, set\_num):  
+    try:  
+        script\_tags = await page.query\_selector\_all(&quot;script&quot;)  
+        desired\_script\_content = None  
+
+        for script\_tag in script\_tags:  
+            script\_content = await script\_tag.inner\_text()  
+            if &quot;data.addRows(\[&quot; in script\_content:  
+                desired\_script\_content = script\_content  
+                break  
+
+        if desired\_script\_content:  
+            pattern = r&quot;data\\.addRows\\((\\\[.\*?\\\]\\));&quot;  
+            matches = re.findall(pattern, desired\_script\_content, re.DOTALL)  
+            if matches:  
+                history\_data = matches\[0\].replace(&quot;\\n&quot;, &quot;&quot;).replace(&quot;null&quot;, &quot;'null'&quot;)  
+
+                history\_entries = \[\]  
+                pattern\_date = re.compile(r&quot;new Date\\((\\d+), (\\d+), (\\d+)\\), (\\d+\\.?\\d\*), '(\[^'\]\*)', '(\[^'\]\*)'(?:, '(\[^'\]\*)')?(?:, '(\[^'\]\*)')?&quot;)  
+
+                for match in pattern\_date.finditer(history\_data):  
+                    year, month, day = map(int, match.groups()\[:3\])  
+                    month += 1  
+                    date = datetime(year, month, day)  
+                    value = match.group(4)  
+                    currency\_value = match.group(5)  
+                    status = match.group(6) if match.group(6) else None  
+                    description = match.group(7) if match.group(7) else None  
+                    history\_entries.append(  
+                        HistoryEntry(  
+                            date=date,  
+                            number=value,  
+                            tooltip=currency\_value,  
+                            annotation=status,  
+                            annotationText=description,  
+                        )  
+                    )  
+
+                with open(f&quot;{set\_num}\_history.csv&quot;, mode=&quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as file:  
+                    writer = csv.writer(file)  
+                    writer.writerow(  
+                        \[&quot;Date&quot;, &quot;Value&quot;, &quot;Currency Value&quot;, &quot;Status&quot;, &quot;Description&quot;\]  
+                    )  
+                    for entry in history\_entries:  
+                        writer.writerow(  
+                            \[  
+                                entry.date,  
+                                entry.number,  
+                                entry.tooltip,  
+                                entry.annotation,  
+                                entry.annotationText,  
+                            \]  
+                        )  
+
+                if len(matches) &gt; 1:  
+                    new\_data = matches\[1\].replace(&quot;\\n&quot;, &quot;&quot;).replace(&quot;null&quot;, &quot;'null'&quot;)  
+                    pattern\_new = re.compile(r&quot;new Date\\((\\d+), (\\d+), (\\d+)\\), (\\d+\\.?\\d\*), (\\d+\\.?\\d\*), (\\d+\\.?\\d\*), (\\d+\\.?\\d\*), '(\[^'\]\*)'&quot;)  
+                    new\_entries = \[\]  
+
+                    for match in pattern\_new.finditer(new\_data):  
+                        year, month, day = map(int, match.groups()\[:3\])  
+                        month += 1  
+                        date = datetime(year, month, day)  
+                        value1, value2, value3, value4 = map(float, match.groups()\[3:7\])  
+                        description = match.group(8)  
+                        new\_entries.append(  
+                            NewEntry(  
+                                date=date,  
+                                value1=value1,  
+                                value2=value2,  
+                                value3=value3,  
+                                value4=value4,  
+                                description=description,  
+                            )  
+                        )  
+
+                    with open(f&quot;{set\_num}\_new.csv&quot;, mode=&quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as file:  
+                        writer = csv.writer(file)  
+                        writer.writerow(  
+                            \[&quot;Date&quot;, &quot;Value 1&quot;, &quot;Value 2&quot;, &quot;Value 3&quot;, &quot;Value 4&quot;, &quot;Description&quot;\]  
+                        )  
+                        for entry in new\_entries:  
+                            writer.writerow(  
+                                \[  
+                                    entry.date,  
+                                    entry.value1,  
+                                    entry.value2,  
+                                    entry.value3,  
+                                    entry.value4,  
+                                    entry.description,  
+                                \]  
+                            )  
+                else:  
+                    pass  
+
+            else:  
+                print(&quot;Could not find 'data.addRows(\[...\]);' in the script content.&quot;)  
+        else:  
+            print(&quot;Script tag with 'data.addRows(\[' not found.&quot;)  
+    except Exception as e:  
+        print(f&quot;An error occurred while extracting data: {e}&quot;)
+</code></pre><p><strong>Extraction du script :</strong> recherche d’une balise script contenant <code>data.addRows</code>.</p><p><strong>Analyse et écriture :</strong> si trouvé, extraction et parsing (regex) vers des objets <code>HistoryEntry</code>, puis écriture CSV.</p><h3 id=détails-du-set>Détails du set</h3><p>La méthode <code>parse_set</code> récupère prix, options d’achat rapide, prédictions et analyse de sous-thème.</p><pre><code>async def parse\_set(self, page, set\_details):  
+    set\_details\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_SetDetails&quot;)  
+    set\_details\_rows = await set\_details\_div.query\_selector\_all(&quot;.row.rowlist&quot;)  
+
+    set\_info = \[\]  
+    for row in set\_details\_rows:  
+        key\_element = await row.query\_selector(&quot;.text-muted&quot;)  
+        value\_element = await row.query\_selector(&quot;.col-xs-7&quot;)  
+        if key\_element and value\_element:  
+            key = await key\_element.inner\_text()  
+            value = await value\_element.inner\_text()  
+            set\_info.append(SetDetails(name=key.strip(), value=value.strip()))  
+
+    set\_pricing\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_PanelSetPricing&quot;)  
+    pricing\_rows = await set\_pricing\_div.query\_selector\_all(&quot;.row.rowlist&quot;)  
+
+    pricing\_info = \[\]  
+    for row in pricing\_rows:  
+        key\_element = await row.query\_selector(&quot;.text-muted&quot;)  
+        value\_element = await row.query\_selector(&quot;.col-xs-7&quot;)  
+        if key\_element and value\_element:  
+            key = await key\_element.inner\_text()  
+            value = await value\_element.inner\_text()  
+            pricing\_info.append(SetDetails(name=key.strip(), value=value.strip()))  
+
+    quick\_buy\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_PanelSetBuying&quot;)  
+    quick\_buy\_rows = await quick\_buy\_div.query\_selector\_all(&quot;.row.rowlist&quot;)  
+
+    quick\_buy\_info = \[\]  
+    for row in quick\_buy\_rows:  
+        key\_element = await row.query\_selector(&quot;.text-muted&quot;)  
+        value\_element = await row.query\_selector(&quot;.col-xs-7&quot;)  
+        if key\_element and value\_element:  
+            key = await key\_element.inner\_text()  
+            value = await value\_element.inner\_text()  
+            quick\_buy\_info.append(SetDetails(name=key.strip(), value=value.strip()))  
+
+    set\_predictions\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_PanelSetPredictions&quot;)  
+    set\_predictions\_rows = await set\_predictions\_div.query\_selector\_all(&quot;.row.rowlist&quot;)  
+
+    set\_predictions\_info = \[\]  
+    for row in set\_predictions\_rows:  
+        key\_element = await row.query\_selector(&quot;.text-muted&quot;)  
+        value\_element = await row.query\_selector(&quot;.col-xs-7&quot;)  
+        if key\_element and value\_element:  
+            key = await key\_element.inner\_text()  
+            value = await value\_element.inner\_text()  
+            set\_predictions\_info.append(SetDetails(name=key.strip(), value=value.strip()))  
+
+    set\_facts\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_PanelSetFacts&quot;)  
+    if set\_facts\_div:  
+        set\_facts = await set\_facts\_div.inner\_text()  
+        set\_facts = set\_facts.strip()  
+    else:  
+        set\_facts = &quot;No set facts available&quot;  
+
+    subtheme\_analysis\_div = await page.query\_selector(&quot;div#ContentPlaceHolder1\_PanelSetAnalysis&quot;)  
+    subtheme\_analysis\_rows = await subtheme\_analysis\_div.query\_selector\_all(&quot;.row.rowlist&quot;)  
+
+    subtheme\_analysis\_info = \[\]  
+    for row in subtheme\_analysis\_rows:  
+        key\_element = await row.query\_selector(&quot;.text-muted&quot;)  
+        value\_element = await row.query\_selector(&quot;.col-xs-7&quot;)  
+        if key\_element and value\_element:  
+            key = await key\_element.inner\_text()  
+            value = await value\_element.inner\_text()  
+            subtheme\_analysis\_info.append(SetDetails(name=key.strip(), value=value.strip()))  
+
+    lego\_set = LegoSet(  
+        details=set\_info,  
+        pricing=pricing\_info,  
+        quick\_buy=quick\_buy\_info,  
+        set\_predictions=set\_predictions\_info,  
+        set\_facts=set\_facts,  
+        subtheme\_analysis=subtheme\_analysis\_info,  
+    )  
+
+    await self.write\_to\_csv(lego\_set)
+</code></pre><p><strong>Extracting Set Details:</strong></p><ul><li>The method extracts various details about the set, such as general information, pricing, quick buy options, predictions, and subtheme analysis.</li></ul><p><strong>Creating and Writing Data:</strong></p><ul><li>These details are stored in <code>SetDetails</code> objects and combined into a <code>LegoSet</code> object, which is then written to a CSV file.</li></ul><h3 id=writing-data-to-csv>Writing Data to CSV</h3><p>The <code>write_to_csv</code> method writes the scraped data to a CSV file.</p><pre><code>async def write\_to\_csv(self, lego\_set):  
+    with open(self.output\_file, mode=&quot;a&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as file:  
+        writer = csv.writer(file)  
+
+        writer.writerow(  
+            \[  
+                &quot;Details&quot;,  
+                &quot;Pricing&quot;,  
+                &quot;Quick Buy&quot;,  
+                &quot;Set Predictions&quot;,  
+                &quot;Set Facts&quot;,  
+                &quot;Subtheme Analysis&quot;,  
+            \]  
+        )  
+
+        max\_length = max(  
+            len(lego\_set.details),  
+            len(lego\_set.pricing),  
+            len(lego\_set.quick\_buy),  
+            len(lego\_set.set\_predictions),  
+            len(lego\_set.subtheme\_analysis),  
+        )  
+
+        for i in range(max\_length):  
+            row = \[  
+                lego\_set.details\[i\].value if i &lt; len(lego\_set.details) else &quot;&quot;,  
+                lego\_set.pricing\[i\].value if i &lt; len(lego\_set.pricing) else &quot;&quot;,  
+                lego\_set.quick\_buy\[i\].value if i &lt; len(lego\_set.quick\_buy) else &quot;&quot;,  
+                lego\_set.set\_predictions\[i\].value if i &lt; len(lego\_set.set\_predictions) else &quot;&quot;,  
+                lego\_set.set\_facts if i == 0 else &quot;&quot;,    
+                lego\_set.subtheme\_analysis\[i\].value if i &lt; len(lego\_set.subtheme\_analysis) else &quot;&quot;,  
+            \]  
+            writer.writerow(row)
+</code></pre><p><strong>Preparing the CSV File:</strong></p><ul><li>The method opens the CSV file in append mode and writes the headers.</li></ul><p><strong>Writing Rows:</strong></p><ul><li>It writes rows of data to the CSV file, ensuring that all details are included, even if some lists are shorter than others.</li></ul><h3 id=running-the-scraper>Running the Scraper</h3><p>Finally, the main function runs the scraper.</p><p>async def main():<br>with open(&ldquo;lego_sets.csv&rdquo;, mode=&ldquo;w&rdquo;, newline="", encoding=&ldquo;utf-8&rdquo;) as file:<br>pass</p><pre><code>lego\_api = LegoAPI(&quot;set\_list.txt&quot;)  
+await lego\_api.start()  
+</code></pre><p>loop = asyncio.get_event_loop()<br>asyncio.run_coroutine_threadsafe(main(), loop)</p><p>By using this scraper, I was able to gather detailed historical and current data on LEGO sets, enabling comprehensive analysis and insights into the world of LEGO.</p><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-007.png alt></p><h2 id=0011_historycsv><a href=https://github.com/AlgoETS/LegosTracker/blob/main/data/001-1_history.csv>001–1_history.csv</a></h2><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-008.png alt></p><h2 id=0011_newcsv><a href=https://github.com/AlgoETS/LegosTracker/blob/main/data/001-1_new.csv>001–1_new.csv</a></h2><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-009.png alt></p><h2 id=analyse-des-prix--historique-et-prévisions>Analyse des prix : historique et prévisions</h2><p>Focus sur l’historique de prix d’un set (001–1) et prévisions par <strong>régression linéaire</strong>.</p><h2 id=nettoyage-des-données-historiques>Nettoyage des données historiques</h2><p>Étape clé pour fiabiliser l’analyse — déroulé du nettoyage :</p><p>import pandas as pd<br>import matplotlib.pyplot as plt<br>from sklearn.linear_model import LinearRegression<br>from sklearn.tree import DecisionTreeRegressor<br>from sklearn.ensemble import RandomForestRegressor<br>from sklearn.ensemble import GradientBoostingRegressor<br>import numpy as np<br>from scipy import stats<br>from scipy.stats import norm, skew</p><p>df = pd.read_csv(&ldquo;data/lego_sets.csv&rdquo;)</p><p># Remove duplicate rows<br>df.drop_duplicates(inplace=True)</p><p># Handle missing values in other columns<br>df[&lsquo;Pricing&rsquo;] = df[&lsquo;Pricing&rsquo;].fillna(0)</p><p># Convert &ldquo;Details&rdquo; column to string data type<br>df[&lsquo;Details&rsquo;] = df[&lsquo;Details&rsquo;].astype(str)</p><p># Standardize currency values to USD<br># Ensure the column containing currency values exists and has the correct name<br>if &lsquo;Pricing&rsquo; in df.columns:<br># Remove currency symbols and any other non-numeric characters<br>df[&lsquo;Pricing&rsquo;] = df[&lsquo;Pricing&rsquo;].str.replace(&rsquo;[^\d.]&rsquo;, &lsquo;&rsquo;, regex=True)<br># Convert to float<br>df[&lsquo;Pricing&rsquo;] = pd.to_numeric(df[&lsquo;Pricing&rsquo;], errors=&lsquo;coerce&rsquo;)</p><p>if &lsquo;Set Predictions&rsquo; in df.columns:<br>df[&lsquo;Set Predictions&rsquo;] = df[&lsquo;Set Predictions&rsquo;].astype(str)<br>df[&lsquo;Set Predictions&rsquo;].fillna(&rsquo;&rsquo;, inplace=True)<br>df[&lsquo;Set Predictions&rsquo;] = df[&lsquo;Set Predictions&rsquo;].str.replace(&rsquo;[^\d.]&rsquo;, &lsquo;&rsquo;, regex=True)<br>df[&lsquo;Set Predictions&rsquo;] = pd.to_numeric(df[&lsquo;Set Predictions&rsquo;], errors=&lsquo;coerce&rsquo;)</p><p># Drop irrelevant columns<br>df.drop([&lsquo;Subtheme Analysis&rsquo;], axis=1, inplace=True)</p><p># Rename columns for clarity<br>df.rename(columns={&lsquo;Details&rsquo;: &lsquo;Set Number&rsquo;, &lsquo;Set Facts&rsquo;: &lsquo;Facts&rsquo;}, inplace=True)</p><p># Remove leading and trailing whitespace from the &ldquo;Facts&rdquo; column<br>df[&lsquo;Facts&rsquo;] = df[&lsquo;Facts&rsquo;].str.strip().replace(&rsquo;\n&rsquo;, &lsquo;&rsquo;, regex=True)</p><p># Replace non-numeric characters in &ldquo;Quick Buy&rdquo; with empty strings<br>if &lsquo;Quick Buy&rsquo; in df.columns and df[&lsquo;Quick Buy&rsquo;].dtype == &lsquo;object&rsquo;:<br>df[&lsquo;Quick Buy&rsquo;] = df[&lsquo;Quick Buy&rsquo;].str.replace(&rsquo;[^\d.]&rsquo;, &lsquo;&rsquo;, regex=True)</p><p># Convert &ldquo;Quick Buy&rdquo; column to numeric, coercing errors to NaN<br>if &lsquo;Quick Buy&rsquo; in df.columns:<br>df[&lsquo;Quick Buy&rsquo;] = pd.to_numeric(df[&lsquo;Quick Buy&rsquo;], errors=&lsquo;coerce&rsquo;)</p><p># Drop rows with NaN values in the &ldquo;Quick Buy&rdquo; column<br>df.dropna(subset=[&lsquo;Quick Buy&rsquo;], inplace=True)</p><p># Find the Lego set with the lowest price in the &ldquo;Quick Buy&rdquo; section<br>if &lsquo;Quick Buy&rsquo; in df.columns:<br>lowest_price_set = df.loc[df[&lsquo;Quick Buy&rsquo;].idxmin()]</p><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-010.png alt></p><p># Step 1: Remove duplicate rows<br>df_0011.drop_duplicates(inplace=True)</p><p># Step 2: Handle missing values in the &lsquo;Currency Value&rsquo; column<br>df_0011[&lsquo;Currency Value&rsquo;] = df_0011[&lsquo;Currency Value&rsquo;].fillna(0)</p><p># Step 3: Standardize currency values to USD<br># Remove currency symbols and any other non-numeric characters<br>df_0011[&lsquo;Currency Value&rsquo;] = df_0011[&lsquo;Currency Value&rsquo;].str.replace(&rsquo;[^\d.]&rsquo;, &lsquo;&rsquo;, regex=True)<br># Convert to float<br>df_0011[&lsquo;Currency Value&rsquo;] = pd.to_numeric(df_0011[&lsquo;Currency Value&rsquo;], errors=&lsquo;coerce&rsquo;)</p><p># Step 4: Drop unnecessary columns<br>df_0011.drop([&lsquo;Value&rsquo;, &lsquo;Status&rsquo;], axis=1, inplace=True)</p><p>df_0011[&lsquo;Date&rsquo;] = pd.to_datetime(df_0011[&lsquo;Date&rsquo;], errors=&lsquo;coerce&rsquo;)</p><p># Step 5: Rename columns for clarity<br>df_0011.rename(columns={&lsquo;Currency Value&rsquo;: &lsquo;USD Value&rsquo;, &lsquo;Description&rsquo;: &lsquo;Set Description&rsquo;}, inplace=True)</p><p># remove NAN values<br>df_0011[&lsquo;USD Value&rsquo;] = df_0011[&lsquo;USD Value&rsquo;].fillna(0)</p><p>df_0011 = df_0011[df_0011[&lsquo;USD Value&rsquo;] != 0]</p><p># remove nan values description remplace by &rsquo;&rsquo;<br>df_0011[&lsquo;Set Description&rsquo;] = df_0011[&lsquo;Set Description&rsquo;].fillna(&rsquo;&rsquo;)</p><h2 id=régression-linéaire-et-prévisions>Régression linéaire et prévisions</h2><p>Une fois les données nettoyées, on projette les prix futurs avec une régression linéaire.</p><p>X = df_0011[&lsquo;Date&rsquo;].map(pd.Timestamp.toordinal).values.reshape(-1, 1)<br>y = df_0011[&lsquo;USD Value&rsquo;].values</p><p># Fit the model<br>model = LinearRegression().fit(X, y)</p><p># Prepare future dates and predict<br>future_dates = pd.date_range(&lsquo;2008-12-31&rsquo;, &lsquo;2030-12-31&rsquo;, freq=&lsquo;Y&rsquo;)<br>future_dates_ordinal = future_dates.map(pd.Timestamp.toordinal).values.reshape(-1, 1)<br>future_predictions = model.predict(future_dates_ordinal)</p><p># Plotting, making sure to convert ordinal dates back to datetime for readability<br>plt.figure(figsize=(10, 6))<br>plt.scatter(df_0011[&lsquo;Date&rsquo;], df_0011[&lsquo;USD Value&rsquo;], color=&lsquo;blue&rsquo;, label=&lsquo;Data points&rsquo;)<br>plt.plot(df_0011[&lsquo;Date&rsquo;], model.predict(X), color=&lsquo;red&rsquo;, label=&lsquo;Linear regression&rsquo;)<br>plt.plot(future_dates, future_predictions, color=&lsquo;green&rsquo;, label=&lsquo;Future predictions&rsquo;, linestyle=&rsquo;&ndash;&rsquo;)</p><p>plt.title(&lsquo;Linear Regression of Lego Set 001-1&rsquo;)<br>plt.xlabel(&lsquo;Date&rsquo;)<br>plt.ylabel(&lsquo;USD Value&rsquo;)<br>plt.xticks(rotation=45)<br>plt.legend()<br>plt.grid(True)<br>plt.tight_layout()<br>plt.show()</p><p>Once the historical data is cleaned, we can use it to make future price predictions using linear regression.</p><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-011.png alt></p><p># Create subplots<br>fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 12))</p><p># Plot 1: Gain Over Time<br>axes[0].plot(df_0011[&lsquo;Date&rsquo;], df_0011[&lsquo;Gain&rsquo;], marker=&lsquo;o&rsquo;, linestyle=&rsquo;-&rsquo;, color=&lsquo;b&rsquo;, label=&lsquo;Gain&rsquo;)<br>axes[0].set_title(&lsquo;Gain Over Time&rsquo;)<br>axes[0].set_xlabel(&lsquo;Date&rsquo;)<br>axes[0].set_ylabel(&lsquo;Gain&rsquo;)<br>axes[0].grid(True)<br>axes[0].legend()</p><p># Add trend line to the first plot<br>slope, intercept, r_value, p_value, std_err = stats.linregress(df_0011.index, df_0011[&lsquo;Gain&rsquo;])<br>axes[0].plot(df_0011[&lsquo;Date&rsquo;], intercept + slope * df_0011.index, color=&lsquo;red&rsquo;, label=&lsquo;Trend line&rsquo;)</p><p># Annotate the trend line equation<br>axes[0].text(df_0011[&lsquo;Date&rsquo;].iloc[5], df_0011[&lsquo;Gain&rsquo;].iloc[5], f&rsquo;y = {slope:.2f}x + {intercept:.2f}&rsquo;, fontsize=10, color=&lsquo;black&rsquo;)</p><p># Rotate x-axis labels for better readability<br>axes[0].tick_params(axis=&lsquo;x&rsquo;, rotation=45)</p><p># Annotate the maximum gain if df_0011 is not empty<br>if not df_0011.empty:<br>max_gain_index = df_0011[&lsquo;Gain&rsquo;].idxmax()<br>if not pd.isna(max_gain_index):<br>max_gain_date = df_0011.loc[max_gain_index, &lsquo;Date&rsquo;]<br>max_gain_value = df_0011.loc[max_gain_index, &lsquo;Gain&rsquo;]<br>axes[0].annotate(&lsquo;Max Gain&rsquo;, xy=(max_gain_date, max_gain_value),<br>xytext=(max_gain_date - pd.Timedelta(days=100), max_gain_value + 0.5),<br>arrowprops=dict(facecolor=&lsquo;black&rsquo;, arrowstyle=&rsquo;->&rsquo;))</p><p># Highlight points of interest if df_0011 is not empty<br>if not df_0011.empty:<br>points_of_interest_index = [5, 11, 13, 23]<br>points_of_interest = df_0011.iloc[points_of_interest_index]<br>axes[0].scatter(points_of_interest[&lsquo;Date&rsquo;], points_of_interest[&lsquo;Gain&rsquo;], color=&lsquo;red&rsquo;, label=&lsquo;Points of Interest&rsquo;)</p><p># Plot 2: USD Value Over Time<br>axes[1].scatter(df_0011[&lsquo;Date&rsquo;], df_0011[&lsquo;USD Value&rsquo;], color=&lsquo;blue&rsquo;, label=&lsquo;Data points&rsquo;)<br>axes[1].set_title(&lsquo;USD Value Over Time&rsquo;)<br>axes[1].set_xlabel(&lsquo;Date&rsquo;)<br>axes[1].set_ylabel(&lsquo;USD Value&rsquo;)<br>axes[1].legend()<br>axes[1].grid(True)</p><p># Linear Regression for USD Value over Time<br>X = df_0011[&lsquo;Date&rsquo;].astype(int).values.reshape(-1, 1) # Convert datetime to numerical representation<br>y = df_0011[&lsquo;USD Value&rsquo;].values<br>model = LinearRegression().fit(X, y)<br>axes[1].plot(df_0011[&lsquo;Date&rsquo;], model.predict(X), color=&lsquo;red&rsquo;, label=&lsquo;Linear regression&rsquo;)</p><p># Rotate x-axis labels for better readability<br>for ax in axes:<br>ax.tick_params(axis=&lsquo;x&rsquo;, rotation=45)</p><p>plt.tight_layout()<br>plt.show()</p><p>Press enter or click to view image in full size</p><p><img src=/CV/blog/posts/economics-lego-data-science/img-012.png alt></p><h2 id=conclusion>Conclusion</h2><p>Cette analyse parcourt l’univers LEGO — des couleurs aux tendances de prix et aux prévisions. Les outils de science des données permettent de mettre en lumière des motifs sur ces « jouets » devenus objets de collection.</p><h2 id=références>Références</h2><ul><li><a href=https://www.brickeconomy.com>BrickEconomy</a></li><li><a href=https://rebrickable.com/downloads/>Rebrickable</a></li><li><a href=https://github.com/hevalhazalkurt/exploring_the_data_of_LEGO_history>Exploring the Data of LEGO History</a></li></ul><hr><p><em>Publié à l’origine sur <a href=https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb>Medium</a>.</em></p></section><footer class="mt-12 flex flex-wrap"><a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href=https://antoineboucher.info/CV/blog/tags/lego>LEGO</a><a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href=https://antoineboucher.info/CV/blog/tags/data-science>Data Science</a><a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href=https://antoineboucher.info/CV/blog/tags/pandas>Pandas</a><a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href=https://antoineboucher.info/CV/blog/tags/scraping>Scraping</a><a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href=https://antoineboucher.info/CV/blog/tags/playwright>Playwright</a></footer><nav class="mt-24 flex overflow-hidden rounded-xl bg-black/[3%] text-lg leading-[1.2]! *:flex *:w-1/2 *:items-center *:p-5 *:font-medium *:no-underline dark:bg-white/[8%] [&>*:hover]:bg-black/[2%] dark:[&>*:hover]:bg-white/[3%]"><a class="ltr:pr-3 rtl:pl-3" href=https://antoineboucher.info/CV/blog/fr/posts/multiple-indicators-backtesting/><span class="ltr:mr-1.5 rtl:ml-1.5">←</span><span>Backtest d’indicateurs techniques sur plusieurs tickers avec Python</span></a><a class="justify-end pl-3 ltr:ml-auto rtl:mr-auto" href=https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/><span>Expérimentation des indicateurs technique avec Python et Backtesting</span><span class="ltr:ml-1.5 rtl:mr-1.5">→</span></a></nav></article></main><footer class="mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>powered by hugo️️</a>️
+<a class=link href=https://github.com/nanxiaobei/hugo-paper rel=noopener target=_blank>hugo-paper</a></footer></body></html>

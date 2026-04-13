@@ -52,20 +52,34 @@ jobs:
             [ -f "$file" ] && cp "$file" _site/ 2>/dev/null || true
           done
           # Copy directories
+          [ -d "css" ] && cp -r css _site/
           [ -d "linktree" ] && cp -r linktree _site/
           [ -d "papers" ] && cp -r papers _site/
           echo "Static files prepared."
 
       - name: Build Hugo blog
+        env:
+          HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
           PAGES_ROOT="${{ steps.pages.outputs.base_url }}"
           PAGES_ROOT="${PAGES_ROOT%/}"
-          HUGO_BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/blog/"
+          # Canonical host must match where visitors load the site (custom domain on GitHub Pages).
+          # Otherwise Permalink/absURL point at github.io while HTML is served from the custom domain,
+          # breaking Subresource Integrity on CSS and wasting link preloads.
+          if [ -n "${HUGO_BASE_URL_OVERRIDE}" ]; then
+            HUGO_BASE="${HUGO_BASE_URL_OVERRIDE}"
+          else
+            HUGO_BASE="https://antoineboucher.info/${REPO}/blog/"
+          fi
+          case "${HUGO_BASE}" in
+            */) ;;
+            *) HUGO_BASE="${HUGO_BASE}/" ;;
+          esac
           echo "configure-pages base_url (reference): ${PAGES_ROOT}"
           echo "Hugo baseURL (used for build): ${HUGO_BASE}"
           if [ -n "${PAGES_ROOT}" ] && [ "${PAGES_ROOT}" != "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}" ]; then
-            echo "::warning::configure-pages base_url differs from derived site root; using derived URL for Hugo -b"
+            echo "::notice::configure-pages base_url is ${PAGES_ROOT}; Hugo -b uses ${HUGO_BASE} so asset URLs match the custom domain."
           fi
           hugo --gc --minify -s hugo -d "${GITHUB_WORKSPACE}/_site/blog" -b "${HUGO_BASE}"
           # Same favicon as CV (site root); keep a copy under /blog/ for old /blog/favicon.ico links
@@ -81,12 +95,12 @@ jobs:
             echo "Missing ${INDEX}"
             exit 1
           fi
-          if ! grep -q "href=/${REPO}/blog/posts/" "${INDEX}"; then
-            echo "Expected Posts nav href containing /${REPO}/blog/posts/ in blog index"
+          if ! grep -q "/${REPO}/blog/posts/" "${INDEX}"; then
+            echo "Expected blog index to contain /${REPO}/blog/posts/ (nav or links)"
             exit 1
           fi
-          if ! grep -q "href=/${REPO}/blog/search/" "${INDEX}"; then
-            echo "Expected Search nav href containing /${REPO}/blog/search/ in blog index"
+          if ! grep -q "/${REPO}/blog/search/" "${INDEX}"; then
+            echo "Expected blog index to contain /${REPO}/blog/search/ (nav or links)"
             exit 1
           fi
           if grep -q 'href=/blog/posts/' "${INDEX}" || grep -q 'href=/blog/search/' "${INDEX}"; then

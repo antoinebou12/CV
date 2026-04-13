@@ -107,8 +107,8 @@ If loop occurs:
 
 4. **Prepare `_site`, build Hugo, verify**
    - Copies root static files (`index.html`, assets, `linktree/`, `papers/`) into `_site/`
-   - Runs `hugo` with output directory `_site/blog/` and a production `baseURL` of `https://<username>.github.io/<repo>/blog/`
-   - Verifies `blog/index.html` contains menu links prefixed with `/<repo>/blog/`
+   - Runs `hugo` with output directory `_site/blog/` and a production `baseURL` of **`https://antoineboucher.info/<repo>/blog/`** (canonical custom domain on GitHub Pages). This keeps absolute asset URLs (`Permalink`, `absURL`, Open Graph, stylesheet integrity) on the same host as the HTML, avoiding broken CSS and preload warnings when visitors use the custom domain. Override with repository variable **`HUGO_BASE_URL`** if the canonical URL changes.
+   - Verifies `blog/index.html` contains paths `/<repo>/blog/posts/` and `/<repo>/blog/search/` (works for both root-relative and absolute `href` values)
 
 5. **Upload artifact**
    - Uses `actions/upload-pages-artifact@v3`
@@ -126,6 +126,7 @@ If loop occurs:
 
 Key settings:
 - **Artifact path**: `_site` (built on the runner; includes `blog/` from Hugo)
+- **Hugo `baseURL`**: defaults to `https://antoineboucher.info/<repo>/blog/`; set repository variable **`HUGO_BASE_URL`** (e.g. for forks) to override
 - **Environment**: `github-pages`
 - **Permissions**: `pages: write`, `id-token: write`
 

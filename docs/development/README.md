@@ -29,7 +29,7 @@ See [CV Compilation](./cv-compilation.md) for detailed instructions.
 
 ### Hugo blog (navigation and header)
 
-The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, CV link, mobile drawer, dark mode). See **[Hugo navigation](./hugo-navigation.md)** for where to edit config, i18n, and behavior.
+The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, language switcher, mobile drawer, dark mode). See **[Hugo navigation](./hugo-navigation.md)** for where to edit config, i18n, and behavior.
 
 **Posts with images (page bundles):** Use a folder per post, e.g. `hugo/content/posts/<slug>/index.md`, and put assets in `hugo/content/posts/<slug>/images/`. Reference them in Markdown as `images/<file>.png`. In front matter, set `images:` to a list (first entry is used as the featured thumbnail in list views; see `hugo/layouts/partials/featured-image-resource.html`). Run `hugo` or `hugo --minify` from `hugo/` to confirm the site builds.
 
