@@ -1,0 +1,22 @@
+{{- $out := slice -}}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- range where site.RegularPages "Type" "in" $sections -}}
+  {{- if not .Draft -}}
+    {{- $tags := .Params.tags | default slice -}}
+    {{- $summary := .Summary | plainify | chomp -}}
+    {{- $plain := .Plain | plainify | chomp -}}
+    {{- $content := $plain -}}
+    {{- if gt (len $plain) 12000 -}}
+      {{- $content = slicestr $plain 0 12000 -}}
+    {{- end -}}
+    {{- $out = $out | append (dict
+      "title" .Title
+      "permalink" .Permalink
+      "summary" $summary
+      "content" $content
+      "tags" $tags
+      "date" (.Date.Format "2006-01-02")
+    ) -}}
+  {{- end -}}
+{{- end -}}
+{{- $out | jsonify (dict "indent" "  ") -}}

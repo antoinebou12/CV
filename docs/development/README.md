@@ -74,35 +74,89 @@ CV/
 ### HTML Development
 - ✅ Keep HTML semantic and accessible
 - ✅ Use relative paths for local resources
-- ✅ Test on multiple browsers
-- ✅ Validate HTML before committing
+- ✅ Test on multiple browsers (Chrome, Firefox, Safari, Edge)
+- ✅ Validate HTML before committing (use W3C validator)
 - ✅ Keep CSS organized and maintainable
+- ✅ Ensure mobile responsiveness
+- ✅ Test all links and interactive elements
+- ✅ Maintain consistency between English and French versions
 
 ### LaTeX Development
-- ✅ Use consistent formatting
+- ✅ Use consistent formatting and style
 - ✅ Keep sections modular (separate `.tex` files)
 - ✅ Test compilation before committing
 - ✅ Document custom commands or packages
 - ✅ Keep font paths relative
+- ✅ Use meaningful variable names
+- ✅ Comment complex LaTeX code
+- ✅ Maintain consistent date formats
+- ✅ Keep both language versions in sync
 
 ### Git Workflow
-- ✅ Write clear commit messages
+- ✅ Write clear, descriptive commit messages
 - ✅ Test changes locally before pushing
-- ✅ Review GitHub Actions results
-- ✅ Keep `main` branch deployable
+- ✅ Review GitHub Actions results after pushing
+- ✅ Keep `main` branch deployable at all times
+- ✅ Use feature branches for major changes
+- ✅ Squash commits when merging
+- ✅ Tag releases for important milestones
+
+### Build Script Usage
+- ✅ Always test builds locally before pushing
+- ✅ Use `--verbose` flag when debugging
+- ✅ Use `--clean` flag to remove auxiliary files
+- ✅ Use `--all --parallel` for faster builds
+- ✅ Check build statistics after compilation
+- ✅ Review LaTeX warnings and fix when possible
 
 ## Testing
 
 ### Local Testing
-- Test HTML in multiple browsers
-- Verify all links work
-- Check mobile responsiveness
-- Validate LaTeX compilation
+
+**HTML Testing:**
+- Test in multiple browsers (Chrome, Firefox, Safari, Edge)
+- Verify all links work (internal and external)
+- Check mobile responsiveness (use browser dev tools)
+- Test print stylesheet
+- Validate HTML using W3C validator
+- Check accessibility (screen readers, keyboard navigation)
+
+**LaTeX Testing:**
+- Compile locally before committing
+- Check for LaTeX warnings and errors
+- Verify PDF output looks correct
+- Test both English and French versions
+- Check page breaks and formatting
+- Verify all fonts render correctly
+
+**Build Script Testing:**
+```bash
+# Test single language
+python build_cv.py build --language en --verbose
+
+# Test both languages
+python build_cv.py build --all --verbose
+
+# Test with warnings
+python build_cv.py build --all --show-warnings
+```
 
 ### Automated Testing
-- GitHub Actions compiles CV automatically
-- GitHub Actions deploys website automatically
-- Check workflow status after pushing
+
+**GitHub Actions:**
+- CV compilation runs automatically on changes to `cv-*/**`
+- Website deployment runs automatically on push to `main`
+- Check workflow status in GitHub Actions tab
+- Review workflow logs for errors
+- Verify PDFs are generated correctly
+- Check deployment status
+
+**CI/CD Pipeline:**
+1. Push changes to repository
+2. GitHub Actions triggers automatically
+3. CV compilation runs (if LaTeX files changed)
+4. Website deployment runs (if HTML files changed)
+5. Verify deployment in browser
 
 ## Debugging
 

@@ -25,12 +25,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+        with:
+          submodules: recursive
+
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v4
         with:
           enablement: true
-      
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.160.1"
+          extended: true
+
       - name: Prepare static files
         run: |
           mkdir -p _site
@@ -45,15 +54,26 @@ jobs:
           # Copy directories
           [ -d "linktree" ] && cp -r linktree _site/
           [ -d "papers" ] && cp -r papers _site/
-          # List what we're deploying
-          echo "Files to deploy:"
-          find _site -type f | head -20
-      
+          echo "Static files prepared."
+
+      - name: Build Hugo blog
+        run: |
+          ROOT="${{ steps.pages.outputs.base_url }}"
+          ROOT="${ROOT%/}"
+          HUGO_BASE="${ROOT}/blog/"
+          echo "Hugo baseURL: ${HUGO_BASE}"
+          hugo --gc --minify -s hugo -d "${GITHUB_WORKSPACE}/_site/blog" -b "${HUGO_BASE}"
+
+      - name: List deploy tree
+        run: |
+          echo "Files to deploy (sample):"
+          find _site -type f | head -40
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

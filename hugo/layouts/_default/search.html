@@ -1,0 +1,127 @@
+{{ define "main" }}
+<article>
+  <header class="mb-10">
+    <h1 class="my-0! pb-2">{{ .Title }}</h1>
+    <p class="mb-0 text-sm opacity-70">{{ i18n "searchIntro" }}</p>
+  </header>
+
+  <div class="not-prose mb-8">
+    <label class="sr-only" for="site-search-input">{{ i18n "searchPlaceholder" }}</label>
+    <input
+      id="site-search-input"
+      type="search"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="{{ i18n "searchPlaceholder" }}"
+      class="w-full rounded-lg border border-black/10 bg-white/80 px-4 py-3 text-base text-black shadow-sm outline-none ring-0 placeholder:text-black/40 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/30 dark:border-white/15 dark:bg-black/30 dark:text-white dark:placeholder:text-white/40"
+    />
+    <p id="site-search-status" class="mt-2 min-h-[1.25rem] text-xs text-black/50 dark:text-white/50" aria-live="polite"></p>
+  </div>
+
+  <ul id="site-search-results" class="not-prose m-0 list-none space-y-6 p-0"></ul>
+</article>
+
+{{- $jsonURL := "" -}}
+{{- with site.Home.OutputFormats.Get "json" -}}
+  {{- $jsonURL = .Permalink -}}
+{{- end -}}
+<div id="site-search-config" class="hidden" data-index-url="{{ $jsonURL | htmlEscape }}" data-msg-empty="{{ i18n "searchNoResults" | htmlEscape }}" data-msg-loading="{{ i18n "searchLoading" | htmlEscape }}" data-msg-short="{{ i18n "searchTypeMore" | htmlEscape }}" data-msg-failed="{{ i18n "searchFailed" | htmlEscape }}" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js" defer></script>
+<script defer>
+  (function () {
+    const cfg = document.getElementById("site-search-config");
+    const indexURL = cfg && cfg.dataset.indexUrl ? cfg.dataset.indexUrl : "";
+    const statusEl = document.getElementById("site-search-status");
+    const input = document.getElementById("site-search-input");
+    const list = document.getElementById("site-search-results");
+    const emptyMsg = (cfg && cfg.dataset.msgEmpty) || "";
+    const loadingMsg = (cfg && cfg.dataset.msgLoading) || "";
+    const typeMoreMsg = (cfg && cfg.dataset.msgShort) || "";
+    const failedMsg = (cfg && cfg.dataset.msgFailed) || "";
+
+    if (!indexURL || !input || !list) return;
+
+    let fuse = null;
+    let ready = false;
+
+    function esc(s) {
+      const d = document.createElement("div");
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function render(items) {
+      list.innerHTML = "";
+      if (!items.length) {
+        statusEl.textContent = emptyMsg;
+        return;
+      }
+      statusEl.textContent = "";
+      for (const hit of items) {
+        const item = hit.item;
+        const li = document.createElement("li");
+        li.className = "m-0 rounded-lg border border-black/8 bg-black/[0.02] p-4 dark:border-white/10 dark:bg-white/[0.04]";
+        const tags = Array.isArray(item.tags) ? item.tags : [];
+        const tagStr = tags
+          .map((t) => '<span class="mr-1 inline-block rounded bg-black/5 px-2 py-0.5 text-xs dark:bg-white/10">' + esc(String(t)) + "</span>")
+          .join("");
+        li.innerHTML =
+          '<h2 class="mt-0 mb-1 text-lg font-semibold"><a class="no-underline hover:underline" href="' +
+          esc(item.permalink) +
+          '">' +
+          esc(item.title) +
+          "</a></h2>" +
+          (item.date ? '<p class="mb-2 text-xs opacity-60">' + esc(item.date) + "</p>" : "") +
+          (tagStr ? '<p class="mb-2 text-xs leading-relaxed">' + tagStr + "</p>" : "") +
+          '<p class="mb-0 text-sm leading-relaxed opacity-80">' +
+          esc(item.summary || (item.content || "").slice(0, 220)) +
+          (item.summary || item.content ? "…" : "") +
+          "</p>";
+        list.appendChild(li);
+      }
+    }
+
+    function runQuery(q) {
+      if (!ready || !fuse) return;
+      const term = q.trim();
+      if (term.length < 2) {
+        list.innerHTML = "";
+        statusEl.textContent = term.length ? typeMoreMsg : "";
+        return;
+      }
+      const results = fuse.search(term, { limit: 25 });
+      render(results);
+    }
+
+    fetch(indexURL)
+      .then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      })
+      .then((data) => {
+        fuse = new Fuse(data, {
+          includeScore: true,
+          threshold: 0.32,
+          ignoreLocation: true,
+          minMatchCharLength: 2,
+          keys: [
+            { name: "title", weight: 0.45 },
+            { name: "tags", weight: 0.28 },
+            { name: "summary", weight: 0.15 },
+            { name: "content", weight: 0.12 },
+          ],
+        });
+        ready = true;
+        statusEl.textContent = "";
+        runQuery(input.value);
+      })
+      .catch(() => {
+        statusEl.textContent = failedMsg;
+      });
+
+    statusEl.textContent = loadingMsg;
+    input.addEventListener("input", () => runQuery(input.value));
+  })();
+</script>
+{{ end }}

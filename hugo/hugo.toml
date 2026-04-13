@@ -1,0 +1,54 @@
+# Base URL is overridden in CI for GitHub Pages (…/repo/blog/).
+baseURL = "http://localhost:1313/blog/"
+languageCode = "en-us"
+title = "Antoine Boucher"
+theme = "paper"
+enableRobotsTXT = true
+
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages.en]
+languageName = "EN"
+weight = 1
+
+[[languages.en.menus.main]]
+name = "Posts"
+pageRef = "/posts"
+weight = 10
+
+[[languages.en.menus.main]]
+name = "Search"
+pageRef = "/search"
+weight = 20
+
+[languages.fr]
+languageName = "FR"
+weight = 2
+[languages.fr.params]
+bio = "Ingénieur logiciel — backend, plateforme, DevSecOps. CV et notes."
+
+[[languages.fr.menus.main]]
+name = "Articles"
+pageRef = "/posts"
+weight = 10
+
+[[languages.fr.menus.main]]
+name = "Recherche"
+pageRef = "/search"
+weight = 20
+
+[params]
+color = "linen"
+github = "antoinebou12"
+name = "Antoine Boucher"
+bio = "Software engineer — backend, platform, DevSecOps. CV and notes."
+rss = true
+monoDarkIcon = true
+mainSections = ["posts"]
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[markup.goldmark.renderer]
+unsafe = true
