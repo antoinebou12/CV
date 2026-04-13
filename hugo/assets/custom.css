@@ -5,6 +5,54 @@
  * uses :not(#\#) selectors; that is normal generated CSS, not something to “fix” in main.min.css.
  */
 
+/* Full-width header + horizontal padding (utilities may be absent from prebuilt theme CSS) */
+.site-header {
+  box-sizing: border-box;
+  max-width: none;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .site-header {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header {
+    padding-inline: 2rem;
+  }
+}
+
+.header-util-cluster {
+  gap: 1.5rem;
+  padding-inline-start: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .header-util-cluster {
+    gap: 1.75rem;
+    padding-inline-start: 1rem;
+  }
+}
+
+/* Main column: fluid horizontal padding */
+main.site-main {
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  main.site-main {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  main.site-main {
+    padding-inline: 2rem;
+  }
+}
+
 /* --- Full viewport + desktop content width --- */
 main.prose {
   min-height: calc(100dvh - 9rem);
@@ -16,29 +64,24 @@ main.prose {
   }
 }
 
-@media (min-width: 1024px) {
-  :root {
-    --w: calc(min(880px, 100vw - 4rem) + 32px * 2);
-  }
+/*
+ * --w caps <main> width (see layouts/_default/baseof.html). Horizontal padding is on main
+ * (px-4 sm:px-6 lg:px-8), so use 100vw - 2rem as the outer bound.
+ */
+:root {
+  --w: min(880px, 100vw - 2rem);
 }
 
-@media (min-width: 1280px) {
-  :root {
-    --w: calc(min(960px, 100vw - 4rem) + 32px * 2);
-  }
+/* Grids, section lists, search: use more horizontal space */
+main:has(.blog-list-page),
+main:has(.section-list-page),
+main:has(.site-search-page) {
+  --w: min(1536px, 100vw - 2rem);
 }
 
-/* Single posts + search + list grids: wider readable column */
-main:has(> article) {
-  --w: calc(min(1280px, 100vw - 4rem) + 32px * 2);
-}
-
-main:has(.section-list-page) {
-  --w: calc(min(1280px, 100vw - 4rem) + 32px * 2);
-}
-
-main:has(.blog-list-page) {
-  --w: calc(min(1280px, 100vw - 4rem) + 32px * 2);
+/* Single posts: comfortable measure (search uses .site-search-page, excluded) */
+main:has(> article:not(.site-search-page)) {
+  --w: min(880px, 100vw - 2rem);
 }
 
 /* Post card grids (home / posts list / tag lists / recipes / projects) */

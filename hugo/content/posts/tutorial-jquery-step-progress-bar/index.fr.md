@@ -7,7 +7,6 @@ translationKey: tutorial-jquery-step-progress-bar
 tags:
     - jQuery
     - CSS
-    - UI
     - Progress
     - Tutorial
     - Frontend

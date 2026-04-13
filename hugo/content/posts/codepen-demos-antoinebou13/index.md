@@ -9,7 +9,6 @@ tags:
     - Frontend
     - JavaScript
     - CSS
-    - Demos
 ---
 
 Small experiments and UI demos published on CodePen:

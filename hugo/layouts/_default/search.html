@@ -7,11 +7,6 @@
   </header>
 
   <div class="site-search-card site-search-card--controls not-prose mb-12 md:mb-16" role="search">
-    <label
-      class="absolute m-[-1px] h-px w-px overflow-hidden border-0 p-0 [clip:rect(0,0,0,0)]"
-      for="site-search-input"
-      >{{ i18n "searchInputLabel" }}</label
-    >
     <div class="site-search-input-wrap">
       <span class="site-search-input-icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
@@ -24,6 +19,7 @@
         type="search"
         autocomplete="off"
         spellcheck="false"
+        aria-label="{{ i18n "searchInputLabel" }}"
         placeholder="{{ i18n "searchPlaceholder" }}"
         class="site-search-input w-full min-h-12 rounded-xl border border-black/12 bg-white/90 pl-12 pr-4 text-base text-black shadow-sm outline-none ring-0 placeholder:text-black/45 focus:border-orange-500/55 focus:ring-2 focus:ring-orange-500/35 dark:border-white/18 dark:bg-black/35 dark:text-white dark:placeholder:text-white/45"
       />
@@ -45,11 +41,15 @@
 
   {{- if gt (len site.Taxonomies.tags) 0 -}}
   <section class="site-search-tags-section not-prose mb-12 md:mb-16" aria-labelledby="site-search-tags-heading">
-    <div class="site-search-tag-card">
-      <div class="mb-5 flex flex-wrap items-end justify-between gap-4">
-        <h2 id="site-search-tags-heading" class="site-search-tags-section-title mb-0 text-lg font-semibold text-black/90 dark:text-white/90">
+    <details class="site-search-tag-card group rounded-2xl border border-black/10 bg-white/40 p-6 shadow-[0_4px_24px_rgb(0_0_0_/4%)] backdrop-blur-md outline-none dark:border-white/10 dark:bg-black/20 open:pb-8">
+      <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-lg text-black/90 list-none dark:text-white/90 [&::-webkit-details-marker]:hidden">
+        <span class="flex items-center gap-2">
           {{ i18n "searchBrowseTags" }}
-        </h2>
+          <span class="text-sm font-normal opacity-60">({{ len $sortedTags }})</span>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180 opacity-60"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </summary>
+      <div class="mt-6 border-t border-black/10 pt-6 dark:border-white/10 flex flex-col gap-6">
         <div class="site-search-browse-toolbar flex flex-wrap items-center gap-2">
           <label for="site-search-browse-filter" class="text-sm font-medium text-black/70 dark:text-white/70">{{ i18n "searchBrowseFilterLabel" }}</label>
           <select
@@ -62,26 +62,26 @@
             <option value="blog">{{ i18n "searchBrowseFilterBlog" }}</option>
           </select>
         </div>
+        <div id="site-search-tag-chips" class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
+          {{- range $sortedTags -}}
+          {{- $filters := slice -}}
+          {{- if gt (len (where .Pages "Section" "projects")) 0 -}}{{- $filters = $filters | append "project" -}}{{- end -}}
+          {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}{{- $filters = $filters | append "recipe" -}}{{- end -}}
+          {{- if gt (len (where .Pages "Section" "posts")) 0 -}}{{- $filters = $filters | append "blog" -}}{{- end -}}
+          <a
+            href="{{ .Page.RelPermalink }}"
+            class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
+            data-tag-name="{{ htmlEscape .Page.Title }}"
+            data-browse-filters="{{ delimit $filters " " }}"
+            >{{- .Page.Title -}}</a>
+          {{- end -}}
+        </div>
       </div>
-      <div id="site-search-tag-chips" class="site-search-tag-chips flex flex-wrap gap-2.5 md:gap-3">
-        {{- range $sortedTags -}}
-        {{- $filters := slice -}}
-        {{- if gt (len (where .Pages "Section" "projects")) 0 -}}{{- $filters = $filters | append "project" -}}{{- end -}}
-        {{- if gt (len (where .Pages "Section" "recipes")) 0 -}}{{- $filters = $filters | append "recipe" -}}{{- end -}}
-        {{- if gt (len (where .Pages "Section" "posts")) 0 -}}{{- $filters = $filters | append "blog" -}}{{- end -}}
-        <a
-          href="{{ .Page.RelPermalink }}"
-          class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80"
-          data-tag-name="{{ htmlEscape .Page.Title }}"
-          data-browse-filters="{{ delimit $filters " " }}"
-          >{{- .Page.Title -}}</a>
-        {{- end -}}
-      </div>
-    </div>
+    </details>
   </section>
   {{- end -}}
 
-  <ul id="site-search-results" class="not-prose m-0 list-none space-y-8 p-0 md:space-y-10"></ul>
+  <ul id="site-search-results" class="not-prose m-0 list-none p-0 post-card-grid"></ul>
 </article>
 
 {{- $jsonURL := "" -}}
@@ -316,50 +316,45 @@
 
       for (const item of items) {
         const li = document.createElement("li");
+        li.className = "flex w-full h-full";
         const thumb = item.thumb && String(item.thumb).trim() ? String(item.thumb).trim() : "";
         const pill = typePillLabel(item);
-        const isConference = pill === pillLabels.conference;
-        li.className =
-          "site-search-result m-0 rounded-2xl border p-6 shadow-md md:p-8 " +
-          (isConference
-            ? "border-orange-500/35 bg-gradient-to-br from-orange-500/[0.08] to-black/[0.02] dark:border-orange-400/30 dark:from-orange-400/[0.1] dark:to-white/[0.04] "
-            : "border-black/10 bg-black/[0.02] dark:border-white/12 dark:bg-white/[0.04] ") +
-          (thumb ? "has-thumb " : "");
-        const tagStr = renderTagRow(item, 4);
+        const isConf = item.post_kind === 'conference-recap' || item.post_kind === 'conference';
+        const isTut = item.post_kind === 'tutorial';
+        
+        let badgeClasses = 'border-zinc-400/35 bg-zinc-500/12 text-zinc-800 dark:border-zinc-500/40 dark:bg-zinc-600/25 dark:text-zinc-100';
+        if (isConf) badgeClasses = 'border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100';
+        else if (isTut) badgeClasses = 'border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100';
+        
+        const confClass = isConf ? ' post-list-card-inner--conference' : '';
+        const tagHTML = renderTagRow(item, 3);
         const ex = buildExcerpt(item);
-        const metaRow =
-          '<div class="mb-3 flex flex-wrap items-center gap-2.5">' +
-          '<span class="' +
-          pillCls +
-          '">' +
-          esc(pill) +
-          "</span>" +
-          (item.date
-            ? '<time class="text-sm tabular-nums opacity-65">' + esc(item.date) + "</time>"
-            : "") +
-          "</div>";
-        const titleBlock =
-          '<h2 class="my-0 mb-3 text-xl font-semibold leading-snug tracking-tight md:text-2xl">' +
-          '<a class="text-inherit no-underline hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500/80" href="' +
-          esc(item.permalink) +
-          '">' +
-          esc(item.title) +
-          "</a></h2>";
-        const tagsBlock = tagStr ? '<div class="mb-3">' + tagStr + "</div>" : "";
-        const excerptBlock =
-          ex.html || ex.suffix
-            ? '<p class="mb-0 text-base leading-relaxed opacity-85">' + ex.html + ex.suffix + "</p>"
-            : "";
-        const bodyInner = metaRow + titleBlock + tagsBlock + excerptBlock;
-        const thumbBlock = thumb
-          ? '<div class="site-search-result-thumb"><a href="' +
-            esc(item.permalink) +
-            '" class="block" tabindex="-1" aria-hidden="true"><img src="' +
-            esc(thumb) +
-            '" alt="" width="280" height="210" loading="lazy" decoding="async" /></a></div>'
-          : "";
-        li.innerHTML =
-          thumbBlock + '<div class="site-search-result-body not-prose">' + bodyInner + "</div>";
+
+        const cardThumb = thumb ? `
+          <div class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]">
+            <div class="aspect-video w-full">
+              <img src="${esc(thumb)}" alt="" width="1280" height="720" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
+            </div>
+          </div>` : '';
+
+        const cardTags = tagHTML ? `<div class="post-list-card-tags flex flex-wrap gap-2 mb-2">${tagHTML}</div>` : '';
+        const cardDesc = ex.html || ex.suffix ? `<p class="post-list-card-desc mt-1 text-sm leading-relaxed text-black/70 dark:text-white/70">${ex.html}${ex.suffix}</p>` : '';
+        const cardDate = item.date ? `<time class="post-list-card-time block text-xs tabular-nums text-black/55 dark:text-white/55">${esc(item.date)}</time>` : '';
+
+        li.innerHTML = `
+          <article class="post-list-card group w-full h-full not-prose">
+            <a href="${esc(item.permalink)}" class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/10 bg-white/40 shadow-[0_4px_24px_rgb(0_0_0_/6%)] backdrop-blur-md outline-none ring-0 transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-xl dark:border-white/12 dark:bg-black/40 dark:shadow-[0_4px_28px_rgb(0_0_0_/35%)] dark:hover:shadow-2xl${confClass}">
+              <span class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm ${badgeClasses}">${esc(pill)}</span>
+              ${cardThumb}
+              <div class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6">
+                 ${cardTags}
+                 <h2 class="post-list-card-title my-0 text-lg font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-xl">${esc(item.title)}</h2>
+                 ${cardDate}
+                 ${cardDesc}
+              </div>
+            </a>
+          </article>
+        `;
         list.appendChild(li);
       }
     }

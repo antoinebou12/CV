@@ -5,12 +5,12 @@ date: 2023-12-30T10:00:00-04:00
 description: Reflections on growing as a software engineer across backend systems, platform work, and DevSecOps — what stuck and what I optimize for now.
 translationKey: software-engineering-journey
 tags:
-    - Software engineering
+    - Software Engineering
     - Career
     - Learning
     - Backend
     - DevSecOps
-    - Platform engineering
+    - Platform Engineering
 ---
 
 This site’s bio sums up the slice of the field I care about most: **backend**, **platform**, and **DevSecOps**. This post is a longer look at how I think about that journey — not a timeline of jobs, but the ideas that kept showing up once I stopped treating “shipping features” as the only scoreboard.

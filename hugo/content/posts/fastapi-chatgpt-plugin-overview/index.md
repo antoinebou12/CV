@@ -9,8 +9,7 @@ tags:
     - OpenAI
     - FastAPI
     - Python
-    - Plugins
-    - OpenAPI
+    - Plugin
     - Tutorial
 ---
 

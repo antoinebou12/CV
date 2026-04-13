@@ -6,7 +6,7 @@ description: Synthèse personnelle des séances QcES — canevas d’affaires, s
 translationKey: qces-lean-discovery-pitch
 tags:
     - QcES
-    - Entrepreneuriat
+    - Entrepreneurship
     - BMC
     - Lean Startup
     - Pitch

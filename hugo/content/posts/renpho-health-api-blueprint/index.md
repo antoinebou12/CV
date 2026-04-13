@@ -7,13 +7,10 @@ description: Forking hass-renpho, surfacing Renpho API endpoints with APKLeaks, 
 translationKey: renpho-health-api-blueprint
 tags:
     - Health
-    - Renpho
     - API
-    - Reverse engineering
+    - Reverse Engineering
     - Home Assistant
-    - HACS
-    - Fitness
-    - Home automation
+    - Home Automation
 images:
     - featured.jpeg
 ---

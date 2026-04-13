@@ -14,8 +14,7 @@ tags:
     - Python
     - Embeddings
     - RAG
-    - Machine learning
-    - Recommender systems
+    - Machine Learning
 canonicalURL: "https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d"
 aliases:
     - /posts/dense-sparse-vectors-qdrant-movielens/

@@ -7,8 +7,7 @@ translationKey: portfolio-hugo-week-1
 tags:
     - Hugo
     - Portfolio
-    - Static site
-    - Web development
+    - Static Site
     - Substack
 images:
     - featured.png

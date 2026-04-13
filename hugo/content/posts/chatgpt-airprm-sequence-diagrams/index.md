@@ -9,15 +9,8 @@ tags:
     - AIPRM
     - PlantUML
     - Mermaid
-    - Draw.io
-    - Lucidchart
-    - Creately
-    - Gliffy
     - UML
-    - FastAPI
-    - Redis
-    - MongoDB
-    - Diagram tools
+    - Diagram Tools
 images:
     - featured.jpeg
 ---

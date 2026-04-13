@@ -6,9 +6,8 @@ description: Rapport sur BatchBacktesting — APIs, stratégies EMA/MACD et anal
 translationKey: experimentation-indicateurs-backtesting
 tags:
     - Python
-    - Backtesting
     - Trading
-    - Français
+    - Backtesting
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
 ---
 

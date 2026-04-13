@@ -5,12 +5,12 @@ date: 2023-12-30T10:00:00-04:00
 description: "Réflexions sur la croissance comme ingénieur logiciel — systèmes backend, plateforme et DevSecOps : ce qui reste et ce que j’optimise aujourd’hui."
 translationKey: software-engineering-journey
 tags:
-    - Software engineering
+    - Software Engineering
     - Career
     - Learning
     - Backend
     - DevSecOps
-    - Platform engineering
+    - Platform Engineering
 ---
 
 La bio de ce site résume la facette du métier qui m’intéresse le plus : **backend**, **plateforme** et **DevSecOps**. Cet article prolonge ce regard — pas une chronologie d’emplois, mais les idées qui reviennent quand on cesse de ne mesurer que « les features livrées ».

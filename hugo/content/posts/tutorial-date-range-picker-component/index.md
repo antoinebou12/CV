@@ -7,8 +7,7 @@ translationKey: tutorial-date-range-picker-component
 tags:
     - JavaScript
     - jQuery
-    - Date picker
-    - Web components
+    - Date Picker
     - Tutorial
     - Frontend
 ---

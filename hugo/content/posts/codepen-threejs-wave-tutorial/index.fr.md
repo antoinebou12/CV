@@ -7,7 +7,6 @@ translationKey: codepen-threejs-wave-tutorial
 tags:
     - Three.js
     - WebGL
-    - Animation
     - CodePen
     - JavaScript
     - Tutorial

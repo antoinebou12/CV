@@ -7,10 +7,9 @@ translationKey: runai-aws-inference-webinar
 tags:
     - "Run:ai"
     - AWS
-    - Machine learning
+    - Machine Learning
     - Inference
     - Kubernetes
-    - Webinar
     - Conference
 images:
     - featured.jpeg

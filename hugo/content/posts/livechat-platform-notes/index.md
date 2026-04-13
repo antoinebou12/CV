@@ -5,14 +5,12 @@ date: 2022-09-06T10:00:00-04:00
 description: How 3CX, ManyChat, Kommunicate, and Chatwoot differ for website chat, bots, and team inboxes—plus links and a compact comparison table.
 translationKey: livechat-platform-notes
 tags:
-    - Live chat
+    - Live Chat
     - Chatbot
-    - 3CX
-    - Customer support
-    - Chatwoot
-    - ManyChat
-    - Kommunicate
+    - Customer Support
     - Open Source
+    - 3CX
+    - Chatwoot
 ---
 
 These notes come from comparing options for **website live chat**, **chatbots**, and a **shared support inbox**. The products below are not interchangeable: some are full communications stacks, others are marketing automation, and one is an open-source helpdesk. **Pricing, channels, and features change often**—treat this as orientation, then confirm on each vendor’s site.

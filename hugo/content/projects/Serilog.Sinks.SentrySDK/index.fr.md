@@ -4,7 +4,10 @@ linkTitle: "Serilog.Sinks.SentrySDK"
 date: 2021-09-06T22:42:23+08:00
 draft: false
 description: "Sink Serilog qui envoie les événements vers Sentry via le SDK Sentry."
-tags: ["Serilog", "Sentry", "SentrySDK"]
+tags:
+    - Serilog
+    - Sentry
+    - SentrySDK
 ---
 
 # Serilog.Sinks.SentrySDK

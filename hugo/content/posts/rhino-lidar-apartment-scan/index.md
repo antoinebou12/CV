@@ -8,7 +8,7 @@ tags:
     - LiDAR
     - Rhino
     - iOS
-    - 3D scanning
+    - 3D Scanning
     - Architecture
 images:
     - featured.jpg

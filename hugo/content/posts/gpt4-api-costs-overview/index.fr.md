@@ -6,12 +6,10 @@ description: Notes sur les cas d’usage GPT-4 et GPT-3.5-turbo, leurs forces, e
 translationKey: gpt4-api-costs-overview
 tags:
     - AI
-    - GPT-4
-    - GPT-3.5
     - ChatGPT
     - OpenAI
-    - NLP
     - API
+    - NLP
 ---
 
 ![Image de couverture de l’article](https://media.licdn.com/dms/image/D5612AQHKus7rY_HvVQ/article-cover_image-shrink_720_1280/0/1681059889367?e=1709769600&v=beta&t=39LUP6caikwBW_QeEC7T-2peoci56x6v9xzNtCPdWxQ "Cover Image for AI Article")

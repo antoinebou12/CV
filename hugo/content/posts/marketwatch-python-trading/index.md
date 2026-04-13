@@ -9,9 +9,7 @@ tags:
     - MarketWatch
     - Trading
     - Finance
-    - Automation
     - Open Source
-    - PyPI
 images:
     - featured.png
 ---

@@ -8,7 +8,6 @@ tags:
     - jQuery
     - jQuery UI
     - CSS
-    - Drag and drop
     - Tutorial
     - Frontend
 ---

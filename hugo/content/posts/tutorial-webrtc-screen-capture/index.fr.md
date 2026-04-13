@@ -6,7 +6,6 @@ description: Démarrer / arrêter le partage d’écran avec l’API Screen Capt
 translationKey: tutorial-webrtc-screen-capture
 tags:
     - WebRTC
-    - getDisplayMedia
     - JavaScript
     - HTML
     - Tutorial

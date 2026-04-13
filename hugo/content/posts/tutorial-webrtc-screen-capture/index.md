@@ -6,7 +6,6 @@ description: Start/stop screen sharing with the Screen Capture API, a video elem
 translationKey: tutorial-webrtc-screen-capture
 tags:
     - WebRTC
-    - getDisplayMedia
     - JavaScript
     - HTML
     - Tutorial

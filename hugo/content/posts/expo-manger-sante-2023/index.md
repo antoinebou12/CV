@@ -7,9 +7,8 @@ translationKey: expo-manger-sante-2023
 tags:
     - Expo Manger Santé
     - Montreal
-    - Vegan
-    - Food
     - Conference
+    - Food
     - Photography
 images:
     - featured.jpeg

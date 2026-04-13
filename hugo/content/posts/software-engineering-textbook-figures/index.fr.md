@@ -5,7 +5,7 @@ date: 2026-04-13T08:00:00-04:00
 description: Scans de cours tirés d’un manuel de génie logiciel — décomposition par objectifs, waterfall classique et incrémental, neuf sous-objectifs du cycle de vie, V&V, collage de conseils de processus, et morale d’une étude de cas en éthique.
 translationKey: software-engineering-textbook-figures
 tags:
-    - Software engineering
+    - Software Engineering
     - SDLC
     - Waterfall
     - Verification

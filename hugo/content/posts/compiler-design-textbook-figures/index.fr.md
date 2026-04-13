@@ -6,9 +6,9 @@ description: Notes de cours tirées d’un manuel sur les langages de programmat
 translationKey: compiler-design-textbook-figures
 tags:
     - Compilers
-    - Programming languages
+    - Programming Languages
     - Parsing
-    - Computer science
+    - Computer Science
     - Education
 images:
     - compiler-pipeline.png

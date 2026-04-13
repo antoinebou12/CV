@@ -9,8 +9,7 @@ tags:
     - Snapchat
     - Lens Studio
     - AR
-    - Fiverr
-    - Side project
+    - Side Project
 ---
 
 *Mise à jour avril 2026 avec les chiffres Lens Insights actuels.*

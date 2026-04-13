@@ -5,14 +5,11 @@ date: 2024-03-11T18:30:00-04:00
 description: "Short English recap of Byzantium’s first Ethereum workshop — OpenZeppelin ERC-20, deploy, and peer-to-peer token transfers."
 translationKey: byzantium-solidity-ethereum-workshop
 tags:
+    - Byzantium
     - Solidity
     - Ethereum
-    - ERC-20
-    - OpenZeppelin
-    - Blockchain
     - Conference
     - Education
-    - Byzantium
 images:
     - featured.png
 ---

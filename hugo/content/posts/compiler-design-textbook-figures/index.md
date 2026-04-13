@@ -6,9 +6,9 @@ description: Study notes from a programming-languages text — compiler stages, 
 translationKey: compiler-design-textbook-figures
 tags:
     - Compilers
-    - Programming languages
+    - Programming Languages
     - Parsing
-    - Computer science
+    - Computer Science
     - Education
 images:
     - compiler-pipeline.png

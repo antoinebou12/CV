@@ -6,11 +6,10 @@ description: Session à Cédille avec GitHub et Arctiq — Copilot Chat, /create
 translationKey: github-copilot-cedille-session
 tags:
     - GitHub Copilot
-    - IA
+    - Conference
     - Cédille
     - Arctiq
-    - Conference
-    - Education
+    - AI
 images:
     - featured.jpeg
 ---

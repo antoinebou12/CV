@@ -6,10 +6,9 @@ description: Expérimentation avec le projet BatchBacktesting — EMA, MACD, API
 translationKey: multiple-indicators-backtesting
 tags:
     - Python
-    - Backtesting
     - Trading
+    - Backtesting
     - Crypto
-    - Stocks
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
 ---
 

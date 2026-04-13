@@ -11,7 +11,6 @@ tags:
     - WireGuard
     - Proxmox
     - Caddy
-    - VPN
 images:
     - featured.png
 ---

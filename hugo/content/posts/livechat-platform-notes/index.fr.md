@@ -5,14 +5,12 @@ date: 2022-09-06T10:00:00-04:00
 description: En quoi 3CX, ManyChat, Kommunicate et Chatwoot diffèrent pour le chat web, les bots et les boîtes de réception d’équipe—avec liens et tableau comparatif.
 translationKey: livechat-platform-notes
 tags:
-    - Chat en direct
+    - Live Chat
     - Chatbot
-    - 3CX
-    - Support client
-    - Chatwoot
-    - ManyChat
-    - Kommunicate
+    - Customer Support
     - Open Source
+    - 3CX
+    - Chatwoot
 ---
 
 Ces notes viennent d’une comparaison pour le **chat en direct sur site web**, les **chatbots** et une **boîte de réception partagée** pour le support. Les produits ci-dessous ne sont pas interchangeables : certains sont des piles de communications complètes, d’autres de l’automatisation marketing, et l’un est une solution open source de type helpdesk. **Les tarifs, canaux et fonctionnalités évoluent souvent**—utilisez ce texte comme repère, puis vérifiez sur le site de chaque éditeur.

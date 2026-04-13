@@ -9,7 +9,7 @@ tags:
     - Kinectron
     - p5.js
     - JavaScript
-    - Creative coding
+    - Creative Coding
     - Tutorial
 images:
     - mySketch.gif

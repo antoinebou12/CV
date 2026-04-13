@@ -4,7 +4,13 @@ linkTitle: "MediaBoxDockerCompose"
 date: 2024-01-01T12:00:00Z
 description: "Docker Compose stack for downloads, *Arr automation, Plex/Jellyfin, and ops dashboards—config lives in the repo."
 draft: false
-tags: ["Docker", "Docker Compose", "Homelab", "Plex", "Sonarr", "Radarr", "Jellyfin"]
+tags:
+    - Docker
+    - Docker Compose
+    - Homelab
+    - Plex
+    - Sonarr
+    - Radarr
 ---
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose)](https://github.com/antoinebou12/MediaBoxDockerCompose)

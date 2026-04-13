@@ -6,10 +6,8 @@ description: BatchBacktesting walkthrough — EMA and MACD on many tickers, FMP/
 translationKey: experimentation-indicateurs-backtesting
 tags:
     - Python
-    - Backtesting
     - Trading
-    - Crypto
-    - Stocks
+    - Backtesting
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
 ---
 

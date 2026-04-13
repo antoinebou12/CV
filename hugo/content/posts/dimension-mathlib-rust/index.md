@@ -6,9 +6,9 @@ description: Notes on the Dimension monorepo and its mathlib crate — linear al
 translationKey: dimension-mathlib-rust
 tags:
     - Rust
-    - Linear algebra
+    - Linear Algebra
     - WebAssembly
-    - Scientific computing
+    - Scientific Computing
     - Open Source
 ---
 

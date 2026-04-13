@@ -7,7 +7,6 @@ translationKey: snowflake-data-for-breakfast
 tags:
     - Conference
     - Snowflake
-    - Data
     - Data Analytics
 images:
     - featured.jpeg

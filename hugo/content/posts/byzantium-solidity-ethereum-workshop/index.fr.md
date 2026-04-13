@@ -5,14 +5,11 @@ date: 2024-03-11T18:30:00-04:00
 description: "Retour sur le premier workshop Byzantium sur Ethereum : contrat ERC-20 avec OpenZeppelin, déploiement et échanges entre participants."
 translationKey: byzantium-solidity-ethereum-workshop
 tags:
+    - Byzantium
     - Solidity
     - Ethereum
-    - ERC-20
-    - OpenZeppelin
-    - Blockchain
     - Conference
     - Education
-    - Byzantium
 images:
     - featured.png
 ---

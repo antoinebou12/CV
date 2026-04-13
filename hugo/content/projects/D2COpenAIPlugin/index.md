@@ -4,7 +4,12 @@ linkTitle: "D2COpenAIPlugin"
 date: 2021-09-06T22:42:23+08:00
 draft: false
 description: "A plugin for ChatGPT that enables users to generate diagrams using PlantUML or Mermaid."
-tags: ["ChatGPT", "OpenAI", "Plugin", "PlantUML", "Mermaid"]
+tags:
+    - ChatGPT
+    - OpenAI
+    - Plugin
+    - PlantUML
+    - Mermaid
 ---
 
 # D2COpenAIPlugin

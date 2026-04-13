@@ -5,14 +5,13 @@ description: Moving home-network diagrams to PlantUML C4, Cloudflare DNS, Terraf
 date: 2022-09-06T10:00:00-04:00
 translationKey: home-network-plantuml-c4
 tags:
-    - Network
     - PlantUML
-    - C4 model
+    - C4 Model
+    - Homelab
     - Kubernetes
     - Proxmox
     - Terraform
     - Cloudflare
-    - Homelab
 images:
     - featured.jpeg
 ---

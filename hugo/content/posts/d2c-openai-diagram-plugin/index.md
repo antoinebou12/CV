@@ -7,12 +7,10 @@ translationKey: d2c-openai-diagram-plugin
 tags:
     - ChatGPT
     - OpenAI
-    - Plugins
+    - Plugin
     - PlantUML
     - Mermaid
     - D2
-    - UML
-    - NLP
 images:
     - featured.gif
 ---
