@@ -1,9 +1,9 @@
 {{ define "main" }}
 {{- $sortedTags := sort site.Taxonomies.tags.Alphabetical "Count" "desc" -}}
 <article class="site-search-page">
-  <header class="site-search-page-header mb-12 md:mb-16">
-    <h1 class="my-0! pb-2 text-3xl font-bold tracking-tight md:text-4xl">{{ .Title }}</h1>
-    <p class="site-search-page-intro mb-0 text-base leading-relaxed opacity-80">{{ i18n "searchIntro" }}</p>
+  <header class="site-search-page-header mb-14 md:mb-20">
+    <h1 class="my-0! mb-2 pb-0 text-3xl font-bold tracking-tight md:text-4xl">{{ .Title }}</h1>
+    <p class="site-search-page-intro mt-1 mb-0 text-base leading-relaxed opacity-80">{{ i18n "searchIntro" }}</p>
   </header>
 
   <div class="site-search-card site-search-card--controls not-prose mb-12 md:mb-16" role="search">
@@ -25,7 +25,7 @@
       />
     </div>
 
-    <div class="site-search-sort-row mt-5">
+    <div class="site-search-sort-row mt-8">
       <label for="site-search-sort">{{ i18n "searchSortLabel" }}</label>
       <select id="site-search-sort" class="site-search-sort-select min-w-[12rem]">
         <option value="relevance">{{ i18n "searchSortRelevance" }}</option>
@@ -36,13 +36,13 @@
       </select>
     </div>
 
-    <p id="site-search-status" class="site-search-status mt-4 min-h-[1.35rem] text-sm text-black/55 dark:text-white/55" aria-live="polite"></p>
+    <p id="site-search-status" class="site-search-status mt-6 min-h-[1.35rem] text-sm text-black/55 dark:text-white/55" aria-live="polite"></p>
   </div>
 
   {{- if gt (len site.Taxonomies.tags) 0 -}}
   <section class="site-search-tags-section not-prose mb-12 md:mb-16" aria-labelledby="site-search-tags-heading">
     <div class="site-search-tag-card rounded-2xl border border-black/10 bg-white/40 p-6 shadow-[0_4px_24px_rgb(0_0_0_/4%)] backdrop-blur-md outline-none dark:border-white/10 dark:bg-black/20">
-      <div class="mb-5 flex items-center gap-2 font-semibold text-lg text-black/90 dark:text-white/90">
+      <div class="mb-6 flex items-center gap-2 font-semibold text-lg text-black/90 dark:text-white/90">
         {{ i18n "searchBrowseTags" }}
         <span class="text-sm font-normal opacity-60">({{ len $sortedTags }})</span>
       </div>
@@ -63,13 +63,13 @@
         {{- end -}}
       {{- end -}}
 
-      <div class="flex flex-col gap-8 md:flex-row md:flex-wrap">
+      <div class="flex flex-col gap-10 md:flex-row md:flex-wrap">
         {{- if gt (len $projectTags) 0 -}}
         <div class="flex-1 min-w-[280px]">
           <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchTagsProjects" | default "Project Topics" }}</h3>
-          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+          <div class="site-search-tag-chips flex flex-wrap gap-3">
             {{- range $projectTags -}}
-            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ .Page.Title | htmlUnescape }}">{{- .Page.Title -}}</a>
             {{- end -}}
           </div>
         </div>
@@ -78,9 +78,9 @@
         {{- if gt (len $recipeTags) 0 -}}
         <div class="flex-1 min-w-[280px]">
           <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchTagsRecipes" | default "Recipe Topics" }}</h3>
-          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+          <div class="site-search-tag-chips flex flex-wrap gap-3">
             {{- range $recipeTags -}}
-            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ .Page.Title | htmlUnescape }}">{{- .Page.Title -}}</a>
             {{- end -}}
           </div>
         </div>
@@ -89,9 +89,9 @@
         {{- if gt (len $blogTags) 0 -}}
         <div class="flex-1 min-w-[280px]">
           <h3 class="mb-4 text-sm font-semibold tracking-wider text-black/60 uppercase dark:text-white/60">{{ i18n "searchBrowseFilterBlog" | default "Article Topics" }}</h3>
-          <div class="site-search-tag-chips flex flex-wrap gap-2.5">
+          <div class="site-search-tag-chips flex flex-wrap gap-3">
             {{- range $blogTags -}}
-            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ htmlEscape .Page.Title }}">{{- .Page.Title -}}</a>
+            <a href="{{ .Page.RelPermalink }}" class="site-search-tag-chip inline-flex min-h-10 items-center rounded-lg border px-3 py-2 text-sm font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80" data-tag-name="{{ .Page.Title | htmlUnescape }}">{{- .Page.Title -}}</a>
             {{- end -}}
           </div>
         </div>
@@ -101,7 +101,7 @@
   </section>
   {{- end -}}
 
-  <ul id="site-search-results" class="not-prose m-0 list-none p-0 post-card-grid"></ul>
+  <ul id="site-search-results" class="not-prose m-0 mt-8 list-none p-0 post-card-grid md:mt-10"></ul>
 </article>
 
 {{- $jsonURL := "" -}}
