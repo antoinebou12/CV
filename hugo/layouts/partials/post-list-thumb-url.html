@@ -3,7 +3,7 @@
   {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
     {{- $thumb = .Permalink -}}
   {{- else -}}
-    {{- with .Resize "480x" -}}
+    {{- with .Resize "720x" -}}
       {{- $thumb = .Permalink -}}
     {{- end -}}
   {{- end -}}

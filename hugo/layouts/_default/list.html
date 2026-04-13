@@ -2,7 +2,7 @@
 
 <!-- Tag Title -->
 {{- if and .Title (eq .Type "tags") -}}
-<h1 class="mb-14">#{{- .Title -}}</h1>
+<h1 class="mb-12 text-3xl font-bold tracking-tight md:mb-16 md:text-4xl">#{{- .Title -}}</h1>
 {{- end -}}
 
 <!-- $pages -->
@@ -49,7 +49,7 @@
 </div>
 {{- end -}}
 
-<div class="post-list-sort-toolbar not-prose mb-10 flex flex-wrap items-center gap-3 border-b border-black/10 pb-4 dark:border-white/15">
+<div class="post-list-sort-toolbar not-prose mb-12 flex flex-wrap items-center gap-3 border-b border-black/10 pb-5 dark:border-white/15 md:mb-14">
   <label for="post-list-sort-select" class="text-sm font-medium text-black/80 dark:text-white/80"
     >{{- i18n "sortLabel" -}}</label
   >
@@ -64,12 +64,12 @@
   </select>
 </div>
 
-<div class="post-kind-stack space-y-16">
+<div class="post-kind-stack space-y-20 md:space-y-24">
   {{- if gt (len $tutorials) 0 -}}
   <section class="post-kind-group" aria-labelledby="post-kind-tutorials">
     <h2
       id="post-kind-tutorials"
-      class="mb-6 border-b border-black/10 pb-2 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
     >
       {{- i18n "postKindTutorial" -}}
     </h2>
@@ -85,7 +85,7 @@
   <section class="post-kind-group" aria-labelledby="post-kind-articles">
     <h2
       id="post-kind-articles"
-      class="mb-6 border-b border-black/10 pb-2 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
     >
       {{- i18n "postKindArticle" -}}
     </h2>
@@ -101,7 +101,7 @@
   <section class="post-kind-group" aria-labelledby="post-kind-conferences">
     <h2
       id="post-kind-conferences"
-      class="mb-6 border-b border-black/10 pb-2 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
     >
       {{- i18n "postKindConference" -}}
     </h2>
@@ -170,14 +170,16 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
+<div class="section-list-page">
 <div class="post-card-grid">
 {{- range $paginator.Pages -}}
 {{- partial "post-list-item.html" . -}}
 {{- end -}}
 </div>
+</div>
 
 {{- if gt $paginator.TotalPages 1 -}}
-<nav class="mt-14 flex">
+<nav class="mt-16 flex md:mt-20">
   {{- if $paginator.HasPrev -}}
   <a class="btn not-prose" href="{{- $paginator.Prev.URL -}}"
     >← {{- i18n "prev_page" -}}</a
