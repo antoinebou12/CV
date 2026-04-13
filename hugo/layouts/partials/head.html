@@ -36,14 +36,14 @@
   {{- $custom := resources.Get "custom.css" -}}
   <!---->
   {{- $css := slice $main $custom | resources.Concat "main.css" | minify | fingerprint -}}
-  <link rel="preload stylesheet" as="style" href="{{- $css.Permalink -}}" integrity="{{ $css.Data.Integrity }}" />
+  <link rel="preload stylesheet" as="style" href="{{- $css.RelPermalink -}}" integrity="{{ $css.Data.Integrity }}" />
 
   <!-- dark icon -->
   {{- $dark_icon := "theme.png" -}}
   <!---->
   {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}
   <!---->
-  <link rel="preload" as="image" href="{{- $dark_icon | absURL -}}" />
+  <link rel="preload" as="image" href="{{- $dark_icon | relURL -}}" />
 
   <!-- avatar -->
   {{- $avatar_url := $.Scratch.Get "avatar_url" -}}
@@ -55,7 +55,7 @@
 
   <!-- social list -->
   {{- range $.Scratch.Get "social_list" -}}
-  <link rel="preload" as="image" href="{{- printf `%s.svg` . | absURL -}}" />
+  <link rel="preload" as="image" href="{{- printf `%s.svg` . | relURL -}}" />
   {{- end -}}
   <!---->
 
@@ -63,7 +63,7 @@
   {{- if and .IsPage (not site.Params.disableHLJS) -}}
   <script
     defer
-    src="{{- `highlight.min.js` | absURL -}}"
+    src="{{- `highlight.min.js` | relURL -}}"
     onload="hljs.initHighlightingOnLoad()"
   ></script>
   {{- end -}}
@@ -77,9 +77,8 @@
   <!---->
 
   <!-- favicon: same file as CV (index-en.html / index-fr.html) at site root, sibling to /blog/ -->
-  {{- $siteRoot := site.BaseURL | strings.TrimSuffix "/blog/" | strings.TrimSuffix "/blog" | strings.TrimSuffix "blog/" | strings.TrimSuffix "blog" -}}
-  {{- $siteRoot = strings.TrimSuffix "/" $siteRoot -}}
-  {{- $rootFavicon := printf "%s/favicon.ico" $siteRoot -}}
+  {{- $blogPath := strings.TrimSuffix "/" (urls.Parse site.BaseURL).Path -}}
+  {{- $rootFavicon := path.Join (path.Dir $blogPath) "favicon.ico" -}}
   <link rel="icon" type="image/x-icon" href="{{ $rootFavicon }}" />
   <link rel="apple-touch-icon" href="{{ $rootFavicon }}" />
 
