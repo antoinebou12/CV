@@ -1,20 +1,93 @@
 <header
-  class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center"
+  class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap"
 >
-  <div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto">
+  <div class="relative z-50 flex shrink-0 items-center pr-4">
     <a
       class="-translate-y-[1px] text-2xl font-medium"
       href="{{ site.Home.Permalink }}"
       >{{ site.Title }}</a
     >
+  </div>
+
+  <button
+    type="button"
+    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
+    aria-label="{{ i18n "navMenuOpen" }}"
+    aria-expanded="false"
+    aria-controls="site-nav-panel"
+    data-menu-open="{{ i18n "navMenuOpen" }}"
+    data-menu-close="{{ i18n "navMenuClose" }}"
+  ></button>
+
+  {{- $bg_color := $.Scratch.Get "bg_color" -}}
+
+  <div
+    id="site-nav-panel"
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-center lg:bg-transparent! lg:pb-0 lg:transition-none"
+  >
+    <nav
+      class="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base font-semibold lg:hidden"
+      aria-label="{{ i18n "langCvNav" }}"
+    >
+      {{- $sorted := sort .AllTranslations "Lang" -}}
+      {{- range $i, $p := $sorted -}}
+        {{- if gt $i 0 -}}
+          <span class="opacity-40">|</span>
+        {{- end -}}
+        {{- if eq $p.Lang $.Lang -}}
+          <span class="opacity-60">{{ $p.Lang | upper }}</span>
+        {{- else -}}
+          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ $p.Lang | upper }}</a>
+        {{- end -}}
+      {{- end -}}
+    </nav>
+    {{- with site.Menus.main -}}
+    <nav
+      class="lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse"
+      aria-label="{{ i18n "navMainSections" }}"
+    >
+      {{- range . -}}
+      <a
+        class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal"
+        href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
+        {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
+        >{{- .Name -}}</a
+      >
+      {{- end -}}
+    </nav>
+    {{- end -}}
+
+    {{- with $.Scratch.Get "social_list" -}}
+    <nav
+      class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
+      aria-label="{{ i18n "navSocial" }}"
+    >
+      {{- range . -}}
+      <a
+        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./{{- . -}}.svg)"
+        href="{{- if eq . `rss` -}}{{- `index.xml` | absURL -}}{{- else if eq . `mastodon` -}}{{- index site.Params . -}}{{- else -}}{{- if eq . `threads` -}}https://threads.net/{{- else if eq . `bluesky` -}}https://bsky.app/profile/{{- else -}}https://{{- . -}}.com/{{- end -}}{{- if eq . `linkedin` -}}in/{{- end -}}{{- index site.Params . -}}{{- end -}}"
+        target="_blank"
+        rel="{{- if eq . `rss` -}}alternate{{- else -}}me{{- end -}}"
+      >
+        {{- . -}}
+      </a>
+      {{- end -}}
+    </nav>
+    {{- end -}}
+  </div>
+
+  <div
+    class="relative z-50 flex shrink-0 items-center gap-5 ltr:pl-2 rtl:pr-2"
+  >
     <button
       type="button"
-      class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
+      class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
       aria-label="{{ i18n "navThemeToggle" }}"
       aria-pressed="false"
     ></button>
     <div
-      class="hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) ltr:ml-8 rtl:mr-8 lg:flex"
+      class="hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex"
       aria-label="{{ i18n "langCvNav" }}"
     >
       {{- $sorted := sort .AllTranslations "Lang" -}}
@@ -30,18 +103,6 @@
       {{- end -}}
     </div>
   </div>
-
-  <button
-    type="button"
-    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
-    aria-label="{{ i18n "navMenuOpen" }}"
-    aria-expanded="false"
-    aria-controls="site-nav-panel"
-    data-menu-open="{{ i18n "navMenuOpen" }}"
-    data-menu-close="{{ i18n "navMenuClose" }}"
-  ></button>
-
-  {{- $bg_color := $.Scratch.Get "bg_color" -}}
 
   <script>
     // base
@@ -112,64 +173,10 @@
     });
 
     // manual switch
-    btnDark.addEventListener('click', () => {
-      setDark(localStorage.getItem('dark') !== 'true');
-    });
+    if (btnDark) {
+      btnDark.addEventListener('click', () => {
+        setDark(localStorage.getItem('dark') !== 'true');
+      });
+    }
   </script>
-
-  <div
-    id="site-nav-panel"
-    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"
-  >
-    <nav
-      class="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base font-semibold lg:hidden"
-      aria-label="{{ i18n "langCvNav" }}"
-    >
-      {{- $sorted := sort .AllTranslations "Lang" -}}
-      {{- range $i, $p := $sorted -}}
-        {{- if gt $i 0 -}}
-          <span class="opacity-40">|</span>
-        {{- end -}}
-        {{- if eq $p.Lang $.Lang -}}
-          <span class="opacity-60">{{ $p.Lang | upper }}</span>
-        {{- else -}}
-          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ $p.Lang | upper }}</a>
-        {{- end -}}
-      {{- end -}}
-    </nav>
-    {{- with site.Menus.main -}}
-    <nav
-      class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse"
-      aria-label="{{ i18n "navMainSections" }}"
-    >
-      {{- range . -}}
-      <a
-        class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal"
-        href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
-        {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
-        >{{- .Name -}}</a
-      >
-      {{- end -}}
-    </nav>
-    {{- end -}}
-
-    {{- with $.Scratch.Get "social_list" -}}
-    <nav
-      class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
-      aria-label="{{ i18n "navSocial" }}"
-    >
-      {{- range . -}}
-      <a
-        class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
-        style="--url: url(./{{- . -}}.svg)"
-        href="{{- if eq . `rss` -}}{{- `index.xml` | absURL -}}{{- else if eq . `mastodon` -}}{{- index site.Params . -}}{{- else -}}{{- if eq . `threads` -}}https://threads.net/{{- else if eq . `bluesky` -}}https://bsky.app/profile/{{- else -}}https://{{- . -}}.com/{{- end -}}{{- if eq . `linkedin` -}}in/{{- end -}}{{- index site.Params . -}}{{- end -}}"
-        target="_blank"
-        rel="{{- if eq . `rss` -}}alternate{{- else -}}me{{- end -}}"
-      >
-        {{- . -}}
-      </a>
-      {{- end -}}
-    </nav>
-    {{- end -}}
-  </div>
 </header>

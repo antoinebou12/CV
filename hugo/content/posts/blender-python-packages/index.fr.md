@@ -10,6 +10,8 @@ tags:
     - pip
     - Addons
 canonicalURL: "https://medium.com/@antoine.boucher012/a-method-to-install-python-packages-for-add-ons-plugins-in-blender-windows-blender-4-2-98bcbe10fa81"
+images:
+    - img-001.png
 ---
 
 ## Introduction
@@ -17,6 +19,10 @@ canonicalURL: "https://medium.com/@antoine.boucher012/a-method-to-install-python
 Blender offre une API Python puissante pour scripts, add-ons et plugins. Un point délicat : **installer des paquets Python tiers** dans l’**environnement Python isolé** de Blender.
 
 Contrairement à une installation Python système, Blender embarque son propre interprète : `pip` « global » ne suffit pas toujours. Cet article propose une méthode **générale et robuste** pour installer les dépendances des add-ons tout en restant compatible entre versions.
+
+![Espace Scripting de Blender avec l’éditeur de texte et Exécuter le script](./img-001.png)
+
+*Lancer l’installateur depuis l’éditeur de texte (espace Scripting).*
 
 ## Pourquoi des paquets externes dans le Python de Blender ?
 
@@ -43,133 +49,147 @@ Le script ci-dessous **installe automatiquement** les paquets manquants via le P
 
 ## Script d’installation
 
-import bpy  
-import sys  
-import site  
-import logging  
-import subprocess  
-import threading  
-  
-\# Set up logging  
-logger = logging.getLogger(\_\_name\_\_)  
-logging.basicConfig(level=logging.INFO)  
-\# List of packages required by the add-on/plugin  
-REQUIRED\_PACKAGES = {  
-    "fileseq": "fileseq==1.15.2",  
-    "meshio": "meshio==5.3.4",  
-    "rich": "rich==13.7.0",  
-    "requests": "requests==2.31.0"  
-}  
-def get\_blender\_python\_path():  
-    """Returns the path of Blender's embedded Python interpreter."""  
-    return sys.executable  
-def get\_modules\_path():  
-    """Return a writable directory for installing Python packages."""  
-    return bpy.utils.user\_resource("SCRIPTS", path="modules", create=True)  
-def append\_modules\_to\_sys\_path(modules\_path):  
-    """Ensure Blender can find installed packages."""  
-    if modules\_path not in sys.path:  
-        sys.path.append(modules\_path)  
-    site.addsitedir(modules\_path)  
-def display\_message(message, title="Notification", icon='INFO'):  
-    """Show a popup message in Blender."""  
-    def draw(self, context):  
-        self.layout.label(text=message)  
-    def show\_popup():  
-        bpy.context.window\_manager.popup\_menu(draw, title=title, icon=icon)  
-        return None  \# Stops timer  
-    bpy.app.timers.register(show\_popup)  
-def install\_package(package, modules\_path):  
-    """Install a single package using Blender's Python."""  
-    try:  
-        logger.info(f"Installing {package}...")  
-        subprocess.check\_call(\[  
-            get\_blender\_python\_path(),  
-            "-m",  
-            "pip",  
-            "install",  
-            "--upgrade",  
-            "--target",  
-            modules\_path,  
-            package  
-        \])  
-        logger.info(f"{package} installed successfully.")  
-    except subprocess.CalledProcessError as e:  
-        logger.error(f"Failed to install {package}. Error: {e}")  
-        display\_message(f"Failed to install {package}. Check console for details.", icon='ERROR')  
-def background\_install\_packages(packages, modules\_path):  
-    """Install missing packages in a background thread."""  
-    def install\_packages():  
-        wm = bpy.context.window\_manager  
-        wm.progress\_begin(0, len(packages))  
-        for i, (module\_name, pip\_spec) in enumerate(packages.items()):  
-            try:  
-                \_\_import\_\_(module\_name)  
-                logger.info(f"'{module\_name}' is already installed.")  
-            except ImportError:  
-                install\_package(pip\_spec, modules\_path)  
-            wm.progress\_update(i + 1)  
-        wm.progress\_end()  
-        display\_message("All required packages installed successfully.")  
-    threading.Thread(target=install\_packages, daemon=True).start()  
-\# Setup  
-modules\_path = get\_modules\_path()  
-append\_modules\_to\_sys\_path(modules\_path)  
-\# Start package installation  
-background\_install\_packages(REQUIRED\_PACKAGES, modules\_path)
+```python
+import bpy
+import sys
+import site
+import logging
+import subprocess
+import threading
+
+# Set up logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+# List of packages required by the add-on/plugin
+REQUIRED_PACKAGES = {
+    "fileseq": "fileseq==1.15.2",
+    "meshio": "meshio==5.3.4",
+    "rich": "rich==13.7.0",
+    "requests": "requests==2.31.0"
+}
+def get_blender_python_path():
+    """Returns the path of Blender's embedded Python interpreter."""
+    return sys.executable
+def get_modules_path():
+    """Return a writable directory for installing Python packages."""
+    return bpy.utils.user_resource("SCRIPTS", path="modules", create=True)
+def append_modules_to_sys_path(modules_path):
+    """Ensure Blender can find installed packages."""
+    if modules_path not in sys.path:
+        sys.path.append(modules_path)
+    site.addsitedir(modules_path)
+def display_message(message, title="Notification", icon='INFO'):
+    """Show a popup message in Blender."""
+    def draw(self, context):
+        self.layout.label(text=message)
+    def show_popup():
+        bpy.context.window_manager.popup_menu(draw, title=title, icon=icon)
+        return None  # Stops timer
+    bpy.app.timers.register(show_popup)
+def install_package(package, modules_path):
+    """Install a single package using Blender's Python."""
+    try:
+        logger.info(f"Installing {package}...")
+        subprocess.check_call([
+            get_blender_python_path(),
+            "-m",
+            "pip",
+            "install",
+            "--upgrade",
+            "--target",
+            modules_path,
+            package
+        ])
+        logger.info(f"{package} installed successfully.")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Failed to install {package}. Error: {e}")
+        display_message(f"Failed to install {package}. Check console for details.", icon='ERROR')
+def background_install_packages(packages, modules_path):
+    """Install missing packages in a background thread."""
+    def install_packages():
+        wm = bpy.context.window_manager
+        wm.progress_begin(0, len(packages))
+        for i, (module_name, pip_spec) in enumerate(packages.items()):
+            try:
+                __import__(module_name)
+                logger.info(f"'{module_name}' is already installed.")
+            except ImportError:
+                install_package(pip_spec, modules_path)
+            wm.progress_update(i + 1)
+        wm.progress_end()
+        display_message("All required packages installed successfully.")
+    threading.Thread(target=install_packages, daemon=True).start()
+# Setup
+modules_path = get_modules_path()
+append_modules_to_sys_path(modules_path)
+# Start package installation
+background_install_packages(REQUIRED_PACKAGES, modules_path)
+```
 
 ## Découpage pas à pas
 
 ## 1️⃣ Chemin de l’interprète Blender
 
-def get\_blender\_python\_path():  
+```python
+def get_blender_python_path():
     return sys.executable
+```
 
 *   Utilise `sys.executable` pour que `pip` cible le bon Python.
 
 ## 2️⃣ Répertoire d’installation
 
-def get\_modules\_path():  
-    return bpy.utils.user\_resource("SCRIPTS", path\="modules", create\=True)
+```python
+def get_modules_path():
+    return bpy.utils.user_resource("SCRIPTS", path="modules", create=True)
+```
 
 *   Dossier typique sous Windows : `AppData\Roaming\Blender Foundation\Blender\<version>\scripts\modules`.
 
 ## 3️⃣ Rendre les paquets importables
 
-def append\_modules\_to\_sys\_path(modules\_path):  
-    if modules\_path not in sys.path:  
-        sys.path.append(modules\_path)  
-    site.addsitedir(modules\_path)
+```python
+def append_modules_to_sys_path(modules_path):
+    if modules_path not in sys.path:
+        sys.path.append(modules_path)
+    site.addsitedir(modules_path)
+```
 
 *   Ajoute le dossier à `sys.path` et `site.addsitedir` pour que Blender **trouve** les paquets.
 
 ## 4️⃣ Installer un paquet
 
-def install\_package(package, modules\_path):  
-    subprocess.check\_call(\[  
-        get\_blender\_python\_path(),  
-        "-m",  
-        "pip",  
-        "install",  
-        "--upgrade",  
-        "--target",  
-        modules\_path,  
-        package  
-    \])
+```python
+def install_package(package, modules_path):
+    subprocess.check_call([
+        get_blender_python_path(),
+        "-m",
+        "pip",
+        "install",
+        "--upgrade",
+        "--target",
+        modules_path,
+        package
+    ])
+```
 
 *   Appelle `python -m pip install --target ...` avec l’exécutable Blender.
 
 ## 5️⃣ Plusieurs paquets
 
-def background\_install\_packages(packages, modules\_path):  
-    threading.Thread(target=install\_packages, daemon=True).start()
+```python
+def background_install_packages(packages, modules_path):
+    threading.Thread(target=install_packages, daemon=True).start()
+```
 
 *   **Thread d’arrière-plan** pour éviter de figer l’interface.
 
 ## 6️⃣ Messages utilisateur
 
-def display\_message(message, title="Notification", icon='INFO'):  
-    bpy.app.timers.register(show\_popup)
+```python
+def display_message(message, title="Notification", icon='INFO'):
+    bpy.app.timers.register(show_popup)
+```
 
 *   Popups Blender pour succès / erreur.
 
@@ -183,19 +203,19 @@ def display\_message(message, title="Notification", icon='INFO'):
 4. Coller le script et **Run Script**.  
 5. Installation automatique + popup à la fin.
 
-![](./img-001.png)
-
 ## Option 2 : intégrer à un add-on
 
 *   Appelez la même logique depuis `register()` pour installer les dépendances au chargement.
 
-def register():  
-  """Register all classes and set up PointerProperties."""  
-  modules\_path = get\_modules\_path()  
-  append\_modules\_to\_sys\_path(modules\_path)  
-  \# Install required packages in the background  
-  background\_install\_packages(REQUIRED\_PACKAGES, modules\_path)  
+```python
+def register():
+  """Register all classes and set up PointerProperties."""
+  modules_path = get_modules_path()
+  append_modules_to_sys_path(modules_path)
+  # Install required packages in the background
+  background_install_packages(REQUIRED_PACKAGES, modules_path)
   ...
+```
 
 ## Dépannage
 
@@ -204,8 +224,10 @@ def register():
 *   Redémarrer Blender.  
 *   Vérifier `sys.path` :
 
-import sys  
+```python
+import sys
 print(sys.path)
+```
 
 ## En bref
 

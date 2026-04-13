@@ -170,7 +170,7 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
-<div class="section-list-page">
+<div class="section-list-page{{ if and .IsSection (eq .Section "posts") }} blog-posts-index{{ end }}">
 <div class="post-card-grid">
 {{- range $paginator.Pages -}}
 {{- partial "post-list-item.html" . -}}

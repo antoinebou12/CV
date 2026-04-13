@@ -8,4 +8,15 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
+{{- if and (eq $thumb "") (eq .Section "posts") -}}
+  {{- $rawKind := .Params.post_kind | default "article" -}}
+  {{- $kind := cond (eq $rawKind "conference-recap") "conference" $rawKind -}}
+  {{- $fallback := "images/post-kind-article.png" -}}
+  {{- if eq $kind "tutorial" -}}
+    {{- $fallback = "images/post-kind-tutorial.png" -}}
+  {{- else if eq $kind "conference" -}}
+    {{- $fallback = "images/post-kind-conference.png" -}}
+  {{- end -}}
+  {{- $thumb = $fallback | relURL -}}
+{{- end -}}
 {{- return $thumb -}}
