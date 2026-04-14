@@ -79,11 +79,32 @@ CV/
 ├── configs/               # Configuration files (nginx, traefik, etc.)
 ├── k8s/                   # Kubernetes manifests
 ├── helm/                  # Helm charts
+├── hugo/                  # Hugo blog (Paper theme): posts, projects, recipes, search
 ├── docs/                  # Documentation
 └── .github/              # GitHub Actions workflows
 ```
 
 ## 🛠️ Usage
+
+### Hugo blog (Paper)
+
+The site under `hugo/` is built with [Hugo](https://gohugo.io/) extended (see `.github/workflows/deploy.yml` for the pinned version). GitHub Pages deployment builds theme CSS with npm in `hugo/themes/paper`, then runs `hugo --gc --minify` with a `baseURL` that matches your public URL (repository variable `HUGO_BASE_URL` or default `https://antoineboucher.info/<repo>/blog/`).
+
+**Local development**
+
+```bash
+cd hugo/themes/paper
+npm ci
+npm run build:css
+cd ../..
+hugo server -D
+```
+
+Templates in `hugo/layouts` can be formatted with Prettier (Go template parser): install dependencies from `hugo/package.json` (`npm install` in `hugo/`), then `npm run format:templates`.
+
+**CSS pruning note:** The Paper theme uses Tailwind v4 with `@source` pointing at your layouts; a committed `hugo_stats.json` and `[build.buildStats]` are not required unless you later add a PostCSS PurgeCSS pipeline (then enable `[build.buildStats]` per [Hugo build stats](https://gohugo.io/configuration/build/#configure-build-stats)).
+
+**Not used here:** Netlify-specific `netlify.toml`, Mergify rules, or a published theme `theme.toml` (those apply to other hosting or theme publishing workflows).
 
 ### Building CVs
 

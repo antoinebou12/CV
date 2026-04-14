@@ -2,11 +2,14 @@
   "name": "cv-hugo-site",
   "private": true,
   "scripts": {
-    "build:css": "tailwindcss -i ./themes/paper/assets/app.css -o ./themes/paper/assets/main.css --minify"
+    "build:css": "tailwindcss -i ./themes/paper/assets/app.css -o ./themes/paper/assets/main.css --minify",
+    "format:templates": "prettier --write \"layouts/**/*.html\""
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
     "@tailwindcss/typography": "^0.5.16",
+    "prettier": "^3.4.2",
+    "prettier-plugin-go-template": "^0.0.15",
     "tailwindcss": "^4.1.18"
   }
 }
