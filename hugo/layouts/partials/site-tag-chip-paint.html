@@ -33,6 +33,8 @@
     }
     function paintSiteTagChips() {
       document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function (el) {
+        if (el.getAttribute("data-skip-tag-paint") === "true") return;
+        if (el.classList && el.classList.contains("post-list-tag-chip--tutorial-solid")) return;
         var nm = el.getAttribute("data-tag-name") || el.textContent.trim();
         el.setAttribute("style", tagChipStyle(nm));
       });

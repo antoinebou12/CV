@@ -483,6 +483,33 @@ main:has(> article:not(.site-search-page)) {
   outline-offset: 2px;
 }
 
+.post-list-card-tags-summary:focus-visible {
+  outline: 2px solid rgb(249 115 22 / 75%);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.post-list-card--tutorial .post-list-tag-chip--tutorial-solid,
+.post-list-card--tutorial .site-search-result-tag.post-list-tag-chip--tutorial-solid {
+  background-color: rgb(17 17 17) !important;
+  color: rgb(250 250 250) !important;
+  border-color: rgb(51 51 51) !important;
+  box-shadow: none;
+}
+
+.dark .post-list-card--tutorial .post-list-tag-chip--tutorial-solid,
+.dark .post-list-card--tutorial .site-search-result-tag.post-list-tag-chip--tutorial-solid {
+  background-color: rgb(250 250 250) !important;
+  color: rgb(17 17 17) !important;
+  border-color: rgb(212 212 212) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .post-list-card-tags-details[open] .post-list-card-tags {
+    animation: site-search-accordion-in 0.2s ease-out both;
+  }
+}
+
 .site-search-tag-accordion summary::-webkit-details-marker {
   display: none;
 }

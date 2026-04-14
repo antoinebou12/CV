@@ -7,6 +7,7 @@
   {{- $teaser = $p.Summary | plainify | chomp -}}
 {{- end -}}
 {{- $titleID := printf "post-title-%s" (md5 $p.Permalink) -}}
+{{- $terms := $p.GetTerms "tags" -}}
 {{- $badgeLabel := i18n "searchPillArticle" -}}
 {{- if eq $p.Section "projects" -}}
 {{- $badgeLabel = i18n "searchPillProject" -}}
@@ -18,75 +19,86 @@
 {{- $badgeLabel = i18n "searchPillTutorial" -}}
 {{- end -}}
 <article
-  class="post-list-card group h-full not-prose"
+  class="post-list-card group h-full not-prose{{ if eq $kind "tutorial" }} post-list-card--tutorial{{ end }}"
   data-sort-date="{{ $p.Date.Unix }}"
   data-sort-title="{{ $p.Title | plainify | htmlUnescape }}"
 >
-  <a
+  <div
     class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/15 bg-white/90 shadow-lg outline-none ring-0 backdrop-blur-md transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl dark:border-white/15 dark:bg-black/70 dark:hover:shadow-2xl{{ if eq $kind "conference" }} post-list-card-inner--conference{{ end }}"
-    href="{{ $p.Permalink }}"
-    aria-labelledby="{{ $titleID }}"
   >
-    <span
-      class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm {{ if eq $p.Section "projects" }}border-emerald-500/40 bg-emerald-500/12 text-emerald-950 dark:border-emerald-400/45 dark:bg-emerald-400/15 dark:text-emerald-100{{ else if eq $p.Section "recipes" }}border-amber-500/40 bg-amber-500/12 text-amber-950 dark:border-amber-400/45 dark:bg-amber-400/15 dark:text-amber-100{{ else if eq $kind "conference" }}border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100{{ else if eq $kind "tutorial" }}border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100{{ else }}border-zinc-400/35 bg-zinc-500/12 text-zinc-800 dark:border-zinc-500/40 dark:bg-zinc-600/25 dark:text-zinc-100{{ end }}"
-      >{{- $badgeLabel -}}</span
+    <a
+      class="post-list-card-hit relative flex min-h-0 flex-1 flex-col text-inherit no-underline outline-none ring-0 focus-visible:z-[2] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
+      href="{{ $p.Permalink }}"
+      aria-labelledby="{{ $titleID }}"
     >
-    {{- if gt $p.Weight 0 -}}
-    <span
-      class="pointer-events-none absolute right-4 top-4 z-[3] rounded-full bg-orange-500/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm"
-      >{{- i18n "postListFeatured" -}}</span
-    >
-    {{- end -}}
-    {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.png") -}}
-    <div
-      class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"
-    >
-      <div class="aspect-[4/3] w-full">
-        <img
-          src="{{ $mediaURL }}"
-          alt=""
-          width="720"
-          height="540"
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
-        />
+      <span
+        class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm {{ if eq $p.Section "projects" }}border-emerald-500/40 bg-emerald-500/12 text-emerald-950 dark:border-emerald-400/45 dark:bg-emerald-400/15 dark:text-emerald-100{{ else if eq $p.Section "recipes" }}border-amber-500/40 bg-amber-500/12 text-amber-950 dark:border-amber-400/45 dark:bg-amber-400/15 dark:text-amber-100{{ else if eq $kind "conference" }}border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100{{ else if eq $kind "tutorial" }}border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100{{ else }}border-zinc-400/35 bg-zinc-500/12 text-zinc-800 dark:border-zinc-500/40 dark:bg-zinc-600/25 dark:text-zinc-100{{ end }}"
+        >{{- $badgeLabel -}}</span
+      >
+      {{- if gt $p.Weight 0 -}}
+      <span
+        class="pointer-events-none absolute right-4 top-4 z-[3] rounded-full bg-orange-500/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm"
+        >{{- i18n "postListFeatured" -}}</span
+      >
+      {{- end -}}
+      {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.png") -}}
+      <div
+        class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"
+      >
+        <div class="aspect-[4/3] w-full">
+          <img
+            src="{{ $mediaURL }}"
+            alt=""
+            width="720"
+            height="540"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+          />
+        </div>
       </div>
-    </div>
-    <div
-      class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6"
-    >
-      {{- $terms := $p.GetTerms "tags" -}}
-      {{- if gt (len $terms) 0 -}}
-      <div class="post-list-card-tags flex flex-wrap gap-2">
-        {{- range first 3 $terms -}}
+      <div
+        class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6"
+      >
+        <h2
+          id="{{ $titleID }}"
+          class="post-list-card-title my-0 text-lg font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-xl"
+        >
+          {{- $p.Title -}}
+        </h2>
+        <time
+          class="post-list-card-time block text-xs tabular-nums text-black/55 dark:text-white/55"
+          datetime="{{ $p.Date.Format "2006-01-02" }}"
+          >{{- $p.Date | time.Format ":date_medium" -}}</time
+        >
+        {{- with $teaser -}}
+        <p
+          class="post-list-card-desc mt-1 text-sm leading-relaxed text-black/70 dark:text-white/70"
+        >
+          {{- . -}}
+        </p>
+        {{- end -}}
+      </div>
+    </a>
+    {{- if gt (len $terms) 0 -}}
+    <details class="post-list-card-tags-details border-t border-black/10 px-5 pb-5 pt-3 sm:px-6 sm:pb-6 dark:border-white/10" open>
+      <summary
+        class="post-list-card-tags-summary cursor-pointer list-none text-xs font-semibold uppercase tracking-wide text-black/65 outline-none hover:text-black/90 dark:text-white/60 dark:hover:text-white/90 [&::-webkit-details-marker]:hidden"
+      >
+        {{- i18n "postListTagsToggleWithCount" (dict "Count" (len $terms)) -}}
+      </summary>
+      <div class="post-list-card-tags mt-3 flex flex-wrap gap-2">
+        {{- range $terms -}}
         <a
           href="{{ .RelPermalink }}"
-          class="post-list-tag-chip site-search-tag-chip inline-flex min-h-9 max-w-full items-center rounded-lg border px-2.5 py-1 text-[11px] font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80"
+          class="post-list-tag-chip site-search-tag-chip inline-flex min-h-9 max-w-full items-center rounded-lg border px-2.5 py-1 text-[11px] font-semibold leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:z-[2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80{{ if eq $kind "tutorial" }} post-list-tag-chip--tutorial-solid{{ end }}"
           data-tag-name="{{ .Title | htmlUnescape }}"
+          {{- if eq $kind "tutorial" }} data-skip-tag-paint="true"{{ end -}}
           >{{- .Title -}}</a
         >
         {{- end -}}
       </div>
-      {{- end -}}
-      <h2
-        id="{{ $titleID }}"
-        class="post-list-card-title my-0 text-lg font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-xl"
-      >
-        {{- $p.Title -}}
-      </h2>
-      <time
-        class="post-list-card-time block text-xs tabular-nums text-black/55 dark:text-white/55"
-        datetime="{{ $p.Date.Format "2006-01-02" }}"
-        >{{- $p.Date | time.Format ":date_medium" -}}</time
-      >
-      {{- with $teaser -}}
-      <p
-        class="post-list-card-desc mt-1 text-sm leading-relaxed text-black/70 dark:text-white/70"
-      >
-        {{- . -}}
-      </p>
-      {{- end -}}
-    </div>
-  </a>
+    </details>
+    {{- end -}}
+  </div>
 </article>
