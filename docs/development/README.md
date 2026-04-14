@@ -33,7 +33,7 @@ The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, lan
 
 **Posts with images (page bundles):** Use a folder per post, e.g. `hugo/content/posts/<slug>/index.md`, and put assets in `hugo/content/posts/<slug>/images/`. Reference them in Markdown as `images/<file>.png`. In front matter, set `images:` to a list (first entry is used as the featured thumbnail in list views; see `hugo/layouts/partials/featured-image-resource.html`). Run `hugo` or `hugo --minify` from `hugo/` to confirm the site builds.
 
-**Theme CSS (Tailwind):** After editing [`hugo/themes/paper/assets/app.css`](../../hugo/themes/paper/assets/app.css) or templates under `hugo/layouts/`, rebuild the compiled bundle so new utility classes are included: from `hugo/themes/paper/`, run `npm ci` (or `npm install`) then `npm run build:css` (writes `assets/main.css`). GitHub Actions runs this before `hugo` on deploy.
+**Theme CSS (Tailwind):** After editing [`hugo/themes/paper/assets/app.css`](../../hugo/themes/paper/assets/app.css) or templates under `hugo/layouts/`, rebuild the compiled bundle so new utility classes are included: from [`hugo/`](../../hugo/), run `npm ci` then `npm run build:css` (writes `themes/paper/assets/main.css`). The lockfile is [`hugo/package-lock.json`](../../hugo/package-lock.json) in the main repo (the Paper theme is a submodule). GitHub Actions runs this before `hugo` on deploy.
 
 ## GitHub Actions Workflows
 
