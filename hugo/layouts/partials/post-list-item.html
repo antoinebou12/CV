@@ -60,9 +60,11 @@
       {{- if gt (len $terms) 0 -}}
       <div class="post-list-card-tags flex flex-wrap gap-2">
         {{- range first 3 $terms -}}
-        <span
-          class="rounded-full border border-black/10 bg-black/[0.04] px-2.5 py-1 text-[11px] leading-none text-black/70 backdrop-blur-sm dark:border-white/15 dark:bg-white/[0.06] dark:text-white/75"
-          >{{- .Title -}}</span
+        <a
+          href="{{ .RelPermalink }}"
+          class="post-list-tag-chip site-search-tag-chip inline-flex min-h-9 max-w-full items-center rounded-lg border px-2.5 py-1 text-[11px] font-medium leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80"
+          data-tag-name="{{ .Title | htmlUnescape }}"
+          >{{- .Title -}}</a
         >
         {{- end -}}
       </div>

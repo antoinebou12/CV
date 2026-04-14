@@ -483,6 +483,85 @@ main:has(> article:not(.site-search-page)) {
   outline-offset: 2px;
 }
 
+.site-search-tag-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-search-tag-accordion-chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.site-search-tag-accordion.group[open] .site-search-tag-accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.site-search-tag-accordion-panel {
+  animation: site-search-accordion-in 0.22s ease-out both;
+}
+
+.site-search-card-more-tags-summary:focus-visible {
+  outline: 2px solid rgb(249 115 22 / 75%);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+@keyframes site-search-accordion-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes site-search-skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.site-search-skeleton-card .site-search-skeleton-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 10%),
+    rgb(0 0 0 / 0%)
+  );
+  background-size: 200% 100%;
+  animation: site-search-skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+.dark .site-search-skeleton-card .site-search-skeleton-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0%),
+    rgb(255 255 255 / 10%),
+    rgb(255 255 255 / 0%)
+  );
+}
+
+@keyframes site-search-hit-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.site-search-hit-enter {
+  animation: site-search-hit-enter 0.38s ease-out both;
+  animation-delay: calc(var(--site-search-hit-i, 0) * 38ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-search-input {
     transition: none;
@@ -498,6 +577,19 @@ main:has(> article:not(.site-search-page)) {
 
   .post-list-card .group:hover .post-list-card-media img {
     transform: none;
+  }
+
+  .site-search-tag-accordion-panel {
+    animation: none;
+  }
+
+  .site-search-skeleton-card .site-search-skeleton-shimmer {
+    animation: none;
+  }
+
+  .site-search-hit-enter {
+    animation: none;
+    animation-delay: 0s;
   }
 }
 

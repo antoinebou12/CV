@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Accueil on Antoine Boucher</title><link>http://localhost:1313/blog/fr/</link><description>Recent content in Accueil on Antoine Boucher</description><generator>Hugo</generator><language>fr</language><lastBuildDate>Mon, 13 Apr 2026 15:40:00 -0400</lastBuildDate><atom:link href="http://localhost:1313/blog/fr/index.xml" rel="self" type="application/rss+xml"/><item><title>Pipeline de compilation, généalogie des langages et pourquoi les grammaires comptent</title><link>http://localhost:1313/blog/fr/posts/compiler-design-textbook-figures/</link><pubDate>Mon, 13 Apr 2026 15:40:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/compiler-design-textbook-figures/</guid><description>&lt;p&gt;Ces figures proviennent d’un &lt;strong&gt;manuel de langages de programmation / conception de compilateurs&lt;/strong&gt; que je lisais pour un cours. Je les ai gardées sur une seule page de référence : comment la compilation est découpée en phases, comment les langages d’aujourd’hui se situent historiquement, et où la &lt;strong&gt;syntaxe&lt;/strong&gt; ne suffit plus — il faut des &lt;strong&gt;règles de priorité&lt;/strong&gt;, une &lt;strong&gt;désambiguïsation&lt;/strong&gt; pour le &lt;code&gt;else&lt;/code&gt;, et des &lt;strong&gt;attributs&lt;/strong&gt; pour la sémantique comme les types.&lt;/p&gt;</description></item><item><title>Similarité entre films et recherche vectorielle</title><link>http://localhost:1313/blog/fr/posts/vector-databases-similar-movies/</link><pubDate>Mon, 13 Apr 2026 12:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/vector-databases-similar-movies/</guid><description>&lt;p&gt;Fil conducteur en &lt;strong&gt;trois parties&lt;/strong&gt; sur la &lt;strong&gt;similarité entre films&lt;/strong&gt; : &lt;strong&gt;partie 1&lt;/strong&gt; — embeddings dans &lt;strong&gt;PostgreSQL + pgvector&lt;/strong&gt; et recherche du plus proche voisin en SQL ; &lt;strong&gt;partie 2&lt;/strong&gt; — &lt;strong&gt;Qdrant&lt;/strong&gt; et &lt;strong&gt;MovieLens&lt;/strong&gt; (vecteurs denses pour la recherche sémantique, vecteurs creux pour un voisinage façon filtrage collaboratif) ; &lt;strong&gt;partie 3&lt;/strong&gt; — le même catalogue pgvector comme couche de &lt;strong&gt;récupération&lt;/strong&gt; pour un petit pipeline &lt;strong&gt;RAG&lt;/strong&gt; avec &lt;strong&gt;LangChain&lt;/strong&gt; et &lt;strong&gt;Ollama&lt;/strong&gt;. Ci-dessous, des extraits animés du travail (&lt;code&gt;movie-similarities-1.gif&lt;/code&gt; … &lt;code&gt;3.gif&lt;/code&gt;).&lt;/p&gt;</description></item><item><title>Bibliothèque Python pour le trading virtuel MarketWatch</title><link>http://localhost:1313/blog/fr/posts/marketwatch-python-trading/</link><pubDate>Mon, 13 Apr 2026 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/marketwatch-python-trading/</guid><description>&lt;p&gt;J’ai publié &lt;strong&gt;&lt;a href="https://pypi.org/project/marketwatch/"&gt;marketwatch&lt;/a&gt;&lt;/strong&gt; sur PyPI : un petit client Python pour le &lt;strong&gt;jeu boursier virtuel&lt;/strong&gt; &lt;a href="https://www.marketwatch.com"&gt;MarketWatch&lt;/a&gt; (paper trading), pas l’accès à un courtier réel. Pour scripter des listes de suivi, récupérer les données d’une partie ou du portefeuille, ou expérimenter une automatisation dans le cadre du jeu, le paquet encapsule les flux dans une API simple.&lt;/p&gt;
+&lt;h2 id="liens"&gt;Liens&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Paquet :&lt;/strong&gt; &lt;a href="https://pypi.org/project/marketwatch/"&gt;pypi.org/project/marketwatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation :&lt;/strong&gt; &lt;a href="https://antoinebou12.github.io/marketwatch/"&gt;antoinebou12.github.io/marketwatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source et tickets :&lt;/strong&gt; &lt;a href="https://github.com/antoinebou12/marketwatch"&gt;github.com/antoinebou12/marketwatch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="ce-que-ça-permet"&gt;Ce que ça permet&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Créer et gérer des &lt;strong&gt;listes de suivi&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Lire les détails et paramètres d’une &lt;strong&gt;partie&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Inspecter &lt;strong&gt;portefeuille&lt;/strong&gt;, positions et ordres en attente&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acheter&lt;/strong&gt; et &lt;strong&gt;vendre&lt;/strong&gt; (dans le jeu)&lt;/li&gt;
+&lt;li&gt;Récupérer le &lt;strong&gt;classement&lt;/strong&gt; d’une partie&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Utile pour explorer des stratégies automatisées ou de petits bots &lt;strong&gt;dans les règles du jeu&lt;/strong&gt; — voir la doc pour les noms de méthodes et les structures retournées.&lt;/p&gt;</description></item><item><title>Dimension — une pile math en Rust autour de mathlib</title><link>http://localhost:1313/blog/fr/posts/dimension-mathlib-rust/</link><pubDate>Mon, 13 Apr 2026 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/dimension-mathlib-rust/</guid><description>&lt;h2 id="de-quoi-il-sagit"&gt;De quoi il s’agit&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Dimension"&gt;Dimension&lt;/a&gt; est un monorepo avec lequel j’expérimente le code numérique en Rust. La partie qui porte la plupart de l’API publique est &lt;strong&gt;mathlib&lt;/strong&gt; : une crate centrée sur l’algèbre linéaire, avec matrices denses et creuses, vecteurs, décompositions classiques (SVD, Cholesky, LU, PCA), solveurs, et beaucoup de briques pour le style « graphiques » (types 3D, quaternions, quaternions duaux, caméras, easing, courbes).&lt;/p&gt;
+&lt;p&gt;Le dépôt regroupe aussi des crates liées à la simulation et aux outils — cinématique, physique, géométrie, démos de rendu, briques « neurales », et un petit site qui empaquette certaines démos WASM — de sorte que &lt;strong&gt;mathlib&lt;/strong&gt; reste le noyau numérique partagé pendant que d’autres dossiers explorent comment ce noyau se comporte dans de vrais programmes.&lt;/p&gt;</description></item><item><title>Du BMC au pitch : notes de parcours QcES (printemps 2024)</title><link>http://localhost:1313/blog/fr/posts/qces-lean-discovery-pitch/</link><pubDate>Mon, 13 Apr 2026 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/qces-lean-discovery-pitch/</guid><description>&lt;p&gt;&lt;strong&gt;&lt;a href="http://localhost:1313/blog/fr/posts/qces-lean-discovery-pitch/"&gt;Version anglaise&lt;/a&gt;&lt;/strong&gt; — même sujet, même fil d’URL.&lt;/p&gt;
+&lt;h2 id="en-bref"&gt;En bref&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Le &lt;strong&gt;Business Model Canvas (BMC)&lt;/strong&gt; décrit comment l’organisation &lt;strong&gt;crée, livre et capture&lt;/strong&gt; de la valeur ; il répond à trois questions : &lt;strong&gt;désirabilité&lt;/strong&gt;, &lt;strong&gt;faisabilité&lt;/strong&gt;, &lt;strong&gt;viabilité&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;On commence en général par &lt;strong&gt;segment de clientèle&lt;/strong&gt; et &lt;strong&gt;proposition de valeur&lt;/strong&gt;, puis on itère : le modèle &lt;strong&gt;change&lt;/strong&gt; avec le marché.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Segmenter&lt;/strong&gt;, c’est rendre le marché &lt;strong&gt;explicite&lt;/strong&gt; (B2B vs B2C, critères concrets) plutôt que des étiquettes vagues (« médecins », « parents »).&lt;/li&gt;
+&lt;li&gt;Les &lt;strong&gt;entrevues&lt;/strong&gt; servent à la &lt;strong&gt;découverte&lt;/strong&gt; : objectif d’&lt;strong&gt;apprendre&lt;/strong&gt;, pas de vendre ; viser &lt;strong&gt;connecter&lt;/strong&gt;, pas convaincre — en restant attaché au &lt;strong&gt;problème&lt;/strong&gt;, pas à la solution.&lt;/li&gt;
+&lt;li&gt;Le &lt;strong&gt;feedback&lt;/strong&gt; structuré (forces + une piste d’amélioration) et une &lt;strong&gt;pitch courte&lt;/strong&gt; (sans diapos) aident à clarifier l’idée tôt.&lt;/li&gt;
+&lt;li&gt;Une &lt;strong&gt;roadmap produit&lt;/strong&gt; est une &lt;strong&gt;vue stratégique dans le temps&lt;/strong&gt;, pas un plan de projet détaillé ; elle s’aligne sur vision, public, horizon, métriques et ressources.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PoC&lt;/strong&gt;, &lt;strong&gt;prototype&lt;/strong&gt; et &lt;strong&gt;MVP&lt;/strong&gt; ne jouent pas le même rôle : technologie, interaction utilisateur, puis &lt;strong&gt;première version sur le marché&lt;/strong&gt; à éprouver.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Marché et proposition de valeur&lt;/strong&gt; : tenir compte des forces externes (macro, industrie, tendances) et formuler la valeur comme &lt;strong&gt;offre + bénéfice&lt;/strong&gt; pour le client.&lt;/li&gt;
+&lt;li&gt;Le &lt;strong&gt;pitch&lt;/strong&gt; suit souvent &lt;strong&gt;Intéresser → Croire → Rejoindre&lt;/strong&gt; : problème d’abord, preuves et différenciation, puis &lt;strong&gt;demande précise&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Ce texte est une synthèse personnelle à partir de matériel de cours QcES (cohorte printemps 2024) et d’intervenants ; ce n’est pas un document officiel du programme.&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Dimension (mathlib)</title><link>http://localhost:1313/blog/fr/projects/dimension/</link><pubDate>Mon, 13 Apr 2026 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/dimension/</guid><description>&lt;h1 id="dimension"&gt;Dimension&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Dimension"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/Dimension" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Dimension"&gt;Dépôt&lt;/a&gt; · &lt;a href="https://docs.rs/mathlib"&gt;mathlib sur docs.rs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mathlib&lt;/strong&gt; est une crate Rust pour l’algèbre linéaire dense et creuse, les décompositions, la mathématique 3D, le clustering, les graphes, les transformations, et plus encore — avec des démos &lt;strong&gt;WebAssembly&lt;/strong&gt; et des fonctionnalités &lt;strong&gt;SIMD&lt;/strong&gt; / &lt;strong&gt;GPU&lt;/strong&gt; optionnelles. Le dépôt Dimension regroupe cette crate avec de la cinématique, de la physique, des expériences de rendu et de la documentation.&lt;/p&gt;
+&lt;h2 id="démarrage-rapide"&gt;Démarrage rapide&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd mathlib &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cargo build
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd mathlib &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cargo test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Voir le &lt;a href="https://github.com/antoinebou12/Dimension#readme"&gt;README&lt;/a&gt; à la racine et &lt;a href="https://github.com/antoinebou12/Dimension/blob/main/docs/DOCS.md"&gt;docs/DOCS.md&lt;/a&gt; pour l’architecture et des exemples.&lt;/p&gt;</description></item><item><title>ESP32-7SEG</title><link>http://localhost:1313/blog/fr/projects/esp32-7seg/</link><pubDate>Mon, 13 Apr 2026 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/esp32-7seg/</guid><description>&lt;h1 id="esp32-7seg"&gt;ESP32-7SEG&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/ESP32-7SEG"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/ESP32-7SEG" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/ESP32-7SEG"&gt;Dépôt&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/ESP32-7SEG/blob/main/LICENSE"&gt;Licence MIT&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Firmware pour une carte &lt;strong&gt;ESP32 FireBeetle&lt;/strong&gt; qui pilote un &lt;strong&gt;afficheur 7 segments Adafruit&lt;/strong&gt; (backpack I2C) et expose une &lt;strong&gt;interface web locale&lt;/strong&gt; pour les modes minuteur et la gestion WiFi.&lt;/p&gt;
+&lt;h2 id="interface-web"&gt;Interface web&lt;/h2&gt;
+&lt;p&gt;Le serveur intégré sert un panneau &lt;strong&gt;Timer Control&lt;/strong&gt; dans le navigateur :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Modes &lt;strong&gt;chronomètre&lt;/strong&gt; et &lt;strong&gt;compte à rebours&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Raccourcis &lt;strong&gt;10 min&lt;/strong&gt;, &lt;strong&gt;5 min&lt;/strong&gt;, &lt;strong&gt;1 min&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Saisie &lt;strong&gt;minutes&lt;/strong&gt; et &lt;strong&gt;secondes&lt;/strong&gt; manuelle, bouton &lt;strong&gt;Start&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reset WiFi&lt;/strong&gt; pour effacer les identifiants stockés et reconfigurer l’appareil&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="matériel"&gt;Matériel&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ESP32 FireBeetle (v1.0)&lt;/li&gt;
+&lt;li&gt;Afficheur 7 segments Adafruit avec backpack I2C&lt;/li&gt;
+&lt;li&gt;Platine d’essai et fils de liaison (SCL, SDA, VCC, GND)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="logiciel"&gt;Logiciel&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Projet &lt;a href="https://platformio.org/"&gt;PlatformIO&lt;/a&gt; ; voir &lt;a href="https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini"&gt;&lt;code&gt;platformio.ini&lt;/code&gt;&lt;/a&gt; pour la carte et les bibliothèques.&lt;/li&gt;
+&lt;li&gt;Le dépôt inclut aussi des sous-projets &lt;strong&gt;Android&lt;/strong&gt; et &lt;strong&gt;firmware&lt;/strong&gt; pour une stack plus complète autour du même matériel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="démarrage-rapide"&gt;Démarrage rapide&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/ESP32-7SEG.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd ESP32-7SEG
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ouvrir le projet dans PlatformIO (ou Arduino IDE avec les bibliothèques équivalentes), compiler et flasher l’ESP32. Au démarrage, lire l’adresse IP dans le &lt;strong&gt;moniteur série&lt;/strong&gt;, puis l’ouvrir dans un navigateur sur le même réseau pour utiliser l’interface web.&lt;/p&gt;</description></item><item><title>Notes sur le cycle de vie logiciel — GOALS, waterfall, vérification vs validation</title><link>http://localhost:1313/blog/fr/posts/software-engineering-textbook-figures/</link><pubDate>Mon, 13 Apr 2026 08:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/software-engineering-textbook-figures/</guid><description>&lt;p&gt;Ces pages viennent d’un &lt;strong&gt;manuel de génie logiciel&lt;/strong&gt; utilisé en cours. J’y ai regroupé les figures sur une seule page de référence : &lt;strong&gt;planification orientée objectifs&lt;/strong&gt;, comment le modèle &lt;strong&gt;waterfall&lt;/strong&gt; enchaîne les activités (avec &lt;strong&gt;vérification et validation&lt;/strong&gt; appariées à chaque phase), une variante &lt;strong&gt;incrémentale&lt;/strong&gt;, la liste des &lt;strong&gt;sous-objectifs du cycle de vie&lt;/strong&gt; du manuel, le rappel que &lt;strong&gt;les conseils méthodo dépendent du contexte&lt;/strong&gt;, et un court passage &lt;strong&gt;d’éthique&lt;/strong&gt; sur l’impact sur les personnes.&lt;/p&gt;</description></item><item><title>Installer des paquets Python pour les add-ons Blender (Windows, Blender 4.2+)</title><link>http://localhost:1313/blog/fr/posts/blender-python-packages/</link><pubDate>Sat, 08 Feb 2025 12:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/blender-python-packages/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Blender offre une API Python puissante pour scripts, add-ons et plugins. Un point délicat : &lt;strong&gt;installer des paquets Python tiers&lt;/strong&gt; dans l’&lt;strong&gt;environnement Python isolé&lt;/strong&gt; de Blender.&lt;/p&gt;
+&lt;p&gt;Contrairement à une installation Python système, Blender embarque son propre interprète : &lt;code&gt;pip&lt;/code&gt; « global » ne suffit pas toujours. Cet article propose une méthode &lt;strong&gt;générale et robuste&lt;/strong&gt; pour installer les dépendances des add-ons tout en restant compatible entre versions.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/blender-python-packages/img-001.png" alt="Espace Scripting de Blender avec l’éditeur de texte et Exécuter le script"&gt;&lt;/p&gt;</description></item><item><title>Plugin ChatGPT avec FastAPI — plan d’implémentation</title><link>http://localhost:1313/blog/fr/posts/fastapi-chatgpt-plugin-overview/</link><pubDate>Sat, 01 Jun 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/fastapi-chatgpt-plugin-overview/</guid><description>&lt;p&gt;Les &lt;strong&gt;plugins&lt;/strong&gt; de style OpenAI exposent une API HTTP décrite par un document &lt;strong&gt;OpenAPI&lt;/strong&gt; pour que ChatGPT puisse appeler vos outils de façon contrôlée. &lt;strong&gt;FastAPI&lt;/strong&gt; génère OpenAPI automatiquement, ce qui colle bien à ce modèle.&lt;/p&gt;
+&lt;h2 id="1-définir-lapi-dans-fastapi"&gt;1. Définir l’API dans FastAPI&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Les routes renvoient du &lt;strong&gt;JSON&lt;/strong&gt; avec des formes stables (éviter le texte libre ambigu quand la structure compte).&lt;/li&gt;
+&lt;li&gt;Ajoutez &lt;strong&gt;résumés et descriptions&lt;/strong&gt; sur les chemins et les champs — ça aide le modèle à choisir le bon outil.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="2-publier-openapijson"&gt;2. Publier &lt;code&gt;openapi.json&lt;/code&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;FastAPI sert &lt;strong&gt;&lt;code&gt;/openapi.json&lt;/code&gt;&lt;/strong&gt; par défaut ; le manifeste du plugin pointe vers cette URL (ou une copie statique versionnée).&lt;/li&gt;
+&lt;li&gt;Gardez les schémas &lt;strong&gt;stricts&lt;/strong&gt; : énumérations, champs obligatoires et exemples réduisent les mauvais appels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="3-manifeste-du-plugin"&gt;3. Manifeste du plugin&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hébergez &lt;strong&gt;&lt;code&gt;ai-plugin.json&lt;/code&gt;&lt;/strong&gt; (ou le format exigé par la doc développeur OpenAI actuelle) en &lt;strong&gt;HTTPS&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Le manifeste référence l’URL de base de l’API et l’emplacement d’OpenAPI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="4-authentification"&gt;4. Authentification&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Préférez &lt;strong&gt;OAuth&lt;/strong&gt; ou &lt;strong&gt;clés API&lt;/strong&gt; comme documenté pour votre intégration ; ne commitez jamais de secrets.&lt;/li&gt;
+&lt;li&gt;Validez les jetons dans les dépendances ou le middleware FastAPI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="5-déploiement"&gt;5. Déploiement&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Point de terminaison &lt;strong&gt;HTTPS&lt;/strong&gt; joignable depuis les serveurs OpenAI.&lt;/li&gt;
+&lt;li&gt;Journalisation et &lt;strong&gt;idempotence&lt;/strong&gt; pour les routes à effets de bord.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="6-tests-manuels"&gt;6. Tests manuels&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Appelez les routes avec &lt;code&gt;curl&lt;/code&gt; ou HTTPie en utilisant les mêmes charges que le modèle enverra.&lt;/li&gt;
+&lt;li&gt;Itérez sur les descriptions et contraintes avant d’ouvrir le trafic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Les détails évoluent avec les mises à jour de la plateforme OpenAI — suivez toujours la doc la plus récente sur &lt;strong&gt;plugins / tools / actions&lt;/strong&gt; pour la prod.&lt;/p&gt;</description></item><item><title>Backtest d’indicateurs techniques sur plusieurs tickers avec Python</title><link>http://localhost:1313/blog/fr/posts/multiple-indicators-backtesting/</link><pubDate>Thu, 30 May 2024 15:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/multiple-indicators-backtesting/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Ce rapport présente une expérimentation sur les indicateurs techniques avec le projet &lt;strong&gt;BatchBacktesting&lt;/strong&gt; sur GitHub : &lt;a href="https://github.com/AlgoETS/BatchBacktesting"&gt;BatchBacktesting&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="installation-des-dépendances"&gt;Installation des dépendances&lt;/h2&gt;
+&lt;p&gt;Installez les bibliothèques nécessaires :&lt;/p&gt;
+&lt;p&gt;!pip install numpy httpx richp&lt;/p&gt;
+&lt;h2 id="imports"&gt;Imports&lt;/h2&gt;
+&lt;p&gt;Modules à importer pour le script :&lt;/p&gt;
+&lt;p&gt;import pandas as pd&lt;br&gt;
+import numpy as np&lt;br&gt;
+from datetime import datetime&lt;br&gt;
+import httpx&lt;br&gt;
+import concurrent.futures&lt;br&gt;
+import glob&lt;br&gt;
+import warnings&lt;br&gt;
+from rich.progress import track&lt;/p&gt;
+&lt;p&gt;warnings.filterwarnings(&amp;ldquo;ignore&amp;rdquo;)&lt;/p&gt;
+&lt;h2 id="configuration-api"&gt;Configuration API&lt;/h2&gt;
+&lt;p&gt;Remplacez &lt;code&gt;FMP_API_KEY&lt;/code&gt; et &lt;code&gt;BINANCE_API_KEY&lt;/code&gt; par vos clés pour accéder aux services concernés.&lt;/p&gt;</description></item><item><title>Économie des boîtes LEGO avec science des données</title><link>http://localhost:1313/blog/fr/posts/economics-lego-data-science/</link><pubDate>Thu, 30 May 2024 12:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/economics-lego-data-science/</guid><description>&lt;p&gt;Passionné de données et de LEGO, j’ai exploré l’univers LEGO avec des données historiques : tendances, prix et caractéristiques des boîtes dans le temps. À partir des jeux &lt;strong&gt;Rebrickable&lt;/strong&gt; et d’outils comme &lt;strong&gt;Pandas&lt;/strong&gt;, &lt;strong&gt;Matplotlib&lt;/strong&gt; et &lt;strong&gt;Scikit-Learn&lt;/strong&gt;, voici un parcours sur l’histoire et l’économie des sets LEGO.&lt;/p&gt;
+&lt;h2 id="vue-densemble-des-jeux-de-données"&gt;Vue d’ensemble des jeux de données&lt;/h2&gt;
+&lt;p&gt;Les fichiers utilisés couvrent sets, pièces et thèmes :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;colors.csv&lt;/strong&gt; : couleurs LEGO (ID, noms, RGB, transparence).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;inventories.csv&lt;/strong&gt; : inventaires (ID, versions, numéros de set).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;inventory_parts.csv&lt;/strong&gt; : pièces par inventaire (quantités, couleurs, pièces de rechange).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;inventory_sets.csv&lt;/strong&gt; : lien inventaires ↔ sets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;part_categories.csv&lt;/strong&gt; : catégories de pièces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;part_relationships.csv&lt;/strong&gt; : relations entre pièces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parts.csv&lt;/strong&gt; : pièces (numéros, noms, catégories).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sets.csv&lt;/strong&gt; : sets (numéros, noms, années, thèmes, nombre de pièces).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;themes.csv&lt;/strong&gt; : thèmes (ID, noms, thèmes parents).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/economics-lego-data-science/img-001.png" alt=""&gt;&lt;/p&gt;</description></item><item><title>Expérimentation des indicateurs technique avec Python et Backtesting</title><link>http://localhost:1313/blog/fr/posts/experimentation-indicateurs-backtesting/</link><pubDate>Tue, 14 May 2024 20:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/experimentation-indicateurs-backtesting/</guid><description>&lt;h2 id="faites-du-batch-backtesting-sur-les-cryptos-et-les-stocks"&gt;Faites du Batch Backtesting sur les cryptos et les stocks&lt;/h2&gt;
+&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Dans ce rapport, nous présentons une expérimentation des indicateurs techniques à l’aide du projet BatchBacktesting disponible sur GitHub à l’adresse suivante :&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AlgoETS/BatchBacktesting/tree/main"&gt;BatchBacktesting&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;!pip install numpy httpx rich&lt;/p&gt;
+&lt;p&gt;import pandas as pd&lt;br&gt;
+import numpy as np&lt;br&gt;
+from datetime import datetime&lt;br&gt;
+import sys&lt;br&gt;
+import os&lt;br&gt;
+import httpx&lt;/p&gt;
+&lt;p&gt;import concurrent.futures&lt;br&gt;
+from datetime import datetime&lt;br&gt;
+import glob&lt;br&gt;
+import warnings&lt;br&gt;
+from rich.progress import track&lt;br&gt;
+warnings.filterwarnings(&amp;ldquo;ignore&amp;rdquo;)&lt;/p&gt;</description></item><item><title>Faire travailler ensemble Caddy, EC2, CloudWatch, Step Functions et Lambda</title><link>http://localhost:1313/blog/fr/posts/caddy-ec2-cloudwatch-lambda/</link><pubDate>Tue, 14 May 2024 18:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/caddy-ec2-cloudwatch-lambda/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Monter une infra web solide et scalable peut être coûteux et complexe. Avec les bons outils, on peut rester efficace et économique. Cet article décrit &lt;strong&gt;Caddy&lt;/strong&gt; sur &lt;strong&gt;AWS EC2&lt;/strong&gt;, l’intégration à &lt;strong&gt;CloudWatch&lt;/strong&gt; pour la supervision, et &lt;strong&gt;Step Functions&lt;/strong&gt; + &lt;strong&gt;Lambda&lt;/strong&gt; pour automatiser — une approche complète pour un tableau de bord à budget maîtrisé.&lt;/p&gt;
+&lt;h3 id="étape-1--installer-caddy-sur-ec2"&gt;Étape 1 : installer Caddy sur EC2&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Caddy&lt;/strong&gt; est un serveur web simple avec &lt;strong&gt;HTTPS automatique&lt;/strong&gt;, adapté au trafic web et au reverse proxy. Je l’utilise aussi pour mes assistants à la maison.&lt;/p&gt;</description></item><item><title>Parcours vers la certification AWS Certified Cloud Practitioner</title><link>http://localhost:1313/blog/fr/posts/aws-certified-cloud-practitioner/</link><pubDate>Tue, 14 May 2024 16:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/aws-certified-cloud-practitioner/</guid><description>&lt;p&gt;Je suis heureux d’annoncer que j’ai récemment obtenu la certification &lt;strong&gt;AWS Certified Cloud Practitioner&lt;/strong&gt; d’Amazon Web Services (AWS) ! C’est une étape importante dans mon parcours pro, et je profite de ce billet pour mettre en avant les outils qui m’y ont aidé.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AWS Skill Builder&lt;/strong&gt; et &lt;strong&gt;AWS Cloud Quest&lt;/strong&gt; ont été centraux dans ma préparation, avec un parcours à la fois structuré et ludique. Voici mon plan d’étude et comment ces ressources peuvent aider quiconque veut renforcer ses compétences cloud.&lt;/p&gt;</description></item><item><title>Prévoir des cours boursiers avec des simulations Monte Carlo</title><link>http://localhost:1313/blog/fr/posts/predicting-stock-prices-monte-carlo/</link><pubDate>Tue, 14 May 2024 09:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/predicting-stock-prices-monte-carlo/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;En finance, on raisonne rarement sur un seul prix « prévu » : il s’agit plutôt de &lt;strong&gt;fourchettes&lt;/strong&gt;, de &lt;strong&gt;risque de queue&lt;/strong&gt; et de &lt;strong&gt;mesurer à quel point&lt;/strong&gt; les modèles simples peuvent se tromper. Cet article déroule une &lt;strong&gt;simulation Monte Carlo de trajectoires&lt;/strong&gt; en Python : on estime dérive et volatilité à partir des clôtures historiques, on simule de nombreux chemins de prix futurs (pas discret façon brownien géométrique), et on résume le tout par une &lt;strong&gt;distribution&lt;/strong&gt; — l’objet adapté aux questions de risque (bandes, quantiles, recouvrement par rapport à une période tenue hors échantillon).&lt;/p&gt;</description></item><item><title>Kinectron + p5.js — contrôle du sketch et export GIF</title><link>http://localhost:1313/blog/fr/posts/kinectron-p5-sketch-gif/</link><pubDate>Fri, 15 Mar 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/kinectron-p5-sketch-gif/</guid><description>&lt;h3 id="introduction"&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Ce tutoriel montre comment monter un sketch &lt;strong&gt;Kinectron&lt;/strong&gt; dans &lt;strong&gt;p5.js&lt;/strong&gt; avec arrêt / lecture du sketch et enregistrement en &lt;strong&gt;GIF&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="prérequis"&gt;Prérequis&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Bases JavaScript et p5.js.&lt;/li&gt;
+&lt;li&gt;Bibliothèque Kinectron installée.&lt;/li&gt;
+&lt;li&gt;Bibliothèque p5.js installée.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kinect v2&lt;/strong&gt; ou &lt;strong&gt;Azure Kinect DK&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Serveur &lt;strong&gt;Kinectron&lt;/strong&gt; en marche.&lt;/li&gt;
+&lt;li&gt;Environnement local ou en ligne compatible JavaScript et p5.js.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="étape-1--environnement"&gt;Étape 1 : environnement&lt;/h3&gt;
+&lt;p&gt;Inclure p5.js et Kinectron dans le HTML.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;html&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;head&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text/javascript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text/javascript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;./client/dist/kinectron-client.js&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text/javascript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;script&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;sketch.js&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text/javascript&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;script&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;head&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;body&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;body&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;/&lt;span style="color:#f92672"&gt;html&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="étape-2--variables"&gt;Étape 2 : variables&lt;/h3&gt;
+&lt;p&gt;Dans &lt;code&gt;sketch.js&lt;/code&gt;, définir les variables nécessaires.&lt;/p&gt;</description></item><item><title>Premier atelier Byzantium — Solidity et token ERC-20 sur Ethereum</title><link>http://localhost:1313/blog/fr/posts/byzantium-solidity-ethereum-workshop/</link><pubDate>Mon, 11 Mar 2024 18:30:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/byzantium-solidity-ethereum-workshop/</guid><description>&lt;p&gt;Lundi, &lt;strong&gt;Byzantium&lt;/strong&gt; a organisé son &lt;strong&gt;premier atelier sur Ethereum&lt;/strong&gt; : une session accessible aux débutant·e·s comme aux personnes déjà à l’aise avec la blockchain, avec mise en pratique jusqu’au &lt;strong&gt;déploiement d’un token&lt;/strong&gt; et des &lt;strong&gt;transferts entre portefeuilles&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/byzantium-solidity-ethereum-workshop/images/workshop-title-slide.png" alt="Diapositive d’ouverture — Workshop sur Solidity (Ethereum)"&gt;&lt;/p&gt;
+&lt;h2 id="programme"&gt;Programme&lt;/h2&gt;
+&lt;p&gt;L’animation, assurée par &lt;strong&gt;Khalil Anis Zabat&lt;/strong&gt;, est partie d’une base &lt;strong&gt;Solidity&lt;/strong&gt; et d’un contrat &lt;strong&gt;ERC-20&lt;/strong&gt; standard, en s’appuyant sur &lt;strong&gt;OpenZeppelin&lt;/strong&gt; : définir le nom et le symbole du token, fixer les &lt;strong&gt;décimales&lt;/strong&gt;, et &lt;strong&gt;émettre&lt;/strong&gt; une première quantité pour le déployeur. Ensuite, chacun·e a pu suivre la démo, déployer son propre contrat sur un réseau de test, puis &lt;strong&gt;échanger des tokens&lt;/strong&gt; avec les autres participant·e·s — le passage concret du « code sur l’écran » à « quelque chose qu’on peut envoyer à un pair ».&lt;/p&gt;</description></item><item><title>Barre de progression par étapes responsive (jQuery + CSS)</title><link>http://localhost:1313/blog/fr/posts/tutorial-jquery-step-progress-bar/</link><pubDate>Mon, 12 Feb 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/tutorial-jquery-step-progress-bar/</guid><description>&lt;p&gt;Ce code crée une barre de progression responsive en quatre étapes. Il utilise &lt;strong&gt;jQuery&lt;/strong&gt; pour changer dynamiquement le texte et &lt;strong&gt;CSS&lt;/strong&gt; pour le style. Voici le détail du fonctionnement.&lt;/p&gt;
+&lt;h3 id="structure-html"&gt;Structure HTML&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;La barre est dans un &lt;code&gt;div&lt;/code&gt; avec la classe &lt;code&gt;progressbar_container&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Une liste non ordonnée &lt;code&gt;ul&lt;/code&gt; avec la classe &lt;code&gt;progressbar&lt;/code&gt; représente la barre.&lt;/li&gt;
+&lt;li&gt;Chaque étape est un &lt;code&gt;li&lt;/code&gt; avec la classe &lt;code&gt;progressbar_node&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;L’étape courante est mise en avant avec la classe &lt;code&gt;current_node&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="style-css"&gt;Style CSS&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.progressbar_container&lt;/code&gt; positionne la barre, gère sa taille et la centre.&lt;/li&gt;
+&lt;li&gt;Chaque &lt;code&gt;.progressbar_node&lt;/code&gt; représente une étape.&lt;/li&gt;
+&lt;li&gt;Le pseudo-élément &lt;code&gt;:before&lt;/code&gt; de &lt;code&gt;.progressbar_node&lt;/code&gt; dessine les pastilles numérotées.&lt;/li&gt;
+&lt;li&gt;Le pseudo-élément &lt;code&gt;:after&lt;/code&gt; trace les traits entre les étapes.&lt;/li&gt;
+&lt;li&gt;Les étapes courantes et complétées ont une couleur plus foncée et une bordure pleine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="comportement-javascript"&gt;Comportement JavaScript&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Au &lt;code&gt;$(document).ready&lt;/code&gt;, les étapes précédant la courante sont marquées complétées avec &lt;code&gt;activated_node&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Un écouteur &lt;code&gt;$(window).resize&lt;/code&gt; modifie le texte de la première étape selon la largeur de la fenêtre, en basculant entre « PASSENGER » et « PASSENGER DETAILS ».&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="remarques"&gt;Remarques&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Incluez la bibliothèque &lt;strong&gt;jQuery&lt;/strong&gt; pour utiliser cette syntaxe.&lt;/li&gt;
+&lt;li&gt;Le redimensionnement aide la responsivité sur différentes largeurs d’écran.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="utilisation"&gt;Utilisation&lt;/h3&gt;
+&lt;p&gt;Incluez le HTML fourni, liez le CSS et chargez jQuery pour que le script fonctionne.&lt;/p&gt;</description></item><item><title>Capture d’écran dans le navigateur (getDisplayMedia)</title><link>http://localhost:1313/blog/fr/posts/tutorial-webrtc-screen-capture/</link><pubDate>Sat, 10 Feb 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/tutorial-webrtc-screen-capture/</guid><description>&lt;h3 id="tutoriel--utilitaire-de-capture-décran-avec-html-css-et-javascript"&gt;Tutoriel : utilitaire de capture d’écran avec HTML, CSS et JavaScript&lt;/h3&gt;
+&lt;h4 id="introduction"&gt;Introduction&lt;/h4&gt;
+&lt;p&gt;Ce tutoriel montre comment ajouter une capture d’écran dans une appli web : HTML pour la structure, CSS pour le style, JavaScript pour le comportement.&lt;/p&gt;
+&lt;h4 id="prérequis"&gt;Prérequis&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Bases HTML, CSS et JavaScript&lt;/li&gt;
+&lt;li&gt;Navigateur récent avec support de &lt;code&gt;getDisplayMedia&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="structure-html"&gt;Structure HTML&lt;/h4&gt;
+&lt;p&gt;Boutons pour démarrer / arrêter la capture et zone pour la vidéo.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;button&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&amp;gt;Start Capture&amp;lt;/&lt;span style="color:#f92672"&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;button&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;stop&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;hidden&amp;#34;&lt;/span&gt;&amp;gt;Stop Capture&amp;lt;/&lt;span style="color:#f92672"&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;/&lt;span style="color:#f92672"&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;wrapper-video&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;br&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;strong&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;log-title&amp;#34;&lt;/span&gt;&amp;gt;Log:&amp;lt;/&lt;span style="color:#f92672"&gt;strong&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;br&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;pre&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;log&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;pre&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="css"&gt;CSS&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#video {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;display&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;table-cell&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;border&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;solid&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;#999&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;width&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;100&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;max-width&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1080&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;wrapper-video&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;display&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;table&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;width&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;100&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;max-width&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1082&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;recording-border&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;border&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;solid&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;red&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;error-background-color&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;background-color&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;red&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;error&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;color&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;red&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;warn&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;color&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;orange&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;color&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;darkgreen&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;hidden&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;display&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;none&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#a6e22e"&gt;log-title&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;margin-top&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;8&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="javascript"&gt;JavaScript&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;const&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;#log&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;const&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$startElem&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;#start&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;const&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$stopElem&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;#stop&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;displayMediaOptions&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;video&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cursor&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;never&amp;#39;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;displaySurface&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;browser&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;audio&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;$startElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;on&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;, &lt;span style="color:#66d9ef"&gt;function&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;evt&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;startCapture&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;$stopElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;on&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;, &lt;span style="color:#66d9ef"&gt;function&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;evt&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stopCapture&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;log&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt; =&amp;gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;append&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;&lt;span style="color:#e6db74"&gt;${&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt;&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;lt;br&amp;gt;`&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;error&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt; =&amp;gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;append&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;`&amp;lt;span class=&amp;#34;error&amp;#34;&amp;gt;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;${&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt;&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;lt;/span&amp;gt;&amp;lt;br&amp;gt;`&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;warn&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt; =&amp;gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;append&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;`&amp;lt;span class=&amp;#34;warn&amp;#34;&amp;gt;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;${&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt;&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;lt;/span&amp;gt;&amp;lt;br&amp;gt;`&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt; =&amp;gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;append&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;`&amp;lt;span class=&amp;#34;info&amp;#34;&amp;gt;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;${&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;msg&lt;/span&gt;&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;lt;/span&amp;gt;&amp;lt;br&amp;gt;`&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;async&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;startCapture&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;text&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;try&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;.wrapper-video&amp;#39;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;addClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;recording-border&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;append&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;&amp;lt;video id=&amp;#34;video&amp;#34; autoplay&amp;gt;&amp;lt;/video&amp;gt;&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$stopElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;removeClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;hidden&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$startElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;addClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;hidden&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;#video&amp;#39;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;removeClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;error-background-color&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; document.&lt;span style="color:#a6e22e"&gt;getElementById&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;video&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;srcObject&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;await&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;navigator&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;mediaDevices&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;getDisplayMedia&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;displayMediaOptions&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dumpOptionsInfo&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;catch&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;err&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;#video&amp;#39;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;addClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;error-background-color&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// Gestion des erreurs
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stopCapture&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;evt&lt;/span&gt;) { 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;let&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;tracks&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; document.&lt;span style="color:#a6e22e"&gt;getElementById&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;video&amp;#39;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;srcObject&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;getTracks&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;tracks&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;forEach&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;track&lt;/span&gt; =&amp;gt; &lt;span style="color:#a6e22e"&gt;track&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stop&lt;/span&gt;());
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; document.&lt;span style="color:#a6e22e"&gt;getElementById&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;video&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;srcObject&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;null&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$stopElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;addClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;hidden&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$startElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;removeClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;hidden&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;.wrapper-video&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;removeClass&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;recording-border&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;text&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;$logElem&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;text&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumpOptionsInfo&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;const&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;videoTrack&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; document.&lt;span style="color:#a6e22e"&gt;getElementById&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;video&amp;#34;&lt;/span&gt;).&lt;span style="color:#a6e22e"&gt;srcObject&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;getVideoTracks&lt;/span&gt;()[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;Track settings:&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;JSON&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stringify&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;videoTrack&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;getSettings&lt;/span&gt;(), &lt;span style="color:#66d9ef"&gt;null&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;));
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#34;Track constraints:&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;console&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;info&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;JSON&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stringify&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;videoTrack&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;getConstraints&lt;/span&gt;(), &lt;span style="color:#66d9ef"&gt;null&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;));
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="gestion-derreurs"&gt;Gestion d’erreurs&lt;/h4&gt;
+&lt;p&gt;Complétez le bloc &lt;code&gt;catch&lt;/code&gt; de &lt;code&gt;startCapture&lt;/code&gt; selon les cas à gérer.&lt;/p&gt;</description></item><item><title>Démos CodePen (collection)</title><link>http://localhost:1313/blog/fr/posts/codepen-demos-antoinebou13/</link><pubDate>Wed, 10 Jan 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/codepen-demos-antoinebou13/</guid><description>&lt;p&gt;Petites expériences et démos UI publiées sur CodePen :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/BMdzwx"&gt;Pen — BMdzwx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/details/xMXNyy"&gt;Détails — xMXNyy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/MLEdxr"&gt;Tableau noir canvas — MLEdxr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/JxrqQx"&gt;Pen — JxrqQx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/byVQKJ"&gt;Pen — byVQKJ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/jjzxER"&gt;Pen — jjzxER&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/qzQpYg"&gt;Pen — qzQpYg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/ZEENwWB"&gt;Pen — ZEENwWB&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codepen.io/antoinebou13/pen/rNoqVOj"&gt;Vague Three.js — rNoqVOj&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Des articles plus longs sur certaines de ces démos sont sous &lt;strong&gt;Articles&lt;/strong&gt; (tutoriels tableau noir et Three.js).&lt;/p&gt;</description></item><item><title>Créer un portfolio avec Hugo (semaine 1)</title><link>http://localhost:1313/blog/fr/posts/portfolio-hugo-week-1/</link><pubDate>Mon, 08 Jan 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/portfolio-hugo-week-1/</guid><description>&lt;h1 id="introduction-"&gt;&lt;strong&gt;Introduction :&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;Bienvenue sur mon blog personnel, un récit de mon parcours dans le développement d&amp;rsquo;un portfolio multifacette avec Hugo. En tant qu&amp;rsquo;ingénieur logiciel, je suis ravi de partager les subtilités de la construction d&amp;rsquo;un site web dynamique et interactif, où mes compétences professionnelles se croisent avec mes passions personnelles. Ce premier article marque le début d&amp;rsquo;une série dans laquelle je vais explorer divers aspects du développement web, de l&amp;rsquo;analyse de données et de l&amp;rsquo;intégration de technologies web avancées.&lt;/p&gt;</description></item><item><title>Champignons Bella Farcis aux Œufs avec Fromage de Chèvre et Épinards</title><link>http://localhost:1313/blog/fr/recipes/champignon/</link><pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/recipes/champignon/</guid><description>&lt;h1 id="champignons-bella-farcis-aux-œufs-avec-fromage-de-chèvre-et-épinards"&gt;Champignons Bella Farcis aux Œufs avec Fromage de Chèvre et Épinards&lt;/h1&gt;
+&lt;h2 id="catégorie"&gt;Catégorie&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Type :&lt;/strong&gt; Végétarien&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ingrédient Principal :&lt;/strong&gt; Champignons&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temps de Préparation :&lt;/strong&gt; 1 minute&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temps de Cuisson :&lt;/strong&gt; 5 minutes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temps Total :&lt;/strong&gt; 6 minutes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Portions :&lt;/strong&gt; 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="ingrédients"&gt;Ingrédients&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;3 gros champignons bella (prix : 1,99 $)&lt;/li&gt;
+&lt;li&gt;2 œufs (prix : 0,50 $)&lt;/li&gt;
+&lt;li&gt;100g de fromage de chèvre (prix : 1,99 $)&lt;/li&gt;
+&lt;li&gt;1 poignée d&amp;rsquo;épinards (prix : 0,50 $)&lt;/li&gt;
+&lt;li&gt;Sel (prix : 0,01 $)&lt;/li&gt;
+&lt;li&gt;Huile d&amp;rsquo;avocat (prix : 0,01 $)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="prix"&gt;Prix&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Prix total : 5,00 $&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="instructions"&gt;Instructions&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Préchauffez votre poêle avec de l&amp;rsquo;huile d&amp;rsquo;avocat.&lt;/li&gt;
+&lt;li&gt;Retirez les tiges des champignons et placez-les chapeau vers le bas dans la poêle.&lt;/li&gt;
+&lt;li&gt;Cassez un œuf dans chaque chapeau de champignon.&lt;/li&gt;
+&lt;li&gt;Assaisonnez de sel et ajoutez des épinards autour des champignons.&lt;/li&gt;
+&lt;li&gt;Couvrez et faites cuire jusqu&amp;rsquo;à ce que les œufs soient pris.&lt;/li&gt;
+&lt;li&gt;Émiettez le fromage de chèvre sur les champignons et les œufs.&lt;/li&gt;
+&lt;li&gt;Servez chaud avec de l&amp;rsquo;avocat tranché.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="avis"&gt;Avis&lt;/h2&gt;
+&lt;p&gt;⭐⭐⭐⭐ - &amp;ldquo;Juteux et facile à faire. Ce plat végétarien est un mélange délicieux de textures et de saveurs. Parfait pour un repas sain et satisfaisant !&amp;rdquo;&lt;/p&gt;</description></item><item><title>Tarte chèvre, épinards, miel et noix</title><link>http://localhost:1313/blog/fr/recipes/saumon/</link><pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/recipes/saumon/</guid><description>&lt;p&gt;Brouillon de recette — détails à compléter.&lt;/p&gt;</description></item><item><title>Tarte épinards, chèvre, miel et noix</title><link>http://localhost:1313/blog/fr/recipes/spinach-goat-cheese-walnut-tart/</link><pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/recipes/spinach-goat-cheese-walnut-tart/</guid><description>&lt;h1 id="tarte-épinards-chèvre-miel-et-noix"&gt;Tarte épinards, chèvre, miel et noix&lt;/h1&gt;
+&lt;p&gt;Brouillon — à compléter selon votre pâte et votre four. Idée : précuire le fond de tarte, faire tomber les épinards à la poêle, mélanger avec du chèvre émietté et des noix toastées, ajouter le miel en fin de cuisson.&lt;/p&gt;</description></item><item><title>Scan d’appartement LiDAR avec Rhino sur iPhone</title><link>http://localhost:1313/blog/fr/posts/rhino-lidar-apartment-scan/</link><pubDate>Tue, 02 Jan 2024 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/rhino-lidar-apartment-scan/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Nous avons utilisé l’app &lt;strong&gt;Rhino&lt;/strong&gt; sur iPhone avec &lt;strong&gt;LiDAR&lt;/strong&gt; pour scanner notre appartement et clarifier les choix d’aménagement et de mobilier.&lt;/p&gt;
+&lt;h3 id="lidar-et-rhino"&gt;LiDAR et Rhino&lt;/h3&gt;
+&lt;p&gt;Le LiDAR capture la profondeur rapidement ; Rhino sur iPhone transforme ces scans en géométrie 3D exploitable directement sur l’appareil.&lt;/p&gt;
+&lt;h3 id="déroulé"&gt;Déroulé&lt;/h3&gt;
+&lt;p&gt;Nous avons parcouru pièce par pièce pendant que le téléphone cartographiait l’espace ; Rhino mettait le modèle à jour au fil du déplacement.&lt;/p&gt;
+&lt;h3 id="captures-décran"&gt;Captures d’écran&lt;/h3&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/rhino-lidar-apartment-scan/images/Screenshot-from-2024-01-02-22-41-35.png" alt="Workflow de scan"&gt;&lt;/p&gt;</description></item><item><title>HDR-10bpp-Display-Test</title><link>http://localhost:1313/blog/fr/projects/hdr-10bpp-display-test/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/hdr-10bpp-display-test/</guid><description>&lt;h2 id="hdr-10bpp-display-test"&gt;HDR-10bpp-Display-Test&lt;/h2&gt;
+&lt;p&gt;Petit projet pour vérifier les capacités &lt;strong&gt;HDR 4K&lt;/strong&gt; sur Linux, notamment une profondeur de &lt;strong&gt;10 bits par canal&lt;/strong&gt;. Utile pour valider chaîne graphique, pilotes et écran.&lt;/p&gt;
+&lt;h3 id="démarrage"&gt;Démarrage&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/hdr-10bpp-display-test"&gt;Dépôt GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="prérequis-exemple-debianubuntu"&gt;Prérequis (exemple Debian/Ubuntu)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Serveur X, Python 3, GTK 3&lt;/li&gt;
+&lt;li&gt;ImageJ (affichage 10 bits), ImageIO&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo apt-get install xserver-xorg python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 imagej
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Les procédures détaillées et scripts sont décrits en anglais dans le README du dépôt.&lt;/p&gt;</description></item><item><title>Media center (Docker Compose)</title><link>http://localhost:1313/blog/fr/projects/mediaboxdockercompose/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/mediaboxdockercompose/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;Dépôt&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE"&gt;Licence MIT&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Stack média en Docker Compose : récupération (torrents et Usenet), chaîne *Arr, sous-titres, lecture avec &lt;strong&gt;Plex&lt;/strong&gt; ou &lt;strong&gt;Jellyfin&lt;/strong&gt;, demandes et supervision. Les volumes et chemins suivent le &lt;code&gt;docker-compose.yml&lt;/code&gt; du dépôt (variable &lt;code&gt;ROOT&lt;/code&gt;, etc.).&lt;/p&gt;
+&lt;h2 id="contenu-de-la-stack"&gt;Contenu de la stack&lt;/h2&gt;
+&lt;p&gt;Regroupement par rôle (détails dans le &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml"&gt;fichier compose&lt;/a&gt;) :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Clients et indexeurs&lt;/strong&gt; — Deluge, NZBGet, Jackett, NZBHydra2, Prowlarr&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatisation&lt;/strong&gt; — Sonarr, Radarr, Lidarr, Bazarr, CouchPotato ; Readarr (livres) ; Whisparr ; Tdarr (transcodage)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bibliothèques et demandes&lt;/strong&gt; — Plex, Jellyfin, Ombi, Jellyseerr, Tautulli&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complément&lt;/strong&gt; — Stash (organisateur de bibliothèque spécialisé)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Exploitation&lt;/strong&gt; — Netdata, Dashmachine, Filebrowser&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="démarrage-rapide"&gt;Démarrage rapide&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Installer &lt;a href="https://docs.docker.com/get-docker/"&gt;Docker&lt;/a&gt; et Compose sur la machine.&lt;/li&gt;
+&lt;li&gt;Cloner le dépôt et renseigner les variables d’environnement (fichier &lt;code&gt;.env&lt;/code&gt; du dépôt, chemins type &lt;code&gt;ROOT&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Depuis le dossier du projet :&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/MediaBoxDockerCompose.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd MediaBoxDockerCompose
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;L’ancienne commande &lt;code&gt;docker-compose up -d&lt;/code&gt; reste valable ; le &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose#readme"&gt;README&lt;/a&gt; du dépôt décrit la procédure en anglais.&lt;/p&gt;</description></item><item><title>RetroArch Web Games</title><link>http://localhost:1313/blog/fr/projects/retroarch-web-games/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/retroarch-web-games/</guid><description>&lt;h2 id="retroarch-web-games"&gt;RetroArch Web Games&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/retroarch-web-games"&gt;retroarch-web-games&lt;/a&gt; — RetroArch dans le navigateur via Docker, avec jeux NES, SNES, Mega Drive et Game Boy pré-téléchargés.&lt;/p&gt;
+&lt;h3 id="fonctionnalités"&gt;Fonctionnalités&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Jeux fournis avec l’image&lt;/li&gt;
+&lt;li&gt;Lecteur web auto-hébergé&lt;/li&gt;
+&lt;li&gt;Déploiement simple avec Docker / Docker Compose&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="utilisation"&gt;Utilisation&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker-compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Image Docker : &lt;a href="https://hub.docker.com/r/antoinebou13/retroarch-web-games"&gt;hub.docker.com/r/antoinebou13/retroarch-web-games&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Les détails supplémentaires sont en anglais dans le dépôt GitHub.&lt;/p&gt;</description></item><item><title>Mon parcours en génie logiciel</title><link>http://localhost:1313/blog/fr/posts/software-engineering-journey/</link><pubDate>Sat, 30 Dec 2023 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/software-engineering-journey/</guid><description>&lt;p&gt;La bio de ce site résume la facette du métier qui m’intéresse le plus : &lt;strong&gt;backend&lt;/strong&gt;, &lt;strong&gt;plateforme&lt;/strong&gt; et &lt;strong&gt;DevSecOps&lt;/strong&gt;. Cet article prolonge ce regard — pas une chronologie d’emplois, mais les idées qui reviennent quand on cesse de ne mesurer que « les features livrées ».&lt;/p&gt;
+&lt;h2 id="des-features-aux-systèmes"&gt;Des features aux systèmes&lt;/h2&gt;
+&lt;p&gt;Au début, le progrès semble linéaire : tickets fermés, endpoints ajoutés, écrans livrés. Ce travail compte. Avec le temps, les problèmes intéressants se situent un cran au-dessus : comment les services communiquent, comment les pannes se propagent, comment un changement dans le dépôt d’une équipe affecte tout le monde le lundi matin. Le backend cesse d’être « écrire le handler » et devient « concevoir quelque chose qui reste compréhensible quand vous n’êtes plus dans la pièce ».&lt;/p&gt;</description></item><item><title>Portfolio</title><link>http://localhost:1313/blog/fr/projects/porfolio/</link><pubDate>Sat, 30 Dec 2023 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/porfolio/</guid><description>&lt;h2 id="projet-portfolio"&gt;Projet portfolio&lt;/h2&gt;
+&lt;p&gt;Site personnel statique généré avec &lt;strong&gt;Hugo&lt;/strong&gt;. Dépôt : &lt;a href="https://github.com/antoinebou12/portfolio"&gt;github.com/antoinebou12/portfolio&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>GPT-4 vs GPT-3.5 — capacités et cadre des coûts API</title><link>http://localhost:1313/blog/fr/posts/gpt4-api-costs-overview/</link><pubDate>Mon, 10 Apr 2023 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/gpt4-api-costs-overview/</guid><description>&lt;p&gt;&lt;img src="https://media.licdn.com/dms/image/D5612AQHKus7rY_HvVQ/article-cover_image-shrink_720_1280/0/1681059889367?e=1709769600&amp;amp;v=beta&amp;amp;t=39LUP6caikwBW_QeEC7T-2peoci56x6v9xzNtCPdWxQ" alt="Image de couverture de l’article" title="Cover Image for AI Article"&gt;&lt;/p&gt;
+&lt;p&gt;Alors que l’intelligence artificielle progresse, de plus en plus d’entreprises intègrent des chatbots à leur service client. Ces chatbots couvrent un large spectre de demandes, des questions simples aux sujets plus complexes. Le coût de mise en œuvre et de maintenance reste un facteur important. Dans cet article, on estime les coûts d’utilisation des modèles &lt;strong&gt;GPT-4&lt;/strong&gt; et &lt;strong&gt;GPT-3.5-turbo&lt;/strong&gt; avec un plafond de &lt;strong&gt;25 messages toutes les 3 heures&lt;/strong&gt; sur un mois, en supposant des tailles de prompt moyennes comparables (&lt;strong&gt;50 à 200 jetons&lt;/strong&gt;).&lt;/p&gt;</description></item><item><title>Créer un CV professionnel avec JSON Resume</title><link>http://localhost:1313/blog/fr/posts/professional-resume-json-resume/</link><pubDate>Sat, 10 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/professional-resume-json-resume/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Avoir un CV en ligne compte. Une approche efficace consiste à utiliser le paquet npm &lt;strong&gt;JSON Resume&lt;/strong&gt; : rédiger le CV en JSON, puis l’exporter en &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;PDF&lt;/strong&gt; ou l’intégrer à un site personnel.&lt;/p&gt;
+&lt;h2 id="format-json-resume"&gt;Format JSON Resume&lt;/h2&gt;
+&lt;p&gt;JSON Resume est une initiative open source communautaire pour un standard CV en JSON. Le format est léger et facile à manipuler, ce qui permet de construire des outils autour.&lt;/p&gt;
+&lt;p&gt;Sections typiques :&lt;/p&gt;</description></item><item><title>Architecture réseau — de Lucidchart à PlantUML C4</title><link>http://localhost:1313/blog/fr/posts/home-network-plantuml-c4/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/home-network-plantuml-c4/</guid><description>&lt;p&gt;J’ai récemment entamé une refonte de mon réseau domestique. Le passage de Draw.io à &lt;strong&gt;PlantUML C4&lt;/strong&gt; pour les diagrammes de déploiement change la donne. 🏡&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/home-network-plantuml-c4/images/1688937735221.jpeg" alt="1688937733753.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;PlantUML C4 propose une approche &lt;strong&gt;textuelle&lt;/strong&gt; 📝 qui s’intègre bien au contrôle de version, ce qui en fait un outil adapté à l’infrastructure as code (IaC) 🏗️ .&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/home-network-plantuml-c4/images/1688937733753.jpeg" alt="1688937733753.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;Je migre aussi vers &lt;strong&gt;Cloudflare&lt;/strong&gt; pour la gestion DNS ✅&lt;br&gt;
+Je compte utiliser &lt;strong&gt;Terraform&lt;/strong&gt; et &lt;strong&gt;GitHub Actions&lt;/strong&gt; comme CD 🔁&lt;/p&gt;</description></item><item><title>Conférence Snowflake Data-for-Breakfast — points saillants</title><link>http://localhost:1313/blog/fr/posts/snowflake-data-for-breakfast/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/snowflake-data-for-breakfast/</guid><description>&lt;p&gt;Notes issues de la conférence &lt;strong&gt;Snowflake Data-for-Breakfast&lt;/strong&gt; sur la plateforme de données cloud Snowflake, l’entrepôt de données, l’intégration et l’analytique — dont une keynote forte d’&lt;strong&gt;Infostrux&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="vue-densemble"&gt;Vue d’ensemble&lt;/h2&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/snowflake-data-for-breakfast/images/governed.jpeg" alt="Supports de conférence"&gt;&lt;/p&gt;
+&lt;h2 id="enseignements-clés"&gt;Enseignements clés&lt;/h2&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/snowflake-data-for-breakfast/images/menu.jpeg" alt="Menu de l’événement"&gt;&lt;/p&gt;
+&lt;h3 id="opérations-de-données-à-léchelle-mondiale"&gt;Opérations de données à l’échelle mondiale&lt;/h3&gt;
+&lt;p&gt;Une étude de cas dans le secteur de la santé montrait Snowflake gérant des opérations de données sécurisées sur trois continents, en simplifiant le partage avec les partenaires tout en gardant haute disponibilité et SLA solides.&lt;/p&gt;</description></item><item><title>Créateur de Lenses Snapchat</title><link>http://localhost:1313/blog/fr/posts/snapchat-lens-creator/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/snapchat-lens-creator/</guid><description>&lt;p&gt;&lt;em&gt;Mise à jour avril 2026 avec les chiffres Lens Insights actuels.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;À ce jour, mes lenses Snapchat totalisent &lt;strong&gt;6,21 M de lectures&lt;/strong&gt;, &lt;strong&gt;12,11 M de vues&lt;/strong&gt;, &lt;strong&gt;616,4 k partages&lt;/strong&gt; et &lt;strong&gt;6 893 favoris&lt;/strong&gt; (cumul, Lens Insights). Tout a commencé par un intérêt personnel pour les filtres RA et s’est transformé en missions payantes sur &lt;strong&gt;Fiverr&lt;/strong&gt; en parallèle de mes expérimentations.&lt;/p&gt;
+&lt;p&gt;Entre &lt;strong&gt;2017 et 2020&lt;/strong&gt;, j’ai publié &lt;strong&gt;42 lenses&lt;/strong&gt; pour moi-même et pour des clients. Parmi celles qui ont le plus servi figurent &lt;strong&gt;Go Crazy Facetime&lt;/strong&gt; (~2,9 M de lectures), &lt;strong&gt;Face Ghosting&lt;/strong&gt; (~1,2 M) et &lt;strong&gt;BIG SMILE&lt;/strong&gt; (~520 k).&lt;/p&gt;</description></item><item><title>Expo Manger Santé 2023 — olives, kiosques et découvertes</title><link>http://localhost:1313/blog/fr/posts/expo-manger-sante-2023/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/expo-manger-sante-2023/</guid><description>&lt;p&gt;J’ai récemment participé à &lt;strong&gt;Expo Manger Santé 2023&lt;/strong&gt; à la &lt;strong&gt;Place des Congrès&lt;/strong&gt; à Montréal. Les photos de l’événement sont signées &lt;strong&gt;OS7Media&lt;/strong&gt; (&lt;a href="mailto:os7mediamatrix@gmail.com"&gt;os7mediamatrix@gmail.com&lt;/a&gt;) — merci pour les clichés utilisés ici.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/expo-manger-sante-2023/images/antoine1.jpeg" alt="Antoine1"&gt;
+&lt;img src="http://localhost:1313/blog/posts/expo-manger-sante-2023/images/antoine2.jpeg" alt="Antoine2"&gt;&lt;/p&gt;
+&lt;h2 id="une-vente-qui-a-porté-ses-fruits"&gt;Une vente qui a porté ses fruits&lt;/h2&gt;
+&lt;p&gt;En tant que vendeur, je suis passionné par le goût riche des olives et leurs bienfaits. Sur deux jours, j’ai pu partager cette passion avec le public, ce qui s’est traduit par de très bonnes ventes, environ &lt;strong&gt;300 $&lt;/strong&gt;. Au-delà du chiffre, ce sont surtout les échanges et les histoires autour des olives qui comptaient.&lt;/p&gt;</description></item><item><title>Les nouveautés de GitHub Copilot</title><link>http://localhost:1313/blog/fr/posts/github-copilot-cedille-session/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/github-copilot-cedille-session/</guid><description>&lt;p&gt;Les nouveautés de GitHub Copilot qui m&amp;rsquo;intéressent personnellement à voir prochainement.&lt;/p&gt;
+&lt;h2 id="copilot-chat-et-createnotebook"&gt;Copilot Chat et /createNotebook&lt;/h2&gt;
+&lt;p&gt;GitHub Copilot Chat avec &lt;code&gt;/createNotebook&lt;/code&gt; permet de créer rapidement un carnet Jupyter à partir du code existant — utile pour la documentation et le prototypage, notamment pour les personnes en data science et en enseignement.&lt;/p&gt;
+&lt;h2 id="github-next"&gt;GitHub Next&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://githubnext.com"&gt;GitHub Next&lt;/a&gt; regroupe les expérimentations et pistes d’innovation autour des produits GitHub.&lt;/p&gt;
+&lt;h2 id="session-à-cédille"&gt;Session à Cédille&lt;/h2&gt;
+&lt;p&gt;Chez &lt;strong&gt;Cédille&lt;/strong&gt;, nous avons assisté à une session avec &lt;strong&gt;GitHub&lt;/strong&gt; et &lt;strong&gt;Arctiq&lt;/strong&gt; centrée sur Copilot et les offres IA autour du développement.&lt;/p&gt;</description></item><item><title>Plateformes de chat en direct et de support (3CX, ManyChat, Kommunicate, Chatwoot)</title><link>http://localhost:1313/blog/fr/posts/livechat-platform-notes/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/livechat-platform-notes/</guid><description>&lt;p&gt;Ces notes viennent d’une comparaison pour le &lt;strong&gt;chat en direct sur site web&lt;/strong&gt;, les &lt;strong&gt;chatbots&lt;/strong&gt; et une &lt;strong&gt;boîte de réception partagée&lt;/strong&gt; pour le support. Les produits ci-dessous ne sont pas interchangeables : certains sont des piles de communications complètes, d’autres de l’automatisation marketing, et l’un est une solution open source de type helpdesk. &lt;strong&gt;Les tarifs, canaux et fonctionnalités évoluent souvent&lt;/strong&gt;—utilisez ce texte comme repère, puis vérifiez sur le site de chaque éditeur.&lt;/p&gt;</description></item><item><title>Plugin OpenAI D2C — diagrammes PlantUML, Mermaid et D2</title><link>http://localhost:1313/blog/fr/posts/d2c-openai-diagram-plugin/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/d2c-openai-diagram-plugin/</guid><description>&lt;p&gt;GitHub : &lt;a href="https://lnkd.in/en3dSVuQ"&gt;https://lnkd.in/en3dSVuQ&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;URL du plugin : &lt;a href="https://lnkd.in/exVNZMnT"&gt;https://lnkd.in/exVNZMnT&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;D2COpenAIPlugin&lt;/strong&gt; est un plugin pour ChatGPT qui permet de générer des diagrammes avec &lt;strong&gt;PlantUML&lt;/strong&gt;, &lt;strong&gt;Mermaid&lt;/strong&gt; et &lt;strong&gt;D2&lt;/strong&gt;. Il enrichit ChatGPT en offrant un moyen fluide de créer des diagrammes variés.&lt;/p&gt;
+&lt;p&gt;Pour un flux &lt;strong&gt;prompt dans le chat&lt;/strong&gt; (modèle AIPRM, exemples de séquences cache hit/miss, astuces d’outils canvas), voir &lt;strong&gt;&lt;a href="http://localhost:1313/blog/fr/posts/chatgpt-airprm-sequence-diagrams/"&gt;Diagrammes avec ChatGPT et AIPRM&lt;/a&gt;&lt;/strong&gt; — complémentaire à cette approche par plugin.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/d2c-openai-diagram-plugin/images/1692387139389.jpeg" alt="1692387139389.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;🤖 ChatGPT UML Plugins - DEMO&lt;/p&gt;</description></item><item><title>Prompts de diagrammes avec ChatGPT et AIPRM (PlantUML, Mermaid, etc.)</title><link>http://localhost:1313/blog/fr/posts/chatgpt-airprm-sequence-diagrams/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/chatgpt-airprm-sequence-diagrams/</guid><description>&lt;p&gt;L’extension navigateur &lt;a href="https://www.aiprm.com/"&gt;AIPRM&lt;/a&gt; ajoute des modèles de prompts réutilisables dans ChatGPT. Avec un &lt;strong&gt;prompt structuré&lt;/strong&gt; (type de diagramme, ce qu’il faut représenter, pourquoi, et quel outil), vous obtenez des réponses cohérentes — que vous visiez du texte (&lt;strong&gt;PlantUML&lt;/strong&gt;, &lt;strong&gt;Mermaid&lt;/strong&gt;) ou une marche à suivre pour un outil graphique.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="http://localhost:1313/blog/fr/posts/chatgpt-airprm-sequence-diagrams/"&gt;Article complet en anglais&lt;/a&gt;&lt;/strong&gt; (même slug — vous pouvez aussi choisir &lt;strong&gt;EN&lt;/strong&gt; dans l’en-tête du site).&lt;/p&gt;
+&lt;h2 id="gabarit-de-prompt-aiprm-à-copier-et-adapter"&gt;Gabarit de prompt AIPRM (à copier et adapter)&lt;/h2&gt;
+&lt;p&gt;Une ligne par dimension. Collez le bloc dans ChatGPT (avec ou sans AIPRM) et modifiez les valeurs entre crochets.&lt;/p&gt;</description></item><item><title>Run:ai sur AWS — notes de webinaire (inférence et autoscaling)</title><link>http://localhost:1313/blog/fr/posts/runai-aws-inference-webinar/</link><pubDate>Tue, 06 Sep 2022 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/runai-aws-inference-webinar/</guid><description>&lt;p&gt;Notes du webinaire &lt;strong&gt;Run:ai&lt;/strong&gt; sur l’exécution et la montée en charge des charges d’&lt;strong&gt;inférence&lt;/strong&gt; sur &lt;strong&gt;AWS&lt;/strong&gt; (Amériques). Run:ai met l’accent sur l’ordonnancement, la visibilité et l’efficacité pour les modèles sur GPU dans des environnements partagés.&lt;/p&gt;
+&lt;h2 id="tableau-de-bord"&gt;Tableau de bord&lt;/h2&gt;
+&lt;p&gt;Vue d’ensemble des jobs et de l’usage des ressources.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/runai-aws-inference-webinar/images/dashboard.jpeg" alt="Tableau de bord"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/runai-aws-inference-webinar/images/dashboard1.jpeg" alt="Tableau de bord (autre vue)"&gt;&lt;/p&gt;
+&lt;h2 id="cli"&gt;CLI&lt;/h2&gt;
+&lt;p&gt;Opérations et automatisation en ligne de commande.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/runai-aws-inference-webinar/images/cli.jpeg" alt="CLI"&gt;&lt;/p&gt;
+&lt;h2 id="modèles-et-charge"&gt;Modèles et charge&lt;/h2&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/runai-aws-inference-webinar/images/model.jpeg" alt="Vue modèle"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/runai-aws-inference-webinar/images/multi.jpeg" alt="Plusieurs instances / scaling"&gt;&lt;/p&gt;</description></item><item><title>Balance Renpho, Home Assistant et rétro-ingénierie de l’API</title><link>http://localhost:1313/blog/fr/posts/renpho-health-api-blueprint/</link><pubDate>Sun, 10 Oct 2021 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/renpho-health-api-blueprint/</guid><description>&lt;h2 id="inspiration--le--blueprint-protocol--de-bryan-johnson"&gt;Inspiration : le « Blueprint Protocol » de Bryan Johnson&lt;/h2&gt;
+&lt;p&gt;Pour moi, le suivi de santé personnel a commencé avec le &lt;strong&gt;Blueprint Protocol&lt;/strong&gt; de Bryan Johnson — une poussée vers l’auto-quantification qui collait à ma façon de voir la forme. Je voulais le même niveau de granularité ; une balance &lt;strong&gt;Renpho&lt;/strong&gt; avec bio-impédance s’est avérée un moyen pratique d’obtenir plus que le simple poids.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:1313/blog/posts/renpho-health-api-blueprint/images/blueprint.jpg" alt="Inspiration Blueprint Protocol"&gt;&lt;/p&gt;
+&lt;h2 id="fork-de-hass-renpho-et-écosystème-home-assistant"&gt;Fork de hass-renpho et écosystème Home Assistant&lt;/h2&gt;
+&lt;p&gt;J’ai trouvé &lt;strong&gt;hass-renpho&lt;/strong&gt;, une intégration communautaire qui ramène les données Renpho dans Home Assistant. Le projet était à l’arrêt ; avec le mainteneur d’origine indisponible, j’ai forké pour étendre la prise en charge des métriques exposées par le matériel.&lt;/p&gt;</description></item><item><title>Analyseur de bandes-annonces</title><link>http://localhost:1313/blog/fr/projects/movietraileranalyzer/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/movietraileranalyzer/</guid><description>&lt;p&gt;Voir le projet sur &lt;a href="https://github.com/antoinebou12/MovieTrailerAnalyzer/tree/main"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Classificateur de fichiers</title><link>http://localhost:1313/blog/fr/projects/fileclassifier/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/fileclassifier/</guid><description>&lt;h1 id="fileclassifier"&gt;FileClassifier&lt;/h1&gt;
+&lt;p&gt;Outil en ligne de commande qui organise automatiquement les fichiers d’un dossier en catégories selon leur type (images, documents, vidéos, etc.). Classifieur extensible avec prise en charge optionnelle de la modélisation de sujets.&lt;/p&gt;
+&lt;h2 id="fonctionnalités"&gt;Fonctionnalités&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Organisation automatique par types de fichiers&lt;/li&gt;
+&lt;li&gt;Catégories prédéfinies pour les formats courants&lt;/li&gt;
+&lt;li&gt;Classifieur extensible (modélisation de sujets)&lt;/li&gt;
+&lt;li&gt;Structure de sortie configurable&lt;/li&gt;
+&lt;li&gt;Léger et simple à utiliser&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/FileClassifier.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd FileClassifier
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install poetry
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;poetry install
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;La suite (usage, options, exemples) est documentée en anglais dans le &lt;a href="https://github.com/antoinebou12/FileClassifier"&gt;dépôt&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin</title><link>http://localhost:1313/blog/fr/projects/d2copenaiplugin/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/d2copenaiplugin/</guid><description>&lt;h1 id="d2copenaiplugin"&gt;D2COpenAIPlugin&lt;/h1&gt;
+&lt;p&gt;Consultez le projet &lt;a href="https://github.com/antoinebou12/D2COpenAIPlugin/tree/main"&gt;sur GitHub&lt;/a&gt;.&lt;br&gt;
+Démo en ligne : &lt;a href="https://openai-uml-plugin.vercel.app"&gt;openai-uml-plugin.vercel.app&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Rejoignez la &lt;a href="https://openai.com/waitlist/plugins"&gt;liste d’attente des extensions ChatGPT&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;D2COpenAIPlugin est une extension pour ChatGPT qui permet de générer des diagrammes avec &lt;strong&gt;PlantUML&lt;/strong&gt; ou &lt;strong&gt;Mermaid&lt;/strong&gt;, directement depuis la conversation.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif" alt="https://github.com/antoinebou12/UMLOpenAIPlugin/docs/DiagramGeneratorPlugin.gif"&gt;
+&lt;img src="https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41" alt="image"&gt;&lt;/p&gt;
+&lt;h2 id="fonctionnalités"&gt;Fonctionnalités&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Diagrammes PlantUML ou Mermaid&lt;/li&gt;
+&lt;li&gt;Intégration avec ChatGPT&lt;/li&gt;
+&lt;li&gt;Interface orientée création de schémas&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="installation-aperçu"&gt;Installation (aperçu)&lt;/h2&gt;
+&lt;p&gt;Prérequis typiques : Python 3.10+, FastAPI, uvicorn. Cloner le dépôt, installer les dépendances (poetry ou &lt;code&gt;requirements-dev.txt&lt;/code&gt;), configurer les variables d’environnement et un jeton bearer, puis lancer l’API (par ex. &lt;code&gt;uvicorn app:app --host 127.0.0.1 --port 5003&lt;/code&gt;).&lt;/p&gt;</description></item><item><title>DasherControl</title><link>http://localhost:1313/blog/fr/projects/dashcontrol/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/dashcontrol/</guid><description>&lt;h1 id="dashercontrol"&gt;DasherControl&lt;/h1&gt;
+&lt;p&gt;Tableau de bord configurable avec grille d’éléments (iframes, favoris, etc.) et contrôle basique de conteneurs &lt;strong&gt;Docker&lt;/strong&gt;, développé en &lt;strong&gt;Vue.js&lt;/strong&gt; et &lt;strong&gt;Rust&lt;/strong&gt; (Rocket).&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"&gt;
+&lt;img src="https://img.shields.io/github/workflow/status/antoinebou13/DasherControl/build" alt="GitHub Workflow Status"&gt;
+&lt;img src="https://img.shields.io/github/v/release/antoinebou13/DasherControl" alt="GitHub release (latest by date)"&gt;&lt;/p&gt;
+&lt;h2 id="objectif"&gt;Objectif&lt;/h2&gt;
+&lt;p&gt;Centraliser les applications web du homelab (Sonarr, Jellyfin, etc.) sans multiplier les onglets, et préparer des widgets (applets) pour les tâches récurrentes — reverse proxy, SSL, supervision — avec une expérience proche d’un bureau de widgets, persistée en base.&lt;/p&gt;</description></item><item><title>PlantUMLApi</title><link>http://localhost:1313/blog/fr/projects/plantumlapi/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/plantumlapi/</guid><description>&lt;h1 id="plantumlapi"&gt;PlantUMLApi&lt;/h1&gt;
+&lt;p&gt;Interface Python vers un serveur &lt;strong&gt;PlantUML&lt;/strong&gt; : génération de diagrammes UML et assimilés à partir d’un langage texte simple. Par défaut le client cible le serveur public PlantUML, mais il peut pointer vers n’importe quelle instance.&lt;/p&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install plantumlapi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ou depuis les sources :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install git+https://github.com/antoinebou12/plantumlapi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="ligne-de-commande"&gt;Ligne de commande&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;plantumlapi --help
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;La référence complète des options et de l’API Python est en anglais dans le &lt;a href="https://github.com/antoinebou12/plantumlapi"&gt;dépôt&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>RawAnalyser</title><link>http://localhost:1313/blog/fr/projects/rawanalyser/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/rawanalyser/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/RawAnalyser"&gt;Dépôt GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="rawanalyser"&gt;RawAnalyser&lt;/h1&gt;
+&lt;p&gt;Outil Python pour l’analyse d’images RAW : détection de clipping noir/blanc, calcul gamma, planéité et vignettage (réf. Algolux), inspection des pixels Bayer.&lt;/p&gt;
+&lt;h2 id="prérequis"&gt;Prérequis&lt;/h2&gt;
+&lt;p&gt;Python 2.7 ou 3 selon la branche du dépôt, avec notamment numpy, scipy, pyqt5, plotly, matplotlib, etc. (liste complète dans le README du projet).&lt;/p&gt;
+&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python rawanalyser.py --help
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;La documentation détaillée des options et workflows est en anglais sur &lt;a href="https://github.com/antoinebou12/RawAnalyser"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Serilog.Sinks.SentrySDK</title><link>http://localhost:1313/blog/fr/projects/serilog.sinks.sentrysdk/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/serilog.sinks.sentrysdk/</guid><description>&lt;h1 id="serilogsinkssentrysdk"&gt;Serilog.Sinks.SentrySDK&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Sink Serilog&lt;/strong&gt; pour &lt;strong&gt;Sentry&lt;/strong&gt; : centraliser logs et erreurs dans Sentry avec le SDK officiel.&lt;/p&gt;
+&lt;p&gt;S’inspire de &lt;a href="https://github.com/serilog-contrib/serilog-sinks-sentry"&gt;serilog-contrib/serilog-sinks-sentry&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="état-du-projet"&gt;État du projet&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml/badge.svg" alt=".NET Core Test"&gt;&lt;/a&gt;
+&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/CI.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/CI.yml/badge.svg" alt=".NET Core CI"&gt;&lt;/a&gt;
+&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/codeql.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/codeql.yml/badge.svg" alt="CodeQL"&gt;&lt;/a&gt;
+&lt;a href="https://codecov.io/gh/antoinebou12/Serilog.Sinks.SentrySDK"&gt;&lt;img src="https://codecov.io/gh/antoinebou12/Serilog.Sinks.SentrySDK/branch/main/graph/badge.svg?token=DKLJUGCpI4" alt="codecov"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="paquets-nuget"&gt;Paquets NuGet&lt;/h2&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;/th&gt;
+ &lt;th&gt;Paquet&lt;/th&gt;
+ &lt;th&gt;NuGet&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Serilog.Sinks.SentrySDK&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK/"&gt;Lien&lt;/a&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK/"&gt;&lt;img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.svg" alt="NuGet"&gt;&lt;/a&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Serilog.Sinks.SentrySDK.AspNetCore&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore/"&gt;Lien&lt;/a&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore/"&gt;&lt;img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.AspNetCore.svg" alt="NuGet"&gt;&lt;/a&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="installation-et-configuration"&gt;Installation et configuration&lt;/h2&gt;
+&lt;p&gt;Exemples &lt;code&gt;dotnet add package&lt;/code&gt;, configuration dans &lt;code&gt;Program.cs&lt;/code&gt; / &lt;code&gt;appsettings.json&lt;/code&gt;, et options avancées : voir le &lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"&gt;README en anglais&lt;/a&gt; sur GitHub.&lt;/p&gt;</description></item><item><title>WordUnveil</title><link>http://localhost:1313/blog/fr/projects/wordunveil/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/fr/projects/wordunveil/</guid><description>&lt;h1 id="wordunveil"&gt;WordUnveil&lt;/h1&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/badge/license-MIT-green" alt="License"&gt;
+&lt;img src="https://img.shields.io/badge/-RedwoodJS-B7410E?logo=redwoodjs" alt="Redwood"&gt;
+&lt;img src="https://img.shields.io/badge/-GraphQL-E10098?logo=graphql" alt="GraphQL"&gt;
+&lt;img src="https://img.shields.io/badge/-Prisma-2D3748?logo=prisma" alt="Prisma"&gt;
+&lt;img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql" alt="MySQL"&gt;&lt;/p&gt;
+&lt;p&gt;Variante multilingue du jeu Wordle pour découvrir du vocabulaire tout en jouant. Stack : RedwoodJS, GraphQL, Prisma et MySQL.&lt;/p&gt;
+&lt;h2 id="démarrage"&gt;Démarrage&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;En développement&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd WordUnveil
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn install
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cp .env.default .env
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw prisma migrate dev
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw exec seed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Docker Compose&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker-compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;PostgreSQL seul&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker run --name&lt;span style="color:#f92672"&gt;=&lt;/span&gt;db -e POSTGRES_USER&lt;span style="color:#f92672"&gt;=&lt;/span&gt;admin -e POSTGRES_PASSWORD&lt;span style="color:#f92672"&gt;=&lt;/span&gt;admin -p &lt;span style="color:#e6db74"&gt;&amp;#39;5432:5432&amp;#39;&lt;/span&gt; -d postgres
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="déploiement"&gt;Déploiement&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw deploy baremetal production --first-run
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>Évolution du réseau — construire un lab à la maison</title><link>http://localhost:1313/blog/fr/posts/home-networking-evolution/</link><pubDate>Mon, 06 Sep 2021 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/home-networking-evolution/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Bienvenue dans un nouveau chapitre du blog : les détails de la mise en place d’un &lt;strong&gt;réseau domestique&lt;/strong&gt; solide. En tant qu’ingénieur logiciel passionné par les protocoles et le calcul efficace, j’ai voulu un système qui équilibre performance, sécurité et coût. Ce billet raconte l’expérience et les choix techniques.&lt;/p&gt;
+&lt;h2 id="relever-le-défi-du-réseau-maison"&gt;Relever le défi du réseau maison&lt;/h2&gt;
+&lt;p&gt;Mon intérêt pour le réseau remonte aux études (IP, VPN, etc.). Face au coût du cloud, j’ai visé une solution locale avec du &lt;strong&gt;matériel ancien&lt;/strong&gt;, pour limiter dépenses hardware et services en ligne tout en gardant une bonne fonctionnalité.&lt;/p&gt;</description></item><item><title>Bibliothèque Python MarketWatch</title><link>http://localhost:1313/blog/fr/projects/marketwatch/</link><pubDate>Mon, 06 Sep 2021 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/fr/projects/marketwatch/</guid><description>&lt;h1 id="bibliothèque-python-marketwatch"&gt;Bibliothèque Python MarketWatch&lt;/h1&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/pypi/v/marketwatch" alt="PyPI"&gt;
+&lt;img src="https://img.shields.io/pypi/pyversions/marketwatch" alt="PyPI - Python Version"&gt;
+&lt;img src="https://img.shields.io/pypi/l/marketwatch" alt="PyPI - License"&gt;
+&lt;img src="https://img.shields.io/pypi/dm/marketwatch" alt="PyPI - Downloads"&gt;
+&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/marketwatch" alt="GitHub last commit"&gt;
+&lt;a href="https://github.com/antoinebou12/marketwatch/actions/workflows/python-test.yml"&gt;&lt;img src="https://github.com/antoinebou12/marketwatch/actions/workflows/python-test.yml/badge.svg" alt="Python Test and Build"&gt;&lt;/a&gt;
+&lt;img src="https://raw.githubusercontent.com/antoinebou12/marketwatch/main/.github/badge/coverage.svg" alt="Coverage"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.marketwatch.com"&gt;MarketWatch&lt;/a&gt; · &lt;a href="https://antoinebou12.github.io/marketwatch/"&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Client Python pour le &lt;strong&gt;jeu boursier&lt;/strong&gt; MarketWatch (connexion, cours, portefeuille, ordres, etc.). S’appuie sur des travaux antérieurs de la communauté (voir le dépôt pour les crédits).&lt;/p&gt;
+&lt;p&gt;Les détails d’API, exemples et changelog complets sont en anglais sur &lt;a href="https://github.com/antoinebou12/marketwatch"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Composant web de sélection de plage de dates (jQuery + plugin)</title><link>http://localhost:1313/blog/fr/posts/tutorial-date-range-picker-component/</link><pubDate>Fri, 05 Feb 2016 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/tutorial-date-range-picker-component/</guid><description>&lt;p&gt;Ce tutoriel date de l’ère &lt;strong&gt;jQuery + Moment&lt;/strong&gt; : on enveloppe deux champs texte dans un élément &lt;code&gt;&amp;lt;daterangepicker-two-input&amp;gt;&lt;/code&gt;, on l’enregistre avec &lt;code&gt;customElements.define&lt;/code&gt;, et on confie le conteneur au plugin &lt;strong&gt;Date Range Picker&lt;/strong&gt;. Les stacks récentes préfèrent souvent &lt;code&gt;&amp;lt;input type=&amp;quot;date&amp;quot;&amp;gt;&lt;/code&gt;, flatpickr ou des composants de date du framework — mais beaucoup de tableaux de bord des années 2010 (et en maintenance) ressemblent encore à ça.&lt;/p&gt;
+&lt;h3 id="tutoriel--créer-un-élément-personnalisé-de-plage-de-dates"&gt;Tutoriel : créer un élément personnalisé de plage de dates&lt;/h3&gt;
+&lt;h4 id="introduction"&gt;Introduction&lt;/h4&gt;
+&lt;p&gt;Vous obtenez une petite balise réutilisable qui ouvre le calendrier de plage familier (style arrivée / départ) avec un balisage homogène entre pages.&lt;/p&gt;</description></item><item><title>Minuteur décompte personnalisé (HTML, CSS, JavaScript)</title><link>http://localhost:1313/blog/fr/posts/tutorial-custom-countdown-timer/</link><pubDate>Mon, 01 Feb 2016 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/tutorial-custom-countdown-timer/</guid><description>&lt;p&gt;Un décompte classique DOM + &lt;code&gt;setInterval&lt;/code&gt; : saisie en minutes, tick, démarrage et reset, et un court fichier audio à l’arrivée à zéro — le genre d’exemple qu’on trouvait partout dans les blogs « apprendre JavaScript » vers 2016, avant que les frameworks ne dominent la une.&lt;/p&gt;
+&lt;h3 id="tutoriel--construire-un-minuteur-décompte"&gt;Tutoriel : construire un minuteur décompte&lt;/h3&gt;
+&lt;h4 id="étape-1--structure-html"&gt;Étape 1 : structure HTML&lt;/h4&gt;
+&lt;p&gt;On pose la base : champ pour les minutes, affichage du décompte, boutons démarrer et réinitialiser.&lt;/p&gt;</description></item><item><title>Animation de vague 3D Three.js (tutoriel CodePen)</title><link>http://localhost:1313/blog/fr/posts/codepen-threejs-wave-tutorial/</link><pubDate>Thu, 07 Jan 2016 12:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/codepen-threejs-wave-tutorial/</guid><description>&lt;h2 id="démo-codepen"&gt;Démo CodePen&lt;/h2&gt;
+&lt;div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"&gt;
+ &lt;iframe
+ title="CodePen embed"
+ src="https://codepen.io/antoinebou13/embed/rNoqVOj?default-tab=result"
+ style="width:100%; height: 480px;"
+ loading="lazy"
+ allowfullscreen="true"
+ &gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h3 id="introduction"&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Ce tutoriel construit une &lt;strong&gt;animation de vague 3D&lt;/strong&gt; avec &lt;strong&gt;Three.js&lt;/strong&gt; : scène, caméra, renderer WebGL, grille de cubes et un mouvement ondulant simple — le genre de démo « regardez, du WebGL dans le navigateur » des articles Three.js + CodePen de 2016. Utilisez l’intégration ci-dessus pour modifier en direct.&lt;/p&gt;
+&lt;h4 id="mise-en-place-de-la-scène"&gt;Mise en place de la scène&lt;/h4&gt;
+&lt;p&gt;Scène, caméra perspective et renderer WebGL :&lt;/p&gt;</description></item><item><title>Tableau noir HTML5 Canvas (tutoriel CodePen)</title><link>http://localhost:1313/blog/fr/posts/codepen-blackboard-canvas-tutorial/</link><pubDate>Thu, 07 Jan 2016 11:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/codepen-blackboard-canvas-tutorial/</guid><description>&lt;h2 id="démo-codepen"&gt;Démo CodePen&lt;/h2&gt;
+&lt;div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"&gt;
+ &lt;iframe
+ title="CodePen embed"
+ src="https://codepen.io/antoinebou13/embed/MLEdxr?default-tab=result"
+ style="width:100%; height: 480px;"
+ loading="lazy"
+ allowfullscreen="true"
+ &gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Ce tutoriel parcourt un &lt;strong&gt;tableau noir interactif&lt;/strong&gt; avec &lt;strong&gt;Canvas HTML5&lt;/strong&gt; et JavaScript : dessin, import d’images via l’API File, effacement. C’est le style des pas-à-pas CodePen de 2016. L’intégration ci-dessus montre le résultat.&lt;/p&gt;
+&lt;h2 id="mise-en-place-du-canvas"&gt;Mise en place du canvas&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;canvas&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;drawingCanvas&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;canvas&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;html&lt;/span&gt;&lt;span style="color:#f92672"&gt;,&lt;/span&gt; &lt;span style="color:#f92672"&gt;body&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;width&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;100&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;height&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;100&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;overflow&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;hidden&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;margin&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;padding&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;background&lt;/span&gt;: hsla(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;canvas&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;background&lt;/span&gt;: hsla(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;%&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="contrôles"&gt;Contrôles&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;color&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;colorPicker&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;value&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;#FFFFFF&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;range&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;penSize&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;min&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;1&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;max&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;20&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;value&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;button&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;saveImage&amp;#34;&lt;/span&gt;&amp;gt;Save Image&amp;lt;/&lt;span style="color:#f92672"&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;button&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;eraseCanvas&amp;#34;&lt;/span&gt;&amp;gt;Erase&amp;lt;/&lt;span style="color:#f92672"&gt;button&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;file&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;imageLoader&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;imageLoader&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;accept&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;image/*&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#colorPicker&lt;span style="color:#f92672"&gt;,&lt;/span&gt; #penSize&lt;span style="color:#f92672"&gt;,&lt;/span&gt; #saveImage&lt;span style="color:#f92672"&gt;,&lt;/span&gt; #eraseCanvas&lt;span style="color:#f92672"&gt;,&lt;/span&gt; #imageLoader {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;position&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;absolute&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;top&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;10&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;z-index&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1000&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#colorPicker {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;right&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;40&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#penSize {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;right&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;120&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#eraseCanvas {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;right&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;275&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#saveImage {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;right&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;350&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#imageLoader {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;right&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;400&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;px&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="logique-de-dessin"&gt;Logique de dessin&lt;/h2&gt;
+&lt;p&gt;Voir la &lt;a href="http://localhost:1313/blog/fr/posts/codepen-blackboard-canvas-tutorial/"&gt;version anglaise&lt;/a&gt; pour le JavaScript complet (&lt;code&gt;onMouseDown&lt;/code&gt;, &lt;code&gt;onMouseMove&lt;/code&gt;, &lt;code&gt;redrawCanvas&lt;/code&gt;, &lt;code&gt;loadImage&lt;/code&gt;, &lt;code&gt;saveImage&lt;/code&gt;, &lt;code&gt;eraseCanvas&lt;/code&gt;).&lt;/p&gt;</description></item><item><title>Bulles d’images déplaçables et triables (style Messenger)</title><link>http://localhost:1313/blog/fr/posts/tutorial-jquery-messenger-image-bubbles/</link><pubDate>Thu, 07 Jan 2016 10:00:00 -0400</pubDate><guid>http://localhost:1313/blog/fr/posts/tutorial-jquery-messenger-image-bubbles/</guid><description>&lt;h3 id="tutoriel--images-déplaçables-et-triables-avec-jquery"&gt;Tutoriel : images déplaçables et triables avec jQuery&lt;/h3&gt;
+&lt;h4 id="introduction"&gt;Introduction&lt;/h4&gt;
+&lt;p&gt;Ce guide utilise &lt;strong&gt;jQuery&lt;/strong&gt; et &lt;strong&gt;jQuery UI&lt;/strong&gt; pour des avatars « bulles » circulaires que l’on peut faire glisser et réordonner — les mêmes ingrédients que dans les démos à la mode quand les cercles façon Messenger et les listes triables étaient partout (ère ES5 + jQuery, ~2016). Pratique pour du legacy ou pour garder la recette au même endroit.&lt;/p&gt;
+&lt;h4 id="prérequis"&gt;Prérequis&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Bases HTML, CSS et JavaScript&lt;/li&gt;
+&lt;li&gt;Bibliothèques jQuery et jQuery UI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="structure-html"&gt;Structure HTML&lt;/h4&gt;
+&lt;p&gt;Deux listes non ordonnées (&lt;code&gt;ul&lt;/code&gt;) avec des éléments (&lt;code&gt;li&lt;/code&gt;) contenant des images.&lt;/p&gt;</description></item></channel></rss>

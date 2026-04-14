@@ -1,0 +1,49 @@
+<script>
+  (function () {
+    "use strict";
+    function tagHue(name) {
+      var h = 0;
+      var s = String(name);
+      for (var i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+      return ((h % 360) + 360) % 360;
+    }
+    function tagChipStyle(name) {
+      var h = tagHue(name);
+      var dark = document.documentElement.classList.contains("dark");
+      if (dark) {
+        return (
+          "background:hsl(" +
+          h +
+          ",22%,22%);color:hsl(" +
+          h +
+          ",12%,94%);border-color:hsl(" +
+          h +
+          ",18%,34%)"
+        );
+      }
+      return (
+        "background:hsl(" +
+        h +
+        ",28%,94%);color:hsl(" +
+        h +
+        ",35%,22%);border-color:hsl(" +
+        h +
+        ",22%,78%)"
+      );
+    }
+    function paintSiteTagChips() {
+      document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function (el) {
+        var nm = el.getAttribute("data-tag-name") || el.textContent.trim();
+        el.setAttribute("style", tagChipStyle(nm));
+      });
+    }
+    window.SiteTagChipStyle = tagChipStyle;
+    window.paintSiteTagChips = paintSiteTagChips;
+    if (document.documentElement) {
+      new MutationObserver(function () {
+        paintSiteTagChips();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    }
+    paintSiteTagChips();
+  })();
+</script>
