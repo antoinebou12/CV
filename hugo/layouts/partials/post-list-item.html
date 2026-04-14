@@ -37,13 +37,13 @@
       >{{- i18n "postListFeatured" -}}</span
     >
     {{- end -}}
-    {{- with $thumbURL -}}
+    {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.png") -}}
     <div
       class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"
     >
       <div class="aspect-[4/3] w-full">
         <img
-          src="{{ . }}"
+          src="{{ $mediaURL }}"
           alt=""
           width="720"
           height="540"
@@ -53,7 +53,6 @@
         />
       </div>
     </div>
-    {{- end -}}
     <div
       class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6"
     >

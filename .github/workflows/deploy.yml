@@ -40,6 +40,17 @@ jobs:
           hugo-version: "0.160.1"
           extended: true
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hugo/themes/paper/package-lock.json
+
+      - name: Build Hugo theme CSS (Tailwind)
+        working-directory: hugo/themes/paper
+        run: npm ci && npm run build:css
+
       - name: Prepare static files
         run: |
           mkdir -p _site

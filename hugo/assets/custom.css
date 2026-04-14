@@ -36,9 +36,84 @@
   }
 }
 
-/* Main column: fluid horizontal padding */
+/* Primary nav: spacing even if Tailwind utilities are missing from built main.css */
+.site-nav-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .site-nav-main {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+    column-gap: 0.5rem;
+    row-gap: 0.35rem;
+  }
+
+  .site-nav-main a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.25;
+    min-height: auto;
+    padding-block: 0.5rem;
+  }
+}
+
+/* Main column: fluid horizontal padding + canvas (dark: transparent so body ::before shows) */
 main.site-main {
   padding-inline: 1rem;
+  background-color: var(--page-bg, var(--bg, #faf8f1));
+}
+
+html.dark main.site-main {
+  background-color: transparent;
+}
+
+/* Material-style surface tokens (cards vs page) */
+:root {
+  --surface-1: rgb(255 255 255 / 94%);
+  --surface-border: rgb(0 0 0 / 14%);
+  --shadow-elevation-1:
+    0 1px 2px rgb(0 0 0 / 6%),
+    0 6px 16px rgb(0 0 0 / 6%);
+}
+
+html.dark {
+  --page-bg: rgb(9 9 11);
+  --surface-1: rgb(39 39 42 / 88%);
+  --surface-border: rgb(255 255 255 / 14%);
+  --shadow-elevation-1:
+    0 1px 0 rgb(255 255 255 / 5%),
+    0 10px 28px rgb(0 0 0 / 38%);
+}
+
+.post-list-card-inner {
+  isolation: isolate;
+  background: var(--surface-1) !important;
+  border-color: var(--surface-border) !important;
+  box-shadow: var(--shadow-elevation-1);
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.single-post-surface {
+  border-radius: 1.25rem;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elevation-1);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.dark .single-post-surface {
+  box-shadow: var(--shadow-elevation-1);
 }
 
 @media (min-width: 640px) {
@@ -199,16 +274,6 @@ main:has(> article:not(.site-search-page)) {
   }
 }
 
-/* Hover lift + shadow: primary definition on `.post-list-card-inner` via Tailwind utilities. */
-
-.post-list-card-inner {
-  isolation: isolate;
-  transition:
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
-}
-
 .post-list-card-inner:focus-visible {
   outline: 2px solid rgb(249 115 22 / 90%);
   outline-offset: 3px;
@@ -333,20 +398,16 @@ main:has(> article:not(.site-search-page)) {
 
 .site-search-card {
   border-radius: var(--site-search-card-radius);
-  border: 1px solid rgb(0 0 0 / 10%);
-  background: rgb(255 255 255 / 88%);
-  box-shadow:
-    0 1px 0 rgb(0 0 0 / 5%),
-    0 10px 32px rgb(0 0 0 / 7%);
+  border: 1px solid var(--surface-border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elevation-1);
   padding: var(--site-search-card-pad);
 }
 
 .dark .site-search-card {
-  border-color: rgb(255 255 255 / 12%);
-  background: rgb(0 0 0 / 35%);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 6%),
-    0 12px 36px rgb(0 0 0 / 38%);
+  border-color: var(--surface-border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elevation-1);
 }
 
 .site-search-input-wrap {

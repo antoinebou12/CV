@@ -8,15 +8,23 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- if and (eq $thumb "") (eq .Section "posts") -}}
-  {{- $rawKind := .Params.post_kind | default "article" -}}
-  {{- $kind := cond (eq $rawKind "conference-recap") "conference" $rawKind -}}
-  {{- $fallback := "images/post-kind-article.png" -}}
-  {{- if eq $kind "tutorial" -}}
-    {{- $fallback = "images/post-kind-tutorial.png" -}}
-  {{- else if eq $kind "conference" -}}
-    {{- $fallback = "images/post-kind-conference.png" -}}
+{{- if eq $thumb "" -}}
+  {{- if eq .Section "posts" -}}
+    {{- $rawKind := .Params.post_kind | default "article" -}}
+    {{- $kind := cond (eq $rawKind "conference-recap") "conference" $rawKind -}}
+    {{- $fallback := "images/post-kind-article.png" -}}
+    {{- if eq $kind "tutorial" -}}
+      {{- $fallback = "images/post-kind-tutorial.png" -}}
+    {{- else if eq $kind "conference" -}}
+      {{- $fallback = "images/post-kind-conference.png" -}}
+    {{- end -}}
+    {{- $thumb = $fallback | relURL -}}
+  {{- else if eq .Section "projects" -}}
+    {{- $thumb = "images/post-kind-project.png" | relURL -}}
+  {{- else if eq .Section "recipes" -}}
+    {{- $thumb = "images/post-kind-recipe.png" | relURL -}}
+  {{- else -}}
+    {{- $thumb = "images/post-kind-article.png" | relURL -}}
   {{- end -}}
-  {{- $thumb = $fallback | relURL -}}
 {{- end -}}
 {{- return $thumb -}}
