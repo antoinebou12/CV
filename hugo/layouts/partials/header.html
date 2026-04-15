@@ -11,7 +11,7 @@
 
   <button
     type="button"
-    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
+    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 md:hidden ltr:-mr-8 rtl:-ml-8"
     aria-label="{{ i18n "navMenuOpen" }}"
     aria-expanded="false"
     aria-controls="site-nav-panel"
@@ -114,35 +114,51 @@
     // mobile menu
     const btnMenu = document.querySelector('.btn-menu');
     const navPanel = document.getElementById('site-nav-panel');
-    const menuOpenLabel = btnMenu.dataset.menuOpen;
-    const menuCloseLabel = btnMenu.dataset.menuClose;
+    if (btnMenu) {
+      const menuOpenLabel = btnMenu.dataset.menuOpen;
+      const menuCloseLabel = btnMenu.dataset.menuClose;
 
-    const setMenuOpen = (open) => {
-      if (open) {
-        htmlClass.add('open');
-      } else {
-        htmlClass.remove('open');
-      }
-      btnMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btnMenu.setAttribute('aria-label', open ? menuCloseLabel : menuOpenLabel);
-    };
+      const setMenuOpen = (open) => {
+        if (open) {
+          htmlClass.add('open');
+        } else {
+          htmlClass.remove('open');
+        }
+        btnMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btnMenu.setAttribute('aria-label', open ? menuCloseLabel : menuOpenLabel);
+      };
 
-    btnMenu.addEventListener('click', () => {
-      setMenuOpen(!htmlClass.contains('open'));
-    });
+      btnMenu.addEventListener('click', () => {
+        setMenuOpen(!htmlClass.contains('open'));
+      });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && htmlClass.contains('open')) {
-        setMenuOpen(false);
-      }
-    });
-
-    if (navPanel) {
-      navPanel.addEventListener('click', (e) => {
-        if (e.target.closest('a')) {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && htmlClass.contains('open')) {
           setMenuOpen(false);
         }
       });
+
+      if (navPanel) {
+        navPanel.addEventListener('click', (e) => {
+          if (e.target.closest('a')) {
+            setMenuOpen(false);
+          }
+        });
+      }
+
+      const mdUpMq = window.matchMedia('(min-width: 768px)');
+      const handleMdUpChange = (event) => {
+        if (event.matches) {
+          setMenuOpen(false);
+        }
+      };
+
+      handleMdUpChange(mdUpMq);
+      if (typeof mdUpMq.addEventListener === 'function') {
+        mdUpMq.addEventListener('change', handleMdUpChange);
+      } else if (typeof mdUpMq.addListener === 'function') {
+        mdUpMq.addListener(handleMdUpChange);
+      }
     }
 
     // dark theme
