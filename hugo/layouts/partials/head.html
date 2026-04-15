@@ -54,10 +54,15 @@
   <!---->
 
   <!-- social list -->
-  {{- range $.Scratch.Get "social_list" -}}
+  {{- $preloadSocialIcons := site.Params.preloadSocialIcons | default 3 -}}
+  {{- range first $preloadSocialIcons ($.Scratch.Get "social_list") -}}
   <link rel="preload" as="image" href="{{- printf `%s.svg` . | relURL -}}" />
   {{- end -}}
   <!---->
+
+  {{- if site.Params.giscus.repo -}}
+  <link rel="preconnect" href="https://giscus.app" crossorigin />
+  {{- end -}}
 
   <!-- highlight js -->
   {{- if and .IsPage (not site.Params.disableHLJS) -}}

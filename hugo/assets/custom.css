@@ -77,6 +77,10 @@ html.dark main.site-main {
 
 /* Material-style surface tokens (cards vs page) */
 :root {
+  --text-strong: rgb(10 10 10);
+  --text-body: rgb(23 23 23 / 86%);
+  --text-muted: rgb(23 23 23 / 62%);
+  --brand-accent: rgb(249 115 22);
   --surface-1: rgb(255 255 255 / 94%);
   --surface-border: rgb(0 0 0 / 14%);
   --shadow-elevation-1:
@@ -86,11 +90,41 @@ html.dark main.site-main {
 
 html.dark {
   --page-bg: rgb(9 9 11);
+  --text-strong: rgb(250 250 250);
+  --text-body: rgb(250 250 250 / 82%);
+  --text-muted: rgb(250 250 250 / 60%);
   --surface-1: rgb(39 39 42 / 88%);
   --surface-border: rgb(255 255 255 / 14%);
   --shadow-elevation-1:
     0 1px 0 rgb(255 255 255 / 5%),
     0 10px 28px rgb(0 0 0 / 38%);
+}
+
+body {
+  color: var(--text-body);
+}
+
+.site-main .prose {
+  color: var(--text-body);
+}
+
+.site-main .prose :where(h1, h2, h3, h4) {
+  color: var(--text-strong);
+  letter-spacing: -0.01em;
+}
+
+.site-main .prose :where(p, li) {
+  line-height: 1.72;
+}
+
+.site-main .prose :where(code):not(pre code) {
+  border-radius: 0.35rem;
+  background: rgb(0 0 0 / 5%);
+  padding: 0.1rem 0.35rem;
+}
+
+.dark .site-main .prose :where(code):not(pre code) {
+  background: rgb(255 255 255 / 12%);
 }
 
 .post-list-card-inner {
@@ -102,6 +136,23 @@ html.dark {
     box-shadow 0.25s ease,
     border-color 0.25s ease,
     transform 0.25s ease;
+}
+
+.post-list-card-title {
+  color: var(--text-strong) !important;
+}
+
+.post-list-card-time,
+.post-list-card-desc {
+  color: var(--text-muted) !important;
+}
+
+.post-list-card:hover .post-list-card-inner {
+  border-color: rgb(0 0 0 / 20%) !important;
+}
+
+.dark .post-list-card:hover .post-list-card-inner {
+  border-color: rgb(255 255 255 / 22%) !important;
 }
 
 .single-post-surface {
@@ -681,10 +732,122 @@ details.post-kind-disclosure[open] .post-kind-disclosure__chevron {
     0 4px 18px rgb(0 0 0 / 28%);
 }
 
+.post-list-card-inner--project {
+  border-color: rgb(16 185 129 / 35%) !important;
+  box-shadow:
+    0 1px 0 rgb(16 185 129 / 15%),
+    0 8px 20px rgb(0 0 0 / 7%);
+}
+
+.dark .post-list-card-inner--project {
+  border-color: rgb(52 211 153 / 42%) !important;
+  box-shadow:
+    0 1px 0 rgb(52 211 153 / 22%),
+    0 12px 26px rgb(0 0 0 / 34%);
+}
+
 .post-card-grid--conference {
   gap: 2.5rem;
 }
 
 article.conference-post .conference-single-hero img {
   display: block;
+}
+
+/* Homepage framing */
+.home-hero {
+  border: 1px solid var(--surface-border);
+  border-radius: 1.25rem;
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elevation-1);
+  padding: clamp(1.25rem, 3.5vw, 2rem);
+}
+
+.home-hero-eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.home-hero-title {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(1.7rem, 3.9vw, 2.4rem);
+  line-height: 1.12;
+}
+
+.home-hero-lead {
+  margin: 1rem 0 0;
+  max-width: 62ch;
+  color: var(--text-body);
+}
+
+.home-section-heading {
+  color: var(--text-muted) !important;
+  letter-spacing: 0.11em;
+}
+
+/* Language switch clarity */
+.site-lang-switch {
+  border-radius: 999px;
+  border: 1px solid rgb(0 0 0 / 14%);
+  background: rgb(255 255 255 / 60%);
+  padding: 0.2rem 0.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.dark .site-lang-switch {
+  border-color: rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 6%);
+}
+
+.site-lang-switch a,
+.site-lang-switch span {
+  font-weight: 700;
+}
+
+.site-lang-switch span[aria-current="true"] {
+  color: var(--brand-accent);
+}
+
+/* Optional CV widgets */
+.cv-widgets {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 900px) {
+  .cv-widgets {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cv-widget-card {
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elevation-1);
+  padding: 1rem;
+}
+
+.cv-widget-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.cv-widget-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
 }

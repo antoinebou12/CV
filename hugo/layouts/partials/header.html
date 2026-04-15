@@ -26,7 +26,7 @@
     class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:pb-0 lg:transition-none"
   >
     <nav
-      class="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base font-semibold lg:hidden"
+      class="site-lang-switch mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm font-semibold lg:hidden"
       aria-label="{{ i18n "langCvNav" }}"
     >
       {{- $sorted := sort .AllTranslations "Lang" -}}
@@ -35,9 +35,9 @@
           <span class="opacity-40">|</span>
         {{- end -}}
         {{- if eq $p.Lang $.Lang -}}
-          <span class="opacity-60">{{ $p.Lang | upper }}</span>
+          <span class="opacity-85" aria-current="true">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</span>
         {{- else -}}
-          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ $p.Lang | upper }}</a>
+          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</a>
         {{- end -}}
       {{- end -}}
     </nav>
@@ -48,7 +48,7 @@
     >
       {{- range . -}}
       <a
-        class="block text-center text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} lg:bg-black/5 lg:dark:bg-white/10{{ end }}"
+        class="block text-center text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} lg:bg-black/8 lg:dark:bg-white/14{{ end }}"
         href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
         {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
         >{{- .Name -}}</a
@@ -87,7 +87,7 @@
       aria-pressed="false"
     ></button>
     <div
-      class="hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex"
+      class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex"
       aria-label="{{ i18n "langCvNav" }}"
     >
       {{- $sorted := sort .AllTranslations "Lang" -}}
@@ -96,9 +96,9 @@
           <span class="opacity-40 px-2" aria-hidden="true">|</span>
         {{- end -}}
         {{- if eq $p.Lang $.Lang -}}
-          <span class="opacity-60">{{ $p.Lang | upper }}</span>
+          <span class="opacity-85" aria-current="true">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</span>
         {{- else -}}
-          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ $p.Lang | upper }}</a>
+          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</a>
         {{- end -}}
       {{- end -}}
     </div>
