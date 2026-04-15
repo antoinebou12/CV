@@ -489,6 +489,41 @@ main:has(> article:not(.site-search-page)) {
   border-radius: 0.25rem;
 }
 
+/* Blog list: collapsible post-kind sections (Tutorials / Articles / Conferences) */
+.post-kind-disclosure__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+details.post-kind-disclosure[open] .post-kind-disclosure__panel {
+  grid-template-rows: 1fr;
+}
+
+.post-kind-disclosure__panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+details.post-kind-disclosure[open] .post-kind-disclosure__chevron {
+  transform: rotate(180deg);
+}
+
+/* Kind pill on card image: tutorial (high contrast on busy thumbnails) */
+.post-list-card-badge--tutorial {
+  border-color: rgb(29 78 216 / 95%);
+  background-color: rgb(37 99 235);
+  color: rgb(255 255 255);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 18%);
+}
+
+.dark .post-list-card-badge--tutorial {
+  border-color: rgb(147 197 253 / 90%);
+  background-color: rgb(59 130 246);
+  color: rgb(255 255 255);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 35%);
+}
+
 .post-list-card--tutorial .post-list-tag-chip--tutorial-solid,
 .post-list-card--tutorial .site-search-result-tag.post-list-tag-chip--tutorial-solid {
   background-color: rgb(17 17 17) !important;
@@ -617,6 +652,18 @@ main:has(> article:not(.site-search-page)) {
   .site-search-hit-enter {
     animation: none;
     animation-delay: 0s;
+  }
+
+  .post-kind-disclosure__panel {
+    transition: none;
+  }
+
+  details.post-kind-disclosure[open] .post-kind-disclosure__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .post-kind-disclosure__chevron {
+    transition: none;
   }
 }
 

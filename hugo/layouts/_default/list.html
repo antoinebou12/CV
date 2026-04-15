@@ -66,51 +66,81 @@
 
 <div class="post-kind-stack space-y-20 md:space-y-24">
   {{- if gt (len $tutorials) 0 -}}
-  <section class="post-kind-group" aria-labelledby="post-kind-tutorials">
-    <h2
-      id="post-kind-tutorials"
-      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+  <details class="post-kind-disclosure post-kind-group" aria-labelledby="post-kind-tutorials">
+    <summary
+      class="post-kind-disclosure__summary mb-0 flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg border-b border-black/10 pb-3 outline-none transition-colors hover:bg-black/[0.03] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] dark:border-white/15 dark:hover:bg-white/[0.04] [&::-webkit-details-marker]:hidden"
     >
-      {{- i18n "postKindTutorial" -}}
-    </h2>
-    <div class="post-card-grid" data-post-sort-cards>
-      {{- range $tutorials -}}
-      {{- partial "post-list-item.html" . -}}
-      {{- end -}}
+      <h2
+        id="post-kind-tutorials"
+        class="my-0 flex-1 border-0 pb-0 text-left text-sm font-semibold tracking-widest text-black/55 uppercase dark:text-white/55"
+      >
+        {{- i18n "postKindTutorial" -}}
+      </h2>
+      <span class="post-kind-disclosure__chevron shrink-0 text-lg leading-none text-black/50 transition-transform duration-300 ease-out dark:text-white/50" aria-hidden="true">▾</span>
+      <span class="sr-only">{{ i18n "postKindSectionExpand" }}</span>
+    </summary>
+    <div class="post-kind-disclosure__panel">
+      <div class="post-kind-disclosure__panel-inner pt-8">
+        <div class="post-card-grid" data-post-sort-cards>
+          {{- range $tutorials -}}
+          {{- partial "post-list-item.html" . -}}
+          {{- end -}}
+        </div>
+      </div>
     </div>
-  </section>
+  </details>
   {{- end -}}
 
   {{- if gt (len $articles) 0 -}}
-  <section class="post-kind-group" aria-labelledby="post-kind-articles">
-    <h2
-      id="post-kind-articles"
-      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+  <details class="post-kind-disclosure post-kind-group" aria-labelledby="post-kind-articles">
+    <summary
+      class="post-kind-disclosure__summary mb-0 flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg border-b border-black/10 pb-3 outline-none transition-colors hover:bg-black/[0.03] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] dark:border-white/15 dark:hover:bg-white/[0.04] [&::-webkit-details-marker]:hidden"
     >
-      {{- i18n "postKindArticle" -}}
-    </h2>
-    <div class="post-card-grid" data-post-sort-cards>
-      {{- range $articles -}}
-      {{- partial "post-list-item.html" . -}}
-      {{- end -}}
+      <h2
+        id="post-kind-articles"
+        class="my-0 flex-1 border-0 pb-0 text-left text-sm font-semibold tracking-widest text-black/55 uppercase dark:text-white/55"
+      >
+        {{- i18n "postKindArticle" -}}
+      </h2>
+      <span class="post-kind-disclosure__chevron shrink-0 text-lg leading-none text-black/50 transition-transform duration-300 ease-out dark:text-white/50" aria-hidden="true">▾</span>
+      <span class="sr-only">{{ i18n "postKindSectionExpand" }}</span>
+    </summary>
+    <div class="post-kind-disclosure__panel">
+      <div class="post-kind-disclosure__panel-inner pt-8">
+        <div class="post-card-grid" data-post-sort-cards>
+          {{- range $articles -}}
+          {{- partial "post-list-item.html" . -}}
+          {{- end -}}
+        </div>
+      </div>
     </div>
-  </section>
+  </details>
   {{- end -}}
 
   {{- if gt (len $conferences) 0 -}}
-  <section class="post-kind-group" aria-labelledby="post-kind-conferences">
-    <h2
-      id="post-kind-conferences"
-      class="mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+  <details class="post-kind-disclosure post-kind-group" aria-labelledby="post-kind-conferences">
+    <summary
+      class="post-kind-disclosure__summary mb-0 flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg border-b border-black/10 pb-3 outline-none transition-colors hover:bg-black/[0.03] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] dark:border-white/15 dark:hover:bg-white/[0.04] [&::-webkit-details-marker]:hidden"
     >
-      {{- i18n "postKindConference" -}}
-    </h2>
-    <div class="post-card-grid post-card-grid--conference" data-post-sort-cards>
-      {{- range $conferences -}}
-      {{- partial "post-list-item.html" . -}}
-      {{- end -}}
+      <h2
+        id="post-kind-conferences"
+        class="my-0 flex-1 border-0 pb-0 text-left text-sm font-semibold tracking-widest text-black/55 uppercase dark:text-white/55"
+      >
+        {{- i18n "postKindConference" -}}
+      </h2>
+      <span class="post-kind-disclosure__chevron shrink-0 text-lg leading-none text-black/50 transition-transform duration-300 ease-out dark:text-white/50" aria-hidden="true">▾</span>
+      <span class="sr-only">{{ i18n "postKindSectionExpand" }}</span>
+    </summary>
+    <div class="post-kind-disclosure__panel">
+      <div class="post-kind-disclosure__panel-inner pt-8">
+        <div class="post-card-grid post-card-grid--conference" data-post-sort-cards>
+          {{- range $conferences -}}
+          {{- partial "post-list-item.html" . -}}
+          {{- end -}}
+        </div>
+      </div>
     </div>
-  </section>
+  </details>
   {{- end -}}
 </div>
 

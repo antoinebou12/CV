@@ -514,9 +514,13 @@
         if (isConf)
           badgeClasses =
             "border-orange-500/45 bg-orange-500/15 text-orange-900 dark:border-orange-400/50 dark:bg-orange-400/20 dark:text-orange-100";
-        else if (isTut)
-          badgeClasses =
-            "border-blue-500/40 bg-blue-500/15 text-blue-900 dark:border-blue-400/45 dark:bg-blue-400/18 dark:text-blue-100";
+        else if (isTut) badgeClasses = "post-list-card-badge--tutorial";
+
+        const pillSpanClass = isTut
+          ? "pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide " +
+            badgeClasses
+          : "pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm " +
+            badgeClasses;
 
         const confClass = isConf ? " post-list-card-inner--conference" : "";
         const tutClass = isTut ? " post-list-card--tutorial" : "";
@@ -544,7 +548,7 @@
           <article class="post-list-card group w-full h-full not-prose${tutClass}">
             <div class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/15 bg-white/90 shadow-lg outline-none ring-0 backdrop-blur-md transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl dark:border-white/15 dark:bg-black/70${confClass}">
               <a href="${esc(item.permalink)}" class="post-list-card-hit relative flex min-h-0 flex-1 flex-col text-inherit no-underline outline-none ring-0 focus-visible:z-[2] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black">
-                <span class="pointer-events-none absolute left-4 top-4 z-[3] rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm ${badgeClasses}">${esc(pill)}</span>
+                <span class="${pillSpanClass}">${esc(pill)}</span>
                 ${cardThumb}
                 <div class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
                    <h2 class="post-list-card-title my-0 text-lg font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-xl">${esc(item.title)}</h2>

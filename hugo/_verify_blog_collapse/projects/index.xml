@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects on Antoine Boucher</title><link>http://localhost:1313/blog/projects/</link><description>Recent content in Projects on Antoine Boucher</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 13 Apr 2026 12:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/blog/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>Dimension (mathlib)</title><link>http://localhost:1313/blog/projects/dimension/</link><pubDate>Mon, 13 Apr 2026 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/dimension/</guid><description>&lt;h1 id="dimension"&gt;Dimension&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Dimension"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/Dimension" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Dimension"&gt;Repository&lt;/a&gt; · &lt;a href="https://docs.rs/mathlib"&gt;mathlib on docs.rs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mathlib&lt;/strong&gt; is a Rust crate for dense and sparse linear algebra, decompositions, 3D math, clustering, graph algorithms, transforms, and more—with &lt;strong&gt;WebAssembly&lt;/strong&gt; demos and optional &lt;strong&gt;SIMD&lt;/strong&gt; / &lt;strong&gt;GPU&lt;/strong&gt; features. The Dimension repo wraps that crate alongside kinematics, physics, rendering experiments, and documentation.&lt;/p&gt;
+&lt;h2 id="quick-start"&gt;Quick start&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd mathlib &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cargo build
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd mathlib &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cargo test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;See the root &lt;a href="https://github.com/antoinebou12/Dimension#readme"&gt;README&lt;/a&gt; and &lt;a href="https://github.com/antoinebou12/Dimension/blob/main/docs/DOCS.md"&gt;docs/DOCS.md&lt;/a&gt; for architecture and examples.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Blog:&lt;/strong&gt; &lt;a href="http://localhost:1313/blog/posts/dimension-mathlib-rust/"&gt;Dimension — a Rust math stack around mathlib&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ESP32-7SEG</title><link>http://localhost:1313/blog/projects/esp32-7seg/</link><pubDate>Mon, 13 Apr 2026 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/esp32-7seg/</guid><description>&lt;h1 id="esp32-7seg"&gt;ESP32-7SEG&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/ESP32-7SEG"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/ESP32-7SEG" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/ESP32-7SEG"&gt;Repository&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/ESP32-7SEG/blob/main/LICENSE"&gt;MIT License&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Firmware for an &lt;strong&gt;ESP32 FireBeetle&lt;/strong&gt; that drives an &lt;strong&gt;Adafruit 7-segment display&lt;/strong&gt; (I2C backpack) and exposes a &lt;strong&gt;local web interface&lt;/strong&gt; for timer modes and WiFi management.&lt;/p&gt;
+&lt;h2 id="web-interface"&gt;Web interface&lt;/h2&gt;
+&lt;p&gt;The built-in server serves a &lt;strong&gt;Timer Control&lt;/strong&gt; panel in the browser:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Stopwatch&lt;/strong&gt; and &lt;strong&gt;Countdown&lt;/strong&gt; modes&lt;/li&gt;
+&lt;li&gt;Quick presets: &lt;strong&gt;10 Min&lt;/strong&gt;, &lt;strong&gt;5 Min&lt;/strong&gt;, &lt;strong&gt;1 Min&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Manual &lt;strong&gt;minutes&lt;/strong&gt; and &lt;strong&gt;seconds&lt;/strong&gt; fields plus &lt;strong&gt;Start&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reset WiFi&lt;/strong&gt; to clear stored credentials when you need to re-provision the device&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="hardware"&gt;Hardware&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ESP32 FireBeetle (v1.0)&lt;/li&gt;
+&lt;li&gt;Adafruit 7-segment display with I2C backpack&lt;/li&gt;
+&lt;li&gt;Breadboard and jumper wires (SCL, SDA, VCC, GND)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="software"&gt;Software&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://platformio.org/"&gt;PlatformIO&lt;/a&gt; project; see &lt;a href="https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini"&gt;&lt;code&gt;platformio.ini&lt;/code&gt;&lt;/a&gt; in the repo for board and library configuration.&lt;/li&gt;
+&lt;li&gt;The repository also includes &lt;strong&gt;Android&lt;/strong&gt; and &lt;strong&gt;firmware&lt;/strong&gt; subprojects for a fuller stack around the same device.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="quick-start"&gt;Quick start&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/ESP32-7SEG.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd ESP32-7SEG
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Open the project in PlatformIO (or Arduino IDE with equivalent libraries), build, and flash the ESP32. After boot, check the &lt;strong&gt;serial monitor&lt;/strong&gt; for the device IP address, then open it in a browser on the same network to use the web UI.&lt;/p&gt;</description></item><item><title>HDR-10bpp-Display-Test</title><link>http://localhost:1313/blog/projects/hdr-10bpp-display-test/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/hdr-10bpp-display-test/</guid><description>&lt;h2 id="hdr-10bpp-display-test"&gt;HDR-10bpp-Display-Test&lt;/h2&gt;
+&lt;p&gt;The HDR-10bpp-Display-Test is a simple yet effective way to verify the HDR 4K display capabilities on Linux systems, specifically testing the color depth of 10 bits per channel. This test is essential for anyone looking to ensure the highest quality display performance on their Linux environment.&lt;/p&gt;
+&lt;h3 id="getting-started"&gt;Getting Started&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/hdr-10bpp-display-test"&gt;HDR-10bpp-Display-Test&lt;/a&gt;: A test project for HDR 4K display on Linux.&lt;/p&gt;
+&lt;h4 id="prerequisites"&gt;Prerequisites&lt;/h4&gt;
+&lt;p&gt;Before running the test, ensure your system has the following software installed:&lt;/p&gt;</description></item><item><title>Media box (Docker Compose)</title><link>http://localhost:1313/blog/projects/mediaboxdockercompose/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/mediaboxdockercompose/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;Repository&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE"&gt;MIT License&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with &lt;strong&gt;Plex&lt;/strong&gt; or &lt;strong&gt;Jellyfin&lt;/strong&gt;, with optional request and monitoring UIs. Configuration is meant to live under a shared &lt;code&gt;ROOT&lt;/code&gt; tree on disk as in the repo’s &lt;code&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="whats-in-the-stack"&gt;What’s in the stack&lt;/h2&gt;
+&lt;p&gt;Grouped roughly by role (see the &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml"&gt;compose file&lt;/a&gt; for images and volumes):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Download clients &amp;amp; indexers&lt;/strong&gt; — Deluge, NZBGet, Jackett, NZBHydra2, Prowlarr&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automation&lt;/strong&gt; — Sonarr, Radarr, Lidarr, Bazarr, CouchPotato; Readarr (books); Whisparr; Tdarr (transcoding)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Libraries &amp;amp; requests&lt;/strong&gt; — Plex, Jellyfin, Ombi, Jellyseerr, Tautulli&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extras&lt;/strong&gt; — Stash (specialized library organizer)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ops&lt;/strong&gt; — Netdata, Dashmachine, Filebrowser&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="quick-start"&gt;Quick start&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Install &lt;a href="https://docs.docker.com/get-docker/"&gt;Docker&lt;/a&gt; and Compose on the host.&lt;/li&gt;
+&lt;li&gt;Clone the repo and configure environment variables (see the repo &lt;code&gt;.env&lt;/code&gt; and paths like &lt;code&gt;ROOT&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;From the project directory:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/MediaBoxDockerCompose.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd MediaBoxDockerCompose
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If your setup still uses the older CLI, &lt;code&gt;docker-compose up -d&lt;/code&gt; matches what the &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose#readme"&gt;README&lt;/a&gt; describes.&lt;/p&gt;</description></item><item><title>RetroArch Web Games</title><link>http://localhost:1313/blog/projects/retroarch-web-games/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/retroarch-web-games/</guid><description>&lt;h2 id="retroarch-web-games"&gt;RetroArch Web Games&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/retroarch-web-games"&gt;retroarch-web-games&lt;/a&gt;: Docker Retroarch Web with pre-downloaded games.&lt;/p&gt;
+&lt;p&gt;This repository offers a self-hosted RetroArch web player, allowing you to enjoy classic NES, SNES, Genesis, and Gameboy games right in your browser. Set up is a breeze with our Docker container.&lt;/p&gt;
+&lt;h3 id="features"&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre-loaded Games&lt;/strong&gt;: Enjoy a variety of games for NES, SNES, Genesis, and Gameboy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-hosted Web Player&lt;/strong&gt;: Easily host the RetroArch player on your own server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easy Deployment&lt;/strong&gt;: Utilize Docker for straightforward setup and deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="how-to-use"&gt;How to Use&lt;/h3&gt;
+&lt;p&gt;To get started, run the Docker image with the following command:&lt;/p&gt;</description></item><item><title>Portfolio</title><link>http://localhost:1313/blog/projects/porfolio/</link><pubDate>Sat, 30 Dec 2023 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/porfolio/</guid><description>&lt;h2 id="portfolio-project"&gt;Portfolio Project&lt;/h2&gt;
+&lt;p&gt;This project is about creating a personal portfolio website using Hugo. You can view the project &lt;a href="https://github.com/antoinebou12/portfolio"&gt;here&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin</title><link>http://localhost:1313/blog/projects/d2copenaiplugin/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/d2copenaiplugin/</guid><description>&lt;h1 id="d2copenaiplugin"&gt;D2COpenAIPlugin&lt;/h1&gt;
+&lt;p&gt;You can view the project &lt;a href="https://github.com/antoinebou12/D2COpenAIPlugin/tree/main"&gt;here&lt;/a&gt;
+You can use the plugin &lt;a href="https://openai-uml-plugin.vercel.app"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Join the &lt;a href="https://openai.com/waitlist/plugins"&gt;ChatGPT plugins waitlist here&lt;/a&gt;!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;D2COpenAIPlugin is a plugin for ChatGPT that enables users to generate diagrams using PlantUML or Mermaid. This plugin enhances the capabilities of ChatGPT by providing a seamless way to create diverse and creative diagrams.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif" alt="https://github.com/antoinebou12/UMLOpenAIPlugin/docs/DiagramGeneratorPlugin.gif"&gt;
+&lt;img src="https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41" alt="image"&gt;&lt;/p&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate diagrams using PlantUML or Mermaid&lt;/li&gt;
+&lt;li&gt;Seamless integration with ChatGPT&lt;/li&gt;
+&lt;li&gt;User-friendly interface for creating diagrams&lt;/li&gt;
+&lt;li&gt;Enhances the versatility of ChatGPT&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Before using the plugin, make sure to have the following prerequisites installed:&lt;/p&gt;</description></item><item><title>DasherControl</title><link>http://localhost:1313/blog/projects/dashcontrol/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/dashcontrol/</guid><description>&lt;h1 id="dashercontrol"&gt;DasherControl&lt;/h1&gt;
+&lt;p&gt;Another Interactive Configurable Dashboard with Customisable GridItem with IFrame and Bookmark and other cool features with basic Container Controller for Docker made with Vuejs and Rust (rocket).&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"&gt;
+&lt;img src="https://img.shields.io/github/workflow/status/antoinebou13/DasherControl/build" alt="GitHub Workflow Status"&gt;
+&lt;img src="https://img.shields.io/github/v/release/antoinebou13/DasherControl" alt="GitHub release (latest by date)"&gt;&lt;/p&gt;
+&lt;h2 id="why-"&gt;Why &amp;hellip;&lt;/h2&gt;
+&lt;p&gt;Everything is a web app that can be installed with a docker in a container. I want to manage all my web applications on one dashboard like Sonarr and Jellyfin without opening like 10 tabs in chrome (rip my ram). When using services like Portainer or the Docker CLI, it&amp;rsquo;s long to set up a reverse proxy with SSL to secure your homelab. So I want to write widgets (Applets) that can do all my tasks that I do on the daily when managing my homelab. Also, I want to make a simple dashboard with widgets (vuejs component) like Windows Vista, but on the web and saved in a database.&lt;/p&gt;</description></item><item><title>File Classifier</title><link>http://localhost:1313/blog/projects/fileclassifier/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/fileclassifier/</guid><description>&lt;h1 id="fileclassifier"&gt;FileClassifier&lt;/h1&gt;
+&lt;p&gt;FileClassifier is a Python-based command-line tool that automatically organizes files in a specified directory into predefined categories based on their file types. The tool supports multiple file formats, such as images, documents, videos, and more. It also comes with an extendable classifier that allows you to add topic modeling for better organization.&lt;/p&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Automatic file organization based on file types.&lt;/li&gt;
+&lt;li&gt;Predefined categories for common file formats.&lt;/li&gt;
+&lt;li&gt;Extendable classifier with topic modeling support.&lt;/li&gt;
+&lt;li&gt;Customizable output directory structure.&lt;/li&gt;
+&lt;li&gt;Lightweight and easy to use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;p&gt;To install FileClassifier, simply clone the repository and install the required dependencies:&lt;/p&gt;</description></item><item><title>Movie Trailer Analyzer</title><link>http://localhost:1313/blog/projects/movietraileranalyzer/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/movietraileranalyzer/</guid><description>&lt;p&gt;You can view the project &lt;a href="https://github.com/antoinebou12/MovieTrailerAnalyzer/tree/main"&gt;here&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PlantUMLApi</title><link>http://localhost:1313/blog/projects/plantumlapi/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/plantumlapi/</guid><description>&lt;h1 id="plantumlapi"&gt;PlantUMLApi&lt;/h1&gt;
+&lt;p&gt;Python interface with the PlantUML web. PlantUML is a library for generating UML diagrams from a simple text markup language.&lt;/p&gt;
+&lt;p&gt;PyPlantUML is a simple remote client interface to a PlantUML server using the same custom encoding used by most other PlantUML clients.&lt;/p&gt;
+&lt;p&gt;This client defaults to the public PlantUML server but can be used against any server.&lt;/p&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;p&gt;To install, run the following command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install plantumlapi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install git+https://github.com/antoinebou12/plantumlapi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="command-line-usage"&gt;Command Line Usage&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;usage: plantuml.py &lt;span style="color:#f92672"&gt;[&lt;/span&gt;-h&lt;span style="color:#f92672"&gt;]&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt;-o OUT&lt;span style="color:#f92672"&gt;]&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt;-s SERVER&lt;span style="color:#f92672"&gt;]&lt;/span&gt; filename &lt;span style="color:#f92672"&gt;[&lt;/span&gt;filename ...&lt;span style="color:#f92672"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Generate images from PlantUML defined files using PlantUML server
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;positional arguments: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; filename file&lt;span style="color:#f92672"&gt;(&lt;/span&gt;s&lt;span style="color:#f92672"&gt;)&lt;/span&gt; to generate images from
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;optional arguments: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -h, --help show this help message and exit 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -o OUT, --out OUT directory to put the files into 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -s SERVER, --server SERVER 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server to generate from; defaults to plantuml.com 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; plantumlapi.plantumlapi &lt;span style="color:#f92672"&gt;import&lt;/span&gt; PlantUML
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Create a PlantUML object, set the output directory and server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;p &lt;span style="color:#f92672"&gt;=&lt;/span&gt; PlantUML(url&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://www.plantuml.com/plantuml/duml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Generate a diagram from a string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;p&lt;span style="color:#f92672"&gt;.&lt;/span&gt;process(&lt;span style="color:#e6db74"&gt;&amp;#34;@startuml&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;\n&lt;/span&gt;&lt;span style="color:#e6db74"&gt;class Foo&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;\n&lt;/span&gt;&lt;span style="color:#e6db74"&gt;@enduml&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="docker"&gt;Docker&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker run -d -p 8080:8080 plantuml/plantuml-server:jetty
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;from pyplantuml import PlantUML
+
+# Create a PlantUML object, set the output directory and server
+p = PlantUML(url=&amp;#34;http://localhost:8080/png&amp;#34;)
+
+# Generate a diagram from a string
+p.process(&amp;#34;@startuml\nclass Foo\n@enduml&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>RawAnalyser</title><link>http://localhost:1313/blog/projects/rawanalyser/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/rawanalyser/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/RawAnalyser"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="rawanalyser"&gt;RawAnalyser&lt;/h1&gt;
+&lt;p&gt;RawAnalyser is a simple Python-based tool designed for analyzing raw images. It provides functionality for black and white clipping detection, gamma calculation, and flatness with vignette detection (Algolux).&lt;/p&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;You need to have Python 2.7 installed and the following libraries:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;json&lt;/li&gt;
+&lt;li&gt;time&lt;/li&gt;
+&lt;li&gt;numpy&lt;/li&gt;
+&lt;li&gt;scipy&lt;/li&gt;
+&lt;li&gt;pyqt5&lt;/li&gt;
+&lt;li&gt;argparse&lt;/li&gt;
+&lt;li&gt;argcomplete&lt;/li&gt;
+&lt;li&gt;watchdog&lt;/li&gt;
+&lt;li&gt;logging&lt;/li&gt;
+&lt;li&gt;colorama&lt;/li&gt;
+&lt;li&gt;plotly&lt;/li&gt;
+&lt;li&gt;matplotlib&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Run the RawAnalyser script:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python RawAnalyser.py &amp;lt;pathfolder&amp;gt; &amp;lt;pointfile&amp;gt; --func &amp;lt;clipping,gamma,vignette,histogram,noHist,basic, default all&amp;gt; --bl &amp;lt;black level, default 1024&amp;gt; --vignette &amp;lt;pathvignette&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="2"&gt;
+&lt;li&gt;Start the GUI:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python GUI.py
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="3"&gt;
+&lt;li&gt;Check the value of the pixel and the color with the bayer pattern:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python RawPixel.pt input&amp;lt;file&amp;gt; x y --bitdepth &amp;lt;8,10,16,default 16&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="scripts-description"&gt;Scripts Description&lt;/h2&gt;
+&lt;h3 id="rawanalyserpy"&gt;RawAnalyser.py&lt;/h3&gt;
+&lt;p&gt;A script designed for checking black and white level of clipping in a raw image. You need to provide a path to the folder to be checked and a json file with the region of interest and the gray patches.&lt;/p&gt;</description></item><item><title>Serilog.Sinks.SentrySDK</title><link>http://localhost:1313/blog/projects/serilog.sinks.sentrysdk/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/serilog.sinks.sentrysdk/</guid><description>&lt;h1 id="serilogsinkssentrysdk"&gt;Serilog.Sinks.SentrySDK&lt;/h1&gt;
+&lt;p&gt;A Serilog sink for Sentry that simplifies error and log management in your applications.&lt;/p&gt;
+&lt;p&gt;Based on &lt;a href="https://github.com/serilog-contrib/serilog-sinks-sentry"&gt;serilog-contrib/serilog-sinks-sentry&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="project-status"&gt;Project Status&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml/badge.svg" alt=".NET Core Test"&gt;&lt;/a&gt;
+&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/CI.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/CI.yml/badge.svg" alt=".NET Core CI"&gt;&lt;/a&gt;
+&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/codeql.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/codeql.yml/badge.svg" alt="CodeQL"&gt;&lt;/a&gt;
+&lt;a href="https://codecov.io/gh/antoinebou12/Serilog.Sinks.SentrySDK"&gt;&lt;img src="https://codecov.io/gh/antoinebou12/Serilog.Sinks.SentrySDK/branch/main/graph/badge.svg?token=DKLJUGCpI4" alt="codecov"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="available-packages"&gt;Available Packages&lt;/h2&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;/th&gt;
+ &lt;th&gt;Package&lt;/th&gt;
+ &lt;th&gt;Nuget&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Serilog.Sinks.SentrySDK&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK/"&gt;Package Link&lt;/a&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK/"&gt;&lt;img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.svg" alt="NuGet"&gt;&lt;/a&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Serilog.Sinks.SentrySDK.AspNetCore&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore/"&gt;Package Link&lt;/a&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore/"&gt;&lt;img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.AspNetCore.svg" alt="NuGet"&gt;&lt;/a&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;p&gt;The library is available as a &lt;a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK/"&gt;Nuget package&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can install it with the following command:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;dotnet add package Serilog.Sinks.SentrySDK
+Install-Package Serilog.Sinks.SentrySDK
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="demos"&gt;Demos&lt;/h2&gt;
+&lt;p&gt;Demos demonstrating how to use this library can be found &lt;a href="demos/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="getting-started"&gt;Getting Started&lt;/h2&gt;
+&lt;h3 id="adding-the-sentry-sink"&gt;Adding the Sentry Sink&lt;/h3&gt;
+&lt;p&gt;Add the Sentry sink to your Serilog logger configuration, so that the logs will be sent to your Sentry instance. The Sentry DSN must be provided.&lt;/p&gt;</description></item><item><title>WordUnveil</title><link>http://localhost:1313/blog/projects/wordunveil/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>http://localhost:1313/blog/projects/wordunveil/</guid><description>&lt;h1 id="wordsunveil"&gt;WordsUnveil&lt;/h1&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/badge/license-MIT-green" alt="License"&gt;
+&lt;img src="https://img.shields.io/badge/-RedwoodJS-B7410E?logo=redwoodjs" alt="Redwood"&gt;
+&lt;img src="https://img.shields.io/badge/-GraphQL-E10098?logo=graphql" alt="GraphQL"&gt;
+&lt;img src="https://img.shields.io/badge/-Prisma-2D3748?logo=prisma" alt="Prisma"&gt;
+&lt;img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql" alt="MySQL"&gt;&lt;/p&gt;
+&lt;p&gt;WordsEnigma is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.&lt;/p&gt;
+&lt;h2 id="getting-started"&gt;Getting Started&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Development Setup&lt;/strong&gt;
+WordsUnveil is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.&lt;/p&gt;
+&lt;h2 id="getting-started-1"&gt;Getting Started&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Development Setup&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>MarketWatch API Python library</title><link>http://localhost:1313/blog/projects/marketwatch/</link><pubDate>Mon, 06 Sep 2021 12:00:00 +0000</pubDate><guid>http://localhost:1313/blog/projects/marketwatch/</guid><description>&lt;h1 id="marketwatch-api-python-library"&gt;Marketwatch API Python Library&lt;/h1&gt;
+&lt;p&gt;&lt;img src="https://img.shields.io/pypi/v/marketwatch" alt="PyPI"&gt;
+&lt;img src="https://img.shields.io/pypi/pyversions/marketwatch" alt="PyPI - Python Version"&gt;
+&lt;img src="https://img.shields.io/pypi/l/marketwatch" alt="PyPI - License"&gt;
+&lt;img src="https://img.shields.io/pypi/dm/marketwatch" alt="PyPI - Downloads"&gt;
+&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/marketwatch" alt="GitHub last commit"&gt;
+&lt;a href="https://github.com/antoinebou12/marketwatch/actions/workflows/python-test.yml"&gt;&lt;img src="https://github.com/antoinebou12/marketwatch/actions/workflows/python-test.yml/badge.svg" alt="Python Test and Build"&gt;&lt;/a&gt;
+&lt;img src="https://raw.githubusercontent.com/antoinebou12/marketwatch/main/.github/badge/coverage.svg" alt="Coverage"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.marketwatch.com"&gt;MarketWatch&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://antoinebou12.github.io/marketwatch/"&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A Python libary to interact with the MarketWatch Stock Market Game
+Based on code from&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/kevindong/MarketWatch_API/"&gt;https://github.com/kevindong/MarketWatch_API/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bwees/pymarketwatch"&gt;https://github.com/bwees/pymarketwatch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="feature"&gt;Feature&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Logging in and out of the site&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Getting the current price of a stock&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Getting information about games on the site&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Buying, selling, shorting, and covering stocks in a game&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Creating, adding to, getting, and deleting watchlists&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Getting, adding to, and deleting items from a portfolio&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Getting and cancelling pending orders&lt;/li&gt;
+&lt;li&gt;&lt;input checked="" disabled="" type="checkbox"&gt; Checking if the game is down&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install marketwatch
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install git+https://github.com/antoinebou12/marketwatch.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/marketwatch.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;p&gt;Here are some examples of how you can use the MarketWatch class:&lt;/p&gt;</description></item></channel></rss>

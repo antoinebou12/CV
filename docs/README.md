@@ -22,6 +22,7 @@ Development workflows, processes, and best practices.
 
 - [CV Compilation](./development/cv-compilation.md) - LaTeX CV compilation process
 - [GitHub Actions](./development/github-actions.md) - GitHub Actions workflows
+- [Hugo blog (Paper theme)](./development/hugo-navigation.md) - Header, menus, i18n, `baseURL`, mobile menu, dark mode
 
 ### [Infrastructure](./infrastructure/README.md)
 Infrastructure documentation for Docker, Kubernetes, and Nginx.

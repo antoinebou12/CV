@@ -1,6 +1,6 @@
 # Hugo blog: header and navigation
 
-The static blog under [`hugo/`](../../hugo/) uses the [hugo-paper](https://github.com/nanxiaobei/hugo-paper) theme with a **custom header** for bilingual language switching, the main menu, and dark mode. The repository still publishes standalone HTML résumés at the site root (`index-en.html`, `index-fr.html`); they are not linked from the blog header.
+The static blog under [`hugo/`](../../hugo/) uses the **Paper** theme ([nanxiaobei/hugo-paper](https://github.com/nanxiaobei/hugo-paper)) with a **custom header** for bilingual language switching, the main menu, and dark mode. The repository still publishes standalone HTML résumés at the site root (`index-en.html`, `index-fr.html`); they are not linked from the blog header.
 
 ## Files to edit
 

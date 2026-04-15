@@ -21,5 +21,3 @@ cd mathlib && cargo test
 ```
 
 Voir le [README](https://github.com/antoinebou12/Dimension#readme) à la racine et [docs/DOCS.md](https://github.com/antoinebou12/Dimension/blob/main/docs/DOCS.md) pour l’architecture et des exemples.
-
-**Blog (EN) :** [Dimension — a Rust math stack around mathlib]({{< page_relpermalink "/posts/dimension-mathlib-rust" >}})

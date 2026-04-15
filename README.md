@@ -219,6 +219,7 @@ Comprehensive documentation is available in the `docs/` directory:
 - **[Development Guide](docs/development/README.md)** - Development workflows and best practices
 - **[Deployment Guide](docs/deployment/README.md)** - Deployment options and instructions
 - **[Infrastructure Guide](docs/infrastructure/README.md)** - Docker, Kubernetes, and Nginx configuration
+- **[Hugo blog (Paper theme)](docs/development/hugo-navigation.md)** - Menus, i18n, `baseURL`, mobile menu, dark mode
 
 ## 🔧 Development
 
