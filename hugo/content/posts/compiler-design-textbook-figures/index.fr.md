@@ -1,7 +1,7 @@
 ---
 post_kind: article
 title: "Pipeline de compilation, généalogie des langages et pourquoi les grammaires comptent"
-date: 2026-04-13T15:40:00-04:00
+date: 2023-04-13T15:40:00-04:00
 description: Notes de cours tirées d’un manuel sur les langages de programmation — étapes du compilateur, chronologie des grands langages, arbres d’analyse, ambiguïté (opérateurs et else pendouillant) et grammaires attribuées pour les types.
 translationKey: compiler-design-textbook-figures
 tags:

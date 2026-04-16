@@ -1,7 +1,7 @@
 ---
 post_kind: article
 title: "Compiler pipeline, language genealogy, and why grammars matter"
-date: 2026-04-13T15:40:00-04:00
+date: 2023-04-13T15:40:00-04:00
 description: Study notes from a programming-languages text — compiler stages, a timeline of major languages, parse trees, ambiguity (operators and dangling else), and attribute grammars for types.
 translationKey: compiler-design-textbook-figures
 tags:

@@ -1,7 +1,7 @@
 ---
 post_kind: article
 title: "Software lifecycle notes — GOALS, waterfall, and verification vs validation"
-date: 2026-04-13T08:00:00-04:00
+date: 2023-04-13T08:00:00-04:00
 description: Study scans from a software engineering text — goal-oriented decomposition, classic and incremental waterfall, nine life-cycle subgoals, V&V, a collage of process advice, and an ethics case-study takeaway.
 translationKey: software-engineering-textbook-figures
 tags:
