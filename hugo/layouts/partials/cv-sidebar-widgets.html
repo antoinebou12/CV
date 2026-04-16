@@ -42,10 +42,19 @@
       {{- range $cfg.extraLinks -}}
       {{- $linkURL := .url -}}
       {{- if eq (lower .name) "resume" -}}
+        {{- $pp := site.Params.githubpagesrepo | default "" -}}
         {{- if eq $page.Lang "fr" -}}
-          {{- $linkURL = "/cv-fr/resume.pdf" -}}
+          {{- if $pp -}}
+            {{- $linkURL = printf "/%s/cv-fr/resume.pdf" $pp -}}
+          {{- else -}}
+            {{- $linkURL = "/cv-fr/resume.pdf" -}}
+          {{- end -}}
         {{- else -}}
-          {{- $linkURL = "/cv-en/resume.pdf" -}}
+          {{- if $pp -}}
+            {{- $linkURL = printf "/%s/cv-en/resume.pdf" $pp -}}
+          {{- else -}}
+            {{- $linkURL = "/cv-en/resume.pdf" -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
       <li><a href="{{ $linkURL }}" target="_blank" rel="noopener">{{ .name }}</a></li>

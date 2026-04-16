@@ -153,22 +153,6 @@
     aria-label="{{ i18n "searchResultsRegionLabel" }}"
   >
     <h2 id="site-search-results-heading" class="sr-only">{{ i18n "searchResultsHeading" }}</h2>
-    <div
-      id="site-search-results-skeleton"
-      class="post-card-grid gap-6"
-      aria-hidden="true"
-    >
-      {{- range seq 1 4 -}}
-      <div class="site-search-skeleton-card flex w-full flex-col overflow-hidden rounded-[1.25rem] border border-black/10 bg-white/60 shadow-md dark:border-white/12 dark:bg-black/40">
-        <div class="site-search-skeleton-shimmer aspect-video w-full bg-black/[0.08] dark:bg-white/[0.1]"></div>
-        <div class="flex flex-col gap-3 px-5 py-5 sm:px-6">
-          <div class="site-search-skeleton-shimmer h-3 w-2/5 max-w-[40%] rounded bg-black/[0.1] dark:bg-white/[0.12]"></div>
-          <div class="site-search-skeleton-shimmer h-4 w-full max-w-[90%] rounded bg-black/[0.1] dark:bg-white/[0.12]"></div>
-          <div class="site-search-skeleton-shimmer h-4 w-4/5 max-w-[75%] rounded bg-black/[0.1] dark:bg-white/[0.12]"></div>
-        </div>
-      </div>
-      {{- end -}}
-    </div>
     <ul id="site-search-results" class="not-prose m-0 hidden list-none p-0 post-card-grid"></ul>
   </section>
 </article>
@@ -207,7 +191,6 @@
     const input = document.getElementById("site-search-input");
     const list = document.getElementById("site-search-results");
     const resultsRegion = document.getElementById("site-search-results-region");
-    const skeletonEl = document.getElementById("site-search-results-skeleton");
     const emptyMsg = (cfg && cfg.dataset.msgEmpty) || "";
     const loadingMsg = (cfg && cfg.dataset.msgLoading) || "";
     const typeMoreMsg = (cfg && cfg.dataset.msgShort) || "";
@@ -475,15 +458,9 @@
       return { html: esc(body.slice(0, max)), suffix: "…" };
     }
 
-    function setResultsLoading(loading, resultCount) {
+    function setResultsLoading(loading) {
       if (!resultsRegion) return;
-      const singleResult = Number(resultCount) === 1;
-      const showSkeleton = loading && !singleResult;
       resultsRegion.setAttribute("aria-busy", loading ? "true" : "false");
-      if (skeletonEl) {
-        skeletonEl.classList.toggle("hidden", !showSkeleton);
-        skeletonEl.setAttribute("aria-hidden", showSkeleton ? "false" : "true");
-      }
       if (list) {
         if (loading) list.classList.add("hidden");
         else list.classList.remove("hidden");
@@ -492,7 +469,7 @@
 
     function renderHits(hits) {
       list.innerHTML = "";
-      setResultsLoading(false, hits.length);
+      setResultsLoading(false);
       if (!hits.length) {
         statusEl.textContent = emptyMsg;
         return;
@@ -574,7 +551,7 @@
       if (term.length < 2) {
         list.innerHTML = "";
         lastHits = [];
-        setResultsLoading(false, 0);
+        setResultsLoading(false);
         statusEl.textContent = term.length ? typeMoreMsg : "";
         return;
       }
@@ -604,7 +581,7 @@
     }
 
     statusEl.textContent = loadingMsg;
-    setResultsLoading(true, 0);
+    setResultsLoading(true);
     if (typeof window.paintSiteTagChips === "function") window.paintSiteTagChips();
     initTagBrowsePagination();
 
@@ -642,13 +619,13 @@
         miniSearch.addAll(data);
         ready = true;
         statusEl.textContent = "";
-        setResultsLoading(false, 0);
+        setResultsLoading(false);
         if (typeof window.paintSiteTagChips === "function") window.paintSiteTagChips();
         runQuery(input.value);
       })
       .catch(function () {
         statusEl.textContent = failedMsg;
-        setResultsLoading(false, 0);
+        setResultsLoading(false);
       });
 
     input.addEventListener("input", function () {

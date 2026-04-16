@@ -69,9 +69,21 @@ jobs:
           [ -d "papers" ] && cp -r papers _site/
           echo "Static files prepared."
 
+      - name: Copy CV PDFs to Pages site root
+        run: |
+          if [ ! -f "cv-en/resume.pdf" ] || [ ! -f "cv-fr/resume.pdf" ]; then
+            echo "Missing cv-en/resume.pdf or cv-fr/resume.pdf (build CVs or run compile-cv workflow first)"
+            exit 1
+          fi
+          mkdir -p _site/cv-en _site/cv-fr
+          cp -f cv-en/resume.pdf _site/cv-en/resume.pdf
+          cp -f cv-fr/resume.pdf _site/cv-fr/resume.pdf
+          echo "CV PDFs copied to _site/cv-en and _site/cv-fr"
+
       - name: Build Hugo blog
         env:
           HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
+          HUGO_PARAMS_GITHUBPAGESREPO: ${{ github.event.repository.name }}
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
           PAGES_ROOT="${{ steps.pages.outputs.base_url }}"

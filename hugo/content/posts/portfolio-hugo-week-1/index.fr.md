@@ -49,6 +49,16 @@ En créant mon blog, j'ai accordé une attention particulière à l'esthétique 
 
 , j'ai visé à créer une interface visuellement attrayante et conviviale. Ces choix de conception reflètent ma conviction de l'importance d'une expérience utilisateur propre et efficace, une philosophie que je transmets de mon expérience en ingénierie logicielle.
 
+## Contenu intégré (shortcode iframe)
+
+Les articles peuvent intégrer toute page en **HTTPS** via le shortcode `iframe` (obligatoire : `src` ; optionnel : `title`, `height`, `loading`, `referrerpolicy`, `allowfullscreen`, `class`) :
+
+<pre><code>&#123;&#123;&lt; iframe src=&quot;https://example.com/&quot; title=&quot;Exemple&quot; height=&quot;480&quot; &gt;&#125;&#125;</code></pre>
+
+Exemple :
+
+{{< iframe src="https://antoinebou12.github.io/FlashGames/" title="FlashGames" height="420" referrerpolicy="no-referrer-when-downgrade" >}}
+
 ## **Conclusion :**
 
 Ce blog est l'incarnation de mon parcours dans le monde de la technologie, mélangeant des expériences personnelles avec une croissance professionnelle. À travers cette plateforme, je vise à partager mes connaissances en ingénierie logicielle, en développement web et bien plus encore. Je vous invite à vous joindre à moi dans cette exploration, pour apprendre, être inspiré et découvrir les possibilités infinies dans le monde de la technologie.

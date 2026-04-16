@@ -49,6 +49,16 @@ This blog also serves as a platform for discussing academic and professional dev
 
 In creating my blog, I paid special attention to aesthetics and functionality. By experimenting with various Hugo themes and incorporating interactive elements like particles.js, I aimed to create a visually appealing and user-friendly interface. These design choices reflect my belief in the importance of a clean and efficient user experience, a philosophy I carry over from my software engineering background.
 
+## Embedded content (iframe shortcode)
+
+Blog posts can embed any **HTTPS** page using the site `iframe` shortcode (required: `src`; optional: `title`, `height`, `loading`, `referrerpolicy`, `allowfullscreen`, `class`):
+
+<pre><code>&#123;&#123;&lt; iframe src=&quot;https://example.com/&quot; title=&quot;Example&quot; height=&quot;480&quot; &gt;&#125;&#125;</code></pre>
+
+Example:
+
+{{< iframe src="https://antoinebou12.github.io/FlashGames/" title="FlashGames" height="420" referrerpolicy="no-referrer-when-downgrade" >}}
+
 ## Conclusion
 
 This blog is an embodiment of my journey in the tech world, blending personal experiences with professional growth. Through this platform, I aim to share my insights into software engineering, web development, and much more. I invite you to join me on this exploration, to learn, to be inspired, and to discover the endless possibilities in the world of technology.

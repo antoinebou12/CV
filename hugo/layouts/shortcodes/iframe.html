@@ -1,0 +1,24 @@
+{{- $src := .Get "src" -}}
+{{- if not $src -}}
+  {{- errorf "shortcode iframe: missing required param \"src\"" -}}
+{{- end -}}
+{{- if not (hasPrefix $src "https://") -}}
+  {{- errorf "shortcode iframe: src must use https:// (got %q)" $src -}}
+{{- end -}}
+{{- $title := .Get "title" | default "Embedded content" -}}
+{{- $h := .Get "height" | default "480" | replaceRE `[^0-9]` "" -}}
+{{- $height := cond (eq $h "") "480" $h -}}
+{{- $loading := .Get "loading" | default "lazy" -}}
+{{- $referrerpolicy := .Get "referrerpolicy" -}}
+{{- $allowfullscreen := .Get "allowfullscreen" | default "true" -}}
+{{- $class := .Get "class" -}}
+<div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10{{- with $class }} {{ . }}{{- end }}">
+  <iframe
+    title="{{ $title | htmlEscape }}"
+    src="{{ $src | safeURL }}"
+    style="width:100%; height: {{ $height }}px;"
+    loading="{{ $loading | htmlEscape }}"
+    {{- if $referrerpolicy }} referrerpolicy="{{ $referrerpolicy | htmlEscape }}"{{ end -}}
+    {{- if eq $allowfullscreen "true" }} allowfullscreen="true"{{ end -}}
+  ></iframe>
+</div>
