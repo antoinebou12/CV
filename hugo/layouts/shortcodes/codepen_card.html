@@ -1,0 +1,15 @@
+{{- $user := .Get "user" -}}
+{{- $slug := .Get "slug" -}}
+{{- $height := .Get "height" | default 380 -}}
+{{- $tab := .Get "tab" | default "result" -}}
+{{- $title := .Get "title" -}}
+{{- $caption := .Get "caption" -}}
+{{- $kind := .Get "kind" | default "pen" -}}
+{{- $href := cond (eq $kind "details") (printf "https://codepen.io/%s/details/%s" $user $slug) (printf "https://codepen.io/%s/pen/%s" $user $slug) -}}
+{{- $openLabel := cond (eq .Page.Language.Lang "fr") "Ouvrir sur CodePen" "Open on CodePen" -}}
+<div class="codepen-grid-card rounded-lg border border-black/10 bg-black/[0.02] p-3 dark:border-white/15 dark:bg-white/[0.03]">
+  <h3>{{ $title }}</h3>
+  <p class="codepen-grid-caption">{{ $caption }}</p>
+  {{- partial "codepen-embed.html" (dict "user" $user "slug" $slug "height" $height "tab" $tab "marginClass" "my-0") -}}
+  <a class="codepen-grid-open text-black/80 no-underline hover:text-black dark:text-white/85 dark:hover:text-white" href="{{ $href }}" target="_blank" rel="noopener noreferrer">{{ $openLabel }}</a>
+</div>

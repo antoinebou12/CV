@@ -1,0 +1,15 @@
+{{- $user := .user -}}
+{{- $slug := .slug -}}
+{{- $height := .height | default 480 -}}
+{{- $tab := .tab | default "result" -}}
+{{- $tabEnc := replace $tab "," "%2C" -}}
+{{- $marginClass := .marginClass | default "my-6" -}}
+<div class="not-prose {{ $marginClass }} w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10">
+  <iframe
+    title="CodePen embed"
+    src="https://codepen.io/{{ $user }}/embed/{{ $slug }}?default-tab={{ $tabEnc }}"
+    style="width:100%; height: {{ $height }}px;"
+    loading="lazy"
+    allowfullscreen="true"
+  ></iframe>
+</div>

@@ -2,13 +2,4 @@
 {{- $slug := .Get 1 -}}
 {{- $height := .Get 2 | default 480 -}}
 {{- $tab := .Get 3 | default "result" -}}
-{{- $tabEnc := replace $tab "," "%2C" -}}
-<div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10">
-  <iframe
-    title="CodePen embed"
-    src="https://codepen.io/{{ $user }}/embed/{{ $slug }}?default-tab={{ $tabEnc }}"
-    style="width:100%; height: {{ $height }}px;"
-    loading="lazy"
-    allowfullscreen="true"
-  ></iframe>
-</div>
+{{- partial "codepen-embed.html" (dict "user" $user "slug" $slug "height" $height "tab" $tab) -}}

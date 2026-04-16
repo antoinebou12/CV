@@ -94,6 +94,10 @@
 </section>
 {{- end -}}
 
+{{- if $.IsHome -}}
+{{- partial "home-spotlight-triple.html" (dict "Articles" $articles "Tutorials" $tutorials "Conferences" $conferences) -}}
+{{- end -}}
+
 <div class="post-kind-stack space-y-20 md:space-y-24">
   {{- if gt (len $articles) 0 -}}
   <details class="post-kind-disclosure post-kind-group" aria-labelledby="post-kind-articles">

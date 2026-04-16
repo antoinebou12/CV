@@ -1,0 +1,54 @@
+{{- $articles := .Articles | default slice -}}
+{{- $tutorials := .Tutorials | default slice -}}
+{{- $conferences := .Conferences | default slice -}}
+
+{{- $pickTutorial := false -}}
+{{- $wt := where $tutorials "Weight" "gt" 0 -}}
+{{- if gt (len $wt) 0 -}}
+  {{- $pickTutorial = index (sort $wt "Weight" "desc") 0 -}}
+{{- else if gt (len $tutorials) 0 -}}
+  {{- $pickTutorial = index $tutorials 0 -}}
+{{- end -}}
+
+{{- $pickArticle := false -}}
+{{- $wa := where $articles "Weight" "gt" 0 -}}
+{{- if gt (len $wa) 0 -}}
+  {{- $pickArticle = index (sort $wa "Weight" "desc") 0 -}}
+{{- else if gt (len $articles) 0 -}}
+  {{- $pickArticle = index $articles 0 -}}
+{{- end -}}
+
+{{- $pickConference := false -}}
+{{- $wc := where $conferences "Weight" "gt" 0 -}}
+{{- if gt (len $wc) 0 -}}
+  {{- $pickConference = index (sort $wc "Weight" "desc") 0 -}}
+{{- else if gt (len $conferences) 0 -}}
+  {{- $pickConference = index $conferences 0 -}}
+{{- end -}}
+
+{{- if or $pickTutorial $pickArticle $pickConference -}}
+<section
+  class="home-spotlight-triple post-kind-group not-prose mt-4 border-t border-black/10 pt-8 dark:border-white/15 md:pt-10"
+  aria-labelledby="home-spotlight-triple-title"
+>
+  <h2
+    id="home-spotlight-triple-title"
+    class="home-section-heading mb-8 border-b border-black/10 pb-3 text-sm font-semibold tracking-widest text-black/55 uppercase dark:border-white/15 dark:text-white/55"
+  >
+    {{- i18n "homeSpotlightTripleHeading" -}}
+  </h2>
+  <div
+    class="home-spotlight-triple__grid grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12"
+  >
+    {{- with $pickTutorial -}}
+      {{- partial "post-list-item.html" . -}}
+    {{- end -}}
+    {{- with $pickArticle -}}
+      {{- partial "post-list-item.html" . -}}
+    {{- end -}}
+    {{- with $pickConference -}}
+      {{- partial "post-list-item.html" . -}}
+    {{- end -}}
+  </div>
+</section>
+{{- end -}}

@@ -1,7 +1,6 @@
 {{- $page := .Page | default . -}}
 {{- $cfg := site.Params.cvSidebar | default dict -}}
-{{- $enabled := $cfg.enabled | default false -}}
-{{- if not $enabled -}}
+{{- if ne $cfg.enabled true -}}
   {{- return -}}
 {{- end -}}
 
