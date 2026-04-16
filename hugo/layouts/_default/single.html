@@ -7,7 +7,7 @@
 
 <article{{- if $isConference }} class="conference-post"{{- end -}}>
   <header class="mb-14">
-    <h1 class="my-0! pb-2.5">{{- .Title -}}</h1>
+    <h1 id="single-post-title" class="my-0! pb-2.5">{{- .Title -}}</h1>
     {{- if $isConference -}}
     <p class="mb-0 mt-2 text-xs font-semibold uppercase tracking-wider text-orange-700 dark:text-orange-300/95">{{- i18n "searchPillConference" -}}</p>
     {{- end -}}
@@ -24,6 +24,9 @@
       <span>{{- $single_author -}}</span>
       {{- end -}}
     </div>
+    {{- end -}}
+    {{- with .Description -}}
+    <p class="single-post-lead">{{- . | plainify -}}</p>
     {{- end -}}
   </header>
 
@@ -64,9 +67,9 @@
   {{- end -}}
   {{- end -}}
 
-  <div class="single-post-surface not-prose mb-10">
-    <div class="prose prose-neutral max-w-none dark:prose-invert">
-      <section>{{- $page.Content -}}</section>
+  <div class="single-post-surface single-post-body not-prose mb-10 min-w-0">
+    <div class="single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert">
+      <section class="single-post-content" aria-labelledby="single-post-title">{{- $page.Content -}}</section>
     </div>
   </div>
 

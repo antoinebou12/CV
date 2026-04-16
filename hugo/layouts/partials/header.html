@@ -11,7 +11,7 @@
 
   <button
     type="button"
-    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 md:hidden ltr:-mr-8 rtl:-ml-8"
+    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
     aria-label="{{ i18n "navMenuOpen" }}"
     aria-expanded="false"
     aria-controls="site-nav-panel"
@@ -154,18 +154,18 @@
         });
       }
 
-      const mdUpMq = window.matchMedia('(min-width: 768px)');
-      const handleMdUpChange = (event) => {
+      const lgUpMq = window.matchMedia('(min-width: 1024px)');
+      const handleLgUpChange = (event) => {
         if (event.matches) {
           setMenuOpen(false);
         }
       };
 
-      handleMdUpChange(mdUpMq);
-      if (typeof mdUpMq.addEventListener === 'function') {
-        mdUpMq.addEventListener('change', handleMdUpChange);
-      } else if (typeof mdUpMq.addListener === 'function') {
-        mdUpMq.addListener(handleMdUpChange);
+      handleLgUpChange(lgUpMq);
+      if (typeof lgUpMq.addEventListener === 'function') {
+        lgUpMq.addEventListener('change', handleLgUpChange);
+      } else if (typeof lgUpMq.addListener === 'function') {
+        lgUpMq.addListener(handleLgUpChange);
       }
     }
 

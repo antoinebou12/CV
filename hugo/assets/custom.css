@@ -29,7 +29,7 @@
   padding-inline-start: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .btn-menu {
     display: none;
   }
@@ -253,6 +253,68 @@ body {
   box-shadow: var(--shadow-elevation-1);
 }
 
+/* Single article: contain wide code blocks, keep column from horizontal overflow */
+.single-post-surface.single-post-body {
+  min-width: 0;
+}
+
+.single-post-surface .single-post-prose {
+  min-width: 0;
+}
+
+.single-post-surface .prose :where(.highlight) {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.single-post-surface .prose :where(pre) {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.single-post-surface .prose :where(pre code) {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* Section rhythm inside single body (list/home prose unchanged) */
+.single-post-surface .single-post-content :where(h2) {
+  margin-top: 2.5rem;
+  margin-bottom: 0.65rem;
+  scroll-margin-top: 5rem;
+}
+
+.single-post-surface .single-post-content :where(h3) {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  scroll-margin-top: 4.5rem;
+}
+
+.single-post-surface .single-post-content :where(h4) {
+  margin-top: 1.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.single-post-surface .single-post-content :where(hr) {
+  margin: 2rem 0;
+  border-color: var(--surface-border);
+}
+
+.single-post-surface .single-post-content > :first-child {
+  margin-top: 0;
+}
+
+.single-post-lead {
+  margin: 0.85rem 0 0;
+  max-width: 62ch;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
 @media (min-width: 640px) {
   main.site-main {
     padding-inline: 1.5rem;
@@ -291,9 +353,9 @@ main:has(.site-search-page) {
   --w: 100%;
 }
 
-/* Single posts: comfortable measure (search uses .site-search-page, excluded) */
+/* Single posts: match list/search horizontal canvas (search uses .site-search-page, excluded) */
 main:has(> article:not(.site-search-page)) {
-  --w: min(880px, 100vw - 2rem);
+  --w: 100%;
 }
 
 /* Post card grids (home / posts list / tag lists / recipes / projects) */

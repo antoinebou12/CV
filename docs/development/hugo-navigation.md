@@ -34,6 +34,8 @@ The theme expects:
 
 Do **not** rename `btn-menu`, `nav-wrapper`, or the `open` class without checking hugo-paper’s CSS (bundled `main.css`).
 
+The hamburger (`.btn-menu`) and inline desktop nav both use Tailwind’s **`lg` breakpoint (1024px)**—below that width the drawer overlay applies; keep `header.html`, `custom.css`, and any `matchMedia` checks aligned on **1024px**, not `md` (768px), or navigation becomes unreachable between 768px and 1023px.
+
 Behavior added in this project’s partial:
 
 - **`aria-expanded`** and **open/close** labels on the menu button (from i18n).

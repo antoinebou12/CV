@@ -1,22 +1,42 @@
 ---
+# hugo new content recipes/<slug>/index.md
 title: "{{ replace .File.ContentBaseName `-` ` ` | title }}"
-date: {{ .Date.Format "2006-01-02T15:04:05-07:00" }}
+description: One or two sentences for listings and SEO.
+date: {{ now.Format "2006-01-02T15:04:05Z07:00" }}
+lastmod: {{ now.Format "2006-01-02T15:04:05Z07:00" }}
 draft: true
-description: ""
+translationKey: "{{ .File.ContentBaseName }}"
 # tags:
-#   -
+#   - Vegetarian
 # images:
-#   - featured.png
+#   - featured.jpg
 ---
 
-Intro (what this recipe is and when you would make it).
+<!-- Add featured.jpg (or .png) in this folder and list it under images: in front matter for cards. -->
+
+## Category
+
+- **Type:**
+- **Main ingredient:**
+- **Preparation time:**
+- **Cooking time:**
+- **Total time:**
+- **Servings:**
 
 ## Ingredients
 
 - Item one
 - Item two
 
-## Steps
+## Instructions
 
-1. First step
-2. Second step
+1. Step one
+2. Step two
+
+## Notes
+
+Optional tips or substitutions.
+
+## Review
+
+Optional tasting note.
