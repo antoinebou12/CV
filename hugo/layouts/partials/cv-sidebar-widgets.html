@@ -40,7 +40,15 @@
       <li><a href="https://linkedin.com/in/{{ . }}" target="_blank" rel="me noopener">LinkedIn</a></li>
       {{- end -}}
       {{- range $cfg.extraLinks -}}
-      <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a></li>
+      {{- $linkURL := .url -}}
+      {{- if eq (lower .name) "resume" -}}
+        {{- if eq $page.Lang "fr" -}}
+          {{- $linkURL = "/cv-fr/resume.pdf" -}}
+        {{- else -}}
+          {{- $linkURL = "/cv-en/resume.pdf" -}}
+        {{- end -}}
+      {{- end -}}
+      <li><a href="{{ $linkURL }}" target="_blank" rel="noopener">{{ .name }}</a></li>
       {{- end -}}
     </ul>
   </section>

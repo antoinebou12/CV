@@ -15,6 +15,11 @@ draft: false
 - Lecteur web auto-hébergé  
 - Déploiement simple avec Docker / Docker Compose  
 
+### Projet connexe
+
+- [FlashGames](https://antoinebou12.github.io/FlashGames/) — Petite collection de jeux Flash historiques préservés pour les navigateurs modernes via Ruffle.
+- Source : [antoinebou12/FlashGames](https://github.com/antoinebou12/FlashGames)
+
 ### Utilisation
 
 ```bash

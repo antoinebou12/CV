@@ -17,6 +17,11 @@ This repository offers a self-hosted RetroArch web player, allowing you to enjoy
 - **Self-hosted Web Player**: Easily host the RetroArch player on your own server.
 - **Easy Deployment**: Utilize Docker for straightforward setup and deployment.
 
+### Related project
+
+- [FlashGames](https://antoinebou12.github.io/FlashGames/) — A small collection of legacy Flash games preserved for modern browsers with Ruffle.
+- Source: [antoinebou12/FlashGames](https://github.com/antoinebou12/FlashGames)
+
 ### How to Use
 
 To get started, run the Docker image with the following command:
