@@ -252,6 +252,10 @@
       border-top: 1px solid #eef4f2;
     }
 
+    details.cv-job:not([open]) > .cv-job-body {
+      display: none;
+    }
+
     .cv-course-body {
       padding: 0 12px 12px 12px;
       font-size: 0.95em;
@@ -1379,6 +1383,20 @@
   </div>
   <!-- ClustrMaps widget -->
   <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=5r6lAAh3W_opreqW2Zi-o-UhGvrv12PSDzwfKIyaVoA&cl=ffffff&w=a"></script>
+  <script>
+    (function () {
+      function closeCvJobs() {
+        document.querySelectorAll('details.cv-job[open]').forEach(function (el) {
+          el.removeAttribute('open');
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', closeCvJobs);
+      } else {
+        closeCvJobs();
+      }
+    })();
+  </script>
 </body>
 <script>
     particlesJS('particles-js', {
