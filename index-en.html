@@ -128,6 +128,110 @@
       text-transform: uppercase;
     }
 
+    /* Collapsible CV sections (<details>) — panel + chevron */
+    details.cv-section {
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    details.cv-section>summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35em;
+      cursor: pointer;
+      color: #227c74;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 0 12px;
+      margin: 0;
+      border-bottom: 2px solid #e8eceb;
+      user-select: none;
+    }
+
+    details.cv-section>summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-section>summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      font-size: 0.45em;
+      opacity: 0.55;
+      transition: transform 0.2s ease;
+    }
+
+    details.cv-section[open]>summary::after {
+      transform: rotate(-180deg);
+    }
+
+    .cv-section-body {
+      padding-top: 6px;
+    }
+
+    details.cv-course {
+      margin: 10px 0 12px 0;
+      border: 1px solid #d5dedc;
+      border-left: 4px solid #227c74;
+      border-radius: 0 4px 4px 0;
+      background: #f9fbfa;
+    }
+
+    details.cv-course>summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: #1d4a45;
+      font-size: 0.98em;
+      line-height: 1.35;
+      user-select: none;
+    }
+
+    details.cv-course>summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-course>summary::after {
+      content: '\f054';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.65em;
+      opacity: 0.45;
+      margin-top: 0.35em;
+    }
+
+    details.cv-course[open]>summary::after {
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+
+    .cv-course-body {
+      padding: 0 12px 12px 12px;
+      font-size: 0.95em;
+    }
+
+    .teaching-tech-ol {
+      margin: 0 0 0 1.1em;
+      padding: 0;
+    }
+
+    .teaching-tech-ol li {
+      margin-bottom: 0.5em;
+    }
+
+    .teaching-term {
+      display: inline-block;
+      font-weight: 700;
+      color: #334960;
+      min-width: 8.5em;
+    }
+
     #awards,
     #education {
       margin-top: 20px;
@@ -359,23 +463,6 @@
       z-index: -1;
     }
 
-    .conference-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .conference-row img {
-      flex-shrink: 0;
-      max-height: 52px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .conference-row .conference-text {
-      flex: 1;
-      min-width: 0;
-    }
   </style>
   <style type="text/css" media="print">
     body {
@@ -401,8 +488,7 @@
     .contact-item,
     .publication,
     .skills,
-    .interests,
-    .conference-row {
+    .interests {
       page-break-inside: avoid;
     }
 
@@ -506,7 +592,7 @@
             <img src="antoine.jpeg" alt="avatar">
           </div>
           <div id="text-header">
-            <h1>Antoine Boucher<br><span>Software Engineer — Backend / Platform / DevSecOps</span></h1>
+            <h1>Antoine Boucher<br><span>Software Engineer — Platform and Computer Graphics</span></h1>
             <div style="margin-top: 8px;">
               <a href="cv-en/resume.pdf" download class="btn btn-primary">
                 Download CV
@@ -519,17 +605,20 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7">
         <!-- ABOUT ME -->
-        <div class="box">
-          <h2><i class="fas fa-user ico"></i> About</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-user ico"></i> About</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">Software engineer focused on cloud-native backend systems, DevSecOps automation, and developer tooling. Strong across Java/Kotlin + Python, Docker/Kubernetes, CI/CD, and infrastructure-as-code.</li>
             <li class="list-group-item">Active open-source contributor/maintainer (public repos with significant adoption; ~2.8k stars shown on GitHub as of Jan 2026).</li>
             <li class="list-group-item">Master's Degree in Information Technology Engineering from École de technologie supérieure (ÉTS).</li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- WORK EXPERIENCE -->
-        <div class="box">
-          <h2><i class="fas fa-suitcase ico"></i> Work Experience</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Work Experience</summary>
+          <div class="cv-section-body">
 		  <!-- IMC2 -->
           <div class="job clearfix">
             <div class="row">
@@ -579,7 +668,7 @@
                     <li class="list-group-item">Assisted teams with Docker and Kubernetes fundamentals (containerization, deployments, debugging)</li>
                     <li class="list-group-item">Supported security learning with practical references to OWASP (common web risks, secure practices, and remediation mindset)</li>
                     <li class="list-group-item">Corrected practical assignments and provided technical coaching to unblock teams and improve deliverables</li>
-                    <li class="list-group-item">GitLab, CI/CD, DevSecOps, Docker, Kubernetes, SonarQube, OWASP, Secure Coding, Linux</li>
+                    <li class="list-group-item">GitLab, CI/CD, DevSecOps, Docker, Kubernetes, OWASP, Secure Coding, Linux</li>
                   </ul>
                 </div>
               </div>
@@ -599,16 +688,37 @@
               <div class="job-details col-xs-11">
                 <div class="profession">Teaching Assistant (Contract Part-time)</div>
                 <div class="description">
-                  Courses: TCH057 (Mobile Applications and User Experience, Winter 2024), IND500 (Distributed Databases, Fall 2025), TCH099 (Informatics Integrator Project, Summer 2024, Winter 2025, Summer 2025), GTI660 (Multimedia Databases, Summer 2024), GTI320 (Mathematical Programming: Patterns & Efficient Algorithms, Winter 2026)
-                  <div class="highlights">Highlights</div>
-                  <ul class="list-group">
-                    <li class="list-group-item"><strong>TCH057:</strong> Supported students during labs by answering questions on course concepts and assignments (mobile dev + UX fundamentals)</li>
-                    <li class="list-group-item"><strong>IND500:</strong> Created and updated lab content (SQL, MongoDB, Kafka, PostgreSQL) aligned with modern distributed data concepts; designed and corrected lab assignments with detailed feedback and grading rubrics</li>
-                    <li class="list-group-item"><strong>TCH099:</strong> Supported students with debugging, architecture choices, and project integration (backend + data pipelines); helped instructors update/test course infrastructure across cohorts (including Microsoft Azure where relevant); guided teams on delivery practices and project execution (requirements clarification, milestones, SCRUM basics)</li>
-                    <li class="list-group-item"><strong>GTI660:</strong> Created and updated lab content; designed and corrected lab assignments; provided detailed feedback to students</li>
-                    <li class="list-group-item"><strong>GTI320:</strong> Supported course delivery and student learning</li>
-                    <li class="list-group-item">SQL, MongoDB, Kafka, PostgreSQL, Distributed Databases, Microsoft Azure, Android Studio, UI/UX, SCRUM</li>
-                  </ul>
+                  <p style="margin-top:0">Course highlights below are ordered from most recent term to earliest. Technologies used across these courses are listed separately in semester order.</p>
+                  <div class="highlights">Courses (by term)</div>
+                  <details class="cv-course" open>
+                    <summary>GTI320 — Mathematical Programming: Patterns &amp; Efficient Algorithms <span style="font-weight:400;opacity:.85">(Winter 2026)</span></summary>
+                    <div class="cv-course-body">Supported course delivery and student learning.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>IND500 — Distributed Databases <span style="font-weight:400;opacity:.85">(Fall 2025)</span></summary>
+                    <div class="cv-course-body">Created and updated lab content (SQL, MongoDB, Kafka, PostgreSQL) aligned with modern distributed data concepts; designed and corrected lab assignments with detailed feedback and grading rubrics.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>TCH099 — Informatics Integrator Project <span style="font-weight:400;opacity:.85">(Summer 2025, Winter 2025, Summer 2024)</span></summary>
+                    <div class="cv-course-body">Supported students with debugging, architecture choices, and project integration (backend + data pipelines); helped instructors update/test course infrastructure across cohorts (including Microsoft Azure where relevant); guided teams on delivery practices and project execution (requirements clarification, milestones, SCRUM basics).</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>GTI660 — Multimedia Databases <span style="font-weight:400;opacity:.85">(Summer 2024)</span></summary>
+                    <div class="cv-course-body">Created and updated lab content; designed and corrected lab assignments; provided detailed feedback to students.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>TCH057 — Mobile Applications and User Experience <span style="font-weight:400;opacity:.85">(Winter 2024)</span></summary>
+                    <div class="cv-course-body">Supported students during labs by answering questions on course concepts and assignments (mobile dev + UX fundamentals).</div>
+                  </details>
+                  <div class="highlights">Technologies &amp; topics (chronological by term)</div>
+                  <ol class="teaching-tech-ol">
+                    <li><span class="teaching-term">Winter 2024</span> Android Studio, UI/UX (TCH057)</li>
+                    <li><span class="teaching-term">Summer 2024</span> SQL (GTI660); Microsoft Azure, SCRUM, backend and data-pipeline integration (TCH099)</li>
+                    <li><span class="teaching-term">Winter 2025</span> Microsoft Azure, SCRUM, backend and data-pipeline integration (TCH099)</li>
+                    <li><span class="teaching-term">Summer 2025</span> Microsoft Azure, SCRUM, backend and data-pipeline integration (TCH099)</li>
+                    <li><span class="teaching-term">Fall 2025</span> SQL, MongoDB, Kafka, PostgreSQL, distributed databases (IND500)</li>
+                  </ol>
+                  <p style="margin-bottom:0;font-size:0.92em;opacity:.9">Flat list (data stack order): SQL, MongoDB, Kafka, PostgreSQL, Distributed Databases, Microsoft Azure, Android Studio, UI/UX, SCRUM.</p>
                 </div>
               </div>
             </div>
@@ -729,13 +839,13 @@
               <div class="job-details col-xs-11">
                 <div class="profession">Full Stack Developer (Co-op → Part-time)</div>
                 <div class="description">
-                  Worked on travel/ticketing web platform: UI redesign, payment support, and business logic implementation.
+                  Travel/ticketing platform (Italiarail), internal support tooling, and Selenium-based quality automation.
                   <div class="highlights">Highlights</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Worked on travel/ticketing web platform: UI redesign, payment support, and business logic implementation</li>
-                    <li class="list-group-item">Built/reworked an automated testing setup to replace manual UI testing workflows</li>
-                    <li class="list-group-item">Maintained compatibility fixes (including legacy browser constraints) and created supporting API endpoints</li>
-                    <li class="list-group-item">Python, Django, JavaScript, jQuery, REST APIs, SCRUM/KANBAN</li>
+                    <li class="list-group-item">Travel/ticketing (Italiarail): worked with Railkey Tech on performance and UX; Braintree payment integration; UI redesign for consistency; ticketing frontend refresh to new guidelines; purchase-related API endpoints and bugfixes</li>
+                    <li class="list-group-item">Internal tooling: Django, Pyramid, and jQuery for customer-service web tools and a currency-usage analysis dashboard</li>
+                    <li class="list-group-item">Quality: rewrote Selenium end-to-end test infrastructure during co-op and extended automated coverage while part-time</li>
+                    <li class="list-group-item">Python, Django, Pyramid, JavaScript, jQuery, Selenium, MongoDB, REST API, Git, Jira, test automation</li>
                   </ul>
                 </div>
               </div>
@@ -747,43 +857,20 @@
                 <div class="where">
                   Algolux
                 </div>
-                <div class="year">May 2018 – Aug 2018</div>
+                <div class="year">May 2017 – Aug 2017; May 2018 – Aug 2018</div>
               </div>
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Algorithm Developer (Internship)</div>
+                <div class="profession">Engineering Intern</div>
                 <div class="description">
-                  Built tools and pipelines for camera/ISP testing: image capture, analysis utilities, and workflow automation.
+                  Internships combining camera/ISP validation automation, vision datasets and tooling, and lab infrastructure support.
                   <div class="highlights">Highlights</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Built tools and pipelines for camera/ISP testing: image capture, analysis utilities, and workflow automation</li>
-                    <li class="list-group-item">Developed a Flask REST service for remote control/visual testing; created scripts for Linux deployment automation</li>
-                    <li class="list-group-item">Contributed to dataset creation workflows for vision experiments (capture + annotation process)</li>
-                    <li class="list-group-item">Python, C++, CUDA, OpenCV, Flask, REST APIs, Linux</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="job clearfix">
-            <div class="row">
-              <div class="details">
-                <div class="where">
-                  Algolux
-                </div>
-                <div class="year">May 2017 – Aug 2017</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="job-details col-xs-11">
-                <div class="profession">IT Technician (Internship)</div>
-                <div class="description">
-                  Supported Linux/Windows workstations and server environment used for image processing experiments and REST tooling.
-                  <div class="highlights">Highlights</div>
-                  <ul class="list-group">
-                    <li class="list-group-item">Supported Linux/Windows workstations and server environment used for image processing experiments and REST tooling</li>
-                    <li class="list-group-item">Linux, Windows, Server Administration, REST APIs</li>
+                    <li class="list-group-item">Automation for camera/ISP validation: Ansible and Linux/QEMU UEFI VM workflows for REST-based installs; HDR 10bpp test imagery for Nexus 6 ISP; Flask REST services for remote display and capture workflows</li>
+                    <li class="list-group-item">Vision data and analysis: large-scale outdoor capture and annotation pipeline (~12k images); Python tool for raw color analysis; software control for camera rigs/tripods for varied viewpoints</li>
+                    <li class="list-group-item">Lab operations: QNAP backups for Ubuntu workstations, networking support, Linux/Windows desktops and servers for imaging experiments and REST tooling</li>
+                    <li class="list-group-item">Python, C++, CUDA, OpenCV, Flask, Ansible, Linux, Windows, REST APIs</li>
                   </ul>
                 </div>
               </div>
@@ -800,14 +887,15 @@
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Manager, MakerSpace (Part-time)</div>
+                <div class="profession">Manager, digital fabrication lab (Part-time)</div>
                 <div class="description">
-                  Operated makerspace facility (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end.
+                  Operated electronics and software development lab (3D printers/VR/electronics).
                   <div class="highlights">Highlights</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Operated makerspace facility (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end</li>
-                    <li class="list-group-item">Assisted students with digital fabrication, prototyping, and innovation projects</li>
-                    <li class="list-group-item">3D Printing, VR, Electronics, Equipment Maintenance, Digital Fabrication</li>
+                    <li class="list-group-item">Operated electronics and software development lab (3D printers/VR/electronics)</li>
+                    <li class="list-group-item">Ensured materials and tools were always available for users; assisted students with 3D printers and VR equipment</li>
+                    <li class="list-group-item">Helped troubleshoot technical issues and guided students in innovative projects; maintained and repaired 3D printers</li>
+                    <li class="list-group-item">3D Printing, Electronics, Equipment Maintenance</li>
                   </ul>
                 </div>
               </div>
@@ -824,39 +912,43 @@
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Manager, MakerSpace (Part-time)</div>
+                <div class="profession">Manager of the MakerSpace (Part-time)</div>
                 <div class="description">
-                  Operated makerspace (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end.
+                  Ran the MakerSpace (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end.
                   <div class="highlights">Highlights</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Operated makerspace (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end</li>
-                    <li class="list-group-item">3D Printing, VR, Electronics, Equipment Maintenance, Student Support</li>
+                    <li class="list-group-item">Ran the MakerSpace (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end</li>
+                    <li class="list-group-item">Assisted students with digital fabrication, prototyping, and innovation projects</li>
+                    <li class="list-group-item">Ensured materials and tools were always available for users; promoted innovation and creativity in digital fabrication and virtual reality</li>
+                    <li class="list-group-item">3D Printing, VR, Electronics, Equipment Maintenance, Digital Fabrication</li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- LEADERSHIP & COMMUNITY -->
-        <div class="box">
-          <h2><i class="fas fa-users ico"></i> Leadership & Community</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-users ico"></i> Leadership & Community</summary>
+          <div class="cv-section-body">
           <div class="job clearfix">
             <div class="row">
               <div class="details">
                 <div class="where">AlgoÉTS</div>
-                <div class="year">Jan 2023 – Present</div>
+                <div class="year">Jan 2023 – Apr 2026</div>
               </div>
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">President</div>
                 <div class="description">
-                  Maintains club infrastructure and web presence; supports projects around trading/data/engineering education.
+                  Maintains club infrastructure and web presence; supports projects in trading, data, and engineering education.
                   <div class="highlights">Highlights</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Maintains club infrastructure and web presence; supports projects around trading/data/engineering education</li>
-                    <li class="list-group-item">Leads development/support for internal tools (platform, strategies, workshops, automation)</li>
-                    <li class="list-group-item">Python, Trading Platforms, Data Science, Backtesting, Infrastructure</li>
+                    <li class="list-group-item">Maintains club infrastructure and web presence; supports projects in trading, data, and engineering education</li>
+                    <li class="list-group-item">Leads development and support for internal tools (platform, strategies, workshops, automation)</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Technical Skills:</span> Python, Trading Platforms, Data Science, Backtesting, Infrastructure</li>
                   </ul>
                 </div>
               </div>
@@ -882,10 +974,12 @@
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- PROJECTS -->
-        <div class="box">
-          <h2><i class="fas fa-code-branch ico"></i> Selected Projects (Most Relevant)</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-code-branch ico"></i> Selected Projects</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
               <span style="font-weight:bold">UML / Diagram tooling</span>
@@ -896,55 +990,46 @@
               </ul>
             </li>
             <li class="list-group-item">
-              <span style="font-weight:bold">Conference Website Development</span>
+              <span style="font-weight:bold">Conference website development</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://graphquon.github.io/"><span style="font-weight:bold">Graphquon 2024</span></a> (Sep 2024 - Nov 2024) — Developed official conference website for Annual Quebec-Ontario Pre-SIGGRAPH Workshop; created <a href="https://chatgpt.com/g/g-B1Bfoq5qh-uml-diagram-expert">ChatGPT plugin (UML diagram expert)</a> to support conference attendees</li>
+                <li><strong>Graphquon 2024</strong> (Sep 2024 – Nov 2024) — Developed the official conference website for the Annual Quebec-Ontario Pre-SIGGRAPH Workshop; created a ChatGPT plugin (UML diagram expert) to support attendees (<a href="https://www.dgp.toronto.edu/graphquon/">Graphquon</a>)</li>
               </ul>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold">Automation / DevOps / Self-hosting</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">another-install-script</span></a> — Menu-based script to install/operate multiple Docker containers and system configuration (Docker/Ansible)</li>
-                <li><a href="https://github.com/antoinebou12/retroarch-web-games"><span style="font-weight:bold">retroarch-web-games</span></a> — Dockerized Retroarch web setup (self-hosting + packaging)</li>
-                <li><a href="https://github.com/antoinebou12/DasherControl"><span style="font-weight:bold">DasherControl</span></a> — Interactive configurable dashboard with customizable GridItem components supporting IFrame and Bookmark integrations</li>
+                <li><a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">another-install-script</span></a> — Menu-based script to install and operate multiple Docker containers and system configuration (Docker / Ansible)</li>
+                <li><a href="https://github.com/antoinebou12/retroarch-web-games"><span style="font-weight:bold">retroarch-web-games</span></a> — Dockerized RetroArch web setup (self-hosting and packaging)</li>
+                <li><a href="https://github.com/antoinebou13/DasherControl"><span style="font-weight:bold">DasherControl</span></a> — Interactive configurable dashboard with customizable GridItem components supporting iframe and bookmark integrations</li>
               </ul>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold">Integrations / Data</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/marketwatch"><span style="font-weight:bold">marketwatch (PyPI)</span></a> — Python library to interface with MarketWatch virtual trading platform (watchlists, portfolio, leaderboard)</li>
-                <li><a href="https://github.com/neilzilla/hass-renpho"><span style="font-weight:bold">hass_renpho</span></a> (Jun 2023 - Sep 2024) — Home Assistant integration for Renpho scale metrics; custom integration + automation plumbing</li>
-                <li><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"><span style="font-weight:bold">Serilog.Sinks.SentrySDK</span></a> — Serilog sink simplifying Sentry error/log management in .NET</li>
+                <li><a href="https://pypi.org/project/marketwatch/"><span style="font-weight:bold">marketwatch</span></a> (PyPI) — Python library for the MarketWatch virtual trading platform (watchlists, portfolio, leaderboard)</li>
+                <li><a href="https://github.com/antoinebou12/hass_renpho"><span style="font-weight:bold">hass_renpho</span></a> (Jun 2023 – Sep 2024) — Home Assistant integration for Renpho scale metrics; custom integration and automation plumbing</li>
+                <li><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"><span style="font-weight:bold">Serilog.Sinks.SentrySDK</span></a> — Serilog sink simplifying Sentry error and log management in .NET</li>
               </ul>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold">AR / Creator work</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"><span style="font-weight:bold">Snapchat Lenses (2017–2020)</span></a> — 42 lenses created; reported totals: 13.80M plays, 20.21M views, 709.6k shares, 9,977 favorites, 263 posts, 187 unique posters</li>
+                <li><span style="font-weight:bold">Snapchat Lenses</span> (2017–2020) — 42 lenses created; reported totals: 13.80M plays, 20.21M views, 709.6k shares, 9,977 favorites, 263 posts, 187 unique posters</li>
               </ul>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
       </div>
       <div class="col-xs-12 col-sm-5">
         <!-- CONTACT -->
-        <div class="box clearfix">
-          <h2><i class="fas fa-bullseye ico"></i> Contact</h2>
-          <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fas fa-map-marker fa-fw"></span></div>
-            <div class="title pull-right">443 Notre Dame Est</div>
-            <div class="title  pull-right">Montreal, Quebec H2Y 1C9 CA</div>
-          </div>
+        <details class="box clearfix cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-bullseye ico"></i> Contact</summary>
+          <div class="cv-section-body">
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fas fa-envelope fa-fw"></span></div>
-            <div class="title only pull-right"><a href="mailto:antoine.bou13@gmail.com"
-                target="_blank">antoine.bou13@gmail.com</a></div>
-          </div>
-          <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fab fa-twitter fa-fw"></span></div>
-            <div class="title pull-right">Twitter</div>
-            <div class="description pull-right"><a href="https:&#x2F;&#x2F;twitter.com&#x2F;antoinebou12"
-                target="_blank">antoinebou12</a></div>
+            <div class="title only pull-right"><a href="mailto:antoine@antoineboucher.info"
+                target="_blank">antoine@antoineboucher.info</a></div>
           </div>
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fab fa-linkedin fa-fw"></span></div>
@@ -959,33 +1044,31 @@
             <div class="description pull-right"><a href="https://antoineboucher.info" target="_blank">antoineboucher.info</a></div>
           </div>
           <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fab fa-orcid fa-fw"></span></div>
-            <div class="title pull-right">ORCID</div>
-            <div class="description pull-right"><a href="https://orcid.org/0009-0006-4142-0708" target="_blank">0009-0006-4142-0708</a></div>
-          </div>
-          <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fab fa-github fa-fw"></span></div>
             <div class="title pull-right">GitHub</div>
             <div class="description pull-right"><a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12"
                 target="_blank">antoinebou12</a></div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- EDUCATION -->
-        <div class="box">
-          <h2><i class="fas fa-university ico"></i> Education</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-university ico"></i> Education</summary>
+          <div class="cv-section-body">
           <ul id="education" class="clearfix">
             <li>
               <div class="year pull-left">
-                Aug 2023 - Dec 2025
+                Aug 2023 – Apr 2026
               </div>
               <div class="description pull-right">
                 <h3>École de technologie supérieure (ÉTS)</h3>
                 <div class="where"></div>
                 <p><i class="fas fa-graduation-cap ico"></i> Master&#39;s Degree, Information Technology Engineering</p>
+                <p>Thesis research: real-time surface wear in interactive physics simulations; dynamic friction and texture.</p>
               </div>
             </li>
             <li>
-              <div class="year pull-left">Sep 2018 - Apr 2023</div>
+              <div class="year pull-left">Sep 2018 – Apr 2023</div>
               <div class="description pull-right">
                 <h3>École de technologie supérieure (ÉTS)</h3>
                 <div class="where"></div>
@@ -993,10 +1076,12 @@
               </div>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- SKILLS -->
-        <div class="box">
-          <h2><i class="fas fa-tasks ico"></i> Core Skills</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Core Skills</summary>
+          <div class="cv-section-body">
           <div class="skills clearfix">
             <div class="item-skills">
               Backend
@@ -1006,10 +1091,11 @@
               <span class="skill badge">Java</span>
               <span class="skill badge">Kotlin</span>
               <span class="skill badge">Python</span>
+              <span class="skill badge">C++</span>
               <span class="skill badge">REST APIs</span>
               <span class="skill badge">GraphQL</span>
               <span class="skill badge">Microservices</span>
-              <span class="skill badge">Swagger/OpenAPI</span>
+              <span class="skill badge">OpenGL</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1052,7 +1138,6 @@
               <span class="skill badge">JUnit</span>
               <span class="skill badge">Integration/E2E Testing</span>
               <span class="skill badge">Playwright</span>
-              <span class="skill badge">SonarQube</span>
               <span class="skill badge">Observability/Logging</span>
             </div>
           </div>
@@ -1065,37 +1150,38 @@
               <span class="skill badge">Linux</span>
               <span class="skill badge">Bash</span>
               <span class="skill badge">Ansible</span>
-              <span class="skill badge">UML/Diagrams</span>
-              <span class="skill badge">PlantUML/Mermaid</span>
               <span class="skill badge">Security-minded delivery</span>
             </div>
           </div>
-        </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              AI coding / Agents
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Claude (Anthropic)</span>
+              <span class="skill badge">MCP (Model Context Protocol)</span>
+              <span class="skill badge">AI-assisted coding</span>
+              <span class="skill badge">Software agents</span>
+            </div>
+          </div>
+          </div>
+        </details>
         <!-- CONFERENCES -->
-        <div class="box">
-          <h2><i class="fas fa-chalkboard-teacher ico"></i> Conferences</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-chalkboard-teacher ico"></i> Conferences</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
-              <div class="conference-row">
-                <img src="images/graphquon-logo.png" alt="Graphquon logo">
-                <div class="conference-text">
-                  <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (Nov 15–16, 2025) — Presenter, Annual Quebec-Ontario Pre-SIGGRAPH Workshop, University of Toronto
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="conference-row">
-                <img src="images/graphquon-logo.png" alt="Graphquon logo">
-                <div class="conference-text">
-                  <a href="https://graphquon.github.io/"><strong>Graphquon 2024</strong></a> (Sep 2024 – Nov 2024) — Official conference website and <a href="https://chatgpt.com/g/g-B1Bfoq5qh-uml-diagram-expert">ChatGPT plugin (UML diagram expert)</a> for the Annual Quebec-Ontario Pre-SIGGRAPH Workshop
-                </div>
-              </div>
+              <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (Nov 15–16, 2025) — Presenter, Annual Quebec-Ontario Pre-SIGGRAPH Workshop, University of Toronto
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- CERTIFICATIONS & PROGRAMS -->
-        <div class="box">
-          <h2><i class="fas fa-trophy ico"></i> Certifications & Programs</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-trophy ico"></i> Certifications & Programs</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item"><a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a> — valid through Apr 2027</li>
             <li class="list-group-item"><a href="https://verified.sertifier.com/fr/verify/37471918795197/">Programme Québécois d'Entrepreneuriat Scientifique (QcES)</a></li>
@@ -1103,10 +1189,12 @@
             <li class="list-group-item"><a href="https://www.udemy.com/certificate/UC-0eafdbf0-41f4-465c-a7fd-ea5fc5a0d4d0/">Ultimate AWS Certified Cloud Practitioner CLF-C02</a> (Udemy, Mar 2024)</li>
             <li class="list-group-item">GDPR (Wandrian, May 2019)</li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- PUBLICATIONS -->
-        <div class="box">
-          <h2><i class="fas fa-book ico"></i> Publications</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-book ico"></i> Publications</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
               <span style="font-weight:bold"><a href="papers/rapport/rapport.md.html">Ray Tracing Engine</a></span><br>
@@ -1121,18 +1209,20 @@
               <span>Dec 2017</span>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- HOBBIES -->
-        <div class="box">
-          <h2><i class="fas fa-heart ico"></i> Interests</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-heart ico"></i> Interests</summary>
+          <div class="cv-section-body">
           <div class="interests clearfix">
             <div class="item-interests">
               Sport
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="interest badge">Skating</span>
               <span class="interest badge">Basketball</span>
               <span class="interest badge">Cycling</span>
+              <span class="interest badge">Skating</span>
             </div>
           </div>
           <div class="interests clearfix">
@@ -1140,10 +1230,10 @@
               Gaming
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="interest badge">Valorant</span>
               <span class="interest badge">Overwatch</span>
               <span class="interest badge">CS:GO</span>
               <span class="interest badge">Indie Games</span>
+              <span class="interest badge">Battlefield</span>
             </div>
           </div>
           <div class="interests clearfix">
@@ -1155,7 +1245,8 @@
               <span class="interest badge">Piano</span>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
       </div>
     </div>
   </div>

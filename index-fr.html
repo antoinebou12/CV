@@ -128,6 +128,110 @@
       text-transform: uppercase;
     }
 
+    /* Collapsible CV sections (<details>) — panel + chevron */
+    details.cv-section {
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    details.cv-section>summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35em;
+      cursor: pointer;
+      color: #227c74;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 0 12px;
+      margin: 0;
+      border-bottom: 2px solid #e8eceb;
+      user-select: none;
+    }
+
+    details.cv-section>summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-section>summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      font-size: 0.45em;
+      opacity: 0.55;
+      transition: transform 0.2s ease;
+    }
+
+    details.cv-section[open]>summary::after {
+      transform: rotate(-180deg);
+    }
+
+    .cv-section-body {
+      padding-top: 6px;
+    }
+
+    details.cv-course {
+      margin: 10px 0 12px 0;
+      border: 1px solid #d5dedc;
+      border-left: 4px solid #227c74;
+      border-radius: 0 4px 4px 0;
+      background: #f9fbfa;
+    }
+
+    details.cv-course>summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: #1d4a45;
+      font-size: 0.98em;
+      line-height: 1.35;
+      user-select: none;
+    }
+
+    details.cv-course>summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-course>summary::after {
+      content: '\f054';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.65em;
+      opacity: 0.45;
+      margin-top: 0.35em;
+    }
+
+    details.cv-course[open]>summary::after {
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+
+    .cv-course-body {
+      padding: 0 12px 12px 12px;
+      font-size: 0.95em;
+    }
+
+    .teaching-tech-ol {
+      margin: 0 0 0 1.1em;
+      padding: 0;
+    }
+
+    .teaching-tech-ol li {
+      margin-bottom: 0.5em;
+    }
+
+    .teaching-term {
+      display: inline-block;
+      font-weight: 700;
+      color: #334960;
+      min-width: 8.5em;
+    }
+
     #awards,
     #education {
       margin-top: 20px;
@@ -359,23 +463,6 @@
       z-index: -1;
     }
 
-    .conference-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .conference-row img {
-      flex-shrink: 0;
-      max-height: 52px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .conference-row .conference-text {
-      flex: 1;
-      min-width: 0;
-    }
   </style>
   <style type="text/css" media="print">
     body {
@@ -401,8 +488,7 @@
     .contact-item,
     .publication,
     .skills,
-    .interests,
-    .conference-row {
+    .interests {
       page-break-inside: avoid;
     }
 
@@ -506,7 +592,7 @@
             <img src="antoine.jpeg" alt="avatar">
           </div>
           <div id="text-header">
-            <h1>Antoine Boucher<br><span>Ingénieur logiciel — Backend / Plateforme / DevSecOps</span></h1>
+            <h1>Antoine Boucher<br><span>Ingénieur logiciel — Plateforme et infographie</span></h1>
             <div style="margin-top: 8px;">
               <a href="cv-fr/resume.pdf" download class="btn btn-primary">
                 Télécharger le CV
@@ -519,17 +605,20 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7">
         <!-- À PROPOS -->
-        <div class="box">
-          <h2><i class="fas fa-user ico"></i> À propos</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-user ico"></i> À propos</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">Ingénieur logiciel spécialisé dans les systèmes backend cloud-native, l'automatisation DevSecOps et les outils développeur. Solide expérience avec Java/Kotlin + Python, Docker/Kubernetes, CI/CD et infrastructure-as-code.</li>
             <li class="list-group-item">Contributeur/mainteneur open source actif (dépôts publics avec adoption significative ; ~2.8k étoiles sur GitHub en jan 2026).</li>
             <li class="list-group-item">Maîtrise en génie des technologies de l'information de l'École de technologie supérieure (ÉTS).</li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- EXPÉRIENCE PROFESSIONNELLE -->
-        <div class="box">
-          <h2><i class="fas fa-suitcase ico"></i> Expérience professionnelle</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Expérience professionnelle</summary>
+          <div class="cv-section-body">
 		  <!-- IMC2 -->
           <div class="job clearfix">
             <div class="row">
@@ -579,7 +668,7 @@
                     <li class="list-group-item">Assisté équipes avec fondamentaux Docker et Kubernetes (containerisation, déploiements, débogage)</li>
                     <li class="list-group-item">Soutenu apprentissage sécurité avec références pratiques à OWASP (risques web communs, pratiques sécurisées, et mentalité de remédiation)</li>
                     <li class="list-group-item">Corrigé travaux pratiques et fourni coaching technique pour débloquer équipes et améliorer livrables</li>
-                    <li class="list-group-item">GitLab, CI/CD, DevSecOps, Docker, Kubernetes, SonarQube, OWASP, Codage sécurisé, Linux</li>
+                    <li class="list-group-item">GitLab, CI/CD, DevSecOps, Docker, Kubernetes, OWASP, Codage sécurisé, Linux</li>
                   </ul>
                 </div>
               </div>
@@ -599,16 +688,37 @@
               <div class="job-details col-xs-11">
                 <div class="profession">Assistant d'enseignement (Contrat temps partiel)</div>
                 <div class="description">
-                  Cours: TCH057 (Applications mobiles et expérience utilisateur, Hiver 2024), IND500 (Bases de données distribuées, Automne 2025), TCH099 (Projet intégrateur en informatique, Été 2024, Hiver 2025, Été 2025), GTI660 (Bases de données multimédias, Été 2024), GTI320 (Programmation mathématique: Patterns et algorithmes efficaces, Hiver 2026)
-                  <div class="highlights">Points saillants</div>
-                  <ul class="list-group">
-                    <li class="list-group-item"><strong>TCH057:</strong> Soutenu étudiants pendant laboratoires en répondant questions sur concepts de cours et travaux (développement mobile + fondamentaux UX)</li>
-                    <li class="list-group-item"><strong>IND500:</strong> Créé et mis à jour contenu de laboratoires (SQL, MongoDB, Kafka, PostgreSQL) aligné avec concepts modernes de données distribuées; conçu et corrigé travaux de laboratoire avec commentaires détaillés et grilles d'évaluation</li>
-                    <li class="list-group-item"><strong>TCH099:</strong> Soutenu étudiants avec débogage, choix d'architecture et intégration de projets (backend + pipelines de données); aidé instructeurs à mettre à jour/tester infrastructure de cours à travers cohortes (incluant Microsoft Azure où pertinent); guidé équipes sur pratiques de livraison et exécution de projets (clarification exigences, jalons, bases SCRUM)</li>
-                    <li class="list-group-item"><strong>GTI660:</strong> Créé et mis à jour contenu de laboratoires; conçu et corrigé travaux de laboratoire; fourni commentaires détaillés aux étudiants</li>
-                    <li class="list-group-item"><strong>GTI320:</strong> Soutenu livraison de cours et apprentissage des étudiants</li>
-                    <li class="list-group-item">SQL, MongoDB, Kafka, PostgreSQL, Bases de données distribuées, Microsoft Azure, Android Studio, UI/UX, SCRUM</li>
-                  </ul>
+                  <p style="margin-top:0">Les cours ci-dessous sont du plus récent au plus ancien. Les technologies mobilisées sont regroupées par session.</p>
+                  <div class="highlights">Cours (par session)</div>
+                  <details class="cv-course" open>
+                    <summary>GTI320 — Programmation mathématique : patterns et algorithmes efficaces <span style="font-weight:400;opacity:.85">(Hiver 2026)</span></summary>
+                    <div class="cv-course-body">Soutenu la livraison du cours et l'apprentissage des étudiants.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>IND500 — Bases de données distribuées <span style="font-weight:400;opacity:.85">(Automne 2025)</span></summary>
+                    <div class="cv-course-body">Créé et mis à jour le contenu de laboratoires (SQL, MongoDB, Kafka, PostgreSQL) aligné sur les concepts modernes de données distribuées; conçu et corrigé les travaux avec commentaires détaillés et grilles d'évaluation.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>TCH099 — Projet intégrateur en informatique <span style="font-weight:400;opacity:.85">(Été 2025, Hiver 2025, Été 2024)</span></summary>
+                    <div class="cv-course-body">Soutenu les étudiants (débogage, choix d'architecture, intégration de projets, backend et pipelines de données); aidé les instructeurs à mettre à jour et tester l'infrastructure du cours entre cohortes (dont Microsoft Azure au besoin); guidé les équipes sur les pratiques de livraison et l'exécution (clarification des exigences, jalons, bases SCRUM).</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>GTI660 — Bases de données multimédias <span style="font-weight:400;opacity:.85">(Été 2024)</span></summary>
+                    <div class="cv-course-body">Créé et mis à jour le contenu de laboratoires; conçu et corrigé les travaux; fourni des commentaires détaillés aux étudiants.</div>
+                  </details>
+                  <details class="cv-course" open>
+                    <summary>TCH057 — Applications mobiles et expérience utilisateur <span style="font-weight:400;opacity:.85">(Hiver 2024)</span></summary>
+                    <div class="cv-course-body">Soutenu les étudiants en laboratoire (questions sur les concepts et les travaux : développement mobile et fondamentaux UX).</div>
+                  </details>
+                  <div class="highlights">Technologies et thèmes (ordre chronologique par session)</div>
+                  <ol class="teaching-tech-ol">
+                    <li><span class="teaching-term">Hiver 2024</span> Android Studio, UI/UX (TCH057)</li>
+                    <li><span class="teaching-term">Été 2024</span> SQL (GTI660); Microsoft Azure, SCRUM, intégration backend et pipelines de données (TCH099)</li>
+                    <li><span class="teaching-term">Hiver 2025</span> Microsoft Azure, SCRUM, intégration backend et pipelines de données (TCH099)</li>
+                    <li><span class="teaching-term">Été 2025</span> Microsoft Azure, SCRUM, intégration backend et pipelines de données (TCH099)</li>
+                    <li><span class="teaching-term">Automne 2025</span> SQL, MongoDB, Kafka, PostgreSQL, bases de données distribuées (IND500)</li>
+                  </ol>
+                  <p style="margin-bottom:0;font-size:0.92em;opacity:.9">Liste plate (pile données) : SQL, MongoDB, Kafka, PostgreSQL, bases de données distribuées, Microsoft Azure, Android Studio, UI/UX, SCRUM.</p>
                 </div>
               </div>
             </div>
@@ -725,21 +835,20 @@
                 <div class="where">
                   Wandrian
                 </div>
-                <div class="year">Mai 2019 – Jan 2020</div>
+                <div class="year">Mai 2019 – Janvier 2020</div>
               </div>
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Développeur Full Stack (Stages → Temps partiel)</div>
                 <div class="description">
-                  Collaboré avec équipe Railkey Tech pour optimiser performance et expérience utilisateur du site Italiarail.
+                  Plateforme billetterie/voyage (Italiarail), outils service client et automatisation de tests Selenium.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Collaboré avec équipe Railkey Tech pour optimiser performance et expérience utilisateur du site Italiarail</li>
-                    <li class="list-group-item">Assisté intégration Braintree Payment Support, assurant transactions fluides et sécurisées</li>
-                    <li class="list-group-item">Entrepris refonte UI pour améliorer expérience utilisateur et cohérence de l'interface</li>
-                    <li class="list-group-item">Implémenté solution de tests automatisés utilisant Selenium pour rationaliser tests de code et assurer robustesse du site</li>
-                    <li class="list-group-item">Python, Django, JavaScript, jQuery, Selenium, MongoDB, REST API, Git, Jira, Automatisation de tests</li>
+                    <li class="list-group-item">Billetterie/voyage (Italiarail) : travail avec Railkey Tech sur performance et UX; intégration des paiements Braintree; refonte UI pour cohérence; frontend billets selon nouvelles lignes directrices; endpoints d'achat et correctifs associés</li>
+                    <li class="list-group-item">Outils internes : Django, Pyramid et jQuery pour le site service client et un tableau de bord d'analyse d'utilisation des devises</li>
+                    <li class="list-group-item">Qualité : réécriture de l'infrastructure de tests bout-en-bout Selenium en stage puis extension des tests automatisés à temps partiel</li>
+                    <li class="list-group-item">Python, Django, Pyramid, JavaScript, jQuery, Selenium, MongoDB, REST API, Git, Jira, automatisation de tests</li>
                   </ul>
                 </div>
               </div>
@@ -751,46 +860,20 @@
                 <div class="where">
                   Algolux
                 </div>
-                <div class="year">Mai 2018 – Août 2018</div>
+                <div class="year">Mai 2017 – Août 2017; Mai 2018 – Août 2018</div>
               </div>
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Développeur d'algorithmes (Stage)</div>
+                <div class="profession">Stagiaire en ingénierie</div>
                 <div class="description">
-                  Créé scripts Ansible et diagrammes d'architecture système Linux pour installation API REST sur Qemu VM ISO UEFI USB, permettant tests images HDR 10bpp pour ISP Nexus 6.
+                  Stages alliant automatisation pour validation caméra/ISP, jeux de données et outils de vision, et soutien à l'infrastructure du laboratoire.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Créé scripts Ansible et diagrammes d'architecture système Linux pour installation API REST sur Qemu VM ISO UEFI USB, permettant tests images HDR 10bpp pour ISP Nexus 6</li>
-                    <li class="list-group-item">Développé API REST utilisant Python Flask pour contrôle à distance d'écrans MacBook</li>
-                    <li class="list-group-item">Géré capture de 12,000 images utilisant trépied 8 pieds à travers Montréal pour créer jeu de données caméra sécurité avec applications d'annotation sur Linux pour entraînement IA</li>
-                    <li class="list-group-item">Développé outil basé Python pour analyse de couleur d'images brutes, améliorant capacités d'ajustement qualité d'image</li>
-                    <li class="list-group-item">Créé solution logicielle pour contrôle à distance de bras caméra, permettant capture d'images depuis angles et distances divers</li>
-                    <li class="list-group-item">Configuré serveur de sauvegarde QNAP pour postes Ubuntu; assisté tâches réseau serveur</li>
-                    <li class="list-group-item">Python, C++, CUDA, OpenCV, Flask, Ansible, Linux, REST APIs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="job clearfix">
-            <div class="row">
-              <div class="details">
-                <div class="where">
-                  Algolux
-                </div>
-                <div class="year">Mai 2017 – Août 2017</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="job-details col-xs-11">
-                <div class="profession">Technicien informatique (Stage)</div>
-                <div class="description">
-                  Supported Linux/Windows workstations and server environment used for image processing experiments and REST tooling.
-                  <div class="highlights">Points saillants</div>
-                  <ul class="list-group">
-                    <li class="list-group-item">Supported Linux/Windows workstations and server environment used for image processing experiments and REST tooling</li>
-                    <li class="list-group-item">Linux, Windows, Server Administration, REST APIs</li>
+                    <li class="list-group-item">Automatisation pour validation caméra/ISP : scripts Ansible et flux Linux/QEMU UEFI pour déploiements REST; imagerie de test HDR 10 bpp pour ISP Nexus 6; services REST Flask pour affichage et capture à distance</li>
+                    <li class="list-group-item">Données et analyse pour vision : campagne de capture extérieure et pipeline d'annotation (~12k images); outil Python d'analyse couleur sur RAW; logiciel de commande de rigs caméra/trépied pour points de vue variés</li>
+                    <li class="list-group-item">Exploitation du laboratoire : sauvegardes QNAP pour postes Ubuntu, support réseau, postes et serveurs Linux/Windows pour expériences d'imagerie et outils REST</li>
+                    <li class="list-group-item">Python, C++, CUDA, OpenCV, Flask, Ansible, Linux, Windows, REST APIs</li>
                   </ul>
                 </div>
               </div>
@@ -807,15 +890,15 @@
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Gestionnaire, MakerSpace (Temps partiel)</div>
+                <div class="profession">Gestionnaire d'atelier de fabrication numérique (Temps partiel)</div>
                 <div class="description">
-                  Opéré installation makerspace (imprimantes 3D/VR/électronique), maintenu équipement et soutenu projets étudiants de bout en bout.
+                  Opéré laboratoire d'électronique et de développement logiciel (imprimantes 3D/VR/électronique).
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Opéré installation makerspace (imprimantes 3D/VR/électronique), maintenu équipement et soutenu projets étudiants de bout en bout</li>
-                    <li class="list-group-item">Assisté étudiants avec fabrication numérique, prototypage et projets d'innovation</li>
-                    <li class="list-group-item">Assuré matériaux et outils toujours disponibles pour utilisateurs; promu innovation et créativité en fabrication numérique et réalité virtuelle</li>
-                    <li class="list-group-item">Impression 3D, VR, Électronique, Maintenance d'équipement, Fabrication numérique</li>
+                    <li class="list-group-item">Opéré laboratoire d'électronique et de développement logiciel (imprimantes 3D/VR/électronique)</li>
+                    <li class="list-group-item">Assuré matériaux et outils toujours disponibles pour utilisateurs; assisté étudiants avec imprimantes 3D et équipement VR</li>
+                    <li class="list-group-item">Aidé résolution problèmes techniques et guidé étudiants dans projets innovants; maintenu et réparé imprimantes 3D</li>
+                    <li class="list-group-item">Impression 3D, Électronique, Maintenance d'équipement</li>
                   </ul>
                 </div>
               </div>
@@ -832,41 +915,43 @@
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
-                <div class="profession">Gestionnaire, MakerSpace (Temps partiel)</div>
+                <div class="profession">Gestionnaire du MakerSpace (Temps partiel)</div>
                 <div class="description">
-                  Opéré laboratoire makerspace d'électronique et développement logiciel (imprimantes 3D/VR/électronique).
+                  Exploité le MakerSpace (imprimantes 3D/VR/électronique), maintenu équipement et soutenu projets étudiants de bout en bout.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Opéré laboratoire makerspace d'électronique et développement logiciel (imprimantes 3D/VR/électronique)</li>
-                    <li class="list-group-item">Assuré matériaux et outils toujours disponibles pour utilisateurs; assisté étudiants avec imprimantes 3D et équipement VR</li>
-                    <li class="list-group-item">Aidé résolution problèmes techniques et guidé étudiants dans projets innovants; maintenu et réparé imprimantes 3D</li>
-                    <li class="list-group-item">Impression 3D, Électronique, Maintenance d'équipement</li>
+                    <li class="list-group-item">Exploité le MakerSpace (imprimantes 3D/VR/électronique), maintenu équipement et soutenu projets étudiants de bout en bout</li>
+                    <li class="list-group-item">Assisté étudiants avec fabrication numérique, prototypage et projets d'innovation</li>
+                    <li class="list-group-item">Assuré matériaux et outils toujours disponibles pour utilisateurs; promu innovation et créativité en fabrication numérique et réalité virtuelle</li>
+                    <li class="list-group-item">Impression 3D, VR, Électronique, Maintenance d'équipement, Fabrication numérique</li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- LEADERSHIP & COMMUNAUTÉ -->
-        <div class="box">
-          <h2><i class="fas fa-users ico"></i> Leadership & Communauté</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-users ico"></i> Leadership & Communauté</summary>
+          <div class="cv-section-body">
           <div class="job clearfix">
             <div class="row">
               <div class="details">
                 <div class="where">AlgoÉTS</div>
-                <div class="year">Jan 2023 – Présent</div>
+                <div class="year">Jan 2023 – avr. 2026</div>
               </div>
             </div>
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Président</div>
                 <div class="description">
-                  Maintains club infrastructure and web presence; supports projects around trading/data/engineering education.
+                  Maintient l'infrastructure et la présence web du club ; soutient des projets autour du trading, des données et de la formation en ingénierie.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Maintains club infrastructure and web presence; supports projects around trading/data/engineering education</li>
-                    <li class="list-group-item">Dirige développement/support pour outils internes (plateforme, stratégies, ateliers, automatisation)</li>
-                    <li class="list-group-item">Python, Trading Platforms, Data Science, Backtesting, Infrastructure</li>
+                    <li class="list-group-item">Maintient l'infrastructure et la présence web du club ; soutient des projets autour du trading, des données et de la formation en ingénierie</li>
+                    <li class="list-group-item">Dirige le développement et le soutien d'outils internes (plateforme, stratégies, ateliers, automatisation)</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, plateformes de trading, science des données, backtesting, infrastructure</li>
                   </ul>
                 </div>
               </div>
@@ -892,69 +977,62 @@
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- PROJETS -->
-        <div class="box">
-          <h2><i class="fas fa-code-branch ico"></i> Projets sélectionnés (Les plus pertinents)</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-code-branch ico"></i> Projets sélectionnés</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
-              <span style="font-weight:bold">Outils UML / Diagrammes</span>
+              <span style="font-weight:bold">UML / Outils de diagrammes</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/uml-mcp"><span style="font-weight:bold">uml-mcp</span></a> — Outil/serveur de génération de diagrammes UML (basé sur MCP) permettant création de diagrammes depuis langage naturel</li>
-                <li><a href="https://github.com/antoinebou12/D2COpenAIPlugin"><span style="font-weight:bold">D2COpenAIPlugin</span></a> — Plugin générant diagrammes (PlantUML, Mermaid, Diagrams) depuis prompts; focus outils développeur</li>
-                <li><a href="https://github.com/antoinebou12/plantumlapi"><span style="font-weight:bold">plantumlapi</span></a> — Interface Python autour workflows web PlantUML et génération de diagrammes</li>
+                <li><a href="https://github.com/antoinebou12/uml-mcp"><span style="font-weight:bold">uml-mcp</span></a> — Outil / serveur de génération de diagrammes UML (via MCP) à partir du langage naturel</li>
+                <li><a href="https://github.com/antoinebou12/D2COpenAIPlugin"><span style="font-weight:bold">D2COpenAIPlugin</span></a> — Extension qui génère des diagrammes (PlantUML, Mermaid, Diagrams) à partir de prompts ; orientation outils développeur</li>
+                <li><a href="https://github.com/antoinebou12/plantumlapi"><span style="font-weight:bold">plantumlapi</span></a> — Interface Python autour des flux web PlantUML et de la génération de diagrammes</li>
               </ul>
             </li>
             <li class="list-group-item">
-              <span style="font-weight:bold">Développement site web conférence</span>
+              <span style="font-weight:bold">Site web de conférence</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://graphquon.github.io/"><span style="font-weight:bold">Graphquon 2024</span></a> (Sep 2024 - Nov 2024) — Développé site web officiel conférence pour Atelier annuel Québec-Ontario Pre-SIGGRAPH; créé <a href="https://chatgpt.com/g/g-B1Bfoq5qh-uml-diagram-expert">plugin ChatGPT (expert diagrammes UML)</a> pour soutenir participants conférence</li>
+                <li><strong>Graphquon 2024</strong> (sep. 2024 – nov. 2024) — Développement du site officiel de l’atelier annuel Québec-Ontario pré-SIGGRAPH ; extension ChatGPT (expert diagrammes UML) pour les participant·e·s (<a href="https://www.dgp.toronto.edu/graphquon/">Graphquon</a>)</li>
               </ul>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold">Automatisation / DevOps / Auto-hébergement</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">another-install-script</span></a> — Script basé menu pour installer/opérer multiples conteneurs Docker et configuration système (Docker/Ansible)</li>
-                <li><a href="https://github.com/antoinebou12/retroarch-web-games"><span style="font-weight:bold">retroarch-web-games</span></a> — Configuration web Retroarch dockerisée (auto-hébergement + packaging)</li>
-                <li><a href="https://github.com/antoinebou12/DasherControl"><span style="font-weight:bold">DasherControl</span></a> — Tableau de bord interactif configurable avec composants GridItem personnalisables supportant intégrations IFrame et Bookmark</li>
+                <li><a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">another-install-script</span></a> — Script menu pour installer et exploiter plusieurs conteneurs Docker et la configuration système (Docker / Ansible)</li>
+                <li><a href="https://github.com/antoinebou12/retroarch-web-games"><span style="font-weight:bold">retroarch-web-games</span></a> — Mise en place RetroArch web conteneurisée (auto-hébergement et empaquetage)</li>
+                <li><a href="https://github.com/antoinebou13/DasherControl"><span style="font-weight:bold">DasherControl</span></a> — Tableau de bord interactif configurable avec composants GridItem (iframe et favoris intégrés)</li>
               </ul>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold">Intégrations / Données</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/marketwatch"><span style="font-weight:bold">marketwatch (PyPI)</span></a> — Bibliothèque Python pour interface avec plateforme trading virtuelle MarketWatch (listes de surveillance, portefeuille, classement)</li>
-                <li><a href="https://github.com/neilzilla/hass-renpho"><span style="font-weight:bold">hass_renpho</span></a> (Juin 2023 - Sep 2024) — Intégration Home Assistant pour métriques balance Renpho; intégration personnalisée + plomberie automatisation</li>
-                <li><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"><span style="font-weight:bold">Serilog.Sinks.SentrySDK</span></a> — Sink Serilog simplifiant gestion erreurs/logs Sentry dans .NET</li>
+                <li><a href="https://pypi.org/project/marketwatch/"><span style="font-weight:bold">marketwatch</span></a> (PyPI) — Bibliothèque Python pour le jeu de bourse virtuel MarketWatch (listes de suivi, portefeuille, classement)</li>
+                <li><a href="https://github.com/antoinebou12/hass_renpho"><span style="font-weight:bold">hass_renpho</span></a> (juin 2023 – sep. 2024) — Intégration Home Assistant pour les métriques de balance Renpho ; composant personnalisé et automatisation</li>
+                <li><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"><span style="font-weight:bold">Serilog.Sinks.SentrySDK</span></a> — Sink Serilog simplifiant la gestion des erreurs et journaux Sentry en .NET</li>
               </ul>
             </li>
             <li class="list-group-item">
-              <span style="font-weight:bold">AR / Travail créateur</span>
+              <span style="font-weight:bold">RA / Création</span>
               <ul style="margin-top: 5px;">
-                <li><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"><span style="font-weight:bold">Snapchat Lenses (2017–2020)</span></a> — 42 lentilles créées; totaux rapportés: 13.80M lectures, 20.21M vues, 709.6k partages, 9,977 favoris, 263 publications, 187 créateurs uniques</li>
+                <li><span style="font-weight:bold">Lenses Snapchat</span> (2017–2020) — 42 lenses ; totaux rapportés : 13,80 M plays, 20,21 M vues, 709,6 k partages, 9 977 favoris, 263 publications, 187 créateur·rice·s uniques</li>
               </ul>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
       </div>
       <div class="col-xs-12 col-sm-5">
         <!-- CONTACT -->
-        <div class="box clearfix">
-          <h2><i class="fas fa-bullseye ico"></i> Contact</h2>
-          <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fas fa-map-marker fa-fw"></span></div>
-            <div class="title pull-right">443 Notre Dame Est</div>
-            <div class="title  pull-right">Montreal, Quebec H2Y 1C9 CA</div>
-          </div>
+        <details class="box clearfix cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-bullseye ico"></i> Contact</summary>
+          <div class="cv-section-body">
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fas fa-envelope fa-fw"></span></div>
-            <div class="title only pull-right"><a href="mailto:antoine.bou13@gmail.com"
-                target="_blank">antoine.bou13@gmail.com</a></div>
-          </div>
-          <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fab fa-twitter fa-fw"></span></div>
-            <div class="title pull-right">Twitter</div>
-            <div class="description pull-right"><a href="https:&#x2F;&#x2F;twitter.com&#x2F;antoinebou12"
-                target="_blank">antoinebou12</a></div>
+            <div class="title only pull-right"><a href="mailto:antoine@antoineboucher.info"
+                target="_blank">antoine@antoineboucher.info</a></div>
           </div>
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fab fa-linkedin fa-fw"></span></div>
@@ -969,33 +1047,31 @@
             <div class="description pull-right"><a href="https://antoineboucher.info" target="_blank">antoineboucher.info</a></div>
           </div>
           <div class="contact-item">
-            <div class="icon pull-left text-center"><span class="fab fa-orcid fa-fw"></span></div>
-            <div class="title pull-right">ORCID</div>
-            <div class="description pull-right"><a href="https://orcid.org/0009-0006-4142-0708" target="_blank">0009-0006-4142-0708</a></div>
-          </div>
-          <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fab fa-github fa-fw"></span></div>
             <div class="title pull-right">GitHub</div>
             <div class="description pull-right"><a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12"
                 target="_blank">antoinebou12</a></div>
           </div>
-        </div>
+          </div>
+        </details>
         <!-- FORMATION -->
-        <div class="box">
-          <h2><i class="fas fa-university ico"></i> Formation</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-university ico"></i> Formation</summary>
+          <div class="cv-section-body">
           <ul id="education" class="clearfix">
             <li>
               <div class="year pull-left">
-                Août 2023 - Déc 2025
+                Août 2023 – Avril 2026
               </div>
               <div class="description pull-right">
                 <h3>École de technologie supérieure (ÉTS)</h3>
                 <div class="where"></div>
                 <p><i class="fas fa-graduation-cap ico"></i> Maîtrise, Génie des technologies de l'information</p>
+                <p>Mémoire : usure de surface en temps réel dans des simulations physiques interactives ; frottement et texture dynamiques.</p>
               </div>
             </li>
             <li>
-              <div class="year pull-left">Sep 2018 - Apr 2023</div>
+              <div class="year pull-left">Sep 2018 – Apr 2023</div>
               <div class="description pull-right">
                 <h3>École de technologie supérieure (ÉTS)</h3>
                 <div class="where"></div>
@@ -1003,10 +1079,12 @@
               </div>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- COMPÉTENCES -->
-        <div class="box">
-          <h2><i class="fas fa-tasks ico"></i> Compétences principales</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Compétences principales</summary>
+          <div class="cv-section-body">
           <div class="skills clearfix">
             <div class="item-skills">
               Backend
@@ -1016,10 +1094,11 @@
               <span class="skill badge">Java</span>
               <span class="skill badge">Kotlin</span>
               <span class="skill badge">Python</span>
+              <span class="skill badge">C++</span>
               <span class="skill badge">REST APIs</span>
               <span class="skill badge">GraphQL</span>
               <span class="skill badge">Microservices</span>
-              <span class="skill badge">Swagger/OpenAPI</span>
+              <span class="skill badge">OpenGL</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1062,7 +1141,6 @@
               <span class="skill badge">JUnit</span>
               <span class="skill badge">Tests d'intégration/E2E (Playwright)</span>
               <span class="skill badge">Playwright</span>
-              <span class="skill badge">SonarQube</span>
               <span class="skill badge">Observabilité/Journalisation</span>
             </div>
           </div>
@@ -1075,37 +1153,38 @@
               <span class="skill badge">Linux</span>
               <span class="skill badge">Bash</span>
               <span class="skill badge">Ansible</span>
-              <span class="skill badge">UML/Diagrams</span>
-              <span class="skill badge">PlantUML/Mermaid</span>
               <span class="skill badge">Livraison orientée sécurité</span>
             </div>
           </div>
-        </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              IA / Agents
+              <span class="skill-level">Avancé</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Claude (Anthropic)</span>
+              <span class="skill badge">MCP (Model Context Protocol)</span>
+              <span class="skill badge">Codage assisté par l&#39;IA</span>
+              <span class="skill badge">Agents logiciels</span>
+            </div>
+          </div>
+          </div>
+        </details>
         <!-- CONFÉRENCES -->
-        <div class="box">
-          <h2><i class="fas fa-chalkboard-teacher ico"></i> Conférences</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-chalkboard-teacher ico"></i> Conférences</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
-              <div class="conference-row">
-                <img src="images/graphquon-logo.png" alt="Logo Graphquon">
-                <div class="conference-text">
-                  <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (15–16 nov. 2025) — Présentateur, atelier annuel Québec-Ontario Pre-SIGGRAPH, Université de Toronto
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="conference-row">
-                <img src="images/graphquon-logo.png" alt="Logo Graphquon">
-                <div class="conference-text">
-                  <a href="https://graphquon.github.io/"><strong>Graphquon 2024</strong></a> (sep. 2024 – nov. 2024) — Site web officiel de la conférence et <a href="https://chatgpt.com/g/g-B1Bfoq5qh-uml-diagram-expert">plugin ChatGPT (expert diagrammes UML)</a> pour l’atelier annuel Québec-Ontario Pre-SIGGRAPH
-                </div>
-              </div>
+              <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (15–16 nov. 2025) — Présentateur, atelier annuel Québec-Ontario Pre-SIGGRAPH, Université de Toronto
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- CERTIFICATIONS & PROGRAMMES -->
-        <div class="box">
-          <h2><i class="fas fa-trophy ico"></i> Certifications & Programmes</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-trophy ico"></i> Certifications & Programmes</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item"><a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a> — valide jusqu'en avr. 2027</li>
             <li class="list-group-item"><a href="https://verified.sertifier.com/fr/verify/37471918795197/">Programme Québécois d'Entrepreneuriat Scientifique (QcES)</a></li>
@@ -1113,10 +1192,12 @@
             <li class="list-group-item"><a href="https://www.udemy.com/certificate/UC-0eafdbf0-41f4-465c-a7fd-ea5fc5a0d4d0/">Ultimate AWS Certified Cloud Practitioner CLF-C02</a> (Udemy, mars 2024)</li>
             <li class="list-group-item">RGPD (Wandrian, mai 2019)</li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- PUBLICATIONS -->
-        <div class="box">
-          <h2><i class="fas fa-book ico"></i> Publications</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-book ico"></i> Publications</summary>
+          <div class="cv-section-body">
           <ul class="list-group">
             <li class="list-group-item">
               <span style="font-weight:bold"><a href="papers/rapport/rapport.md.html">Ray Tracing Engine</a></span><br>
@@ -1131,18 +1212,20 @@
               <span>Déc 2017</span>
             </li>
           </ul>
-        </div>
+          </div>
+        </details>
         <!-- LOISIRS -->
-        <div class="box">
-          <h2><i class="fas fa-heart ico"></i> Intérêts</h2>
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-heart ico"></i> Intérêts</summary>
+          <div class="cv-section-body">
           <div class="interests clearfix">
             <div class="item-interests">
               Sport
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="interest badge">Patinage</span>
               <span class="interest badge">Basketball</span>
               <span class="interest badge">Vélo</span>
+              <span class="interest badge">Patinage</span>
             </div>
           </div>
           <div class="interests clearfix">
@@ -1150,10 +1233,10 @@
               Jeux vidéo
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="interest badge">Valorant</span>
               <span class="interest badge">Overwatch</span>
               <span class="interest badge">CS:GO</span>
               <span class="interest badge">Jeux indépendants</span>
+              <span class="interest badge">Battlefield</span>
             </div>
           </div>
           <div class="interests clearfix">
@@ -1165,7 +1248,8 @@
               <span class="interest badge">Piano</span>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
       </div>
     </div>
   </div>
