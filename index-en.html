@@ -211,6 +211,47 @@
       display: inline-block;
     }
 
+    /* Second-level collapse: each job under Work Experience / Leadership */
+    details.cv-job {
+      margin-bottom: 15px;
+      border: 1px solid #e0e8e6;
+      border-radius: 4px;
+      background: #fdfefd;
+    }
+
+    details.cv-job>summary.cv-job-summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+    }
+
+    details.cv-job>summary.cv-job-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-job>summary.cv-job-summary::after {
+      content: '\f054';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.55em;
+      color: #227c74;
+      opacity: 0.5;
+      margin: 0.6em 8px 0 0;
+      transition: transform 0.2s ease;
+    }
+
+    details.cv-job[open]>summary.cv-job-summary::after {
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+
+    .cv-job-body {
+      padding: 0 4px 10px 4px;
+      border-top: 1px solid #eef4f2;
+    }
+
     .cv-course-body {
       padding: 0 12px 12px 12px;
       font-size: 0.95em;
@@ -589,7 +630,7 @@
         <div id="photo-header" class="text-center">
           <!-- PHOTO (AVATAR) -->
           <div id="photo">
-            <img src="antoine.jpeg" alt="avatar">
+            <img src="antoine.png" alt="Antoine Boucher">
           </div>
           <div id="text-header">
             <h1>Antoine Boucher<br><span>Software Engineer — Platform and Computer Graphics</span></h1>
@@ -620,7 +661,9 @@
           <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Work Experience</summary>
           <div class="cv-section-body">
 		  <!-- IMC2 -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -632,6 +675,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Research Assistant (Permanent Part-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Built and maintained CI/CD pipelines using GitLab CI and GitLab Runners for end-to-end DevSecOps workflows.
                   <div class="highlights">Highlights</div>
@@ -645,9 +694,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
 		  <!-- POLY -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -659,6 +711,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Teaching Assistant, LOG8100 DevSecOps (Contract Part-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   LOG8100 — DevSecOps : Opérations et Développement Logiciel Sécurisé
                   <div class="highlights">Highlights</div>
@@ -673,9 +731,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
 		  <!-- ETS -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -687,6 +748,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Teaching Assistant (Contract Part-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   <p style="margin-top:0">Course highlights below are ordered from most recent term to earliest. Technologies used across these courses are listed separately in semester order.</p>
                   <div class="highlights">Courses (by term)</div>
@@ -722,9 +789,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           <!-- IONODES -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -736,6 +806,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Cloud Developer (Permanent Full-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Designed and implemented an Auth0-based subscription/organization permission model for an IoT platform.
                   <div class="highlights">Highlights</div>
@@ -749,9 +825,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           <!-- Intact -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -763,6 +842,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Back End Developer</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Built backend services supporting mobile onboarding and enrollment flows; contributed API logic for legacy + new systems.
                   <div class="highlights">Highlights</div>
@@ -775,8 +860,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -788,6 +876,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Web Specialist (Contract / Consulting)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Redesigned bilingual blog (FR/EN) and implemented custom e-commerce UI/UX changes on CommerceBuild.
                   <div class="highlights">Highlights</div>
@@ -800,8 +894,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -813,6 +910,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Full Stack Developer (Co-op)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Built features for an inventory management system using Python/Django, Vue, and PostgreSQL.
                   <div class="highlights">Highlights</div>
@@ -825,8 +928,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -838,6 +944,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Full Stack Developer (Co-op → Part-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Travel/ticketing platform (Italiarail), internal support tooling, and Selenium-based quality automation.
                   <div class="highlights">Highlights</div>
@@ -850,8 +962,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -863,6 +978,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Engineering Intern</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Internships combining camera/ISP validation automation, vision datasets and tooling, and lab infrastructure support.
                   <div class="highlights">Highlights</div>
@@ -875,33 +996,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
-            <div class="row">
-              <div class="details">
-                <div class="where">
-                  École de technologie supérieure (ÉTS)
-                </div>
-                <div class="year">Sep 2018 – Apr 2023</div>
-              </div>
             </div>
-            <div class="row">
-              <div class="job-details col-xs-11">
-                <div class="profession">Manager, digital fabrication lab (Part-time)</div>
-                <div class="description">
-                  Operated electronics and software development lab (3D printers/VR/electronics).
-                  <div class="highlights">Highlights</div>
-                  <ul class="list-group">
-                    <li class="list-group-item">Operated electronics and software development lab (3D printers/VR/electronics)</li>
-                    <li class="list-group-item">Ensured materials and tools were always available for users; assisted students with 3D printers and VR equipment</li>
-                    <li class="list-group-item">Helped troubleshoot technical issues and guided students in innovative projects; maintained and repaired 3D printers</li>
-                    <li class="list-group-item">3D Printing, Electronics, Equipment Maintenance</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="job clearfix">
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -913,6 +1012,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Manager of the MakerSpace (Part-time)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Ran the MakerSpace (3D printers/VR/electronics), maintained equipment, and supported student projects end-to-end.
                   <div class="highlights">Highlights</div>
@@ -925,14 +1030,17 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           </div>
         </details>
         <!-- LEADERSHIP & COMMUNITY -->
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-users ico"></i> Leadership & Community</summary>
           <div class="cv-section-body">
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">AlgoÉTS</div>
@@ -942,6 +1050,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">President</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Maintains club infrastructure and web presence; supports projects in trading, data, and engineering education.
                   <div class="highlights">Highlights</div>
@@ -953,8 +1067,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">ETS Memes</div>
@@ -964,6 +1081,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Co-Creator &amp; Administrator</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Community page management, content creation, moderation, and operations.
                   <div class="highlights">Highlights</div>
@@ -973,7 +1096,8 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           </div>
         </details>
         <!-- PROJECTS -->

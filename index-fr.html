@@ -211,6 +211,47 @@
       display: inline-block;
     }
 
+    /* Second-level collapse: each job under Work Experience / Leadership */
+    details.cv-job {
+      margin-bottom: 15px;
+      border: 1px solid #e0e8e6;
+      border-radius: 4px;
+      background: #fdfefd;
+    }
+
+    details.cv-job>summary.cv-job-summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+    }
+
+    details.cv-job>summary.cv-job-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cv-job>summary.cv-job-summary::after {
+      content: '\f054';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.55em;
+      color: #227c74;
+      opacity: 0.5;
+      margin: 0.6em 8px 0 0;
+      transition: transform 0.2s ease;
+    }
+
+    details.cv-job[open]>summary.cv-job-summary::after {
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+
+    .cv-job-body {
+      padding: 0 4px 10px 4px;
+      border-top: 1px solid #eef4f2;
+    }
+
     .cv-course-body {
       padding: 0 12px 12px 12px;
       font-size: 0.95em;
@@ -589,7 +630,7 @@
         <div id="photo-header" class="text-center">
           <!-- PHOTO (AVATAR) -->
           <div id="photo">
-            <img src="antoine.jpeg" alt="avatar">
+            <img src="antoine.png" alt="Antoine Boucher">
           </div>
           <div id="text-header">
             <h1>Antoine Boucher<br><span>Ingénieur logiciel — Plateforme et infographie</span></h1>
@@ -620,7 +661,9 @@
           <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Expérience professionnelle</summary>
           <div class="cv-section-body">
 		  <!-- IMC2 -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -632,6 +675,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Assistant de recherche (Temps partiel permanent)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Géré pipelines CI/CD avec GitLab CI et GitLab Runners pour flux de travail DevSecOps bout-en-bout, améliorant fiabilité déploiements.
                   <div class="highlights">Points saillants</div>
@@ -645,9 +694,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
 		  <!-- POLY -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -659,6 +711,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Chargé de travaux pratiques, LOG8100 DevSecOps (Contrat temps partiel)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   LOG8100 — DevSecOps : Opérations et Développement Logiciel Sécurisé
                   <div class="highlights">Points saillants</div>
@@ -673,9 +731,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
 		  <!-- ETS -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -687,6 +748,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Assistant d'enseignement (Contrat temps partiel)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   <p style="margin-top:0">Les cours ci-dessous sont du plus récent au plus ancien. Les technologies mobilisées sont regroupées par session.</p>
                   <div class="highlights">Cours (par session)</div>
@@ -722,9 +789,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           <!-- IONODES -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -736,6 +806,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Développeur cloud (Temps plein permanent)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Conçu et implémenté un système d'abonnement à 3 niveaux avec permissions basées sur l'organisation utilisant Auth0 pour la plateforme IoT.
                   <div class="highlights">Points saillants</div>
@@ -749,9 +825,12 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           <!-- Intact -->
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -763,6 +842,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Développeur Back End</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Créé de nouvelles campagnes basées sur les dates d'inscription des clients, offrant des expériences personnalisées pour nouveaux clients.
                   <div class="highlights">Points saillants</div>
@@ -776,8 +861,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -789,6 +877,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Spécialiste Web (Contrat / Consultation)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Refondu blog bilingue (français et anglais), améliorant expérience utilisateur et accessibilité.
                   <div class="highlights">Points saillants</div>
@@ -803,8 +897,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -816,6 +913,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Développeur Full Stack (Stages)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Utilisé Python, Django, Vue.js et PostgreSQL pour développer un analyseur de données polyvalent gérant XML, JSON, CSV et Excel.
                   <div class="highlights">Points saillants</div>
@@ -828,8 +931,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -841,6 +947,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Développeur Full Stack (Stages → Temps partiel)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Plateforme billetterie/voyage (Italiarail), outils service client et automatisation de tests Selenium.
                   <div class="highlights">Points saillants</div>
@@ -853,8 +965,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -866,6 +981,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Stagiaire en ingénierie</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Stages alliant automatisation pour validation caméra/ISP, jeux de données et outils de vision, et soutien à l'infrastructure du laboratoire.
                   <div class="highlights">Points saillants</div>
@@ -878,33 +999,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
-            <div class="row">
-              <div class="details">
-                <div class="where">
-                  École de technologie supérieure (ÉTS)
-                </div>
-                <div class="year">Sep 2016 – Avr 2023</div>
-              </div>
             </div>
-            <div class="row">
-              <div class="job-details col-xs-11">
-                <div class="profession">Gestionnaire d'atelier de fabrication numérique (Temps partiel)</div>
-                <div class="description">
-                  Opéré laboratoire d'électronique et de développement logiciel (imprimantes 3D/VR/électronique).
-                  <div class="highlights">Points saillants</div>
-                  <ul class="list-group">
-                    <li class="list-group-item">Opéré laboratoire d'électronique et de développement logiciel (imprimantes 3D/VR/électronique)</li>
-                    <li class="list-group-item">Assuré matériaux et outils toujours disponibles pour utilisateurs; assisté étudiants avec imprimantes 3D et équipement VR</li>
-                    <li class="list-group-item">Aidé résolution problèmes techniques et guidé étudiants dans projets innovants; maintenu et réparé imprimantes 3D</li>
-                    <li class="list-group-item">Impression 3D, Électronique, Maintenance d'équipement</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="job clearfix">
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">
@@ -916,6 +1015,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Gestionnaire du MakerSpace (Temps partiel)</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Exploité le MakerSpace (imprimantes 3D/VR/électronique), maintenu équipement et soutenu projets étudiants de bout en bout.
                   <div class="highlights">Points saillants</div>
@@ -928,14 +1033,17 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           </div>
         </details>
         <!-- LEADERSHIP & COMMUNAUTÉ -->
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-users ico"></i> Leadership & Communauté</summary>
           <div class="cv-section-body">
-          <div class="job clearfix">
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">AlgoÉTS</div>
@@ -945,6 +1053,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Président</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Maintient l'infrastructure et la présence web du club ; soutient des projets autour du trading, des données et de la formation en ingénierie.
                   <div class="highlights">Points saillants</div>
@@ -956,8 +1070,11 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="job clearfix">
+            </div>
+</details>
+          <details class="cv-job job clearfix">
+            <summary class="cv-job-summary clearfix">
+
             <div class="row">
               <div class="details">
                 <div class="where">ETS Memes</div>
@@ -967,6 +1084,12 @@
             <div class="row">
               <div class="job-details col-xs-11">
                 <div class="profession">Co-créateur &amp; Administrateur</div>
+              </div>
+            </div>
+            </summary>
+            <div class="cv-job-body">
+            <div class="row">
+              <div class="job-details col-xs-11">
                 <div class="description">
                   Gestion de page communautaire, création de contenu, modération et opérations.
                   <div class="highlights">Points saillants</div>
@@ -976,7 +1099,8 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+</details>
           </div>
         </details>
         <!-- PROJETS -->
