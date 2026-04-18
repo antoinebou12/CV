@@ -80,6 +80,17 @@ jobs:
           cp -f cv-fr/resume.pdf _site/cv-fr/resume.pdf
           echo "CV PDFs copied to _site/cv-en and _site/cv-fr"
 
+      - name: Copy cover letter PDFs to Pages site
+        run: |
+          if [ ! -f "letters/en/cover-letter.pdf" ] || [ ! -f "letters/fr/cover-letter.pdf" ]; then
+            echo "Missing letters/en/cover-letter.pdf or letters/fr/cover-letter.pdf (build locally or run compile-cv workflow)"
+            exit 1
+          fi
+          mkdir -p _site/letters/en _site/letters/fr
+          cp -f letters/en/cover-letter.pdf _site/letters/en/cover-letter.pdf
+          cp -f letters/fr/cover-letter.pdf _site/letters/fr/cover-letter.pdf
+          echo "Cover letter PDFs copied to _site/letters/en and _site/letters/fr"
+
       - name: Build Hugo blog
         env:
           HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
@@ -132,6 +143,18 @@ jobs:
             exit 1
           fi
           echo "Blog nav path prefix OK for repo ${REPO}"
+
+      - name: Check links in site output
+        uses: lycheeverse/lychee-action@v2
+        with:
+          token: ${{ github.token }}
+          args: >-
+            --verbose
+            --no-progress
+            --max-retries 3
+            --max-concurrency 8
+            --exclude-path 'node_modules'
+            ./_site
 
       - name: List deploy tree
         run: |
