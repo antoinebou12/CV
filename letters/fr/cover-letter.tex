@@ -1,0 +1,134 @@
+%-------------------------------------------------------------------------------
+% Lettre longue d'accompagnement (français) — dossier dédié letters/fr
+% Compilation : cd letters/fr && latexmk -xelatex -interaction=nonstopmode cover-letter.tex
+%-------------------------------------------------------------------------------
+\documentclass[11pt, a4paper]{../../cv-fr/russell}
+
+\geometry{left=1.4cm, top=1.0cm, right=1.4cm, bottom=2.2cm, footskip=.5cm}
+
+\usepackage[normalem]{ulem}
+\emergencystretch=3em
+\hbadness=10000
+\hfuzz=0.5pt
+
+\fontdir[../../cv-fr/fonts/]
+
+\colorlet{russell}{russell-black}
+\setbool{acvSectionColorHighlight}{true}
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+\name{Antoine}{Boucher}
+\position{Ingénieur logiciel --- Plateforme et infographie}
+\mobile{+14384918831}
+\email{antoine@antoineboucher.info}
+\homepage{antoineboucher.info}
+\github{antoinebou12}
+\linkedin{antoineboucher12}
+
+\begin{document}
+
+\makecvheader[C]
+\makecvfooter
+  {\today}
+  {}
+  {\thepage}
+
+\recipient{Équipe de recrutement}{Organisme ou canal par lequel vous avez reçu ce document}
+\letterdate{\today}
+\lettertitle{Narration professionnelle et guide de \href{https://antoineboucher.info}{antoineboucher.info}}
+\letteropening{Bonjour,}
+
+\makelettertitle
+
+\begin{cvletter}
+\begin{spacing}{1.18}
+
+\lettersection{Pourquoi ce document existe}
+
+Ce texte délibérément plus long qu'une lettre d'une page veut tenir lieu de dossier d'introduction lorsque vous n'avez pas encore mon CV sous les yeux : il explique comment je travaille, ce que j'ai livré, et comment le site public \href{https://antoineboucher.info}{antoineboucher.info} est structuré pour que vous puissiez vérifier rapidement les faits. Considérez-le comme un compagnon narratif du PDF de curriculum vitae accessible depuis les pages d'accueil en anglais et en français.
+
+Je suis ingénieur logiciel dans une trajectoire de maîtrise en génie des technologies de l'information (ÉTS), à la croisée de l'ingénierie de plateforme (Kubernetes, Terraform, GitLab CI/CD, GCP), des services backend en Java, Kotlin et Python, et d'un volet recherche en infographie interactive (OpenGL, C++, Blender). J'y ajoute des charges d'auxiliarat d'enseignement, de la maintenance open source, et un homelab où je répète réseau, automatisation et services auto-hébergés avec la même rigueur qu'un musicien répète ses gammes.
+
+Si vous comparez des candidats uniquement sur papier, rappelez-vous que le papier masque le rythme. Cette lettre expose le rythme : comment je nomme les compromis, comment j'ordonne l'information, et combien de contexte j'assume déjà chez vous sur l'écosystème universitaire montréalais, les assureurs réglementés et les instituts de recherche. Lors d'un entretien, vous pourrez m'interpeller sur n'importe quel paragraphe et demander des preuves---journaux, fusions Git, grilles d'évaluation anonymisées lorsque la politique le permet.
+
+\lettersection{Microcopie et intitulés réellement affichés}
+
+Les pages statiques réutilisent volontairement une esthétique Bootstrap~3 : elles restent lisibles sur des portables d'entreprise plus âgés et évitent de courir après la mode front lorsque l'objectif est la lisibilité. Les titres de sections suivent la cartographie mentale des recruteurs : \textbf{Expérience professionnelle} plutôt qu'une chronologie abstraite, \textbf{Compétences clés} plutôt qu'une liste de mode. Des icônes précèdent les titres pour que la lecture en biais regroupe toujours correctement les blocs. La version anglaise reprend la même iconographie avec des libellés traduits afin qu'un relecteur bilingue bascule de langue sans réapprendre la mise en page. Le bloc contact reflète l'en-tête du PDF : téléphone, courriel, identifiant LinkedIn, GitHub et domaine canonique, chacun sous forme de lien cliquable. Rien ne lance de vidéo automatiquement, ni de fenêtres parasites, ni de bannière de consentement cookies : c'est un document qui se fait passer pour une page web, et c'est voulu.
+
+\lettersection{Parcours professionnel, en langage direct}
+
+\textbf{Recherche et livraison sécurisée (IMC2).} À l'IMC2---Institut multidisciplinaire en cybersécurité et cyberrésilience---j'ai occupé un poste d'assistant de recherche à temps partiel permanent jusqu'en début 2026. Le rôle mêlait propriété de plateforme et ingénierie orientée produit : GitLab CI/CD et exécuteurs pour des services de recherche sur GCP, charges conteneurisées, déploiements pilotés par Terraform, et questions de réseau sur GKE lorsque les microservices se parlent réellement dans un cluster. J'ai renforcé des microservices Java avec JUnit et Playwright, raccordé des builds Android au même chemin de promotion, et contribué à des outils orientés analystes automatisant l'analyse de risques cyber sur plus d'un millier de risques et plus de cent catégories de menaces, avec pondération, priorisation par étoiles et interface Angular de triage. Ce mélange---rigueur DevSecOps, priorisation quantitative et UX humaine---est la ligne directrice que je veux que vous reteniez.
+
+\textbf{Enseigner le DevSecOps (Polytechnique Montréal).} Comme auxiliaire pour LOG8100 DevSecOps, j'ai maintenu l'espace GitLab d'environ vingt équipes concurrentes par session : dépôts, gabarits CI/CD, exécuteurs et flux. Le travail était moitié pédagogie, moitié ingénierie de fiabilité pour une salle de classe à l'échelle. J'ai encadré des constructions Docker et Kubernetes sous objectifs de sécurité explicites, relié la théorie aux scénarios exploitables alignés sur OWASP, et rafraîchi les artefacts de laboratoire pour clarifier les attentes lors des remises.
+
+\textbf{Données, mobile et intégrateur (ÉTS).} Sur plusieurs cours et projets intégrateurs, j'ai accumulé un volume important d'heures de contact couvrant mobile et UX, bases distribuées et livraison en équipe intégratrice. J'ai rédigé des exercices SQL, MongoDB, Kafka et PostgreSQL avec rubriques, débloqué des équipes sur l'architecture et le backend, et maintenu l'infrastructure de cours sur Azure tout en coachant Scrum. Cela a aiguisé ma capacité à traduire des exigences floues d'étudiants en résultats testables---compétence directement transférable au mentorat et au travail avec des responsables produit.
+
+\textbf{Industrie avant l'intensité recherche.} Les étapes précédentes incluent le développement cloud chez IONODES (modèles d'abonnement Auth0 pour l'IoT multi-locataire, instrumentation Sentry et Serilog, cadence Azure DevOps), des microservices Kotlin et Spring chez Intact (APIs de campagnes, observabilité ELK), des mandats web full-stack (Django, Vue, CommerceBuild, commerce orienté SEO), et des stages couvrant chaînes Python, automatisation Selenium et infrastructure de laboratoire en vision par ordinateur. Chaque arrêt ajoute une couche : environnements réglementés, diagnostic en astreinte, et politique de livraison lorsque les parties prenantes divergent sur le périmètre.
+
+\textbf{Infographie et identité de recherche.} Mon travail de maîtrise couple des métaphores de perception tactile avec l'infographie interactive : frottement et coordonnées de texture qui évoluent lorsque les surfaces s'usent. Ce n'est pas un simple point de sprint ; c'est la preuve que je suis à l'aise avec la simulation, la pensée GPU-adjacente et les articles comme livrables, pas seulement les tickets.
+
+\lettersection{Ce que je optimise en rejoignant une équipe}
+
+\textbf{Définition du ``terminé''.} Je me soucie qu'un changement soit observable, mesurable et réversible. Observable : métriques ou journaux bougent de façon interprétable sans folklore SSH. Mesurable : des critères d'acceptation existaient avant la demande de fusion, même si le responsable produit était saturé. Réversible : drapeaux de fonctionnalité, migrations base de données en mode expand-contract, ou plans Terraform que l'on peut annuler sans héroïsme. Ces trois mots sonnent génériques jusqu'à ce qu'une équipe livre sans eux ; alors ils deviennent la différence entre une panne de fin de semaine et un déploiement du mardi.
+
+\textbf{Contrats de collaboration.} J'écris par défaut les décisions dans les billet ou les demandes de fusion pour que les coéquipiers asynchrones héritent du contexte. Je traite la revue de code comme un canal d'enseignement, pas comme une barrière : je commente nommage, invariants et domaines de défaillance, et j'accepte la même exigence en retour. En classe, j'ai appris à calibrer la rétroaction pour qu'un étudiant reparte avec une prochaine action, pas dix inquiétudes ; la même habitude s'applique aux juniors sur un service de production.
+
+\textbf{Posture face au risque.} La recherche en cybersécurité m'a appris à parler en modèles de menace, pas en impressions. Enseigner le DevSecOps m'a appris à traduire des fiches CWE en laboratoires que les étudiants peuvent exploiter sans danger. L'industrie m'a appris que les auditeurs et les clients lisent les post-mortems. Je ne cherche pas une culture qui prétend qu'il n'y a jamais d'incident ; je cherche une culture qui les raconte honnêtement et finance la prévention à proportion.
+
+\lettersection{Open source, homelab et outillage pour assistants}
+
+Les dépôts publics font partie de mon identité professionnelle, pas d'une note marginale. Des projets comme \href{https://github.com/antoinebou12/uml-mcp}{\texttt{uml-mcp}} se situent à l'intersection de l'expérience développeur et de l'outillage d'IA : une surface Model Context Protocol (MCP) permettant à des assistants de codage fondés sur des grands modèles linguistiques d'invoquer des capacités orientées diagrammes afin de produire ou d'affiner des vues d'architecture à partir du dépôt ou du langage naturel. D'autres dépôts concernent des greffons de diagrammes et des utilitaires autour de PlantUML. Par ailleurs, j'exploite un homelab (virtualisation, chemins WireGuard et Tailscale, automatisations Home Assistant, piles médias) parce que la littératie de production n'est pas seulement une affaire d'API cloud---c'est aussi comprendre les modes de défaillance lorsque DNS, certificats et routage se contredisent.
+
+\textbf{Pourquoi MCP compte en un paragraphe.} Les assistants sans outils hallucinent des arborescences ; les assistants avec outils hallucinent encore si les outils sont flous. MCP normalise la façon dont un hôte annonce des capacités, valide des arguments et renvoie des erreurs vers la boucle du modèle. Un serveur de diagrammes sous MCP n'est donc pas un gadget : c'est un contrat qui dit ``voici les primitives graphiques que vous pouvez appeler, voici les échecs à remonter à l'utilisateur, voici comment les sorties rejoignent la documentation.'' C'est l'éthos d'ingénierie derrière \texttt{uml-mcp}, pas la course aux nouveautés.
+
+\textbf{L'homelab comme répétition.} Des grappes Proxmox, des piles Jellyfin et des métriques Renpho vers Home Assistant ne garnissent pas un CV pour le plaisir. C'est là que je teste restaurations de sauvegarde, renouvellement TLS et partitions réseau sans risquer un jeu de données subventionné. Lorsqu'un étudiant demande si WireGuard est ``facile'', je peux répondre à partir de captures et du souvenir émotionnel d'une coquille dans \texttt{AllowedIPs} à minuit.
+
+\lettersection{Le site portfolio comme interface}
+
+Le site bilingue statique sur \href{https://antoineboucher.info}{antoineboucher.info} reste volontairement sobre en surface : colonne unique, arrière-plan en particules, en-tête photo et divulgation progressive pour ne pas submerger au premier rendu. Voyez-le comme un CV interactif qui emprunte des affordances HTML plutôt qu'à un lecteur PDF.
+
+\textbf{Navigation supérieure et bascule de langue.} Une barre compacte surplombe le héros. Le lien \textbf{Blog} mène au journal Hugo sous \texttt{/blog/}, où vivent des billets plus longs (infra, ateliers, explorations de données) avec leur propre thème, navigation et chaîne de build documentée ailleurs dans ce dépôt. Le sélecteur de langue est une paire de liens : \textbf{EN} ouvre \texttt{index-en.html} ; \textbf{FR} ouvre \texttt{index-fr.html}. Les deux fichiers calquent la structure ; ils diffèrent par les textes et par la cible du bouton de téléchargement du CV.
+
+\textbf{Héros et contrôle ``Télécharger le CV''.} Le bloc héros centre une photo, le nom et le titre, puis un appel à l'action principal. En anglais, le libellé est \textbf{Download CV} et pointe vers \texttt{cv-en/resume.pdf} avec l'attribut HTML \texttt{download}. En français, le libellé est \textbf{Télécharger le CV} et pointe vers \texttt{cv-fr/resume.pdf}, également avec \texttt{download}. Concrètement, cet attribut incite les navigateurs à traiter la navigation comme un transfert de fichier avec nom suggéré plutôt que comme un simple affichage PDF dans l'onglet---détail UX utile sur mobile et lorsque les recruteurs classent des artefacts rapidement. Il n'existe pas de bouton commerce du type ``Ajouter au panier'' sur ces pages ; le vocabulaire interactif principal est la navigation, les panneaux repliables et les liens sortants.
+
+\textbf{Sections repliables (À propos aux centres d'intérêt).} Le corps emploie des \texttt{<details>} imbriqués. Au niveau section, chaque panneau a un résumé avec icône et titre. Ouvrir un panneau révèle des puces ou des blocs d'emploi imbriqués ; le refermer réduit le bruit. Sur la page anglaise, l'ordre des sections externes est celui décrit dans la version anglaise de cette lettre ; la page française conserve le même squelette avec des intitulés traduits (\textbf{À propos}, \textbf{Expérience professionnelle}, \textbf{Formation}, \textbf{Compétences clés}, etc.).
+
+\textbf{Emplois imbriqués.} Sous \textbf{Expérience professionnelle}, chaque rôle est encore un \texttt{<details>}. Le résumé affiche organisme, période et titre ; l'expansion montre des paragraphes narratifs puis une liste \textbf{Points saillants} calquée sur les puces fortes du CV. Ce motif permet d'abord de balayer les titres, puis d'approfondir IMC2, Polytechnique, ÉTS, IONODES, Intact et les stages sans mur de texte.
+
+\textbf{Nuées de liens utiles.} Les projets sélectionnés dupliquent volontairement des URL GitHub à fort signal : \texttt{uml-mcp}, outils de diagrammes, automatisation homelab, intégrations Home Assistant, paquets NuGet et PyPI lorsque les compteurs de téléchargements font partie du récit. Les publications pointent vers des ressources locales \texttt{papers/} lorsque des PDFs sont hébergés. Les certifications renvoient vers Credly et Sertifier pour permettre une vérification tierce sans croire aveuglément ce domaine.
+
+\textbf{Ce qui n'est pas sur la page d'accueil.} Le blog Hugo possède sa propre architecture d'information (billets, étiquettes, navigation PaperMod). Un répertoire \texttt{linktree/} soutient un hub de liens optionnel. Je ne les détaille pas exhaustivement ici, mais le lien \textbf{Blog} est le pont entre la surface statique du CV et ces artefacts plus profonds.
+
+\textbf{Blog et chaîne de build (carte du lecteur).} Lorsque vous cliquez \textbf{Blog}, vous quittez le CV statique d'époque Bootstrap et entrez dans un site Hugo dont le CSS est construit avec npm dans le thème, puis publié sous un \texttt{baseURL} aligné sur le domaine personnalisé afin que l'intégrité des sous-ressources et les permaliens absolus ne se battent pas. Les billets mélangent français et anglais selon le sujet---retours d'atelier, expériences cloud, études de données---et héritent des motifs PaperMod (menu sur petit écran, bascule thème sombre, listes d'étiquettes). Il n'est pas nécessaire de connaître Hugo pour lire les billets ; comprendre la chaîne explique pourquoi certains actifs vivent sous \texttt{/blog/} alors que le CV reste à la racine.
+
+\textbf{Accessibilité et divulgation progressive.} Les \texttt{<details>} externes s'ouvrent par défaut au chargement pour que moteurs de recherche et humains pressés voient l'ossature. Les emplois imbriqués commencent repliés pour limiter la hauteur de page sur ordinateur portable. Les icônes proviennent de Font Awesome via CDN sur les pages statiques : compromis (dépendance externe) au profit d'une cohérence visuelle avec peu de CSS personnalisé. La navigation au clavier traverse les résumés ; il n'y a pas de navigation JavaScript cachée sur la page d'accueil au-delà du script d'arrière-plan en particules.
+
+\textbf{Téléchargements au-delà du bouton héros.} Le téléchargement du CV dans le héros est le seul contrôle explicitement nommé ``téléchargement'', mais d'autres ancres pointent vers des PDF sous \texttt{papers/} ou vers du markdown rendu lorsqu'un long rapport se lit mieux d'abord en HTML. Ces liens se comportent comme des liens ordinaires : le navigateur peut ou non intégrer le PDF selon ses réglages. Pour un paquet hors ligne, prenez le PDF du CV via le héros puis suivez les publications une à une---je n'offre pas d'archive ``tout télécharger'' qui serait périmée chaque semaine.
+
+\lettersection{Leadership, conférences et certifications en ligne}
+
+Le volet \textbf{Leadership et communauté} reflète le bénévolat associatif et la logistique d'événements où le logiciel soutient plutôt qu'il ne vole la vedette. Le bloc \textbf{Conférences} met en avant une participation récurrente comme Graphquon, où j'ai à la fois construit de l'outillage (par exemple des extensions orientées ChatGPT pour aider les participant·es) et présenté du matériel proche de la recherche ; lisez ces lignes comme preuve que je peux m'adresser aux communautés infographie et sécurité sans traiter les conférences comme des vacances. \textbf{Certifications et programmes} renvoie vers Credly pour AWS Certified Cloud Practitioner et vers Sertifier pour le programme québécois d'entrepreneuriat scientifique, ce qui compte si vos règles d'approvisionnement exigent une preuve formelle de littératie cloud ou d'exposition aux méthodes de startup au-delà d'un adjectif sur un CV.
+
+\textbf{Publications et artefacts longs.} Le panneau \textbf{Publications} mélange des PDF hébergés sous \texttt{papers/} et du markdown rendu lorsque la coloration syntaxique aide la lecture. Chaque entrée vise des URL stables pour que les citations dans d'anciens billets ne pourrissent pas immédiatement. Si vous évaluez l'ingénierie recherche, lisez au moins un artefact de bout en bout et observez si figures, équations et références survivent au pipeline PDF ; c'est la même discipline que j'apporte lorsque je génère des diagrammes d'architecture à partir du code.
+
+\textbf{Centres d'intérêt comme garde-fou.} Le dernier panneau est court volontairement : il signale des loisirs hors écran parce que l'épuisement professionnel est un risque de livraison. Ce n'est pas du remplissage ; c'est un rappel que les équipes durables planifient la récupération.
+
+\lettersection{Comment utiliser ce matériel dans un processus d'embauche}
+
+Si vous triez rapidement, commencez par le bouton de téléchargement du CV dans la langue qui vous convient, puis comparez un bloc employeur du site à la même section du PDF. Si vous évaluez la pensée système, lisez les points saillants IMC2 et demandez-moi comment je simplifierais le modèle de score pour un plus petit locataire. Si vous évaluez l'enseignement et la communication, parcourez les sections Polytechnique et ÉTS puis demandez quinze minutes sur la façon dont j'ai débloqué une cohorte en difficulté. Si vous évaluez la maturité open source, choisissez \texttt{uml-mcp} ou un autre dépôt et inspectez issues, versions et ton de la documentation.
+
+\lettersection{Conclusion}
+
+J'aime bâtir des plateformes en lesquelles d'autres ingénieurs·es ont confiance, enseigner pour éviter de répéter des erreurs coûteuses, et écrire assez en public pour que mes défauts et mes forces soient connus. Merci d'avoir lu jusqu'ici. Le CV PDF lié depuis le site demeure le résumé canonique de deux pages ; cette lettre est l'annexe longue à conserver lorsque vous voulez du contexte avant même de planifier un appel.
+
+\textbf{Post-scriptum sur la longueur.} Cinq pages est un format inhabituel pour une lettre ; j'ai choisi la densité plutôt que la brièveté parce que les lettres génériques ressemblent à des textes à trous et font perdre du temps. Vous tenez ici une carte : parcours, philosophie open source et visite guidée des contrôles sur \href{https://antoineboucher.info}{antoineboucher.info}. Si votre processus n'accepte qu'un PDF, envoyez ce fichier seul ; s'il demande CV plus lettre, joignez ce texte au CV de deux pages sans répéter les puces---servez-vous de l'entretien pour creuser la section qui a le plus retenu l'attention du comité.
+
+\end{spacing}
+\end{cvletter}
+
+\letterclosing{Cordialement,}
+\letterenclosure[Pièce jointe]{Curriculum vitæ (PDF) via \href{https://antoineboucher.info}{antoineboucher.info} --- Download CV / Télécharger le CV}
+
+\makeletterclosing
+
+\end{document}

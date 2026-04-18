@@ -8,6 +8,7 @@ on:
     paths:
       - 'cv-en/**'
       - 'cv-fr/**'
+      - 'letters/**'
       - 'build_cv.py'
       - 'Dockerfile.cv'
       - 'requirements.txt'
@@ -68,6 +69,22 @@ jobs:
           fi
           echo "All required files and directories found"
 
+      - name: Check links in CV sources
+        uses: lycheeverse/lychee-action@v2
+        with:
+          token: ${{ github.token }}
+          failIfEmpty: false
+          args: >-
+            --verbose
+            --no-progress
+            --max-retries 3
+            ./cv-en/latex
+            ./cv-fr/latex
+            ./cv-en/resume.tex
+            ./cv-fr/resume.tex
+            ./letters/en/cover-letter.tex
+            ./letters/fr/cover-letter.tex
+
       - name: Build both CVs using Python script
         id: build
         run: |
@@ -102,6 +119,28 @@ jobs:
           echo "French CV size: $fr_size bytes"
           echo "PDFs verified successfully"
 
+      - name: Build cover letters (XeLaTeX)
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/en texlive/texlive:latest \
+            latexmk -xelatex -interaction=nonstopmode -halt-on-error cover-letter.tex
+          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/fr texlive/texlive:latest \
+            latexmk -xelatex -interaction=nonstopmode -halt-on-error cover-letter.tex
+
+      - name: Verify cover letter PDFs
+        run: |
+          for f in letters/en/cover-letter.pdf letters/fr/cover-letter.pdf; do
+            if [ ! -f "$f" ]; then
+              echo "Error: missing $f"
+              exit 1
+            fi
+            sz=$(stat -c%s "$f" 2>/dev/null || echo "0")
+            if [ "$sz" -eq 0 ]; then
+              echo "Error: empty $f"
+              exit 1
+            fi
+            echo "$f size: $sz bytes"
+          done
+
       - name: Commit PDFs
         if: success()
         run: |
@@ -109,12 +148,12 @@ jobs:
           git config --local user.name "GitHub Action"
           
           # Check if there are any changes
-          git add cv-en/resume.pdf cv-fr/resume.pdf
+          git add cv-en/resume.pdf cv-fr/resume.pdf letters/en/cover-letter.pdf letters/fr/cover-letter.pdf
           
           if git diff --staged --quiet; then
             echo "No changes to commit - PDFs are up to date"
           else
-            git commit -m "Auto-compile CV PDFs [skip ci]"
+            git commit -m "Auto-compile CV and cover letter PDFs [skip ci]"
             git push
             echo "PDFs committed successfully"
           fi
@@ -127,4 +166,6 @@ jobs:
           path: |
             cv-en/resume.pdf
             cv-fr/resume.pdf
+            letters/en/cover-letter.pdf
+            letters/fr/cover-letter.pdf
           retention-days: 7
