@@ -129,9 +129,8 @@ cv-en/                  # English CV
 │   ├── summary.tex
 │   ├── experience.tex
 │   ├── education.tex
-│   ├── skills.tex
+│   ├── skills.tex      # includes certifications / QcES / Cloud Quest (single row)
 │   ├── projects.tex
-│   ├── achievements.tex
 │   ├── references.bib
 │   └── ...
 ├── fonts/              # Custom fonts

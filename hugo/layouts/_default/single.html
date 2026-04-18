@@ -25,9 +25,7 @@
       {{- end -}}
     </div>
     {{- end -}}
-    {{- with .Description -}}
-    <p class="single-post-lead">{{- . | plainify -}}</p>
-    {{- end -}}
+    {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
 
   {{- if $isConference -}}
