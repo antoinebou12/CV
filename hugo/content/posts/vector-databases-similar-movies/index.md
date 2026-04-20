@@ -21,7 +21,7 @@ aliases:
     - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-This page is a **single walkthrough** of a movie-similarity thread: embeddings and nearest neighbors, then a second engine with **two vector meanings**, then **retrieval + generation** tied to your own rows. Short GIFs from that work are below (`movie-similarities-1.gif` … `3.gif`).
+This page is a **single walkthrough** of a movie-similarity thread: embeddings and nearest neighbors, then a second engine with **two vector meanings**, then **retrieval + generation** tied to your own rows. Short animated walkthroughs from that work live in the companion notebooks and Medium series rather than in this static site bundle.
 
 **At a glance**
 
@@ -31,15 +31,9 @@ This page is a **single walkthrough** of a movie-similarity thread: embeddings a
 
 ## Visualizations
 
-![Movie similarity visualization 1](./movie-similarities-1.gif)
-
 *Part 1 — pgvector / SQL: exploring similar movies from embeddings and distance metrics.*
 
-![Movie similarity visualization 2](./movie-similarities-2.gif)
-
 *Part 2 — Qdrant + MovieLens: dense movie search or sparse user–rating neighborhoods (depending on your recording).*
-
-![Movie similarity visualization 3](./movie-similarities-3.gif)
 
 *Part 3 — Grounded Q&A: question → retrieve rows → LLM answer tied to your catalog.*
 

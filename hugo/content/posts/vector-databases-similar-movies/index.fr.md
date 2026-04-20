@@ -21,7 +21,7 @@ aliases:
     - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-Cette page regroupe **un seul parcours** sur la similarité entre films : embeddings et plus proches voisins, puis un second moteur avec **deux sens du mot « vecteur »**, puis **récupération + génération** calée sur vos propres lignes. Des extraits animés du travail figurent ci-dessous (`movie-similarities-1.gif` … `3.gif`).
+Cette page regroupe **un seul parcours** sur la similarité entre films : embeddings et plus proches voisins, puis un second moteur avec **deux sens du mot « vecteur »**, puis **récupération + génération** calée sur vos propres lignes. Les extraits animés du travail sont surtout dans les notebooks et la série Medium associée plutôt que dans ce dépôt statique.
 
 **En bref**
 
@@ -31,15 +31,9 @@ Cette page regroupe **un seul parcours** sur la similarité entre films : embedd
 
 ## Visualisations
 
-![Movie similarity visualization 1](./movie-similarities-1.gif)
-
 *Partie 1 — pgvector / SQL : films proches à partir des embeddings et des métriques de distance.*
 
-![Movie similarity visualization 2](./movie-similarities-2.gif)
-
 *Partie 2 — Qdrant + MovieLens : recherche dense de films ou voisinage creux utilisateur–notes.*
-
-![Movie similarity visualization 3](./movie-similarities-3.gif)
 
 *Partie 3 — Q&R ancrée : question → lignes récupérées → réponse du LLM liée au catalogue.*
 

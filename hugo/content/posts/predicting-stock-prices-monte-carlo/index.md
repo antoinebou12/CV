@@ -241,7 +241,7 @@ Related exploratory code: [AlgoETS/MarkokChainMonteCarlo](https://github.com/Alg
 
 *   Landauskas, M. & Valakevičius, E. (2011). [*Modelling of Stock Prices by Markov Chain Monte Carlo Method*](https://ojs.mruni.eu/ojs/intellectual-economics/article/view/817) — *Intellectual Economics*, Vol. 5 No. 2 (article page); [PDF download](https://ojs.mruni.eu/ojs/intellectual-economics/article/download/817/774/1511).
 *   [Semantic Scholar index](https://www.semanticscholar.org/paper/MODELLING-OF-STOCK-PRICES-BY-THE-MARKOV-CHAIN-MONTE-Landauskas-Valakevi%C4%8Dius/ced26fa31b2306e747d69de10b77aaf3b9704e7a) for the same paper.
-*   [Neural Networks in Finance: Markov Chain Monte Carlo (MCMC) and Stochastic Volatility Modeling](/analytics-vidhya/neural-networks-in-finance-markov-chain-monte-carlo-mcmc-and-stochastic-volatility-modelling-3f4f148c3046)
+*   [Neural Networks in Finance: Markov Chain Monte Carlo (MCMC) and Stochastic Volatility Modeling](https://medium.com/analytics-vidhya/neural-networks-in-finance-markov-chain-monte-carlo-mcmc-and-stochastic-volatility-modelling-3f4f148c3046)
 *   [Monte Carlo Simulation Basics](https://www.investopedia.com/articles/investing/112514/monte-carlo-simulation-basics.asp)
 
 ---

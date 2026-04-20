@@ -43,7 +43,7 @@ Install-Package Serilog.Sinks.SentrySDK
 
 ## Demos
 
-Demos demonstrating how to use this library can be found [here](demos/).
+Usage examples and demo-style snippets are maintained in the [GitHub repository README](https://github.com/antoinebou12/Serilog.Sinks.SentrySDK).
 
 ## Getting Started
 
