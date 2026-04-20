@@ -144,11 +144,30 @@ jobs:
           fi
           echo "Blog nav path prefix OK for repo ${REPO}"
 
+      # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
+      # Lychee needs a filesystem path that matches that prefix plus --root-dir (see lychee docs).
+      - name: Mirror project path prefix for link checker
+        run: |
+          ROOT="${GITHUB_WORKSPACE}/_site"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          mkdir -p "${ROOT}/${REPO}"
+          ln -sfn "../blog" "${ROOT}/${REPO}/blog"
+          if [ -f "${ROOT}/favicon.ico" ]; then
+            ln -sfn "../favicon.ico" "${ROOT}/${REPO}/favicon.ico"
+          fi
+          for d in cv-en cv-fr letters css linktree papers; do
+            if [ -d "${ROOT}/${d}" ]; then
+              ln -sfn "../${d}" "${ROOT}/${REPO}/${d}"
+            fi
+          done
+          echo "Symlinked ${ROOT}/${REPO}/* -> published assets for /${REPO}/ URL prefix"
+
       - name: Check links in site output
         uses: lycheeverse/lychee-action@v2
         with:
           token: ${{ github.token }}
           args: >-
+            --root-dir "${{ github.workspace }}/_site"
             --verbose
             --no-progress
             --max-retries 3
