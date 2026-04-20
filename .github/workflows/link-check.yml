@@ -1,0 +1,49 @@
+name: Link check
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          token: ${{ github.token }}
+          args: >-
+            --verbose
+            --no-progress
+            --max-retries 3
+            --max-concurrency 8
+            --exclude-path 'node_modules'
+            ./hugo/content
+            ./hugo/layouts
+            ./hugo/static
+            ./docs
+            ./index.html
+            ./index-en.html
+            ./index-fr.html
+            ./404.html
+            ./cv-en/latex
+            ./cv-fr/latex
+            ./cv-en/resume.tex
+            ./cv-fr/resume.tex
