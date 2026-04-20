@@ -43,38 +43,40 @@ sudo yum install caddy -y
 
 3. **Configurer Caddy** — exemple de `Caddyfile` (domaine et proxy) :
 
-{  
- email antoine@antoineboucher.info  
- servers {  
- metrics  
- }  
- admin :2019  
-}  
-(log\_site) {  
- log {  
- output file /home/ec2-user/caddy/logs/{args\[0\]}.log {  
- roll\_size 10mb  
- roll\_keep 5  
- roll\_keep\_for 168h  
- }  
- level INFO  
- }  
-}  
-antoineboucher.info www.antoineboucher.info {  
- import log\_site antoineboucher.info  
- reverse\_proxy <cloudfront\_url>  
- handle\_errors {  
- redir https://www.github.com/antoinebou12  
- }  
-}  
-linkedin.antoineboucher.info www.linkedin.antoineboucher.info {  
- import log\_site linkedin.antoineboucher.info  
- redir https://www.linkedin.com/in/antoineboucher12  
-}  
-home.antoineboucher.info www.home.antoineboucher.info {  
- import log\_site home.antoineboucher.info  
- reverse\_proxy http://homeip:port  
+```caddyfile
+{
+ email antoine@antoineboucher.info
+ servers {
+ metrics
+ }
+ admin :2019
 }
+(log_site) {
+ log {
+ output file /home/ec2-user/caddy/logs/{args[0]}.log {
+ roll_size 10mb
+ roll_keep 5
+ roll_keep_for 168h
+ }
+ level INFO
+ }
+}
+antoineboucher.info www.antoineboucher.info {
+ import log_site antoineboucher.info
+ reverse_proxy <cloudfront_url>
+ handle_errors {
+ redir https://github.com/antoinebou12
+ }
+}
+linkedin.antoineboucher.info www.linkedin.antoineboucher.info {
+ import log_site linkedin.antoineboucher.info
+ redir https://www.linkedin.com/in/antoineboucher12
+}
+home.antoineboucher.info www.home.antoineboucher.info {
+ import log_site home.antoineboucher.info
+ reverse_proxy http://127.0.0.1:8080
+}
+```
 
 Démarrer / recharger Caddy : `sudo caddy reload`
 

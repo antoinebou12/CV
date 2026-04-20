@@ -11,8 +11,8 @@ draft: false
 Another Interactive Configurable Dashboard with Customisable GridItem with IFrame and Bookmark and other cool features with basic Container Controller for Docker made with Vuejs and Rust (rocket).
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/antoinebou13/DasherControl/build)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/antoinebou13/DasherControl)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/antoinebou12/DasherControl/build)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/antoinebou12/DasherControl)
 
 ## Why ...
 
@@ -21,13 +21,13 @@ Everything is a web app that can be installed with a docker in a container. I wa
 ## Preview Look
 
 Preview look 0.1.5
-![gif](https://raw.githubusercontent.com/antoinebou13/DasherControl/main/images/demo%20dashercontrol.gif)
+![gif](https://raw.githubusercontent.com/antoinebou12/DasherControl/main/images/demo%20dashercontrol.gif)
 Preview look 0.1.2
-![preview look](https://raw.githubusercontent.com/antoinebou13/DasherControl/main/images/DasherControl.png)
+![preview look](https://raw.githubusercontent.com/antoinebou12/DasherControl/main/images/DasherControl.png)
 
 ## Roadmap
 
-[DasherControlv1](https://github.com/antoinebou13/DasherControl/projects/1)
+[DasherControlv1](https://github.com/antoinebou12/DasherControl/projects/1)
 
 ### Finished
 

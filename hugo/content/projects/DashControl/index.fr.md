@@ -11,8 +11,8 @@ draft: false
 Tableau de bord configurable avec grille d’éléments (iframes, favoris, etc.) et contrôle basique de conteneurs **Docker**, développé en **Vue.js** et **Rust** (Rocket).
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/antoinebou13/DasherControl/build)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/antoinebou13/DasherControl)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/antoinebou12/DasherControl/build)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/antoinebou12/DasherControl)
 
 ## Objectif
 
@@ -20,6 +20,6 @@ Centraliser les applications web du homelab (Sonarr, Jellyfin, etc.) sans multip
 
 ## Aperçu
 
-![gif](https://raw.githubusercontent.com/antoinebou13/DasherControl/main/images/demo%20dashercontrol.gif)
+![gif](https://raw.githubusercontent.com/antoinebou12/DasherControl/main/images/demo%20dashercontrol.gif)
 
-Feuille de route et documentation complète : [GitHub — DasherControl](https://github.com/antoinebou13/DasherControl).
+Feuille de route et documentation complète : [GitHub — DasherControl](https://github.com/antoinebou12/DasherControl).
