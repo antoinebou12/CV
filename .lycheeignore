@@ -7,6 +7,7 @@
 http://localhost:8000
 http://localhost:8080
 http://localhost:8081
+http://localhost:.*
 
 # Docker-internal service URLs in repo configs (not reachable from CI)
 http://prometheus:9090
@@ -37,3 +38,7 @@ https://github\.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies\.json
 
 # AWS training URLs change slug frequently
 https://aws\.amazon\.com/training/.*
+
+# Live tag URLs on the custom domain can 404 in CI when slugs differ from encoded
+# hrefs checked before the new build is live; taxonomy pages are covered by Hugo builds.
+https://antoineboucher\.info/CV/blog/tags/.*

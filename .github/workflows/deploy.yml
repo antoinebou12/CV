@@ -162,14 +162,10 @@ jobs:
           done
           echo "Symlinked ${ROOT}/${REPO}/* -> published assets for /${REPO}/ URL prefix"
 
-      # Do not block Pages publish: broken external links should not stop deploy.
-      # The standalone link-check.yml workflow still fails the check on main/PR for visibility.
       - name: Check links in site output
-        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
           token: ${{ github.token }}
-          fail: false
           args: >-
             --root-dir "${{ github.workspace }}/_site"
             --verbose
@@ -180,13 +176,6 @@ jobs:
             --accept 301,302,303,307,308,403,429,999
             --exclude-path 'node_modules'
             ./_site
-
-      - name: Notice if post-build link check found issues
-        if: steps.lychee.outputs.exit_code != '0'
-        run: |
-          echo "::notice::Lychee exit code ${LYCHEE_EXIT} on _site output; deploy continues. See the previous step log for details."
-        env:
-          LYCHEE_EXIT: ${{ steps.lychee.outputs.exit_code }}
 
       - name: List deploy tree
         run: |
