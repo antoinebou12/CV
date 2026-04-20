@@ -47,6 +47,6 @@ echo "Running lychee from ${REPO_ROOT} on ${ROOT} (relative paths; required on W
 (
   cd "${REPO_ROOT}"
   rel="${ROOT#"${REPO_ROOT}/"}"
-  "${LYCHEE}" --no-progress --max-retries 3 --max-concurrency 8 --max-redirects 20 --accept 301,302,303,307,308,403,429,999 --root-dir "./${rel}" "./${rel}"
+  "${LYCHEE}" --no-progress --max-retries 3 --max-concurrency 8 --max-redirects 20 --accept 200,204,206,301,302,303,307,308,403,429,999 --root-dir "./${rel}" "./${rel}"
 )
 echo "lychee OK"
