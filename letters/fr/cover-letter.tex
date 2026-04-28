@@ -1,6 +1,8 @@
 %-------------------------------------------------------------------------------
-% Lettre d'accompagnement une page (français) --- alignée sur letters/en
-% Compilation (PowerShell) : Set-Location letters/fr; latexmk -xelatex -interaction=nonstopmode cover-letter.tex
+% Lettre d'accompagnement une page (français)
+% Personnalisation : \RecipientName, \CompanyName ; \LetterSubject, \RoleTitle ;
+%   \WhyCompany (1--2 phrases ; vide = paragraphe omis).
+% Compilation : Set-Location letters/fr; latexmk -xelatex -interaction=nonstopmode cover-letter.tex
 %-------------------------------------------------------------------------------
 \documentclass[11pt, a4paper]{../../cv-fr/russell}
 
@@ -17,8 +19,14 @@
 \setbool{acvSectionColorHighlight}{true}
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 
+\newcommand{\RecipientName}{Responsable du recrutement}
+\newcommand{\CompanyName}{}
+\newcommand{\LetterSubject}{Objet : Candidature --- Ingénieur logiciel}
+\newcommand{\RoleTitle}{des postes en plateforme, en infographie ou en développement logiciel généraliste (y compris sécurité et cloud)}
+\newcommand{\WhyCompany}{}
+
 \name{Antoine}{Boucher}
-\position{Ingénieur logiciel --- Plateforme (jeux vidéo, exploitation)}
+\position{Ingénieur logiciel --- Plateforme et infographie}
 \mobile{+14384918831}
 \email{antoine@antoineboucher.info}
 \homepage{antoineboucher.info}
@@ -33,33 +41,37 @@
   {}
   {\thepage}
 
-\recipient{Équipe de recrutement}{Organisme ou canal par lequel vous avez reçu ce document}
+\recipient{\RecipientName}{\ifdefempty{\CompanyName}{\vphantom{A}}{\CompanyName}}
 \letterdate{\today}
-\lettertitle{Lettre d'accompagnement --- plateforme / exploitation (jeux vidéo)}
-\letteropening{Bonjour,}
+\lettertitle{\LetterSubject}
+\letteropening{Madame, Monsieur,}
 
 \makelettertitle
 
 \begin{cvletter}
-\begin{spacing}{1.14}
+\begin{spacing}{1.10}
 
-Je poursuis une maîtrise en génie des technologies de l'information à l'ÉTS. Mon travail récent, c'est surtout plateforme et backends (Kubernetes, Terraform, GitLab CI/CD, GCP, Java, Kotlin, Python) et du DevSecOps, en recherche, industrie et auxiliaire. Je vise la plateforme, la build/CI ou l'exploitation dans des studios de jeux : pipelines, artefacts, environnements, et l'astreinte quand la compilation s'allonge. Un volet recherche plus modeste : infographie interactive (OpenGL, C++, Blender). Le CV PDF et \href{https://antoineboucher.info}{antoineboucher.info} détaillent le reste.
+Je termine une maîtrise en génie des technologies de l'information à l'École de technologie supérieure. Mon parcours couvre assez largement le développement logiciel : services dorsaux, interfaces web, automatisation, sécurité applicative, déploiement infonuagique, outils internes et programmation C++. Je me décris comme généraliste : j'apprends vite et je m'adapte au besoin de l'équipe. Je vise \RoleTitle. Mon curriculum vitæ détaille le parcours ; d'autres précisions figurent sur \href{https://antoineboucher.info}{antoineboucher.info}.
 
-À l'IMC2 (Institut multidisciplinaire en cybersécurité et cyberrésilience), auxiliaire de recherche à temps partiel jusqu'au début 2026 : GitLab CI/CD et exécuteurs sur GCP, Terraform, charges conteneurisées, tests sur microservices Java, builds Android sur le même chemin de promotion, outils analystes pour risques cyber à grande échelle. Ce n'est pas un crédit jeu en boîte, mais la même famille de problèmes---binaires qui bougent, promotions qui doivent rester ennuyeuses, journaux quand les gens attendent.
+À l'IMC2, j'ai été auxiliaire de recherche à temps partiel (mars 2025 à février 2026) sur une plateforme de cybersécurité sur GCP. J'ai participé au développement et au renforcement de services Java, à l'automatisation de tests, au déploiement d'infrastructure avec Terraform et à l'exploitation de charges conteneurisées, ainsi qu'à l'intégration des compilations Android dans le même chemin de livraison que les services dorsaux. J'ai aussi contribué à des outils pour analystes : notation, visualisation et priorisation de risques cyber à grande échelle. J'y ai touché à plusieurs facettes d'un même produit --- backend, sécurité, données, visualisation, livraison et exploitation --- sans me limiter à un seul rôle technique.
 
-Auxiliaire LOG8100 DevSecOps à Polytechnique et cours logiciels à l'ÉTS : GitLab partagé pour plusieurs équipes, gabarits CI, exécuteurs, labs Azure, Docker, Kubernetes, bases, backends, livraison sécurisée sous remises figées. Je finis souvent par la prochaine action concrète.
+J'ai été auxiliaire d'enseignement DevSecOps à Polytechnique Montréal (cours LOG8100), et auxiliaire pour plusieurs cours à l'ÉTS. J'ai accompagné des équipes sur GitLab, Docker, Kubernetes, Azure, les bases de données, le développement web et les pratiques sécuritaires. J'aime poser un problème clairement, débloquer les autres et faire avancer un livrable sous contrainte de temps.
 
-Avant : cloud IONODES, Kotlin/Spring chez Intact, mandats Django/Vue avec observabilité et API. Habitudes de prod : journaux utiles, tableaux de bord qui répondent à de vraies questions, migrations réversibles, périmètres qui ne finissent pas en panne surprise.
+Auparavant : infrastructure infonuagique chez IONODES, services Kotlin et Spring chez Intact, mandats web avec Django, Vue, API et observabilité. Ces expériences m'ont donné une base solide en développement backend et frontend, intégration, déploiement et maintenance.
 
-À côté : infographie interactive, usure de surfaces. Publiquement \href{https://github.com/antoinebou12/uml-mcp}{\texttt{uml-mcp}} (MCP, diagrammes) parce qu'un assistant se comporte mieux avec des outils explicites.
+Dans le cadre de la maîtrise, j'approfondis C++, OpenGL et Blender sur un projet de simulation d'usure de surface en temps réel dans l'espace texture, mêlant simulation, GPU et rendu interactif. Ce travail correspond à mon intérêt pour les systèmes exigeants en performance, la fiabilité et la qualité logicielle.
 
-Je cherche un studio qui finance plateforme et release, trace les décisions dans les issues ou les demandes de fusion, et voit la revue comme une boucle d'apprentissage. Merci ; j'échangerai volontiers sur votre ferme de build, déploiement ou stack d'exploitation.
+\ifdefempty{\WhyCompany}{}{%
+\WhyCompany\par
+}
+
+Je publie aussi quelques projets open source, dont \textbf{\href{https://github.com/antoinebou12/uml-mcp}{uml-mcp}}, un outil lié à la génération de diagrammes UML. Je serais heureux d'échanger sur la manière dont mon parcours pourrait soutenir vos projets, votre plateforme ou vos opérations logicielles.
 
 \end{spacing}
 \end{cvletter}
 
 \letterclosing{Cordialement,}
-\letterenclosure[Pièce jointe]{Curriculum vitæ (PDF) via \href{https://antoineboucher.info}{antoineboucher.info} --- Download CV / Télécharger le CV}
+\letterenclosure[Pièce jointe]{Curriculum vitæ --- \href{https://antoineboucher.info}{antoineboucher.info} --- Download CV / Télécharger le CV}
 
 \makeletterclosing
 
