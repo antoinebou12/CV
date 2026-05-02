@@ -14,6 +14,9 @@ Reproducible baseline for machine discovery, Cloudflare “Agent-Ready” style 
 | Skill markdown | [`hugo/static/.well-known/agent-skills/*.md`](../../hugo/static/.well-known/agent-skills/) |
 | Curated homepage markdown | [`hugo/static/agent/home.md`](../../hugo/static/agent/home.md) |
 | HTTP headers (Cloudflare Pages / Netlify-style) | [`hugo/static/_headers`](../../hugo/static/_headers) |
+| OAuth protected resource (RFC 9728, informational) | [`hugo/static/.well-known/oauth-protected-resource`](../../hugo/static/.well-known/oauth-protected-resource) |
+| MCP server card (SEP-style stub) | [`hugo/static/.well-known/mcp/server-card.json`](../../hugo/static/.well-known/mcp/server-card.json) |
+| OIDC / OAuth “not supported” stubs | [`hugo/static/.well-known/openid-configuration`](../../hugo/static/.well-known/openid-configuration), [`hugo/static/.well-known/oauth-authorization-server`](../../hugo/static/.well-known/oauth-authorization-server) |
 
 Hugo copies `hugo/static/**` into the blog output directory. GitHub Actions then **promotes** `robots.txt`, `sitemap.xml`, `.well-known/**`, `_headers`, and root `llms.txt` to the **site root** so `https://antoineboucher.info/robots.txt` and `https://antoineboucher.info/.well-known/...` resolve. See [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml).
 
@@ -34,6 +37,10 @@ On Cloudflare **without** `_headers` support, mirror the same values with a **Tr
 ## Markdown negotiation (edge)
 
 Static hosting alone cannot vary `Content-Type` by `Accept` for `/`. Use the Worker in [`cloudflare/workers/agent-ready-home/`](../../cloudflare/workers/agent-ready-home/README.md): it serves `/<SITE_REPO>/blog/agent/home.md` when `GET /` requests `text/markdown`.
+
+## WebMCP (browser)
+
+[`index-en.html`](../../index-en.html) and [`index-fr.html`](../../index-fr.html) register a minimal `open_cv_pdf` tool when `navigator.modelContext.provideContext` is available (Chrome WebMCP early preview). The API may change; registration is wrapped in `try`/`catch`.
 
 ## CI guards
 

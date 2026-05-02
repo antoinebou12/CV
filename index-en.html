@@ -1380,6 +1380,35 @@
       }
     })();
   </script>
+  <script>
+    (function () {
+      var mc = navigator.modelContext || navigator.webModelContext;
+      if (!mc || typeof mc.provideContext !== 'function') return;
+      try {
+        mc.provideContext({
+          tools: [
+            {
+              name: 'open_cv_pdf',
+              description: 'Open the public CV PDF (English or French) in a new browser tab.',
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  lang: { type: 'string', enum: ['en', 'fr'], description: 'CV language' }
+                },
+                required: ['lang']
+              },
+              execute: function (args) {
+                var lang = args && args.lang === 'fr' ? 'fr' : 'en';
+                var path = lang === 'fr' ? 'cv-fr/resume.pdf' : 'cv-en/resume.pdf';
+                window.open(path, '_blank', 'noopener,noreferrer');
+                return Promise.resolve({ opened: path });
+              }
+            }
+          ]
+        });
+      } catch (e) { /* WebMCP early preview; ignore if shape changes */ }
+    })();
+  </script>
 </body>
 <script>
     particlesJS('particles-js', {

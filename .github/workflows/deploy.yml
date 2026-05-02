@@ -227,7 +227,20 @@ jobs:
               for k in ("name", "type", "description", "url", "sha256"):
                   if k not in entry:
                       raise SystemExit(f"agent-skills entry missing {k!r}: {entry!r}")
-          print("JSON validation OK for api-catalog and agent-skills index")
+          for rel in (
+              ".well-known/openid-configuration",
+              ".well-known/oauth-authorization-server",
+              ".well-known/oauth-protected-resource",
+              ".well-known/mcp/server-card.json",
+          ):
+              p = root / rel
+              if not p.is_file():
+                  raise SystemExit(f"missing {rel}")
+              json.loads(p.read_text(encoding="utf-8"))
+          card = json.loads((root / ".well-known/mcp/server-card.json").read_text(encoding="utf-8"))
+          if "serverInfo" not in card:
+              raise SystemExit("mcp server-card missing serverInfo")
+          print("JSON validation OK for api-catalog, agent-skills, OIDC/OAuth stubs, MCP card")
           PY
 
       # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
