@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# Major AI crawlers: allow search/discovery, disallow training collection.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+# Content Signals (draft extension used by some agents).
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+# Root sitemap is promoted from Hugo output in CI (see deploy workflow).
+Sitemap: https://antoineboucher.info/sitemap.xml

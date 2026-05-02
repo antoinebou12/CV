@@ -122,6 +122,55 @@ jobs:
             cp -f "${GITHUB_WORKSPACE}/favicon.ico" "${GITHUB_WORKSPACE}/_site/blog/favicon.ico"
           fi
 
+      - name: Promote agent-ready discovery assets to site root
+        env:
+          HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
+        run: |
+          set -euo pipefail
+          ROOT="${GITHUB_WORKSPACE}/_site"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          mkdir -p "${ROOT}/.well-known"
+          if [ -f "${ROOT}/blog/robots.txt" ]; then
+            cp -f "${ROOT}/blog/robots.txt" "${ROOT}/robots.txt"
+          fi
+          if [ -f "${ROOT}/blog/sitemap.xml" ]; then
+            cp -f "${ROOT}/blog/sitemap.xml" "${ROOT}/sitemap.xml"
+          fi
+          if [ -d "${ROOT}/blog/.well-known" ]; then
+            cp -a "${ROOT}/blog/.well-known/." "${ROOT}/.well-known/"
+          fi
+          if [ -f "${GITHUB_WORKSPACE}/hugo/static/_headers" ]; then
+            cp -f "${GITHUB_WORKSPACE}/hugo/static/_headers" "${ROOT}/_headers"
+          fi
+          if [ -f "${ROOT}/blog/llms.txt" ]; then
+            cp -f "${ROOT}/blog/llms.txt" "${ROOT}/llms.txt"
+          fi
+          # Default GitHub Pages project-site baseURL is https://antoineboucher.info/<repo>/blog/.
+          # Static discovery JSON uses /blog/ until rewritten here when no custom HUGO_BASE_URL is set.
+          if [ -z "${HUGO_BASE_URL_OVERRIDE}" ]; then
+            for f in \
+              "${ROOT}/.well-known/api-catalog" \
+              "${ROOT}/.well-known/agent-skills/index.json" \
+              "${ROOT}/.well-known/markdown-map.json" \
+              "${ROOT}/_headers" \
+              "${ROOT}/robots.txt" \
+              "${ROOT}/llms.txt"; do
+              [ -f "$f" ] || continue
+              sed -i "s|https://antoineboucher.info/blog/|https://antoineboucher.info/${REPO}/blog/|g" "$f"
+            done
+            if [ -f "${ROOT}/.well-known/markdown-map.json" ]; then
+              sed -i "s|\"/blog/agent/home.md\"|\"/${REPO}/blog/agent/home.md\"|g" "${ROOT}/.well-known/markdown-map.json"
+            fi
+            find "${ROOT}/.well-known" -type f -name '*.md' -print0 2>/dev/null | while IFS= read -r -d '' f; do
+              sed -i "s|https://antoineboucher.info/blog/|https://antoineboucher.info/${REPO}/blog/|g" "$f"
+            done
+            if [ -d "${ROOT}/blog/agent" ]; then
+              find "${ROOT}/blog/agent" -type f -name '*.md' -print0 | while IFS= read -r -d '' f; do
+                sed -i "s|https://antoineboucher.info/blog/|https://antoineboucher.info/${REPO}/blog/|g" "$f"
+              done
+            fi
+          fi
+
       - name: Verify blog nav uses project path prefix
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
@@ -143,6 +192,43 @@ jobs:
             exit 1
           fi
           echo "Blog nav path prefix OK for repo ${REPO}"
+
+      - name: Validate agent-ready baseline artifacts
+        run: |
+          set -euo pipefail
+          ROOT="${GITHUB_WORKSPACE}/_site"
+          ROBOTS="${ROOT}/robots.txt"
+          SITEMAP="${ROOT}/sitemap.xml"
+          API_CATALOG="${ROOT}/.well-known/api-catalog"
+          SKILLS_INDEX="${ROOT}/.well-known/agent-skills/index.json"
+
+          [ -f "${ROBOTS}" ] || { echo "Missing ${ROBOTS}"; exit 1; }
+          [ -f "${SITEMAP}" ] || { echo "Missing ${SITEMAP}"; exit 1; }
+          [ -f "${API_CATALOG}" ] || { echo "Missing ${API_CATALOG}"; exit 1; }
+          [ -f "${SKILLS_INDEX}" ] || { echo "Missing ${SKILLS_INDEX}"; exit 1; }
+
+          grep -q '^User-agent:' "${ROBOTS}" || { echo "robots.txt missing User-agent"; exit 1; }
+          grep -q '^Sitemap:' "${ROBOTS}" || { echo "robots.txt missing Sitemap"; exit 1; }
+
+          grep -qF '"$schema"' "${SKILLS_INDEX}" || { echo 'agent-skills index missing "$schema"'; exit 1; }
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("_site")
+          catalog = json.loads((root / ".well-known/api-catalog").read_text(encoding="utf-8"))
+          if "linkset" not in catalog or not isinstance(catalog["linkset"], list):
+              raise SystemExit("api-catalog: expected top-level linkset array")
+          skills_doc = json.loads((root / ".well-known/agent-skills/index.json").read_text(encoding="utf-8"))
+          for key in ("$schema", "skills"):
+              if key not in skills_doc:
+                  raise SystemExit(f"agent-skills index missing {key!r}")
+          for entry in skills_doc["skills"]:
+              for k in ("name", "type", "description", "url", "sha256"):
+                  if k not in entry:
+                      raise SystemExit(f"agent-skills entry missing {k!r}: {entry!r}")
+          print("JSON validation OK for api-catalog and agent-skills index")
+          PY
 
       # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
       # Lychee needs a filesystem path that matches that prefix plus --root-dir (see lychee docs).
