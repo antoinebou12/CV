@@ -1,0 +1,47 @@
+{{- $seoDesc := "" -}}
+{{- if .IsPage -}}
+  {{- if or .Description .Params.description -}}
+    {{- $seoDesc = (or .Description .Params.description) | plainify | strings.TrimSpace -}}
+  {{- end -}}
+  {{- if not $seoDesc -}}
+    {{- with .Summary | plainify | strings.TrimSpace -}}
+      {{- $seoDesc = . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $seoDesc -}}
+    {{- $seoDesc = printf "%s — %s" (.Title | plainify) (site.Title | plainify) -}}
+  {{- end -}}
+{{- else if .IsHome -}}
+  {{- $seoDesc = site.Params.description | default "A personal blog" | plainify | strings.TrimSpace -}}
+{{- else if eq .Kind "section" -}}
+  {{- if or .Description .Params.description -}}
+    {{- $seoDesc = (or .Description .Params.description) | plainify | strings.TrimSpace -}}
+  {{- end -}}
+  {{- if not $seoDesc -}}
+    {{- $seoDesc = printf "Index of %s: dated notes and articles by %s." (.Title | plainify) (site.Title | plainify) -}}
+  {{- end -}}
+{{- else if eq .Kind "taxonomy" -}}
+  {{- if eq site.Language.Lang "fr" -}}
+    {{- $seoDesc = printf "Liste des étiquettes du blog : choisissez-en une pour filtrer articles et notes par %s." (site.Title | plainify) -}}
+  {{- else -}}
+    {{- $seoDesc = printf "All topic tags for %s posts—pick a tag to see matching articles and notes." (site.Title | plainify) -}}
+  {{- end -}}
+{{- else if eq .Kind "term" -}}
+  {{- $tag := .Title | plainify -}}
+  {{- if eq site.Language.Lang "fr" -}}
+    {{- $seoDesc = printf "Articles et notes avec l’étiquette « %s » sur %s." $tag (site.Title | plainify) -}}
+  {{- else -}}
+    {{- $seoDesc = printf "Articles and notes tagged “%s” on %s—newest posts first in this index." $tag (site.Title | plainify) -}}
+  {{- end -}}
+{{- else -}}
+  {{- $seoDesc = site.Params.description | default "A personal blog" | plainify | strings.TrimSpace -}}
+{{- end -}}
+{{- $seoDesc = $seoDesc | plainify | strings.TrimSpace | truncate 160 -}}
+{{- if lt (countrunes $seoDesc) 50 -}}
+  {{- $suffix := printf " — %s" (site.Title | plainify) -}}
+  {{- $seoDesc = printf "%s%s" $seoDesc $suffix | plainify | strings.TrimSpace | truncate 160 -}}
+{{- end -}}
+{{- if lt (countrunes $seoDesc) 50 -}}
+  {{- $seoDesc = site.Params.description | default "A personal blog" | plainify | strings.TrimSpace | truncate 160 -}}
+{{- end -}}
+{{- return $seoDesc -}}

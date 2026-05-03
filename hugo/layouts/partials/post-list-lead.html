@@ -1,0 +1,30 @@
+{{- /* Avatar + bio only (no name headline). Use under home <h1> to avoid duplicating site.Params.name. */ -}}
+{{- $avatar_url := .Scratch.Get "avatar_url" -}}
+{{- $bioText := "" -}}
+{{- if site.Params.bio -}}
+  {{- $bioText = site.Params.bio -}}
+{{- else if site.Params.name -}}
+  {{- $bioText = print "A personal blog by " site.Params.name -}}
+{{- end -}}
+{{- if or $avatar_url site.Params.name site.Params.bio -}}
+<div class="-mt-2 mb-12 flex items-center">
+  {{- if $avatar_url -}}
+  <div
+    class="h-24 w-24 shrink-0 rounded-full border-[0.5px] border-black/10 bg-white/50 p-3 ltr:mr-5 ltr:-ml-1 rtl:-mr-1 rtl:ml-5 dark:bg-white/90!"
+  >
+    <img
+      class="not-prose my-0 h-full w-full rounded-full bg-black/5! hover:animate-spin dark:bg-black/80!"
+      src="{{- $avatar_url -}}"
+      alt="{{- site.Params.name | default site.Title -}}"
+    />
+  </div>
+  {{- end -}}
+  {{- if $bioText -}}
+  <div>
+    <div class="break-words">
+      {{- $bioText -}}
+    </div>
+  </div>
+  {{- end -}}
+</div>
+{{- end -}}

@@ -17,18 +17,9 @@
   <!-- author -->
   {{- $site_author := or .Params.author site.Params.author site.Title -}}
 
-  <!---->
-  {{- if eq .Kind "page" -}}
-  <meta name="description" content="{{- .Summary -}}" />
+  {{- $seoDesc := partialCached "seo-metadata-description.html" . .RelPermalink -}}
+  <meta name="description" content="{{- $seoDesc -}}" />
   <meta name="author" content="{{- or .Params.author $site_author -}}" />
-  {{- else -}}
-  <!---->
-  <meta
-    name="description"
-    content="{{- site.Params.description | default (print `A personal blog`) -}}"
-  />
-  <meta name="author" content="{{- $site_author -}}" />
-  {{- end -}}
 
   <!-- css & js -->
   {{- $main := resources.Get "main.css" -}}
@@ -99,9 +90,9 @@
   <!---->
   {{- partial "seo-jsonld.html" . -}}
   <!---->
-  {{- template "_internal/opengraph.html" . -}}
+  {{- partial "opengraph.html" . -}}
   <!---->
-  {{- template "_internal/twitter_cards.html" . -}}
+  {{- partial "twitter_cards.html" . -}}
   <!-- RSS -->
   {{- range .AlternativeOutputFormats -}}
   <link
@@ -112,8 +103,9 @@
   />
   {{- end -}}
 
-  <!-- canonical -->
-  <link rel="canonical" href="{{- .Permalink -}}" />
   {{- end -}}
   <!---->
+
+  <!-- canonical: always emit (auditors and SEO); production-only tags stay in the block above -->
+  <link rel="canonical" href="{{- .Permalink -}}" />
 </head>

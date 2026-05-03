@@ -1,9 +1,11 @@
 /**
  * Markdown negotiation for site root (Markdown for Agents).
+ * Proxies apex /sitemap.xml and /robots.txt to GitHub Pages project-site paths.
  * Requires env.SITE_REPO (e.g. "CV") for GitHub Pages project-site paths.
  */
 async function originFetch(request, env, targetUrl) {
-  const req = new Request(targetUrl.toString(), { method: "GET", headers: request.headers });
+  const method = request.method === "HEAD" ? "HEAD" : "GET";
+  const req = new Request(targetUrl.toString(), { method, headers: request.headers });
   if (env.ASSETS && typeof env.ASSETS.fetch === "function") {
     return env.ASSETS.fetch(req);
   }
@@ -13,12 +15,23 @@ async function originFetch(request, env, targetUrl) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const repo = (env.SITE_REPO || "CV").replace(/^\/+|\/+$/g, "");
+
+    const discoveryMap = {
+      "/sitemap.xml": `/${repo}/sitemap.xml`,
+      "/robots.txt": `/${repo}/robots.txt`,
+    };
+    const underRepo = discoveryMap[url.pathname];
+    if (underRepo && (request.method === "GET" || request.method === "HEAD")) {
+      const proxied = await originFetch(request, env, new URL(underRepo, url.origin));
+      return proxied;
+    }
+
     const accept = request.headers.get("Accept") || "";
     const wantsMarkdown =
       accept.includes("text/markdown") || accept.includes("text/x-markdown");
 
     if (wantsMarkdown && url.pathname === "/") {
-      const repo = (env.SITE_REPO || "CV").replace(/^\/+|\/+$/g, "");
       const candidates = [
         new URL(`/${repo}/blog/agent/home.md`, url.origin),
         new URL("/blog/agent/home.md", url.origin),
