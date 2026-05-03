@@ -4,7 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antoine Boucher - CV</title>
+  <meta name="description" content="Entry point for Antoine Boucher’s public CV: detects your browser language and sends you to the English or French HTML résumé; PDFs and blog are one click away.">
+  <link rel="canonical" href="https://antoineboucher.info/CV/index.html">
+  <meta property="og:title" content="Antoine Boucher — CV">
+  <meta property="og:description" content="Entry point for Antoine Boucher’s public CV: detects your browser language and sends you to the English or French HTML résumé; PDFs and blog are one click away.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://antoineboucher.info/CV/index.html">
+  <meta property="og:image" content="https://antoineboucher.info/CV/antoine.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","@id":"https://antoineboucher.info/CV/index.html#webpage","url":"https://antoineboucher.info/CV/index.html","name":"Antoine Boucher — CV","description":"Entry point for Antoine Boucher’s public CV: language redirect to English or French résumé pages."}
+  </script>
   <script>
+    // WebMCP (same tool as language CV pages) so GET / registers tools before redirect.
+    (function () {
+      var mc = navigator.modelContext || navigator.webModelContext;
+      if (mc && typeof mc.provideContext === 'function') {
+        try {
+          mc.provideContext({
+            tools: [
+              {
+                name: 'open_cv_pdf',
+                description: 'Open the public CV PDF (English or French) in a new browser tab.',
+                inputSchema: {
+                  type: 'object',
+                  properties: {
+                    lang: { type: 'string', enum: ['en', 'fr'], description: 'CV language' }
+                  },
+                  required: ['lang']
+                },
+                execute: function (args) {
+                  var lang = args && args.lang === 'fr' ? 'fr' : 'en';
+                  var path = lang === 'fr' ? 'cv-fr/resume.pdf' : 'cv-en/resume.pdf';
+                  window.open(path, '_blank', 'noopener,noreferrer');
+                  return Promise.resolve({ opened: path });
+                }
+              }
+            ]
+          });
+        } catch (e) { /* WebMCP preview API */ }
+      }
+    })();
     // Language detection and redirect
     (function() {
       const lang = navigator.language || navigator.userLanguage;

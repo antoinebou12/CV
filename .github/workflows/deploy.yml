@@ -93,6 +93,7 @@ jobs:
 
       - name: Build Hugo blog
         env:
+          HUGO_ENV: production
           HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
           HUGO_PARAMS_GITHUBPAGESREPO: ${{ github.event.repository.name }}
         run: |
@@ -171,6 +172,36 @@ jobs:
             fi
           fi
 
+      - name: Merge static URLs into root sitemap and align robots Sitemap
+        env:
+          HUGO_BASE_URL_OVERRIDE: ${{ vars.HUGO_BASE_URL }}
+        run: |
+          set -euo pipefail
+          ROOT="${GITHUB_WORKSPACE}/_site"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          if [ -n "${HUGO_BASE_URL_OVERRIDE}" ]; then
+            H="${HUGO_BASE_URL_OVERRIDE}"
+            case "${H}" in
+              */) ;;
+              *) H="${H}/" ;;
+            esac
+            case "${H}" in
+              */blog/) SITE_ROOT="${H%/blog/}" ;;
+              */blog) SITE_ROOT="${H%/blog}" ;;
+              *) SITE_ROOT="${H%/}" ;;
+            esac
+          else
+            SITE_ROOT="https://antoineboucher.info/${REPO}"
+          fi
+          LASTMOD=$(date -u +%Y-%m-%d)
+          python3 "${GITHUB_WORKSPACE}/scripts/merge_root_sitemap.py" \
+            --input "${ROOT}/sitemap.xml" \
+            --output "${ROOT}/sitemap.xml" \
+            --site-root "${SITE_ROOT}" \
+            --lastmod "${LASTMOD}"
+          SITEMAP_URL="${SITE_ROOT}/sitemap.xml"
+          sed -i "s|^Sitemap:.*|Sitemap: ${SITEMAP_URL}|" "${ROOT}/robots.txt"
+
       - name: Verify blog nav uses project path prefix
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
@@ -209,6 +240,7 @@ jobs:
 
           grep -q '^User-agent:' "${ROBOTS}" || { echo "robots.txt missing User-agent"; exit 1; }
           grep -q '^Sitemap:' "${ROBOTS}" || { echo "robots.txt missing Sitemap"; exit 1; }
+          grep -qF 'index-en.html' "${SITEMAP}" || { echo "sitemap.xml should list index-en.html"; exit 1; }
 
           grep -qF '"$schema"' "${SKILLS_INDEX}" || { echo 'agent-skills index missing "$schema"'; exit 1; }
 

@@ -25,3 +25,7 @@ Use a **Pages Function** or attach this script as a **Worker in front of Pages**
 ## Optional
 
 - Extend `worker.mjs` to read `/.well-known/markdown-map.json` from the origin and support multiple paths (see `hugo/static/.well-known/markdown-map.json` in this repository).
+
+## Cloudflare dashboard (proxy + GitHub Pages)
+
+If you proxy GitHub Pages, also add **Transform Rules** for `Link` and `Content-Type` on `/.well-known/*` because the origin ignores `hugo/static/_headers`. See [Agent-ready baseline — Cloudflare proxy](../../docs/development/agent-ready-baseline.md#cloudflare-proxy-in-front-of-github-pages).

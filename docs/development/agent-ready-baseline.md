@@ -34,13 +34,51 @@ If the host honors `_headers` (e.g. Cloudflare Pages), the homepage exposes comb
 
 On Cloudflare **without** `_headers` support, mirror the same values with a **Transform Rule** (response headers) or a small Worker.
 
+## Cloudflare proxy in front of GitHub Pages
+
+GitHub Pages **does not** interpret [`hugo/static/_headers`](../../hugo/static/_headers). With the **orange-cloud** proxy, add the following in the Cloudflare dashboard (or Terraform) so scanners see the same behavior as a native Pages deploy.
+
+### 1) Ship the repo artifact first
+
+Merge to `main` / `master`, ensure [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml) succeeds, then **purge cache** for the zone (Caching → Configuration → Purge Everything, or custom purge: `/robots.txt`, `/sitemap.xml`, `/.well-known/*`, `/`).
+
+**Production spot-check** (Windows PowerShell): `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify-agent-ready-production.ps1`
+
+As of a local check, `https://antoineboucher.info/robots.txt` can still return the **legacy** 1248-byte comment-only file while `/.well-known/api-catalog` returns **404** until the promoted `_site` layout is live and caches are cleared.
+
+### 2) Response header Transform Rules (Link on homepage)
+
+Rules → Transform Rules → **Modify response header** (or Response Header Transform Rules, product wording varies).
+
+| Rule name | When (expression) | Set header | Value |
+|-----------|-------------------|------------|--------|
+| `AgentLinkHome` | `(http.host eq "antoineboucher.info" and (http.request.uri.path eq "/" or http.request.uri.path eq "/index.html"))` | `Link` | `</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/agent-skills/index.json>; rel="service-doc"; type="application/json", </llms.txt>; rel="describedby"; type="text/plain"` |
+
+Use **one** `Link` header value (comma-separated relations per RFC 8288). Adjust `http.host` if you use `www`.
+
+### 3) Response Content-Type for discovery JSON
+
+Add separate **Modify response header** rules (or one rule with a map in a Worker) so paths under `/.well-known/` return JSON types instead of `text/html`:
+
+| When | Set `Content-Type` |
+|------|---------------------|
+| `http.request.uri.path eq "/.well-known/api-catalog"` | `application/linkset+json; charset=utf-8` |
+| `http.request.uri.path eq "/.well-known/openid-configuration"` or `.../oauth-authorization-server` or `.../oauth-protected-resource` or `.../mcp/server-card.json` | `application/json; charset=utf-8` |
+
+### 4) Markdown for Agents
+
+Either:
+
+- Enable **Markdown for Agents** on the zone (Cloudflare dashboard: see [Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/) in current docs for the exact menu path), **or**
+- Deploy the Worker in [`cloudflare/workers/agent-ready-home/`](../../cloudflare/workers/agent-ready-home/README.md) on a route that runs **before** the origin, with `SITE_REPO` matching the GitHub Pages path segment (e.g. `CV`).
+
 ## Markdown negotiation (edge)
 
 Static hosting alone cannot vary `Content-Type` by `Accept` for `/`. Use the Worker in [`cloudflare/workers/agent-ready-home/`](../../cloudflare/workers/agent-ready-home/README.md): it serves `/<SITE_REPO>/blog/agent/home.md` when `GET /` requests `text/markdown`.
 
 ## WebMCP (browser)
 
-[`index-en.html`](../../index-en.html) and [`index-fr.html`](../../index-fr.html) register a minimal `open_cv_pdf` tool when `navigator.modelContext.provideContext` is available (Chrome WebMCP early preview). The API may change; registration is wrapped in `try`/`catch`.
+[`index.html`](../../index.html) (homepage before redirect), [`index-en.html`](../../index-en.html), and [`index-fr.html`](../../index-fr.html) register a minimal `open_cv_pdf` tool when `navigator.modelContext.provideContext` is available (Chrome WebMCP early preview). The API may change; registration is wrapped in `try`/`catch`.
 
 ## CI guards
 
@@ -49,6 +87,4 @@ The deploy workflow validates root `robots.txt`, `sitemap.xml`, JSON parse for `
 ## Deferred (optional)
 
 - Web Bot Auth (`/.well-known/http-message-signatures-directory`)
-- OAuth/OIDC beyond explicit “not supported” placeholders under `hugo/static/.well-known/`
-- MCP server card at `/.well-known/mcp/server-card.json`
-- WebMCP browser tools
+- Full OIDC/OAuth authorization server metadata (beyond “not supported” stubs) if you add token APIs

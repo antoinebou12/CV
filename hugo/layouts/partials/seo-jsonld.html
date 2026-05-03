@@ -1,0 +1,19 @@
+{{- if .IsHome -}}
+  {{- $same := slice -}}
+  {{- with site.Params.github }}{{ $same = $same | append (printf "https://github.com/%s" .) }}{{ end -}}
+  {{- with site.Params.linkedin }}{{ $same = $same | append (printf "https://www.linkedin.com/in/%s" .) }}{{ end -}}
+  {{- $org := dict "@context" "https://schema.org" "@type" "Organization" "name" site.Title "url" site.Home.Permalink -}}
+  {{- if gt (len $same) 0 }}{{ $org = merge $org (dict "sameAs" $same) }}{{ end -}}
+  <script type="application/ld+json">
+{{ $org | jsonify | safeHTML }}
+  </script>
+  {{- $siteNode := dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink -}}
+  {{- with site.Params.description }}{{ $siteNode = merge $siteNode (dict "description" .) }}{{ end -}}
+  {{- with site.GetPage "search" -}}
+    {{- $target := printf "%s?q={search_term_string}" .Permalink -}}
+    {{- $siteNode = merge $siteNode (dict "potentialAction" (dict "@type" "SearchAction" "target" $target "query-input" "required name=search_term_string")) -}}
+  {{- end -}}
+  <script type="application/ld+json">
+{{ $siteNode | jsonify | safeHTML }}
+  </script>
+{{- end -}}
