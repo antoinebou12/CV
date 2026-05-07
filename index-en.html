@@ -186,6 +186,168 @@
       padding-top: 6px;
     }
 
+    .section-intro {
+      margin: 6px 0 14px;
+      color: #4d5a59;
+      font-size: 0.96em;
+      line-height: 1.55;
+    }
+
+    .project-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .project-card {
+      border: 1px solid #dde7e5;
+      border-left: 4px solid #227c74;
+      border-radius: 0 5px 5px 0;
+      background: #fbfdfd;
+      margin-bottom: 10px;
+      padding: 9px 11px;
+    }
+
+    .project-title {
+      font-size: 1.03em;
+      font-weight: 700;
+      color: #1f4742;
+    }
+
+    .project-context {
+      font-size: 0.9em;
+      color: #5d6a69;
+      margin-top: 2px;
+    }
+
+    .project-impact {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .project-tag {
+      background: #32475c;
+      color: #fff;
+      font-size: 0.75em;
+      border-radius: 999px;
+      padding: 3px 8px;
+    }
+
+    .contact-cta {
+      margin: 8px 0 12px;
+      padding: 8px 10px;
+      border: 1px solid #dfe8e6;
+      border-radius: 4px;
+      background: #fbfdfd;
+    }
+
+    .contact-cta .btn {
+      margin-top: 6px;
+    }
+
+    .hero-actions {
+      margin-top: 8px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .call-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-color: #c8d9d6;
+      color: #1f4742;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .call-cta-btn:hover,
+    .call-cta-btn:focus {
+      background: #eef6f5;
+      border-color: #9ebdb8;
+      color: #1c3f3b;
+    }
+
+    .call-cta-btn:focus {
+      outline: 2px solid #9ebdb8;
+      outline-offset: 1px;
+    }
+
+    .call-cta-icon {
+      width: 1.55em;
+      height: 1.55em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #e5f0ee;
+      color: #227c74;
+      flex-shrink: 0;
+    }
+
+    .contact-cta .call-cta-btn {
+      font-weight: 600;
+    }
+
+    .contact-cta-fallback {
+      margin-top: 6px;
+      font-size: 0.92em;
+      color: #4c5e5b;
+    }
+
+    .contact-cta-fallback a {
+      color: #227c74;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .contact-cta-fallback a:hover,
+    .contact-cta-fallback a:focus {
+      text-decoration: underline;
+    }
+
+    .recommendation-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .recommendation-card {
+      border: 1px solid #dde7e5;
+      border-left: 4px solid #32475c;
+      border-radius: 0 5px 5px 0;
+      background: #fbfdfd;
+      margin-bottom: 10px;
+      padding: 9px 11px;
+    }
+
+    .recommendation-source {
+      margin-top: 5px;
+      font-size: 0.9em;
+      color: #5d6a69;
+    }
+
+    .recommendation-quote {
+      margin: 0;
+      font-style: italic;
+      line-height: 1.55;
+      color: #374746;
+    }
+
+    .recommendation-author {
+      margin-top: 7px;
+      font-size: 0.9em;
+      color: #5d6a69;
+    }
+
     details.cv-course {
       margin: 10px 0 12px 0;
       border: 1px solid #d5dedc;
@@ -470,6 +632,20 @@
       color: #334960;
     }
 
+    @media (max-width: 767px) {
+      .project-card {
+        padding: 10px;
+      }
+
+      .hero-actions {
+        display: flex;
+      }
+
+      .contact-cta .btn {
+        width: 100%;
+      }
+    }
+
     .item-interests,
     .item-skills {
       height: 30px;
@@ -651,9 +827,13 @@
           </div>
           <div id="text-header">
             <h1>Antoine Boucher<br><span>Software Engineer — Platform and graphics</span></h1>
-            <div style="margin-top: 8px;">
+            <div class="hero-actions">
               <a href="cv-en/resume.pdf" download class="btn btn-primary">
                 Download CV
+              </a>
+              <a href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer" class="btn btn-default call-cta-btn">
+                <span class="call-cta-icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
+                Book a 30-min intro call
               </a>
             </div>
           </div>
@@ -666,6 +846,7 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-user ico"></i> About</summary>
           <div class="cv-section-body">
+          <p class="section-intro">Platform and graphics engineer focused on practical delivery: secure backend systems, cloud-native operations, and developer tooling with measurable outcomes.</p>
           <ul class="list-group">
             <li class="list-group-item">Software engineer with a generalist profile: platform work, backends, security-aware delivery, and interactive graphics (C++/OpenGL, Blender). Strong with Java/Kotlin and Python, Docker/Kubernetes, and infrastructure-as-code.</li>
             <li class="list-group-item">Active open-source contributor/maintainer (public repos with significant adoption; ~100 stars shown on GitHub as of May 2026).</li>
@@ -677,6 +858,7 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Work Experience</summary>
           <div class="cv-section-body">
+          <p class="section-intro">Recent roles across cybersecurity research, teaching, and cloud platforms with a strong focus on delivery quality and operational reliability.</p>
 		  <!-- IMC2 -->
           <details class="cv-job job clearfix">
             <summary class="cv-job-summary clearfix">
@@ -1099,42 +1281,52 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-code-branch ico"></i> Selected Projects</summary>
           <div class="cv-section-body">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <span style="font-weight:bold">UML / Diagram tooling</span>
-              <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/uml-mcp"><span style="font-weight:bold">uml-mcp</span></a> — UML diagram generation tool/server (MCP-based) enabling diagram creation from natural language</li>
-                <li><a href="https://github.com/antoinebou12/D2COpenAIPlugin"><span style="font-weight:bold">D2COpenAIPlugin</span></a> — Plugin that generates diagrams (PlantUML, Mermaid, Diagrams) from prompts; developer tooling focus</li>
-                <li><a href="https://github.com/antoinebou12/plantumlapi"><span style="font-weight:bold">plantumlapi</span></a> — Python interface around PlantUML web workflows and diagram generation</li>
-              </ul>
+          <p class="section-intro">Selected projects. Five projects spanning production systems, enterprise integration, and applied architecture.</p>
+          <ul class="project-list">
+            <li class="project-card">
+              <div class="project-title"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp ecosystem</a></div>
+              <div class="project-context">Developer tooling and AI-assisted architecture diagrams</div>
+              <div class="project-impact">Built a practical UML generation flow from natural language with supporting tooling (`uml-mcp`, `D2COpenAIPlugin`, `plantumlapi`) used for rapid architecture communication.</div>
+              <div class="project-tags">
+                <span class="project-tag">MCP</span><span class="project-tag">Python</span><span class="project-tag">PlantUML</span><span class="project-tag">Mermaid</span>
+              </div>
+              <div class="project-context">Impact: multiple released OSS repositories with active public maintenance.</div>
             </li>
-            <li class="list-group-item">
-              <span style="font-weight:bold">Conference website development</span>
-              <ul style="margin-top: 5px;">
-                <li><strong>Graphquon 2024</strong> (Sep 2024 – Nov 2024) — Developed the official conference website for the Annual Quebec-Ontario Pre-SIGGRAPH Workshop; created a ChatGPT plugin (UML diagram expert) to support attendees (<a href="https://www.dgp.toronto.edu/graphquon/">Graphquon</a>)</li>
-              </ul>
+            <li class="project-card">
+              <div class="project-title"><a href="https://www.dgp.toronto.edu/graphquon/">Graphquon 2024 conference website</a></div>
+              <div class="project-context">Academic event platform and participant support tools</div>
+              <div class="project-impact">Delivered the official Annual Quebec-Ontario Pre-SIGGRAPH Workshop website and added a UML-focused assistant workflow for attendee support.</div>
+              <div class="project-tags">
+                <span class="project-tag">Web</span><span class="project-tag">Conference</span><span class="project-tag">UX</span>
+              </div>
+              <div class="project-context">Impact: delivered in production for a live annual conference.</div>
             </li>
-            <li class="list-group-item">
-              <span style="font-weight:bold">Automation / DevSecOps / Self-hosting</span>
-              <ul style="margin-top: 5px;">
-                <li><a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">another-install-script</span></a> — Menu-based script to install and operate multiple Docker containers and system configuration (Docker / Ansible)</li>
-                <li><a href="https://github.com/antoinebou12/retroarch-web-games"><span style="font-weight:bold">retroarch-web-games</span></a> — Dockerized RetroArch web setup (self-hosting and packaging)</li>
-                <li><a href="https://github.com/antoinebou13/DasherControl"><span style="font-weight:bold">DasherControl</span></a> — Interactive configurable dashboard with customizable GridItem components supporting iframe and bookmark integrations</li>
-              </ul>
+            <li class="project-card">
+              <div class="project-title"><a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK">Serilog.Sinks.SentrySDK</a></div>
+              <div class="project-context">Enterprise observability integration for .NET teams</div>
+              <div class="project-impact">Shipped and maintained a Serilog sink that simplifies Sentry log/error ingestion in production environments, reducing custom integration overhead.</div>
+              <div class="project-tags">
+                <span class="project-tag">.NET</span><span class="project-tag">Serilog</span><span class="project-tag">Sentry</span><span class="project-tag">NuGet</span>
+              </div>
+              <div class="project-context">Impact: ~157k NuGet downloads.</div>
             </li>
-            <li class="list-group-item">
-              <span style="font-weight:bold">Integrations / Data</span>
-              <ul style="margin-top: 5px;">
-                <li><a href="https://pypi.org/project/marketwatch/"><span style="font-weight:bold">marketwatch</span></a> (PyPI) — Python library for the MarketWatch virtual trading platform (watchlists, portfolio, leaderboard)</li>
-                <li><a href="https://github.com/antoinebou12/hass_renpho"><span style="font-weight:bold">hass_renpho</span></a> (Jun 2023 – Sep 2024) — Home Assistant integration for Renpho scale metrics; custom integration and automation plumbing</li>
-                <li><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"><span style="font-weight:bold">Serilog.Sinks.SentrySDK</span></a> (<a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK">NuGet</a>, ~157k downloads) — Serilog sink simplifying Sentry error and log management in .NET (.NET, Serilog, Sentry)</li>
-              </ul>
+            <li class="project-card">
+              <div class="project-title"><a href="https://github.com/antoinebou12/another-install-script">Automation and self-hosting toolkit</a></div>
+              <div class="project-context">Ops automation for reproducible personal and lab environments</div>
+              <div class="project-impact">Created menu-driven automation for multi-container setup and host configuration, with adjacent self-hosting/dashboard projects to speed environment provisioning.</div>
+              <div class="project-tags">
+                <span class="project-tag">Docker</span><span class="project-tag">Ansible</span><span class="project-tag">Linux</span><span class="project-tag">Automation</span>
+              </div>
+              <div class="project-context">Impact: reusable scripts across multiple services and hosts.</div>
             </li>
-            <li class="list-group-item">
-              <span style="font-weight:bold">AR / Creator work</span>
-              <ul style="margin-top: 5px;">
-                <li><span style="font-weight:bold">Snapchat Lenses</span> (2017–2020) — 42 lenses created; reported totals: 13.80M plays, 20.21M views, 709.6k shares, 9,977 favorites, 263 posts, 187 unique posters</li>
-              </ul>
+            <li class="project-card">
+              <div class="project-title">Snapchat Lenses creator portfolio</div>
+              <div class="project-context">Interactive graphics and AR publishing at scale</div>
+              <div class="project-impact">Designed and published an AR portfolio with sustained audience engagement, demonstrating end-to-end creative + technical execution in graphics-first products.</div>
+              <div class="project-tags">
+                <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
+              </div>
+              <div class="project-context">Impact: 42 lenses, 20.21M views, 13.80M plays, 709.6k shares.</div>
             </li>
           </ul>
           </div>
@@ -1145,6 +1337,15 @@
         <details class="box clearfix cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-bullseye ico"></i> Contact</summary>
           <div class="cv-section-body">
+          <p class="section-intro">Have a role to fill or a project in mind? Available for software engineering roles and focused consulting mandates across platform, cloud, and graphics-heavy products. 24h response.</p>
+          <div class="contact-cta">
+            <strong>Ready to discuss your role or project?</strong><br>
+            <a href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm call-cta-btn">
+              <span class="call-cta-icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
+              Book a 30-min intro call
+            </a>
+            <div class="contact-cta-fallback">Prefer email? <a href="mailto:antoine@antoineboucher.info">antoine@antoineboucher.info</a></div>
+          </div>
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fas fa-envelope fa-fw"></span></div>
             <div class="title only pull-right"><a href="mailto:antoine@antoineboucher.info"
@@ -1199,8 +1400,9 @@
         </details>
         <!-- SKILLS -->
         <details class="box cv-section" open>
-          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Core Skills</summary>
+          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Tech Stack</summary>
           <div class="cv-section-body">
+          <p class="section-intro">Tools I use day to day. Focused on platform engineering, graphics, and production cloud delivery.</p>
           <div class="skills clearfix">
             <div class="item-skills">
               Graphics / 3D
@@ -1287,6 +1489,20 @@
               <span class="skill badge">Security-minded delivery</span>
             </div>
           </div>
+          </div>
+        </details>
+        <!-- RECOMMENDATIONS -->
+        <details class="box cv-section" open>
+          <summary class="cv-section-summary"><i class="fas fa-comment-dots ico"></i> Recommendations</summary>
+          <div class="cv-section-body">
+          <p class="section-intro">Recommendations. One recent quote is shown below, and full recommendations are available on LinkedIn.</p>
+          <ul class="recommendation-list">
+            <li class="recommendation-card">
+              <p class="recommendation-quote">“[Placeholder] Add one short LinkedIn recommendation quote here (exact wording from your profile).”</p>
+              <div class="recommendation-author">[Name, Role, Company]</div>
+              <div class="recommendation-source"><a href="https://www.linkedin.com/in/antoineboucher12/" target="_blank" rel="noopener noreferrer">View LinkedIn recommendations</a></div>
+            </li>
+          </ul>
           </div>
         </details>
         <!-- CONFERENCES -->
