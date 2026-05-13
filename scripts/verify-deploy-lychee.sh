@@ -24,11 +24,6 @@ if [[ -f "${REPO_ROOT}/cv-en/resume.pdf" ]] && [[ -f "${REPO_ROOT}/cv-fr/resume.
 else
   echo "warning: missing cv-en/resume.pdf or cv-fr/resume.pdf; internal /cv-*/ links may fail in lychee (CI deploy requires both)" >&2
 fi
-if [[ -f "${REPO_ROOT}/letters/en/cover-letter.pdf" ]] && [[ -f "${REPO_ROOT}/letters/fr/cover-letter.pdf" ]]; then
-  mkdir -p "${ROOT}/letters/en" "${ROOT}/letters/fr"
-  cp -f "${REPO_ROOT}/letters/en/cover-letter.pdf" "${ROOT}/letters/en/cover-letter.pdf"
-  cp -f "${REPO_ROOT}/letters/fr/cover-letter.pdf" "${ROOT}/letters/fr/cover-letter.pdf"
-fi
 for d in css linktree papers; do
   if [[ -d "${REPO_ROOT}/${d}" ]]; then
     cp -r "${REPO_ROOT}/${d}" "${ROOT}/"
@@ -37,7 +32,7 @@ done
 mkdir -p "${ROOT}/${REPO}"
 ln -sfn "../blog" "${ROOT}/${REPO}/blog"
 ln -sfn "../favicon.ico" "${ROOT}/${REPO}/favicon.ico"
-for d in cv-en cv-fr letters css linktree papers; do
+for d in cv-en cv-fr css linktree papers; do
   if [[ -d "${ROOT}/${d}" ]]; then
     ln -sfn "../${d}" "${ROOT}/${REPO}/${d}"
   fi

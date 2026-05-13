@@ -80,17 +80,6 @@ jobs:
           cp -f cv-fr/resume.pdf _site/cv-fr/resume.pdf
           echo "CV PDFs copied to _site/cv-en and _site/cv-fr"
 
-      - name: Copy cover letter PDFs to Pages site
-        run: |
-          if [ ! -f "letters/en/cover-letter.pdf" ] || [ ! -f "letters/fr/cover-letter.pdf" ]; then
-            echo "Missing letters/en/cover-letter.pdf or letters/fr/cover-letter.pdf (build locally or run compile-cv workflow)"
-            exit 1
-          fi
-          mkdir -p _site/letters/en _site/letters/fr
-          cp -f letters/en/cover-letter.pdf _site/letters/en/cover-letter.pdf
-          cp -f letters/fr/cover-letter.pdf _site/letters/fr/cover-letter.pdf
-          echo "Cover letter PDFs copied to _site/letters/en and _site/letters/fr"
-
       - name: Build Hugo blog
         env:
           HUGO_ENV: production
@@ -286,7 +275,7 @@ jobs:
           if [ -f "${ROOT}/favicon.ico" ]; then
             ln -sfn "../favicon.ico" "${ROOT}/${REPO}/favicon.ico"
           fi
-          for d in cv-en cv-fr letters css linktree papers; do
+          for d in cv-en cv-fr css linktree papers; do
             if [ -d "${ROOT}/${d}" ]; then
               ln -sfn "../${d}" "${ROOT}/${REPO}/${d}"
             fi
