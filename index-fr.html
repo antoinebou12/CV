@@ -325,11 +325,57 @@
     }
 
 
-    .project-embed {
-      margin: 8px 0;
+    details.project-preview {
+      margin: 8px 0 10px;
       border: 1px solid #dde7e5;
       border-radius: 6px;
       background: #fff;
+      overflow: hidden;
+    }
+
+    details.project-preview > summary.project-preview-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 9px 12px;
+      color: #1f4742;
+      font-size: 0.92em;
+      font-weight: 600;
+      user-select: none;
+      background: #f8fbfb;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    details.project-preview[open] > summary.project-preview-summary {
+      border-bottom: 1px solid #dde7e5;
+      background: #f4faf9;
+    }
+
+    details.project-preview > summary.project-preview-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.project-preview > summary.project-preview-summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      font-size: 0.75em;
+      color: #227c74;
+      opacity: 0.7;
+      transition: transform 0.2s ease;
+    }
+
+    details.project-preview[open] > summary.project-preview-summary::after {
+      transform: rotate(-180deg);
+    }
+
+    details.project-preview .project-preview-panel .project-embed {
+      margin: 0;
+      border: none;
+      border-radius: 0;
       overflow: hidden;
     }
 
@@ -341,7 +387,8 @@
     }
 
     .project-embed-note {
-      margin: 0 0 6px;
+      margin: 0;
+      padding: 8px 12px 10px;
       font-size: 0.82em;
       color: #5d6a69;
       line-height: 1.4;
@@ -764,6 +811,10 @@
         max-width: 12rem;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      .project-embed iframe {
+        height: 240px;
       }
 
       .hero-actions {
@@ -1457,9 +1508,22 @@
               </div>
             </li>
 
-            <li class="project-card">
-              <div class="project-title"><a href="https://www.dgp.toronto.edu/graphquon/">Site de conférence Graphquon 2024</a></div>
+            <li class="project-card project-card--graphquon">
+              <div class="project-title"><a href="https://graphquon.github.io/">Site de conférence Graphquon 2024</a></div>
               <div class="project-context">Plateforme événementielle académique et outils de soutien aux participants</div>
+              <details class="project-preview">
+                <summary class="project-preview-summary">Aperçu du site de conférence</summary>
+                <div class="project-preview-panel">
+                  <div class="project-embed">
+                    <iframe
+                      title="Aperçu du site Graphquon"
+                      data-src="https://graphquon.github.io/"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      allowfullscreen="true"></iframe>
+                  </div>
+                  <p class="project-embed-note">Si l'aperçu reste vide, le site peut bloquer l'intégration—<a href="https://graphquon.github.io/" target="_blank" rel="noopener noreferrer">ouvrez le site de conférence</a>.</p>
+                </div>
+              </details>
               <div class="project-impact">Livré le site officiel de l'atelier annuel Québec-Ontario pre-SIGGRAPH et ajouté un workflow d'assistance UML pour l'accompagnement des participants.</div>
               <div class="project-tags">
                 <span class="project-tag">Web</span><span class="project-tag">Conférence</span><span class="project-tag">UX</span>
@@ -1487,15 +1551,19 @@
             <li class="project-card project-card--snapchat">
               <div class="project-title"><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">Portfolio créateur Snapchat Lenses</a></div>
               <div class="project-context">Infographie interactive et publication AR à grande échelle</div>
-              <div class="project-embed">
-                <iframe
-                  title="Profil créateur Lens Studio Snapchat"
-                  src="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  allowfullscreen="true"></iframe>
-              </div>
-              <p class="project-embed-note">Si l'aperçu reste vide, Snapchat bloque souvent les intégrations—<a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">ouvrez le profil Lens Studio</a>.</p>
+              <details class="project-preview">
+                <summary class="project-preview-summary">Aperçu du profil Lens Studio</summary>
+                <div class="project-preview-panel">
+                  <div class="project-embed">
+                    <iframe
+                      title="Profil créateur Lens Studio Snapchat"
+                      data-src="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      allowfullscreen="true"></iframe>
+                  </div>
+                  <p class="project-embed-note">Si l'aperçu reste vide, Snapchat bloque souvent les intégrations—<a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">ouvrez le profil Lens Studio</a>.</p>
+                </div>
+              </details>
               <div class="project-impact">Conçu et publié un portfolio AR avec engagement soutenu, démontrant une exécution complète, de l'idée au produit graphique en production.</div>
               <div class="project-tags">
                 <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
@@ -1908,6 +1976,22 @@
           ]
         });
       } catch (e) { /* WebMCP: API experimentale */ }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      function loadProjectPreviewIframe(details) {
+        if (!details.open) return;
+        var iframe = details.querySelector('iframe[data-src]');
+        if (!iframe || iframe.getAttribute('src')) return;
+        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      }
+      document.querySelectorAll('details.project-preview').forEach(function (el) {
+        el.addEventListener('toggle', function () {
+          loadProjectPreviewIframe(el);
+        });
+      });
     })();
   </script>
 </body>
