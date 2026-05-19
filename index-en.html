@@ -275,12 +275,34 @@
       color: #5c4508;
     }
 
+    .github-profile-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 6px;
+      font-size: 0.82em;
+      line-height: 1.3;
+    }
+
+    .github-profile-stats .github-stat strong {
+      font-weight: 700;
+    }
+
+    .github-profile-stats .github-stat-contrib strong {
+      color: #c9a227;
+    }
+
+    .github-profile-stats .github-stat-stars,
+    .github-profile-stats .github-stat-forks {
+      color: #32475c;
+    }
+
     .project-card-body {
       display: grid;
-      grid-template-columns: minmax(140px, 36%) 1fr;
+      grid-template-columns: minmax(11rem, 38%) 1fr;
       gap: 12px;
       margin-top: 8px;
-      align-items: start;
+      align-items: center;
     }
 
     .project-card-copy {
@@ -289,12 +311,39 @@
 
     .project-diagram {
       margin: 0;
+      padding: 8px;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      background: #fff;
     }
 
     .project-diagram svg {
       max-width: 100%;
       height: auto;
       display: block;
+      margin: 0 auto;
+    }
+
+    .project-embed {
+      margin: 8px 0;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .project-embed iframe {
+      display: block;
+      width: 100%;
+      height: 280px;
+      border: 0;
+    }
+
+    .project-embed-note {
+      margin: 0 0 6px;
+      font-size: 0.82em;
+      color: #5d6a69;
+      line-height: 1.4;
     }
 
     .sr-only {
@@ -710,6 +759,12 @@
         grid-template-columns: 1fr;
       }
 
+      .project-diagram {
+        max-width: 12rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .hero-actions {
         display: flex;
       }
@@ -922,7 +977,7 @@
           <p class="section-intro">Platform and graphics engineer focused on practical delivery: secure backend systems, cloud-native operations, and developer tooling with measurable outcomes.</p>
           <ul class="list-group">
             <li class="list-group-item">Software engineer with a generalist profile: platform work, backends, security-aware delivery, and interactive graphics (C++/OpenGL, Blender). Strong with Java/Kotlin and Python, Docker/Kubernetes, and infrastructure-as-code.</li>
-            <li class="list-group-item">Active open-source contributor/maintainer (public repos with significant adoption; 100 stars shown on GitHub as of May 2026).</li>
+            <li class="list-group-item">Active open-source contributor/maintainer (public repos with significant adoption; 241 stars on GitHub as of May 2026).</li>
             <li class="list-group-item">Master's Degree in Information Technology Engineering from <a href="https://www.etsmtl.ca/" target="_blank" rel="noopener noreferrer">École de technologie supérieure (ÉTS)</a>.</li>
           </ul>
           </div>
@@ -1365,39 +1420,38 @@
               <div class="project-context">Developer tooling and AI-assisted architecture diagrams</div>
               <div class="project-card-body">
                 <figure class="project-diagram" aria-labelledby="uml-flow-caption-en">
-                  <!-- mermaid: flowchart LR; user([User]) --> ai[AI assistant] --> harness[MCP / ChatGPT] --> uml[UML diagram] -->
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 72" role="img" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 220" role="img" aria-hidden="true">
                     <defs>
-                      <marker id="uml-arrow-en" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                        <path d="M0,0 L8,3 L0,6 Z" fill="#5d6a69"/>
+                      <marker id="uml-arrow-en" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
+                        <path d="M0,0 L8,0 L4,7 Z" fill="#5d6a69"/>
                       </marker>
                       <style>
                         .uml-n { fill: #f4faf9; stroke: #227c74; stroke-width: 1.5; }
                         .uml-n-start { fill: #eef6f5; }
-                        .uml-t { font: 600 11px 'Open Sans', sans-serif; fill: #1f4742; }
+                        .uml-t { font: 600 10px 'Open Sans', sans-serif; fill: #1f4742; }
                         .uml-e { stroke: #5d6a69; stroke-width: 1.5; fill: none; marker-end: url(#uml-arrow-en); }
                       </style>
                     </defs>
-                    <rect class="uml-n uml-n-start" x="4" y="18" width="72" height="36" rx="18"/>
-                    <text class="uml-t" x="40" y="41" text-anchor="middle">User</text>
-                    <line class="uml-e" x1="78" y1="36" x2="108" y2="36"/>
-                    <rect class="uml-n" x="110" y="18" width="96" height="36" rx="6"/>
-                    <text class="uml-t" x="158" y="41" text-anchor="middle">AI assistant</text>
-                    <line class="uml-e" x1="208" y1="36" x2="238" y2="36"/>
-                    <rect class="uml-n" x="240" y="18" width="108" height="36" rx="6"/>
-                    <text class="uml-t" x="294" y="41" text-anchor="middle">MCP / ChatGPT</text>
-                    <line class="uml-e" x1="350" y1="36" x2="378" y2="36"/>
-                    <rect class="uml-n" x="380" y="18" width="64" height="36" rx="6"/>
-                    <text class="uml-t" x="412" y="41" text-anchor="middle">UML diagram</text>
+                    <rect class="uml-n uml-n-start" x="24" y="4" width="72" height="28" rx="14"/>
+                    <text class="uml-t" x="60" y="22" text-anchor="middle">User</text>
+                    <line class="uml-e" x1="60" y1="34" x2="60" y2="42"/>
+                    <rect class="uml-n" x="8" y="44" width="104" height="32" rx="6"/>
+                    <text class="uml-t" x="60" y="64" text-anchor="middle">AI assistant</text>
+                    <line class="uml-e" x1="60" y1="78" x2="60" y2="86"/>
+                    <rect class="uml-n" x="8" y="88" width="104" height="32" rx="6"/>
+                    <text class="uml-t" x="60" y="108" text-anchor="middle">MCP / ChatGPT</text>
+                    <line class="uml-e" x1="60" y1="122" x2="60" y2="130"/>
+                    <rect class="uml-n" x="8" y="132" width="104" height="32" rx="6"/>
+                    <text class="uml-t" x="60" y="152" text-anchor="middle">UML diagram</text>
                   </svg>
                   <figcaption class="sr-only" id="uml-flow-caption-en">User to AI assistant to MCP or ChatGPT to UML diagram</figcaption>
                 </figure>
                 <div class="project-card-copy">
-                <div class="project-impact">Natural-language and repo context → architecture diagrams for design reviews and docs. <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> is an MCP server that exposes diagram tools to AI coding assistants (Cursor and similar harnesses); <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a> adds the same rendering pipeline in ChatGPT—Mermaid, PlantUML, and Kroki backends, two entry points, one flow.</div>
-                <div class="project-tags">
+                  <div class="project-impact">Natural-language and repo context → architecture diagrams for design reviews and docs. <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> is an MCP server that exposes diagram tools to AI coding assistants (Cursor and similar harnesses); <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a> adds the same rendering pipeline in ChatGPT—Mermaid, PlantUML, and Kroki backends, two entry points, one flow.</div>
+                  <div class="project-tags">
                   <span class="project-tag">MCP</span><span class="project-tag">Python</span><span class="project-tag">Mermaid</span><span class="project-tag">Open source</span>
                 </div>
-                <div class="project-context">Impact: ~83 GitHub stars on uml-mcp; actively maintained public Python OSS.</div>
+                  <div class="project-context">Impact: ~83 GitHub stars on uml-mcp; actively maintained public Python OSS.</div>
               </div>
               </div>
             </li>
@@ -1429,9 +1483,18 @@
               </div>
               <div class="project-context">Impact: one stack definition and installer flow reused across personal and lab machines.</div>
             </li>
-            <li class="project-card">
-              <div class="project-title">Snapchat Lenses creator portfolio</div>
+            <li class="project-card project-card--snapchat">
+              <div class="project-title"><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">Snapchat Lenses creator portfolio</a></div>
               <div class="project-context">Interactive graphics and AR publishing at scale</div>
+              <div class="project-embed">
+                <iframe
+                  title="Snapchat Lens Studio creator profile"
+                  src="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen="true"></iframe>
+              </div>
+              <p class="project-embed-note">If the preview is blank, Snapchat blocks embeds on other sites—<a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">open the Lens Studio profile</a>.</p>
               <div class="project-impact">Designed and published an AR portfolio with sustained audience engagement, demonstrating end-to-end creative + technical execution in graphics-first products.</div>
               <div class="project-tags">
                 <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
@@ -1476,8 +1539,14 @@
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fab fa-github fa-fw"></span></div>
             <div class="title pull-right">GitHub</div>
-            <div class="description pull-right"><a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12"
-                target="_blank">antoinebou12</a></div>
+            <div class="description pull-right">
+              <a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12" target="_blank" rel="noopener noreferrer">antoinebou12</a>
+              <div class="github-profile-stats" aria-label="GitHub profile highlights">
+                <span class="github-stat github-stat-contrib"><strong>297</strong> contributions</span>
+                <span class="github-stat github-stat-stars"><span aria-hidden="true">★</span> <strong>241</strong></span>
+                <span class="github-stat github-stat-forks"><span class="fab fa-github" aria-hidden="true"></span> <strong>58</strong></span>
+              </div>
+            </div>
           </div>
           </div>
         </details>
@@ -1512,7 +1581,7 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Tech Stack</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Tools I use day to day. Focused on platform engineering, graphics, and production cloud delivery.</p>
+          <p class="section-intro">Day-to-day stack across CI/CD pipelines, platform delivery, graphics, testing, and production observability.</p>
           <div class="skills clearfix">
             <div class="item-skills">
               Graphics / 3D
@@ -1520,8 +1589,19 @@
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
               <span class="skill badge">OpenGL</span>
+              <span class="skill badge">GLSL</span>
               <span class="skill badge">C++</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Graphics / 3D
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
               <span class="skill badge">Blender</span>
+              <span class="skill badge">CUDA</span>
+              <span class="skill badge">OpenCV</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1532,25 +1612,91 @@
             <div class="col-sm-offset-1 col-sm-12 clearfix">
               <span class="skill badge">Java</span>
               <span class="skill badge">Kotlin</span>
+              <span class="skill badge">Spring Boot</span>
               <span class="skill badge">Python</span>
-              <span class="skill badge">GraphQL</span>
+              <span class="skill badge">Django</span>
+              <span class="skill badge">Flask</span>
+              <span class="skill badge">REST APIs</span>
               <span class="skill badge">Microservices</span>
             </div>
           </div>
           <div class="skills clearfix">
             <div class="item-skills">
-              DevSecOps / Cloud
+              Backend
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">C#</span>
+              <span class="skill badge">.NET</span>
+              <span class="skill badge">Android</span>
+              <span class="skill badge">GraphQL</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Frontend
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">JavaScript</span>
+              <span class="skill badge">HTML</span>
+              <span class="skill badge">Angular</span>
+              <span class="skill badge">React</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Frontend
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Vue</span>
+              <span class="skill badge">CSS</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              CI/CD &amp; Pipelines
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">DevSecOps</span>
+              <span class="skill badge">Git</span>
+              <span class="skill badge">GitLab Pipelines</span>
+              <span class="skill badge">GitHub Actions</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              CI/CD &amp; Pipelines
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Azure DevOps</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Cloud / Platform
               <span class="skill-level">Advanced</span>
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
               <span class="skill badge">Docker</span>
               <span class="skill badge">Kubernetes</span>
-              <span class="skill badge">Terraform</span>
-              <span class="skill badge">GitLab CI/CD</span>
-              <span class="skill badge">GitHub Actions</span>
+              <span class="skill badge">Docker Swarm</span>
+              <span class="skill badge">IaC</span>
               <span class="skill badge">GCP</span>
               <span class="skill badge">Azure</span>
               <span class="skill badge">AWS</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Cloud / Platform
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Terraform</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1559,22 +1705,13 @@
               <span class="skill-level">Advanced</span>
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">SQL</span>
               <span class="skill badge">PostgreSQL</span>
               <span class="skill badge">MySQL</span>
               <span class="skill badge">MongoDB</span>
               <span class="skill badge">Redis</span>
               <span class="skill badge">Kafka</span>
               <span class="skill badge">Data Science</span>
-              <span class="skill badge">Business Research</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              E2E automation
-              <span class="skill-level">Advanced</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">E2E testing (Playwright, Selenium)</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1583,8 +1720,32 @@
               <span class="skill-level">Advanced</span>
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Playwright</span>
+              <span class="skill badge">Selenium</span>
               <span class="skill badge">JUnit</span>
-              <span class="skill badge">Observability/Logging</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Observability
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">ELK</span>
+              <span class="skill badge">Elasticsearch</span>
+              <span class="skill badge">Kibana</span>
+              <span class="skill badge">Grafana</span>
+              <span class="skill badge">Prometheus</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Observability
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Sentry</span>
+              <span class="skill badge">Serilog</span>
             </div>
           </div>
           <div class="skills clearfix">
@@ -1596,7 +1757,11 @@
               <span class="skill badge">Linux</span>
               <span class="skill badge">Bash</span>
               <span class="skill badge">Ansible</span>
+              <span class="skill badge">MCP</span>
+              <span class="skill badge">Auth0</span>
+              <span class="skill badge">OWASP</span>
               <span class="skill badge">Security-minded delivery</span>
+              <span class="skill badge">Business Research</span>
             </div>
           </div>
           </div>
