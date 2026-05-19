@@ -240,6 +240,75 @@
       padding: 3px 8px;
     }
 
+    .project-card--uml {
+      padding: 11px 13px;
+      background: #f4faf9;
+    }
+
+    .project-card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .project-github-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: #7a5c10;
+      background: #fff8e6;
+      border: 1px solid #e8d4a8;
+      border-radius: 999px;
+      padding: 4px 10px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .project-github-stars:hover,
+    .project-github-stars:focus {
+      background: #fff3d6;
+      border-color: #d4b87a;
+      color: #5c4508;
+    }
+
+    .project-card-body {
+      display: grid;
+      grid-template-columns: minmax(140px, 36%) 1fr;
+      gap: 12px;
+      margin-top: 8px;
+      align-items: start;
+    }
+
+    .project-card-copy {
+      min-width: 0;
+    }
+
+    .project-diagram {
+      margin: 0;
+    }
+
+    .project-diagram svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .contact-cta {
       margin: 8px 0 12px;
       padding: 8px 10px;
@@ -635,6 +704,10 @@
     @media (max-width: 767px) {
       .project-card {
         padding: 10px;
+      }
+
+      .project-card-body {
+        grid-template-columns: 1fr;
       }
 
       .hero-actions {
@@ -1284,15 +1357,51 @@
           <div class="cv-section-body">
           <p class="section-intro">Selected projects. Five projects spanning production systems, enterprise integration, and applied architecture.</p>
           <ul class="project-list">
-            <li class="project-card">
-              <div class="project-title"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> · <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a></div>
-              <div class="project-context">UML and architecture diagrams from natural language (MCP + ChatGPT)</div>
-              <div class="project-impact"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> is an MCP server that renders UML (class, sequence, and more) from prompts or descriptions. <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a> brings the same PlantUML, Mermaid, and Diagrams backends into ChatGPT as a plugin—two entry points, one diagram pipeline for design reviews and docs.</div>
-              <div class="project-tags">
-                <span class="project-tag">MCP</span><span class="project-tag">Python</span><span class="project-tag">PlantUML</span><span class="project-tag">Mermaid</span><span class="project-tag">ChatGPT</span>
+            <li class="project-card project-card--uml">
+              <div class="project-card-header">
+                <div class="project-title">uml-mcp ecosystem</div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/uml-mcp" aria-label="uml-mcp on GitHub, about 83 stars">★ 83</a>
               </div>
-              <div class="project-context">Impact: ~83 GitHub stars (uml-mcp) and ~10 (D2COpenAIPlugin); actively maintained Python OSS.</div>
+              <div class="project-context">Developer tooling and AI-assisted architecture diagrams</div>
+              <div class="project-card-body">
+                <figure class="project-diagram" aria-labelledby="uml-flow-caption-en">
+                  <!-- mermaid: flowchart LR; user([User]) --> ai[AI assistant] --> harness[MCP / ChatGPT] --> uml[UML diagram] -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 72" role="img" aria-hidden="true">
+                    <defs>
+                      <marker id="uml-arrow-en" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6 Z" fill="#5d6a69"/>
+                      </marker>
+                      <style>
+                        .uml-n { fill: #f4faf9; stroke: #227c74; stroke-width: 1.5; }
+                        .uml-n-start { fill: #eef6f5; }
+                        .uml-t { font: 600 11px 'Open Sans', sans-serif; fill: #1f4742; }
+                        .uml-e { stroke: #5d6a69; stroke-width: 1.5; fill: none; marker-end: url(#uml-arrow-en); }
+                      </style>
+                    </defs>
+                    <rect class="uml-n uml-n-start" x="4" y="18" width="72" height="36" rx="18"/>
+                    <text class="uml-t" x="40" y="41" text-anchor="middle">User</text>
+                    <line class="uml-e" x1="78" y1="36" x2="108" y2="36"/>
+                    <rect class="uml-n" x="110" y="18" width="96" height="36" rx="6"/>
+                    <text class="uml-t" x="158" y="41" text-anchor="middle">AI assistant</text>
+                    <line class="uml-e" x1="208" y1="36" x2="238" y2="36"/>
+                    <rect class="uml-n" x="240" y="18" width="108" height="36" rx="6"/>
+                    <text class="uml-t" x="294" y="41" text-anchor="middle">MCP / ChatGPT</text>
+                    <line class="uml-e" x1="350" y1="36" x2="378" y2="36"/>
+                    <rect class="uml-n" x="380" y="18" width="64" height="36" rx="6"/>
+                    <text class="uml-t" x="412" y="41" text-anchor="middle">UML diagram</text>
+                  </svg>
+                  <figcaption class="sr-only" id="uml-flow-caption-en">User to AI assistant to MCP or ChatGPT to UML diagram</figcaption>
+                </figure>
+                <div class="project-card-copy">
+                <div class="project-impact">Natural-language and repo context → architecture diagrams for design reviews and docs. <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> is an MCP server that exposes diagram tools to AI coding assistants (Cursor and similar harnesses); <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a> adds the same rendering pipeline in ChatGPT—Mermaid, PlantUML, and Kroki backends, two entry points, one flow.</div>
+                <div class="project-tags">
+                  <span class="project-tag">MCP</span><span class="project-tag">Python</span><span class="project-tag">Mermaid</span><span class="project-tag">Open source</span>
+                </div>
+                <div class="project-context">Impact: ~83 GitHub stars on uml-mcp; actively maintained public Python OSS.</div>
+              </div>
+              </div>
             </li>
+
             <li class="project-card">
               <div class="project-title"><a href="https://www.dgp.toronto.edu/graphquon/">Graphquon 2024 conference website</a></div>
               <div class="project-context">Academic event platform and participant support tools</div>
