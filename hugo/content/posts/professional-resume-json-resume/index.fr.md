@@ -136,7 +136,7 @@ Visualisation interactive des compétences (D3.js).
 
 ### Export LinkedIn vers JSON Resume
 
-- [LinkedIn to JSON Resume Exporter](https://joshuatz.com/projects/web-stuff/linkedin-profile-to-json-resume-exporter/)
+- [LinkedIn to JSON Resume Exporter](https://github.com/joshuatz/linkedin-to-jsonresume)
 
 ### Hugo-Mod-JSON-Resume
 

@@ -27,7 +27,7 @@ Preview look 0.1.2
 
 ## Roadmap
 
-[DasherControlv1](https://github.com/antoinebou12/DasherControl/projects/1)
+[DasherControl](https://github.com/antoinebou12/DasherControl)
 
 ### Finished
 

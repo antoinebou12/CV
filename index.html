@@ -1,66 +1,1237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antoine Boucher - CV</title>
-  <meta name="description" content="Browser-language redirect to the English or French HTML CV; PDFs and blog links live on those resume pages.">
-  <link rel="canonical" href="https://antoineboucher.info/CV/index.html">
-  <meta property="og:title" content="Antoine Boucher — CV">
-  <meta property="og:description" content="Browser-language redirect to the English or French HTML CV; PDFs and blog links live on those resume pages.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://antoineboucher.info/CV/index.html">
-  <meta property="og:image" content="https://antoineboucher.info/CV/antoine.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Antoine Boucher — CV">
-  <meta name="twitter:description" content="Browser-language redirect to the English or French HTML CV; PDFs and blog links live on those resume pages.">
-  <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","@id":"https://antoineboucher.info/CV/index.html#webpage","url":"https://antoineboucher.info/CV/index.html","name":"Antoine Boucher — CV","description":"Browser-language redirect to the English or French HTML CV; PDFs and blog links live on those resume pages."}
-  </script>
-  <script>
-    // WebMCP (same tool as language CV pages) so GET / registers tools before redirect.
-    (function () {
-      var mc = navigator.modelContext || navigator.webModelContext;
-      if (mc && typeof mc.provideContext === 'function') {
-        try {
-          mc.provideContext({
-            tools: [
-              {
-                name: 'open_cv_pdf',
-                description: 'Open the public CV PDF (English or French) in a new browser tab.',
-                inputSchema: {
-                  type: 'object',
-                  properties: {
-                    lang: { type: 'string', enum: ['en', 'fr'], description: 'CV language' }
-                  },
-                  required: ['lang']
-                },
-                execute: function (args) {
-                  var lang = args && args.lang === 'fr' ? 'fr' : 'en';
-                  var path = lang === 'fr' ? 'cv-fr/resume.pdf' : 'cv-en/resume.pdf';
-                  window.open(path, '_blank', 'noopener,noreferrer');
-                  return Promise.resolve({ opened: path });
-                }
-              }
-            ]
-          });
-        } catch (e) { /* WebMCP preview API */ }
-      }
-    })();
-    // Language detection and redirect
-    (function() {
-      const lang = navigator.language || navigator.userLanguage;
-      const preferredLang = lang.startsWith('fr') ? 'fr' : 'en';
-      window.location.href = 'index-' + preferredLang + '.html';
-    })();
-  </script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume of Antoine Boucher</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800);
+    @charset "utf-8";
+
+    @-webkit-viewport {
+      width: device-width;
+    }
+
+    @-moz-viewport {
+      width: device-width;
+    }
+
+    @-ms-viewport {
+      width: device-width;
+    }
+
+    @-o-viewport {
+      width: device-width;
+    }
+
+    @viewport {
+      width: device-width;
+    }
+
+    body {
+      font-family: 'Open Sans', Arial, Tahoma;
+      font-weight: 400;
+      color: #363636;
+      background: #334960;
+      z-index: 10;
+    }
+
+    blockquote {
+      font-size: 1em;
+    }
+
+    .container {
+      margin-top: 80px;
+      margin-bottom: 15px;
+      background: #fff;
+      z-index: 11;
+    }
+
+    .row {
+      z-index: 11;
+      background: #fff;
+    }
+
+    #photo-header {
+      margin-top: -75px;
+    }
+
+    #photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      padding: 5px;
+      background: #334960;
+      display: inline-block;
+    }
+
+    #photo img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    #text-header h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+
+    #text-header h1::first-line {
+      font-size: 1.5em;
+      font-weight: 800;
+      line-height: 1.5em;
+    }
+
+    #text-header h1 span {
+      color: #334960;
+      opacity: 0.7;
+    }
+
+    #text-header h1 sup {
+      opacity: 0.5;
+    }
+
+    #text-header:after {
+      width: 100%;
+      height: 3px;
+      border-bottom: 1px solid #ddd;
+      margin-top: 15px;
+      content: '';
+      display: block;
+    }
+
+    .box {
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .box h2 {
+      color: #227c74;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    #awards,
+    #education {
+      margin-top: 20px;
+      margin-bottom: 0;
+      position: relative;
+      padding: 1em 0;
+      list-style: none;
+    }
+
+    #awards:before,
+    #education:before {
+      width: 5px;
+      height: 100%;
+      position: absolute;
+      left: 35px;
+      top: 0;
+      content: ' ';
+      display: block;
+      background: #32475c;
+      background: -moz-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(7%, #32475c), color-stop(89%, #32475c), color-stop(100%, #ffffff));
+      background: -webkit-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
+      background: -o-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
+      background: -ms-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
+      background: linear-gradient(to bottom, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
+    }
+
+    #awards li,
+    #education li {
+      width: 100%;
+      z-index: 2;
+      position: relative;
+      float: left;
+    }
+
+    #awards .year,
+    #education .year {
+      width: 14%;
+      background: #fff;
+      padding: 10px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    #awards .description,
+    #education .description {
+      width: 83%;
+      display: inline-block;
+      background: #eee;
+      margin-bottom: 10px;
+      position: relative;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    #awards .description:after,
+    #education .description:after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      right: 0;
+      left: -16px;
+      height: 0;
+      width: 0;
+      border: solid transparent;
+      border-right-color: #eee;
+      border-width: 8px;
+      pointer-events: none;
+    }
+
+    #awards .description h3,
+    #education .description h3 {
+      font-size: 1.2em;
+      margin: 0;
+      padding: 0;
+      font-weight: 700;
+    }
+
+    #awards .description p,
+    #education .description p {
+      margin-top: 5px;
+      padding: 0;
+    }
+
+    .job {
+      margin-bottom: 15px;
+    }
+
+    .job .details {
+      margin-left: 3%;
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #eee;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    .job .where {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .job .year {
+      opacity: 0.7;
+    }
+
+    .job .profession {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .job .description {
+      line-height: 1.5em;
+    }
+
+    .job .highlights {
+      padding: 5px 0;
+      font-weight: bold;
+    }
+
+    .job .job-details {
+      padding-left: 5%;
+      width: 100%;
+    }
+
+    .publication {
+      margin-bottom: 0;
+    }
+
+    .publication .name {
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    .publication .year {
+      opacity: 0.7;
+    }
+
+    .publication p {
+      margin: 0;
+      padding-top: 10px;
+    }
+
+    .contact-item {
+      width: 100%;
+      float: left;
+    }
+
+    .contact-item .icon {
+      padding: 10px;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      color: #32475c;
+      background: #eee;
+    }
+
+    .contact-item:last-child .icon {
+      border-bottom: none;
+    }
+
+    .contact-item .title {
+      width: 80%;
+      width: calc(100% - 55px);
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    .contact-item .title.only {
+      margin-top: 10px;
+    }
+
+    .contact-item .description {
+      width: 80%;
+      width: calc(100% - 55px);
+      color: #334960;
+    }
+
+    .item-interests,
+    .item-skills {
+      height: 30px;
+      color: #334960;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .interest,
+    .skill {
+      color: #fff;
+      display: inline-block;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      padding: 5px 10px;
+      background: #32475c;
+      position: relative;
+      font-size: .85em;
+    }
+
+    .skill-level {
+      background-color: #227c74;
+      border-radius: 4px;
+      color: #fff;
+      padding: 1px 8px;
+      font-size: .75em;
+      position: absolute;
+      margin: 1px 10px;
+    }
+
+    #language-skills .skill {
+      margin: 10px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    #particles-js {
+      position: fixed;
+      height: 350vh;
+      background: #334960;
+      /* Fallback color */
+      background-size: cover;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <style type="text/css" media="print">
+    body {
+      font-size: .95em;
+      -webkit-print-color-adjust: exact;
+    }
+
+    a[href]:after {
+      content: none !important;
+    }
+
+    #photo {
+      display: none;
+    }
+
+    .box {
+      margin-bottom: -10px;
+    }
+
+    blockquote,
+    #education,
+    #awards,
+    .contact-item,
+    .publication,
+    .skills,
+    .interests {
+      page-break-inside: avoid;
+    }
+
+    .col-sm-5 {
+      width: 40%;
+      padding: 0 15px;
+    }
+
+    .col-sm-7 {
+      width: 60%;
+      padding: 0 15px;
+    }
+
+    .skills .col-sm-offset-1,
+    .interests .col-sm-offset-1 {
+      margin-top: -10px;
+      margin-bottom: 5px;
+    }
+
+    #education {
+      margin: 0;
+      margin-bottom: -20px;
+    }
+
+    #awards:before,
+    #education:before {
+      background: none;
+    }
+
+    #awards .description,
+    #education .description,
+    .job .details {
+      border: 1px solid #eee;
+    }
+
+    .publication,
+    .publication .panel-heading,
+    .publication .name {
+      margin: 0;
+      padding: 0 5px;
+      border: none;
+    }
+
+    .publication .panel-body {
+      padding: 0 10px;
+      margin: 0;
+    }
+
+    .badge {
+      margin: 0;
+    }
+
+    .list-group-item {
+      border: none;
+      margin: 0;
+      padding: 5px 15px;
+    }
+
+    .list-group-item:after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 0;
+      left: -1px;
+      height: 0;
+      width: 0;
+      border: solid transparent;
+      border-right-color: #999;
+      border-width: 4px;
+      pointer-events: none;
+      
+    }
+
+    #particles-js {
+      position: fixed;
+      height: 350vh;
+      background: #334960;
+      /* Fallback color */
+      background-size: cover;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
 </head>
+
 <body>
-  <p>Redirecting...</p>
-  <p>If you are not redirected, please select your language:</p>
-  <ul>
-    <li><a href="index-en.html">English</a></li>
-    <li><a href="index-fr.html">Français</a></li>
-  </ul>
+  <div id="particles-js"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="photo-header" class="text-center">
+          <!-- PHOTO (AVATAR) -->
+          <div id="photo">
+            <img src="https://antoine-boucher-cv.s3.us-east-1.amazonaws.com/antoine.jpeg" alt="avatar">
+          </div>
+          <div id="text-header">
+            <h1>Antoine Boucher<br><span>Software Engineer</span></h1>
+            <div style="margin-top: 8px;">
+              <a href="http://antoine-boucher-cv.s3-website-us-east-1.amazonaws.com/cv.pdf" download class="btn btn-primary">
+                Download CV
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-7">
+        <!-- ABOUT ME -->
+        <div class="box">
+          <h2><i class="fas fa-user ico"></i> About</h2>
+          <ul class="list-group>
+                <li class=" list-group-item">
+            </li>
+            <li class="list-group-item">📓 Bachelor's Degree in Information Technology Engineering</li>
+            <li class="list-group-item">👨‍💻 Full Stack, Open Source, Linux</li>
+            <li class="list-group-item">🏗️ DevOps. Docker and automation lover</li>
+            <li class="list-group-item">🌐 I'm also a freelance web developer</li>
+          </ul>
+        </div>
+        <!-- WORK EXPERIENCE -->
+        <div class="box">
+          <h2><i class="fas fa-suitcase ico"></i> Work Experience</h2>
+		  <!-- ETS -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  École de technologie supérieure (ÉTS)
+                </div>
+                <div class="year">February 2025 - April 2025</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Teacher Assistant Contract Part-time</div>
+                <div class="description">
+                  Teacher Assistant for the course TCH099 (1 classes) - Informatic integrator project (Summer 2024)
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Help teacher setup new course material with PHP</li>
+                    <li class="list-group-item">Correction of the practical application</li>
+                    <li class="list-group-item">Answer students' questions about course material</li>
+                    <li class="list-group-item">Teach students about SCRUM</li>
+                    <li class="list-group-item">PHP, Azure, MYSQL, Android Studio</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+		  <!-- POLY -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Polytechnique 
+                </div>
+                <div class="year">September 2024 - December 2024</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Teacher Assistant Contract Part-time</div>
+                <div class="description">
+                  Teacher Assistant for the course LOG8100LOG8100 DevSecOps - Operations and dev. secure software
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Help teacher setup new course material with SonarQube , Kubernetes, Docker</li>
+                    <li class="list-group-item">Correction of the practical application</li>
+                    <li class="list-group-item">Answer students' questions about course material</li>
+                    <li class="list-group-item">Teach students about DevSecOps</li>
+                    <li class="list-group-item">SonarQube , Kubernetes, Docker</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ETS -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  École de technologie supérieure (ÉTS)
+                </div>
+                <div class="year">May 2024 - September 2024</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Teacher Assistant Contract Part-time</div>
+                <div class="description">
+                  Teacher Assistant for the course GTI660 - Multimedia databases (Summer 2024)
+                  Teacher Assistant for the course TCH099 (2 classes) - Informatic integrator project (Summer 2024)
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Help teacher setup new course material with PostgreSQL</li>
+                    <li class="list-group-item">Correction of the practical application</li>
+                    <li class="list-group-item">Answer students' questions about course material</li>
+                    <li class="list-group-item">Teach students about PostgreSQL, SCRUM, Vector Database</li>
+                    <li class="list-group-item">PostgreSQL, Vector Database, SCRUM</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ETS -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  École de technologie supérieure (ÉTS)
+                </div>
+                <div class="year">February 2024 – May 2024 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Teacher Assistant Contract Part-time</div>
+                <div class="description">
+                  Teacher Assistant for the course TCH057 - Mobile Applications and User Experience (Winter 2024)
+                <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Answer students' questions about course material</li>
+                    <li class="list-group-item">Correction of the practical application</li>
+                    <li class="list-group-item">UI, UX, Android Studio, Figma</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- IONODES -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  IONODES
+                </div>
+                <div class="year">May 2023 – August 2023</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Cloud Developer</div>
+                <div class="description">
+                  Worked on IoT platform and Azure DevOps for deployment.
+                  <p>(C#) (UML) (Azure) / (GDPR/Microservices)</p>
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Designed and implemented a robust Subscription system using Auth0</li>
+                    <li class="list-group-item">Orchestrated deployments with Azure DevOps and feature flags</li>
+                    <li class="list-group-item">Developed Sentry SDK integrations in C# for enhanced logging</li>
+                    <li class="list-group-item">Created comprehensive Swagger API documentation</li>
+                    <li class="list-group-item">Knowledge acquisition: ONVIF, RTC, RTP, WebRTC, etc.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Intact Labs -->
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Intact Labs
+                </div>
+                <div class="year">January 2022 – April 2022</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Backend Developer</div>
+                <div class="description">
+                  Developing a new microservice for the Intact mobile application.
+                  <p>(Microservice) (Kotlin) (GraphQl) / (SAFe)</p>
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Developed a microservice for new client registration for the
+                      Belairdirect and Intact mobile application</li>
+                    <li class="list-group-item">Inter-microservice communication with GraphQL and Kafka for insurance
+                      user data</li>
+                    <li class="list-group-item">Implementation of a 2-factor authentication (2FA) API for the mobile
+                      application</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Divine Essence
+                </div>
+                <div class="year">June 2020 – April 2022</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Web Specialist Consultation</div>
+                <div class="description">
+                  Web Specialist for the Divine Essence Union-Nature.
+                  <p>(CommerceBuild) (CSS) (HTML) (JavaScript)</p>
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Redesign Blog In French and In English</li>
+                    <li class="list-group-item">Custom Add to Cart call API for CommerceBuild</li>
+                    <li class="list-group-item">Custom Dynamic Sales Label for Search Optimisation on Commercebuild</li>
+                    <li class="list-group-item">Tech Support, Messaging Support Line</li>
+                    <li class="list-group-item">Teaching the Basic of HTML, CSS, Javascript</li>
+                    <li class="list-group-item">Implementation 3CX ChatBot</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Power Go
+                </div>
+                <div class="year">September 2020 – May 2021</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Full Stack Developer</div>
+                <div class="description">
+                  Full stack developer for the PowerGo Inventory Management.
+                  <p>(Python/Django) (JavaScript/Vue) (PostgreSQL) / (SCRUM/KANBAN)</p>
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Created tables for managing the sale of used vehicles on resale sites
+                      (FacebookMarketplace, AutoHebdo, etc.)</li>
+                    <li class="list-group-item">Imported/exported specialized data for communication with APIs (XML,
+                      JSON, CSV, EXCEL)</li>
+                    <li class="list-group-item">Developed a currency exchange rate conversion system.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Wandrian
+                </div>
+                <div class="year">May 2019 – January 2020</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Full Stack Developer</div>
+                <div class="description">
+                  Full stack developer for the Wandrian Travel Planning. (Python/Django)
+                  (JavaScript/JQuery)/(SCRUM/KANBAN)
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Used a graphic design system for web components on shop.italiarail.com
+                    </li>
+                    <li class="list-group-item">Implemented business logic for the train ticketing system.</li>
+                    <li class="list-group-item">Developed an end-to-end automated testing system(Custom) to replace
+                      manual interface tests(TestRail).</li>
+                    <li class="list-group-item">Internet explorer 11 compatibility of the website.</li>
+                    <li class="list-group-item">API endpoint for the train ticketing system.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Algolux
+                </div>
+                <div class="year">May 2018 – August 2018</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Algorithmic Developer</div>
+                <div class="description">
+                  Developing algorithms for optimizing camera performance, including color correction and image
+                  processing. (Python) (C++) (CUDA) (OpenCV)
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Algorithms for optimizing camera performance, including color correction
+                      and image processing.Bayer layer of images to improve image quality and reduce noise.</li>
+                    <li class="list-group-item">REST API application for displaying test image for camera optimisation.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Algolux
+                </div>
+                <div class="year">May 2017 – August 2017</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">IT Technician</div>
+                <div class="description">
+                  Installing Cuda and Linux on a computer for deep learning.
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Maintained Linux/Windows server for a REST application displaying visual
+                      tests for intelligent image processing algorithms.</li>
+                    <li class="list-group-item">Algorithms for optimizing camera performance, including color correction
+                      and image processing.Bayer layer of images to improve image quality and reduce noise.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">
+                  Collégial international Sainte-Anne
+                </div>
+                <div class="year">January 2016 – May 2017</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Manager of the MakerSpace</div>
+                <div class="description">
+                  Manager of the MakerSpace. (3D printer/VRLab) (Python) (MATLAB) (CAD) (Music Production) (3D Printing)
+                  (Photoshop) (Electronics)
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">3D printing of parts for the school's clubs and projects.</li>
+                    <li class="list-group-item">making VR applications for the school's clubs and projects.</li>
+                    <li class="list-group-item">Reparing 3D printers and other electronic devices.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- VOLUNTEER -->
+        <div class="box">
+          <h2><i class="fas fa-users ico"></i> Volunteer</h2>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">AlgoETS</div>
+                <div class="year">January 2023 – Present</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">President</div>
+                <div class="description">
+                  AlgoÉTS is the algorithmic trading club of the École de technologie supérieure (ÉTS). Coming from a
+                  university specializing in applied engineering, we bring engineering, finance and data science
+                  together into one club. http://algoets.etsmtl.ca
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Maintaining the infrastructure of the club</li>
+                    <li class="list-group-item">Developing the website (AlgoETS)</li>
+                    <li class="list-group-item">Developing the trading platform (InvestorBroker)</li>
+                    <li class="list-group-item">Developing trading strategies (Panda, Backtesting)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="job clearfix">
+            <div class="row">
+              <div class="details">
+                <div class="where">ETS Memes</div>
+                <div class="year">September 2017 – April 2023</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="job-details col-xs-11">
+                <div class="profession">Co-Creator &amp; Administrator</div>
+                <div class="description">
+                  Meme page for the school posting students content and original content
+                  <div class="highlights">Highlights</div>
+                  <ul class="list-group">
+                    <li class="list-group-item">Managing the page</li>
+                    <li class="list-group-item">Creating meme based on the school</li>
+                    <li class="list-group-item">Creating original content</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PROJECTS -->
+        <div class="box">
+          <h2><i class="fas fa-code-branch ico"></i> Projects</h2>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a href="https://github.com/neilzilla/hass-renpho"><span style="font-weight:bold">Renpho</span></a>
+              Home Assistant
+              configuration and custom integrations for home automation
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/antoinebou12/D2COpenAIPlugin"><span style="font-weight:bold">D2C ChatGPT</span></a>
+              UMLOpenAIPlugin is a plugin for generating text with GPT Plugin Model and creating diagrams with different libraries(PlantUML, Mermaid, Diagrams)
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/antoinebou12/marketwatch"><span style="font-weight:bold">MarketWatch
+                  API Python</span></a>: A Python API for MarketWatch.com
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/antoinebou12/DasherControl"><span
+                  style="font-weight:bold">DasherControl</span></a>: A Rust and VueJS dashboard
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/antoinebou12/another-install-script"><span style="font-weight:bold">Another
+                  Install Script</span></a>: A bash script to install multiple docker container with a super simple menu
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/dyc3/opentogethertube"><span
+                  style="font-weight:bold">OpenTogetherTube</span></a>: Real-time syncronized playback. Worked on
+              Dockerfile and Docker Compose and Documentation
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/place1/wg-access-server/"><span
+                  style="font-weight:bold">wg-access-server</span></a>: WireGuard VPN server and device management Web
+              UI Worked on Dockerfile and Docker Compose and UI changes and Clean up in ReactJs
+            </li>
+            <li class="list-group-item">
+              <a href="https://github.com/antoinebou12/linkshare"><span style="font-weight:bold">LinkShare</span></a>:
+              Ruby on rail social network to share link and preview link with multiple user
+            </li>
+            <li class="list-group-item">
+              <a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"><span
+                  style="font-weight:bold">Snapchat Lens</span></a>: Total Plays 6.20m Total Views 12.10m Total Shares
+              614.8k
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-5">
+        <!-- CONTACT -->
+        <div class="box clearfix">
+          <h2><i class="fas fa-bullseye ico"></i> Contact</h2>
+          <div class="contact-item">
+            <div class="icon pull-left text-center"><span class="fas fa-map-marker fa-fw"></span></div>
+            <div class="title pull-right">443 Notre Dame Est</div>
+            <div class="title  pull-right">Montreal, Quebec H2Y 1C9 CA</div>
+          </div>
+          <div class="contact-item">
+            <div class="icon pull-left text-center"><span class="fas fa-envelope fa-fw"></span></div>
+            <div class="title only pull-right"><a href="mailto:antoine@antoineboucher.info"
+                target="_blank">antoine@antoineboucher.info</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon pull-left text-center"><span class="fab fa-twitter fa-fw"></span></div>
+            <div class="title pull-right">Twitter</div>
+            <div class="description pull-right"><a href="https:&#x2F;&#x2F;twitter.com&#x2F;antoinebou12"
+                target="_blank">antoinebou12</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon pull-left text-center"><span class="fab fa-linkedin fa-fw"></span></div>
+            <div class="title pull-right">LinkedIn</div>
+            <div class="description pull-right"><a
+                href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;antoineboucher12&#x2F;"
+                target="_blank">antoineboucher12</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="icon pull-left text-center"><span class="fab fa-github fa-fw"></span></div>
+            <div class="title pull-right">GitHub</div>
+            <div class="description pull-right"><a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12"
+                target="_blank">antoinebou12</a></div>
+          </div>
+        </div>
+        <!-- EDUCATION -->
+        <div class="box">
+          <h2><i class="fas fa-university ico"></i> Education</h2>
+          <ul id="education" class="clearfix">
+            <li>
+              <div class="year pull-left">
+                2025
+                2023
+              </div>
+              <div class="description pull-right">
+                <h3>École de technologie supérieure (ÉTS)</h3>
+                <div class="where"></div>
+                <p>Master&#39;s Degree</p>
+                <p>Master&#39;s Degree in Information Technology Engineering</p>
+              </div>
+            </li>
+            <li>
+              <div class="year pull-left">2023 2017</div>
+              <div class="description pull-right">
+                <h3>École de technologie supérieure (ÉTS)</h3>
+                <div class="where"></div>
+                <p><i class="fas fa-graduation-cap ico"></i> Bachelor&#39;s Degree</p>
+                <p>Bachelor&#39;s Degree in Information Technology Engineering</p>
+              </div>
+            </li>
+            <li>
+              <div class="year pull-left">2017 2015</div>
+              <div class="description pull-right">
+                <h3>Collégial Sainte-Anne</h3>
+                <div class="where"></div>
+                <p><i class="fas fa-graduation-cap ico"></i> Cegep Diploma</p>
+                <p>Pure Science</p>
+              </div>
+            </li>
+            <li>
+              <div class="year pull-left">2015 2010</div>
+              <div class="description pull-right">
+                <h3>Collège Sainte-Anne</h3>
+                <div class="where"></div>
+                <p><i class="fas fa-graduation-cap ico"></i> DEC Sciences</p>
+                <p>Pure Science</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- SKILLS -->
+        <div class="box">
+          <h2><i class="fas fa-tasks ico"></i> Skills</h2>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Backend
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Django</span>
+              <span class="skill badge">FastAPI</span>
+              <span class="skill badge">GraphQL</span>
+              <span class="skill badge">REST</span>
+              <span class="skill badge">NextJS</span>
+              <span class="skill badge">Spring boot</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Languages
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Java/Kotlin</span>
+              <span class="skill badge">Javascript</span>
+              <span class="skill badge">Rust</span>
+              <span class="skill badge">Python</span>
+              <span class="skill badge">C++</span>
+              <span class="skill badge">C#</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Frontend
+              <span class="skill-level">Good</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">React</span>
+              <span class="skill badge">Vue</span>
+              <span class="skill badge">Tailwind CSS</span>
+              <span class="skill badge">jQuery</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Databases
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">PostgreSQL</span>
+              <span class="skill badge">MySQL</span>
+              <span class="skill badge">MongoDB</span>
+              <span class="skill badge">Redis</span>
+              <span class="skill badge">Oracle</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              Data Science
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Pandas</span>
+              <span class="skill badge">Numpy</span>
+              <span class="skill badge">Seaborn</span>
+              <span class="skill badge">Plotly</span>
+              <span class="skill badge">Jupyter Lab</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              DevOps
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">Docker</span>
+              <span class="skill badge">Kubernetes</span>
+              <span class="skill badge">Actions</span>
+              <span class="skill badge">Ansible</span>
+              <span class="skill badge">Vagrant</span>
+              <span class="skill badge">Vercel</span>
+              <span class="skill badge">Cloudflare</span>
+            </div>
+          </div>
+          <div class="skills clearfix">
+            <div class="item-skills">
+              DevOps
+              <span class="skill-level">Good</span>
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="skill badge">AWS</span>
+              <span class="skill badge">Azure</span>
+              <span class="skill badge">Terraform</span>
+            </div>
+          </div>
+        </div>
+        <!-- ACHIEVEMENTS -->
+        <div class="box">
+          <h2><i class="fas fa-trophy ico"></i> Achievements</h2>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="https://verified.sertifier.com/fr/verify/37471918795197/">Certificat d’accomplissement Programme Québécois d’Entrepreneuriat Scientifique (QcES)</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7">AWS Cloud Quest: Data Analytics</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5">AWS Cloud Quest: Networking</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54">AWS Cloud Quest: Cloud Practitioner</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea">AWS Cloud Quest: Machine Learning</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8">AWS Cloud Quest: Serverless Developer</a></li>
+            <li class="list-group-item"><a href="https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171">AWS Cloud Quest: Solutions Architect</a></li>
+          </ul>
+        </div>
+        <!-- PUBLICATIONS -->
+        <div class="box">
+          <h2><i class="fas fa-book ico"></i> Publications</h2>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <span style="font-weight:bold"><a href="https://antoineboucher.info/papers/rapport/rapport.md.html">Ray Tracing Engine</a></span><br>
+              <span>Dec 20, 2023</span>
+            </li>
+            <li class="list-group-item">
+              <span style="font-weight:bold"><a href="https://antoineboucher.info/papers/Algorithmic_Study_of_the_Relation_of_Peaceful_and_Violent_Subjects_to_Philosophy_Using_Wikipedia_and_a_Python_Crawler.pdf">Algorithmic Study of the Relation of Peaceful and Violent Subjects to Philosophy Using Wikipedia and a Python Crawler</a></span><br>
+              <span>Collégial international Sainte-Anne · Apr 8, 2018</span>
+              <p>By clicking on the first link in the main text of any Wikipedia article over and over again, you will eventually reach the Philosophy article. We have created a computer program to find the relation of peaceful and violent subjects to Philosophy by analyzing their distribution of click distances. After testing this with an assortment words related to both concepts, our results show a strong pattern that violent subjects are closer to Philosophy than their peaceful counterparts.</p>
+            </li>
+            <li class="list-group-item">
+              <span style="font-weight:bold"><a href="https://antoineboucher.info/papers/A_3D_variant_of_Vogel_s_model_to_observe_prime_patterns_in_a_spherical_coordinate_system.pdf">A 3D variant of Vogel’s model to observe prime patterns in a spherical coordinate system</a></span><br>
+              <span>Collégial international Sainte-Anne · Dec 20, 2017</span>
+              <p>The prime numbers are a mystery as no complete formula exist to enumerate them. Existing visualization methods show prime numbers as patterns in 2D space but these patterns are too complex to formulate. We describe a novel 3D visualization approach that shows strong natural patterns, e.g., sea shells, which should ease formulation.</p>
+            </li>
+          </ul>
+        </div>
+        <!-- HOBBIES -->
+        <div class="box">
+          <h2><i class="fas fa-heart ico"></i> Interests</h2>
+          <div class="interests clearfix">
+            <div class="item-interests">
+              Sport
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="interest badge">Skating</span>
+              <span class="interest badge">Basketball</span>
+              <span class="interest badge">Cycling</span>
+            </div>
+          </div>
+          <div class="interests clearfix">
+            <div class="item-interests">
+              Gaming
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="interest badge">Valorant</span>
+              <span class="interest badge">Overwatch</span>
+              <span class="interest badge">CS:GO</span>
+              <span class="interest badge">Indie Games</span>
+            </div>
+          </div>
+          <div class="interests clearfix">
+            <div class="item-interests">
+              Music
+            </div>
+            <div class="col-sm-offset-1 col-sm-12 clearfix">
+              <span class="interest badge">Guitar</span>
+              <span class="interest badge">Piano</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+<script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 200, density: { enable: true, value_area: 2400 } },
+        color: { value: "#ffffff" },
+        shape: {
+          type: "circle",
+          stroke: { width: 1, color: "#000000" },
+          polygon: { nb_sides: 6 },
+          // Add more shape properties if needed
+        },
+        opacity: {
+          value: 0.5,
+          random: false,
+          anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: { enable: false, speed: 40, size_min: 0.1, sync: false }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 6,
+          direction: "none",
+          random: false,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+          attract: { enable: false, rotateX: 600, rotateY: 1200 }
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 1 } },
+          bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+          repulse: { distance: 200, duration: 0.4 },
+          push: { particles_nb: 4 },
+          remove: { particles_nb: 2 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
 </html>

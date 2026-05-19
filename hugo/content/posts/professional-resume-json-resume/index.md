@@ -148,7 +148,7 @@ When creating a dynamic and engaging online resume using Hugo and the JSON Resum
 
 This handy tool allows you to export your LinkedIn profile into the JSON Resume format. It's a quick way to transfer your professional data into a structured resume format.
 
-- Export LinkedIn profile: [LinkedIn to JSON Resume Exporter](https://joshuatz.com/projects/web-stuff/linkedin-profile-to-json-resume-exporter/)
+- Export LinkedIn profile: [LinkedIn to JSON Resume Exporter](https://github.com/joshuatz/linkedin-to-jsonresume)
 
 ### Hugo-Mod-JSON-Resume
 

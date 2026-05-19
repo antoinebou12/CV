@@ -1,6 +1,10 @@
 .lychee-deploy-verify/
 _site_hugo_test/
 
+# Local Hugo / deploy verify output (CI builds _site on the runner only)
+/_site/
+/_test_site/
+
 # Windows reserved device name; accidental creation breaks `git add`.
 /NUL
 
@@ -9,6 +13,21 @@ _site_hugo_test/
 
 # OpenAI Codex local workspace data
 /.codex/
+
+# LaTeX build artifacts (cv-en, cv-fr, letters)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.run.xml
+*.synctex.gz
+*.xdv
+*.toc
+*.lof
+*.lot
 
 # Build/editor logs and temp files
 *.log
