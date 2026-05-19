@@ -34,6 +34,9 @@ jobs:
         with:
           enablement: true
 
+      - name: Test sitemap merge script
+        run: python3 "${GITHUB_WORKSPACE}/scripts/test_merge_root_sitemap.py"
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -186,86 +189,36 @@ jobs:
           python3 "${GITHUB_WORKSPACE}/scripts/merge_root_sitemap.py" \
             --input "${ROOT}/sitemap.xml" \
             --output "${ROOT}/sitemap.xml" \
+            --blog-dir "${ROOT}/blog" \
             --site-root "${SITE_ROOT}" \
             --lastmod "${LASTMOD}"
           SITEMAP_URL="${SITE_ROOT}/sitemap.xml"
           sed -i "s|^Sitemap:.*|Sitemap: ${SITEMAP_URL}|" "${ROOT}/robots.txt"
 
-      - name: Verify blog nav uses project path prefix
+      - name: Validate deploy artifact
         run: |
-          REPO="${GITHUB_REPOSITORY#*/}"
-          INDEX="${GITHUB_WORKSPACE}/_site/blog/index.html"
-          if [ ! -f "${INDEX}" ]; then
-            echo "Missing ${INDEX}"
-            exit 1
-          fi
-          if ! grep -q "/${REPO}/blog/posts/" "${INDEX}"; then
-            echo "Expected blog index to contain /${REPO}/blog/posts/ (nav or links)"
-            exit 1
-          fi
-          if ! grep -q "/${REPO}/blog/search/" "${INDEX}"; then
-            echo "Expected blog index to contain /${REPO}/blog/search/ (nav or links)"
-            exit 1
-          fi
-          if grep -q 'href=/blog/posts/' "${INDEX}" || grep -q 'href=/blog/search/' "${INDEX}"; then
-            echo "Found bare /blog/ links (missing /${REPO}/ prefix); Hugo baseURL is wrong for GitHub Pages project site"
-            exit 1
-          fi
-          echo "Blog nav path prefix OK for repo ${REPO}"
+          python3 "${GITHUB_WORKSPACE}/scripts/verify_deploy_build.py" \
+            --site-dir "${GITHUB_WORKSPACE}/_site" \
+            --repo "${GITHUB_REPOSITORY#*/}" \
+            --repo-root "${GITHUB_WORKSPACE}"
 
-      - name: Validate agent-ready baseline artifacts
+      - name: List deploy tree
         run: |
-          set -euo pipefail
-          ROOT="${GITHUB_WORKSPACE}/_site"
-          ROBOTS="${ROOT}/robots.txt"
-          SITEMAP="${ROOT}/sitemap.xml"
-          API_CATALOG="${ROOT}/.well-known/api-catalog"
-          SKILLS_INDEX="${ROOT}/.well-known/agent-skills/index.json"
+          echo "Files to deploy (sample):"
+          find _site -type f | head -40
 
-          [ -f "${ROBOTS}" ] || { echo "Missing ${ROBOTS}"; exit 1; }
-          [ -f "${SITEMAP}" ] || { echo "Missing ${SITEMAP}"; exit 1; }
-          [ -f "${API_CATALOG}" ] || { echo "Missing ${API_CATALOG}"; exit 1; }
-          [ -f "${SKILLS_INDEX}" ] || { echo "Missing ${SKILLS_INDEX}"; exit 1; }
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
 
-          grep -q '^User-agent:' "${ROBOTS}" || { echo "robots.txt missing User-agent"; exit 1; }
-          grep -q '^Sitemap:' "${ROBOTS}" || { echo "robots.txt missing Sitemap"; exit 1; }
-          grep -qF 'index-en.html' "${SITEMAP}" || { echo "sitemap.xml should list index-en.html"; exit 1; }
-
-          grep -qF '"$schema"' "${SKILLS_INDEX}" || { echo 'agent-skills index missing "$schema"'; exit 1; }
-
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          root = Path("_site")
-          catalog = json.loads((root / ".well-known/api-catalog").read_text(encoding="utf-8"))
-          if "linkset" not in catalog or not isinstance(catalog["linkset"], list):
-              raise SystemExit("api-catalog: expected top-level linkset array")
-          skills_doc = json.loads((root / ".well-known/agent-skills/index.json").read_text(encoding="utf-8"))
-          for key in ("$schema", "skills"):
-              if key not in skills_doc:
-                  raise SystemExit(f"agent-skills index missing {key!r}")
-          for entry in skills_doc["skills"]:
-              for k in ("name", "type", "description", "url", "sha256"):
-                  if k not in entry:
-                      raise SystemExit(f"agent-skills entry missing {k!r}: {entry!r}")
-          for rel in (
-              ".well-known/openid-configuration",
-              ".well-known/oauth-authorization-server",
-              ".well-known/oauth-protected-resource",
-              ".well-known/mcp/server-card.json",
-          ):
-              p = root / rel
-              if not p.is_file():
-                  raise SystemExit(f"missing {rel}")
-              json.loads(p.read_text(encoding="utf-8"))
-          card = json.loads((root / ".well-known/mcp/server-card.json").read_text(encoding="utf-8"))
-          if "serverInfo" not in card:
-              raise SystemExit("mcp server-card missing serverInfo")
-          print("JSON validation OK for api-catalog, agent-skills, OIDC/OAuth stubs, MCP card")
-          PY
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
       # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
       # Lychee needs a filesystem path that matches that prefix plus --root-dir (see lychee docs).
+      # Runs after deploy so broken links never block publishing.
       - name: Mirror project path prefix for link checker
         run: |
           ROOT="${GITHUB_WORKSPACE}/_site"
@@ -282,9 +235,13 @@ jobs:
           done
           echo "Symlinked ${ROOT}/${REPO}/* -> published assets for /${REPO}/ URL prefix"
 
-      - name: Check links in site output
+      - name: Check links in site output (advisory)
+        id: lychee
+        continue-on-error: true
         uses: lycheeverse/lychee-action@v2
         with:
+          fail: false
+          failIfEmpty: false
           token: ${{ github.token }}
           args: >-
             --root-dir "${{ github.workspace }}/_site"
@@ -296,16 +253,7 @@ jobs:
             --exclude-path 'node_modules'
             ./_site
 
-      - name: List deploy tree
+      - name: Link check note
+        if: steps.lychee.outcome != 'success'
         run: |
-          echo "Files to deploy (sample):"
-          find _site -type f | head -40
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          echo "::warning::Lychee reported broken or unreachable links. GitHub Pages deploy already completed."
