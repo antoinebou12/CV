@@ -24,13 +24,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
         with:
           enablement: true
 
@@ -45,9 +45,9 @@ jobs:
 
       # Lockfile lives in the main repo under hugo/ (theme is a submodule — lockfile there is not in parent git).
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "22"
+          node-version: "24"
           cache: npm
           cache-dependency-path: hugo/package-lock.json
 
@@ -208,13 +208,13 @@ jobs:
           find _site -type f | head -40
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
       # Lychee needs a filesystem path that matches that prefix plus --root-dir (see lychee docs).
