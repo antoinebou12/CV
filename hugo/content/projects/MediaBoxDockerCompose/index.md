@@ -1,8 +1,8 @@
 ---
-title: "Media box (Docker Compose)"
+title: "MediaBoxDockerCompose"
 linkTitle: "MediaBoxDockerCompose"
 date: 2024-01-01T12:00:00Z
-description: "Docker Compose stack for downloads, *Arr automation, Plex/Jellyfin, and ops dashboards—config lives in the repo."
+description: "Docker Compose homelab stack—downloads, *Arr automation, Plex/Jellyfin, VPN, Samba, and ops dashboards—with paths driven from the repo."
 draft: false
 tags:
     - Docker
@@ -17,15 +17,18 @@ tags:
 
 [Repository](https://github.com/antoinebou12/MediaBoxDockerCompose) · [MIT License](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE)
 
-Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with **Plex** or **Jellyfin**, with optional request and monitoring UIs. Configuration is meant to live under a shared `ROOT` tree on disk as in the repo’s `docker-compose.yml`.
+Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with **Plex** or **Jellyfin**, with request UIs and monitoring. Configuration is meant to live under a shared `ROOT` tree on disk as in the repo’s `docker-compose.yml`.
+
+For hosts that are not ready for the full stack yet, the companion [**another-install-script**](https://github.com/antoinebou12/another-install-script) repo offers menu-driven bash installers to pull up individual containers (and related dashboards) on a fresh Linux machine before you adopt this compose file.
 
 ## What’s in the stack
 
-Grouped roughly by role (see the [compose file](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml) for images and volumes):
+Grouped by role (see the [compose file](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml) for images, ports, and volumes):
 
 - **Download clients & indexers** — Deluge, NZBGet, Jackett, NZBHydra2, Prowlarr  
 - **Automation** — Sonarr, Radarr, Lidarr, Bazarr, CouchPotato; Readarr (books); Whisparr; Tdarr (transcoding)  
 - **Libraries & requests** — Plex, Jellyfin, Ombi, Jellyseerr, Tautulli  
+- **Network & files** — WireGuard (VPN), Samba shares  
 - **Extras** — Stash (specialized library organizer)  
 - **Ops** — Netdata, Dashmachine, Filebrowser  
 
