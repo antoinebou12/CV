@@ -114,7 +114,7 @@ The website is tested and works on:
 ### Check Python
 ```bash
 python --version
-# Should show Python 3.x.x
+# Should show Python 3.x.x (3.8+ locally; GitHub Actions workflows use 3.14)
 ```
 
 ### Check Docker

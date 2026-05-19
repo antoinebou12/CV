@@ -4,15 +4,18 @@ Documentation for GitHub Actions workflows used in this project.
 
 ## Overview
 
-The project uses two main GitHub Actions workflows:
+The project uses three GitHub Actions workflows:
 
 1. **CV Compilation** (`.github/workflows/compile-cv.yml`)
-   - Compiles LaTeX CV to PDF
-   - Commits PDF back to repository
+   - Builds CV and cover letter PDFs via Docker and `build_cv.py`
+   - Commits PDFs back to the repository
 
 2. **GitHub Pages Deployment** (`.github/workflows/deploy.yml`)
-   - Deploys website to GitHub Pages
-   - Triggers on push to main/master
+   - Deploys the static site and Hugo blog to GitHub Pages
+   - Triggers on push to `main`/`master`
+
+3. **Link check** (`.github/workflows/link-check.yml`)
+   - Runs Lychee on Hugo content, docs, and static HTML (PR, push, weekly schedule)
 
 ## CV Compilation Workflow
 
@@ -26,33 +29,38 @@ The project uses two main GitHub Actions workflows:
 ### Workflow Steps
 
 1. **Checkout repository**
-   - Uses `actions/checkout@v4`
+   - Uses `actions/checkout@v6`
    - Full history fetched for git operations
 
-2. **Compile LaTeX document**
-   - Uses `xu-cheng/latex-action@v3`
-   - Compiles `cv-en/resume.tex` or `cv-fr/resume.tex` with XeLaTeX
-   - Working directory: `cv-en/` or `cv-fr/`
-   - Supports both English and French versions
+2. **Set up Python**
+   - Uses `actions/setup-python@v6` with **Python 3.14**
+   - Installs dependencies from `requirements.txt` (pip cache enabled)
 
-3. **Output PDFs**
-   - English PDF: `cv-en/resume.pdf`
-   - French PDF: `cv-fr/resume.pdf`
-   - PDFs remain in their respective language folders
+3. **Build PDFs**
+   - Uses `docker/setup-buildx-action@v4` and `python build_cv.py --all --rebuild --verbose --ci` (XeLaTeX in Docker)
+   - Cover letters: `texlive/texlive` container with `latexmk -xelatex` under `letters/en` and `letters/fr`
+   - Lychee link check on CV and letter sources before build
 
-4. **Commit PDF**
-   - Commits `cv.pdf` if changed
-   - Commit message: "Auto-compile CV PDF [skip ci]"
+4. **Output PDFs**
+   - `cv-en/resume.pdf`, `cv-fr/resume.pdf`
+   - `letters/en/cover-letter.pdf`, `letters/fr/cover-letter.pdf`
+
+5. **Commit PDFs**
+   - Commits the four PDFs when changed
+   - Commit message: `Auto-compile CV and cover letter PDFs [skip ci]`
    - Skips CI to prevent loops
+
+6. **Upload artifacts**
+   - Uses `actions/upload-artifact@v7` (retention 7 days, `if: always()`)
 
 ### Configuration
 
 **File**: `.github/workflows/compile-cv.yml`
 
 Key settings:
-- **LaTeX engine**: XeLaTeX (for custom fonts)
-- **Working directory**: `cv-en/` or `cv-fr/`
-- **Output**: `cv-en/resume.pdf` or `cv-fr/resume.pdf`
+- **Python**: 3.14 (CI)
+- **LaTeX engine**: XeLaTeX (Docker image from `Dockerfile.cv` / TeX Live for letters)
+- **Output**: `cv-en/resume.pdf`, `cv-fr/resume.pdf`, and cover letter PDFs under `letters/`
 
 ### Troubleshooting
 
@@ -95,36 +103,48 @@ If loop occurs:
 ### Workflow Steps
 
 1. **Checkout repository**
-   - Uses `actions/checkout@v4`
+   - Uses `actions/checkout@v6` (recursive submodules for Hugo theme)
    - Gets all files for deployment
 
-2. **Setup Pages**
-   - Uses `actions/configure-pages@v4`
+2. **Set up Python**
+   - Uses `actions/setup-python@v6` with **Python 3.14**
+   - Runs `scripts/test_merge_root_sitemap.py` before the Hugo build
+
+3. **Setup Pages**
+   - Uses `actions/configure-pages@v6`
    - Configures GitHub Pages environment
 
-3. **Setup Hugo**
+4. **Setup Hugo and Node**
    - Uses `peaceiris/actions-hugo@v3` (extended, pinned version)
+   - Uses `actions/setup-node@v6` with **Node 24**; `npm ci` and `npm run build:css` in `hugo/`
 
-4. **Prepare `_site`, build Hugo, verify**
+5. **Prepare `_site`, build Hugo, merge sitemap, verify**
    - Copies root static files (`index.html`, assets, `linktree/`, `papers/`) into `_site/`
-   - Runs `hugo` with output directory `_site/blog/` and a production `baseURL` of **`https://antoineboucher.info/<repo>/blog/`** (canonical custom domain on GitHub Pages). This keeps absolute asset URLs (`Permalink`, `absURL`, Open Graph, stylesheet integrity) on the same host as the HTML, avoiding broken CSS and preload warnings when visitors use the custom domain. Override with repository variable **`HUGO_BASE_URL`** if the canonical URL changes.
-   - Verifies `blog/index.html` contains paths `/<repo>/blog/posts/` and `/<repo>/blog/search/` (works for both root-relative and absolute `href` values)
+   - Copies committed CV PDFs into `_site/cv-en` and `_site/cv-fr`
+   - Runs `hugo` with output directory `_site/blog/` and a production `baseURL` of **`https://antoineboucher.info/<repo>/blog/`** (canonical custom domain on GitHub Pages). Override with repository variable **`HUGO_BASE_URL`** if the canonical URL changes.
+   - Promotes agent-ready assets; merges static URLs into root `sitemap.xml` via `scripts/merge_root_sitemap.py`
+   - Validates the deploy tree with `scripts/verify_deploy_build.py` (Python 3.14)
 
-5. **Upload artifact**
-   - Uses `actions/upload-pages-artifact@v3`
+6. **Upload artifact**
+   - Uses `actions/upload-pages-artifact@v5`
    - Uploads the **`_site`** directory (not the raw repository root)
    - Published site root contains `index.html`, copied folders, and **`blog/`** (Hugo output)
 
-6. **Deploy to GitHub Pages**
-   - Uses `actions/deploy-pages@v4`
+7. **Deploy to GitHub Pages**
+   - Uses `actions/deploy-pages@v5`
    - Deploys that artifact to GitHub Pages
    - Makes the site live at `https://<username>.github.io/<repo>` (project site)
+
+8. **Advisory link check**
+   - Lychee on `_site` after deploy (`continue-on-error: true` so publish is not blocked)
 
 ### Configuration
 
 **File**: `.github/workflows/deploy.yml`
 
 Key settings:
+- **Python**: 3.14 (sitemap merge and deploy verification scripts)
+- **Node**: 24 (Tailwind build in `hugo/`)
 - **Artifact path**: `_site` (built on the runner; includes `blog/` from Hugo)
 - **Hugo `baseURL`**: defaults to `https://antoineboucher.info/<repo>/blog/`; set repository variable **`HUGO_BASE_URL`** (e.g. for forks) to override
 - **Environment**: `github-pages`
@@ -210,10 +230,7 @@ Add to README:
 
 ### Change Compilation Options
 
-Edit `.github/workflows/compile-cv.yml`:
-```yaml
-args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-```
+Edit `.github/workflows/compile-cv.yml` (e.g. `build_cv.py` flags, Docker image, or letter `latexmk` options).
 
 ### Change Deployment Path
 
