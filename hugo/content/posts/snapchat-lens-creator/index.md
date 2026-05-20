@@ -2,7 +2,7 @@
 post_kind: article
 title: "Snapchat Lens Creator"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-04-13T12:00:00-04:00
+lastmod: 2026-05-20T12:00:00-04:00
 description: Snapchat lenses with multi-million plays and views (2017–2020), Fiverr clients, tooling, and Lens Studio feedback.
 translationKey: snapchat-lens-creator
 tags:
@@ -12,9 +12,9 @@ tags:
     - Side Project
 ---
 
-*Updated April 2026 with current Lens Insights figures.*
+*Updated May 2026 with current Lens Insights figures.*
 
-To date, my Snapchat lenses have accumulated **6.21M plays**, **12.11M views**, **616.4k shares**, and **6,893 favorites** (all-time, Lens Insights). That started as a personal interest in AR filters and grew into paid work on **Fiverr** alongside my own experiments.
+To date, my Snapchat lenses have accumulated **13.97M plays**, **20.38M views**, **711.8k shares**, **10,092 favorites**, **753 posts**, and **428 unique posters** (all-time, Lens Insights). That started as a personal interest in AR filters and grew into paid work on **Fiverr** alongside my own experiments.
 
 Between **2017 and 2020** I shipped **42 lenses** for myself and clients. A few that carried the most usage include **Go Crazy Facetime** (~2.9M plays), **Face Ghosting** (~1.2M plays), and **BIG SMILE** (~520k plays).
 

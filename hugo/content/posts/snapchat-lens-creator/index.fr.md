@@ -2,7 +2,7 @@
 post_kind: article
 title: "Créateur de Lenses Snapchat"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-04-13T12:00:00-04:00
+lastmod: 2026-05-20T12:00:00-04:00
 description: Lenses Snapchat avec des millions de lectures et vues (2017–2020), clients Fiverr, outillage et retours sur Lens Studio.
 translationKey: snapchat-lens-creator
 tags:
@@ -12,9 +12,9 @@ tags:
     - Side Project
 ---
 
-*Mise à jour avril 2026 avec les chiffres Lens Insights actuels.*
+*Mise à jour mai 2026 avec les chiffres Lens Insights actuels.*
 
-À ce jour, mes lenses Snapchat totalisent **6,21 M de lectures**, **12,11 M de vues**, **616,4 k partages** et **6 893 favoris** (cumul, Lens Insights). Tout a commencé par un intérêt personnel pour les filtres RA et s’est transformé en missions payantes sur **Fiverr** en parallèle de mes expérimentations.
+À ce jour, mes lenses Snapchat totalisent **13,97 M de lectures**, **20,38 M de vues**, **711,8 k partages**, **10 092 favoris**, **753 publications** et **428 auteurs uniques** (cumul, Lens Insights). Tout a commencé par un intérêt personnel pour les filtres RA et s’est transformé en missions payantes sur **Fiverr** en parallèle de mes expérimentations.
 
 Entre **2017 et 2020**, j’ai publié **42 lenses** pour moi-même et pour des clients. Parmi celles qui ont le plus servi figurent **Go Crazy Facetime** (~2,9 M de lectures), **Face Ghosting** (~1,2 M) et **BIG SMILE** (~520 k).
 

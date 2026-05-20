@@ -199,6 +199,120 @@
       list-style: none;
     }
 
+    details.project-group {
+      margin-top: 14px;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      background: #fcfdfd;
+      overflow: hidden;
+    }
+
+    details.project-group:first-of-type {
+      margin-top: 0;
+    }
+
+    details.project-group > summary.project-group-title {
+      list-style: none;
+      cursor: pointer;
+      margin: 0;
+      padding: 11px 14px;
+      color: #1f4742;
+      font-size: 1.02em;
+      font-weight: 700;
+      user-select: none;
+      background: #f7fbfa;
+      border-bottom: 1px solid transparent;
+    }
+
+    details.project-group > summary.project-group-title::-webkit-details-marker {
+      display: none;
+    }
+
+    details.project-group > summary.project-group-title::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.78em;
+      color: #227c74;
+      opacity: 0.7;
+      transition: transform 0.2s ease;
+    }
+
+    details.project-group[open] > summary.project-group-title {
+      border-bottom-color: #dde7e5;
+      background: #f4faf9;
+    }
+
+    details.project-group[open] > summary.project-group-title::after {
+      transform: rotate(-180deg);
+      display: inline-block;
+    }
+
+    .project-group-body {
+      padding: 12px 14px 4px;
+    }
+
+    .project-group-intro {
+      margin: 0 0 10px;
+      color: #5d6a69;
+      font-size: 0.92em;
+      line-height: 1.5;
+    }
+
+    details.project-subgroup {
+      margin-top: 14px;
+      border-top: 1px solid #e5ecea;
+      padding-top: 10px;
+    }
+
+    details.project-subgroup:first-of-type {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    details.project-subgroup > summary.project-subgroup-title {
+      list-style: none;
+      cursor: pointer;
+      margin: 0;
+      color: #1f4742;
+      font-size: 0.98em;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    details.project-subgroup > summary.project-subgroup-title::-webkit-details-marker {
+      display: none;
+    }
+
+    details.project-subgroup > summary.project-subgroup-title::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      float: right;
+      font-size: 0.74em;
+      color: #227c74;
+      opacity: 0.7;
+      transition: transform 0.2s ease;
+    }
+
+    details.project-subgroup[open] > summary.project-subgroup-title::after {
+      transform: rotate(-180deg);
+      display: inline-block;
+    }
+
+    .project-subgroup-body {
+      padding-top: 8px;
+    }
+
+    .project-subgroup-intro {
+      margin: 0 0 10px;
+      color: #5d6a69;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
     .project-card {
       border: 1px solid #dde7e5;
       border-left: 4px solid #227c74;
@@ -305,6 +419,10 @@
       align-items: center;
     }
 
+    .project-card--uml .project-card-body {
+      grid-template-columns: minmax(12rem, 40%) 1fr;
+    }
+
     .project-card-copy {
       min-width: 0;
     }
@@ -318,14 +436,124 @@
     }
 
     .project-diagram svg {
-      max-width: 100%;
+      width: 100%;
+      max-width: 11.5rem;
       height: auto;
       display: block;
       margin: 0 auto;
+      overflow: visible;
     }
 
+    .project-card--simility {
+      padding: 11px 13px;
+    }
 
-    details.project-preview {
+    .project-card--simility .project-card-body,
+    .project-card--renpho .project-card-body {
+      grid-template-columns: minmax(10rem, 42%) 1fr;
+      align-items: start;
+    }
+
+    .project-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .project-gallery figure {
+      margin: 0;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .project-gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .project-gallery figcaption {
+      font-size: 0.72em;
+      line-height: 1.35;
+      padding: 5px 8px 6px;
+      color: #5d6a69;
+      background: #f4faf9;
+      border-top: 1px solid #e8efed;
+    }
+
+    .job-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+      gap: 10px;
+      margin: 12px 0 14px;
+      min-width: 0;
+    }
+
+    .job-gallery figure {
+      margin: 0;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .job-gallery-preview-link {
+      display: block;
+      position: relative;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+      line-height: 0;
+      cursor: zoom-in;
+    }
+
+    .job-gallery-preview-link:hover img,
+    .job-gallery-preview-link:focus-visible img {
+      outline: 2px solid #32475c;
+      outline-offset: -2px;
+    }
+
+    .job-gallery-preview-link img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .job-gallery-preview-hint {
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    .job-gallery figcaption {
+      font-size: 0.72em;
+      line-height: 1.35;
+      padding: 5px 8px 6px;
+      color: #5d6a69;
+      background: #f4faf9;
+      border-top: 1px solid #e8efed;
+    }
+
+    .job-gallery--single {
+      grid-template-columns: minmax(11rem, 18rem);
+    }
+
+    details.project-preview,
+    details.project-nuget {
       margin: 8px 0 10px;
       border: 1px solid #dde7e5;
       border-radius: 6px;
@@ -333,7 +561,8 @@
       overflow: hidden;
     }
 
-    details.project-preview > summary.project-preview-summary {
+    details.project-preview > summary.project-preview-summary,
+    details.project-nuget > summary.project-nuget-summary {
       list-style: none;
       display: flex;
       align-items: center;
@@ -348,16 +577,19 @@
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    details.project-preview[open] > summary.project-preview-summary {
+    details.project-preview[open] > summary.project-preview-summary,
+    details.project-nuget[open] > summary.project-nuget-summary {
       border-bottom: 1px solid #dde7e5;
       background: #f4faf9;
     }
 
-    details.project-preview > summary.project-preview-summary::-webkit-details-marker {
+    details.project-preview > summary.project-preview-summary::-webkit-details-marker,
+    details.project-nuget > summary.project-nuget-summary::-webkit-details-marker {
       display: none;
     }
 
-    details.project-preview > summary.project-preview-summary::after {
+    details.project-preview > summary.project-preview-summary::after,
+    details.project-nuget > summary.project-nuget-summary::after {
       content: '\f078';
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
@@ -368,8 +600,61 @@
       transition: transform 0.2s ease;
     }
 
-    details.project-preview[open] > summary.project-preview-summary::after {
+    details.project-preview[open] > summary.project-preview-summary::after,
+    details.project-nuget[open] > summary.project-nuget-summary::after {
       transform: rotate(-180deg);
+    }
+
+    details.project-nuget .project-nuget-panel {
+      padding: 10px 12px 12px;
+    }
+
+    .project-nuget-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid #eef3f2;
+    }
+
+    .project-nuget-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .project-nuget-row a.project-nuget-id {
+      flex: 1 1 100%;
+      font-size: 0.86em;
+      font-weight: 600;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    @media (min-width: 520px) {
+      .project-nuget-row a.project-nuget-id {
+        flex: 1 1 13.5rem;
+        max-width: 13.5rem;
+      }
+    }
+
+    .project-nuget-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-nuget-badges img {
+      height: 20px;
+      width: auto;
+      vertical-align: middle;
+    }
+
+    .project-nuget-note {
+      margin: 10px 0 0;
+      font-size: 0.82em;
+      color: #5d6a69;
+      line-height: 1.45;
     }
 
     details.project-preview .project-preview-panel .project-embed {
@@ -394,12 +679,54 @@
       border: 0;
     }
 
+    .project-embed--youtube iframe {
+      height: 315px;
+      max-width: 560px;
+    }
+
+    .publication-entry .publication-video-preview {
+      margin-top: 10px;
+      max-width: 560px;
+    }
+
     .project-embed-note {
       margin: 0;
       padding: 8px 12px 10px;
       font-size: 0.82em;
       color: #5d6a69;
       line-height: 1.4;
+    }
+
+    .project-lens-list {
+      margin: 0;
+      padding: 10px 12px 8px;
+      list-style: none;
+    }
+
+    @media (min-width: 640px) {
+      .project-lens-list {
+        columns: 2;
+        column-gap: 1.5rem;
+      }
+    }
+
+    .project-lens-list li {
+      break-inside: avoid;
+      padding: 3px 0;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    .project-lens-list a {
+      font-weight: 600;
+    }
+
+    .project-lens-list-note {
+      margin: 0;
+      padding: 6px 12px 10px;
+      font-size: 0.82em;
+      color: #5d6a69;
+      line-height: 1.45;
     }
 
     .sr-only {
@@ -772,6 +1099,131 @@
       padding-top: 10px;
     }
 
+    .publication-entry--raytracing .publication-entry-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 12px 16px;
+    }
+
+    .publication-entry--raytracing .publication-preview-link,
+    .job-gallery-preview-link {
+      cursor: zoom-in;
+    }
+
+    .publication-entry--raytracing .publication-preview-link {
+      flex: 0 0 auto;
+      position: relative;
+      padding: 0;
+      border: none;
+      background: none;
+      line-height: 0;
+    }
+
+    .publication-entry--raytracing .publication-preview-link:hover .publication-preview,
+    .publication-entry--raytracing .publication-preview-link:focus-visible .publication-preview {
+      outline: 2px solid #32475c;
+      outline-offset: 2px;
+    }
+
+    .publication-entry--raytracing .publication-preview {
+      display: block;
+      max-width: min(220px, 100%);
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .publication-preview-hint {
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    .publication-preview-dialog {
+      border: none;
+      padding: 0;
+      width: min(96vw, 1200px);
+      max-width: 96vw;
+      background: transparent;
+      color: #eee;
+    }
+
+    .publication-preview-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      cursor: zoom-out;
+    }
+
+    .publication-preview-dialog-panel {
+      position: relative;
+      margin: 0;
+      padding: 12px 12px 14px;
+      border-radius: 8px;
+      background: #1a1f26;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .publication-preview-dialog-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .publication-preview-dialog-close:hover,
+    .publication-preview-dialog-close:focus-visible {
+      background: rgba(255, 255, 255, 0.22);
+      outline: 2px solid #fff;
+      outline-offset: 1px;
+    }
+
+    .publication-preview-dialog-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(85vh, 900px);
+      margin: 0 auto;
+      object-fit: contain;
+      border-radius: 4px;
+      cursor: default;
+    }
+
+    .publication-preview-dialog-caption {
+      margin: 10px 0 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #c8d0d8;
+    }
+
+    .publication-preview-dialog-report {
+      margin: 10px 0 0;
+      font-size: 0.9rem;
+    }
+
+    .publication-preview-dialog-report a {
+      color: #8ec8ff;
+    }
+
     .contact-item {
       width: 100%;
       float: left;
@@ -816,7 +1268,20 @@
       }
 
       .project-diagram {
-        max-width: 12rem;
+        max-width: 14rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .project-gallery {
+        max-width: 18rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .job-gallery {
+        grid-template-columns: 1fr;
+        max-width: 20rem;
         margin-left: auto;
         margin-right: auto;
       }
@@ -857,6 +1322,47 @@
       background: #32475c;
       position: relative;
       font-size: .85em;
+    }
+
+    a.skill.badge {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    a.skill.badge:hover,
+    a.skill.badge:focus {
+      background: #3d5a73;
+      text-decoration: underline;
+    }
+
+    .skill-badge-note {
+      background: #4a6278;
+      font-size: .8em;
+    }
+
+    .skill-group-body--certs .skill-tier-line {
+      align-items: flex-start;
+    }
+
+    .skill-group-body--certs .skill-tier-line .skill-level {
+      min-width: 5.75rem;
+      margin-top: 2px;
+    }
+
+    .skill-group-body--certs .cert-validity {
+      font-size: 0.78em;
+      line-height: 1.35;
+      color: #5d6a69;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .skill-group-body--certs .cert-tier-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 8px;
+      flex: 1 1 12rem;
+      min-width: 0;
     }
 
     .skill-level {
@@ -913,7 +1419,35 @@
 
     details.skill-group .skill-group-body {
       border-top: 1px solid #dde7e5;
-      padding: 4px 0 6px;
+      padding: 2px 0 4px;
+    }
+
+    details.skill-group .skill-tier-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      padding: 8px 12px 10px;
+      margin: 0;
+    }
+
+    details.skill-group .skill-tier-line + .skill-tier-line {
+      padding-top: 6px;
+      border-top: 1px solid #eef3f2;
+    }
+
+    details.skill-group .skill-tier-line .skill-level {
+      position: static;
+      flex: 0 0 auto;
+      margin: 0 6px 0 0;
+      min-width: 6.75rem;
+      line-height: 1.3;
+      vertical-align: middle;
+    }
+
+    details.skill-group .skill-tier-line .skill {
+      margin-right: 0;
+      margin-bottom: 0;
     }
 
     details.skill-tier > summary.skill-tier-summary {
@@ -962,6 +1496,35 @@
       padding-bottom: 10px;
       border-bottom: 1px solid #eee;
     }
+
+    .clustrmaps-section-link {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35em;
+      text-decoration: none;
+      color: #227c74;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 0 12px;
+      margin: 0;
+      border-bottom: 2px solid #e8eceb;
+    }
+
+    .clustrmaps-section-link:hover,
+    .clustrmaps-section-link:focus-visible {
+      color: #1a5f56;
+      outline: none;
+      border-bottom-color: #227c74;
+    }
+
+    .clustrmaps-section-link-icon {
+      margin-left: auto;
+      font-size: 0.65em;
+      opacity: 0.75;
+    }
+
     #particles-js {
       position: fixed;
       height: 350vh;
@@ -1124,9 +1687,7 @@
           <div class="cv-section-body">
           <p class="section-intro">Ingénieur plateforme et infographie : backends sécurisés, opérations cloud-native et outils pour développeurs.</p>
           <ul class="list-group">
-            <li class="list-group-item">Ingénieur logiciel polyvalent : plateforme, backends, livraison sécurisée et infographie interactive (C++/OpenGL, Blender). Stack courante : Java/Kotlin, Python, Docker/Kubernetes et infrastructure-as-code.</li>
-            <li class="list-group-item">Contributeur et mainteneur open source actif (241 étoiles GitHub sur dépôts publics en mai 2026).</li>
-            <li class="list-group-item">Maîtrise en génie des technologies de l'information de l'<a href="https://www.etsmtl.ca/" target="_blank" rel="noopener noreferrer">École de technologie supérieure (ÉTS)</a>.</li>
+            <li class="list-group-item">Infographie interactive (C++/OpenGL, Blender) ; stack courante : Java/Kotlin, Python, Docker/Kubernetes et infrastructure-as-code.</li>
           </ul>
           </div>
         </details>
@@ -1166,6 +1727,7 @@
                     <li class="list-group-item">Raccordé les builds mobiles Android à GitLab CI/CD avec promotion vers l'environnement GKE sur GCP géré par Terraform, synchronisant la livraison mobile sur les mêmes parcours Kubernetes que les services backend</li>
                     <li class="list-group-item">Construit une analyse scriptée de 1000+ risques cybersécurité sur 181+ catégories de menaces : score pondéré, priorisation par étoiles et interface Angular pour un triage analyste avec contexte homogène</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Java, Kotlin, Android, Docker, Kubernetes, Terraform, GitLab CI/CD, GCP, JUnit, Playwright, Angular</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Collaboration interfonctions, communication avec les parties prenantes, priorisation analytique</li>
                   </ul>
                 </div>
               </div>
@@ -1195,6 +1757,22 @@
               <div class="job-details col-xs-11">
                 <div class="description">
                   Livraison de cours DevSecOps, parc GitLab pour de nombreuses équipes et coaching sur pratiques de livraison sécurisée (<a href="https://www.polymtl.ca/programmes/cours/devsecops-operations-et-dev-logiciel-secur" target="_blank" rel="noopener noreferrer"><strong>LOG&nbsp;8100</strong></a>).
+                  <div class="job-gallery" role="group" aria-label="Photos LOG 8100">
+                    <figure>
+                      <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/devsecops-log8100/images/devsecops-log8100-cohort.png" data-image-preview-alt="Photo de groupe de la cohorte LOG 8100 à Polytechnique Montréal" aria-label="Afficher la photo de cohorte LOG 8100 en plein écran">
+                        <img src="papers/devsecops-log8100/images/devsecops-log8100-cohort.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                        <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                      </button>
+                      <figcaption>Cohorte LOG 8100 à Polytechnique Montréal</figcaption>
+                    </figure>
+                    <figure>
+                      <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/devsecops-log8100/images/devsecops-arctiq-guest-session.png" data-image-preview-alt="Conférence invitée Arctiq sur le DevSecOps et les assistants IA en sécurité" aria-label="Afficher la session invitée DevSecOps en plein écran">
+                        <img src="papers/devsecops-log8100/images/devsecops-arctiq-guest-session.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                        <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                      </button>
+                      <figcaption>Session invitée Arctiq — DevSecOps et assistants IA en sécurité</figcaption>
+                    </figure>
+                  </div>
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Sous les objectifs <a href="https://www.polymtl.ca/programmes/cours/devsecops-operations-et-dev-logiciel-secur" target="_blank" rel="noopener noreferrer">LOG&nbsp;8100</a> de livraison sécurisée, rédigé et actualisé travaux et supports alignés DevSecOps pour ancrer les pratiques industrielles de sécurité en livraison</li>
@@ -1203,6 +1781,7 @@
                     <li class="list-group-item">Enseigné la sécurité avec exemples OWASP (risques fréquents, pratiques sûres, remédiation) reliés à des scénarios de laboratoire</li>
                     <li class="list-group-item">Corrigé travaux pratiques et coaché sur les livrables pour des remises plus propres et plus rapides</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> GitLab, CI/CD, DevSecOps, Docker, Kubernetes, OWASP, Codage sécurisé, Linux</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Coaching d'équipe, rétroaction constructive, animation en salle de classe</li>
                   </ul>
                 </div>
               </div>
@@ -1233,6 +1812,15 @@
                 <div class="description">
                   <p style="margin-top:0">Laboratoires, soutien au projet intégrateur et permanences sur les parcours mobile/UX, intégrateur et données distribuées ; le détail par cours suit.</p>
                   <p style="margin-top:.35em;margin-bottom:.5em;font-size:0.95em"><strong>Heures de contact :</strong> environ 250 h de contact en classe avec les étudiants (laboratoires, soutien au projet intégrateur, permanences).</p>
+                  <div class="job-gallery job-gallery--single" role="group" aria-label="Photo auxiliaire d'enseignement ÉTS">
+                    <figure>
+                      <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/ets-teaching/images/ets-teaching-cohort.png" data-image-preview-alt="Photo de groupe de la cohorte auxiliaire d'enseignement à l'ÉTS en salle de classe" aria-label="Afficher la photo de cohorte ÉTS en plein écran">
+                        <img src="papers/ets-teaching/images/ets-teaching-cohort.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                        <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                      </button>
+                      <figcaption>Cohorte auxiliaire d'enseignement à l'ÉTS (laboratoires et projet intégrateur)</figcaption>
+                    </figure>
+                  </div>
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Animé laboratoires, soutenu le projet intégrateur et tenu des permanences sur les parcours mobile/UX, intégrateur et données distribuées sur plusieurs sessions à l'ÉTS, pour <strong>environ 250 heures de contact en classe</strong> au total (p.&nbsp;ex. <a href="https://www.etsmtl.ca/etudes/cours/tch057" target="_blank" rel="noopener noreferrer">TCH&nbsp;057</a> hiver 2024 ; <a href="https://www.etsmtl.ca/etudes/cours/ind500" target="_blank" rel="noopener noreferrer">IND&nbsp;500</a> automne 2025 ; <a href="https://www.etsmtl.ca/etudes/cours/tch099" target="_blank" rel="noopener noreferrer">TCH&nbsp;099</a> été 2024, hiver 2025, été 2025 ; <a href="https://www.etsmtl.ca/etudes/cours/gti660" target="_blank" rel="noopener noreferrer">GTI&nbsp;660</a> été 2024 ; <a href="https://www.etsmtl.ca/etudes/cours/gti320" target="_blank" rel="noopener noreferrer">GTI&nbsp;320</a> hiver 2026)</li>
@@ -1240,6 +1828,7 @@
                     <li class="list-group-item">Pour équipes intégrateur <a href="https://www.etsmtl.ca/etudes/cours/tch099" target="_blank" rel="noopener noreferrer">TCH&nbsp;099</a> bloquées sur l'intégration, débogué architecture et pipelines backend/données ; maintenu l'infrastructure de cours sur Azure et le coaching SCRUM ; guidé les jalons pour que les étudiants livrent des parcours bout-en-bout</li>
                     <li class="list-group-item">Animé laboratoires mobile/UX <a href="https://www.etsmtl.ca/etudes/cours/tch057" target="_blank" rel="noopener noreferrer">TCH&nbsp;057</a> et <a href="https://www.etsmtl.ca/etudes/cours/gti320" target="_blank" rel="noopener noreferrer">GTI&nbsp;320</a> (hiver 2026), en résolvant rapidement questions d'outillage et de concepts</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> SQL, MongoDB, Kafka, PostgreSQL, bases de données distribuées, Microsoft Azure, Android Studio, UI/UX, SCRUM</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Mentorat étudiant, rétroaction fondée sur les grilles, patience sous échéances serrées</li>
                   </ul>
                   <div class="highlights">Cours (par session)</div>
                   <details class="cv-course" open>
@@ -1305,6 +1894,7 @@
                     <li class="list-group-item">Travaillé les contraintes ONVIF et WebRTC pour le streaming vidéo à l'échelle IoT</li>
                     <li class="list-group-item">Exploité Azure DevOps avec feature flags et promotions reproductibles</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> C#, .NET, Azure DevOps, Auth0, Sentry, Serilog, UML, Microservices, ONVIF, WebRTC</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Clarification des besoins, communication avec partenaires, sang-froid en production</li>
                   </ul>
                 </div>
               </div>
@@ -1342,6 +1932,7 @@
                     <li class="list-group-item">Construit API connexion et MFA Kotlin pour applis mobiles en conservant les contrôles de politique</li>
                     <li class="list-group-item">Enrichi la pile ELK avec tableaux Kibana et codes d'erreur harmonisés pour des signaux d'incident cohérents côté opérations</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Kotlin, Spring Boot, GraphQL, MongoDB, Microservices, Docker Swarm, Jira, Kibana, SAFe</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Travail en équipe agile, communication d'incidents, coordination interéquipes</li>
                   </ul>
                 </div>
               </div>
@@ -1378,6 +1969,7 @@
                     <li class="list-group-item">Formé l'équipe en HTML/CSS/JS et assuré le support vitrine, ce qui a réduit les questions répétées sur la maintenance</li>
                     <li class="list-group-item">Corrigé régressions pop-up, bannière et grille et ajouté un chatbot 3CX pour le support en libre-service</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> HTML, CSS, JavaScript, CommerceBuild, 3CX, SEO</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Communication client, empathie UX, formation du personnel</li>
                   </ul>
                 </div>
               </div>
@@ -1412,6 +2004,7 @@
                     <li class="list-group-item">Intégré les APIs Facebook Shop et Marketplace pour synchroniser le catalogue sans double saisie</li>
                     <li class="list-group-item">Ajouté un service de taux de change lié à l'inventaire et aux dates d'effet pour garder les catalogues CAD/USD alignés</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, Django, Vue.js, PostgreSQL, MongoDB, JavaScript, REST API, Git, Jira, développement full-stack</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Collaboration à distance, résolution de problèmes avec fournisseurs</li>
                   </ul>
                 </div>
               </div>
@@ -1440,12 +2033,22 @@
               <div class="job-details col-xs-11">
                 <div class="description">
                   Commerce voyage, outils service client/finance et automatisation des tests (stage puis temps partiel).
+                  <div class="job-gallery job-gallery--single" role="group" aria-label="UI billetterie Wandrian">
+                    <figure>
+                      <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/wanderian/images/wanderian-add-tickets-ui.png" data-image-preview-alt="Modale Wandrian Ajout de billets avec itinéraire, date, voyageurs et options de pass Eurail" aria-label="Afficher l'interface billetterie Wandrian en plein écran">
+                        <img src="papers/wanderian/images/wanderian-add-tickets-ui.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                        <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                      </button>
+                      <figcaption>UI billetterie Italiarail — parcours Ajout de billets</figcaption>
+                    </figure>
+                  </div>
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Sur billetterie Italiarail, collaboré avec Railkey Tech pour performance et UX, intégré Braintree, aligné UI aux nouvelles lignes directrices et étendu APIs d'achat, stabilisant parcours réservation bout-en-bout</li>
                     <li class="list-group-item">Accéléré support interne en construisant outils Django, Pyramid et jQuery plus tableau d'analyse d'usage des devises, remplaçant feuilles ad hoc pour service client et finance</li>
                     <li class="list-group-item">En stage, réécrit infrastructure Selenium bout-en-bout puis à temps partiel étendu couverture automatisée, interceptant régressions UI avant production</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, Django, Pyramid, JavaScript, jQuery, Selenium, MongoDB, REST API, Git, Jira, automatisation de tests</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Partenariat QA, livraison soucieuse des détails</li>
                   </ul>
                 </div>
               </div>
@@ -1480,6 +2083,7 @@
                     <li class="list-group-item">Construit jeux de données vision extérieure (~12&nbsp;000 images) avec capture/annotation, outillage Python couleur RAW et commande de rigs pour expériences multi-points de vue</li>
                     <li class="list-group-item">Maintenu débit du laboratoire d'imagerie avec sauvegardes QNAP pour postes Ubuntu, support réseau et serveurs Linux/Windows pour expériences et outillage REST</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, C++, CUDA, OpenCV, Flask, Ansible, Linux, Windows, REST APIs</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Rigueur en recherche, documentation de laboratoire claire</li>
                   </ul>
                 </div>
               </div>
@@ -1517,6 +2121,7 @@
                     <li class="list-group-item">Maintient l'infrastructure et la présence web du club ; soutient des projets autour du trading, des données et de la formation en ingénierie</li>
                     <li class="list-group-item">Dirige le développement et le soutien d'outils internes (plateforme, stratégies, ateliers, automatisation)</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, données et visualisation, web, infrastructure, automatisation d'ateliers</li>
+                    <li class="list-group-item"><span style="font-weight:bold">Compétences relationnelles :</span> Leadership communautaire, animation d'ateliers, coordination bénévole</li>
                   </ul>
                 </div>
               </div>
@@ -1558,54 +2163,146 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-code-branch ico"></i> Projets sélectionnés</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Cinq projets, de la production et de l'intégration d'entreprise à l'architecture appliquée.</p>
+          <p class="section-intro">Une sélection séparée entre projets personnels maintenus dans la durée et contributions sur des bases de code partagées.</p>
+          <details class="project-group">
+            <summary class="project-group-title">Projets personnels et open source maintenus</summary>
+            <div class="project-group-body">
+            <p class="project-group-intro">Outils, homelab, intégrations et prototypes que je conçois, publie et fais évoluer moi-même.</p>
           <ul class="project-list">
             <li class="project-card project-card--uml">
               <div class="project-card-header">
                 <div class="project-title"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a></div>
                 <a class="project-github-stars" href="https://github.com/antoinebou12/uml-mcp" aria-label="uml-mcp sur GitHub, environ 83 étoiles">★ 83</a>
               </div>
-              <div class="project-context">Diagrammes UML depuis Cursor (MCP)</div>
+              <div class="project-context">Diagrammes UML depuis une interface de chat (MCP)</div>
               <div class="project-card-body">
                 <figure class="project-diagram" aria-labelledby="uml-flow-caption-fr">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 248" role="img" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 192" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true">
+                    <title>Vous décrivez, Interface de chat, uml-mcp MCP, diagramme UML</title>
                     <defs>
-                      <marker id="uml-arrow-fr" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
-                        <path d="M0,0 L8,0 L4,7 Z" fill="#5d6a69"/>
-                      </marker>
                       <style>
                         .uml-n { fill: #f4faf9; stroke: #227c74; stroke-width: 1.5; }
                         .uml-n-start { fill: #eef6f5; }
                         .uml-n-core { fill: #e8f6f4; stroke: #1a6b63; stroke-width: 2; }
-                        .uml-t { font: 600 10px 'Open Sans', sans-serif; fill: #1f4742; }
-                        .uml-e { stroke: #5d6a69; stroke-width: 1.5; fill: none; marker-end: url(#uml-arrow-fr); }
+                        .uml-n-out { fill: #faf6ef; stroke: #227c74; stroke-width: 1.5; stroke-dasharray: 3 2; }
+                        .uml-s { fill: #d4ebe8; stroke: #227c74; stroke-width: 1; }
+                        .uml-s-t { font: 700 9px 'Open Sans', system-ui, sans-serif; fill: #1a6b63; dominant-baseline: middle; text-anchor: middle; }
+                        .uml-t { font: 600 10px 'Open Sans', system-ui, sans-serif; fill: #1f4742; dominant-baseline: middle; text-anchor: middle; }
+                        .uml-spine { stroke: #5d6a69; stroke-width: 1.5; fill: none; }
+                        .uml-head { fill: #5d6a69; }
                       </style>
                     </defs>
-                    <rect class="uml-n uml-n-start" x="16" y="4" width="100" height="28" rx="14"/>
-                    <text class="uml-t" x="66" y="22" text-anchor="middle">Vous décrivez</text>
-                    <line class="uml-e" x1="66" y1="34" x2="66" y2="42"/>
-                    <rect class="uml-n" x="12" y="44" width="108" height="32" rx="6"/>
-                    <text class="uml-t" x="66" y="64" text-anchor="middle">Cursor</text>
-                    <line class="uml-e" x1="66" y1="78" x2="66" y2="86"/>
-                    <rect class="uml-n uml-n-core" x="8" y="88" width="116" height="36" rx="6"/>
-                    <text class="uml-t" x="66" y="110" text-anchor="middle">uml-mcp MCP</text>
-                    <line class="uml-e" x1="66" y1="126" x2="66" y2="134"/>
-                    <rect class="uml-n" x="12" y="136" width="108" height="32" rx="6"/>
-                    <text class="uml-t" x="66" y="156" text-anchor="middle">UML diagram</text>
+                    <circle class="uml-s" cx="18" cy="23" r="8"/>
+                    <text class="uml-s-t" x="18" y="23">1</text>
+                    <rect class="uml-n uml-n-start" x="32" y="9" width="108" height="28" rx="14"/>
+                    <text class="uml-t" x="86" y="23">Vous décrivez</text>
+                    <line class="uml-spine" x1="86" y1="37" x2="86" y2="47"/>
+                    <polygon class="uml-head" points="86,47 82,41 90,41"/>
+                    <circle class="uml-s" cx="18" cy="61" r="8"/>
+                    <text class="uml-s-t" x="18" y="61">2</text>
+                    <rect class="uml-n" x="32" y="47" width="108" height="28" rx="6"/>
+                    <text class="uml-t" x="86" y="61">Interface de chat</text>
+                    <line class="uml-spine" x1="86" y1="75" x2="86" y2="85"/>
+                    <polygon class="uml-head" points="86,85 82,79 90,79"/>
+                    <circle class="uml-s" cx="18" cy="103" r="8"/>
+                    <text class="uml-s-t" x="18" y="103">3</text>
+                    <rect class="uml-n uml-n-core" x="32" y="85" width="108" height="36" rx="6"/>
+                    <text class="uml-t" x="86" y="103">uml-mcp MCP</text>
+                    <line class="uml-spine" x1="86" y1="121" x2="86" y2="131"/>
+                    <polygon class="uml-head" points="86,131 82,125 90,125"/>
+                    <circle class="uml-s" cx="18" cy="145" r="8"/>
+                    <text class="uml-s-t" x="18" y="145">4</text>
+                    <rect class="uml-n uml-n-out" x="32" y="131" width="108" height="28" rx="6"/>
+                    <text class="uml-t" x="86" y="145">Diagramme UML</text>
                   </svg>
-                  <figcaption class="sr-only" id="uml-flow-caption-fr">Décrire l'architecture dans Cursor, les outils MCP uml-mcp produisent un diagramme UML</figcaption>
+                  <figcaption class="sr-only" id="uml-flow-caption-fr">Décrire l'architecture dans une interface de chat, les outils MCP uml-mcp produisent un diagramme UML</figcaption>
                 </figure>
                 <div class="project-card-copy">
-                  <div class="project-impact"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> est un serveur MCP open source pour <strong>Cursor</strong> : vous décrivez l'architecture dans le chat, et il produit des diagrammes (classes, séquences, etc.) pour revues et documentation (Mermaid, PlantUML, Kroki). Les mêmes outils sont disponibles dans <strong>ChatGPT</strong> via un <a href="https://github.com/antoinebou12/D2COpenAIPlugin">GPT personnalisé</a>.</div>
+                  <div class="project-impact"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> est un serveur MCP open source pour générer des diagrammes UML depuis une interface de chat. On décrit l'architecture, puis l'outil renvoie des diagrammes utiles pour les revues et la documentation, avec Mermaid, PlantUML ou Kroki. Le même flux fonctionne dans <strong>Cursor</strong> et dans <strong>ChatGPT</strong> via un <a href="https://github.com/antoinebou12/D2COpenAIPlugin">GPT personnalisé</a>.</div>
                   <div class="project-tags">
                     <span class="project-tag">MCP</span><span class="project-tag">Cursor</span><span class="project-tag">Python</span><span class="project-tag">Mermaid</span><span class="project-tag">Open source</span>
                   </div>
-                  <div class="project-context">Impact : ~83 étoiles GitHub sur uml-mcp ; OSS Python maintenu en public.</div>
                 </div>
               </div>
             </li>
-
-
+            <li class="project-card">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/antoinebou12/MediaBoxDockerCompose">MediaBoxDockerCompose</a> · <a href="https://github.com/antoinebou12/another-install-script">scripts d'installation</a></div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/MediaBoxDockerCompose" aria-label="MediaBoxDockerCompose sur GitHub, 11 étoiles">★ 11</a>
+              </div>
+              <div class="project-context">Homelab Linux : bibliothèque média en Docker Compose</div>
+              <div class="project-impact">Une stack <code>docker compose up -d</code> pour monter rapidement une bibliothèque média sur un homelab Linux, avec téléchargements, automatisation *Arr, Plex ou Jellyfin, accès distant et supervision. Les scripts bash du dépôt compagnon servent à préparer un hôte neuf service par service avant de passer au compose complet.</div>
+              <div class="project-tags">
+                <span class="project-tag">Docker Compose</span><span class="project-tag">Servarr</span><span class="project-tag">Plex</span><span class="project-tag">Jellyfin</span><span class="project-tag">Homelab</span>
+              </div>
+            </li>
+            <li class="project-card">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/antoinebou12/ESP32-7SEG" target="_blank" rel="noopener noreferrer">ESP32-7SEG</a></div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/ESP32-7SEG" aria-label="ESP32-7SEG sur GitHub, 1 étoile">★ 1</a>
+              </div>
+              <div class="project-context">Afficheur 7 segments ESP32 avec interface web locale</div>
+              <div class="project-impact">Firmware pour carte ESP32 FireBeetle reliée à un afficheur Adafruit I2C 7 segments. Une petite interface web locale permet d'envoyer chiffres et caractères depuis n'importe quel navigateur du réseau.</div>
+              <div class="project-tags">
+                <span class="project-tag">ESP32</span><span class="project-tag">C++</span><span class="project-tag">PlatformIO</span><span class="project-tag">IoT</span><span class="project-tag">I2C</span>
+              </div>
+            </li>
+            <li class="project-card">
+              <div class="project-title"><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">Portfolio créateur Snapchat Lenses</a></div>
+              <div class="project-context">Lenses AR sur Snapchat</div>
+              <div class="project-impact">Création et publication de lenses AR sur Snapchat (42 lenses, 2017–2020), centrées sur les effets visuels, l'itération rapide et la diffusion mobile. Cumul Lens Insights : <strong>13,97 M lectures</strong>, <strong>20,38 M vues</strong>, <strong>711,8 k partages</strong>, <strong>10 092 favoris</strong>, <strong>753 publications</strong>, <strong>428 auteurs uniques</strong>.</div>
+              <details class="project-preview">
+                <summary class="project-preview-summary">Essayer les lenses publiées (17)</summary>
+                <div class="project-preview-panel">
+                  <ul class="project-lens-list">
+                    <li><a href="https://lens.snap.com/experience/fa538826-5448-4420-9390-b775b823eb5c" target="_blank" rel="noopener noreferrer">BIG SMILE</a></li>
+                    <li><a href="https://lens.snap.com/experience/7d454dc0-a939-4f44-9c28-01118104eff8" target="_blank" rel="noopener noreferrer">Countdown to 10</a></li>
+                    <li><a href="https://lens.snap.com/experience/2ef5605f-dd55-4b48-b279-b8e22ff61263" target="_blank" rel="noopener noreferrer">ETS HELMET</a></li>
+                    <li><a href="https://lens.snap.com/experience/628449c5-3a38-437e-9b03-b78cfc8a3101" target="_blank" rel="noopener noreferrer">Face Corruption</a></li>
+                    <li><a href="https://lens.snap.com/experience/d9418c46-c24b-45fe-a604-e23e6b23d57e" target="_blank" rel="noopener noreferrer">Fox 3D</a></li>
+                    <li><a href="https://lens.snap.com/experience/9296c243-fd47-4dce-80e8-eda9bdd67af7" target="_blank" rel="noopener noreferrer">Glasses Saint Leo</a></li>
+                    <li><a href="https://lens.snap.com/experience/5f5c0865-026f-4453-af59-b7cd592ebece" target="_blank" rel="noopener noreferrer">Go Crazy Facetime</a></li>
+                    <li><a href="https://lens.snap.com/experience/9ef12d3e-fb54-436a-9749-f4b61310c02f" target="_blank" rel="noopener noreferrer">Gmod Dance</a></li>
+                    <li><a href="https://lens.snap.com/experience/37a9a4d6-9e42-4476-af95-1327e472cf3a" target="_blank" rel="noopener noreferrer">Half Life Face</a></li>
+                    <li><a href="https://lens.snap.com/experience/39d1145e-69c5-40e3-b5b1-db527f0a43a7" target="_blank" rel="noopener noreferrer">Isabelle Justice</a></li>
+                    <li><a href="https://lens.snap.com/experience/13428d94-b5bc-49bb-89e4-45db52e172a7" target="_blank" rel="noopener noreferrer">Moist One</a></li>
+                    <li><a href="https://lens.snap.com/experience/2057702b-ec80-4670-886d-57cabdcd6f59" target="_blank" rel="noopener noreferrer">nah with the boys</a></li>
+                    <li><a href="https://lens.snap.com/experience/75cdcfe5-0374-4c6d-a6c5-f0ea9bfc1093" target="_blank" rel="noopener noreferrer">Old man Hoodie</a></li>
+                    <li><a href="https://lens.snap.com/experience/880efb0b-515a-4fc6-b160-5d88fc7965d0" target="_blank" rel="noopener noreferrer">Old School Paint</a></li>
+                    <li><a href="https://lens.snap.com/experience/b32900f3-428d-45cc-bada-0a7515ce2e68" target="_blank" rel="noopener noreferrer">Scared Hamster</a></li>
+                    <li><a href="https://lens.snap.com/experience/10f9dfac-de4a-486f-b158-1433bbe34501" target="_blank" rel="noopener noreferrer">Ti-Tracker</a></li>
+                    <li><a href="https://lens.snap.com/experience/51b03ede-9ea6-4954-a038-ea5401710b95" target="_blank" rel="noopener noreferrer">Trippy Eyes</a></li>
+                  </ul>
+                  <p class="project-lens-list-note">Chaque lien ouvre l'expérience sur <a href="https://lens.snap.com/" target="_blank" rel="noopener noreferrer">lens.snap.com</a> (application Snapchat sur mobile).</p>
+                </div>
+              </details>
+              <div class="project-tags">
+                <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
+              </div>
+            </li>
+          </ul>
+            </div>
+          </details>
+          <details class="project-group">
+            <summary class="project-group-title">Contributions et travaux collaboratifs</summary>
+            <div class="project-group-body">
+            <p class="project-group-intro">Une sélection plus courte de contributions acceptées, regroupées entre travail de maîtrise, projets de club et maintenance open source utile dans la durée.</p>
+          <details class="project-subgroup">
+            <summary class="project-subgroup-title">Maîtrise et code de recherche</summary>
+            <div class="project-subgroup-body">
+            <p class="project-subgroup-intro">Travaux liés à la simulation, à l'outillage scientifique et à des usages proches de la maîtrise.</p>
+          <ul class="project-list">
+            <li class="project-card">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/ETSim/TrueMapData" target="_blank" rel="noopener noreferrer">TrueMapData</a></div>
+                <a class="project-github-stars" href="https://github.com/ETSim/TrueMapData" aria-label="TrueMapData sur GitHub">★ GitHub</a>
+              </div>
+              <div class="project-context">Contribution ETSim · packaging, release et outillage de données</div>
+              <div class="project-impact">Contribution au codebase ETSim autour de la structure du package, du flux de release et de la soumission de dépendances. C'est le projet qui se rattache le plus clairement au travail de maîtrise et à l'outillage de recherche. Contribution connexe : support TrueMap dans <a href="https://github.com/fredericjs/surfalize" target="_blank" rel="noopener noreferrer">fredericjs/surfalize</a> pour la métrologie de surface.</div>
+              <div class="project-tags">
+                <span class="project-tag">Python</span><span class="project-tag">Packaging</span><span class="project-tag">CI/CD</span><span class="project-tag">ETSim</span>
+              </div>
+            </li>
             <li class="project-card project-card--graphquon">
               <div class="project-title"><a href="https://graphquon.github.io/">Site de conférence Graphquon 2024</a></div>
               <div class="project-context">Plateforme événementielle académique et outils de soutien aux participants</div>
@@ -1622,42 +2319,185 @@
                   <p class="project-embed-note">Si l'aperçu reste vide, le site peut bloquer l'intégration. <a href="https://graphquon.github.io/" target="_blank" rel="noopener noreferrer">Ouvrir le site de conférence</a>.</p>
                 </div>
               </details>
-              <div class="project-impact">Construit le site officiel de l'atelier annuel Québec-Ontario pre-SIGGRAPH et un assistant UML pour les questions des participants.</div>
+              <div class="project-impact">Réalisation du site officiel de l'atelier annuel Québec-Ontario pre-SIGGRAPH, avec une expérience simple pour le programme, les infos pratiques et les questions des participants.</div>
               <div class="project-tags">
                 <span class="project-tag">Web</span><span class="project-tag">Conférence</span><span class="project-tag">UX</span>
               </div>
-              <div class="project-context">Impact : livré pour l'atelier 2024.</div>
             </li>
             <li class="project-card">
-              <div class="project-title"><a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK">Serilog.Sinks.SentrySDK</a></div>
-              <div class="project-context">Sink Serilog pour Sentry en .NET</div>
-              <div class="project-impact">Maintient un sink Serilog pour les journaux et erreurs Sentry en production .NET.</div>
-              <div class="project-tags">
-                <span class="project-tag">.NET</span><span class="project-tag">Serilog</span><span class="project-tag">Sentry</span><span class="project-tag">NuGet</span>
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/antoinebou12/ipc-toolkit" target="_blank" rel="noopener noreferrer">ipc-toolkit</a></div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/ipc-toolkit" aria-label="ipc-toolkit sur GitHub">★ GitHub</a>
               </div>
-              <div class="project-context">Impact : ~157 k téléchargements NuGet.</div>
-            </li>
-            <li class="project-card">
-              <div class="project-title"><a href="https://github.com/antoinebou12/MediaBoxDockerCompose">MediaBoxDockerCompose</a> · <a href="https://github.com/antoinebou12/another-install-script">scripts d'installation</a></div>
-              <div class="project-context">Stack média homelab et provisionnement d'hôtes reproductible</div>
-              <div class="project-impact">Maintient une stack Compose (Sonarr, Radarr, Jackett, Deluge, NZBGet, Plex, Jellyfin, Ombi, Tautulli, Lidarr, Netdata, FileBrowser, Samba, WireGuard) et des installateurs bash à menu pour déployer les mêmes services sur un hôte Linux neuf sans configurer chaque conteneur à la main.</div>
+              <div class="project-context">Contribution IPC · frottement anisotrope</div>
+              <div class="project-impact">Contribution au travail sur le <a href="https://github.com/ipc-sim/ipc-toolkit/pull/210" target="_blank" rel="noopener noreferrer">frottement anisotrope</a> dans l'<a href="https://github.com/ipc-sim/ipc-toolkit" target="_blank" rel="noopener noreferrer">IPC Toolkit</a>. Le travail touche un codebase de simulation sérieux, avec contributions sur le coeur C++/Eigen, les bindings Python <code>ipctk</code>, les notebooks et les tests.</div>
               <div class="project-tags">
-                <span class="project-tag">Docker Compose</span><span class="project-tag">Linux</span><span class="project-tag">Ansible</span><span class="project-tag">Homelab</span>
+                <span class="project-tag">C++</span><span class="project-tag">Eigen</span><span class="project-tag">Python</span><span class="project-tag">Simulation</span><span class="project-tag">Frottement</span>
               </div>
-              <div class="project-context">Impact : une définition de stack et un flux d'installation réutilisés sur machines personnelles et de labo.</div>
-            </li>
-            <li class="project-card">
-              <div class="project-title"><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">Portfolio créateur Snapchat Lenses</a></div>
-              <div class="project-context">Lenses AR sur Snapchat</div>
-              <div class="project-impact">Conçu et publié des lenses AR sur Snapchat (42 lenses ; 20 M+ vues).</div>
-              <div class="project-tags">
-                <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
-              </div>
-              <div class="project-context">Impact : 42 lenses, 20,21 M vues, 13,80 M lectures, 709,6 k partages.</div>
             </li>
           </ul>
-          </div>
-        </details>
+            </div>
+          </details>
+          <details class="project-subgroup">
+            <summary class="project-subgroup-title">Travail de club et projets étudiants</summary>
+            <div class="project-subgroup-body">
+            <p class="project-subgroup-intro">Contributions acceptées dans des projets communautaires ou des initiatives étudiantes structurées.</p>
+          <ul class="project-list">
+            <li class="project-card">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/AlgoETS/AINewsTracker" target="_blank" rel="noopener noreferrer">AINewsTracker</a></div>
+                <a class="project-github-stars" href="https://github.com/AlgoETS/AINewsTracker" aria-label="AINewsTracker sur GitHub, 24 étoiles">★ 24</a>
+              </div>
+              <div class="project-context">Contribution AlgoÉTS · backtesting de nouvelles financières par IA</div>
+              <div class="project-impact">Contribution à une stack open source <a href="https://github.com/AlgoETS" target="_blank" rel="noopener noreferrer">AlgoÉTS</a> en FastAPI et MongoDB qui agrège plus de 60 sources, classe les nouvelles par sentiment et par ticker, puis teste leur lien avec les mouvements de marché. Le projet s'appuie sur un workflow Poetry/Docker et une documentation publique.</div>
+              <div class="project-tags">
+                <span class="project-tag">Python</span><span class="project-tag">FastAPI</span><span class="project-tag">MongoDB</span><span class="project-tag">IA</span><span class="project-tag">AlgoÉTS</span>
+              </div>
+            </li>
+            <li class="project-card project-card--simility">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/AlgoETS/SimilityVectorEmbedding" target="_blank" rel="noopener noreferrer">SimilityVectorEmbedding</a></div>
+                <a class="project-github-stars" href="https://github.com/AlgoETS/SimilityVectorEmbedding" aria-label="SimilityVectorEmbedding sur GitHub, 1 étoile">★ 1</a>
+              </div>
+              <div class="project-context">Contribution AlgoÉTS · similarité de films par embeddings vectoriels</div>
+              <div class="project-card-body">
+                <div class="project-gallery" role="group" aria-label="Captures SimilityVectorEmbedding">
+                  <figure>
+                    <img src="papers/simility-vector-embedding/images/gradio-movie-similarity.png" alt="Interface Gradio Movie Similarity Search avec Matrix comme requête" width="640" height="360" loading="lazy" decoding="async" />
+                    <figcaption>Application Gradio : titre, titres multiples ou notes</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="papers/simility-vector-embedding/images/tsne-movie-embeddings.png" alt="Graphique t-SNE des grappes d'embeddings de films" width="640" height="480" loading="lazy" decoding="async" />
+                    <figcaption>Visualisation t-SNE des voisinages d'embeddings</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="papers/simility-vector-embedding/images/embeddings-scatter.png" alt="Nuage de points 2D des vecteurs d'embedding de films" width="640" height="360" loading="lazy" decoding="async" />
+                    <figcaption>Projection 2D de l'espace d'embeddings</figcaption>
+                  </figure>
+                </div>
+                <div class="project-card-copy">
+                  <div class="project-impact">Travail open source <a href="https://github.com/AlgoETS" target="_blank" rel="noopener noreferrer">AlgoÉTS</a> sur la similarité de films : embeddings Sentence Transformers dans PostgreSQL avec <strong>pgvector</strong>, pistes optionnelles <strong>Qdrant</strong> et <strong>Neo4j</strong>. Les notebooks Jupyter comparent les distances cosinus et L2 ; une interface <strong>Gradio</strong> lance la recherche à partir de titres ou de notes.</div>
+                  <div class="project-tags">
+                    <span class="project-tag">Python</span><span class="project-tag">PostgreSQL</span><span class="project-tag">pgvector</span><span class="project-tag">TAL</span><span class="project-tag">Gradio</span><span class="project-tag">AlgoÉTS</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+            </div>
+          </details>
+          <details class="project-subgroup">
+            <summary class="project-subgroup-title">Intégrations open source maintenues</summary>
+            <div class="project-subgroup-body">
+            <p class="project-subgroup-intro">Forks et contributions qui restent utiles à une base d'utilisateurs plus large.</p>
+          <ul class="project-list">
+            <li class="project-card project-card--serilog">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK</a></div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK" aria-label="Serilog.Sinks.SentrySDK sur GitHub, 2 étoiles">★ 2</a>
+              </div>
+              <div class="project-context">Sink Serilog pour Sentry en .NET</div>
+              <div class="project-impact">Maintenance d'un sink .NET qui relie Serilog à Sentry, pour centraliser journaux et erreurs sans alourdir la configuration des applications. Six identifiants NuGet couvrent net6.0 et net10.0 (principal, ASP.NET Core et variantes ciblées), avec publication CI sur les releases GitHub et des exemples prêts à intégrer.</div>
+              <details class="project-nuget">
+                <summary class="project-nuget-summary">Packages NuGet (version et téléchargements)</summary>
+                <div class="project-nuget-panel">
+                  <div class="project-nuget-row">
+                    <a class="project-nuget-id" href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK</a>
+                    <span class="project-nuget-badges">
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.svg?label=nuget" alt="Version NuGet de Serilog.Sinks.SentrySDK" width="88" height="20" loading="lazy" decoding="async" /></a>
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/dt/Serilog.Sinks.SentrySDK.svg?label=downloads" alt="Téléchargements NuGet de Serilog.Sinks.SentrySDK" width="110" height="20" loading="lazy" decoding="async" /></a>
+                    </span>
+                  </div>
+                  <div class="project-nuget-row">
+                    <a class="project-nuget-id" href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.6" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK.6</a>
+                    <span class="project-nuget-badges">
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.6" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.6.svg?label=nuget" alt="Version NuGet de Serilog.Sinks.SentrySDK.6" width="88" height="20" loading="lazy" decoding="async" /></a>
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.6" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/dt/Serilog.Sinks.SentrySDK.6.svg?label=downloads" alt="Téléchargements NuGet de Serilog.Sinks.SentrySDK.6" width="110" height="20" loading="lazy" decoding="async" /></a>
+                    </span>
+                  </div>
+                  <div class="project-nuget-row">
+                    <a class="project-nuget-id" href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.6" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK.AspNetCore.6</a>
+                    <span class="project-nuget-badges">
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.6" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.AspNetCore.6.svg?label=nuget" alt="Version NuGet de Serilog.Sinks.SentrySDK.AspNetCore.6" width="88" height="20" loading="lazy" decoding="async" /></a>
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.6" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/dt/Serilog.Sinks.SentrySDK.AspNetCore.6.svg?label=downloads" alt="Téléchargements NuGet de Serilog.Sinks.SentrySDK.AspNetCore.6" width="110" height="20" loading="lazy" decoding="async" /></a>
+                    </span>
+                  </div>
+                  <div class="project-nuget-row">
+                    <a class="project-nuget-id" href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.10" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK.10</a>
+                    <span class="project-nuget-badges">
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.10" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.10.svg?label=nuget" alt="Version NuGet de Serilog.Sinks.SentrySDK.10" width="88" height="20" loading="lazy" decoding="async" /></a>
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.10" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/dt/Serilog.Sinks.SentrySDK.10.svg?label=downloads" alt="Téléchargements NuGet de Serilog.Sinks.SentrySDK.10" width="110" height="20" loading="lazy" decoding="async" /></a>
+                    </span>
+                  </div>
+                  <div class="project-nuget-row">
+                    <a class="project-nuget-id" href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.10" target="_blank" rel="noopener noreferrer">Serilog.Sinks.SentrySDK.AspNetCore.10</a>
+                    <span class="project-nuget-badges">
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.10" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/v/Serilog.Sinks.SentrySDK.AspNetCore.10.svg?label=nuget" alt="Version NuGet de Serilog.Sinks.SentrySDK.AspNetCore.10" width="88" height="20" loading="lazy" decoding="async" /></a>
+                      <a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK.AspNetCore.10" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/nuget/dt/Serilog.Sinks.SentrySDK.AspNetCore.10.svg?label=downloads" alt="Téléchargements NuGet de Serilog.Sinks.SentrySDK.AspNetCore.10" width="110" height="20" loading="lazy" decoding="async" /></a>
+                    </span>
+                  </div>
+                  <p class="project-nuget-note">Badges chargés depuis shields.io (comme dans le README du dépôt). Dernière version&nbsp;: <a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/releases/tag/v1.0.7.2" target="_blank" rel="noopener noreferrer">v1.0.7.2 sur GitHub</a>.</p>
+                </div>
+              </details>
+              <div class="project-tags">
+                <span class="project-tag">.NET</span><span class="project-tag">Serilog</span><span class="project-tag">Sentry</span><span class="project-tag">NuGet</span><span class="project-tag">ASP.NET Core</span>
+              </div>
+            </li>
+            <li class="project-card project-card--renpho">
+              <div class="project-card-header">
+                <div class="project-title"><a href="https://github.com/antoinebou12/hass_renpho">hass_renpho</a> · <a href="https://hass-renpho.vercel.app/docs" target="_blank" rel="noopener noreferrer">API docs</a></div>
+                <a class="project-github-stars" href="https://github.com/antoinebou12/hass_renpho" aria-label="hass_renpho sur GitHub, 11 étoiles">★ 11</a>
+              </div>
+              <div class="project-context">Intégration Home Assistant (HACS) pour balances Renpho</div>
+              <div class="project-card-body">
+                <div class="project-gallery" role="group" aria-label="Tableaux de bord Lovelace hass_renpho">
+                  <figure>
+                    <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/hass-renpho/images/hass-renpho-lovelace-metrics.png" data-image-preview-alt="Tableau de bord Lovelace Home Assistant : signes vitaux Renpho, historique du poids et jauges de composition" data-image-preview-caption="Signes vitaux, historique du poids et jauges de composition dans Lovelace." aria-label="Afficher le tableau de bord métriques hass_renpho en plein écran">
+                      <img src="papers/hass-renpho/images/hass-renpho-lovelace-metrics.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                      <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                    </button>
+                    <figcaption>Signes vitaux, poids et jauges de composition</figcaption>
+                  </figure>
+                  <figure>
+                    <button type="button" class="job-gallery-preview-link" data-image-preview-open data-image-preview-src="papers/hass-renpho/images/hass-renpho-lovelace-girth.png" data-image-preview-alt="Tableau de bord Lovelace Home Assistant : tours de taille et objectifs Renpho" data-image-preview-caption="Tours de taille et objectifs synchronisés depuis l'API cloud Renpho." aria-label="Afficher le tableau de bord tours de taille hass_renpho en plein écran">
+                      <img src="papers/hass-renpho/images/hass-renpho-lovelace-girth.png" alt="" width="640" height="360" loading="lazy" decoding="async" aria-hidden="true" />
+                      <span class="job-gallery-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                    </button>
+                    <figcaption>Tours de taille et objectifs de l'intégration</figcaption>
+                  </figure>
+                </div>
+                <div class="project-card-copy">
+                  <div class="project-impact">Fork puis maintenance d'une intégration open source issue de <a href="https://github.com/neilzilla/hass-renpho" target="_blank" rel="noopener noreferrer">neilzilla/hass-renpho</a>, pour faire remonter poids, IMC, masse grasse, tours de taille et objectifs Renpho dans Home Assistant. J'y ai repris le client API, le flux de configuration, le proxy optionnel et la documentation associée.</div>
+                  <div class="project-tags">
+                    <span class="project-tag">Home Assistant</span><span class="project-tag">Python</span><span class="project-tag">HACS</span><span class="project-tag">IoT</span><span class="project-tag">Open source</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+            </div>
+          </details>
+            </div>
+          </details>
+          <details class="project-subgroup">
+            <summary class="project-subgroup-title">Autres contributions acceptées</summary>
+            <div class="project-subgroup-body">
+            <p class="project-subgroup-intro">Une courte liste de travaux fusionnés qui ne méritent pas une carte complète, mais qui montrent l'étendue des contributions.</p>
+            <ul class="list-group">
+              <li class="list-group-item"><a href="https://github.com/XITRIX/Moonlight-Switch" target="_blank" rel="noopener noreferrer"><strong>XITRIX/Moonlight-Switch</strong></a> : correctifs acceptés.</li>
+              <li class="list-group-item"><a href="https://github.com/Place1/wg-access-server" target="_blank" rel="noopener noreferrer"><strong>Place1/wg-access-server</strong></a> : mises à jour Docker et documentation.</li>
+            </ul>
+            </div>
+          </details>
+        </div>
+      </details>
+        <div class="box cv-section clustrmaps-section">
+          <a class="clustrmaps-section-link" href="https://clustrmaps.com/h/a/5r6lAAh3W_opreqW2Zi-o-UhGvrv12PSDzwfKIyaVoA" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-globe-americas ico"></i> Carte des visiteurs
+            <span class="clustrmaps-section-link-icon" aria-hidden="true"><i class="fas fa-external-link-alt"></i></span>
+            <span class="sr-only"> (ouvre ClustrMaps dans un nouvel onglet)</span>
+          </a>
+        </div>
       </div>
       <div class="col-xs-12 col-sm-5">
         <!-- CONTACT -->
@@ -1682,8 +2522,8 @@
             <div class="icon pull-left text-center"><span class="fab fa-linkedin fa-fw"></span></div>
             <div class="title pull-right">LinkedIn</div>
             <div class="description pull-right"><a
-                href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;antoineboucher12&#x2F;"
-                target="_blank">antoineboucher12</a></div>
+                href="https://www.linkedin.com/in/antoineboucher12/"
+                target="_blank" rel="noopener noreferrer">antoineboucher12</a></div>
           </div>
           <div class="contact-item">
             <div class="icon pull-left text-center"><span class="fas fa-link fa-fw"></span></div>
@@ -1694,7 +2534,7 @@
             <div class="icon pull-left text-center"><span class="fab fa-github fa-fw"></span></div>
             <div class="title pull-right">GitHub</div>
             <div class="description pull-right">
-              <a href="https:&#x2F;&#x2F;github.com&#x2F;antoinebou12" target="_blank" rel="noopener noreferrer">antoinebou12</a>
+              <a href="https://github.com/antoinebou12" target="_blank" rel="noopener noreferrer">antoinebou12</a>
               <div class="github-profile-stats" aria-label="Statistiques du profil GitHub">
                 <span class="github-stat github-stat-contrib"><strong>297</strong> contributions</span>
                 <span class="github-stat github-stat-stars"><span aria-hidden="true">★</span> <strong>241</strong></span>
@@ -1735,21 +2575,21 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Compétences</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Plateforme, infographie, livraison et données, par domaine. Certifications vérifiables ci-dessous.</p>
+          <p class="section-intro">Plateforme, infographie, livraison et données, par domaine ; chaque pastille ouvre la doc ou la page de vérification.</p>
           <details class="skill-group">
             <summary class="skill-group-summary">Graphismes / 3D</summary>
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">OpenGL</span>
-      <span class="skill badge">GLSL</span>
-      <span class="skill badge">C++</span>
+      <a class="skill badge" href="https://www.opengl.org/" target="_blank" rel="noopener noreferrer">OpenGL</a>
+      <a class="skill badge" href="https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language" target="_blank" rel="noopener noreferrer">GLSL</a>
+      <a class="skill badge" href="https://isocpp.org/" target="_blank" rel="noopener noreferrer">C++</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">Blender</span>
-      <span class="skill badge">CUDA</span>
-      <span class="skill badge">OpenCV</span>
+      <a class="skill badge" href="https://www.blender.org/" target="_blank" rel="noopener noreferrer">Blender</a>
+      <a class="skill badge" href="https://developer.nvidia.com/cuda-toolkit" target="_blank" rel="noopener noreferrer">CUDA</a>
+      <a class="skill badge" href="https://opencv.org/" target="_blank" rel="noopener noreferrer">OpenCV</a>
     </div>
             </div>
           </details>
@@ -1758,21 +2598,21 @@
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">Java</span>
-      <span class="skill badge">Kotlin</span>
-      <span class="skill badge">Spring Boot</span>
-      <span class="skill badge">Python</span>
-      <span class="skill badge">Django</span>
-      <span class="skill badge">Flask</span>
-      <span class="skill badge">API REST</span>
-      <span class="skill badge">Microservices</span>
+      <a class="skill badge" href="https://dev.java/" target="_blank" rel="noopener noreferrer">Java</a>
+      <a class="skill badge" href="https://kotlinlang.org/" target="_blank" rel="noopener noreferrer">Kotlin</a>
+      <a class="skill badge" href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener noreferrer">Spring Boot</a>
+      <a class="skill badge" href="https://www.python.org/" target="_blank" rel="noopener noreferrer">Python</a>
+      <a class="skill badge" href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">Django</a>
+      <a class="skill badge" href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer">Flask</a>
+      <a class="skill badge" href="https://developer.mozilla.org/fr/docs/Glossary/REST" target="_blank" rel="noopener noreferrer">API REST</a>
+      <a class="skill badge" href="https://microservices.io/" target="_blank" rel="noopener noreferrer">Microservices</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">C#</span>
-      <span class="skill badge">.NET</span>
-      <span class="skill badge">Android</span>
-      <span class="skill badge">GraphQL</span>
+      <a class="skill badge" href="https://learn.microsoft.com/dotnet/csharp/" target="_blank" rel="noopener noreferrer">C#</a>
+      <a class="skill badge" href="https://dotnet.microsoft.com/" target="_blank" rel="noopener noreferrer">.NET</a>
+      <a class="skill badge" href="https://developer.android.com/" target="_blank" rel="noopener noreferrer">Android</a>
+      <a class="skill badge" href="https://graphql.org/" target="_blank" rel="noopener noreferrer">GraphQL</a>
     </div>
             </div>
           </details>
@@ -1781,15 +2621,15 @@
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">JavaScript</span>
-      <span class="skill badge">HTML</span>
-      <span class="skill badge">Angular</span>
-      <span class="skill badge">React</span>
+      <a class="skill badge" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">JavaScript</a>
+      <a class="skill badge" href="https://developer.mozilla.org/docs/Web/HTML" target="_blank" rel="noopener noreferrer">HTML</a>
+      <a class="skill badge" href="https://angular.dev/" target="_blank" rel="noopener noreferrer">Angular</a>
+      <a class="skill badge" href="https://react.dev/" target="_blank" rel="noopener noreferrer">React</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">Vue</span>
-      <span class="skill badge">CSS</span>
+      <a class="skill badge" href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue</a>
+      <a class="skill badge" href="https://developer.mozilla.org/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS</a>
     </div>
             </div>
           </details>
@@ -1798,16 +2638,16 @@
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">DevOps</span>
-      <span class="skill badge">DevSecOps</span>
-      <span class="skill badge">Git</span>
-      <span class="skill badge">GitLab CI/CD</span>
-      <span class="skill badge">Pipelines GitLab</span>
-      <span class="skill badge">GitHub Actions</span>
+      <a class="skill badge" href="https://aws.amazon.com/devops/what-is-devops/" target="_blank" rel="noopener noreferrer">DevOps</a>
+      <a class="skill badge" href="https://www.devsecops.org/" target="_blank" rel="noopener noreferrer">DevSecOps</a>
+      <a class="skill badge" href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git</a>
+      <a class="skill badge" href="https://docs.gitlab.com/ee/ci/" target="_blank" rel="noopener noreferrer">GitLab CI/CD</a>
+      <a class="skill badge" href="https://docs.gitlab.com/ee/ci/pipelines/" target="_blank" rel="noopener noreferrer">Pipelines GitLab</a>
+      <a class="skill badge" href="https://docs.github.com/en/actions" target="_blank" rel="noopener noreferrer">GitHub Actions</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">Azure DevOps</span>
+      <a class="skill badge" href="https://azure.microsoft.com/products/devops" target="_blank" rel="noopener noreferrer">Azure DevOps</a>
     </div>
             </div>
           </details>
@@ -1816,17 +2656,17 @@
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">Docker</span>
-      <span class="skill badge">Kubernetes</span>
-      <span class="skill badge">Docker Swarm</span>
-      <span class="skill badge">IaC</span>
-      <span class="skill badge">GCP</span>
-      <span class="skill badge">Azure</span>
-      <span class="skill badge">AWS</span>
+      <a class="skill badge" href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Docker</a>
+      <a class="skill badge" href="https://kubernetes.io/" target="_blank" rel="noopener noreferrer">Kubernetes</a>
+      <a class="skill badge" href="https://docs.docker.com/engine/swarm/" target="_blank" rel="noopener noreferrer">Docker Swarm</a>
+      <a class="skill badge" href="https://developer.hashicorp.com/terraform/tutorials" target="_blank" rel="noopener noreferrer">IaC</a>
+      <a class="skill badge" href="https://cloud.google.com/" target="_blank" rel="noopener noreferrer">GCP</a>
+      <a class="skill badge" href="https://azure.microsoft.com/" target="_blank" rel="noopener noreferrer">Azure</a>
+      <a class="skill badge" href="https://aws.amazon.com/" target="_blank" rel="noopener noreferrer">AWS</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">Terraform</span>
+      <a class="skill badge" href="https://www.terraform.io/" target="_blank" rel="noopener noreferrer">Terraform</a>
     </div>
             </div>
           </details>
@@ -1835,16 +2675,16 @@
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Avancé</span>
-      <span class="skill badge">ELK</span>
-      <span class="skill badge">Elasticsearch</span>
-      <span class="skill badge">Kibana</span>
-      <span class="skill badge">Grafana</span>
-      <span class="skill badge">Prometheus</span>
+      <a class="skill badge" href="https://www.elastic.co/elastic-stack" target="_blank" rel="noopener noreferrer">ELK</a>
+      <a class="skill badge" href="https://www.elastic.co/elasticsearch/" target="_blank" rel="noopener noreferrer">Elasticsearch</a>
+      <a class="skill badge" href="https://www.elastic.co/kibana/" target="_blank" rel="noopener noreferrer">Kibana</a>
+      <a class="skill badge" href="https://grafana.com/" target="_blank" rel="noopener noreferrer">Grafana</a>
+      <a class="skill badge" href="https://prometheus.io/" target="_blank" rel="noopener noreferrer">Prometheus</a>
     </div>
     <div class="skill-tier-line clearfix">
       <span class="skill-level">Intermédiaire</span>
-      <span class="skill badge">Sentry</span>
-      <span class="skill badge">Serilog</span>
+      <a class="skill badge" href="https://sentry.io/" target="_blank" rel="noopener noreferrer">Sentry</a>
+      <a class="skill badge" href="https://serilog.net/" target="_blank" rel="noopener noreferrer">Serilog</a>
     </div>
             </div>
           </details>
@@ -1852,13 +2692,13 @@
             <summary class="skill-group-summary">Données / Stockage</summary>
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
-      <span class="skill badge">SQL</span>
-      <span class="skill badge">PostgreSQL</span>
-      <span class="skill badge">MySQL</span>
-      <span class="skill badge">MongoDB</span>
-      <span class="skill badge">Redis</span>
-      <span class="skill badge">Kafka</span>
-      <span class="skill badge">Science des données</span>
+      <a class="skill badge" href="https://www.iso.org/standard/76583.html" target="_blank" rel="noopener noreferrer">SQL</a>
+      <a class="skill badge" href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">PostgreSQL</a>
+      <a class="skill badge" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">MySQL</a>
+      <a class="skill badge" href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer">MongoDB</a>
+      <a class="skill badge" href="https://redis.io/" target="_blank" rel="noopener noreferrer">Redis</a>
+      <a class="skill badge" href="https://kafka.apache.org/" target="_blank" rel="noopener noreferrer">Kafka</a>
+      <a class="skill badge" href="https://scikit-learn.org/" target="_blank" rel="noopener noreferrer">Science des données</a>
     </div>
             </div>
           </details>
@@ -1866,9 +2706,8 @@
             <summary class="skill-group-summary">Tests / Qualité</summary>
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
-      <span class="skill badge">Playwright</span>
-      <span class="skill badge">Selenium</span>
-      <span class="skill badge">JUnit</span>
+      <a class="skill badge" href="https://playwright.dev/" target="_blank" rel="noopener noreferrer">Playwright</a>
+      <a class="skill badge" href="https://www.selenium.dev/" target="_blank" rel="noopener noreferrer">Selenium</a>
     </div>
             </div>
           </details>
@@ -1876,24 +2715,52 @@
             <summary class="skill-group-summary">Autres</summary>
             <div class="skill-group-body">
     <div class="skill-tier-line clearfix">
-      <span class="skill badge">Linux</span>
-      <span class="skill badge">Bash</span>
-      <span class="skill badge">Ansible</span>
-      <span class="skill badge">MCP</span>
-      <span class="skill badge">Auth0</span>
-      <span class="skill badge">OWASP</span>
-      <span class="skill badge">Livraison orientée sécurité</span>
+      <a class="skill badge" href="https://www.kernel.org/" target="_blank" rel="noopener noreferrer">Linux</a>
+      <a class="skill badge" href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener noreferrer">Bash</a>
+      <a class="skill badge" href="https://www.ansible.com/" target="_blank" rel="noopener noreferrer">Ansible</a>
+      <a class="skill badge" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP</a>
+      <a class="skill badge" href="https://auth0.com/" target="_blank" rel="noopener noreferrer">Auth0</a>
+      <a class="skill badge" href="https://owasp.org/" target="_blank" rel="noopener noreferrer">OWASP</a>
+      <a class="skill badge" href="https://owasp.org/www-project-devsecops-guidelines/" target="_blank" rel="noopener noreferrer">Livraison orientée sécurité</a>
       <span class="skill badge">Recherche d'affaires</span>
     </div>
             </div>
           </details>
-          <p class="competence-credentials">
-            <strong>Certifications :</strong>
-            <a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a> (jusqu'en avr. 2027) ·
-            <a href="https://verified.sertifier.com/fr/verify/37471918795197/">QcES</a> ·
-            AWS Cloud Quest : <a href="https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54">Cloud Practitioner</a>, <a href="https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7">Data Analytics</a>, <a href="https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea">Machine Learning</a>, <a href="https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8">Serverless Developer</a>, <a href="https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5">Networking</a>, <a href="https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171">Solutions Architect</a> ·
-            RGPD (Wandrian, 2019)
-          </p>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Certifications</summary>
+            <div class="skill-group-body skill-group-body--certs">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">AWS</span>
+      <div class="cert-tier-badges">
+        <a class="skill badge" href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564" target="_blank" rel="noopener noreferrer">AWS Certified Cloud Practitioner</a>
+        <span class="cert-validity">Valide jusqu'en avr. 2027</span>
+      </div>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">QcES</span>
+      <div class="cert-tier-badges">
+        <a class="skill badge" href="https://verified.sertifier.com/fr/verify/37471918795197/" target="_blank" rel="noopener noreferrer">Programme québécois d'entrepreneuriat scientifique (QcES)</a>
+      </div>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Cloud Quest</span>
+      <div class="cert-tier-badges">
+        <a class="skill badge" href="https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54" target="_blank" rel="noopener noreferrer">Cloud Practitioner</a>
+        <a class="skill badge" href="https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7" target="_blank" rel="noopener noreferrer">Data Analytics</a>
+        <a class="skill badge" href="https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea" target="_blank" rel="noopener noreferrer">Machine Learning</a>
+        <a class="skill badge" href="https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8" target="_blank" rel="noopener noreferrer">Serverless Developer</a>
+        <a class="skill badge" href="https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5" target="_blank" rel="noopener noreferrer">Networking</a>
+        <a class="skill badge" href="https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171" target="_blank" rel="noopener noreferrer">Solutions Architect</a>
+      </div>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Autre</span>
+      <div class="cert-tier-badges">
+        <span class="skill badge">RGPD (Wandrian, 2019)</span>
+      </div>
+    </div>
+            </div>
+          </details>
           </div>
         </details>
 
@@ -1927,17 +2794,39 @@
           <summary class="cv-section-summary"><i class="fas fa-book ico"></i> Publications</summary>
           <div class="cv-section-body">
           <ul class="list-group">
-            <li class="list-group-item">
-              <span style="font-weight:bold"><a href="papers/rapport/rapport.md.html">Ray Tracing Engine</a></span><br>
-              <span>Déc 2023</span>
+            <li class="list-group-item publication-entry publication-entry--raytracing">
+              <div class="publication-entry-inner">
+                <div class="publication-entry-text">
+                  <span style="font-weight:bold"><a href="papers/rapport/rapport.md.html">Ray Tracing Engine</a></span><br>
+                  <span>Déc 2023</span>
+                </div>
+                <button type="button" class="publication-preview-link" data-image-preview-open data-image-preview-src="papers/rapport/images/ray-tracing-spheres-scene.png" data-image-preview-alt="Rendu path tracing : sphères réfléchissantes et en verre, éclairage de zone et caustiques" data-image-preview-caption="Sphères réfléchissantes et en verre sous éclairage rectangulaire : caustiques et ombres douces (path tracing)." data-image-preview-report="papers/rapport/rapport.md.html" data-image-preview-report-label="Ouvrir le rapport complet" aria-label="Afficher le rendu en plein écran">
+                  <img src="papers/rapport/images/ray-tracing-spheres-scene.png" alt="" width="220" height="auto" loading="lazy" decoding="async" class="publication-preview" aria-hidden="true" />
+                  <span class="publication-preview-hint" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                </button>
+              </div>
             </li>
             <li class="list-group-item">
               <span style="font-weight:bold"><a href="papers/Algorithmic_Study_of_the_Relation_of_Peaceful_and_Violent_Subjects_to_Philosophy_Using_Wikipedia_and_a_Python_Crawler.pdf">Algorithmic Study of the Relation of Peaceful and Violent Subjects to Philosophy Using Wikipedia and a Python Crawler</a></span><br>
               <span>Avr 2018</span>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item publication-entry">
               <span style="font-weight:bold"><a href="papers/A_3D_variant_of_Vogel_s_model_to_observe_prime_patterns_in_a_spherical_coordinate_system.pdf">A 3D variant of Vogel's model to observe prime patterns in a spherical coordinate system</a></span><br>
               <span>Déc 2017</span>
+              <details class="project-preview publication-video-preview">
+                <summary class="project-preview-summary">Afficher la vidéo intégrée</summary>
+                <div class="project-preview-panel">
+                  <div class="project-embed project-embed--youtube">
+                    <iframe
+                      title="A 3D variant of Vogel's model to observe prime patterns in a spherical coordinate system"
+                      data-src="https://www.youtube.com/embed/mHnxP8Gl0_A"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen></iframe>
+                  </div>
+                  <p class="project-embed-note"><a href="https://www.youtube.com/watch?v=mHnxP8Gl0_A" target="_blank" rel="noopener noreferrer">Ouvrir sur YouTube</a></p>
+                </div>
+              </details>
             </li>
           </ul>
           </div>
@@ -1952,8 +2841,9 @@
             </div>
             <div class="col-sm-offset-1 col-sm-12 clearfix">
               <span class="interest badge">Basketball</span>
-              <span class="interest badge">Vélo</span>
-              <span class="interest badge">Patinage</span>
+              <a class="interest badge" href="https://www.strava.com/athletes/63041546" target="_blank" rel="noopener noreferrer">Vélo</a>
+              <span class="interest badge">Skate</span>
+              <span class="interest badge">Soccer</span>
             </div>
           </div>
           <div class="interests clearfix">
@@ -1981,8 +2871,6 @@
       </div>
     </div>
   </div>
-  <!-- ClustrMaps widget -->
-  <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=5r6lAAh3W_opreqW2Zi-o-UhGvrv12PSDzwfKIyaVoA&cl=ffffff&w=a"></script>
   <script>
     (function () {
       function closeCvJobs() {
@@ -2024,6 +2912,88 @@
           ]
         });
       } catch (e) { /* WebMCP: API experimentale */ }
+    })();
+  </script>
+
+  <dialog class="publication-preview-dialog" id="image-preview-dialog" aria-labelledby="image-preview-dialog-title" data-report-label="Ouvrir le rapport complet">
+    <div class="publication-preview-dialog-panel">
+      <button type="button" class="publication-preview-dialog-close" data-image-preview-close aria-label="Fermer la vue plein écran">&times;</button>
+      <h3 id="image-preview-dialog-title" class="sr-only"></h3>
+      <figure>
+        <img src="" alt="" class="publication-preview-dialog-img" width="1200" height="auto" decoding="async" />
+        <figcaption class="publication-preview-dialog-caption" hidden></figcaption>
+      </figure>
+      <p class="publication-preview-dialog-report" id="image-preview-dialog-report" hidden><a href=""></a></p>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      var dialog = document.getElementById('image-preview-dialog');
+      if (!dialog) return;
+      var dialogImg = dialog.querySelector('.publication-preview-dialog-img');
+      var dialogCaption = dialog.querySelector('.publication-preview-dialog-caption');
+      var dialogTitle = document.getElementById('image-preview-dialog-title');
+      var dialogReport = document.getElementById('image-preview-dialog-report');
+      var dialogReportLink = dialogReport ? dialogReport.querySelector('a') : null;
+      var reportLabelDefault = dialog.getAttribute('data-report-label') || 'Ouvrir le rapport complet';
+
+      function openPreview(btn) {
+        var src = btn.getAttribute('data-image-preview-src');
+        if (!src) {
+          var thumb = btn.querySelector('img');
+          if (thumb) src = thumb.getAttribute('src');
+        }
+        var alt = btn.getAttribute('data-image-preview-alt') || '';
+        if (!alt) {
+          var thumbAlt = btn.querySelector('img');
+          if (thumbAlt) alt = thumbAlt.getAttribute('alt') || '';
+        }
+        var cap = btn.getAttribute('data-image-preview-caption');
+        if (!cap) {
+          var figure = btn.closest('figure');
+          if (figure) {
+            var fc = figure.querySelector('figcaption');
+            if (fc) cap = fc.textContent.trim();
+          }
+        }
+        var reportHref = btn.getAttribute('data-image-preview-report');
+        var reportLabel = btn.getAttribute('data-image-preview-report-label') || reportLabelDefault;
+
+        if (dialogImg && src) {
+          dialogImg.src = src;
+          dialogImg.alt = alt;
+        }
+        if (dialogCaption) {
+          dialogCaption.textContent = cap || '';
+          dialogCaption.hidden = !cap;
+        }
+        if (dialogTitle) dialogTitle.textContent = alt;
+        if (dialogReport && dialogReportLink) {
+          if (reportHref) {
+            dialogReportLink.href = reportHref;
+            dialogReportLink.textContent = reportLabel;
+            dialogReport.hidden = false;
+          } else {
+            dialogReport.hidden = true;
+          }
+        }
+        dialog.showModal();
+      }
+
+      document.querySelectorAll('[data-image-preview-open]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openPreview(btn);
+        });
+      });
+      dialog.querySelectorAll('[data-image-preview-close]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          dialog.close();
+        });
+      });
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) dialog.close();
+      });
     })();
   </script>
 

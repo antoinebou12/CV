@@ -1,3 +1,6 @@
+% Not included in resume.tex (PDF CV). Selected projects live on index-en.html / index-fr.html.
+% Keep this file for optional future use or copy-paste; do not \input it unless you want a Projects section in the PDF.
+
 %-------------------------------------------------------------------------------
 % SECTION TITLE
 %-------------------------------------------------------------------------------
@@ -16,7 +19,7 @@
     {2022 -- 2026} % Date(s)
     {
     \begin{cvitems} % Description(s) of project
-    \item {MCP (Model Context Protocol) server exposing UML/diagram tools to LLM-based coding assistants, to produce architecture from natural language or repository context and automate technical documentation}
+    \item {Open-source MCP (Model Context Protocol) server that turns architecture prompts or repository context into UML and related diagrams for reviews and technical documentation}
     \item {\textbf{Technical Skills:} MCP, LLM tool integration, technical documentation automation}
     \end{cvitems}
     }
@@ -31,8 +34,35 @@
     \begin{cvitems} % Description(s) of project
     \item {Built and operate a Proxmox-based homelab for virtualization, repeatable network topologies, and Dell server lifecycle work including iDRAC-driven out-of-band management}
     \item {Media and household services on a Jellyfin stack; secure multi-home connectivity with WireGuard site-to-site tunnels and a Tailscale mesh for remote administration}
-    \item {Home Assistant automation across the estate; forks and maintains \texttt{hass\_renpho}, a custom integration that surfaces Renpho smart-scale metrics for dashboards and automations}
+    \item {Home Assistant automation across the estate (sensors, scenes, and third-party integrations)}
     \item {\textbf{Technical Skills:} Proxmox, iDRAC, Jellyfin, WireGuard, Tailscale, Home Assistant, multi-cloud deployment, monitoring and observability}
+    \end{cvitems}
+    }
+
+%---------------------------------------------------------
+\cventry
+    {Home Automation / IoT} % Project
+    {hass\_renpho} % Organisation
+    {Open Source (fork of neilzilla/hass-renpho)} % Location
+    {2022 -- 2026} % Date(s)
+    {
+    \begin{cvitems} % Description(s) of project
+    \item {Maintains a Home Assistant custom integration (HACS) that polls Renpho's legacy cloud API and exposes weight, body composition, girth measurements, and goals as sensors and automations}
+    \item {Refactored the API client for fingerprinting, config flow, optional HTTP proxy, and published an OpenAPI explorer at \url{https://hass-renpho.vercel.app/docs} for account debugging}
+    \item {\textbf{Technical Skills:} Python, Home Assistant, REST APIs, HACS, Vercel}
+    \end{cvitems}
+    }
+
+%---------------------------------------------------------
+\cventry
+    {IoT / Embedded} % Project
+    {ESP32-7SEG} % Organisation
+    {Open Source} % Location
+    {2024} % Date(s)
+    {
+    \begin{cvitems} % Description(s) of project
+    \item {ESP32 FireBeetle firmware for an Adafruit I2C 7-segment display; onboard web server updates digits and characters from any browser on the local network (PlatformIO)}
+    \item {\textbf{Technical Skills:} ESP32, C++, PlatformIO, I2C, embedded web server}
     \end{cvitems}
     }
 
