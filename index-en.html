@@ -1496,32 +1496,40 @@
       border-bottom: 1px solid #eee;
     }
 
-    .clustrmaps-section-link {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.35em;
-      text-decoration: none;
-      color: #227c74;
+    .clustrmaps-section-title {
       font-size: 1.5em;
       font-weight: 700;
       text-transform: uppercase;
+      color: #227c74;
+      margin: 0 0 10px;
       padding: 4px 0 12px;
-      margin: 0;
       border-bottom: 2px solid #e8eceb;
     }
 
-    .clustrmaps-section-link:hover,
-    .clustrmaps-section-link:focus-visible {
-      color: #1a5f56;
-      outline: none;
-      border-bottom-color: #227c74;
+    .clustrmaps-embed {
+      width: 300px;
+      max-width: 100%;
+      min-height: 190px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .clustrmaps-section-link-icon {
-      margin-left: auto;
-      font-size: 0.65em;
-      opacity: 0.75;
+    .clustrmaps-footer-link {
+      margin: 8px 0 0;
+      font-size: 0.85em;
+      text-align: center;
+    }
+
+    .clustrmaps-footer-link a {
+      color: #227c74;
+      text-decoration: none;
+    }
+
+    .clustrmaps-footer-link a:hover,
+    .clustrmaps-footer-link a:focus-visible {
+      color: #1a5f56;
+      text-decoration: underline;
+      outline: none;
     }
 
     #particles-js {
@@ -2491,11 +2499,13 @@
         </div>
       </details>
         <div class="box cv-section clustrmaps-section">
-          <a class="clustrmaps-section-link" href="https://clustrmaps.com/h/a/5r6lAAh3W_opreqW2Zi-o-UhGvrv12PSDzwfKIyaVoA" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-globe-americas ico"></i> Visitor map
-            <span class="clustrmaps-section-link-icon" aria-hidden="true"><i class="fas fa-external-link-alt"></i></span>
-            <span class="sr-only"> (opens ClustrMaps in a new tab)</span>
-          </a>
+          <h3 class="clustrmaps-section-title"><i class="fas fa-globe-americas ico"></i> Visitor map</h3>
+          <div class="clustrmaps-embed">
+            <script type="text/javascript" id="clustrmaps" src="https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=a&amp;t=tt&amp;d=5r6lAAh3W_opreqW2Zi-o-UhGvrv12PSDzwfKIyaVoA"></script>
+          </div>
+          <p class="clustrmaps-footer-link">
+            <a href="https://clustrmaps.com/site/1c8ws" target="_blank" rel="noopener noreferrer">ClustrMaps analytics <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
         </div>
       </div>
       <div class="col-xs-12 col-sm-5">
@@ -2556,7 +2566,7 @@
                 <h3><a href="https://www.etsmtl.ca/" target="_blank" rel="noopener noreferrer">École de technologie supérieure (ÉTS)</a></h3>
                 <div class="where"></div>
                 <p><i class="fas fa-graduation-cap ico"></i> Master&#39;s Degree, Information Technology Engineering</p>
-                <p>Thesis research: real-time surface wear in interactive physics simulations; dynamic friction and texture.</p>
+                <p>Thesis: real-time surface wear in interactive physics simulations, with dynamic friction and textures.</p>
               </div>
             </li>
             <li>
