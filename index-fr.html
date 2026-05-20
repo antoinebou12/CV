@@ -379,6 +379,14 @@
       overflow: hidden;
     }
 
+    details.project-preview .project-preview-panel .project-diagram {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      padding: 12px 16px 14px;
+      background: #fff;
+    }
+
     .project-embed iframe {
       display: block;
       width: 100%;
@@ -861,6 +869,94 @@
       margin: 1px 10px;
     }
 
+
+    details.skill-group {
+      margin-bottom: 8px;
+      border: 1px solid #dde7e5;
+      border-radius: 6px;
+      background: #fafcfc;
+      overflow: hidden;
+    }
+
+    details.skill-group > summary.skill-group-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      min-height: 30px;
+      color: #334960;
+      padding: 6px 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      background: #f4faf9;
+    }
+
+    details.skill-group > summary.skill-group-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.skill-group > summary.skill-group-summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      font-size: 0.7em;
+      color: #227c74;
+      opacity: 0.75;
+      transition: transform 0.2s ease;
+    }
+
+    details.skill-group[open] > summary.skill-group-summary::after {
+      transform: rotate(-180deg);
+    }
+
+    details.skill-group .skill-group-body {
+      border-top: 1px solid #dde7e5;
+      padding: 4px 0 6px;
+    }
+
+    details.skill-tier > summary.skill-tier-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px 5px 14px;
+      cursor: pointer;
+      font-size: 0.92em;
+      font-weight: 600;
+      color: #32475c;
+      user-select: none;
+    }
+
+    details.skill-tier > summary.skill-tier-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.skill-tier > summary.skill-tier-summary::after {
+      content: '\f054';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      font-size: 0.65em;
+      color: #227c74;
+      opacity: 0.6;
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+
+    details.skill-tier[open] > summary.skill-tier-summary::after {
+      transform: rotate(90deg);
+    }
+
+    details.skill-tier .skill-tier-badges {
+      padding: 0 10px 8px 14px;
+    }
+
+    details.skill-tier .skill-tier-summary .skill-level {
+      position: static;
+      margin: 0;
+    }
+
     #language-skills .skill {
       margin: 10px 0;
       padding-bottom: 10px;
@@ -1006,7 +1102,7 @@
             <img src="antoine.png" alt="Antoine Boucher">
           </div>
           <div id="text-header">
-            <h1>Antoine Boucher<br><span>Ingénieur logiciel — Plateforme et infographie</span></h1>
+            <h1>Antoine Boucher<br><span>Ingénieur logiciel · Plateforme et infographie</span></h1>
             <div class="hero-actions">
               <a href="cv-fr/resume.pdf" download class="btn btn-primary">
                 Télécharger le CV
@@ -1026,10 +1122,10 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-user ico"></i> À propos</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Ingénieur plateforme et infographie axé sur la livraison concrète : systèmes backend sécurisés, opérations cloud-native et outils développeur avec impact mesurable.</p>
+          <p class="section-intro">Ingénieur plateforme et infographie : backends sécurisés, opérations cloud-native et outils pour développeurs.</p>
           <ul class="list-group">
-            <li class="list-group-item">Ingénieur logiciel au profil polyvalent : plateforme, services dorsaux, livraison sécurisée et infographie interactive (C++/OpenGL, Blender). Solide expérience avec Java/Kotlin et Python, Docker/Kubernetes et infrastructure-as-code.</li>
-            <li class="list-group-item">Contributeur/mainteneur open source actif (dépôts publics avec adoption significative ; 241 étoiles sur GitHub en mai 2026).</li>
+            <li class="list-group-item">Ingénieur logiciel polyvalent : plateforme, backends, livraison sécurisée et infographie interactive (C++/OpenGL, Blender). Stack courante : Java/Kotlin, Python, Docker/Kubernetes et infrastructure-as-code.</li>
+            <li class="list-group-item">Contributeur et mainteneur open source actif (241 étoiles GitHub sur dépôts publics en mai 2026).</li>
             <li class="list-group-item">Maîtrise en génie des technologies de l'information de l'<a href="https://www.etsmtl.ca/" target="_blank" rel="noopener noreferrer">École de technologie supérieure (ÉTS)</a>.</li>
           </ul>
           </div>
@@ -1038,7 +1134,7 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-suitcase ico"></i> Expérience professionnelle</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Rôles récents en cybersécurité, enseignement et plateformes cloud, avec une attention continue à la qualité de livraison et à la fiabilité opérationnelle.</p>
+          <p class="section-intro">Rôles récents en cybersécurité, enseignement et plateformes cloud.</p>
 		  <!-- IMC2 -->
           <details class="cv-job job clearfix">
             <summary class="cv-job-summary clearfix">
@@ -1064,11 +1160,11 @@
                   Livraisons sécurisées et plateformes de recherche sur GCP : exploitation CI/CD, automatisation des tests et outils d'aide à la décision pour analystes.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Piloté <strong>5</strong> pipelines GitLab CI/CD (refactorisation d'un dépôt monolithique en micro-dépôts par service) et runners sur GCP répartis sur <strong>deux</strong> clusters GKE, avec réseau et observabilité gérés par Terraform, renforçant des mises en production cloud reproductibles</li>
-                    <li class="list-group-item">Standardisé l'exposition en production en containerisant les charges (Docker), en configurant et en exploitant les clusters GKE de recherche sur GCP (réseau pour les charges), puis en déployant les services avec Terraform, accélérant les changements d'infrastructure tout en réduisant les risques</li>
-                    <li class="list-group-item">Renforcé <strong>5</strong> microservices Java avec suites JUnit et tests E2E Playwright, améliorant détection des régressions et couverture de tests avant mise en production</li>
+                    <li class="list-group-item">Refactorisé un monolithe en micro-dépôts par service et exploité <strong>5</strong> pipelines GitLab CI/CD et runners sur GCP sur <strong>deux</strong> clusters GKE (réseau et observabilité Terraform) pour des mises en production reproductibles</li>
+                    <li class="list-group-item">Containerisé les charges (Docker), exploité les clusters GKE de recherche sur GCP (réseau des charges) et déployé les services avec Terraform pour des changements d'infrastructure plus sûrs</li>
+                    <li class="list-group-item">Ajouté suites JUnit et tests E2E Playwright sur <strong>5</strong> microservices Java pour repérer les régressions avant mise en production</li>
                     <li class="list-group-item">Raccordé les builds mobiles Android à GitLab CI/CD avec promotion vers l'environnement GKE sur GCP géré par Terraform, synchronisant la livraison mobile sur les mêmes parcours Kubernetes que les services backend</li>
-                    <li class="list-group-item">Pour soutenir la priorisation analyste à grande échelle, livré une analyse scriptée de 1000+ risques cybersécurité couvrant 181+ catégories de menaces, avec algorithme de score pondéré, priorisation par étoiles et visualisation Angular interactive pour accélérer le triage analyste avec un contexte plus homogène</li>
+                    <li class="list-group-item">Construit une analyse scriptée de 1000+ risques cybersécurité sur 181+ catégories de menaces : score pondéré, priorisation par étoiles et interface Angular pour un triage analyste avec contexte homogène</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Java, Kotlin, Android, Docker, Kubernetes, Terraform, GitLab CI/CD, GCP, JUnit, Playwright, Angular</li>
                   </ul>
                 </div>
@@ -1104,8 +1200,8 @@
                     <li class="list-group-item">Sous les objectifs <a href="https://www.polymtl.ca/programmes/cours/devsecops-operations-et-dev-logiciel-secur" target="_blank" rel="noopener noreferrer">LOG&nbsp;8100</a> de livraison sécurisée, rédigé et actualisé travaux et supports alignés DevSecOps pour ancrer les pratiques industrielles de sécurité en livraison</li>
                     <li class="list-group-item">Pour environ 20 équipes en parallèle, structuré et maintenu l'espace GitLab (dépôts, modèles CI/CD, runners, workflows) avec gestion des droits, réduisant friction administrative durant la session</li>
                     <li class="list-group-item">Lorsque des équipes bloquaient sur les fondamentaux plateforme, coaché construction, déploiement et débogage sous Docker et Kubernetes, débloquant jalons de laboratoire</li>
-                    <li class="list-group-item">Ancré l'apprentissage sécurité avec exemples inspirés d'OWASP (risques fréquents, pratiques sûres, mentalité de remédiation), reliant théorie et scénarios concrets</li>
-                    <li class="list-group-item">Corrigé travaux pratiques et prodigué coaching technique sur les livrables, améliorant qualité des remises et délais de correction</li>
+                    <li class="list-group-item">Enseigné la sécurité avec exemples OWASP (risques fréquents, pratiques sûres, remédiation) reliés à des scénarios de laboratoire</li>
+                    <li class="list-group-item">Corrigé travaux pratiques et coaché sur les livrables pour des remises plus propres et plus rapides</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> GitLab, CI/CD, DevSecOps, Docker, Kubernetes, OWASP, Codage sécurisé, Linux</li>
                   </ul>
                 </div>
@@ -1205,9 +1301,9 @@
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Répondu aux besoins d'accès multi-organisation sur plateforme IoT en concevant un modèle d'abonnement Auth0 à trois niveaux, segmentant les capacités par locataire</li>
-                    <li class="list-group-item">Amélioré le diagnostic en production en intégrant le SDK Sentry en C# avec Serilog, structurant la capture d'erreurs pour support et développement</li>
-                    <li class="list-group-item">Renforcé la préparation au streaming vidéo en maîtrisant contraintes ONVIF et WebRTC à l'échelle IoT</li>
-                    <li class="list-group-item">Réduit le risque de mise en service en orchestrant Azure DevOps avec feature flags et promotions reproductibles</li>
+                    <li class="list-group-item">Intégré le SDK Sentry en C# avec Serilog pour tracer les erreurs en production (support et développement)</li>
+                    <li class="list-group-item">Travaillé les contraintes ONVIF et WebRTC pour le streaming vidéo à l'échelle IoT</li>
+                    <li class="list-group-item">Exploité Azure DevOps avec feature flags et promotions reproductibles</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> C#, .NET, Azure DevOps, Auth0, Sentry, Serilog, UML, Microservices, ONVIF, WebRTC</li>
                   </ul>
                 </div>
@@ -1240,11 +1336,11 @@
                   Stage backend : intégration nouveaux clients, systèmes hérités, authentification mobile et visibilité opérationnelle.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Livré un parcours d'inscription en 6 étapes et l'observabilité de l'application mobile sur microservices Kotlin/Spring Boot pour 10&nbsp;000+ utilisateurs actifs, accélérant l'activation des couvertures</li>
+                    <li class="list-group-item">Construit un parcours d'inscription en 6 étapes et l'observabilité mobile sur microservices Kotlin/Spring Boot pour 10&nbsp;000+ utilisateurs actifs</li>
                     <li class="list-group-item">Pour l'intégration nouveaux clients, conçu campagnes sensibles aux dates d'inscription, personnalisant le premier contact sur canaux marketing</li>
-                    <li class="list-group-item">Réduit friction d'enrôlement sur systèmes hérités en implémentant flux API d'inscription, accélérant l'activation des couvertures pour nouveaux clients</li>
-                    <li class="list-group-item">Sécurisé accès mobile en livrant API connexion et MFA Kotlin, simplifiant authentification des applis client sans relâcher contrôles de politique</li>
-                    <li class="list-group-item">Raccourci triage incident en enrichissant pile ELK avec tableaux Kibana et codes d'erreur harmonisés entre microservices, offrant signaux cohérents aux opérations</li>
+                    <li class="list-group-item">Ajouté des flux API d'inscription sur systèmes hérités pour activer les nouveaux clients plus vite</li>
+                    <li class="list-group-item">Construit API connexion et MFA Kotlin pour applis mobiles en conservant les contrôles de politique</li>
+                    <li class="list-group-item">Enrichi la pile ELK avec tableaux Kibana et codes d'erreur harmonisés pour des signaux d'incident cohérents côté opérations</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Kotlin, Spring Boot, GraphQL, MongoDB, Microservices, Docker Swarm, Jira, Kibana, SAFe</li>
                   </ul>
                 </div>
@@ -1277,10 +1373,10 @@
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Modernisé site commerce bilingue en refondant blog FR/EN pour navigation plus claire et accessibilité renforcée, améliorant expérience d'achat de base</li>
-                    <li class="list-group-item">Accru visibilité merchandising en déployant étiquettes de vente dynamiques CommerceBuild optimisées recherche/SEO, augmentant trafic qualifié vers fiches produit</li>
-                    <li class="list-group-item">Réduit friction au panier en implémentant flux API personnalisé « Ajouter au panier » sur CommerceBuild, fluidifiant parcours transactionnel</li>
-                    <li class="list-group-item">Monté en compétences internes via formation HTML/CSS/JS et support technique réactif, diminuant questions répétées sur maintenance vitrine</li>
-                    <li class="list-group-item">Fiabilisé vitrine en corrigeant régressions pop-up, bannière et grille et en intégrant chatbot 3CX pour support client en libre-service</li>
+                    <li class="list-group-item">Déployé étiquettes de vente dynamiques CommerceBuild optimisées recherche/SEO sur les fiches produit</li>
+                    <li class="list-group-item">Implémenté un flux API « Ajouter au panier » sur CommerceBuild pour raccourcir le passage en caisse</li>
+                    <li class="list-group-item">Formé l'équipe en HTML/CSS/JS et assuré le support vitrine, ce qui a réduit les questions répétées sur la maintenance</li>
+                    <li class="list-group-item">Corrigé régressions pop-up, bannière et grille et ajouté un chatbot 3CX pour le support en libre-service</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> HTML, CSS, JavaScript, CommerceBuild, 3CX, SEO</li>
                   </ul>
                 </div>
@@ -1312,9 +1408,9 @@
                   Stage inventaire : formats multiples d'import, places de marché et prix multi-devises.
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
-                    <li class="list-group-item">Unifié flux fournisseurs hétérogènes pour équipes inventaire en livrant analyseur Python/Django/Vue.js/PostgreSQL acceptant XML, JSON, CSV et Excel, remplaçant scripts ponctuels</li>
-                    <li class="list-group-item">Développé revenus omnicanal en intégrant APIs Facebook Shop et Marketplace, synchronisant catalogue sans double saisie</li>
-                    <li class="list-group-item">Évité dérive prix CAD/USD en implémentant service de taux de change lié inventaire et dates d'effet, maintenant catalogues transfrontaliers en phase</li>
+                    <li class="list-group-item">Construit un analyseur Python/Django/Vue.js/PostgreSQL pour flux fournisseurs (XML, JSON, CSV, Excel), remplaçant scripts ponctuels</li>
+                    <li class="list-group-item">Intégré les APIs Facebook Shop et Marketplace pour synchroniser le catalogue sans double saisie</li>
+                    <li class="list-group-item">Ajouté un service de taux de change lié à l'inventaire et aux dates d'effet pour garder les catalogues CAD/USD alignés</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, Django, Vue.js, PostgreSQL, MongoDB, JavaScript, REST API, Git, Jira, développement full-stack</li>
                   </ul>
                 </div>
@@ -1381,7 +1477,7 @@
                   <div class="highlights">Points saillants</div>
                   <ul class="list-group">
                     <li class="list-group-item">Automatisé validation caméra/ISP en combinant Ansible, VM Linux/QEMU UEFI pour déploiements REST, imagerie HDR 10 bpp Nexus 6 et services REST Flask pour capture et affichage à distance, réduisant boucles manuelles</li>
-                    <li class="list-group-item">Produit jeux de données vision extérieure via campagne capture/annotation d'environ 12&nbsp;000 images, outillage Python analyse couleur RAW et logiciel de commande de rigs, permettant expériences à points de vue variés</li>
+                    <li class="list-group-item">Construit jeux de données vision extérieure (~12&nbsp;000 images) avec capture/annotation, outillage Python couleur RAW et commande de rigs pour expériences multi-points de vue</li>
                     <li class="list-group-item">Maintenu débit du laboratoire d'imagerie avec sauvegardes QNAP pour postes Ubuntu, support réseau et serveurs Linux/Windows pour expériences et outillage REST</li>
                     <li class="list-group-item"><span style="font-weight:bold">Compétences techniques :</span> Python, C++, CUDA, OpenCV, Flask, Ansible, Linux, Windows, REST APIs</li>
                   </ul>
@@ -1462,17 +1558,17 @@
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-code-branch ico"></i> Projets sélectionnés</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Projets sélectionnés. Cinq projets qui couvrent la production, l'intégration d'entreprise et l'architecture appliquée.</p>
+          <p class="section-intro">Cinq projets, de la production et de l'intégration d'entreprise à l'architecture appliquée.</p>
           <ul class="project-list">
             <li class="project-card project-card--uml">
               <div class="project-card-header">
-                <div class="project-title">Écosystème uml-mcp</div>
+                <div class="project-title"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a></div>
                 <a class="project-github-stars" href="https://github.com/antoinebou12/uml-mcp" aria-label="uml-mcp sur GitHub, environ 83 étoiles">★ 83</a>
               </div>
-              <div class="project-context">Outils pour développeurs et diagrammes d'architecture assistés par l'IA</div>
+              <div class="project-context">Diagrammes UML depuis Cursor (MCP)</div>
               <div class="project-card-body">
                 <figure class="project-diagram" aria-labelledby="uml-flow-caption-fr">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 220" role="img" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 248" role="img" aria-hidden="true">
                     <defs>
                       <marker id="uml-arrow-fr" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
                         <path d="M0,0 L8,0 L4,7 Z" fill="#5d6a69"/>
@@ -1480,33 +1576,35 @@
                       <style>
                         .uml-n { fill: #f4faf9; stroke: #227c74; stroke-width: 1.5; }
                         .uml-n-start { fill: #eef6f5; }
+                        .uml-n-core { fill: #e8f6f4; stroke: #1a6b63; stroke-width: 2; }
                         .uml-t { font: 600 10px 'Open Sans', sans-serif; fill: #1f4742; }
                         .uml-e { stroke: #5d6a69; stroke-width: 1.5; fill: none; marker-end: url(#uml-arrow-fr); }
                       </style>
                     </defs>
-                    <rect class="uml-n uml-n-start" x="24" y="4" width="72" height="28" rx="14"/>
-                    <text class="uml-t" x="60" y="22" text-anchor="middle">User</text>
-                    <line class="uml-e" x1="60" y1="34" x2="60" y2="42"/>
-                    <rect class="uml-n" x="8" y="44" width="104" height="32" rx="6"/>
-                    <text class="uml-t" x="60" y="64" text-anchor="middle">AI assistant</text>
-                    <line class="uml-e" x1="60" y1="78" x2="60" y2="86"/>
-                    <rect class="uml-n" x="8" y="88" width="104" height="32" rx="6"/>
-                    <text class="uml-t" x="60" y="108" text-anchor="middle">MCP / ChatGPT</text>
-                    <line class="uml-e" x1="60" y1="122" x2="60" y2="130"/>
-                    <rect class="uml-n" x="8" y="132" width="104" height="32" rx="6"/>
-                    <text class="uml-t" x="60" y="152" text-anchor="middle">UML diagram</text>
+                    <rect class="uml-n uml-n-start" x="16" y="4" width="100" height="28" rx="14"/>
+                    <text class="uml-t" x="66" y="22" text-anchor="middle">Vous décrivez</text>
+                    <line class="uml-e" x1="66" y1="34" x2="66" y2="42"/>
+                    <rect class="uml-n" x="12" y="44" width="108" height="32" rx="6"/>
+                    <text class="uml-t" x="66" y="64" text-anchor="middle">Cursor</text>
+                    <line class="uml-e" x1="66" y1="78" x2="66" y2="86"/>
+                    <rect class="uml-n uml-n-core" x="8" y="88" width="116" height="36" rx="6"/>
+                    <text class="uml-t" x="66" y="110" text-anchor="middle">uml-mcp MCP</text>
+                    <line class="uml-e" x1="66" y1="126" x2="66" y2="134"/>
+                    <rect class="uml-n" x="12" y="136" width="108" height="32" rx="6"/>
+                    <text class="uml-t" x="66" y="156" text-anchor="middle">UML diagram</text>
                   </svg>
-                  <figcaption class="sr-only" id="uml-flow-caption-fr">Utilisateur vers assistant IA vers MCP ou ChatGPT vers diagramme UML</figcaption>
+                  <figcaption class="sr-only" id="uml-flow-caption-fr">Décrire l'architecture dans Cursor, les outils MCP uml-mcp produisent un diagramme UML</figcaption>
                 </figure>
                 <div class="project-card-copy">
-                  <div class="project-impact">Descriptions en langage naturel et contexte de dépôt → diagrammes d'architecture pour revues de design et documentation. <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> est un serveur MCP qui expose des outils de diagrammes aux assistants de codage (Cursor et harnesses similaires) ; <a href="https://github.com/antoinebou12/D2COpenAIPlugin">D2COpenAIPlugin</a> ajoute le même pipeline de rendu dans ChatGPT—backends Mermaid, PlantUML et Kroki, deux points d'entrée, un flux.</div>
+                  <div class="project-impact"><a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a> est un serveur MCP open source pour <strong>Cursor</strong> : vous décrivez l'architecture dans le chat, et il produit des diagrammes (classes, séquences, etc.) pour revues et documentation (Mermaid, PlantUML, Kroki). Les mêmes outils sont disponibles dans <strong>ChatGPT</strong> via un <a href="https://github.com/antoinebou12/D2COpenAIPlugin">GPT personnalisé</a>.</div>
                   <div class="project-tags">
-                  <span class="project-tag">MCP</span><span class="project-tag">Python</span><span class="project-tag">Mermaid</span><span class="project-tag">Open source</span>
-                </div>
+                    <span class="project-tag">MCP</span><span class="project-tag">Cursor</span><span class="project-tag">Python</span><span class="project-tag">Mermaid</span><span class="project-tag">Open source</span>
+                  </div>
                   <div class="project-context">Impact : ~83 étoiles GitHub sur uml-mcp ; OSS Python maintenu en public.</div>
-              </div>
+                </div>
               </div>
             </li>
+
 
             <li class="project-card project-card--graphquon">
               <div class="project-title"><a href="https://graphquon.github.io/">Site de conférence Graphquon 2024</a></div>
@@ -1521,19 +1619,19 @@
                       referrerpolicy="no-referrer-when-downgrade"
                       allowfullscreen="true"></iframe>
                   </div>
-                  <p class="project-embed-note">Si l'aperçu reste vide, le site peut bloquer l'intégration—<a href="https://graphquon.github.io/" target="_blank" rel="noopener noreferrer">ouvrez le site de conférence</a>.</p>
+                  <p class="project-embed-note">Si l'aperçu reste vide, le site peut bloquer l'intégration. <a href="https://graphquon.github.io/" target="_blank" rel="noopener noreferrer">Ouvrir le site de conférence</a>.</p>
                 </div>
               </details>
-              <div class="project-impact">Livré le site officiel de l'atelier annuel Québec-Ontario pre-SIGGRAPH et ajouté un workflow d'assistance UML pour l'accompagnement des participants.</div>
+              <div class="project-impact">Construit le site officiel de l'atelier annuel Québec-Ontario pre-SIGGRAPH et un assistant UML pour les questions des participants.</div>
               <div class="project-tags">
                 <span class="project-tag">Web</span><span class="project-tag">Conférence</span><span class="project-tag">UX</span>
               </div>
-              <div class="project-context">Impact : livré en production pour un événement annuel réel.</div>
+              <div class="project-context">Impact : livré pour l'atelier 2024.</div>
             </li>
             <li class="project-card">
               <div class="project-title"><a href="https://www.nuget.org/packages/Serilog.Sinks.SentrySDK">Serilog.Sinks.SentrySDK</a></div>
-              <div class="project-context">Intégration observabilité pour équipes .NET en contexte d'entreprise</div>
-              <div class="project-impact">Développé et maintenu un sink Serilog qui simplifie l'ingestion de journaux/erreurs Sentry en production, réduisant le coût d'intégration personnalisée.</div>
+              <div class="project-context">Sink Serilog pour Sentry en .NET</div>
+              <div class="project-impact">Maintient un sink Serilog pour les journaux et erreurs Sentry en production .NET.</div>
               <div class="project-tags">
                 <span class="project-tag">.NET</span><span class="project-tag">Serilog</span><span class="project-tag">Sentry</span><span class="project-tag">NuGet</span>
               </div>
@@ -1548,23 +1646,10 @@
               </div>
               <div class="project-context">Impact : une définition de stack et un flux d'installation réutilisés sur machines personnelles et de labo.</div>
             </li>
-            <li class="project-card project-card--snapchat">
+            <li class="project-card">
               <div class="project-title"><a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">Portfolio créateur Snapchat Lenses</a></div>
-              <div class="project-context">Infographie interactive et publication AR à grande échelle</div>
-              <details class="project-preview">
-                <summary class="project-preview-summary">Aperçu du profil Lens Studio</summary>
-                <div class="project-preview-panel">
-                  <div class="project-embed">
-                    <iframe
-                      title="Profil créateur Lens Studio Snapchat"
-                      data-src="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA"
-                      referrerpolicy="no-referrer-when-downgrade"
-                      allowfullscreen="true"></iframe>
-                  </div>
-                  <p class="project-embed-note">Si l'aperçu reste vide, Snapchat bloque souvent les intégrations—<a href="https://lensstudio.snapchat.com/creator/D61zOrbE9Y5MMVXKQZIPyA" target="_blank" rel="noopener noreferrer">ouvrez le profil Lens Studio</a>.</p>
-                </div>
-              </details>
-              <div class="project-impact">Conçu et publié un portfolio AR avec engagement soutenu, démontrant une exécution complète, de l'idée au produit graphique en production.</div>
+              <div class="project-context">Lenses AR sur Snapchat</div>
+              <div class="project-impact">Conçu et publié des lenses AR sur Snapchat (42 lenses ; 20 M+ vues).</div>
               <div class="project-tags">
                 <span class="project-tag">AR</span><span class="project-tag">Lens Studio</span><span class="project-tag">Graphics</span>
               </div>
@@ -1648,195 +1733,170 @@
         </details>
         <!-- COMPÉTENCES -->
         <details class="box cv-section" open>
-          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Stack technique</summary>
+          <summary class="cv-section-summary"><i class="fas fa-tasks ico"></i> Compétences</summary>
           <div class="cv-section-body">
-          <p class="section-intro">Stack quotidien : pipelines CI/CD, plateforme, infographie, tests et observabilité en production.</p>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Graphismes / 3D
-              <span class="skill-level">Avancé</span>
+          <p class="section-intro">Plateforme, infographie, livraison et données, par domaine. Certifications vérifiables ci-dessous.</p>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Graphismes / 3D</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">OpenGL</span>
+      <span class="skill badge">GLSL</span>
+      <span class="skill badge">C++</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">Blender</span>
+      <span class="skill badge">CUDA</span>
+      <span class="skill badge">OpenCV</span>
+    </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">OpenGL</span>
-              <span class="skill badge">GLSL</span>
-              <span class="skill badge">C++</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Backend</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">Java</span>
+      <span class="skill badge">Kotlin</span>
+      <span class="skill badge">Spring Boot</span>
+      <span class="skill badge">Python</span>
+      <span class="skill badge">Django</span>
+      <span class="skill badge">Flask</span>
+      <span class="skill badge">API REST</span>
+      <span class="skill badge">Microservices</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">C#</span>
+      <span class="skill badge">.NET</span>
+      <span class="skill badge">Android</span>
+      <span class="skill badge">GraphQL</span>
+    </div>
             </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Graphismes / 3D
-              <span class="skill-level">Intermédiaire</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Front-end</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">JavaScript</span>
+      <span class="skill badge">HTML</span>
+      <span class="skill badge">Angular</span>
+      <span class="skill badge">React</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">Vue</span>
+      <span class="skill badge">CSS</span>
+    </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Blender</span>
-              <span class="skill badge">CUDA</span>
-              <span class="skill badge">OpenCV</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">CI/CD et pipelines</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">DevOps</span>
+      <span class="skill badge">DevSecOps</span>
+      <span class="skill badge">Git</span>
+      <span class="skill badge">GitLab CI/CD</span>
+      <span class="skill badge">Pipelines GitLab</span>
+      <span class="skill badge">GitHub Actions</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">Azure DevOps</span>
+    </div>
             </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Backend
-              <span class="skill-level">Avancé</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Cloud / Plateforme</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">Docker</span>
+      <span class="skill badge">Kubernetes</span>
+      <span class="skill badge">Docker Swarm</span>
+      <span class="skill badge">IaC</span>
+      <span class="skill badge">GCP</span>
+      <span class="skill badge">Azure</span>
+      <span class="skill badge">AWS</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">Terraform</span>
+    </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Java</span>
-              <span class="skill badge">Kotlin</span>
-              <span class="skill badge">Spring Boot</span>
-              <span class="skill badge">Python</span>
-              <span class="skill badge">Django</span>
-              <span class="skill badge">Flask</span>
-              <span class="skill badge">API REST</span>
-              <span class="skill badge">Microservices</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Observabilité</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Avancé</span>
+      <span class="skill badge">ELK</span>
+      <span class="skill badge">Elasticsearch</span>
+      <span class="skill badge">Kibana</span>
+      <span class="skill badge">Grafana</span>
+      <span class="skill badge">Prometheus</span>
+    </div>
+    <div class="skill-tier-line clearfix">
+      <span class="skill-level">Intermédiaire</span>
+      <span class="skill badge">Sentry</span>
+      <span class="skill badge">Serilog</span>
+    </div>
             </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Backend
-              <span class="skill-level">Intermédiaire</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Données / Stockage</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill badge">SQL</span>
+      <span class="skill badge">PostgreSQL</span>
+      <span class="skill badge">MySQL</span>
+      <span class="skill badge">MongoDB</span>
+      <span class="skill badge">Redis</span>
+      <span class="skill badge">Kafka</span>
+      <span class="skill badge">Science des données</span>
+    </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">C#</span>
-              <span class="skill badge">.NET</span>
-              <span class="skill badge">Android</span>
-              <span class="skill badge">GraphQL</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Tests / Qualité</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill badge">Playwright</span>
+      <span class="skill badge">Selenium</span>
+      <span class="skill badge">JUnit</span>
+    </div>
             </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Front-end
-              <span class="skill-level">Avancé</span>
+          </details>
+          <details class="skill-group">
+            <summary class="skill-group-summary">Autres</summary>
+            <div class="skill-group-body">
+    <div class="skill-tier-line clearfix">
+      <span class="skill badge">Linux</span>
+      <span class="skill badge">Bash</span>
+      <span class="skill badge">Ansible</span>
+      <span class="skill badge">MCP</span>
+      <span class="skill badge">Auth0</span>
+      <span class="skill badge">OWASP</span>
+      <span class="skill badge">Livraison orientée sécurité</span>
+      <span class="skill badge">Recherche d'affaires</span>
+    </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">JavaScript</span>
-              <span class="skill badge">HTML</span>
-              <span class="skill badge">Angular</span>
-              <span class="skill badge">React</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Front-end
-              <span class="skill-level">Intermédiaire</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Vue</span>
-              <span class="skill badge">CSS</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              CI/CD et pipelines
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">DevOps</span>
-              <span class="skill badge">DevSecOps</span>
-              <span class="skill badge">Git</span>
-              <span class="skill badge">GitLab CI/CD</span>
-              <span class="skill badge">Pipelines GitLab</span>
-              <span class="skill badge">GitHub Actions</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              CI/CD et pipelines
-              <span class="skill-level">Intermédiaire</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Azure DevOps</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Cloud / Plateforme
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Docker</span>
-              <span class="skill badge">Kubernetes</span>
-              <span class="skill badge">Docker Swarm</span>
-              <span class="skill badge">IaC</span>
-              <span class="skill badge">GCP</span>
-              <span class="skill badge">Azure</span>
-              <span class="skill badge">AWS</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Cloud / Plateforme
-              <span class="skill-level">Intermédiaire</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Terraform</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Données / Stockage
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">SQL</span>
-              <span class="skill badge">PostgreSQL</span>
-              <span class="skill badge">MySQL</span>
-              <span class="skill badge">MongoDB</span>
-              <span class="skill badge">Redis</span>
-              <span class="skill badge">Kafka</span>
-              <span class="skill badge">Science des données</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Tests / Qualité
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Playwright</span>
-              <span class="skill badge">Selenium</span>
-              <span class="skill badge">JUnit</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Observabilité
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">ELK</span>
-              <span class="skill badge">Elasticsearch</span>
-              <span class="skill badge">Kibana</span>
-              <span class="skill badge">Grafana</span>
-              <span class="skill badge">Prometheus</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Observabilité
-              <span class="skill-level">Intermédiaire</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Sentry</span>
-              <span class="skill badge">Serilog</span>
-            </div>
-          </div>
-          <div class="skills clearfix">
-            <div class="item-skills">
-              Autres
-              <span class="skill-level">Avancé</span>
-            </div>
-            <div class="col-sm-offset-1 col-sm-12 clearfix">
-              <span class="skill badge">Linux</span>
-              <span class="skill badge">Bash</span>
-              <span class="skill badge">Ansible</span>
-              <span class="skill badge">Auth0</span>
-              <span class="skill badge">OWASP</span>
-              <span class="skill badge">Livraison orientée sécurité</span>
-              <span class="skill badge">MCP</span>
-              <span class="skill badge">Recherche d'affaires</span>
-            </div>
-          </div>
+          </details>
+          <p class="competence-credentials">
+            <strong>Certifications :</strong>
+            <a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a> (jusqu'en avr. 2027) ·
+            <a href="https://verified.sertifier.com/fr/verify/37471918795197/">QcES</a> ·
+            AWS Cloud Quest : <a href="https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54">Cloud Practitioner</a>, <a href="https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7">Data Analytics</a>, <a href="https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea">Machine Learning</a>, <a href="https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8">Serverless Developer</a>, <a href="https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5">Networking</a>, <a href="https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171">Solutions Architect</a> ·
+            RGPD (Wandrian, 2019)
+          </p>
           </div>
         </details>
+
         <!-- RECOMMANDATIONS -->
         <details class="box cv-section" open>
           <summary class="cv-section-summary"><i class="fas fa-comment-dots ico"></i> Recommandations</summary>
@@ -1859,18 +1919,6 @@
             <li class="list-group-item">
               <a href="https://www.dgp.toronto.edu/graphquon/"><strong>Graphquon 2025</strong></a> (15–16 nov. 2025) — Présentateur, atelier annuel Québec-Ontario Pre-SIGGRAPH, Université de Toronto
             </li>
-          </ul>
-          </div>
-        </details>
-        <!-- CERTIFICATIONS & PROGRAMMES -->
-        <details class="box cv-section" open>
-          <summary class="cv-section-summary"><i class="fas fa-trophy ico"></i> Certifications & Programmes</summary>
-          <div class="cv-section-body">
-          <ul class="list-group">
-            <li class="list-group-item"><a href="https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564">AWS Certified Cloud Practitioner</a> — valide jusqu'en avr. 2027</li>
-            <li class="list-group-item"><a href="https://verified.sertifier.com/fr/verify/37471918795197/">Programme Québécois d'Entrepreneuriat Scientifique (QcES)</a></li>
-            <li class="list-group-item">AWS Cloud Quest (Data Analytics, Networking, Cloud Practitioner, Machine Learning, Serverless Developer, Solutions Architect)</li>
-            <li class="list-group-item">RGPD (Wandrian, mai 2019)</li>
           </ul>
           </div>
         </details>
