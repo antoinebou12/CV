@@ -118,7 +118,30 @@ def _filter_aspell_words(words: list[str]) -> list[str]:
     return [w for w in words if not _COURSE_CODE_RE.match(w)]
 
 
+def _text_for_aspell_list(path: Path, text: str) -> str:
+    """Plain text for aspell list (matches Ubuntu --mode=none coverage on all platforms)."""
+    ext = path.suffix.lower()
+    if ext == ".html":
+        text = re.sub(r"(?is)<script[^>]*>.*?</script>", " ", text)
+        text = re.sub(r"(?is)<style[^>]*>.*?</style>", " ", text)
+        text = re.sub(r"(?is)<!--.*?-->", " ", text)
+        text = re.sub(r"<[^>]+>", " ", text)
+    elif ext == ".md":
+        text = re.sub(r"(?ms)^---\s.*?^---\s*", " ", text)
+        text = re.sub(r"(?is)```.*?```", " ", text)
+        text = re.sub(r"`[^`]+`", " ", text)
+        text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    elif ext == ".tex":
+        text = re.sub(r"(?m)^%.*$", " ", text)
+        text = re.sub(r"\\[a-zA-Z@*]+(\[[^\]]*\])?(\{[^{}]*\})*", " ", text)
+        text = re.sub(r"[{}\\]", " ", text)
+    elif ext == ".json":
+        text = re.sub(r'"[^"]+"\s*:', " ", text)
+    return text
+
+
 def _aspell_modes(path: Path) -> list[str]:
+    """Legacy modes; plain-text list is preferred (see _aspell_unknown_words)."""
     ext = path.suffix.lower()
     if ext == ".html":
         return ["html", "none"]
@@ -127,6 +150,39 @@ def _aspell_modes(path: Path) -> list[str]:
     if ext == ".tex":
         return ["tex", "none"]
     return ["none"]
+
+
+def _aspell_unknown_words(
+    path: Path, text: str, aspell: str, personal: list[str]
+) -> list[str] | None:
+    """Return unknown words, or None if aspell failed."""
+    plain = _text_for_aspell_list(path, text)
+    cmd = [
+        aspell,
+        "--lang=fr",
+        "--encoding=utf-8",
+        "list",
+        *personal,
+    ]
+    proc = subprocess.run(
+        cmd,
+        input=plain,
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        err = (proc.stderr or "").strip()
+        return None if err else []
+    return _filter_aspell_words(
+        [
+            line.strip()
+            for line in (proc.stdout or "").splitlines()
+            if line.strip() and not line.startswith("*")
+        ]
+    )
 
 
 def run_codespell(paths: list[Path]) -> list[str]:
@@ -166,38 +222,41 @@ def run_aspell_fr(paths: list[Path]) -> list[str]:
     for path in paths:
         rel = path.relative_to(REPO_ROOT)
         text = path.read_text(encoding="utf-8")
-        words: list[str] | None = None
+        words = _aspell_unknown_words(path, text, aspell, personal)
         aspell_error: str | None = None
-        for mode in _aspell_modes(path):
-            cmd = [
-                aspell,
-                "--lang=fr",
-                "--encoding=utf-8",
-                f"--mode={mode}",
-                "list",
-                *personal,
-            ]
-            proc = subprocess.run(
-                cmd,
-                input=text,
-                cwd=REPO_ROOT,
-                capture_output=True,
-                text=True,
-            )
-            if proc.returncode != 0:
-                err = (proc.stderr or "").strip()
-                if "Unknown mode" in err or "unknown mode" in err:
-                    continue
-                aspell_error = f"{rel}: aspell failed ({mode}): {err}"
-                break
-            words = _filter_aspell_words(
-                [
-                    line.strip()
-                    for line in (proc.stdout or "").splitlines()
-                    if line.strip() and not line.startswith("*")
+        if words is None:
+            for mode in _aspell_modes(path):
+                cmd = [
+                    aspell,
+                    "--lang=fr",
+                    "--encoding=utf-8",
+                    f"--mode={mode}",
+                    "list",
+                    *personal,
                 ]
-            )
-            break
+                proc = subprocess.run(
+                    cmd,
+                    input=text,
+                    cwd=REPO_ROOT,
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                )
+                if proc.returncode != 0:
+                    err = (proc.stderr or "").strip()
+                    if "Unknown mode" in err or "unknown mode" in err:
+                        continue
+                    aspell_error = f"{rel}: aspell failed ({mode}): {err}"
+                    break
+                words = _filter_aspell_words(
+                    [
+                        line.strip()
+                        for line in (proc.stdout or "").splitlines()
+                        if line.strip() and not line.startswith("*")
+                    ]
+                )
+                break
         if aspell_error:
             errors.append(aspell_error)
             continue
