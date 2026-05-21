@@ -34,3 +34,7 @@ If you prefer to deploy from a branch instead:
 This serves files **as they exist on that branch**. It will **not** include the Hugo blog at `/blog/` unless you commit a pre-built `blog/` tree (or change the workflow), because the default pipeline builds the blog only on the runner into `_site/blog/` and never commits it to `main`.
 
 For this project, use **GitHub Actions** as the Pages source so `deploy.yml` can publish the full `_site` output.
+
+### Vercel vs GitHub Pages
+
+The canonical public CV URL is the custom domain on GitHub Pages (`https://antoineboucher.info/CV/`). Root `vercel.json` only registers `index-en.html` and `index-fr.html` as static builds; a Vercel deployment must still expose `css/`, `papers/`, hero images, and PDF paths or those assets will 404. Prefer the GitHub Actions `_site` artifact for full-site previews.

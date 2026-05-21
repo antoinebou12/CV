@@ -40,7 +40,7 @@ jobs:
           enablement: true
 
       - name: Test sitemap merge script
-        run: python "${GITHUB_WORKSPACE}/scripts/test_merge_root_sitemap.py"
+        run: python "${GITHUB_WORKSPACE}/scripts/tests/test_merge_root_sitemap.py"
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -60,11 +60,22 @@ jobs:
         working-directory: hugo
         run: npm ci && npm run build:css
 
+      - name: Generate machine-readable resume artifacts
+        run: |
+          python scripts/build/render_resume_md.py --all
+          python scripts/build/generate_aeo_content.py --all
+          python scripts/build/generate_person_jsonld.py --all
+          cp -f data/resume.en.json resume.json
+          cp -f data/resume.fr.json resume-fr.json
+
       - name: Prepare static files
         run: |
           mkdir -p _site
           # Copy HTML files
-          for file in index.html index-en.html index-fr.html 404.html; do
+          for file in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html; do
+            [ -f "$file" ] && cp "$file" _site/
+          done
+          for file in resume.md resume-fr.md resume.json resume-fr.json; do
             [ -f "$file" ] && cp "$file" _site/
           done
           # Copy image and asset files
@@ -195,7 +206,7 @@ jobs:
             exit 1
           fi
           LASTMOD=$(date -u +%Y-%m-%d)
-          python "${GITHUB_WORKSPACE}/scripts/merge_root_sitemap.py" \
+          python "${GITHUB_WORKSPACE}/scripts/deploy/merge_root_sitemap.py" \
             --input "${ROOT}/sitemap.xml" \
             --output "${ROOT}/sitemap.xml" \
             --blog-dir "${ROOT}/blog" \
@@ -206,28 +217,14 @@ jobs:
 
       - name: Validate deploy artifact
         run: |
-          python "${GITHUB_WORKSPACE}/scripts/verify_deploy_build.py" \
+          python "${GITHUB_WORKSPACE}/scripts/verify/verify_deploy_build.py" \
             --site-dir "${GITHUB_WORKSPACE}/_site" \
             --repo "${GITHUB_REPOSITORY#*/}" \
             --repo-root "${GITHUB_WORKSPACE}"
 
-      - name: List deploy tree
-        run: |
-          echo "Files to deploy (sample):"
-          find _site -type f | head -40
+      - name: Verify meta descriptions (static + Hugo samples)
+        run: python "${GITHUB_WORKSPACE}/scripts/verify/verify_meta_descriptions.py"
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-
-      # Hugo emits root-relative URLs like /REPO/blog/... for GitHub Pages project sites.
-      # Lychee needs a filesystem path that matches that prefix plus --root-dir (see lychee docs).
-      # Runs after deploy so broken links never block publishing.
       - name: Mirror project path prefix for link checker
         run: |
           ROOT="${GITHUB_WORKSPACE}/_site"
@@ -242,14 +239,17 @@ jobs:
               ln -sfn "../${d}" "${ROOT}/${REPO}/${d}"
             fi
           done
-          echo "Symlinked ${ROOT}/${REPO}/* -> published assets for /${REPO}/ URL prefix"
+          for f in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html resume.md resume-fr.md resume.json resume-fr.json; do
+            if [ -f "${ROOT}/${f}" ]; then
+              ln -sfn "../${f}" "${ROOT}/${REPO}/${f}"
+            fi
+          done
+          echo "Symlinked ${ROOT}/${REPO}/* for /${REPO}/ URL prefix"
 
-      - name: Check links in site output (advisory)
-        id: lychee
-        continue-on-error: true
+      - name: Check links in site output (blocking)
         uses: lycheeverse/lychee-action@v2
         with:
-          fail: false
+          fail: true
           failIfEmpty: false
           token: ${{ github.token }}
           args: >-
@@ -263,7 +263,16 @@ jobs:
             --exclude-path 'papers/rapport/reference'
             ./_site
 
-      - name: Link check note
-        if: steps.lychee.outcome != 'success'
+      - name: List deploy tree
         run: |
-          echo "::warning::Lychee reported broken or unreachable links. GitHub Pages deploy already completed."
+          echo "Files to deploy (sample):"
+          find _site -type f | head -40
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

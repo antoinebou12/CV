@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        args: [--ignore-words, .codespell-ignore-words]
+        files: ^(index-.*\.html|cv-.*/latex/.*|docs/|data/|scripts/|AGENTS\.md)
+
+  - repo: local
+    hooks:
+      - id: validate-cv-data
+        name: validate cv.yaml
+        entry: python scripts/verify/validate_cv_data.py
+        language: system
+        files: ^data/cv\.yaml$
+        pass_filenames: false
+
+      - id: generate-cv-check
+        name: generate_cv.py --check
+        entry: python scripts/build/generate_cv.py --check
+        language: system
+        files: ^(data/cv\.yaml|templates/latex/|scripts/build/generate_cv\.py)$
+        pass_filenames: false
+
+      - id: en-fr-parity
+        name: EN/FR HTML parity
+        entry: python scripts/verify/check_en_fr_parity.py
+        language: system
+        files: ^index-(en|fr)\.html$
+        pass_filenames: false

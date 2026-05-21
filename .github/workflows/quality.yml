@@ -1,0 +1,88 @@
+name: Quality checks
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Codespell
+        uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_file: .codespell-ignore-words
+          path: >-
+            index-en.html
+            index-fr.html
+            index.html
+            404.html
+            cv-en/latex
+            cv-fr/latex
+            docs
+            hugo/content
+            data
+            scripts
+            AGENTS.md
+
+  html-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Validate static HTML
+        run: |
+          npm install -g html-validate@9.7.0
+          html-validate \
+            --config '{"extends":["html-validate:recommended"],"rules":{"no-trailing-whitespace":"off","void-style":"off","require-sri":"off","element-permitted-content":"off","no-inline-style":"off"}}' \
+            index-en.html \
+            index-fr.html \
+            about-en.html \
+            about-fr.html \
+            index.html \
+            404.html \
+            linktree/index.html
+
+  en-fr-parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install CI dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: Validate CV data schema
+        run: python scripts/verify/validate_cv_data.py
+
+      - name: EN/FR HTML parity
+        run: python scripts/verify/check_en_fr_parity.py
+
+      - name: Generated LaTeX matches data/cv.yaml
+        run: python scripts/build/generate_cv.py --check
+
+      - name: Regenerate AEO pages (check committed output)
+        run: |
+          python scripts/build/generate_aeo_content.py --all
+          git diff --exit-code about-en.html about-fr.html index-en.html index-fr.html

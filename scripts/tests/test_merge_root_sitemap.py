@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for scripts/merge_root_sitemap.py (Hugo sitemapindex flattening)."""
+"""Tests for scripts/deploy/merge_root_sitemap.py (Hugo sitemapindex flattening)."""
 from __future__ import annotations
 
 import subprocess
@@ -10,7 +10,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
-SCRIPT = Path(__file__).resolve().parent / "merge_root_sitemap.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "deploy" / "merge_root_sitemap.py"
 
 
 def q(tag: str) -> str:
@@ -68,6 +68,23 @@ class MergeRootSitemapTests(unittest.TestCase):
             }
             self.assertIn("https://example.com/CV/blog/en/posts/a/", locs)
             self.assertIn("https://example.com/CV/index-en.html", locs)
+            self.assertIn("https://example.com/CV/resume.md", locs)
+            self.assertIn("https://example.com/CV/llms.txt", locs)
+
+            xhtml_ns = "http://www.w3.org/1999/xhtml"
+            xq = f"{{{xhtml_ns}}}link"
+            en_url = next(
+                el
+                for el in merged.findall(q("url"))
+                if el.find(q("loc")) is not None
+                and el.find(q("loc")).text == "https://example.com/CV/index-en.html"
+            )
+            hreflangs = {
+                link.get("hreflang")
+                for link in en_url.findall(xq)
+                if link.get("rel") == "alternate"
+            }
+            self.assertEqual(hreflangs, {"en", "fr", "x-default"})
 
     def test_urlset_passthrough(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

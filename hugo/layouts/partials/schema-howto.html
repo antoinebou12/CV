@@ -1,0 +1,32 @@
+{{- if and .IsPage .Params.howto ( .Params.howtoSteps | default .Params.howto_steps ) -}}
+{{- $steps := .Params.howtoSteps | default .Params.howto_steps -}}
+{{- $desc := .Params.howtoDescription | default .Params.howto_description | default .Description | default .Summary -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": {{ .Title | plainify | jsonify }},
+  {{- with $desc }}
+  "description": {{ . | plainify | jsonify }},
+  {{- end }}
+  {{- with .Date }}
+  "datePublished": {{ .Format "2006-01-02T15:04:05-07:00" | jsonify }},
+  {{- end }}
+  {{- with .Lastmod }}
+  "dateModified": {{ .Format "2006-01-02T15:04:05-07:00" | jsonify }},
+  {{- end }}
+  "inLanguage": {{ .Lang | jsonify }},
+  "step": [
+    {{- range $i, $step := $steps }}
+    {{- if $i }},{{ end }}
+    {
+      "@type": "HowToStep",
+      "position": {{ add $i 1 }},
+      "name": {{ ($step.name | default $step.title) | plainify | jsonify }},
+      "text": {{ ($step.text | default $step.description) | plainify | jsonify }}
+    }
+    {{- end }}
+  ]
+}
+</script>
+{{- end -}}

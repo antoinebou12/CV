@@ -251,6 +251,18 @@ After compilation:
 - **French PDF**: `cv-fr/resume.pdf`
 - **Auxiliary files**: `.aux`, `.log`, `.out` (can be deleted)
 
+## ATS text extraction check
+
+After building PDFs, verify that `pdftotext` (Poppler) does not show known ATS glitches (small-caps title, footer date bleed, hyphenated “observability”, form-feed before employer names):
+
+```bash
+python scripts/verify/verify_cv_pdf_text.py --lang all
+```
+
+Requires `pdftotext` on `PATH`. The script runs automatically at the end of `scripts/ci/test-pipeline-local.ps1` when compile is enabled.
+
+Layout choices in `russell.cls` / `resume.tex` for parsing: normal-case `\position`, page-only footer (`Page N of M`, no `\today`), `\needspace` on `\cventry`, optional `accsupp` ActualText on header icons.
+
 ## Best Practices
 
 1. **Test locally** before committing

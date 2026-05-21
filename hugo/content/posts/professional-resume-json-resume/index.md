@@ -4,6 +4,15 @@ title: Creating a professional résumé with JSON Resume
 date: 2022-09-10T10:00:00-04:00
 description: Use the JSON Resume schema and npm tooling to publish HTML, PDF, or embedded CV data.
 translationKey: professional-resume-json-resume
+howto: true
+howtoDescription: Publish a CV from JSON Resume using npm tooling and Hugo or static HTML.
+howtoSteps:
+  - name: Install JSON Resume tooling
+    text: Install Node.js and the jsonresume-cli or theme packages you plan to use for export.
+  - name: Author resume.json
+    text: Write a resume.json file following the JSON Resume schema (basics, work, education, skills, projects).
+  - name: Export or embed
+    text: Export to HTML/PDF with a theme, or embed the JSON in a static site generator such as Hugo with a JSON Resume module.
 tags:
     - JSON Resume
     - npm

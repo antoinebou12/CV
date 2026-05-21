@@ -17,6 +17,9 @@ Reproducible baseline for machine discovery, Cloudflare “Agent-Ready” style 
 | OAuth protected resource (RFC 9728, informational) | [`hugo/static/.well-known/oauth-protected-resource`](../../hugo/static/.well-known/oauth-protected-resource) |
 | MCP server card (SEP-style stub) | [`hugo/static/.well-known/mcp/server-card.json`](../../hugo/static/.well-known/mcp/server-card.json) |
 | OIDC / OAuth “not supported” stubs | [`hugo/static/.well-known/openid-configuration`](../../hugo/static/.well-known/openid-configuration), [`hugo/static/.well-known/oauth-authorization-server`](../../hugo/static/.well-known/oauth-authorization-server) |
+| JSON Resume (canonical) | [`data/resume.en.json`](../../data/resume.en.json), [`data/resume.fr.json`](../../data/resume.fr.json) |
+| Plain Markdown CV (generated) | [`resume.md`](../../resume.md), [`resume-fr.md`](../../resume-fr.md) |
+| JSON Resume (deployed) | [`resume.json`](../../resume.json), [`resume-fr.json`](../../resume-fr.json) |
 
 Hugo copies `hugo/static/**` into the blog output directory. GitHub Actions then **promotes** `robots.txt`, `sitemap.xml`, `.well-known/**`, `_headers`, and root `llms.txt` to the **site root** so `https://antoineboucher.info/robots.txt` and `https://antoineboucher.info/.well-known/...` resolve. See [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml).
 
@@ -42,9 +45,19 @@ GitHub Pages **does not** interpret [`hugo/static/_headers`](../../hugo/static/_
 
 Merge to `main` / `master`, ensure [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml) succeeds, then **purge cache** for the zone (Caching → Configuration → Purge Everything, or custom purge: `/robots.txt`, `/sitemap.xml`, `/.well-known/*`, `/`).
 
-**Production spot-check** (Windows PowerShell): `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify-agent-ready-production.ps1`
+**Production spot-check** (Windows PowerShell): `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify-agent-ready-production.ps1 -SitePrefix /CV`
 
-As of a local check, `https://antoineboucher.info/robots.txt` can still return the **legacy** 1248-byte comment-only file while `/.well-known/api-catalog` returns **404** until the promoted `_site` layout is live and caches are cleared.
+After deploy and Cloudflare cache purge, verify these resolve (apex paths are promoted from `_site`; CV static pages live under `/CV/`):
+
+| URL | Expected |
+|-----|----------|
+| `https://antoineboucher.info/robots.txt` | Custom robots with `Sitemap:` → `/CV/sitemap.xml` |
+| `https://antoineboucher.info/llms.txt` | Identity block + machine-readable resume links |
+| `https://antoineboucher.info/.well-known/api-catalog` | JSON linkset (not 404) |
+| `https://antoineboucher.info/CV/resume.md` / `resume.json` | Deployed artifacts |
+| `https://antoineboucher.info/CV/about-en.html` | English FAQ (AEO answer target) |
+
+If `/.well-known/api-catalog` still returns **404** or HTML, the promoted artifact is not live yet or orange-cloud cache/rules need the Transform Rules in §3 below.
 
 ### 2) Response header Transform Rules (Link on homepage)
 
@@ -80,9 +93,26 @@ Static hosting alone cannot vary `Content-Type` by `Accept` for `/`. Use the Wor
 
 [`index.html`](../../index.html) (homepage before redirect), [`index-en.html`](../../index-en.html), and [`index-fr.html`](../../index-fr.html) register a minimal `open_cv_pdf` tool when `navigator.modelContext.provideContext` is available (Chrome WebMCP early preview). The API may change; registration is wrapped in `try`/`catch`.
 
+## AEO readiness (answer engines)
+
+- **Copy source:** [`data/aeo.yaml`](../../data/aeo.yaml) (lead, FAQ, `lastUpdated`).
+- **Regenerate:** `python scripts/build/generate_aeo_content.py --all` → [`about-en.html`](../../about-en.html), [`about-fr.html`](../../about-fr.html), patches CV lead/freshness/nav.
+- **JSON-LD:** FAQPage on About pages; Person/WebSite/Speakable on CV via `generate_person_jsonld.py --all`.
+- **Tracker UI:** see [`aeo-tracker.md`](aeo-tracker.md). Off-site alignment: [`offsite-entity-alignment.md`](offsite-entity-alignment.md).
+
+## Machine-readable resume and SEO
+
+- **Source of truth:** edit `data/resume.en.json` / `data/resume.fr.json`, then run:
+  - `python scripts/build/render_resume_md.py --all`
+  - `python scripts/build/generate_aeo_content.py --all`
+  - `python scripts/build/generate_person_jsonld.py --all`
+- **English default:** `resume.md`, `resume.json`, `hreflang` `x-default` → `index-en.html`; French parallels: `resume-fr.md`, `resume-fr.json`, `index-fr.html`.
+- **Person JSON-LD** is injected between `<!-- PERSON_JSONLD:BEGIN -->` / `END` in `index-en.html` and `index-fr.html` (`jobTitle`, `knowsAbout`, `alumniOf`, `worksFor`, selected projects).
+- **Sitemap:** `scripts/deploy/merge_root_sitemap.py` appends CV static URLs and `xhtml:link` alternates for EN/FR HTML and resume pairs; `robots.txt` already references `Sitemap:` (rewritten in deploy).
+
 ## CI guards
 
-The deploy workflow validates root `robots.txt`, `sitemap.xml`, JSON parse for `api-catalog` and `agent-skills/index.json`, and required fields on the skills index.
+The deploy workflow validates root `robots.txt`, `sitemap.xml`, JSON parse for `api-catalog` and `agent-skills/index.json`, required fields on the skills index, and presence of `resume.md` / `resume.json` in `_site` and the merged sitemap.
 
 ## Deferred (optional)
 

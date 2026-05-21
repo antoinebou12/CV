@@ -1,0 +1,70 @@
+/* About/AEO pages: same shell as index-en/fr; nested FAQ only */
+
+.cv-about-page .cv-faq-item {
+  margin-top: 12px;
+  border: 1px solid #dde7e5;
+  border-radius: 6px;
+  background: #fcfdfd;
+  overflow: hidden;
+}
+
+.cv-about-page .cv-faq-item:first-child {
+  margin-top: 0;
+}
+
+.cv-about-page .cv-faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 11px 14px;
+  color: #1f4742;
+  font-size: 1.02em;
+  font-weight: 700;
+  user-select: none;
+  background: #f7fbfa;
+}
+
+.cv-about-page .cv-faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+.cv-about-page .cv-faq-item > summary::after {
+  content: '\f078';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  float: right;
+  font-size: 0.78em;
+  color: #227c74;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.cv-about-page .cv-faq-item[open] > summary {
+  border-bottom: 1px solid #dde7e5;
+  background: #f4faf9;
+}
+
+.cv-about-page .cv-faq-item[open] > summary::after {
+  transform: rotate(-180deg);
+}
+
+.cv-about-page .cv-faq-answer {
+  margin: 0;
+  padding: 12px 14px;
+  color: #363636;
+  line-height: 1.6;
+}
+
+.cv-about-page .cv-faq-answer a {
+  color: #227c74;
+  font-weight: 600;
+}
+
+.cv-about-page .cv-faq-answer a:hover,
+.cv-about-page .cv-faq-answer a:focus {
+  color: #1a5f56;
+}
+
+.cv-about-page .cv-about-tags {
+  margin-top: 10px;
+}

@@ -1,4 +1,4 @@
-/* Fixed top-left: Blog (Hugo) + language (EN | FR) as separate pills */
+/* Fixed top-left: Blog + EN | FR on CV index; About + Home on about pages */
 
 .cv-site-nav {
   position: fixed;
@@ -46,11 +46,25 @@ a.cv-nav-pill:hover {
 }
 
 .cv-nav-lang .current {
-  opacity: 0.7;
+  color: #1a5f56;
+  font-weight: 700;
   cursor: default;
+}
+
+a.cv-nav-pill:focus-visible,
+.cv-nav-lang a:focus-visible {
+  outline: 2px solid #227c74;
+  outline-offset: 2px;
 }
 
 .cv-nav-lang .sep {
   opacity: 0.4;
   user-select: none;
+}
+
+a.cv-nav-pill.cv-nav-about.current {
+  color: #1a5f56;
+  font-weight: 700;
+  cursor: default;
+  text-decoration: none;
 }

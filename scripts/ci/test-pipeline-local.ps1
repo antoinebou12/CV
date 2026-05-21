@@ -1,12 +1,12 @@
 # Local smoke test mirroring .github/workflows (deploy + compile gates).
-# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File scripts\test-pipeline-local.ps1
+# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File scripts\ci\test-pipeline-local.ps1
 # Optional: -SkipCompile  (skip Docker CV build; deploy/link checks only)
 param(
     [switch]$SkipCompile
 )
 
 $ErrorActionPreference = 'Stop'
-$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 Set-Location $RepoRoot
 
 function Write-Step($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
@@ -14,8 +14,17 @@ function Write-Step($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
 Write-Step 'Python: install deps + sitemap tests'
 python -m pip install --upgrade pip -q
 pip install -r requirements.txt -q
-python scripts\test_merge_root_sitemap.py
+pip install -r requirements-ci.txt -q
+python scripts\tests\test_merge_root_sitemap.py
 if ($LASTEXITCODE -ne 0) { throw 'test_merge_root_sitemap failed' }
+
+Write-Step 'Quality: cv.yaml, EN/FR parity, generate --check'
+python scripts\verify\validate_cv_data.py
+if ($LASTEXITCODE -ne 0) { throw 'validate_cv_data failed' }
+python scripts\verify\check_en_fr_parity.py
+if ($LASTEXITCODE -ne 0) { throw 'check_en_fr_parity failed' }
+python scripts\build\generate_cv.py --check
+if ($LASTEXITCODE -ne 0) { throw 'generate_cv --check failed' }
 
 Write-Step 'Node: Hugo theme CSS (deploy.yml)'
 Push-Location hugo
@@ -25,12 +34,24 @@ npm run build:css
 if ($LASTEXITCODE -ne 0) { throw 'npm run build:css failed' }
 Pop-Location
 
+Write-Step 'Resume artifacts (Markdown, JSON-LD, JSON Resume)'
+python scripts\build\render_resume_md.py --all
+if ($LASTEXITCODE -ne 0) { throw 'render_resume_md failed' }
+python scripts\build\generate_aeo_content.py --all
+if ($LASTEXITCODE -ne 0) { throw 'generate_aeo_content failed' }
+python scripts\html\sync_index_html.py --check
+if ($LASTEXITCODE -ne 0) { throw 'sync_index_html --check failed' }
+python scripts\build\generate_person_jsonld.py --all
+if ($LASTEXITCODE -ne 0) { throw 'generate_person_jsonld failed' }
+Copy-Item -Force data\resume.en.json resume.json
+Copy-Item -Force data\resume.fr.json resume-fr.json
+
 Write-Step 'Deploy artifact: build _site'
 $Site = Join-Path $RepoRoot '_site'
 if (Test-Path $Site) { Remove-Item -Recurse -Force $Site }
 New-Item -ItemType Directory -Path $Site | Out-Null
 
-foreach ($f in @('index.html', 'index-en.html', 'index-fr.html', '404.html')) {
+foreach ($f in @('index.html', 'index-en.html', 'index-fr.html', 'about-en.html', 'about-fr.html', '404.html', 'resume.md', 'resume-fr.md', 'resume.json', 'resume-fr.json')) {
     if (Test-Path $f) { Copy-Item $f $Site }
 }
 Get-ChildItem -Path $RepoRoot -File -Include *.png, *.jpg, *.jpeg, *.ico, *.webmanifest, *.xml |
@@ -108,7 +129,7 @@ if (-not (Test-Path (Join-Path $Site 'sitemap.xml'))) {
     throw 'Missing _site/sitemap.xml after promote'
 }
 $lastmod = (Get-Date).ToUniversalTime().ToString('yyyy-MM-dd')
-python scripts\merge_root_sitemap.py `
+python scripts\deploy\merge_root_sitemap.py `
     --input (Join-Path $Site 'sitemap.xml') `
     --output (Join-Path $Site 'sitemap.xml') `
     --blog-dir (Join-Path $Site 'blog') `
@@ -123,8 +144,12 @@ if (Test-Path $robots) {
 }
 
 Write-Step 'verify_deploy_build.py'
-python scripts\verify_deploy_build.py --site-dir $Site --repo $Repo --repo-root $RepoRoot
+python scripts\verify\verify_deploy_build.py --site-dir $Site --repo $Repo --repo-root $RepoRoot
 if ($LASTEXITCODE -ne 0) { throw 'verify_deploy_build failed' }
+
+Write-Step 'verify_meta_descriptions.py'
+python scripts\verify\verify_meta_descriptions.py
+if ($LASTEXITCODE -ne 0) { throw 'verify_meta_descriptions failed' }
 
 if (-not $SkipCompile) {
     Write-Step 'Compile CV: Docker + build_cv.py (compile-cv.yml)'
@@ -154,6 +179,9 @@ if (-not $SkipCompile) {
     foreach ($f in @('cv-en\resume.pdf', 'cv-fr\resume.pdf')) {
         if (-not (Test-Path $f) -or (Get-Item $f).Length -eq 0) { throw "Invalid $f" }
     }
+    Write-Step 'verify_cv_pdf_text.py (ATS pdftotext smoke)'
+    python scripts\verify\verify_cv_pdf_text.py --lang all
+    if ($LASTEXITCODE -ne 0) { throw 'verify_cv_pdf_text failed' }
 }
 
 Write-Host "`nLocal pipeline smoke test passed." -ForegroundColor Green

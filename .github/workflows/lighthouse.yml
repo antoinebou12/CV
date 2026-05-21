@@ -1,0 +1,80 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "index-en.html"
+      - "index-fr.html"
+      - "css/**"
+      - ".github/workflows/lighthouse.yml"
+      - "lighthouserc.json"
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - "index-en.html"
+      - "index-fr.html"
+      - "css/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.160.1"
+          extended: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: hugo/package-lock.json
+
+      - name: Build minimal _site for CV pages
+        run: |
+          mkdir -p _site
+          for f in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html; do
+            [ -f "$f" ] && cp "$f" _site/
+          done
+          for f in *.png *.jpg *.jpeg *.ico *.webmanifest; do
+            [ -f "$f" ] && cp "$f" _site/ 2>/dev/null || true
+          done
+          [ -d css ] && cp -r css _site/
+          [ -d papers ] && cp -r papers _site/
+          [ -d linktree ] && cp -r linktree _site/
+          REPO="${GITHUB_REPOSITORY#*/}"
+          mkdir -p "_site/${REPO}"
+          for d in css papers linktree; do
+            [ -d "_site/${d}" ] && ln -sfn "../${d}" "_site/${REPO}/${d}"
+          done
+          for f in index-en.html index-fr.html index.html; do
+            [ -f "_site/${f}" ] && ln -sf "../${f}" "_site/${REPO}/${f}"
+          done
+          [ -f _site/antoine.png ] && ln -sf ../antoine.png "_site/${REPO}/antoine.png"
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

@@ -12,6 +12,9 @@ on:
       - 'build_cv.py'
       - 'Dockerfile.cv'
       - 'requirements.txt'
+      - 'data/**'
+      - 'templates/**'
+      - 'scripts/build/generate_cv.py'
       - '.github/workflows/compile-cv.yml'
   workflow_dispatch:
 
@@ -85,6 +88,12 @@ jobs:
             ./letters/en/cover-letter.tex
             ./letters/fr/cover-letter.tex
 
+      - name: Install CI dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: Verify generated LaTeX matches data/cv.yaml
+        run: python scripts/build/generate_cv.py --check
+
       - name: Build both CVs using Python script
         id: build
         run: |
@@ -114,10 +123,16 @@ jobs:
             echo "Error: cv-fr/resume.pdf is empty"
             exit 1
           fi
-          
+
           echo "English CV size: $en_size bytes"
           echo "French CV size: $fr_size bytes"
           echo "PDFs verified successfully"
+
+      - name: Install Poppler (pdftotext)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - name: Verify PDF text extraction (ATS)
+        run: python scripts/verify/verify_cv_pdf_text.py --lang all
 
       - name: Build cover letters (XeLaTeX)
         run: |

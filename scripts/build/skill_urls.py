@@ -1,10 +1,6 @@
-"""Link competence skill badges to official docs (index-en.html, index-fr.html)."""
+"""Official documentation URLs for CV skills (HTML badges and LaTeX linkify)."""
+
 from __future__ import annotations
-
-import re
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
 
 SKILL_URLS: dict[str, str] = {
     "OpenGL": "https://www.opengl.org/",
@@ -18,11 +14,13 @@ SKILL_URLS: dict[str, str] = {
     "Python": "https://www.python.org/",
     "JavaScript": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
     "Spring Boot": "https://spring.io/projects/spring-boot",
+    "microservices": "https://microservices.io/",
     "Django": "https://www.djangoproject.com/",
     "Flask": "https://flask.palletsprojects.com/",
     "API REST": "https://developer.mozilla.org/fr/docs/Glossary/REST",
     "Microservices": "https://microservices.io/",
     "C#": "https://learn.microsoft.com/dotnet/csharp/",
+    "C\\#": "https://learn.microsoft.com/dotnet/csharp/",
     ".NET": "https://dotnet.microsoft.com/",
     "Android": "https://developer.android.com/",
     "GraphQL": "https://graphql.org/",
@@ -76,45 +74,11 @@ SKILL_URLS: dict[str, str] = {
     "Livraison orientée sécurité": "https://owasp.org/www-project-devsecops-guidelines/",
     "Open-source maintainer (uml-mcp)": "https://github.com/antoinebou12/uml-mcp",
     "Mainteneur open source (uml-mcp)": "https://github.com/antoinebou12/uml-mcp",
+    "real-time rendering": "https://www.khronos.org/opengl/",
+    "rendu temps réel": "https://www.khronos.org/opengl/",
 }
 
-SPAN_RE = re.compile(
-    r'<span class="skill badge(?!\s+skill-badge-note)">([^<]+)</span>'
+# Longest labels first so "GitLab CI/CD" matches before "Git".
+LATEX_LINK_ORDER: tuple[str, ...] = tuple(
+    sorted(SKILL_URLS, key=len, reverse=True)
 )
-
-MARKERS = (
-    ("<!-- COMPETENCES -->", "<!-- COMPÉTENCES -->"),
-    ("<!-- COMPETENCES -->", "<!-- COMPÉTENCES -->"),
-    ("<!-- RECOMMENDATIONS -->", "<!-- RECOMMANDATIONS -->"),
-)
-
-
-def link_badges(html: str) -> tuple[str, int]:
-    count = 0
-
-    def repl(match: re.Match[str]) -> str:
-        nonlocal count
-        label = match.group(1)
-        url = SKILL_URLS.get(label)
-        if not url:
-            return match.group(0)
-        count += 1
-        return (
-            f'<a class="skill badge" href="{url}" target="_blank" '
-            f'rel="noopener noreferrer">{label}</a>'
-        )
-
-    return SPAN_RE.sub(repl, html), count
-
-
-def main() -> None:
-    for name in ("index-en.html", "index-fr.html"):
-        path = ROOT / name
-        text = path.read_text(encoding="utf-8")
-        new_text, n = link_badges(text)
-        path.write_text(new_text, encoding="utf-8")
-        print(f"{name}: linked {n} skill badges")
-
-
-if __name__ == "__main__":
-    main()
