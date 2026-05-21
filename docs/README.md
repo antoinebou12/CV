@@ -171,4 +171,4 @@ kubectl apply -f k8s/
 
 - **Portfolio**: [antoineboucher.info](https://antoineboucher.info)
 - **GitHub**: [github.com/antoinebou12](https://github.com/antoinebou12)
-- **LinkedIn**: [linkedin.com/in/antoineboucher12](https://linkedin.com/in/antoineboucher12)
+- **LinkedIn**: [linkedin.com/in/antoineboucher12](https://www.linkedin.com/in/antoineboucher12/)

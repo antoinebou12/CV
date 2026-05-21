@@ -59,6 +59,18 @@ https://www\.semanticscholar\.org/.*
 # Root sitemap is produced by the deploy workflow (Hugo index + static pages); may 404 until published
 https://antoineboucher\.info/(CV/)?sitemap\.xml
 
+# Agent-ready canonical URLs (valid at /CV/ after deploy; source files reference production URLs)
+https://antoineboucher\.info/CV/about-(en|fr)\.html
+https://antoineboucher\.info/CV/resume(-fr)?\.(md|json)
+
+# Bot-blocked or rate-limited in CI (skill badge doc links)
+https://www\.khronos\.org/opengl/wiki/OpenGL_Shading_Language
+https://www\.mysql\.com/.*
+https://www\.gnu\.org/software/bash/.*
+
+# LinkedIn without www (docs/README.md)
+https://linkedin\.com/in/antoineboucher12/?$
+
 # Legacy hosting / employer URLs (dead, bot-blocked, or replaced in HTML — kept for old mirrors)
 https://algolux\.com/.*
 https://www\.intactfc\.com/.*

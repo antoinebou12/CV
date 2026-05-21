@@ -588,7 +588,7 @@ df\_0011\['USD Value'\] = df\_0011\['USD Value'\].fillna(0)
   
 df\_0011 = df\_0011\[df\_0011\['USD Value'\] != 0\]  
   
-\# remove nan values description remplace by ''  
+\# remove nan values description replace with ''  
 df\_0011\['Set Description'\] = df\_0011\['Set Description'\].fillna('')
 
 ## Linear Regression and Future Predictions

@@ -6,6 +6,7 @@ Used by .github/workflows/quality.yml and pre-commit.
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -19,6 +20,9 @@ from _repo import REPO_ROOT
 
 CODE_SPELL_IGNORE = REPO_ROOT / ".codespell-ignore-words"
 ASPELL_FR_PWS = REPO_ROOT / ".aspell.fr.pws"
+
+# Course codes (LOG8100) cannot live in .aspell.fr.pws — aspell rejects digits in words.
+_COURSE_CODE_RE = re.compile(r"^[A-Z]{2,6}\d{2,5}$")
 
 EN_STATIC = (
     "index-en.html",
@@ -94,6 +98,26 @@ def collect_paths(lang: str) -> list[Path]:
     return out
 
 
+def _validate_aspell_pws() -> list[str]:
+    if not ASPELL_FR_PWS.is_file():
+        return []
+    errors: list[str] = []
+    for line in ASPELL_FR_PWS.read_text(encoding="utf-8").splitlines():
+        word = line.strip()
+        if not word or word.startswith("personal_ws"):
+            continue
+        if re.search(r"\d", word):
+            errors.append(
+                f".aspell.fr.pws: invalid entry {word!r} "
+                "(digits not allowed in aspell personal dictionary words)"
+            )
+    return errors
+
+
+def _filter_aspell_words(words: list[str]) -> list[str]:
+    return [w for w in words if not _COURSE_CODE_RE.match(w)]
+
+
 def _aspell_modes(path: Path) -> list[str]:
     ext = path.suffix.lower()
     if ext == ".html":
@@ -132,6 +156,10 @@ def run_aspell_fr(paths: list[Path]) -> list[str]:
     if not aspell:
         return ["aspell not found on PATH (install aspell and aspell-fr)"]
 
+    pws_errors = _validate_aspell_pws()
+    if pws_errors:
+        return pws_errors
+
     personal = ["-p", str(ASPELL_FR_PWS)] if ASPELL_FR_PWS.is_file() else []
     errors: list[str] = []
 
@@ -162,11 +190,13 @@ def run_aspell_fr(paths: list[Path]) -> list[str]:
                     continue
                 aspell_error = f"{rel}: aspell failed ({mode}): {err}"
                 break
-            words = [
-                line.strip()
-                for line in (proc.stdout or "").splitlines()
-                if line.strip() and not line.startswith("*")
-            ]
+            words = _filter_aspell_words(
+                [
+                    line.strip()
+                    for line in (proc.stdout or "").splitlines()
+                    if line.strip() and not line.startswith("*")
+                ]
+            )
             break
         if aspell_error:
             errors.append(aspell_error)

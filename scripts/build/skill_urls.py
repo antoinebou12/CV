@@ -71,7 +71,7 @@ SKILL_URLS: dict[str, str] = {
     "Agile": "https://agilemanifesto.org/",
     "SCRUM": "https://scrumguides.org/",
     "Kanban": "https://kanban.university/what-is-kanban/",
-    "Livraison orientée sécurité": "https://owasp.org/www-project-devsecops-guidelines/",
+    "Livraison orientée sécurité": "https://owasp.org/",
     "Open-source maintainer (uml-mcp)": "https://github.com/antoinebou12/uml-mcp",
     "Mainteneur open source (uml-mcp)": "https://github.com/antoinebou12/uml-mcp",
     "real-time rendering": "https://www.khronos.org/opengl/",
