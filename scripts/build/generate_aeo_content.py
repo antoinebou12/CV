@@ -690,16 +690,19 @@ def patch_cv(locale: str, aeo: dict) -> None:
         html = html.replace("</title>", f"</title>\n{fresh}", 1)
 
     nav_new = cv_nav_block(locale)
-    nav_pat = re.compile(
-        r'<nav class="cv-site-nav"[^>]*>.*?</nav>',
+    skip_nav_pat = re.compile(
+        r'(<a class="skip-link"[^>]*>.*?</a>)\s*<nav class="cv-site-nav"[^>]*>.*?</nav>',
         re.DOTALL,
     )
-    html = nav_pat.sub(nav_new, html, count=1)
+    html = skip_nav_pat.sub(rf"\1\n{nav_new}", html, count=1)
 
-    lead_new = lead_block(lead)
-    if LEAD_BEGIN in html:
-        html = replace_block(html, LEAD_BEGIN, LEAD_END, "")
-    if lead.strip():
+    lead_new = lead_block(lead) if lead.strip() else ""
+    if LEAD_BEGIN in html and UPDATED_BEGIN in html:
+        if lead_new:
+            html = replace_block(html, LEAD_BEGIN, LEAD_END, lead_new)
+        else:
+            html = replace_block(html, LEAD_BEGIN, LEAD_END, "")
+    elif lead_new:
         if UPDATED_BEGIN in html:
             html = html.replace(UPDATED_BEGIN, f"{lead_new}\n{UPDATED_BEGIN}", 1)
         else:
@@ -710,6 +713,8 @@ def patch_cv(locale: str, aeo: dict) -> None:
         html = replace_block(html, UPDATED_BEGIN, UPDATED_END, updated)
     else:
         html = html.replace("  </main>", f"{updated}\n  </main>", 1)
+
+    html = re.sub(r"\n{4,}(?=<!-- AEO_LEAD:BEGIN -->)", "\n\n", html)
 
     path.write_text(html, encoding="utf-8", newline="\n")
     print(f"Updated {path}")

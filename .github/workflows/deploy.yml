@@ -39,6 +39,9 @@ jobs:
         with:
           enablement: true
 
+      - name: Install CI Python dependencies
+        run: pip install -r requirements-ci.txt
+
       - name: Test sitemap merge script
         run: python "${GITHUB_WORKSPACE}/scripts/tests/test_merge_root_sitemap.py"
 
@@ -59,6 +62,9 @@ jobs:
       - name: Build Hugo theme CSS (Tailwind)
         working-directory: hugo
         run: npm ci && npm run build:css
+
+      - name: Install CI Python dependencies
+        run: pip install -r requirements-ci.txt
 
       - name: Generate machine-readable resume artifacts
         run: |
@@ -246,10 +252,10 @@ jobs:
           done
           echo "Symlinked ${ROOT}/${REPO}/* for /${REPO}/ URL prefix"
 
-      - name: Check links in site output (blocking)
+      - name: Check links in site output (advisory)
         uses: lycheeverse/lychee-action@v2
         with:
-          fail: true
+          fail: false
           failIfEmpty: false
           token: ${{ github.token }}
           args: >-

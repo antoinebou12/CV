@@ -58,11 +58,15 @@ def test_cv_has_lead_and_freshness() -> None:
 
 
 def test_regenerate_is_idempotent() -> None:
-    subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build" / "generate_aeo_content.py"), "--all"],
-        cwd=ROOT,
-        check=True,
-    )
+    script = str(ROOT / "scripts" / "build" / "generate_aeo_content.py")
+    cmd = [sys.executable, script, "--all"]
+    subprocess.run(cmd, cwd=ROOT, check=True)
+    cv_targets = ("about-en.html", "about-fr.html", "index-en.html", "index-fr.html")
+    after_first = {name: (ROOT / name).read_bytes() for name in cv_targets}
+    subprocess.run(cmd, cwd=ROOT, check=True)
+    after_second = {name: (ROOT / name).read_bytes() for name in cv_targets}
+    assert after_first == after_second, "second --all run must not change committed CV HTML"
+
     for name in ("about-en.html", "about-fr.html"):
         graph = re.search(
             r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>',

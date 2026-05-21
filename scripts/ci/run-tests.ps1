@@ -17,6 +17,9 @@ if ($LASTEXITCODE -ne 0) { throw 'test_render_resume_md failed' }
 python scripts/tests/test_generate_aeo_content.py
 if ($LASTEXITCODE -ne 0) { throw 'test_generate_aeo_content failed' }
 
+python scripts/tests/test_spellcheck.py
+if ($LASTEXITCODE -ne 0) { throw 'test_spellcheck failed' }
+
 python scripts/build/generate_cv.py --check
 if ($LASTEXITCODE -ne 0) { throw 'generate_cv --check failed (run: python scripts/build/generate_cv.py, then commit skills.tex)' }
 

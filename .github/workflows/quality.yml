@@ -20,22 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Codespell
-        uses: codespell-project/actions-codespell@v2
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
-          ignore_words_file: .codespell-ignore-words
-          path: >-
-            index-en.html
-            index-fr.html
-            index.html
-            404.html
-            cv-en/latex
-            cv-fr/latex
-            docs
-            hugo/content
-            data
-            scripts
-            AGENTS.md
+          python-version: "3.14"
+
+      - name: Install spell tools
+        run: |
+          pip install codespell
+          sudo apt-get update -qq
+          sudo apt-get install -y aspell aspell-en aspell-fr
+
+      - name: Locale spellcheck (EN codespell, FR aspell)
+        run: python scripts/ci/spellcheck.py
 
   html-validate:
     runs-on: ubuntu-latest
@@ -50,8 +47,7 @@ jobs:
       - name: Validate static HTML
         run: |
           npm install -g html-validate@9.7.0
-          html-validate \
-            --config '{"extends":["html-validate:recommended"],"rules":{"no-trailing-whitespace":"off","void-style":"off","require-sri":"off","element-permitted-content":"off","no-inline-style":"off"}}' \
+          html-validate --config .htmlvalidate.json \
             index-en.html \
             index-fr.html \
             about-en.html \
@@ -85,4 +81,5 @@ jobs:
       - name: Regenerate AEO pages (check committed output)
         run: |
           python scripts/build/generate_aeo_content.py --all
-          git diff --exit-code about-en.html about-fr.html index-en.html index-fr.html
+          python scripts/html/sync_index_html.py
+          git diff --exit-code about-en.html about-fr.html index-en.html index-fr.html index.html

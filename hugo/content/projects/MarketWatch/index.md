@@ -19,7 +19,7 @@ draft: false
 
 [Documentation](https://antoinebou12.github.io/marketwatch/)
 
-A Python libary to interact with the MarketWatch Stock Market Game
+A Python library to interact with the MarketWatch Stock Market Game
 Based on code from
 
 - https://github.com/kevindong/MarketWatch_API/

@@ -21,7 +21,7 @@ The project uses five GitHub Actions workflows:
    - Runs Lychee on Hugo content, docs, static HTML, CSS, linktree, letters, papers (PR, push, weekly schedule)
 
 4. **Quality checks** (`.github/workflows/quality.yml`)
-   - Codespell on CV HTML, LaTeX, docs, Hugo content, `data/`
+   - Locale spellcheck: **codespell** (English paths) and **aspell-fr** (French paths) via `scripts/ci/spellcheck.py`
    - `html-validate` on static HTML entry pages
    - `validate_cv_data.py`, `check_en_fr_parity.py`, `generate_cv.py --check`
 
@@ -62,16 +62,17 @@ python scripts/verify/verify_cv_pdf_text.py --lang all
 
 ### Workflow Steps (quality gates before upload)
 
-1. Checkout, Python 3.14, sitemap unit tests
+1. Checkout, Python 3.14, `pip install -r requirements-ci.txt`, sitemap unit tests
 2. Hugo + Node 24 Tailwind build
-3. Assemble `_site` (static HTML, `css/`, `papers/`, CV PDFs, Hugo `blog/`)
-4. Agent-ready promote + sitemap merge
-5. **`verify_deploy_build.py`** (blocking)
-6. **`verify_meta_descriptions.py`** (blocking)
-7. **Lychee on `_site`** with project-path symlinks (blocking — publish only if links pass)
-8. Upload artifact and deploy
+3. Resume/AEO artifacts (`render_resume_md.py`, `generate_aeo_content.py`, `generate_person_jsonld.py`)
+4. Assemble `_site` (static HTML, `css/`, `papers/`, CV PDFs, Hugo `blog/`)
+5. Agent-ready promote + sitemap merge
+6. **`verify_deploy_build.py`** (blocking)
+7. **`verify_meta_descriptions.py`** (blocking)
+8. **Lychee on `_site`** (advisory — `fail: false`; broken links are logged but do not block upload)
+9. Upload artifact and deploy
 
-Post-deploy advisory link checks were removed; broken links now fail the workflow before upload.
+PR/push link checks in **link-check.yml** remain blocking on source trees (no `index-en.htm`; that path is a Vercel redirect only).
 
 ## Quality Workflow
 
@@ -79,8 +80,9 @@ Runs on every push/PR to `main`/`master`:
 
 | Step | Tool |
 |------|------|
-| Spellcheck | codespell + `.codespell-ignore-words` |
-| HTML validate | `html-validate` on `index-*.html`, `404.html`, `linktree/index.html` |
+| Spellcheck | `scripts/ci/spellcheck.py` — EN: codespell + `.codespell-ignore-words`; FR: aspell + `.aspell.fr.pws` (French paths are not run through codespell) |
+| HTML validate | `html-validate --config .htmlvalidate.json` on `index-*.html`, `about-*.html`, `404.html`, `linktree/index.html` |
+| AEO output | `generate_aeo_content.py --all` + `sync_index_html.py`; committed HTML must match (`git diff --exit-code`) |
 | Data schema | `scripts/verify/validate_cv_data.py` |
 | EN/FR parity | `scripts/verify/check_en_fr_parity.py` |
 | Generated LaTeX | `scripts/build/generate_cv.py --check` |
@@ -114,7 +116,7 @@ pip install pre-commit
 pre-commit install
 ```
 
-Hooks: codespell, `validate_cv_data.py`, `generate_cv.py --check`, `check_en_fr_parity.py` (on relevant file changes).
+Hooks: locale spellcheck (`scripts/ci/spellcheck.py`), `validate_cv_data.py`, `generate_cv.py --check`, `check_en_fr_parity.py` (on relevant file changes).
 
 ## Workflow Permissions
 
