@@ -9,7 +9,7 @@ import argparse
 import shutil
 import subprocess
 import sys
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterator
 from pathlib import Path
 
 _SCRIPTS = Path(__file__).resolve().parents[1]
@@ -94,13 +94,15 @@ def collect_paths(lang: str) -> list[Path]:
     return out
 
 
-def _aspell_mode(path: Path) -> str:
+def _aspell_modes(path: Path) -> list[str]:
     ext = path.suffix.lower()
-    if ext in {".html", ".md"}:
-        return "markdown" if ext == ".md" else "html"
+    if ext == ".html":
+        return ["html", "none"]
+    if ext == ".md":
+        return ["markdown", "none"]
     if ext == ".tex":
-        return "tex"
-    return "none"
+        return ["tex", "none"]
+    return ["none"]
 
 
 def run_codespell(paths: list[Path]) -> list[str]:
@@ -135,31 +137,40 @@ def run_aspell_fr(paths: list[Path]) -> list[str]:
 
     for path in paths:
         rel = path.relative_to(REPO_ROOT)
-        mode = _aspell_mode(path)
-        cmd = [
-            aspell,
-            "--lang=fr",
-            "--encoding=utf-8",
-            f"--mode={mode}",
-            "list",
-            *personal,
-        ]
         text = path.read_text(encoding="utf-8")
-        proc = subprocess.run(
-            cmd,
-            input=text,
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-        )
-        if proc.returncode != 0 and proc.stderr:
-            errors.append(f"{rel}: aspell failed: {proc.stderr.strip()}")
+        words: list[str] | None = None
+        aspell_error: str | None = None
+        for mode in _aspell_modes(path):
+            cmd = [
+                aspell,
+                "--lang=fr",
+                "--encoding=utf-8",
+                f"--mode={mode}",
+                "list",
+                *personal,
+            ]
+            proc = subprocess.run(
+                cmd,
+                input=text,
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+            )
+            if proc.returncode != 0:
+                err = (proc.stderr or "").strip()
+                if "Unknown mode" in err or "unknown mode" in err:
+                    continue
+                aspell_error = f"{rel}: aspell failed ({mode}): {err}"
+                break
+            words = [
+                line.strip()
+                for line in (proc.stdout or "").splitlines()
+                if line.strip() and not line.startswith("*")
+            ]
+            break
+        if aspell_error:
+            errors.append(aspell_error)
             continue
-        words = [
-            line.strip()
-            for line in (proc.stdout or "").splitlines()
-            if line.strip() and not line.startswith("*")
-        ]
         if words:
             sample = ", ".join(words[:12])
             extra = f" (+{len(words) - 12} more)" if len(words) > 12 else ""
