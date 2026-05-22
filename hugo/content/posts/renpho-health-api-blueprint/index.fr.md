@@ -2,61 +2,80 @@
 post_kind: article
 title: "Balance Renpho, Home Assistant et rétro-ingénierie de l’API"
 date: 2021-10-10T10:00:00-04:00
-lastmod: 2026-04-13T12:00:00-04:00
-description: Fork de hass-renpho, extraction des points de terminaison Renpho avec APKLeaks, et intégration des métriques bio-impédancemétriques dans un tableau de bord santé Lovelace Home Assistant.
+lastmod: 2026-05-22T16:00:00-04:00
+description: "Fork hass-renpho, APKLeaks sur l’app Android, tableaux Lovelace, habitudes honnêtes pour les métriques bio-impédance."
 translationKey: renpho-health-api-blueprint
 tags:
-    - Health
-    - API
-    - Reverse Engineering
-    - Home Assistant
-    - Home Automation
+  - Health
+  - API
+  - Reverse Engineering
+  - Home Assistant
+  - Home Automation
 images:
-    - featured.jpeg
+  - featured.jpeg
 ---
 
-## Inspiration : le « Blueprint Protocol » de Bryan Johnson
+Je voulais les pesées dans **Home Assistant** avec le reste des automations — pas une app santé de plus. Résultat : fork **hass-renpho**, **APKLeaks** sur le client Android, tableau Lovelace que je consulte encore. **[English version]({{< ref "/posts/renpho-health-api-blueprint/index.md" >}})**.
 
-Pour moi, le suivi de santé personnel a commencé avec le **Blueprint Protocol** de Bryan Johnson — une poussée vers l’auto-quantification qui collait à ma façon de voir la forme. Je voulais le même niveau de granularité ; une balance **Renpho** avec bio-impédance s’est avérée un moyen pratique d’obtenir plus que le simple poids.
+<!--more-->
 
-![Inspiration Blueprint Protocol](images/blueprint.jpg)
+## Point de départ
 
-## Fork de hass-renpho et écosystème Home Assistant
+Balance **Renpho** bio-impédance = plus que le poids. Esprit **[lab maison]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})** : si les données comptent, elles atterrissent là où vivent alertes et graphiques.
 
-J’ai trouvé **hass-renpho**, une intégration communautaire qui ramène les données Renpho dans Home Assistant. Le projet était à l’arrêt ; avec le mainteneur d’origine indisponible, j’ai forké pour étendre la prise en charge des métriques exposées par le matériel.
+![Inspiration suivi personnel](./images/blueprint.jpg)
 
-Ce fork m’a fait suivre le parcours classique des composants personnalisés : installation via **HACS**, configuration des identifiants, itération sur les entités. J’ai aussi échangé avec le mainteneur d’origine quand c’était pertinent — correctifs, retours sur l’API, garder l’intégration utile pour d’autres utilisateurs de balance Renpho.
+Pas d’endorsement d’un protocole célébrité — photo = « je voulais des tendances ».
 
-![Tableau de bord Home Assistant : signes vitaux Renpho, historique du poids, jauges de composition corporelle](images/health-dashboard-metrics.jpeg)
+## Fork hass-renpho
 
-## Rétro-ingénierie et APKLeaks
+`hass-renpho` intègre Renpho dans HA ; projet silencieux → **fork** pour étendre les métriques.
 
-L’app mobile ne publie pas de doc API officielle ; il fallait voir ce que le client Android appelle réellement. **APKLeaks** parcourt l’APK empaqueté à la recherche de chaînes — URL, clés, indices — plutôt que de tout décompiler en source lisible. En l’exécutant sur l’APK Renpho, j’ai obtenu les points HTTP et assez de contexte pour aligner ces appels sur les charges JSON utiles (poids, IMC, métabolisme de base, âge corporel, estimations graisse et muscle, eau, protéines, graisse viscérale, etc.). Dans Home Assistant, tout cela devient des entités et alimente des cartes Lovelace — jauges pour la composition, graphes d’historique pour le poids, lignes simples pour les métriques « bonus ».
+- Install **HACS**, identifiants
+- **Entités** poids + composition
+- **Issues** quand l’API bouge
 
-```shell
-# Installation PyPI simple
-pip3 install apkleaks
-# Explorer les sources
-git clone https://github.com/dwisiswant0/apkleaks
-cd apkleaks/
-pip3 install -r requirements.txt
+Échanges avec le mainteneur quand possible.
+
+![Tableau de bord Home Assistant](./images/health-dashboard-metrics.jpeg)
+
+## APKLeaks
+
+Pas de doc API publique — lire l’**app Android**.
+
+```bash
+pip install apkleaks
+apkleaks -f renpho.apk
 ```
 
-Pour aller plus loin :
+Aligner endpoints et champs JSON (poids, BMI, BMR, graisse, muscle, eau, etc.) → **entités** HA.
 
-- [APKLeaks sur GitHub](https://github.com/dwisiswant0/apkleaks)
-- [Analyse approfondie d’APKLeaks](https://www.whiteoaksecurity.com/blog/apkleaks-discover-leaks-within-apk-files/)
+- [APKLeaks GitHub](https://github.com/dwisiswant0/apkleaks)
+- [White Oak Security](https://www.whiteoaksecurity.com/blog/apkleaks-discover-leaks-within-apk-files/)
 
-## Tableau de bord, contexte et habitudes de mesure
+Contrat **instable** à chaque mise à jour app.
 
-Les données Renpho ne font qu’une partie du tableau. J’utilise aussi Google Health, MyFitnessPal, etc., pour l’activité et l’alimentation, afin que les pesées côtoient régime et mouvement, pas isolées.
+## Tableau et habitudes
 
-![Mise en page Lovelace avec métriques de composition et intégrations complémentaires](images/detailed-metrics-integration.jpeg)
+Renpho = une entrée ; **Google Health** / **MyFitnessPal** pour activité et repas.
 
-Les variations jour après jour m’ont appris à traiter les chiffres comme des **tendances**, pas des jugements. Les vêtements seuls peuvent faire bouger la balance d’environ un kilo « mauvais jour » ; hydratation et digestion comptent aussi. Mesurer à un **moment stable** (pour moi, le matin, conditions comparables) garde la série exploitable sur la carte d’historique HA.
+![Lovelace — métriques détaillées](./images/detailed-metrics-integration.jpeg)
 
-Le projet technique est devenu une habitude : un seul endroit pour la trajectoire du poids, les estimations de composition et les stats exposées par l’intégration — assez pour voir si entraînement ou sommeil réagissent comme prévu.
+| Habitude | Pourquoi |
+|----------|----------|
+| **Même heure** | Matin, hydratation stable |
+| **Vêtements constants** | ~1 kg de bruit |
+| **Tendances** | La composition estimée lag la réalité |
 
-## Communauté et ce qui vous convient
+## Quand s’abstenir
 
-Rien de tout cela ne serait aussi pratique sans l’écosystème Home Assistant et les intégrations open source — forks, tickets et petits correctifs s’additionnent. Si vous quantifiez votre santé, qu’est-ce qui a vraiment tenu chez vous : matériel dédié, apps téléphone, ou solution auto-hébergée comme celle-ci ? Partager ce qu’on utilise et ce qu’on ignore aide souvent plus que le gadget seul : l’essentiel est que les données s’intègrent **régulièrement** à la routine.
+- Besoin **médical** — ce n’est pas l’outil.
+- Obsession sur le % graisse du jour — masquer les jauges inutiles.
+- Pas de maintenance de fork — attendez-vous à des casses.
+
+## Articles liés
+
+- [Évolution réseau maison]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})
+- [Économie LEGO data science]({{< ref "/posts/economics-lego-data-science/index.fr.md" >}})
+
+Vous self-hostez quoi côté santé : HA, Grafana, téléphone seulement ?

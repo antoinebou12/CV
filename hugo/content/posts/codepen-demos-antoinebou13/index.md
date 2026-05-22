@@ -35,7 +35,7 @@ images:
   - featured.png
 ---
 
-These are **live CodePen embeds** I kept from the jQuery-and-vanilla-JS years (~2016–2017): small UI labs, then two bigger demos (Canvas and Three.js). Each card uses the **pen title from CodePen** so you know what you are opening—not just the slug in the URL. Fork anything directly on CodePen if you want to adapt it. **[Version française]({{< ref "/posts/codepen-demos-antoinebou13/index.fr.md" >}})**.
+CodePen was my **public lab notebook** before this Hugo blog existed — instant preview, comments, and forks without deploying. These are **live CodePen embeds** I kept from the jQuery-and-vanilla-JS years (~2016–2017): small UI labs, then two bigger demos (Canvas and Three.js). Each card uses the **pen title from CodePen** so you know what you are opening—not just the slug in the URL. Fork anything directly on CodePen if you want to adapt it. **[Version française]({{< ref "/posts/codepen-demos-antoinebou13/index.fr.md" >}})**.
 
 <!--more-->
 
@@ -82,4 +82,14 @@ These are **live CodePen embeds** I kept from the jQuery-and-vanilla-JS years (~
 | Canvas blackboard | [MLEdxr](https://codepen.io/antoinebou13/pen/MLEdxr) |
 | Three.js wave | [rNoqVOj](https://codepen.io/antoinebou13/pen/rNoqVOj) |
 
+## Why I still link these
+
+CodePen was where I learned **feedback loops under 400 lines** — before this Hugo blog existed. The blackboard and Three.js pens are the ones I reopen when someone asks “can you prototype UI fast?” Everything else is historical context for how form-heavy web felt before component frameworks ate the world.
+
 Older long-form write-ups for some of these ideas were merged here; the aliases in the site config still point to this page.
+
+## Related posts
+
+- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — from Flash and web demos to platform work
+- [Portfolio Hugo week 1]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}}) — where demos became a real site
+- [Kinectron + p5.js]({{< ref "/posts/kinectron-p5-sketch-gif/index.md" >}}) — another creative-coding thread

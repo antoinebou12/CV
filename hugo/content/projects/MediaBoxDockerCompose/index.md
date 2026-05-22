@@ -19,6 +19,8 @@ tags:
 
 Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with **Plex** or **Jellyfin**, with request UIs and monitoring. Configuration is meant to live under a shared `ROOT` tree on disk as in the repo’s `docker-compose.yml`.
 
+**Blog:** port catalog for 86 tracked services (implemented vs spreadsheet-only) plus [Proxmox VE Helper-Scripts](https://github.com/community-scripts/ProxmoxVE) — [MediaBox homelab Docker catalog]({{< ref "/posts/mediabox-homelab-docker-catalog/index.md" >}}).
+
 For hosts that are not ready for the full stack yet, the companion [**another-install-script**](https://github.com/antoinebou12/another-install-script) repo offers menu-driven bash installers to pull up individual containers (and related dashboards) on a fresh Linux machine before you adopt this compose file.
 
 ## What’s in the stack

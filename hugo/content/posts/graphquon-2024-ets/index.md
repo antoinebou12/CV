@@ -68,9 +68,24 @@ Between sessions I talked with **Masha Shugrina** (NVIDIA Spatial Intelligence L
 
 It was the useful kind of industry chat: concrete tools you could imagine plugging into a lab pipeline, not a slide deck of buzzwords.
 
+## Audience and vibe
+
+Mostly **graphics + vision grad students and faculty** from Quebec and Ontario — people who understand meshes and shaders but still want a friendly room. Talks skewed research-heavy; questions were about evaluation protocols and whether a method would survive a SIGGRAPH reviewer, not startup pitch decks.
+
 ## My role vs 2025
 
-For **2024** I was on the **organizing/web** side (site on GitHub Pages, schedule pages, contact blocks). In **2025** I presented at the Toronto edition — see **[GraphQuon 2025 — University of Toronto]({{< ref "/posts/graphquon-2025-university-of-toronto" >}})** (*Where to Wear?* with Sheldon Andrews).
+For **2024** I was on the **organizing/web** side (site on GitHub Pages, schedule pages, contact blocks). That meant I learned the boring critical path: bios on time, PDF links that do not 404, and a schedule page that works on mobile in a hallway. In **2025** I presented at the Toronto edition — see **[GraphQuon 2025 — University of Toronto]({{< ref "/posts/graphquon-2025-university-of-toronto" >}})** (*Where to Wear?* with Sheldon Andrews). Organizing first made presenting calmer — I already knew where the HDMI adapter lived.
+
+## Tips if you attend next year
+
+- **Bring a question for the presenters** — honourable mentions get sharp feedback when they name what they want (SIGGRAPH track, clarity, eval).
+- **Talk in the hall** — half the value is comparing pipelines with other Quebec/Ontario labs.
+- **Check the site early** — schedules shift; [graphquon.github.io](https://graphquon.github.io/) is the source of truth.
+
+## Related posts
+
+- [GraphQuon 2025 — University of Toronto]({{< ref "/posts/graphquon-2025-university-of-toronto/index.md" >}}) — presenting *Where to Wear?*
+- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — ÉTS thread
 
 ## Links
 

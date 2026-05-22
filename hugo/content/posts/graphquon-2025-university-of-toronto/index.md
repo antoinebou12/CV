@@ -52,12 +52,28 @@ The research line connects to my **ÉTS** work on **3D fabrication and validatio
 
 | Format | File | Notes |
 |--------|------|--------|
-| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Full deck export (28 slides). Best for reading and sharing. |
-| **PowerPoint** | `GraphQuon Final.pptx` | Original editable deck (~116 MB with embedded assets—too large to host in this repo). Use the PDF above, or [email me](mailto:antoine@antoineboucher.info) if you need the `.pptx`. |
+| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Full deck export (28 slides). Best for in-browser reading. |
+| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Original editable deck (~116 MB). Download below; preview works best via the PDF. |
+
+**PowerPoint (.pptx)** — full talk with embedded assets:
+
+{{< deck src="graphquon-final.pptx" title="GraphQuon 2025 — Where to wear" label="Download GraphQuon deck (.pptx)" size="~116 MB" viewer="false" >}}
+
+## What I learned presenting
+
+- **Name the evaluation gap early** — reviewers asked how we would validate wear on real garments, not only in simulation.
+- **Slides ≠ paper** — the PDF deck is the fast path; the PPTX is for collaborators who will steal figures.
+- **Community continuity** — same faces as Montréal 2024, new venue; hallway conversations mattered as much as the podium.
 
 ## Toronto, November 2025
 
 A few photos from the trip—badge, campus-adjacent architecture, and the usual downtown walks between sessions.
+
+The **CN Tower night shot** is the “I made it to Toronto” postcard; I use it when I need to remember the trip was also logistics (flights, posters, HDMI), not only research.
+
+The **OCAD Sharp Centre** photo is the design-school landmark — a good reminder that GraphQuon sits between engineering graphics and industrial design culture.
+
+**Yonge–Dundas** was the rainy-night walk between sessions; loud screens, wet pavement, zero regret bringing waterproof shoes.
 
 ![Downtown Toronto at night — CN Tower and Bell Media building](./images/toronto-cn-tower-night.png)
 
@@ -70,6 +86,12 @@ A few photos from the trip—badge, campus-adjacent architecture, and the usual 
 ![Informal gathering with other attendees](./images/graphquon-social-gathering.png)
 
 ![Ontario waterfront — houses linked by a footbridge at dusk](./images/ontario-waterfront-bridge.png)
+
+## Related posts
+
+- [GraphQuon 2024 — ÉTS]({{< ref "/posts/graphquon-2024-ets/index.md" >}}) — organizing the site vs presenting in 2025
+- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — ÉTS and wear research context
+- [AI figurines / 3D pipeline]({{< ref "/posts/ai-figurines-3d-printing/index.md" >}}) — another mesh-and-texture thread
 
 ## Links
 

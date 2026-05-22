@@ -2,8 +2,8 @@
 post_kind: article
 title: "Créer un portfolio avec Hugo (semaine 1)"
 date: 2024-01-06T10:00:00-04:00
-lastmod: 2026-05-23T00:30:00-04:00
-description: "Semaine 1 d’un portfolio Hugo — thème, données embarquées, Substack et shortcode iframe."
+lastmod: 2026-05-22T16:00:00-04:00
+description: "Semaine 1 portfolio Hugo — compromis HBTheme, embeds data, Substack, shortcode iframe, ce que je ferais autrement aujourd’hui."
 translationKey: portfolio-hugo-week-1
 tags:
   - Hugo
@@ -14,40 +14,61 @@ images:
   - featured.png
 ---
 
-Semaine 1 de migration vers **Hugo** : choisir un thème, publier vite, et brancher du contenu au-delà du PDF de CV. Thème (**HBTheme**), embed d’une histoire data, **Substack** en parallèle, shortcode **iframe**. **[English version]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})**.
+Semaine 1 de migration vers **Hugo** (janvier 2024) : thème, déploiement rapide, prouver que le dépôt peut porter plus qu’un PDF de CV. **HBTheme**, embed data, **Substack** à côté, shortcode **iframe**. **[English version]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})**.
 
 <!--more-->
 
-![Aperçu du site](./featured.png)
+![Aperçu du site après premier déploiement](./featured.png)
 
-## Pourquoi Hugo
+## Pourquoi Hugo sans CMS
 
-Génération statique, builds courts, modules sans CMS lourd. Le dépôt comme source de vérité — Markdown → HTML → déploiement peu coûteux.
+| Choix | Raison |
+|-------|--------|
+| **Génération statique** | Hébergement peu coûteux, builds rapides |
+| **Markdown** | Articles et projets versionnés dans git |
+| **Modules** | Thème + partials sans tout copier |
 
-**HBTheme** : commentaires, assets npm, modules Hugo — pas tout recoder à la main.
+Le **dépôt = source de vérité** : Markdown → HTML → GitHub Pages ou équivalent.
+
+## HBTheme semaine 1
+
+Commentaires, assets npm, modules Hugo — pas tout recoder.
+
+Compromis :
+
+- **Structure opinionated** — démarrage vite, friction plus tard pour des types de contenu custom
+- **Pipeline assets** — étapes npm en CI mais SCSS/JS propres
+- **Doc du thème** — plus utile que la doc Hugo en semaine 1
 
 ## Données dans la page
 
-Premier test : intégrer une analyse des **vols de voitures à Montréal** (projet Substack d’un ami) — preuve que Hugo peut porter graphiques et longform, pas seulement des billets courts.
+Test : intégrer l’étude des **vols de voitures à Montréal** (Substack d’un ami) — preuve que Hugo peut porter longform et graphiques, pas seulement des billets courts.
 
 [Étude des vols de voitures à Montréal](https://mohamedilias.substack.com/p/etude-des-vols-de-voitures-a-montreal)
 
-## Substack à côté
+Leçon : **iframe ou lien** pour du contenu invité ; graphiques natifs plus tard avec page bundles.
 
-**Substack** pour les essais longs et une autre audience. Hugo pour le portfolio ; Substack quand le format newsletter convient mieux.
+## Substack en parallèle
+
+Essais longs et audience newsletter. Hugo = shell pro ; Substack = format email/commentaires sans serveur mail maison.
 
 ## Shortcode iframe
-
-Pages HTTPS via le shortcode `iframe` du site (`src` obligatoire ; `title`, `height`, etc. optionnels) :
 
 ```text
 {{</* iframe src="https://example.com/" title="Exemple" height="480" */>}}
 ```
 
-Exemple — démo **FlashGames** :
+Exemple **FlashGames** :
 
 {{< iframe src="https://antoinebou12.github.io/FlashGames/" title="FlashGames" height="420" referrerpolicy="no-referrer-when-downgrade" >}}
 
-## Suite
+À utiliser avec parcimonie (accessibilité, mobile, cookies tiers).
 
-Modules Hugo, esthétique (tests particles.js), lien blog ↔ projets. Le site actuel part de cette base — voir **Articles** sur le blog.
+## Depuis la semaine 1
+
+Site actuel : bilingue, notes de conférence, posts MCP. Voir **[CV JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.fr.md" >}})**.
+
+## Articles liés
+
+- [Parcours en génie logiciel]({{< ref "/posts/software-engineering-journey/index.fr.md" >}})
+- [Prompts diagrammes ChatGPT et AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})

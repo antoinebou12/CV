@@ -89,3 +89,8 @@ Byzantium framed **follow-up workshops** around other token types and deeper Sol
 - [Sepolia testnet explorer](https://sepolia.etherscan.io/)
 
 Thanks to **Khalil** for teaching through the messy middle (wallets, faucets, failed txs), and to everyone who showed up for Byzantium’s first chain night.
+
+## Related posts
+
+- [Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}}) — explaining systems in prose
+- [QcES lean discovery pitch]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}}) — another ÉTS-adjacent learning format

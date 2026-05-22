@@ -68,6 +68,19 @@ Nouvel appartement, plus de curiosité VLAN, VMs **Proxmox** pour des projets de
 
 Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le always-on — le lab est resté pour le privé.
 
+## Pannes mémorables
+
+- **Un seul disque, pas de sauvegarde** — un `apt upgrade` raté et un week-end de réinstall.
+- **Ports admin exposés** — admin derrière VPN seulement, appris à la dure.
+- **Bruit thermique** — le R710 m’a fait penser aux courbes ventilateur avant « serveur » = « chambre à côté ».
+
 ## Bilan
 
 Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automatiser, documenter la topologie, supposer la panne. Liens actuels : **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur le CV.
+
+## Articles connexes
+
+- [Catalogue MediaBox Docker — 86 apps, 28 implémentées]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}}) — tableur, compose et scripts Proxmox
+- [Renpho + Home Assistant]({{< ref "/posts/renpho-health-api-blueprint/index.fr.md" >}}) — données santé à la maison
+- [Rack à planches — CAO vers bois]({{< ref "/posts/skate-rack-cad-to-object/index.fr.md" >}}) — projets physiques entre les câbles
+- [Caddy sur AWS]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.fr.md" >}}) — mêmes idées de proxy, autre facture

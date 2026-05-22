@@ -33,7 +33,7 @@ Most hiring flows start online. **JSON Resume** lets you keep one structured `re
 
 [JSON Resume](https://jsonresume.org/) is an open, community-maintained schema for CVs. Because the file is plain JSON, themes and CLIs can swap the presentation without you rewriting content. The ecosystem ships many visual styles—the grid above shows themes like **Elegant**, **Paper**, **Kendall**, and **Flat**.
 
-You get portability: update the data once, regenerate exports, or pipe the same file into static site generators.
+You get portability: update the data once, regenerate exports, or pipe the same file into static site generators. This site’s **[Hugo week 1]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})** post is the shell; JSON Resume is the structured CV underneath when you want PDF exports without maintaining Word.
 
 ## Main sections
 
@@ -159,3 +159,24 @@ Other tools worth bookmarking:
 ## Takeaway
 
 JSON Resume is not magic—it is discipline. You maintain one source of truth, lean on themes for layout, and plug the same file into CLIs or Hugo when you outgrow a static PDF. For a developer portfolio, that separation between **content** and **presentation** ages well.
+
+## When JSON Resume is enough
+
+| Situation | Fit |
+|-----------|-----|
+| Developer CV with frequent updates | Strong |
+| Heavy design portfolio (art direction) | Export PDF only; custom layout elsewhere |
+| ATS-only corporate portals | Still paste plain text — JSON helps you generate it |
+| Academic CV (publications list) | Extend schema or add a custom section |
+
+## Pitfalls
+
+- Letting `resume.json` rot — set a calendar reminder after each job change.
+- Theme drift across npm major versions — pin theme package in CI.
+- Stuffing every project — curate; interviewers skim.
+
+## Related posts
+
+- [Portfolio Hugo week 1]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}}) — site shell around the same era
+- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — narrative behind the bullets
+- [QcES lean discovery pitch]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}}) — another way to tell your story out loud

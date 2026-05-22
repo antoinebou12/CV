@@ -57,7 +57,9 @@ sequenceDiagram
     Printer-->>User: Chibi figurine
 ```
 
-**Deck:** [make-figurines-using-ai-for-3d-printing.pptx](./make-figurines-using-ai-for-3d-printing.pptx) (~17 MB) — screenshots and tool URLs from the talk.
+**Deck** (~17 MB) — screenshots and tool URLs from the talk:
+
+{{< deck src="make-figurines-using-ai-for-3d-printing.pptx" title="Make figurines using AI for 3D printing" label="Download slide deck (.pptx)" size="~17 MB" >}}
 
 ![Title slide — Make figurines using AI for 3D printing](./images/slide01-title.png)
 
@@ -159,6 +161,27 @@ Check floating islands with the slicer or **[UVtools](https://github.com/sn4k3/U
 ![Finished figurine 1](./images/slide15-result-1.jpeg)
 
 ![Finished figurine 2](./images/slide15-result-2.jpeg)
+
+## When to use this pipeline
+
+| Goal | Start here |
+|------|------------|
+| Gift figurine from a pet photo | ChatGPT/Midjourney chibi → hosted mesh |
+| Repeatable local batch | ComfyUI JSON in this bundle |
+| Teaching a class | Deck + uml-mcp sequence diagram |
+| Production CAD interchange | Expect cleanup in Blender after GLB |
+
+## Pitfalls
+
+- **Skipping 2D quality** — mesh tools amplify bad silhouettes.
+- **Committing 50 MB GLBs** — export locally; link tools instead.
+- **Zero island check** — resin failures mid-print waste hours.
+
+## Related posts
+
+- [Skate rack — CAD to object]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}})
+- [Rhino LiDAR apartment scan]({{< ref "/posts/rhino-lidar-apartment-scan/index.md" >}})
+- [Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})
 
 ## References
 

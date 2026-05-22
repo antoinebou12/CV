@@ -115,6 +115,12 @@ The **demo** tied the story together: deploy or scale an inference workload, wat
 3. **Chargeback labels** on day one (`team`, `model`, `env`) so the dashboard conversation with finance is possible.
 4. Treat **GPU sharing** as a product decision: some teams need dedicated cards; others can share with quotas.
 
+## Related posts
+
+- [Snowflake Data-for-Breakfast]({{< ref "/posts/snowflake-data-for-breakfast/index.md" >}}) — another 2022 data/infra morning session
+- [AWS Cloud Practitioner journey]({{< ref "/posts/aws-certified-cloud-practitioner/index.md" >}}) — vocabulary for the AWS side
+- [Vector databases / movie embeddings]({{< ref "/posts/vector-databases-similar-movies/index.md" >}}) — ML systems teaching thread
+
 ## References
 
 - [Run:ai documentation](https://docs.run.ai/) (product evolves; check current NVIDIA integration notes)

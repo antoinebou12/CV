@@ -22,6 +22,10 @@ I wrote these notes while helping a bilingual storefront team choose **live chat
 
 <!--more-->
 
+## How I used this matrix
+
+I scored each option on **agent training time**, **French/English inbox**, **who owns the server**, and **whether marketing owns the bot**. No vendor won every row — the winner was “least new moving parts for this team,” which is why 3CX and Chatwoot show up most often in my notes below.
+
 ## Start with the job, not the logo
 
 Before you compare feature matrices, ask what you are really buying:
@@ -102,3 +106,8 @@ Conceptually it is **“shared inbox + omnichannel threads”**, closer to Inter
 - [Kommunicate](https://www.kommunicate.io)
 - [Chatwoot](https://www.chatwoot.com) · [GitHub](https://github.com/chatwoot/chatwoot) · [Developer docs](https://developers.chatwoot.com)
 - [Microsoft ChatBot + Power BI (YouTube)](https://www.youtube.com/watch?v=nWxguR5B5-s)
+
+## Related posts
+
+- [Portfolio Hugo week 1]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}}) — embedding third-party tools on a static site
+- [Home networking evolution]({{< ref "/posts/home-networking-evolution/index.md" >}}) — self-hosting mindset vs SaaS chat

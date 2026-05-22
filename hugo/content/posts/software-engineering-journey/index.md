@@ -26,7 +26,11 @@ Career flow ([`career-journey-flow.mmd`](./images/career-journey-flow.mmd), rend
 
 ![Career journey from Flash games and college makerspace to backend platform work today](./images/career-journey-flow.svg)
 
+*Figure: milestones from browser games and makerspace demos through ÉTS capstones, co-ops, and today’s platform/backend focus. Rendered from [`career-journey-flow.mmd`](./images/career-journey-flow.mmd).*
+
 *Color key:* green personal · blue school · purple club · gray co-op · slate full-time job · orange contract · pink teaching · amber today.
+
+The diagram is the map; the sections below are the stories I tell in interviews when someone asks “how did you end up doing platform work?”
 
 ## ~2010 — Game developer energy, Flash and the web
 
@@ -39,6 +43,8 @@ That habit—ship something playable, then fix what feels wrong—never really l
 By college I was curating a **portfolio of game projects** and redoing favorites in **Unity**, **CryEngine**, and **Unreal**. Same motivation, heavier tools: lighting, physics, assets that take a week to look “fine.”
 
 It taught me scope. A jam game and a semester demo do not owe each other the same bar—but both owe you honest playtesting.
+
+That scope sense shows up later when I refuse to boil the ocean on a single microservice migration — I want a playable milestone every week.
 
 ## ~2017 — Makerspace, WiFi RC, web as a serious path
 
@@ -97,4 +103,10 @@ Reliability is trust. Security is not a final gate—it is habits in the pipelin
 
 Sharper platforms, safer delivery, legible systems as they grow. If you are early in the path: follow problems where you see the **whole loop**—code, deploy, operate, improve. I happened to start that loop with Flash and a hovercraft; you might start somewhere else. The loop is the job.
 
-More concrete write-ups live under [posts]({{< ref "/posts" >}}) and [projects]({{< ref "/projects" >}}) on this site—including {{< ref "/posts/rhino-lidar-apartment-scan" >}} and {{< ref "/posts/professional-resume-json-resume" >}} from later chapters.
+More concrete write-ups live under [posts]({{< ref "/posts" >}}) and [projects]({{< ref "/projects" >}}) on this site.
+
+## Related posts
+
+- [GraphQuon 2024 — ÉTS]({{< ref "/posts/graphquon-2024-ets/index.md" >}}) and [GraphQuon 2025 — Toronto]({{< ref "/posts/graphquon-2025-university-of-toronto/index.md" >}}) — graphics research community
+- [CodePen demos]({{< ref "/posts/codepen-demos-antoinebou13/index.md" >}}) — early web experiments
+- [Professional résumé + JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.md" >}}) — how this timeline becomes a CV

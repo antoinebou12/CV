@@ -1,0 +1,28 @@
+{{- $src := .Get "src" -}}
+{{- if not $src -}}
+  {{- errorf "shortcode deck: missing required param \"src\" (page-bundle .pptx filename)" -}}
+{{- end -}}
+{{- $title := .Get "title" | default "Slide deck" -}}
+{{- $label := .Get "label" | default "Download PowerPoint (.pptx)" -}}
+{{- $h := .Get "height" | default "560" | replaceRE `[^0-9]` "" -}}
+{{- $height := cond (eq $h "") "560" $h -}}
+{{- $viewerParam := .Get "viewer" | default "true" -}}
+{{- $viewer := and (ne $viewerParam "false") (ne $viewerParam "0") -}}
+{{- $sizeNote := .Get "size" -}}
+{{- $href := urls.JoinPath .Page.RelPermalink $src -}}
+{{- $abs := $href | absURL -}}
+<div class="not-prose deck-wrap" style="max-width:100%;margin:1.25rem 0;border:1px solid rgba(0,0,0,.1);border-radius:8px;overflow:hidden;">
+  <div class="deck-toolbar" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(0,0,0,.04);font-size:0.95rem;">
+    <a href="{{ $href }}" download style="font-weight:600;text-decoration:underline;">{{ $label }}</a>
+    {{- with $sizeNote -}}<span style="opacity:.7;">({{ $sizeNote }})</span>{{- end -}}
+  </div>
+  {{- if $viewer -}}
+  <iframe
+    title="{{ $title | htmlEscape }}"
+    src="https://view.officeapps.live.com/op/embed.aspx?src={{ $abs | urlquery }}"
+    style="width:100%;height:{{ $height }}px;border:0;display:block;"
+    loading="lazy"
+  ></iframe>
+  <p style="margin:0;padding:0.5rem 1rem;font-size:0.8rem;opacity:.75;">In-browser preview via Microsoft Office Online. If it fails to load, use the download link above (large decks may not preview).</p>
+  {{- end -}}
+</div>

@@ -57,7 +57,9 @@ sequenceDiagram
     Printer-->>User: Chibi figurine
 ```
 
-**Diapositives :** [make-figurines-using-ai-for-3d-printing.pptx](./make-figurines-using-ai-for-3d-printing.pptx) (~17 Mo).
+**Diapositives** (~17 Mo) — captures et liens outils de la présentation :
+
+{{< deck src="make-figurines-using-ai-for-3d-printing.pptx" title="Make figurines using AI for 3D printing" label="Télécharger les diapositives (.pptx)" size="~17 Mo" >}}
 
 ![Diapositive titre](./images/slide01-title.png)
 
@@ -96,13 +98,40 @@ Prompts et graines dans le JSON. Nœuds Hunyuan3D-2 ([GitHub](https://github.com
 
 ![Hunyuan3D et Rodin](./images/slide05-hunyuan-rodin.png)
 
-| Outil | Lien |
-|------|------|
-| **Hunyuan3D-2** | [GitHub](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) |
-| **RodinHD** | [Démo](https://rodinhd.github.io/) |
-| **Hi3DGen** | [Space](https://huggingface.co/spaces/Stable-X/Hi3DGen) |
-| **Hyper3D** | [hyper3d.ai](https://hyper3d.ai/) |
-| **Meshy** | [meshy.ai](https://www.meshy.ai/) |
+La clarté du PNG jouet compte plus que la marque du générateur.
+
+| Outil | Lien | Notes |
+|------|------|--------|
+| **Hunyuan3D-2** | [GitHub](https://github.com/Tencent-Hunyuan/Hunyuan3D-2) | Poids ouverts, local ou hébergé |
+| **RodinHD** | [Démo](https://rodinhd.github.io/) | Figurines / avatars détaillés |
+| **Hi3DGen** | [Space](https://huggingface.co/spaces/Stable-X/Hi3DGen) | Prior 2D + cohérence géométrie ([CHI 2024](https://doi.org/10.1145/3641520.3665304)) |
+| **Hyper3D** | [hyper3d.ai](https://hyper3d.ai/) | Commercial rapide |
+| **Meshy** | [meshy.ai](https://www.meshy.ai/) | Texte/image → 3D, remaillage |
+| **Tripo3D** | [studio.tripo3d.ai](https://studio.tripo3d.ai/) | Studio navigateur |
+| **Sparc3D** | [lizhihao6.github.io/Sparc3D](https://lizhihao6.github.io/Sparc3D/) | Reconstruction multi-vues |
+
+![Tripo3D](./images/slide06-tripo3d.png)
+
+![Hyper3D](./images/slide07-hyper3d.png)
+
+![Sparc3D](./images/slide08-sparc3d.png)
+
+![Meshy](./images/slide09-meshy.png)
+
+## Quand utiliser quoi
+
+| Situation | Piste |
+|----------|--------|
+| VRAM 8–12 Go, une photo | ComfyUI local (workflow fourni) |
+| Test rapide sans GPU | Hi3DGen / Tripo3D en ligne |
+| Figurine chibi déjà propre | Hunyuan3D ou RodinHD |
+| Impression résine fine | Réduire faces, vérifier îlots UVtools |
+
+## Pièges
+
+- **Photo de profil floue** — le maillage fond les traits.
+- **GLB énormes dans git** — garder hors dépôt ; exporter depuis `mesh/`.
+- **Sous-estimer les supports** — cheveux et capes = îlots en slicer.
 
 ## Aperçu maillage
 
@@ -118,7 +147,11 @@ Ajuster faces, symétrie et remaillage avant export GLB/OBJ.
 
 ## Étape 5 — Impression résine
 
+![Préparation impression](./images/slide13-print-1.png)
+
 ![Plateau](./images/slide13-print-2.png)
+
+Résine pour petites pièces ; incliner les porte-à-faux vers le plateau.
 
 ![Îlots](./images/slide14-islands.png)
 

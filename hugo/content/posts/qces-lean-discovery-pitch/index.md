@@ -97,6 +97,20 @@ A pitch asks for a next step: time, intros, lab access, funding. Formats vary; s
 
 A simple ~90 second scaffold: who you are, problem, offer for a target, value proposition, contrast with alternatives, recent milestone, call to action.
 
+## What I would tell a founder friend
+
+| Stage | Do this | Skip this |
+|-------|---------|-----------|
+| Week 1 | Write who hurts and how you will find them | Logo and LLC debate |
+| Week 2–3 | Five interviews, same script | Pitching strangers your solution |
+| Week 4 | Update BMC once with evidence | Fake revenue line in slides |
+| Before demo day | 90 s pitch aloud daily | Adding a fifteenth feature |
+
+## Related posts
+
+- [Professional résumé + JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.md" >}}) — packaging the same story for hiring
+- [MarketWatch Python library]({{< ref "/posts/marketwatch-python-trading/index.md" >}}) — side project born from AlgoÉTS energy
+
 ## Closing
 
 QcES tied tools to habits: canvas, segmentation, roadmap on one side; interviews, feedback, pitching on the other. The thread is keeping the problem central, making assumptions testable, and speaking clearly enough that people can help—not just nod.

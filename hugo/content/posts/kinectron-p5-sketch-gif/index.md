@@ -136,4 +136,24 @@ Run your sketch in a local or online environment that supports JavaScript and p5
 
 
 
+## When to use Kinectron + p5
+
+| Use case | Fit |
+|----------|-----|
+| Class demo of skeleton data | Strong |
+| Production body tracking | Prefer vendor SDK + maintained stack |
+| Offline recorded performance | Set `liveData = false` |
+| Mobile browsers | Poor — desktop lab |
+
+## Pitfalls
+
+- **Duplicate p5 script tags** in HTML — load one p5 build only.
+- **Kinectron server not running** — client connects to nothing silently until you check the console.
+- **`saveGif` duration** — long captures freeze older laptops; keep clips under ~5 s for demos.
+
+## Related posts
+
+- [CodePen demos collection]({{< ref "/posts/codepen-demos-antoinebou13/index.md" >}}) — same creative-coding era
+- [Snapchat Lens Creator]({{< ref "/posts/snapchat-lens-creator/index.md" >}}) — another tracked-face pipeline
+
 From there you can swap in your own gesture checks or swap `liveData` for recorded clips — the buttons and `saveGif` hook are the parts I kept reusing across assignments.

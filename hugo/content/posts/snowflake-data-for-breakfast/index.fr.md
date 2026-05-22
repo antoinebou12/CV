@@ -1,9 +1,9 @@
 ---
 post_kind: conference
-title: "Conférence Snowflake Data-for-Breakfast — retour"
+title: "Conférence Snowflake Data-for-Breakfast — notes"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-05-23T00:30:00-04:00
-description: "Notes du petit-déjeuner-conférence Snowflake — santé globale, fiscalité à grande échelle, clean rooms et keynote Infostrux."
+lastmod: 2026-05-22T16:00:00-04:00
+description: "Notes élargies — santé à l’échelle, fiscalité, clean rooms, keynote Infostrux, quand un entrepôt bat les feuilles."
 translationKey: snowflake-data-for-breakfast
 tags:
   - Conference
@@ -13,40 +13,68 @@ images:
   - featured.jpeg
 ---
 
-**Snowflake Data-for-Breakfast**, c’était une matinée sur la plateforme cloud — entrepôt, partage, gouvernance et histoires client qui rendent l’architecture concrète. **Infostrux** a animé une keynote qui a bien cadré la salle. **[English version]({{< ref "/posts/snowflake-data-for-breakfast/index.md" >}})**.
+**Snowflake Data-for-Breakfast** : matinée sur l’entrepôt cloud, le partage, la gouvernance et des histoires clients qui rendent l’architecture concrète. J’y suis allé pour l’exploitation réelle, pas les goodies. Keynote **Infostrux**. **[English version]({{< ref "/posts/snowflake-data-for-breakfast/index.md" >}})**.
 
 <!--more-->
 
-## Vue d’ensemble
+## Pourquoi
 
-![Matériel de conférence](./images/governed.jpeg)
+Assez de SQL pour être dangereux, pas assez d’histoires de prod. Format petit-déjeuner = faible engagement, vocabulaire utile (**clean room**, **share**, politiques de lignes) avant midi.
 
-## Repères
+## Matériel d’ouverture
 
-![Menu de l’événement](./images/menu.jpeg)
+![Supports — gouvernance et positionnement](./images/governed.jpeg)
 
-### Opérations santé globales
+Snowflake cadré comme **partage gouverné** d’abord, vitesse brute ensuite — pertinent quand la peur est « on ne peut pas exposer cette table ».
 
-Un client santé opérait sur **trois continents** avec partage partenaire, disponibilité et SLA tenus — le cas d’école d’un entrepôt cloud quand conformité et réplication fonctionnent en prod.
+![Menu événement](./images/menu.jpeg)
+
+### Santé mondiale
+
+Client santé sur **trois continents** — partage partenaire sans sacrifier SLA.
+
+| Leçon | Détail |
+|-------|--------|
+| **Réplication + gouvernance** | Conformité liée au partage live |
+| **Budgets latence** | Pas seulement du batch nocturne |
+| **Contrats de partage** | Juridique + objets techniques |
 
 ![Partage de données](./images/sharethrough.jpeg)
 
-![Architecture](./images/architecture.jpeg)
+![Architecture multi-régions](./images/architecture.jpeg)
 
-### Fiscalité et gros volumes
+### Fiscalité à grande échelle
 
-Une autre équipe devait ingérer d’**énormes** jeux de données et les explorer sans connaître toutes les questions à l’avance. Un seul lieu de consolidation et de transformation a accéléré le dépannage et la **lignée** vis-à-vis des audits.
+Gros volumes, questions ad hoc sans script fixe à l’avance.
 
 ![À propos](./images/aboutus.jpeg)
 
 ![Histoire client](./images/customer.jpeg)
 
+Couche unique de consolidation = dépannage plus rapide, **lignée** expliquable aux auditeurs ; moins de CSV par courriel.
+
 ### Clean rooms
 
-Les **clean rooms** pour la due diligence : deux entreprises comparent des données communes sans tout exposer. Collaboration avec confidentialité, pas seulement une case conformité.
+Due diligence : comparer des données qui se chevauchent sans tout fusionner.
 
 ![Sécurité et gouvernance](./images/security.jpeg)
 
-## Pour conclure
+Collaboration préservant la vie privée — pas qu’une case conformité.
 
-Utile si vous touchez aux plateformes de données — bon instantané de la direction Snowflake (échelle, partage, collaboration gouvernée). Je suis reparti·e avec un vocabulaire plus clair pour les échanges client, même hors Snowflake au quotidien.
+## Tableau comparatif
+
+| Pattern | Bon usage | Vigilance |
+|---------|-----------|-----------|
+| **Entrepôt central** | Dimensions partagées | Coût sans discipline requêtes |
+| **Data sharing** | Partenaires live | Contrats + politiques |
+| **Clean room** | Analyses sensibles | Temps de setup |
+| **Montée compute** | Pics exploratoires | Entrepôts laissés allumés |
+
+## Bilan
+
+Vocabulaire plus clair même sans Snowflake au quotidien. Même saison que **[Run:ai sur AWS]({{< ref "/posts/runai-aws-inference-webinar/index.fr.md" >}})**.
+
+## Articles liés
+
+- [Bases vectorielles et films similaires]({{< ref "/posts/vector-databases-similar-movies/index.fr.md" >}})
+- [Économie des LEGO et data science]({{< ref "/posts/economics-lego-data-science/index.fr.md" >}})

@@ -80,8 +80,6 @@ Combining these resources, I followed a structured study plan:
 
 During my certification process, I took my exam through Pearson VUE. Pearson VUE provides a flexible and convenient way to take certification exams, offering both in-person and online proctoring options. My experience with Pearson VUE was seamless, from scheduling the exam to taking it on the day.
 
-## Get Antoine Boucher’s stories in your inbox
-
 One tip I found incredibly helpful was the option to apply for additional exam time. If English is not your primary language, AWS allows you to request a 50% extension for your exam duration. Here’s how you can do it:
 
 1.  AWS Certification: Before scheduling your exam, go to exam accommodations
@@ -117,6 +115,26 @@ Once you’ve passed your exam, you can proudly share your achievement by obtain
 4.  Share Your Badge: You can now share your digital badge on LinkedIn, your resume, or any other platform to showcase your certification.
 
 ![](./img-010.png)
+
+### When to use this sprint plan
+
+| You are… | This two-week path fits? |
+|----------|---------------------------|
+| New to cloud vocabulary | Yes |
+| Already running prod on AWS daily | Skip CLF — go role-specific |
+| Need hands-on K8s depth | Partial — add labs beyond CLF |
+| Non-native English test taker | Yes — request extra time early |
+
+### Pitfalls
+
+- **Cramming without labs** — Cloud Quest carries retention; video alone fades.
+- **Skipping practice exams** — format surprises hurt more than content gaps.
+- **Booking mainnet experiments** — stay on free tier / Sepolia for learning bills.
+
+### Related posts
+
+- [Caddy + EC2 + CloudWatch]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}}) — AWS after the cert
+- [Run:ai on AWS webinar]({{< ref "/posts/runai-aws-inference-webinar/index.md" >}})
 
 ### Takeaway
 

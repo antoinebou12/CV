@@ -2,8 +2,8 @@
 post_kind: article
 title: "Support à planches — du CAO au contreplaqué"
 date: 2021-12-21T10:00:00-05:00
-lastmod: 2026-05-22T15:00:00-04:00
-description: "Rack vertical skate et snowboard — entailles en CAO, coupe en atelier, montage contreplaqué, version finie (décembre 2021)."
+lastmod: 2026-05-22T16:00:00-04:00
+description: "Rack vertical skate et snowboard — CAO, contreplaqué, matériaux, géométrie des entailles, décembre 2021."
 translationKey: skate-rack-cad-to-object
 tags:
   - CAD
@@ -14,48 +14,67 @@ images:
   - featured.jpeg
 ---
 
-Les planches s’accumulaient dans les coins — j’ai dessiné un **rack vertical** en CAO, découpé des **entailles inclinées** dans du contreplaqué, et monté un meuble qui tient **skateboards et snowboard** sans percer les murs du logement. Projet de **décembre 2021** ; photos recadrées des stories d’époque. **[English version]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}})**.
+Planches dans tous les coins — **rack vertical** en CAO, **entailles inclinées** en contreplaqué, support pour **skates et snowboard** sans percer les murs du logement. Décembre 2021. **[English version]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}})**.
 
 <!--more-->
 
-## Conception CAO
+## Besoins
 
-Deux montants, trois traverses, **six entailles inclinées vers le bas** par côté pour que les decks glissent et restent en place. Modéliser d’abord a évité de acheter les panneaux au mauvais pas.
+| Besoin | Réponse design |
+|--------|----------------|
+| **6+ planches** | Six entailles par montant |
+| **Snowboard + skates** | Baie haute plus large |
+| **Location** | Autoportant, pas de chevilles |
+| **Budget** | Contreplaqué 3/4, vis, teinture |
 
-![Modèle CAO d’un rack vertical à six emplacements](./images/skate-rack-cad-model.jpeg)
+## CAO
 
-Le rendu CAO, c’est la version optimiste — pas de sciure, pas de chat.
+Deux montants, trois traverses, **six entailles inclinées** par côté. Esquisses dimensionnées et vérification d’assemblage avant achat des panneaux.
 
-## Dérive métal (atelier scolaire)
+Ordres de grandeur :
 
-Avant le contreplaqué final, j’ai soudé un **cadre tubulaire orange** en cours — bon pour l’équerrage, excessif pour un appart. Ce n’est pas devenu la solution chambre, mais ça validait l’idée montants + traverses.
+- **Hauteur** ~6 pi
+- **Profondeur entaille** ~3/4 largeur deck
+- **Angle** ~15–20° vers le bas
 
-![Cadre métallique tubulaire orange en atelier](./images/skate-rack-metal-frame-shop.jpeg)
+![Modèle CAO](./images/skate-rack-cad-model.jpeg)
 
-## Découpe des entailles
+## Matériaux
 
-Chaque entaille : **trou de fin**, coupe droite à la circulaire, lime. Serre-joints, chutes, répéter.
+Contreplaqué **3/4**, vis bois, teinture, **2×4** de support provisoire.
 
-![Montant contreplaqué avec entailles inclinées sur établi](./images/skate-rack-slot-cutting-workshop.jpeg)
+## Dérive métal
 
-## Montage et inspection
+Cadre **tubulaire orange** soudé — exercice d’équerrage ; version contreplaqué gagne sur poids et esthétique chambre.
 
-Essai à sec, teinture sur bâche au garage (décembre = doigts froids), et **inspecteur qualité** (chat bicolore) qui valide en s’asseyant sur la dernière étagère alignée.
+![Cadre métallique en atelier](./images/skate-rack-metal-frame-shop.jpeg)
 
-![Montage du rack en contreplaqué](./images/skate-rack-plywood-assembly.jpeg)
+## Découpe
 
-![Chat sur une tablette du rack en cours de montage](./images/skate-rack-build-quality-inspector.jpeg)
+Mèche spade, circulaire, lime — répéter.
 
-## Rack fini
+![Entailles sur établi](./images/skate-rack-slot-cutting-workshop.jpeg)
 
-Six emplacements par colonne, **snowboard en haut** (fixations Union visibles), skates en dessous, une planche au sol. Faible encombrement, tout hors du passage.
+## Montage
 
-![Rack fini chargé — skateboards et snowboard](./images/skate-rack-finished-loaded.jpeg)
+Essai à sec, teinture au froid, **chat QA**.
 
-## La prochaine fois
+![Montage contreplaqué](./images/skate-rack-plywood-assembly.jpeg)
 
-- **Angle des entailles** un peu plus prononcé pour les longboards.
-- **Chants** sur les bords des entailles — le contreplaqué accroche le grip au fil du temps.
-- **Fixation murale** — locataire à l’époque ; aujourd’hui j’ancrerais proprement.
+![Chat inspecteur](./images/skate-rack-build-quality-inspector.jpeg)
 
-Même fil « maker » : [lab réseau maison]({{< ref "/posts/home-networking-evolution/index.fr.md" >}}) et [figurines IA / impression 3D]({{< ref "/posts/ai-figurines-3d-printing/index.fr.md" >}}).
+## Fini
+
+Snowboard en haut, skates en slots.
+
+![Rack fini chargé](./images/skate-rack-finished-loaded.jpeg)
+
+## Prochaine fois
+
+Angle plus fort, chants, **cleat français** au mur.
+
+## Articles liés
+
+- [Scan LiDAR Rhino]({{< ref "/posts/rhino-lidar-apartment-scan/index.fr.md" >}})
+- [Lab réseau maison]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})
+- [Figurines IA / impression 3D]({{< ref "/posts/ai-figurines-3d-printing/index.fr.md" >}})

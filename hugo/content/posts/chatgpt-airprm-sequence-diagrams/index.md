@@ -128,6 +128,26 @@ These tools are **canvas-first**: the fastest path is often to generate **PlantU
 
 That avoids blank-canvas syndrome while keeping the diagram editable for styling and annotations your team expects.
 
+## When to use this workflow
+
+| Situation | Use structured ChatGPT + AIPRM |
+|-----------|--------------------------------|
+| Teaching a stack pattern once | Yes — same template for every cohort |
+| One-off whiteboard photo | No — draw or photograph |
+| Regulated architecture review | Yes — text diagrams diff in git |
+| Pretty slides for executives | Export SVG, polish in Draw.io |
+
+## Pitfalls
+
+- Models confuse **cache hit** branches with **database** syntax — always render PlantUML/Mermaid locally before publishing.
+- **AIPRM template drift** — copy the four lines into your repo README so you are not locked to a browser extension version.
+- **Hashtag-style prompts** (“make a diagram”) without naming tool and diagram type — you get generic boxes.
+
+## Related posts
+
+- [D2C OpenAI diagram plugin]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})
+- [AI figurines / uml-mcp]({{< ref "/posts/ai-figurines-3d-printing/index.md" >}})
+
 ## Takeaway
 
 Once the four-line template is in AIPRM, diagram requests feel like filling a form instead of negotiating with the model. I still edit the output — but the first draft lands in the right language (PlantUML vs Mermaid vs bullet list for a canvas tool) often enough that reviews are faster.

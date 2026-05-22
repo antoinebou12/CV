@@ -52,8 +52,12 @@ Ce fil de recherche rejoint mon travail à l’**ÉTS** sur la **fabrication et 
 
 | Format | Fichier | Notes |
 |--------|---------|--------|
-| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Export complet (28 diapos). Idéal pour lecture et partage. |
-| **PowerPoint** | `GraphQuon Final.pptx` | Présentation éditable d’origine (~116 Mo d’actifs embarqués — trop lourd pour ce dépôt). Utilisez le PDF ci-dessus, ou [écrivez-moi](mailto:antoine@antoineboucher.info) pour le `.pptx`. |
+| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Export complet (28 diapos). Idéal pour lecture dans le navigateur. |
+| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Présentation éditable d’origine (~116 Mo). Téléchargement ci-dessous ; aperçu : préférer le PDF. |
+
+**PowerPoint (.pptx)** — présentation complète avec actifs embarqués :
+
+{{< deck src="graphquon-final.pptx" title="GraphQuon 2025 — Where to wear" label="Télécharger les diapositives GraphQuon (.pptx)" size="~116 Mo" viewer="false" >}}
 
 ## Toronto, novembre 2025
 
