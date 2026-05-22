@@ -1,0 +1,25 @@
+{{- $src := .Get "src" -}}
+{{- if not $src -}}
+  {{- errorf "shortcode modelviewer: missing required param \"src\"" -}}
+{{- end -}}
+{{- $title := .Get "title" | default "3D model" -}}
+{{- $height := .Get "height" | default "420" -}}
+{{- $poster := .Get "poster" -}}
+{{- if not (.Page.Scratch.Get "modelviewer-script") -}}
+  {{- .Page.Scratch.Set "modelviewer-script" true -}}
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+{{- end -}}
+<div class="modelviewer-wrap" style="max-width:100%;margin:1.25rem 0;">
+  <model-viewer
+    src="{{ $src }}"
+    alt="{{ $title }}"
+    camera-controls
+    touch-action="pan-y"
+    shadow-intensity="1"
+    exposure="1"
+    style="width:100%;height:{{ $height }}px;background:#1a1a1a;border-radius:8px;"
+    {{- with $poster }} poster="{{ . }}"{{ end }}
+    loading="lazy"
+  ></model-viewer>
+  <p class="modelviewer-caption" style="font-size:0.9rem;color:var(--muted,#666);margin-top:0.5rem;">{{ $title }}</p>
+</div>
