@@ -74,56 +74,47 @@ def load_data() -> dict:
     return yaml.safe_load(DATA.read_text(encoding="utf-8"))
 
 
-def certifications_line(data: dict, lang: str) -> str:
+def _cert_label(cert: dict, lang: str) -> str:
+    label = cert["label"]
+    if isinstance(label, dict):
+        return label[lang]
+    return label
+
+
+def _cert_href(cert: dict, lang: str) -> str:
+    url = cert["url"]
+    label = _cert_label(cert, lang)
+    if cert["id"] == "aws-ccp":
+        until = cert.get("valid_until", {}).get(lang, "")
+        return f"\\href{{{url}}}{{{label}}} ({until})"
+    return f"\\href{{{url}}}{{{label}}}"
+
+
+def format_certifications_latex(data: dict, lang: str) -> str:
     certs = data.get("certifications", [])
-    parts: list[str] = []
-    for i, cert in enumerate(certs):
-        url = cert["url"]
-        label = cert["label"][lang] if isinstance(cert["label"], dict) else cert["label"]
-        if cert["id"] == "aws-ccp":
-            until = cert.get("valid_until", {}).get(lang, "")
-            parts.append(
-                f"\\href{{{url}}}{{{label}}} ({until})"
-                if lang == "en"
-                else f"\\href{{{url}}}{{{label}}} ({until})"
-            )
-        else:
-            parts.append(f"\\href{{{url}}}{{{label}}}")
-    if lang == "en":
-        return ";\n".join(parts) + "}"
-    return ";\n".join(parts) + "}"
+    by_id = {c["id"]: c for c in certs}
+    line1_parts: list[str] = []
+    if "aws-ccp" in by_id:
+        line1_parts.append(_cert_href(by_id["aws-ccp"], lang))
+    if "qces" in by_id:
+        line1_parts.append(_cert_href(by_id["qces"], lang))
+    line1 = "; ".join(line1_parts)
+
+    cq_prefix = "Cloud Quest: " if lang == "en" else "Parcours Cloud Quest : "
+    cq_links = [
+        _cert_href(c, lang)
+        for c in certs
+        if c["id"].startswith("cq-")
+    ]
+    line2 = cq_prefix + ", ".join(cq_links)
+    return f"{line1}; {line2}"
 
 
 def build_groups(data: dict, profile: str, lang: str) -> list[dict]:
     groups: list[dict] = []
     for group in data["skill_groups"][profile]:
         if group.get("generated") == "certifications":
-            line = certifications_line(data, lang)
-            # certifications_line ends with }; template adds closing brace in en file
-            # Match hand-written format: single closing brace on certifications row
-            if lang == "en":
-                line = (
-                    "\\href{https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564}"
-                    "{AWS Certified Cloud Practitioner} (to Apr 2027);\n"
-                    "\\href{https://verified.sertifier.com/fr/verify/37471918795197/}{QcES};\n"
-                    "\\href{https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54}{AWS Cloud Quest: Cloud Practitioner},\n"
-                    "\\href{https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7}{AWS Cloud Quest: Data Analytics},\n"
-                    "\\href{https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea}{AWS Cloud Quest: Machine Learning},\n"
-                    "\\href{https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8}{AWS Cloud Quest: Serverless Developer},\n"
-                    "\\href{https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5}{AWS Cloud Quest: Networking},\n"
-                    "\\href{https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171}{AWS Cloud Quest: Solutions Architect}"
-                )
-            else:
-                line = (
-                    "\\href{https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564}{AWS CCP} (jusqu'en avr. 2027);\n"
-                    "\\href{https://verified.sertifier.com/fr/verify/37471918795197/}{QcES};\n"
-                    "\\href{https://www.credly.com/badges/5f355856-1c00-4322-87db-b79af4919f54}{CQ CP},\n"
-                    "\\href{https://www.credly.com/badges/53058a73-f07d-4773-8a8c-4c6067bac2a7}{Data},\n"
-                    "\\href{https://www.credly.com/badges/85e788b1-b632-4396-8b21-2bc651eb43ea}{ML},\n"
-                    "\\href{https://www.credly.com/badges/3d3e6765-8c1b-4935-ae11-4cdf9ec780b8}{Serverless},\n"
-                    "\\href{https://www.credly.com/badges/3c080879-5c3b-46d2-9f77-6479ece661f5}{Networking},\n"
-                    "\\href{https://www.credly.com/badges/a71d6cf3-b1ed-414f-855f-4a79d516e171}{Architecte}"
-                )
+            line = format_certifications_latex(data, lang)
         else:
             line = linkify_latex_line(group["latex_line"])
         groups.append({"category": group["category"], "line": line})

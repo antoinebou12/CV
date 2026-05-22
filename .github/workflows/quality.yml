@@ -32,7 +32,15 @@ jobs:
           sudo apt-get install -y aspell aspell-en aspell-fr
 
       - name: Locale spellcheck (EN codespell, FR aspell)
-        run: python scripts/ci/spellcheck.py
+        id: spellcheck
+        continue-on-error: true
+        run: |
+          python scripts/ci/spellcheck.py 2>&1 | tee spellcheck.log
+          exit "${PIPESTATUS[0]}"
+
+      - name: Spellcheck report (advisory)
+        if: always()
+        run: bash scripts/ci/write_advisory_summary.sh "Spellcheck" "codespell (EN) + aspell (FR)" "${{ steps.spellcheck.outcome }}" spellcheck.log
 
   html-validate:
     runs-on: ubuntu-latest

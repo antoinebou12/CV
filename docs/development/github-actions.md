@@ -14,14 +14,14 @@ The project uses five GitHub Actions workflows:
 
 2. **GitHub Pages Deployment** (`.github/workflows/deploy.yml`)
    - Deploys the static site and Hugo blog to GitHub Pages
-   - `verify_deploy_build.py`, `verify_meta_descriptions.py`, **blocking** Lychee on `_site`
+   - `verify_deploy_build.py`, `verify_meta_descriptions.py`, **advisory** Lychee on `_site` (`fail: false` + step summary)
    - Triggers on push to `main`/`master`
 
 3. **Link check** (`.github/workflows/link-check.yml`)
-   - Runs Lychee on Hugo content, docs, static HTML, CSS, linktree, letters, papers (PR, push, weekly schedule)
+   - Runs Lychee on Hugo content, docs, static HTML, CSS, linktree, letters, papers (PR, push, weekly schedule); **advisory** (`fail: false`) with a step summary report
 
 4. **Quality checks** (`.github/workflows/quality.yml`)
-   - Locale spellcheck: **codespell** (English paths) and **aspell-fr** (French paths) via `scripts/ci/spellcheck.py`
+   - Locale spellcheck: **codespell** (English paths) and **aspell-fr** (French paths) via `scripts/ci/spellcheck.py` — **advisory** in CI (`continue-on-error` + step summary; pre-commit still runs spellcheck locally)
    - `html-validate` on static HTML entry pages
    - `validate_cv_data.py`, `check_en_fr_parity.py`, `generate_cv.py --check`
 
@@ -69,10 +69,10 @@ python scripts/verify/verify_cv_pdf_text.py --lang all
 5. Agent-ready promote + sitemap merge
 6. **`verify_deploy_build.py`** (blocking)
 7. **`verify_meta_descriptions.py`** (blocking)
-8. **Lychee on `_site`** (advisory — `fail: false`; broken links are logged but do not block upload)
+8. **Lychee on `_site`** (advisory — `fail: false`; broken links are logged in the job summary but do not block upload)
 9. Upload artifact and deploy
 
-PR/push link checks in **link-check.yml** remain blocking on source trees (no `index-en.htm`; that path is a Vercel redirect only).
+PR/push link checks in **link-check.yml** and **compile-cv.yml** are also advisory (`fail: false`). Reports use `scripts/ci/write_advisory_summary.sh` (visible under the workflow run **Summary** tab).
 
 ## Quality Workflow
 
@@ -80,7 +80,7 @@ Runs on every push/PR to `main`/`master`:
 
 | Step | Tool |
 |------|------|
-| Spellcheck | `scripts/ci/spellcheck.py` — EN: codespell + `.codespell-ignore-words`; FR: aspell + `.aspell.fr.pws` (French paths are not run through codespell) |
+| Spellcheck (advisory) | `scripts/ci/spellcheck.py` — EN: codespell + `.codespell-ignore-words`; FR: aspell + `.aspell.fr.pws`; failures do not fail the workflow; see step summary |
 | HTML validate | `html-validate --config .htmlvalidate.json` on `index-*.html`, `about-*.html`, `404.html`, `linktree/index.html` |
 | AEO output | `generate_aeo_content.py --all` + `sync_index_html.py`; committed HTML must match (`git diff --exit-code`) |
 | Data schema | `scripts/verify/validate_cv_data.py` |

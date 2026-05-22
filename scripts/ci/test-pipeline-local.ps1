@@ -170,7 +170,7 @@ if (-not $SkipCompile) {
         & lychee --no-progress --max-retries 3 `
             ./cv-en/latex ./cv-fr/latex ./cv-en/resume.tex ./cv-fr/resume.tex `
             ./letters/en/cover-letter.tex ./letters/fr/cover-letter.tex
-        if ($LASTEXITCODE -ne 0) { Write-Warning 'lychee reported issues (same as CI would fail if failIfEmpty)' }
+        if ($LASTEXITCODE -ne 0) { Write-Warning 'lychee reported issues (advisory in CI; see link-check / deploy workflow summaries)' }
     } else {
         Write-Warning 'lychee not in PATH; skipping link-check step (CI uses lychee-action)'
     }

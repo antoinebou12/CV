@@ -626,7 +626,7 @@
 % Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[5]{%
   \needspace{6\baselineskip}%
-  \vspace{-0.5mm}
+  \vspace{-1.2mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
@@ -681,13 +681,15 @@
 }
 
 % Define an environment for cvskill
+\newlength{\acvSkillLabelWidth}
+\setlength{\acvSkillLabelWidth}{3.6cm}
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
-  \vspace{-2.0mm}
+  \vspace{-3.5mm}
   \begin{center}
     \setlength\tabcolsep{1ex}
     \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{\acvSkillLabelWidth} L{\dimexpr\textwidth-\acvSkillLabelWidth-2\tabcolsep-8pt\relax}}
 }{%
     \end{tabular*}
   \end{center}
@@ -695,7 +697,7 @@
 % Define a line of cv information(skill)
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
-  \skilltypestyle{#1} & \skillsetstyle{#2} \\
+  \skilltypestyle{#1} & \skillsetstyle{#2} \\[-2mm]
 }
 
 % Define an environment for cvitems(for cventry)
@@ -708,7 +710,7 @@
 }{%
   \end{itemize}
   \end{justify}
-  \vspace{0.5mm}
+  \vspace{-1mm}
 }
 
 

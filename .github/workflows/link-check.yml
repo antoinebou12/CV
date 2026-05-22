@@ -26,8 +26,11 @@ jobs:
           submodules: recursive
 
       - name: Check links
+        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          fail: false
+          failIfEmpty: false
           token: ${{ github.token }}
           args: >-
             --verbose
@@ -52,3 +55,7 @@ jobs:
             ./cv-en/resume.tex
             ./cv-fr/resume.tex
             ./data
+
+      - name: Link check report (advisory)
+        if: always()
+        run: bash scripts/ci/write_advisory_summary.sh "Link check" "lychee" "${{ steps.lychee.outcome }}"

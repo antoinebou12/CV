@@ -73,10 +73,12 @@ jobs:
           echo "All required files and directories found"
 
       - name: Check links in CV sources
+        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          token: ${{ github.token }}
+          fail: false
           failIfEmpty: false
+          token: ${{ github.token }}
           args: >-
             --verbose
             --no-progress
@@ -87,6 +89,10 @@ jobs:
             ./cv-fr/resume.tex
             ./letters/en/cover-letter.tex
             ./letters/fr/cover-letter.tex
+
+      - name: Link check report (advisory)
+        if: always()
+        run: bash scripts/ci/write_advisory_summary.sh "CV source link check" "lychee" "${{ steps.lychee.outcome }}"
 
       - name: Install CI dependencies
         run: pip install -r requirements-ci.txt

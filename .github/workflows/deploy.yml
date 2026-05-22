@@ -253,6 +253,7 @@ jobs:
           echo "Symlinked ${ROOT}/${REPO}/* for /${REPO}/ URL prefix"
 
       - name: Check links in site output (advisory)
+        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
           fail: false
@@ -268,6 +269,10 @@ jobs:
             --exclude-path 'node_modules'
             --exclude-path 'papers/rapport/reference'
             ./_site
+
+      - name: Deploy link check report (advisory)
+        if: always()
+        run: bash scripts/ci/write_advisory_summary.sh "Deploy site link check" "lychee" "${{ steps.lychee.outcome }}"
 
       - name: List deploy tree
         run: |
