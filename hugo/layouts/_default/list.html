@@ -40,18 +40,7 @@
 {{- end -}}
 
 <div class="blog-list-page">
-{{- if $.IsHome -}}
-<section class="home-hero not-prose mb-10 md:mb-14" aria-labelledby="home-hero-title">
-  <p class="home-hero-eyebrow">{{ i18n "homeHeroEyebrow" }}</p>
-  <h1 id="home-hero-title" class="home-hero-title">{{ site.Title }}</h1>
-  <div class="home-hero-lead">
-    {{- partial "post-list-lead.html" $ -}}
-    {{- with $.Content -}}
-      {{- . -}}
-    {{- end -}}
-  </div>
-</section>
-{{- else -}}
+{{- if not $.IsHome -}}
 {{- with .Content -}}
 <div class="mb-10 prose">
   {{- . -}}

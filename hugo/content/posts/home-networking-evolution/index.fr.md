@@ -80,7 +80,7 @@ Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automati
 
 ## Articles connexes
 
-- [Catalogue MediaBox Docker — 86 apps, 28 implémentées]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}}) — tableur, compose et scripts Proxmox
+- [MediaBox homelab — notes sur la stack Docker]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}}) — compose, ports et scripts Proxmox
 - [Renpho + Home Assistant]({{< ref "/posts/renpho-health-api-blueprint/index.fr.md" >}}) — données santé à la maison
 - [Rack à planches — CAO vers bois]({{< ref "/posts/skate-rack-cad-to-object/index.fr.md" >}}) — projets physiques entre les câbles
 - [Caddy sur AWS]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.fr.md" >}}) — mêmes idées de proxy, autre facture

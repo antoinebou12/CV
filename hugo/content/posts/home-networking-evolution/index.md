@@ -84,7 +84,7 @@ A homelab is a sandbox for **platform instincts**: automate installs, document t
 
 ## Related posts
 
-- [MediaBox Docker catalog — 86 apps, 28 implemented]({{< ref "/posts/mediabox-homelab-docker-catalog/index.md" >}}) — spreadsheet, compose, and Proxmox helper-scripts
+- [MediaBox homelab — Docker stack notes]({{< ref "/posts/mediabox-homelab-docker-catalog/index.md" >}}) — compose, ports, and Proxmox helper-scripts
 - [Renpho scale + Home Assistant]({{< ref "/posts/renpho-health-api-blueprint/index.md" >}}) — another “own your data at home” project
 - [Skate rack — CAD to plywood]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}}) — physical builds between cable runs
 - [Caddy on AWS]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}}) — same reverse-proxy ideas, different bill

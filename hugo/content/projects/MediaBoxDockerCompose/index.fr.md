@@ -19,7 +19,7 @@ tags:
 
 Stack média en Docker Compose : récupération (torrents et Usenet), chaîne *Arr, sous-titres, lecture avec **Plex** ou **Jellyfin**, demandes et supervision. Les volumes et chemins suivent le `docker-compose.yml` du dépôt (variable `ROOT`, etc.).
 
-**Blog :** catalogue des ports pour 86 services (implémenté vs tableur seulement) et [Proxmox VE Helper-Scripts](https://github.com/community-scripts/ProxmoxVE) — [Catalogue Docker MediaBox homelab]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}}).
+**Blog :** ce qui tourne dans le compose, scripts Proxmox, et où vit la longue liste — [Notes homelab MediaBox]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}}).
 
 Sur un hôte neuf, le dépôt [**another-install-script**](https://github.com/antoinebou12/another-install-script) propose des installateurs bash à menu pour monter des conteneurs isolés avant d’adopter ce fichier Compose complet.
 

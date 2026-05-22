@@ -2,7 +2,7 @@
 post_kind: article
 title: "Démos CodePen (collection)"
 date: 2017-01-10T10:00:00-04:00
-lastmod: 2026-05-22T23:15:00-04:00
+lastmod: 2026-05-23T01:00:00-04:00
 description: "Intégrations CodePen live de l’ère jQuery/vanilla (~2016–2017) : formulaires, widgets, getDisplayMedia, tableau noir Canvas et vague Three.js."
 translationKey: codepen-demos-antoinebou13
 tags:
@@ -17,12 +17,14 @@ tags:
   - HTML
   - WebRTC
 images:
-  - featured.png
+  - featured.jpeg
 ---
 
-Ce sont des **intégrations CodePen live** que j’ai gardées de l’ère jQuery et JavaScript vanilla (~2016–2017) : petits labos d’interface, puis deux démos plus longues (Canvas et Three.js). Chaque carte reprend le **titre du pen sur CodePen** pour savoir ce qu’on ouvre — pas seulement le slug dans l’URL. Forkez sur CodePen pour adapter. **[English version]({{< ref "/posts/codepen-demos-antoinebou13/index.md" >}})**.
+CodePen, c’était mon **carnet de labo public** avant ce blog Hugo — aperçu instantané, commentaires et forks sans déployer. Voici des **intégrations CodePen live** de l’ère jQuery et vanilla (~2016–2017) : petits labos UI, puis deux démos plus longues (Canvas et Three.js). Chaque carte reprend le **titre du pen** — pas seulement le slug. Forkez sur CodePen pour adapter. **[English version]({{< ref "/posts/codepen-demos-antoinebou13/index.md" >}})**.
 
 <!--more-->
+
+![Collection de démos CodePen — éditeur et grille type vague Three.js (illustration du billet)](./featured.jpeg)
 
 ## Expériences UI et formulaires
 

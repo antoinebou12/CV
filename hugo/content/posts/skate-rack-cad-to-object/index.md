@@ -2,8 +2,8 @@
 post_kind: article
 title: "Skate rack — from CAD to plywood"
 date: 2021-12-21T10:00:00-05:00
-lastmod: 2026-05-22T16:00:00-04:00
-description: "Vertical skate and snowboard rack — CAD in Fusion/SolidWorks-style workflow, plywood build, materials, slot geometry, December 2021."
+lastmod: 2026-05-22T22:30:00-04:00
+description: "Vertical skate rack — shop-class welded frame detour, then Home Depot plywood, CAD slots, and a rental-friendly build, December 2021."
 translationKey: skate-rack-cad-to-object
 tags:
   - CAD
@@ -41,18 +41,24 @@ Rough intent (not build drawings):
 
 The CAD render is optimistic — no sawdust, no cat, perfect orthogonality.
 
-## Materials
+## Metal frame detour (shop class energy)
 
-- **3/4" plywood** — two sides + shelves
-- **Wood screws** — pre-drill near ends
-- **Stain** — garage application on tarp
-- **Scrap 2×4** — temporary stand while fitting
+Before the plywood version landed, I welded a **tubular orange frame** in a school shop — good practice for squareness, honestly overkill for an apartment rack. It never became the final bedroom solution: too heavy, too industrial, and my landlord did not need to know I owned a mini weldment. It still proved the layout — **upright posts plus cross-members**, slots implied by spacing even before I cut wood.
 
-## Metal frame detour
+That prototype was the confidence boost; the rack I actually live with came later from sheet goods, not tube stock.
 
-Welded **tubular orange frame** in shop class — practice for squareness, overkill for the apartment. Validated upright + cross-member idea; plywood version won on weight and bedroom aesthetics.
+![Orange tubular metal rack frame in a workshop — welded uprights and cross members before the plywood build](./images/skate-rack-metal-frame-shop.jpeg)
 
-![Orange tubular metal rack frame in a workshop](./images/skate-rack-metal-frame-shop.jpeg)
+The photo is pure shop-class energy: fluorescent lights, concrete floor, and a frame that taught me the geometry without surviving the move indoors.
+
+## Materials — Home Depot run
+
+Once the metal idea stayed in the garage, I went to **Home Depot** for buildable material: one cart of **3/4" plywood** (two side panels and shelves), **wood screws**, **stain**, and **scrap 2×4** for a temporary stand while I dry-fit. No exotic lumber — whatever was flat enough that day.
+
+- **3/4" plywood** — two sides + horizontal ties
+- **Wood screws** — pre-drill near ends so the ply does not split
+- **Stain** — brushed on a tarp in a cold December garage
+- **2×4 scrap** — propped the frame while slots were still rough
 
 ## Cutting slots
 
