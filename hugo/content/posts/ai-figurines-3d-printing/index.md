@@ -2,9 +2,10 @@
 post_kind: article
 title: "Make figurines with AI for 3D printing"
 date: 2026-05-22T10:00:00-04:00
-lastmod: 2026-05-22T20:00:00-04:00
+lastmod: 2026-05-23T02:00:00-04:00
 description: Chibi vinyl figures, ComfyUI (OmniGen2 → Hunyuan3D v2), sequence diagrams via uml-mcp, and resin printing notes with GLB examples.
 translationKey: ai-figurines-3d-printing
+card_image: images/photo-to-object-pipeline.png
 tags:
   - 3D Printing
   - AI
@@ -13,7 +14,7 @@ tags:
   - MCP
   - Chibi
 images:
-  - featured.png
+  - featured.jpeg
 ---
 
 Good **2D toy art** beats a fancy image-to-3D model. This post walks the steps in order, links a [**slide deck**](./make-figurines-using-ai-for-3d-printing.pptx), a [**ComfyUI workflow**](./workflows/image_omnigen2_image_edit.json), and how I sketch the flow with [**uml-mcp**](https://github.com/antoinebou12/uml-mcp).
