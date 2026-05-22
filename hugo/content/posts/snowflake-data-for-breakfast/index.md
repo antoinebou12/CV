@@ -2,50 +2,51 @@
 post_kind: conference
 title: Snowflake Data-for-Breakfast Conference Insights
 date: 2022-09-06T10:00:00-04:00
-description: Notes from the Snowflake Data-for-Breakfast conference on the Snowflake Cloud Data Platform, data warehousing, integration, and analytics—including a strong keynote from Infostrux.
+lastmod: 2026-05-23T00:30:00-04:00
+description: "Breakfast conference notes on Snowflake — global healthcare data, tax-scale analytics, clean rooms, and a strong Infostrux keynote."
 translationKey: snowflake-data-for-breakfast
 tags:
-    - Conference
-    - Snowflake
-    - Data Analytics
+  - Conference
+  - Snowflake
+  - Data Analytics
 images:
-    - featured.jpeg
+  - featured.jpeg
 ---
 
-Notes from the Snowflake Data-for-Breakfast conference on the Snowflake Cloud Data Platform, data warehousing, integration, and analytics—including a strong keynote from Infostrux.
+**Snowflake Data-for-Breakfast** was a morning conference on the cloud data platform — warehousing, sharing, governance, and the customer stories that make abstract architecture feel operational. **Infostrux** ran a keynote that tied the room together. **[Version française]({{< ref "/posts/snowflake-data-for-breakfast/index.fr.md" >}})**.
+
+<!--more-->
 
 ## Overview
 
 ![Conference materials](./images/governed.jpeg)
 
-## Key takeaways
+## What stuck
 
 ![Event menu](./images/menu.jpeg)
 
-### Global data operations
+### Global healthcare operations
 
-A healthcare customer case study showed Snowflake managing secure data operations across three continents, simplifying partner data sharing while keeping high availability and strong SLAs.
+One healthcare customer ran secure operations across **three continents** — partner data sharing without losing availability or SLA headroom. That is the pitch for a cloud warehouse when compliance and replication actually work in production.
 
 ![Data sharing](./images/sharethrough.jpeg)
 
-Cloud data platforms remain a practical backbone for consolidation and analytics; this event was a useful snapshot of where Snowflake is heading.
-
 ![Architecture](./images/architecture.jpeg)
 
-### Tax sector analytics
+### Tax-sector analytics at scale
 
-Another customer needed to store very large datasets and analyze them without knowing every question in advance. Snowflake gave them a single place to consolidate and transform data, which sped up troubleshooting and improved visibility into lineage.
+Another team needed to land **very large** datasets and explore them without knowing every question upfront. Snowflake as a single consolidation and transform layer sped up troubleshooting and made **lineage** easier to explain to auditors and internal users.
 
-![About us slide](./images/aboutus.jpeg)
+![About us](./images/aboutus.jpeg)
 
 ![Customer story](./images/customer.jpeg)
 
 ### Data clean rooms
 
-The clean-room model—collaborating on shared data while preserving privacy—came up as relevant when two companies need to compare datasets during due diligence without exposing everything.
+**Clean rooms** came up for due diligence: two companies compare overlapping datasets without dumping everything into one bucket. Privacy-preserving collaboration is a product story, not just a compliance checkbox.
 
 ![Security and governance](./images/security.jpeg)
 
-## Closing thoughts
+## Closing
 
-Snowflake Data-for-Breakfast was a worthwhile look at cloud data platforms, operations at scale, and newer patterns like clean rooms. Worth attending if you work in data management or analytics.
+Worth the morning if you touch data platforms — good snapshot of where Snowflake is pushing (scale, sharing, governed collaboration). I left with clearer vocabulary for customer conversations, even when we are not on Snowflake day to day.

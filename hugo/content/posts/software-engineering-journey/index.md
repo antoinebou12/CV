@@ -2,45 +2,99 @@
 post_kind: article
 title: "My journey in software engineering"
 date: 2023-12-30T10:00:00-04:00
-description: Reflections on growing as a software engineer across backend systems, platform work, and DevSecOps — what stuck and what I optimize for now.
+lastmod: 2026-05-22T22:30:00-04:00
+description: From Flash games and Unity demos to Algolux, ÉTS capstones, co-ops, and today’s backend, platform, and DevSecOps work—a personal timeline with project links.
 translationKey: software-engineering-journey
 tags:
-    - Software Engineering
-    - Career
-    - Learning
-    - Backend
-    - DevSecOps
-    - Platform Engineering
+  - Software Engineering
+  - Career
+  - Learning
+  - Backend
+  - DevSecOps
+  - Platform Engineering
+images:
+  - featured.png
 ---
 
-This site’s bio sums up the slice of the field I care about most: **backend**, **platform**, and **DevSecOps**. This post is a longer look at how I think about that journey — not a timeline of jobs, but the ideas that kept showing up once I stopped treating “shipping features” as the only scoreboard.
+I did not start in Kubernetes. I started in browser tabs, game loops, and a makerspace that smelled like hot PLA. This post is the longer version of that path—**backend**, **platform**, and **DevSecOps** are where I landed, but the steps in between matter. **[Version française]({{< ref "/posts/software-engineering-journey/index.fr.md" >}})**.
 
-## From features to systems
+<!--more-->
 
-Early on, progress often feels linear: tickets closed, endpoints added, screens shipped. That work matters. Over time, though, the interesting problems sit one level up: how services talk to each other, how failures propagate, how a change in one team’s repo affects everyone else on Monday morning. Backend engineering stops being “write the handler” and becomes “design something that stays understandable when you’re not in the room.”
+## The arc (one glance)
 
-Platform thinking extends that outward. If you have ever set up CI, standardized logging, or made it easier for another developer to run the stack locally, you have already done platform work. The goal is to **lower the tax** on everyday work: fewer one-off runbooks, fewer “works on my machine” threads, more repeatable paths from idea to production.
+Career flow ([`career-journey-flow.mmd`](./images/career-journey-flow.mmd), rendered with [uml-mcp](https://github.com/antoinebou12/uml-mcp)):
 
-## Reliability and ownership
+![Career journey from Flash games and college makerspace to backend platform work today](./images/career-journey-flow.svg)
 
-Reliability is not only uptime graphs. It is also whether teammates trust the system enough to move fast. That trust comes from clear ownership (who fixes what when it breaks), observable behavior (metrics, traces, logs that answer real questions), and changes that are small enough to reason about.
+*Color key:* green personal · blue school · purple club · gray co-op · slate full-time job · orange contract · pink teaching · amber today.
 
-I have learned to treat incidents and near-misses as **design feedback**. Postmortems are useful, but the deeper win is folding those lessons into defaults: better alerts, safer deploys, clearer boundaries between components. Ownership means carrying that loop even when no one assigned a ticket for it.
+## ~2010 — Game developer energy, Flash and the web
 
-## Security as part of delivery
+In high school I was already building small **browser games in Flash** and picking up **HTML and JavaScript**. Progress meant something you could click: a loop that runs, a score that updates, a page that loads without embarrassing you in front of friends.
 
-DevSecOps, for me, is not a separate gate at the end of a sprint. It is **shifting concern left** in ways that fit real teams: dependency hygiene, secret handling, least-privilege access, and threat modeling that is short enough to happen in a normal planning conversation. Security work that only lives in a specialist’s head does not scale; security habits that live in pipelines and conventions do.
+That habit—ship something playable, then fix what feels wrong—never really left. Years later I packaged some of that nostalgia as [FlashGames](https://antoinebou12.github.io/FlashGames/) (Ruffle in the browser) and a {{< ref "/projects/retroarch-web-games" >}} Docker setup for classic consoles.
 
-The same mindset applies to third-party services and cloud resources. If you cannot explain what exposes what, you do not yet have a deployable story — you have a gamble with good branding.
+## ~2015 — A game portfolio, then bigger engines
 
-## Learning and tools
+By college I was curating a **portfolio of game projects** and redoing favorites in **Unity**, **CryEngine**, and **Unreal**. Same motivation, heavier tools: lighting, physics, assets that take a week to look “fine.”
 
-Tools change constantly. Frameworks, cloud APIs, and AI-assisted workflows will keep evolving. What compounds is **judgment**: knowing when to adopt something, when to wrap it, and when to say no. I still read docs, break things in sandboxes, and borrow ideas from open source and from other engineers’ write-ups (including the messier ones — those often contain the constraints that matter).
+It taught me scope. A jam game and a semester demo do not owe each other the same bar—but both owe you honest playtesting.
 
-I also value writing — short posts, diagrams, internal notes — because explaining something badly is often the first step toward understanding it well.
+## ~2017 — Makerspace, WiFi RC, web as a serious path
+
+At **Collégial International Sainte-Anne** I managed the **makerspace**: 3D printers, VR gear, students stuck on wiring at 4 p.m. on a Friday. I also built a **WiFi-controlled RC car**—the kind of project where firmware, mechanical slack, and “why does it only steer left?” share the same afternoon.
+
+That year I leaned into **web development** for real: less “scene in a game engine,” more “product someone uses every week.”
+
+## 2018 — Algolux internship (computational imaging)
+
+My **Algolux** internship was five weeks inside computational photography: Python tools, RAW color analysis, capture workflows, Ansible stacks for ISP validation. I still have the research poster from that period—it is the bridge between “I like code” and “I like systems that touch the physical world.”
+
+![Research poster — AI for image quality optimization, Algolux internship, Collégial Sainte-Anne](./images/algolux-research-poster.png)
+
+Concrete leftovers on this site: {{< ref "/projects/RawAnalyser" >}} (RAW clipping and calibration helpers, Algolux-era lineage). Lab work was spreadsheets, cameras, and scripts—not shiny product pages—but it trained the same loop I use today: **measure, automate, document**.
+
+## ÉTS — Hydroglisseur, AlgoÉTS, and the web stack
+
+**École de technologie supérieure (ÉTS)** is where school projects stacked into something like a career.
+
+**Technological path (2017–2018)** — capstone **hydroglisseur** (hovercraft): blue skirt, lift fan, 3D-printed parts, wood and foam and stubborn debugging. The kind of build that teaches integration before microservices.
+
+![ÉTS hydroglisseur prototype — lift fan, wooden deck, and blue inflatable skirt on the workshop floor](./images/ets-hydroglisseur-prototype.png)
+
+**Bachelor (2018–2023)** — coursework plus clubs. I helped run **[AlgoÉTS](https://algoets.etsmtl.ca/)** (algorithmic trading); we ran workshops like **Python 101 for data science** for members who wanted to move from “I use Python” to “I trust my pandas.”
+
+![AlgoÉTS Python 101 — Science des données session on a classroom display](./images/algoets-python-101.png)
+
+That club work connects to open source I still maintain: the {{< ref "/projects/MarketWatch" >}} Python library for the stock-market game. Same itch—**automate the boring path so humans can focus on decisions**.
+
+**Co-ops (2019–2022)** — [Wandrian](https://wandrian.com/), [Power Go](https://www.powergo.ca/), [Intact](https://www.intact.ca/): parsers, APIs, ELK dashboards, and backend work where the titles finally matched the daily grind.
+
+**Full-time (2023)** — [IONODES](https://ionodes.com/): cloud developer on an IoT platform—Auth0 tiers, Sentry, ONVIF/WebRTC, Azure DevOps.
+
+**Master (2023–2026)** — ÉTS: **real-time rendering**, **interactive physics**, and **surface wear in real time**, with dynamic friction and textures—the thread that ties graphics back to the path.
+
+## 2020s — Platform, security, teaching
+
+After graduation the problems moved up a layer:
+
+- **GitLab CI/CD**, **GCP**, Java microservices, **Playwright** tests (IMC2 research).
+- **DevSecOps labs** at Polytechnique Montréal—GitLab templates for ~20 teams, Docker/Kubernetes, OWASP-minded reviews.
+- **Teaching** at ÉTS: distributed databases, mobile UX labs, integrator projects—courseware is also software delivery.
+- {{< ref "/posts/graphquon-2024-ets" >}} conference web ([graphquon.github.io](https://graphquon.github.io/)) and **[uml-mcp](https://github.com/antoinebou12/uml-mcp)** for diagrams from chat—because explaining systems still beats guessing them.
+
+## What stayed constant (the “human” part)
+
+Early on I measured progress in **features shipped**. Now I care whether the system stays understandable when you are not in the room:
+
+- **Backend** — boundaries, failure modes, APIs that do not surprise the next team.
+- **Platform** — CI, logging, local dev that works without a heroic README.
+- **DevSecOps** — secrets, dependencies, and deploy paths that are boring on purpose.
+
+Reliability is trust. Security is not a final gate—it is habits in the pipeline. I still write posts and draw flows because explaining something badly is how I notice what I do not understand.
 
 ## What I optimize for next
 
-Going forward, I care about the same themes with sharper edges: **clearer platforms**, **safer delivery**, and **systems that stay legible** as they grow. If you are early in your career, my biased advice is to chase problems where you can see the whole loop: code, deploy, operate, improve. That loop is where backend, platform, and DevSecOps stop being buzzwords and become the job.
+Sharper platforms, safer delivery, legible systems as they grow. If you are early in the path: follow problems where you see the **whole loop**—code, deploy, operate, improve. I happened to start that loop with Flash and a hovercraft; you might start somewhere else. The loop is the job.
 
-Thanks for reading — if any of this resonates, you will find more concrete notes elsewhere on this site under posts and projects.
+More concrete write-ups live under [posts]({{< ref "/posts" >}}) and [projects]({{< ref "/projects" >}}) on this site—including {{< ref "/posts/rhino-lidar-apartment-scan" >}} and {{< ref "/posts/professional-resume-json-resume" >}} from later chapters.

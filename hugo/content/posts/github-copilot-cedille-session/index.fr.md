@@ -2,40 +2,37 @@
 post_kind: conference
 title: "Les nouveautés de GitHub Copilot"
 date: 2022-09-06T10:00:00-04:00
-description: Session à Cédille avec GitHub et Arctiq — Copilot Chat, /createNotebook, et GitHub Next.
+lastmod: 2026-05-23T00:30:00-04:00
+description: "Session à Cédille avec GitHub et Arctiq — Copilot Chat, /createNotebook et GitHub Next, avec photos."
 translationKey: github-copilot-cedille-session
 tags:
-    - GitHub Copilot
-    - Conference
-    - Cédille
-    - Arctiq
-    - AI
+  - GitHub Copilot
+  - Conference
+  - Cédille
+  - Arctiq
+  - AI
 images:
-    - featured.jpeg
+  - featured.jpeg
 ---
 
-Les nouveautés de GitHub Copilot qui m'intéressent personnellement à voir prochainement.
+Chez **Cédille**, on a accueilli **GitHub** et **Arctiq** pour une session sur **Copilot** et les outils IA autour du développement. Ce qui m’a le plus parlé : **Copilot Chat** avec **`/createNotebook`** — générer un carnet Jupyter à partir du code existant, pratique pour la data et l’enseignement. **[English version]({{< ref "/posts/github-copilot-cedille-session/index.md" >}})**.
 
-## Copilot Chat et /createNotebook
+<!--more-->
 
-GitHub Copilot Chat avec `/createNotebook` permet de créer rapidement un carnet Jupyter à partir du code existant — utile pour la documentation et le prototypage, notamment pour les personnes en data science et en enseignement.
+## Contenu de la session
 
-## GitHub Next
+- **Copilot Chat** comme assistant dans l’éditeur, au-delà des complétions inline.
+- **`/createNotebook`** pour amorcer un notebook depuis un dépôt — doc et prototypage rapides.
+- **[GitHub Next](https://githubnext.com)** pour suivre les expériences qui pourraient devenir produit.
 
-[GitHub Next](https://githubnext.com) regroupe les expérimentations et pistes d’innovation autour des produits GitHub.
+## Photos
 
-## Session à Cédille
+![Session GitHub Copilot à Cédille — vue de la salle](./images/1695948465024.jpeg)
 
-Chez **Cédille**, nous avons assisté à une session avec **GitHub** et **Arctiq** centrée sur Copilot et les offres IA autour du développement.
+![Session — présentation](./images/1695948465037.jpeg)
 
-Merci aux intervenants **Thierry Madkaud** et **Eldrick Wega** pour les présentations.
+![Session — public](./images/1695948466072.jpeg)
 
-Ces échanges renforcent le lien entre milieu académique et industrie. Merci aux participant·e·s et partenaires.
+Merci à **Thierry Madkaud** et **Eldrick Wega** pour les présentations, et aux participant·e·s. Ce genre d’échange relie bien le milieu étudiant et l’industrie.
 
-À bientôt pour de prochains événements.
-
-![Session — vue 1](./images/1695948465024.jpeg)
-
-![Session — vue 2](./images/1695948465037.jpeg)
-
-![Session — vue 3](./images/1695948466072.jpeg)
+À bientôt pour d’autres événements.

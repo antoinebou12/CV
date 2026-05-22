@@ -2,63 +2,72 @@
 post_kind: article
 title: "Networking evolution — building a home network lab"
 date: 2021-09-06T10:00:00-04:00
-description: Docker on repurposed hardware, bash automation, Caddy, WireGuard, Proxmox VMs, and diagramming the setup.
+lastmod: 2026-05-22T14:00:00-04:00
+description: "Homelab notes — Docker on old hardware, bash automation, Caddy, WireGuard, Proxmox, and diagrams of the setup."
 translationKey: home-networking-evolution
 tags:
-    - Networking
-    - Homelab
-    - Docker
-    - WireGuard
-    - Proxmox
-    - Caddy
+  - Networking
+  - Homelab
+  - Docker
+  - WireGuard
+  - Proxmox
+  - Caddy
 images:
-    - featured.png
+  - featured.png
 ---
 
+Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally. **[Version française]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})**.
 
-## Introduction
+<!--more-->
 
-Welcome to a new chapter in my blog where I dive into the intricacies of building a robust home networking system. As a software engineer with a passion for networking protocols and efficient computing, I've embarked on a journey to design a system that balances performance, security, and cost-effectiveness. This post will detail my experiences and the technical decisions I made along the way.
+## Why a home lab
 
-## Embracing the Challenge of Home Networking
+University courses covered IP, VPNs, and routing on paper. Running services at home made the tradeoffs real: power, noise, backups, and “who has SSH when the router dies.”
 
-My interest in networking began during my academic years, where I learned about various protocols such as IP, VPN, and IP7. Motivated by the high costs of cloud computing, I set out to build a home-based system. My goal was to use older computers, minimizing expenses on hardware and online services, while still achieving a high degree of functionality and efficiency.
+## Docker first
 
+I mapped **free container stacks** to jobs I was paying for in the cloud — media, dashboards, small utilities. Docker was the on-ramp to treating the homelab as composable services instead of one giant pet server.
 
-### Docker Containers: A Gateway to Versatility
+## Bash and two servers
 
-An essential part of my project involved extensive research into Docker containers. I focused on free services that could serve as alternatives to existing cloud services, covering a range of applications from document scanning to home management tasks. This exploration into Docker containers not only allowed me to tailor services to my specific needs but also provided a solid foundation for understanding container-based architecture.
+Core hardware: a cheap **Dell** box plus an older 2004-era machine. **Bash** scripts for **Ubuntu**, **CentOS**, and **Proxmox** installs — repeatable enough that reinstalling after experiments hurt less.
 
-## Developing with Bash and Home Servers
+![Homelab overview](./images/featured.png)
 
-The heart of my system was a home server setup consisting of two main components: a Dell server purchased for a modest sum and an older computer from 2004. I created multiple bash scripts for various operating systems including Ubuntu, CentOS, and Proxmox. These scripts were instrumental in setting up and managing the servers, demonstrating the power of automation and scripting in a home network environment.
+### Physical rack (October 2022)
 
-![featured.png](images/featured.png)
+Before the Lucidchart diagrams, the lab was literally **closets and shelves** — cable nest included. I cropped these from old story posts; they are the real wiring, not a render.
 
-### Overcoming Obstacles and Learning
+**Wall stack** — switch, modem, router, **enterprise server (2010-era)**, and UPS, labeled while I was still learning what plugged into what:
 
-Maintaining this system presented its fair share of challenges. I quickly learned the importance of specialized virtualization software for such projects. This realization led me to use a server specifically designed for virtualization tasks, streamlining the process and enhancing the system's overall stability and performance.
+![Home lab network stack labeled — switch, modem, router, server, UPS](./images/homelab-wall-stack-labeled.jpeg)
 
-![lucidchart.jpeg](images/lucidchart.jpeg)
+**Dell PowerEdge R710** — dual **Xeon X5667** (~3 GHz quad-core), **24 GB RAM**, running headless beside acoustic foam. The handwritten tape on the bezel was my inventory system:
 
-## Remote Management and Security
+![Dell PowerEdge R710 homelab server with Xeon X5667 and 24 GB RAM](./images/dell-poweredge-r710-homelab.jpeg)
 
-An essential aspect of my setup was the ability to manage computers remotely and monitor the health of services and hardware. I implemented a reverse proxy using Caddy, and for added security, I hid my IP behind an OVH server. This setup not only protected my network from potential hacking attempts but also provided a way to manage traffic effectively.
+**Closet shelf build** — rack server horizontal, yellow switch, monitor for local installs, and enough blue patch cables to teach patience:
 
-### WireGuard: A VPN Solution
+![Homelab server closet — rack server, switch, monitor, and cabling](./images/homelab-closet-server-setup.jpeg)
 
-For VPN, I chose WireGuard. Despite its initial complexity in configuration, WireGuard offered a fast, secure, and reliable way to connect my network. I contributed to several projects to simplify its setup, making it more accessible for less tech-savvy users.
+Virtualization matters when you snapshot before trying something dumb. A dedicated hypervisor host beat bare-metal churn.
 
-## Expanding the Network
+![Network diagram (Lucidchart)](./images/lucidchart.jpeg)
 
-Upon moving to a new apartment, I expanded my network to include multiple locations. I used tools like Lucidchart to visualize my network architecture and Proxmox to create numerous VMs. This expansion was not just a technical upgrade but also an opportunity to share my knowledge with others, as I used my setup in a club project.
+## Remote access and edge
 
-![c4.jpeg](images/c4.jpeg)
+**Caddy** as reverse proxy; public exposure through an **OVH** front so home IP is not the only line of defense. Remote admin and health checks became part of the same story as “make the service reachable.”
 
-### Future Projects and Reflections
+**WireGuard** for VPN — annoying to configure the first time, fast once up. I contributed small setup helpers so friends could connect without reading man pages for a week.
 
-Looking ahead, I am considering migrating to a static website hosted on AWS S3 to reduce deployment costs. Furthermore, I'm exploring the use of Github for personal projects, appreciating its free and open nature for individual projects.
+## Growth after moving
 
-## Conclusion
+New apartment, more VLAN curiosity, **Proxmox** VMs for club projects. **Lucidchart** for the wall diagram; **C4**-style views when explaining the stack to someone else.
 
-This journey in home networking has been a blend of personal passion and professional development. Through this process, I've learned the importance of balancing performance, security, and cost. My experience demonstrates that with the right knowledge and tools, creating an efficient home networking system is not only feasible but also incredibly rewarding.
+![C4-style view](./images/c4.jpeg)
+
+Later I moved public sites toward **static hosting** (S3/GitHub Pages) to cut always-on cost — the lab stayed for private services.
+
+## Where it landed
+
+A homelab is a sandbox for **platform instincts**: automate installs, document topology, assume failure. Related today: **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** and install scripts on the main CV project list.

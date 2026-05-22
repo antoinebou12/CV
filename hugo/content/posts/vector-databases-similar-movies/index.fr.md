@@ -2,7 +2,7 @@
 post_kind: article
 title: "Similarité entre films et recherche vectorielle"
 date: 2026-04-13T12:00:00-04:00
-lastmod: 2026-04-18T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "Un fil conducteur : pgvector et SQL pour les embeddings de films, Qdrant et MovieLens pour vecteurs denses et creux, puis RAG LangChain + Ollama ancré sur le même catalogue."
 translationKey: vector-databases-similar-movies
 images:
@@ -21,7 +21,9 @@ aliases:
     - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-Cette page regroupe **un seul parcours** sur la similarité entre films : embeddings et plus proches voisins, puis un second moteur avec **deux sens du mot « vecteur »**, puis **récupération + génération** calée sur vos propres lignes. Les extraits animés du travail sont surtout dans les notebooks et la série Medium associée plutôt que dans ce dépôt statique.
+J’ai enseigné un fil « films similaires » qui a grossi : **pgvector** en SQL, puis **Qdrant** avec vecteurs **denses** et **creux** sur MovieLens, puis une boucle **RAG** **LangChain + Ollama** sur le même catalogue. Cette page est la version fusionnée ; les notebooks animés sont dans [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding). **[English version]({{< ref "/posts/vector-databases-similar-movies/index.md" >}})**.
+
+<!--more-->
 
 **En bref**
 
@@ -224,9 +226,9 @@ Ce sont des enseignements normaux : le RAG n’est pas qu’« embed et search �
 
 Il faut PostgreSQL avec pgvector, des lignes `movies` chargées via le **pipeline de la partie 1** (voir les notebooks liés plus haut), **Ollama** avec le modèle choisi tiré (`pull`), et la pile Python du notebook (`langchain`, `langchain-community`, `langchain-huggingface`, `psycopg2`, etc.). Adapter chaînes de connexion et noms de modèle à votre environnement.
 
-## Conclusion
+## Bilan
 
-**pgvector** (partie 1) offre du SQL lisible et des métriques sur les embeddings de films ; **Qdrant** avec MovieLens (partie 2) illustre la recherche sémantique dense et les vecteurs creux façon collaboratif dans un même moteur ; **LangChain + Ollama** (partie 3) montrent comment le même catalogue devient la couche de récupération pour des réponses en langage naturel **ancrées**. Ensemble, cela couvre la recherche vectorielle, des signaux de type recommandation et une pile RAG minimale reproductible depuis le dépôt du cours.
+Même modèle mental trois fois : **embed → stocker → plus proches voisins**, puis décider si « similaire » veut dire texte d’intrigue, chevauchement de notes, ou preuve pour un LLM. La partie 3, c’est la théorie qui rencontre le désordre — SQL foireux, warnings sur le type `vector`, timeouts Ollama — d’où les sorties notebook conservées dans le dépôt du cours.
 
 ---
 

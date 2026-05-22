@@ -2,6 +2,7 @@
 post_kind: article
 title: Expérimentation des indicateurs technique avec Python et Backtesting
 date: 2024-05-14T20:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Rapport sur BatchBacktesting — APIs, stratégies EMA/MACD et analyse des résultats sur actions et crypto.
 translationKey: experimentation-indicateurs-backtesting
 tags:
@@ -11,13 +12,11 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
 ---
 
+J’ai lancé en lot des stratégies **EMA** et **MACD** sur plein de tickers avec [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting) — FMP pour les actions, Binance pour la crypto. Code et tableaux complets ci-dessous (import Medium). Voir aussi **[backtesting multi-indicateurs]({{< ref "/posts/multiple-indicators-backtesting/index.fr.md" >}})** et **[bandes Monte Carlo]({{< ref "/posts/predicting-stock-prices-monte-carlo/index.fr.md" >}})**. **[English version]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}})**.
+
+<!--more-->
+
 ## Faites du Batch Backtesting sur les cryptos et les stocks
-
-## Introduction
-
-Dans ce rapport, nous présentons une expérimentation des indicateurs techniques à l’aide du projet BatchBacktesting disponible sur GitHub à l’adresse suivante :
-
-[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting/tree/main)
 
 !pip install numpy httpx rich  
   
@@ -314,11 +313,11 @@ Top 5 des instruments avec le plus faible rendement :
 4.  LNC : -78,02%
 5.  CHRW : -76,38%
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
 
-En conclusion, le projet BatchBacktesting offre une approche flexible et puissante pour tester et analyser les performances des indicateurs techniques sur les marchés boursiers et les cryptomonnaies. Les fonctions fournies permettent une intégration facile avec les API de services financiers et une manipulation aisée des données. Les résultats des expérimentations peuvent être utilisés pour développer et affiner des stratégies de trading algorithmique en fonction des performances observées.
+## Bilan
+
+Les runs en lot font ressortir vite les extrêmes — gros gagnants et catastrophes sur le même indicateur — mais ce n’est pas un système de trading live. Traitez les tableaux comme du criblage, puis creusez un ticker avant de faire confiance à une règle.
 
 ---
 

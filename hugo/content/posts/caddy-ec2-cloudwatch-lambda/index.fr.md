@@ -2,6 +2,7 @@
 post_kind: article
 title: "Faire travailler ensemble Caddy, EC2, CloudWatch, Step Functions et Lambda"
 date: 2024-05-14T18:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Caddy sur EC2, journaux vers CloudWatch, scripts Python et orchestration Step Functions + Lambda pour un tableau de bord peu coûteux.
 translationKey: caddy-ec2-cloudwatch-lambda
 tags:
@@ -14,9 +15,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d"
 ---
 
-## Introduction
+Je fais déjà tourner **Caddy** à la maison pour Home Assistant ; ce billet décrit le **miroir AWS pas cher** : **EC2** (souvent `t4g.nano`), HTTPS auto, journaux vers **CloudWatch**, scripts Python, **Step Functions + Lambda** pour un tableau de bord sans SaaS. Le détail pas à pas est importé de Medium ci-dessous. **[English version]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}})**.
 
-Monter une infra web solide et scalable peut être coûteux et complexe. Avec les bons outils, on peut rester efficace et économique. Cet article décrit **Caddy** sur **AWS EC2**, l’intégration à **CloudWatch** pour la supervision, et **Step Functions** + **Lambda** pour automatiser — une approche complète pour un tableau de bord à budget maîtrisé.
+<!--more-->
 
 ### Étape 1 : installer Caddy sur EC2
 
@@ -291,9 +292,9 @@ fields @timestamp, @message
 
 ![](./img-005.png)
 
-### Conclusion
+### Bilan
 
-En combinant **Caddy** sur **EC2**, **CloudWatch**, **Step Functions** et **Lambda**, on obtient une infra web plus simple à exploiter, avec supervision et automatisation utiles pour un coût maîtrisé.
+Pas besoin d’une suite d’observabilité managée pour voir **quel sous-domaine reçoit du trafic** — des requêtes CloudWatch Insights sur les logs JSON Caddy et un peu de Lambda suffisent. Surveillez le free tier et le volume de logs sur une nano.
 
 ---
 

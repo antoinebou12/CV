@@ -2,38 +2,41 @@
 post_kind: conference
 title: "From BMC to pitch — QcES journey notes (Spring 2024)"
 date: 2026-04-13T10:00:00-04:00
-description: Personal synthesis of QcES sessions — business canvas, customer segment, feedback, interviews, roadmap, market fit, value proposition, and storytelling.
+lastmod: 2026-05-22T22:00:00-04:00
+description: Notes from the QcES entrepreneurship program — business canvas, customer interviews, feedback, roadmap, and pitching without drowning in jargon.
 translationKey: qces-lean-discovery-pitch
 tags:
-    - QcES
-    - Entrepreneurship
-    - BMC
-    - Lean Startup
-    - Pitch
-    - Education
+  - QcES
+  - Entrepreneurship
+  - BMC
+  - Lean Startup
+  - Pitch
+  - Education
+images:
+  - featured.png
 ---
 
-**[Full article in French]({{< ref "/posts/qces-lean-discovery-pitch/index.fr.md" >}})** — same slug; you can also switch to **FR** in the header.
+![QcES program logo](./qces-logo.png)
 
-## At a glance
+I took part in **QcES** (Spring 2024 cohort) while working through lean discovery: business model canvas, customer interviews, short pitches, and everything in between. This post is my own recap—not an official program document. **[Full article in French]({{< ref "/posts/qces-lean-discovery-pitch/index.fr.md" >}})** if you prefer.
 
-- The **Business Model Canvas (BMC)** describes how an organization **creates, delivers, and captures** value; it answers three questions: **desirability**, **feasibility**, and **viability**.
-- You usually start with **customer segments** and **value proposition**, then iterate—the model **evolves** with the market.
-- **Segmentation** makes the market **concrete** (B2B vs B2C, crisp criteria) instead of vague labels (“doctors”, “parents”).
-- **Interviews** are for **discovery**: the goal is to **learn**, not to sell; **connect**, don’t convince—and stay attached to the **problem**, not your first idea of the solution.
-- Structured **feedback** (strengths + one growth angle) and a **short spoken pitch** (no slides) clarify the idea early.
-- A **product roadmap** is a **strategic view over time**, not a detailed project plan; it aligns vision, audience, horizon, metrics, and resources.
-- **PoC**, **prototype**, and **MVP** play different roles: technology check, user interaction learning, then a **first market version** you can stress-test with real users or buyers.
-- **Market and value proposition**: account for external forces (macro, industry, trends) and express value as **offer + customer benefit**.
-- A solid **pitch** often follows **Hook → Believe → Join**: lead with the problem, show credibility and differentiation, then make a **specific ask**.
+<!--more-->
 
-*This is a personal write-up based on QcES materials (Spring 2024 cohort) and facilitators; it is not an official program document.*
+## What stuck with me
 
----
+The program kept coming back to a few ideas. The **Business Model Canvas** is a shared map for how you create, deliver, and capture value—and whether the idea is desirable, feasible, and viable. You usually start with **who** you serve and **what** you promise them, then revise as the market talks back.
 
-## Why these pieces fit together
+**Segmentation** sounds dry until you try pitching to “doctors” or “parents.” Splitting B2B (firmographics) from B2C (demographics, behavior) makes the market something you can actually reach.
 
-In practice you don’t “finish” the BMC once. You state **hypotheses**, collect **qualitative evidence** (interviews, observation), **adjust** segments and value proposition, then **prioritize** what goes on a roadmap and into a pitch. The loop below summarizes that motion.
+**Interviews** are for learning, not closing a sale. The facilitators repeated it until it landed: connect, don’t convince; stay curious about the **problem**, not married to your first solution.
+
+Short **feedback** rounds (one real strength, one growth angle) and a **~90 second pitch without slides** force clarity early. A **roadmap** is a strategic view over time—not a Gantt chart. And **PoC**, **prototype**, and **MVP** are different beats: can it work, how do people interact, what is the smallest thing you can put in front of real users.
+
+For pitching, **Hook → Believe → Join** showed up again and again: problem first, then why you’re credible, then a specific ask.
+
+## How the pieces connect
+
+You do not fill the canvas once and frame it. You state a hypothesis, talk to people, adjust segments and value proposition, decide what belongs on a roadmap, then practice explaining it out loud.
 
 ```mermaid
 flowchart LR
@@ -44,58 +47,58 @@ flowchart LR
   road --> pit[Pitch]
 ```
 
-## Business model: the BMC as a shared language
+## Business model canvas
 
-The BMC bundles **nine blocks** (segments, value proposition, channels, customer relationships, revenue, resources, activities, partners, cost structure). The core idea: **every block matters** for survival, and the canvas is a **living artifact**—revisit it when customers or competitors shift.
+Nine blocks, one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners, costs. The point is not decoration—it is survival. Every block can break you if you ignore it, and the canvas should move when customers or competitors shift.
 
-The coursework stresses sequencing: understand **for whom** you create value and **how** you promise it before over-optimizing the rest. The **hypothesis–validation loop** ties research, interviews, and decisions—you test beliefs about the customer and the problem, not only about technology.
+We were pushed to nail **for whom** and **how you help** before optimizing the rest. That matches the hypothesis–validation loop: test beliefs about the customer and the problem, not only the tech stack.
 
-## Customer segments: from fuzzy to actionable
+## Customer segments
 
-It helps to separate **consumer**, **end user**, and **buyer** (who pays isn’t always who uses). An “early” customer often has a **problem**, **awareness**, **active solution search**, sometimes a **hacky workaround**, and a plausible **budget**.
+Who pays is not always who uses. An early customer often has a real problem, knows it, is looking for options, maybe already hacked a workaround, and might have budget.
 
-**B2B** segmentation tends to be **firmographic** (size, location, sector, buying dynamics). **B2C** uses demographics, geography, psychographics, behavior. The exercise is to replace overly broad buckets with **testable segments**—people you can actually find, contact, and interview.
+B2B segments lean on company size, sector, and buying dynamics. B2C adds lifestyle and behavior. The win is replacing vague labels with groups you can find, email, and interview.
 
-## Sharing the idea and getting feedback
+## Sharing the idea
 
-A **~90 second, slide-free** pitch forces clarity: a **problem** outsiders can follow, who **benefits**, the **solution**, and its **advantages**. You are not expected to cover market size and competition on day one; it is a **clarity filter**.
+Ninety seconds, no deck: state the problem in plain language, who benefits, what you offer, and why it matters. You are not expected to quote TAM on day one—it is a clarity filter.
 
-To **receive** feedback: **active listening** (understand before you rebut), notes, a **learning** mindset. To **give** feedback: name a real **strength**, then one **opportunity** (“I’d want to hear more about…”, “this would be stronger if…”).
+When you receive feedback, listen to understand. When you give it, name something that works, then one concrete “what would make this stronger.”
 
-## Interviews: discovery is continuous
+## Interviews
 
-Interviews are framed as the most direct way to fill gaps in an early BMC. The aim is **not** to sell or “pitch” your fix during the call, but to **learn** from someone else’s reality.
+This was the heart of the cohort for me. Interviews fill the gaps a first canvas always has. Do not pitch your fix on the call—learn how the other person lives the problem.
 
-People to talk to often extend beyond the “ideal customer”—users of substitutes, experts, suppliers, communities—anyone **touched** by the problem. And it is not one-and-done: discovery continues through pivots.
+Talk to people beyond the “ideal customer”: users of substitutes, experts, suppliers, communities. Discovery does not end after three calls; it continues through pivots.
 
-Typical hurdles—**finding** the right people, **booking** time, running a **useful** conversation—yield to preparation and humility. The mantra: fall in love with the **problem**, not the solution; **connect** rather than convince.
+Finding people, booking time, and running a useful conversation are skills. The line I still repeat: fall in love with the problem, not the solution.
 
-## Roadmap and maturity: PoC, prototype, MVP
+## Roadmap, PoC, prototype, MVP
 
-A **roadmap** communicates **where you are headed** (vision, key initiatives) over a chosen **horizon** for a specific **audience** (team, investors, partners). It is not the same as an operational **project plan**. Before filling it in, prompts include vision, readers, timeline, **metrics**, scope, **resources**, and an appropriate **format**.
+A roadmap answers where you are headed for a given audience (team, investors, partners) over a chosen horizon. It is not the same as a detailed project plan.
 
-**Proof of concept**: the underlying approach **can work**. **Prototype**: explore **how users interact**; often pre-market. **MVP**: **just enough** to put in front of real users or buyers to **learn fast** (including by watching what breaks). Roadmaps **change shape** with stage—discovery, validation, growth.
+Proof of concept checks whether the approach can work. A prototype explores interaction—often before a real launch. An MVP is the smallest version you put in front of real users to learn fast, including from what breaks.
 
-## Market context and value proposition
+Roadmaps look different in discovery, validation, and growth. That alone saved me from over-planning too early.
 
-Understanding the market is more than counting accounts: it places the venture amid **external forces**—macro (PESTEL-style), **industry dynamics**, **customer behavior**, **major trends**. Those lenses surface constraints and openings.
+## Market and value proposition
 
-**Value proposition** spans what you **deliver** (product, service, “vehicle”) and the **benefit** to the customer. Course slides stress **pain points** and a hypothesis about **why** people care—raw material for discovery interviews.
+Market work is more than counting accounts. Macro forces, industry dynamics, customer behavior, and trends set constraints and openings.
 
-## Storytelling and pitch: Hook, Believe, Join
+Value proposition is offer plus customer benefit—what you deliver and why someone cares. Pain points and “why now” become interview questions, not slide filler.
 
-A pitch is a talk that seeks a **concrete next step**: someone’s time, lab access, intros, funding. Formats vary—from thirty seconds to half an hour, with or without slides.
+## Pitching: Hook, Believe, Join
 
-A structure that showed up repeatedly:
+A pitch asks for a next step: time, intros, lab access, funding. Formats vary; structure helps.
 
-1. **Hook** — start from the **problem** and why it matters to an identifiable audience; do **not** open with the solution.
-2. **Believe** — present the **solution**, **differentiation**, and **evidence** (traction, team, recent wins).
-3. **Join** — a **specific ask**: type of help, amount, expertise, partnership, etc.
+1. **Hook** — the problem and why it matters to a real audience. Do not open with the product.
+2. **Believe** — the solution, differentiation, evidence (traction, team, recent wins).
+3. **Join** — a specific ask: money, expertise, partnership, introduction.
 
-A typical ~90 second scaffold runs: who you are, **problem**, **offer for a target**, **value proposition**, **contrast with alternatives**, **recent milestone**, **call to action**.
+A simple ~90 second scaffold: who you are, problem, offer for a target, value proposition, contrast with alternatives, recent milestone, call to action.
 
-## Closing thought
+## Closing
 
-QcES connects tools (BMC, segmentation, roadmap) with **behaviors** (interviews, feedback, pitching). The thread: keep the problem **central**, make assumptions **testable**, and communicate clearly enough that others can **help**—not only cheer.
+QcES tied tools to habits: canvas, segmentation, roadmap on one side; interviews, feedback, pitching on the other. The thread is keeping the problem central, making assumptions testable, and speaking clearly enough that people can help—not just nod.
 
-If you are in a similar program, **consistency** usually beats polish: a handful of well-run interviews often teaches more than a perfectly decorated canvas.
+If you are in a similar program, a few well-run interviews usually teach more than a perfectly styled canvas. Consistency beats polish.

@@ -2,6 +2,7 @@
 post_kind: article
 title: "Bibliothèque Python pour le trading virtuel MarketWatch"
 date: 2026-04-13T10:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "Paquet PyPI `marketwatch` — client Python pour le jeu boursier virtuel MarketWatch (listes de suivi, parties, portefeuille, ordres, classement)."
 translationKey: marketwatch-python-trading
 tags:
@@ -14,7 +15,9 @@ images:
     - featured.png
 ---
 
-J’ai publié **[marketwatch](https://pypi.org/project/marketwatch/)** sur PyPI : un petit client Python pour le **jeu boursier virtuel** [MarketWatch](https://www.marketwatch.com) (paper trading), pas l’accès à un courtier réel. Pour scripter des listes de suivi, récupérer les données d’une partie ou du portefeuille, ou expérimenter une automatisation dans le cadre du jeu, le paquet encapsule les flux dans une API simple.
+Je voulais automatiser quelques tâches dans le **jeu boursier virtuel** [MarketWatch](https://www.marketwatch.com) (paper trading, pas un vrai courtier). **[marketwatch](https://pypi.org/project/marketwatch/)** sur PyPI est le petit client que j’ai publié pour ça — listes de suivi, état de partie, portefeuille, ordres, classement. **[English version]({{< ref "/posts/marketwatch-python-trading/index.md" >}})**.
+
+<!--more-->
 
 ## Liens
 

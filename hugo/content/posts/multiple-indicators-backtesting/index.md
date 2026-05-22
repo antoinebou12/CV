@@ -2,6 +2,7 @@
 post_kind: article
 title: Multiple Technical Indicators Backtesting on Multiple Tickers using Python
 date: 2024-05-30T15:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Batch backtests with BatchBacktesting — EMA and MACD strategies, FMP/Binance APIs, and aggregated results across stocks and crypto.
 translationKey: multiple-indicators-backtesting
 tags:
@@ -12,9 +13,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
 ---
 
-## Introduction
+Same **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** stack as the [earlier indicator experiment]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}}), but scaled to **many tickers** and both **stocks and crypto** — aggregate leaderboards instead of one-off charts. Code and rankings below are the imported Medium report. **[Version française]({{< ref "/posts/multiple-indicators-backtesting/index.fr.md" >}})**.
 
-In this report, we present an experiment with technical indicators using the BatchBacktesting project available on GitHub at the following link: [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting).
+<!--more-->
 
 ## Installing Dependencies
 
@@ -280,13 +281,11 @@ Here is an example of the results obtained for the instruments with the highest 
 *   LNC: -78.02%
 *   CHRW: -76.38%
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
 
-## Conclusion
+## Takeaway
 
-In conclusion, the BatchBacktesting project offers a flexible and powerful approach for testing and analyzing the performance of technical indicators on stock and cryptocurrency markets. The provided functions allow easy integration with financial services APIs and straightforward data manipulation. The experimental results can be used to develop and refine algorithmic trading strategies based on observed performance.
+Ranking every symbol against the same MACD/EMA template is useful for **research hygiene** (spot absurd returns, sanity-check APIs) — not for deploying capital. Next step is always manual review of the top and bottom names, not autopilot trading.
 
 ---
 

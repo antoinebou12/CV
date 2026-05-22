@@ -2,6 +2,7 @@
 post_kind: article
 title: "Prompts de diagrammes avec ChatGPT et AIPRM (PlantUML, Mermaid, etc.)"
 date: 2022-09-06T10:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "Gabarit de prompt AIPRM : type de diagramme, éléments, objectif et outil — avec exemples PlantUML et Mermaid (React, FastAPI, Redis, MongoDB, cache hit/miss)."
 translationKey: chatgpt-airprm-sequence-diagrams
 tags:
@@ -15,9 +16,9 @@ images:
     - featured.jpeg
 ---
 
-L’extension navigateur [AIPRM](https://www.aiprm.com/) ajoute des modèles de prompts réutilisables dans ChatGPT. Avec un **prompt structuré** (type de diagramme, ce qu’il faut représenter, pourquoi, et quel outil), vous obtenez des réponses cohérentes — que vous visiez du texte (**PlantUML**, **Mermaid**) ou une marche à suivre pour un outil graphique.
+J’en avais assez des fils ChatGPT « dessine un diagramme de séquence » qui renvoient une syntaxe à moitié au hasard. **[AIPRM](https://www.aiprm.com/)** garde le gabarit dans le navigateur ; je verrouille quatre champs — **type**, **éléments**, **objectif**, **outil** — et le modèle arrête de deviner entre **PlantUML**, **Mermaid** ou des notes pour Draw.io. Voir aussi le billet **[plugin D2C OpenAI]({{< ref "/posts/d2c-openai-diagram-plugin/index.fr.md" >}})**. **[English version]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})**.
 
-**[Article complet en anglais]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})** (même slug — vous pouvez aussi choisir **EN** dans l’en-tête du site).
+<!--more-->
 
 ## Gabarit de prompt AIPRM (à copier et adapter)
 
@@ -127,10 +128,6 @@ Ce sont des outils **orientés canevas**. Souvent le plus rapide est de faire g�
 
 Vous évitez la page blanche tout en gardant la main sur le style et les annotations.
 
-## Conclusion
+## Bilan
 
-Un prompt structuré rend le diagramme **reproductible** : type de diagramme, éléments mis en avant, objectif (et contexte), et outil cible. AIPRM ne fait qu’accélérer l’accès à ce gabarit une fois qu’il est dans votre bibliothèque.
-
----
-
-*Hashtags pour le partage :* #ChatGPT #diagramme #UML #logiciel #outilsdedesign #PlantUML #Mermaid #Drawio #Lucidchart #Creately #Gliffy
+Une fois le gabarit en quatre lignes dans AIPRM, la demande de diagramme ressemble à remplir un formulaire plutôt qu’à négocier avec le modèle. Je retouche toujours la sortie — mais le premier jet arrive souvent dans le bon langage (PlantUML, Mermaid ou liste pour un outil graphique).

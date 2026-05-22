@@ -2,37 +2,46 @@
 post_kind: article
 title: Creating a professional résumé with JSON Resume
 date: 2022-09-10T10:00:00-04:00
-description: Use the JSON Resume schema and npm tooling to publish HTML, PDF, or embedded CV data.
+lastmod: 2026-05-22T22:00:00-04:00
+description: Write your CV once in JSON, then export HTML or PDF with community themes—or wire the same data into a Hugo site.
 translationKey: professional-resume-json-resume
 howto: true
 howtoDescription: Publish a CV from JSON Resume using npm tooling and Hugo or static HTML.
 howtoSteps:
   - name: Install JSON Resume tooling
-    text: Install Node.js and the jsonresume-cli or theme packages you plan to use for export.
+    text: Install Node.js and resume-cli (or theme packages) for export.
   - name: Author resume.json
-    text: Write a resume.json file following the JSON Resume schema (basics, work, education, skills, projects).
+    text: Write resume.json with basics, work, education, skills, and projects.
   - name: Export or embed
-    text: Export to HTML/PDF with a theme, or embed the JSON in a static site generator such as Hugo with a JSON Resume module.
+    text: Export HTML/PDF with a theme, or embed JSON in Hugo via a JSON Resume module.
 tags:
-    - JSON Resume
-    - npm
-    - Career
-    - HTML
+  - JSON Resume
+  - npm
+  - Career
+  - HTML
+images:
+  - featured.png
 ---
 
-## Introduction
+![JSON Resume — sample themes (Elegant, Paper, Kendall, Flat, and others)](./json-resume-themes.png)
 
-In today's digital world, having an online resume is crucial for showcasing your professional profile. One effective way to create an online resume is by using the JSON Resume npm package. This package allows you to write your resume in JSON and then export it to various formats such as HTML, PDF, or even integrate it into your personal website.
+Most hiring flows start online. **JSON Resume** lets you keep one structured `resume.json` and render it as HTML, PDF, or data inside your own site. **[Version française]({{< ref "/posts/professional-resume-json-resume/index.fr.md" >}})** covers the same walkthrough.
 
-## JSON Resume Format
+<!--more-->
 
-JSON Resume is a community-driven open-source initiative to create a JSON-based standard for resumes. The format is lightweight and easy to use, making it perfect for building tools around it.
+## Why JSON?
 
-Here's a breakdown of the key sections in a typical JSON Resume:
+[JSON Resume](https://jsonresume.org/) is an open, community-maintained schema for CVs. Because the file is plain JSON, themes and CLIs can swap the presentation without you rewriting content. The ecosystem ships many visual styles—the grid above shows themes like **Elegant**, **Paper**, **Kendall**, and **Flat**.
 
-### The Basics Section
+You get portability: update the data once, regenerate exports, or pipe the same file into static site generators.
 
-This section contains your basic information like name, job title, contact information, and a brief summary. It also includes your location and links to your professional profiles.
+## Main sections
+
+A typical `resume.json` groups your story into predictable blocks.
+
+### Basics
+
+Name, headline, email, site, short summary, location, and social profiles (LinkedIn, GitHub, etc.).
 
 ```json
 "basics": {
@@ -56,9 +65,9 @@ This section contains your basic information like name, job title, contact infor
 }
 ```
 
-### Work Experience
+### Work
 
-This section details your professional experience. You can include the company name, your position, the period of employment, and a summary of your role and achievements.
+Roles with company, title, dates, and a short summary of what you did.
 
 ```json
 "work": [
@@ -74,7 +83,7 @@ This section details your professional experience. You can include the company n
 
 ### Education
 
-List your academic qualifications, the institution, the degree or course, and the period of study.
+School, field, degree type, and study dates.
 
 ```json
 "education": [
@@ -90,7 +99,7 @@ List your academic qualifications, the institution, the degree or course, and th
 
 ### Skills
 
-Mention your skills along with the proficiency level and relevant keywords.
+Skill groups with optional level and keyword tags (languages, frameworks, tools).
 
 ```json
 "skills": [
@@ -104,7 +113,7 @@ Mention your skills along with the proficiency level and relevant keywords.
 
 ### Projects
 
-Highlight significant projects you've worked on, including the project name, duration, a brief description, and a URL if available.
+Side work or portfolio pieces with dates, description, and URL.
 
 ```json
 "projects": [
@@ -118,51 +127,35 @@ Highlight significant projects you've worked on, including the project name, dur
 ]
 ```
 
-## Using the npm Package
+## CLI workflow
 
-1. **Install resume-cli globally**: This command line tool allows you to export your resume in different formats.
-   ```
-   npm install -g resume-cli
-   ```
+Install the command-line tool globally:
 
-2. **Create your resume.json**: Follow the JSON Resume schema to create your resume.
+```bash
+npm install -g resume-cli
+```
 
-3. **Export your resume**: Use the CLI to export your resume to different formats.
-   ```
-   resume export resume.html
-   resume export resume.pdf
-   ```
+Author `resume.json` against the [schema](https://jsonresume.org/schema/), pick a theme, then export:
 
-4. **Hosting**: You can host your JSON resume for free using the JSON Resume Registry.
+```bash
+resume export resume.html
+resume export resume.pdf
+```
 
-The JSON Resume npm package provides a standardized, flexible, and easy way to create and share your professional profile. By following the JSON schema and using the CLI tool, you can generate a modern and attractive resume that can be shared with potential employers and contacts.
+You can also publish to the free [JSON Resume Registry](https://registry.jsonresume.org/) for a hosted page.
 
-## Additional Resources for Enhancing Your Online Resume with Hugo and JSON Resume
+Same data, multiple outputs—handy when you want a printable PDF and a web version that stay in sync.
 
-When creating a dynamic and engaging online resume using Hugo and the JSON Resume module, there are additional resources that can enhance your experience and provide more customization options. Here's a list of valuable resources you might find helpful:
+## Hugo and friends
 
-### Profile Studio
+If your site already runs on **Hugo**, modules like [hugo-mod-json-resume](https://github.com/schnerring/hugo-mod-json-resume) map JSON sections into templates (including multilingual variants). That is how you move from a standalone export to a CV section inside a personal blog.
 
-**Profile Studio** is an online tool that allows you to preview and customize your JSON Resume in real-time. It's a great way to see how your resume will look and make adjustments on the fly.
+Other tools worth bookmarking:
 
-- Preview your resume: [Profile Studio Preview](https://profile-studio.netlify.app/#/preview)
+- **[Profile Studio](https://profile-studio.netlify.app/#/preview)** — live preview while you edit JSON.
+- **[SkillSet](https://jac21.github.io/SkillSet/)** — D3 visualization for the skills block.
+- **[LinkedIn to JSON Resume](https://github.com/joshuatz/linkedin-to-jsonresume)** — bootstrap `resume.json` from an existing profile.
 
-### SkillSet Visualization
+## Takeaway
 
-**SkillSet** is an innovative tool that visualizes the skills section of your JSON Resume. It uses D3.js to create an intuitive and interactive display of your abilities and expertise.
-
-- Visualize your skills: [SkillSet](https://jac21.github.io/SkillSet/)
-
-### LinkedIn to JSON Resume Exporter
-
-This handy tool allows you to export your LinkedIn profile into the JSON Resume format. It's a quick way to transfer your professional data into a structured resume format.
-
-- Export LinkedIn profile: [LinkedIn to JSON Resume Exporter](https://github.com/joshuatz/linkedin-to-jsonresume)
-
-### Hugo-Mod-JSON-Resume
-
-This Hugo module is essential for integrating JSON Resume into your Hugo site. It supports multilingual data and offers templates for various sections of your resume.
-
-- Integrate JSON Resume with Hugo: [Hugo-Mod-JSON-Resume](https://github.com/schnerring/hugo-mod-json-resume)
-
-Utilizing these resources, you can effectively create a visually appealing and interactive online resume that showcases your professional journey in the best light possible.
+JSON Resume is not magic—it is discipline. You maintain one source of truth, lean on themes for layout, and plug the same file into CLIs or Hugo when you outgrow a static PDF. For a developer portfolio, that separation between **content** and **presentation** ages well.

@@ -1,62 +1,73 @@
 ---
 post_kind: article
-title: "Évolution du réseau — construire un lab à la maison"
+title: "Évolution réseau — monter un lab à la maison"
 date: 2021-09-06T10:00:00-04:00
-description: Docker sur matériel réutilisé, automatisation bash, Caddy, WireGuard, VMs Proxmox et schémas de l’installation.
+lastmod: 2026-05-22T14:00:00-04:00
+description: "Notes homelab — Docker sur vieux matériel, bash, Caddy, WireGuard, Proxmox et schémas du setup."
 translationKey: home-networking-evolution
 tags:
-    - Networking
-    - Homelab
-    - Docker
-    - WireGuard
-    - Proxmox
-    - Caddy
+  - Networking
+  - Homelab
+  - Docker
+  - WireGuard
+  - Proxmox
+  - Caddy
 images:
-    - featured.png
+  - featured.png
 ---
 
-## Introduction
+Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi. **[English version]({{< ref "/posts/home-networking-evolution/index.md" >}})**.
 
-Bienvenue dans un nouveau chapitre du blog : les détails de la mise en place d’un **réseau domestique** solide. En tant qu’ingénieur logiciel passionné par les protocoles et le calcul efficace, j’ai voulu un système qui équilibre performance, sécurité et coût. Ce billet raconte l’expérience et les choix techniques.
+<!--more-->
 
-## Relever le défi du réseau maison
+## Pourquoi un lab
 
-Mon intérêt pour le réseau remonte aux études (IP, VPN, etc.). Face au coût du cloud, j’ai visé une solution locale avec du **matériel ancien**, pour limiter dépenses hardware et services en ligne tout en gardant une bonne fonctionnalité.
+Les cours couvraient IP, VPN et routage sur papier. Faire tourner des services à la maison rend les compromis concrets : courant, bruit, sauvegardes, et « qui a SSH quand le routeur lâche ».
 
-### Conteneurs Docker : polyvalence
+## Docker en premier
 
-Une part importante du projet : explorer **Docker** et des services gratuits pouvant remplacer le cloud (scan de documents, gestion du foyer, etc.). Cette exploration a servi de base pour comprendre l’architecture conteneurisée.
+J’ai aligné des **stacks conteneur gratuites** sur des jobs payés dans le cloud — média, tableaux de bord, petits outils. Docker comme porte d’entrée vers des services composables plutôt qu’un seul serveur « animal ».
 
-## Bash et serveurs à la maison
+## Bash et deux machines
 
-Le cœur du système : un **serveur Dell** acheté à bas prix et un vieux PC de 2004. J’ai écrit plusieurs scripts **bash** pour Ubuntu, CentOS et Proxmox afin d’installer et gérer les machines — automatisation et scripting au centre du réseau domestique.
+Matériel : un **Dell** pas cher et une machine de 2004. Scripts **bash** pour **Ubuntu**, **CentOS** et **Proxmox** — assez reproductibles pour que les réinstallations après expériences fassent moins mal.
 
-![featured.png](images/featured.png)
+![Vue d’ensemble homelab](./images/featured.png)
 
-### Obstacles et apprentissage
+### Rack physique (octobre 2022)
 
-La maintenance a montré l’importance d’un **hyperviseur** adapté. J’ai fini par utiliser un serveur dédié à la virtualisation pour stabiliser et simplifier l’ensemble.
+Avant les schémas Lucidchart, le lab tenait dans des **placards et étagères** — nœud de câbles compris. Photos recadrées d’anciennes stories ; c’est le vrai câblage, pas un rendu 3D.
 
-![lucidchart.jpeg](images/lucidchart.jpeg)
+**Pile murale** — switch, modem, routeur, **serveur entreprise (génération ~2010)**, onduleur, étiquetée pendant que j’apprenais encore qui branchait quoi :
 
-## Gestion à distance et sécurité
+![Pile réseau homelab étiquetée — switch, modem, routeur, serveur, UPS](./images/homelab-wall-stack-labeled.jpeg)
 
-Il fallait pouvoir **administrer à distance** et surveiller santé des services et du matériel. J’ai mis un **reverse proxy Caddy** et masqué mon IP derrière un serveur **OVH** pour réduire les risques et mieux router le trafic.
+**Dell PowerEdge R710** — deux **Xeon X5667** (quad ~3 GHz), **24 Go RAM**, à côté de mousse acoustique. Le ruban adhésif sur le bezel, c’était mon inventaire :
 
-### WireGuard comme VPN
+![Serveur homelab Dell PowerEdge R710 — Xeon X5667, 24 Go RAM](./images/dell-poweredge-r710-homelab.jpeg)
 
-Pour le VPN, choix de **WireGuard** : rapide et fiable une fois la config maîtrisée. J’ai aussi contribué à des projets pour simplifier son déploiement.
+**Placard** — serveur rack à l’horizontale, switch jaune, écran pour les installs locales, et assez de câbles bleus pour apprendre la patience :
 
-## Élargir le réseau
+![Placard serveur homelab — rack, switch, écran et câblage](./images/homelab-closet-server-setup.jpeg)
 
-Après un déménagement, extension multi-sites avec **Lucidchart** pour visualiser l’architecture et **Proxmox** pour de nombreuses VMs — aussi utilisé dans un projet de club pour partager l’expérience.
+La virtualisation compte quand tu snapshots avant une idée douteuse. Un hôte dédié bat le tout bare-metal.
 
-![c4.jpeg](images/c4.jpeg)
+![Schéma réseau (Lucidchart)](./images/lucidchart.jpeg)
 
-### Projets futurs
+## Accès distant et bordure
 
-Envisager un site statique sur **AWS S3** pour réduire les coûts de déploiement, et poursuivre l’usage de **GitHub** pour les projets personnels.
+**Caddy** en reverse proxy ; exposition via un frontal **OVH** pour ne pas n’exposer que l’IP résidentielle. Admin à distance et santé des services dans la même histoire que « rendre le service joignable ».
 
-## Conclusion
+**WireGuard** pour le VPN — pénible la première fois, rapide une fois en place. J’ai contribué à de petits aides-setup pour des ami·e·s.
 
-Ce parcours mélange passion personnelle et développement pro. L’équilibre performance / sécurité / coût est au centre ; avec les bons outils, un réseau maison efficace est tout à fait réalisable et gratifiant.
+## Après le déménagement
+
+Nouvel appartement, plus de curiosité VLAN, VMs **Proxmox** pour des projets de club. **Lucidchart** pour le schéma mural ; vue type **C4** pour expliquer la pile.
+
+![Vue type C4](./images/c4.jpeg)
+
+Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le always-on — le lab est resté pour le privé.
+
+## Bilan
+
+Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automatiser, documenter la topologie, supposer la panne. Liens actuels : **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur le CV.

@@ -2,64 +2,89 @@
 post_kind: article
 title: "Plateformes de chat en direct et de support (3CX, ManyChat, Kommunicate, Chatwoot)"
 date: 2022-09-06T10:00:00-04:00
-description: En quoi 3CX, ManyChat, Kommunicate et Chatwoot diffèrent pour le chat web, les bots et les boîtes de réception d’équipe—avec liens et tableau comparatif.
+lastmod: 2026-05-22T22:45:00-04:00
+description: "Notes pour choisir chat web, bot et boîte d’équipe — différences entre 3CX, ManyChat, Kommunicate et Chatwoot, avec visuels et liens."
 translationKey: livechat-platform-notes
 tags:
-    - Live Chat
-    - Chatbot
-    - Customer Support
-    - Open Source
-    - 3CX
-    - Chatwoot
+  - Live Chat
+  - Chatbot
+  - Customer Support
+  - Open Source
+  - 3CX
+  - Chatwoot
+images:
+  - featured.png
 ---
 
-Ces notes viennent d’une comparaison pour le **chat en direct sur site web**, les **chatbots** et une **boîte de réception partagée** pour le support. Les produits ci-dessous ne sont pas interchangeables : certains sont des piles de communications complètes, d’autres de l’automatisation marketing, et l’un est une solution open source de type helpdesk. **Les tarifs, canaux et fonctionnalités évoluent souvent**—utilisez ce texte comme repère, puis vérifiez sur le site de chaque éditeur.
+![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](./images/chatwoot-inbox.png)
 
-## 3CX
+J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur. **[English version]({{< ref "/posts/livechat-platform-notes/index.md" >}})**.
 
-[3CX](https://www.3cx.com) est surtout une offre **UCaaS / PBX** (téléphonie, réunions, postes). Le **chat web en direct** et les widgets associés s’inscrivent dans ce même écosystème, ce qui est pertinent si vous routez déjà la voix et le chat via 3CX et voulez un seul fournisseur pour les files et les agents.
+<!--more-->
 
-Pour **Live Chat and Talk** (y compris les extensions CMS comme WordPress), suivez la procédure **à jour** dans la documentation officielle plutôt qu’une liste figée—les libellés et noms d’intégration changent entre versions. Point de départ : [documentation 3CX](https://www.3cx.com/docs/).
+## Commencer par le besoin, pas par le logo
 
-**Notes (FR)** : j’avais rédigé un guide de configuration pour le plugin Live Chat and Talk ; il doit être **recoupé** avec la doc officielle ci-dessus avant toute mise en production.
+Avant la matrice de fonctionnalités, clarifiez ce que vous achetez vraiment :
 
-### Connexe : analytique et bots (pas spécifique à 3CX)
+- **Une seule file pour la voix et le chat web** → pile téléphonie.
+- **Campagnes et croissance sur Instagram/Facebook** → marketing conversationnel.
+- **Le bot ouvre, l’humain finit** → SaaS CX géré.
+- **Boîte partagée sur votre propre infra** → desk open source.
 
-Lien tangentiel au chat web, utile si vous explorez des scénarios **Microsoft** mêlant bots et analytique :
+Schéma de décision ([`platform-picker-flow.mmd`](./images/platform-picker-flow.mmd), rendu avec [uml-mcp](https://github.com/antoinebou12/uml-mcp)) :
 
-- [YouTube — Microsoft ChatBot (Power BI)](https://www.youtube.com/watch?v=nWxguR5B5-s)
+![Quelle plateforme de chat selon votre objectif — arbre de décision 3CX, ManyChat, Kommunicate, Chatwoot](./images/platform-picker-flow.svg)
 
-## ManyChat
+| | | |
+|:---:|:---:|:---:|
+| ![Logo 3CX](./images/logo-3cx.svg) | **ManyChat** · [manychat.com](https://manychat.com) | **Kommunicate** · [kommunicate.io](https://www.kommunicate.io) |
+| | ![Logo Chatwoot](./images/logo-chatwoot-brand.svg) | |
 
-[ManyChat](https://manychat.com) sert surtout au **marketing conversationnel et à l’automatisation**, avec une orientation forte vers **Meta** (Instagram/Facebook) : diffusions, séquences et capture de leads.
+## 3CX — la téléphonie d’abord, le chat dans la même file
 
-**Adapté** aux campagnes et entonnoirs sur les réseaux sociaux ; **moins** comme helpdesk multicanal neutre avec ticketing poussé et SLA sur e-mail, chat et téléphonie dans un même produit open-core.
+![Logo 3CX — communications d’entreprise et PBX](./images/logo-3cx.svg)
 
-- [Tarification ManyChat](https://manychat.com/pricing)
+[3CX](https://www.3cx.com), c’est d’abord de l’**UCaaS / PBX** : postes, réunions, routage d’appels. Le **chat web** et les widgets **Talk** vivent dans cet écosystème. Si la voix passe déjà par 3CX, ajouter le chat peut donner **un fournisseur, un poste agent, un ensemble de files** au lieu d’empiler une inbox séparée.
 
-## Kommunicate
+C’était l’intérêt quand j’ai configuré **Live Chat and Talk** sur un site CommerceBuild : ventes et support restaient dans une pile déjà payée, avec un **chatbot 3CX** pour les questions simples. Le revers : vous achetez une **plateforme de communications**, pas un helpdesk neutre. Profondeur de ticketing, flexibilité CRM et scénarios « seulement courriel + chat SaaS » passent au second plan.
 
-[Kommunicate](https://www.kommunicate.io) vise la **collaboration humain + bot** : le bot ouvre la conversation, puis **transfère** vers des agents sur le site et les canaux de messagerie courants. C’est du **SaaS géré**—vous intégrez et configurez plutôt que d’exploiter la pile vous-même.
+**Mise en place :** pour WordPress et autres plugins CMS, suivez la [documentation 3CX](https://www.3cx.com/docs/) **à jour** — les libellés d’assistant et les noms d’intégration bougent entre versions. J’avais des **notes FR** pour le plugin Live Chat and Talk d’après un ancien guide ; à **recouper avec la doc officielle** avant la prod.
 
-Utile si vous voulez un **bot type plateforme NLU** et une interface agent sans self-hosting ; comparez le coût total et la résidence des données aux options auto-hébergées si c’est un critère pour votre organisation.
+**Connexe (hors 3CX) :** scénarios **Microsoft** bots + analytique : [YouTube — Microsoft ChatBot (Power BI)](https://www.youtube.com/watch?v=nWxguR5B5-s).
 
-## Chatwoot
+## ManyChat — campagnes et Meta, pas un helpdesk
 
-[Chatwoot](https://www.chatwoot.com) est une suite **open source** d’engagement client (licence **AGPL**). Vous pouvez utiliser **Chatwoot Cloud** ou **l’auto-héberger** (Docker et autres chemins documentés pour les opérations).
+[ManyChat](https://manychat.com) sert au **marketing conversationnel** : diffusions, séquences, capture de leads, surtout sur **Meta** (Instagram, Facebook). On l’utilise pour faire grandir et automatiser les DM, pas pour un desk support sobre avec SLA sur courriel, téléphone et web au même endroit.
 
-**Conceptuellement**, c’est plutôt « boîte de réception partagée + conversations omnicanales » qu’un PBX ou un bot marketing pur :
+**Adapté :** croissance, entonnoirs, scripts support orientés réseaux sociaux.  
+**Moins adapté :** « une inbox open-core pour web + courriel + téléphone avec ticketing poussé ».
 
-- **Inbox unifiée** pour widget web, courriel et autres canaux (la liste exacte évolue—voir leur documentation).
-- **Équipes, étiquettes, automatisations** et historique orientés support et suivi commercial.
-- **API et webhooks** pour intégrations et flux sur mesure.
+Voir la [tarification ManyChat](https://manychat.com/pricing) (sièges, contacts) avant de bâtir des flux dessus.
 
-**Compromis** : l’auto-hébergement donne la maîtrise et peut réduire le coût par siège, mais vous assumez **sauvegardes, mises à jour et sécurité**. La profondeur fonctionnelle par rapport aux grandes suites propriétaires dépend du canal ; vérifiez vos besoins (voix, CRM précis, etc.) sur leur feuille de route et leurs docs.
+## Kommunicate — bot d’abord, humain quand ça compte
 
-**Liens** :
+[Kommunicate](https://www.kommunicate.io) vise la **collaboration humain + bot** : le bot prend le premier tour, puis **transfère** vers des agents sur le site et les canaux de messagerie courants. Vous intégrez un **SaaS géré** — pas de week-end Kubernetes obligatoire.
+
+Utile pour du câblage **type Dialogflow** et une interface agent soignée sans exploiter la pile. Comparez **coût total**, **résidence des données** et **dépendance aux modèles** (plusieurs fournisseurs LLM annoncés) à l’auto-hébergement si la conformité compte.
+
+## Chatwoot — inbox partagée, cloud ou Docker maison
+
+![Logo Chatwoot — engagement client open source](./images/logo-chatwoot-brand.svg)
+
+[Chatwoot](https://www.chatwoot.com) est une suite **AGPL**. **Chatwoot Cloud** ou **auto-hébergement** (Docker, guides opérateur dans la doc développeur).
+
+C’est plutôt **« boîte partagée + fils omnicanaux »**, proche d’Intercom/Zendesk qu’un PBX ou un bot marketing pur :
+
+- **Inbox unifiée** pour widget web, courriel et autres canaux (liste exacte évolutive — voir leur doc).
+- **Équipes, étiquettes, automatisations** et historique pour support et suivi commercial.
+- **API et webhooks** quand l’UI par défaut ne suffit plus.
+
+![Liste inbox Chatwoot — thème clair, rafraîchissement UI 2024 (capture via GitHub Chatwoot)](./images/chatwoot-inbox.png)
+
+**Compromis :** l’auto-hébergement donne la maîtrise et peut réduire le coût par siège, mais vous assumez **sauvegardes, mises à jour et sécurité**. Voix et certaines intégrations CRM enterprise peuvent arriver après les grandes suites propriétaires — vérifiez vos must-have sur leur feuille de route.
 
 - [Chatwoot sur GitHub](https://github.com/chatwoot/chatwoot)
-- [Chatwoot](https://www.chatwoot.com) (aperçu produit)
-- [Documentation développeur Chatwoot](https://developers.chatwoot.com) (API, installation, auto-hébergement)
+- [Documentation développeur Chatwoot](https://developers.chatwoot.com)
 
 ## Comparaison rapide
 
@@ -70,12 +95,10 @@ Utile si vous voulez un **bot type plateforme NLU** et une interface agent sans 
 | **Kommunicate** | Transfert bot → humain, CX géré | SaaS | Non |
 | **Chatwoot** | Inbox omnicanale, orientée support | SaaS (cloud) ou auto-hébergé | Oui (AGPL) |
 
-## Ressources
+## Liens à vérifier avant d’acheter
 
 - [Documentation 3CX](https://www.3cx.com/docs/)
 - [Tarification ManyChat](https://manychat.com/pricing)
 - [Kommunicate](https://www.kommunicate.io)
-- [Chatwoot](https://www.chatwoot.com)
-- [Chatwoot — GitHub](https://github.com/chatwoot/chatwoot)
-- [Chatwoot — documentation développeur](https://developers.chatwoot.com)
-- [YouTube — Microsoft ChatBot (Power BI)](https://www.youtube.com/watch?v=nWxguR5B5-s)
+- [Chatwoot](https://www.chatwoot.com) · [GitHub](https://github.com/chatwoot/chatwoot) · [Documentation développeur](https://developers.chatwoot.com)
+- [Microsoft ChatBot + Power BI (YouTube)](https://www.youtube.com/watch?v=nWxguR5B5-s)

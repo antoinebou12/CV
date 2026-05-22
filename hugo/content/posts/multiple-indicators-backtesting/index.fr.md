@@ -2,6 +2,7 @@
 post_kind: article
 title: "Backtest d’indicateurs techniques sur plusieurs tickers avec Python"
 date: 2024-05-30T15:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Expérimentation avec le projet BatchBacktesting — EMA, MACD, APIs FMP/Binance et résultats agrégés sur actions et crypto.
 translationKey: multiple-indicators-backtesting
 tags:
@@ -12,9 +13,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
 ---
 
-## Introduction
+Même stack **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** que l’[expérience indicateurs]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}}), mais à l’échelle de **nombreux tickers** et actions + crypto — classements agrégés plutôt qu’un seul graphique. Rapport Medium importé ci-dessous. **[English version]({{< ref "/posts/multiple-indicators-backtesting/index.md" >}})**.
 
-Ce rapport présente une expérimentation sur les indicateurs techniques avec le projet **BatchBacktesting** sur GitHub : [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting).
+<!--more-->
 
 ## Installation des dépendances
 
@@ -276,9 +277,9 @@ Exemple de classement EMA (rendements les plus hauts et plus bas) :
 
 ![](./img-001.png)
 
-## Conclusion
+## Bilan
 
-BatchBacktesting offre une approche souple pour tester des indicateurs techniques sur actions et crypto. Les fonctions fournies s’intègrent aux APIs financières et simplifient la manipulation des données. Les résultats expérimentaux peuvent nourrir l’affinage de stratégies algorithmiques — en gardant à l’esprit sur-ajustement et réalité des frais.
+Classer chaque symbole avec le même gabarit MACD/EMA aide l’**hygiène de recherche** (repérer des rendements absurdes, vérifier les APIs) — pas à déployer du capital. L’étape suivante reste la relecture manuelle des extrêmes, pas le trading automatique.
 
 ---
 

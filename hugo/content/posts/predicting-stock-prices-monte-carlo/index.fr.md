@@ -2,6 +2,7 @@
 post_kind: article
 title: "Prévoir des cours boursiers avec des simulations Monte Carlo"
 date: 2024-05-14T09:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Simulation de trajectoires Monte Carlo en Python à partir de rendements historiques — bandes de risque, quantiles et comparaison à une période de validation.
 translationKey: predicting-stock-prices-monte-carlo
 tags:
@@ -12,11 +13,11 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b"
 ---
 
-## Introduction
+En trading, on pense surtout en **fourchettes**, pas en prix magique. J’ai simulé des trajectoires **Monte Carlo** sur les clôtures Apple : dérive et vol sur les données avant 2023, puis vérification si 2023 tombe dans la bande simulée 5e–95e. **[English version]({{< ref "/posts/predicting-stock-prices-monte-carlo/index.md" >}})**.
 
-En finance, on raisonne rarement sur un seul prix « prévu » : il s’agit plutôt de **fourchettes**, de **risque de queue** et de **mesurer à quel point** les modèles simples peuvent se tromper. Cet article déroule une **simulation Monte Carlo de trajectoires** en Python : on estime dérive et volatilité à partir des clôtures historiques, on simule de nombreux chemins de prix futurs (pas discret façon brownien géométrique), et on résume le tout par une **distribution** — l’objet adapté aux questions de risque (bandes, quantiles, recouvrement par rapport à une période tenue hors échantillon).
+<!--more-->
 
-Le **Monte Carlo par chaînes de Markov (MCMC)**, comme dans l’article de Landauskas et Valakevičius sur la modélisation des cours, est un autre outil : il **tire des échantillons** d’une loi qui n’a pas à être gaussienne simple — par exemple construite par **estimation par noyau** des prix observés — alors que le code ci-dessous suppose des chocs log-normaux à partir de dérive et volatilité estimées. Un flux pratique est **MCMC (ou autre inférence) pour la loi des données**, puis **Monte Carlo forward** pour les scénarios multi-périodes. Ce billet implémente explicitement le pas GBM forward ; voir les références et le lien WIP ci-dessous pour aller vers du MCMC « papier ».
+Le **MCMC** (ex. Landauskas & Valakevičius) est une autre étape — inférence sur la loi des prix vs **scénarios forward** ici. WIP : [note LinkedIn](https://lnkd.in/eTUeTsAS). Dépôt : [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMonteCarlo).
 
 ## Étape 1 : environnement Python
 
@@ -215,11 +216,9 @@ plt.show()
 
 ![](./img-008.png)
 
-## Conclusion
+## Bilan
 
-Le **Monte Carlo forward** fournit une **distribution** de prix futurs sous une dynamique supposée — adapté aux **bandes de quantiles**, au comportement de **queue** et aux contrôles de **recouverture** sur données hors échantillon. C’est une étape distincte du **MCMC**, qui sert à **échantillonner** sous un modèle flexible des données (comme l’approche KDE de Landauskas et Valakevičius) avant ou en parallèle de la simulation forward. Pipeline typique : **ajuster ou échantillonner la loi qui colle à l’historique**, puis **faire avancer les scénarios par Monte Carlo**. Avec du **backtest** de stratégie, on sépare « à quel point le risque de modèle est large ? » de « une règle est-elle rentable ? »
-
-Code d’exploration lié : [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMonteCarlo) (expériences MCMC / stratification).
+Monte Carlo répondait « à quel point les prix pouvaient bouger ? » sur une fenêtre de validation ; le **backtest** (billets [BatchBacktesting]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}})) répond « une règle paie-t-elle ? ». Garder les deux questions séparées.
 
 ## Références
 

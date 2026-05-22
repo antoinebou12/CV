@@ -2,6 +2,7 @@
 post_kind: article
 title: "Économie des boîtes LEGO avec science des données"
 date: 2024-05-30T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Tendances, prix et thèmes LEGO à partir de données Rebrickable et d’un scraper BrickEconomy — Pandas, visualisations et régression.
 translationKey: economics-lego-data-science
 tags:
@@ -13,7 +14,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb"
 ---
 
-Passionné de données et de LEGO, j’ai exploré l’univers LEGO avec des données historiques : tendances, prix et caractéristiques des boîtes dans le temps. À partir des jeux **Rebrickable** et d’outils comme **Pandas**, **Matplotlib** et **Scikit-Learn**, voici un parcours sur l’histoire et l’économie des sets LEGO.
+Je collectionne le LEGO et j’écris du Python — j’ai donc croisé les exports **Rebrickable** avec un scraper **BrickEconomy** pour voir l’évolution des sets, des couleurs et des thèmes, et tester une régression simple sur des classiques comme le **001-1**. Les sections ci-dessous reprennent l’article Medium complet. **[English version]({{< ref "/posts/economics-lego-data-science/index.md" >}})**.
+
+<!--more-->
 
 ## Vue d’ensemble des jeux de données
 
@@ -188,8 +191,6 @@ class LegoAPI:
 *   For each set number, the scraper navigates to the search results page on BrickEconomy.
 *   It extracts links to individual set pages and checks if the set number matches.
 *   The scraper then navigates to the set’s page and calls methods to parse historical data and set details.
-
-Press enter or click to view image in full size
 
 ![](./img-006.png)
 
@@ -458,19 +459,13 @@ asyncio.run\_coroutine\_threadsafe(main(), loop)
 
 By using this scraper, I was able to gather detailed historical and current data on LEGO sets, enabling comprehensive analysis and insights into the world of LEGO.
 
-Press enter or click to view image in full size
-
 ![](./img-007.png)
 
 ## [001–1\_history.csv](https://github.com/AlgoETS/LegosTracker/blob/main/data/001-1_history.csv)
 
-Press enter or click to view image in full size
-
 ![](./img-008.png)
 
 ## [001–1\_new.csv](https://github.com/AlgoETS/LegosTracker/blob/main/data/001-1_new.csv)
-
-Press enter or click to view image in full size
 
 ![](./img-009.png)
 
@@ -542,8 +537,6 @@ df.dropna(subset=\['Quick Buy'\], inplace=True)
 if 'Quick Buy' in df.columns:  
     lowest\_price\_set = df.loc\[df\['Quick Buy'\].idxmin()\]
 
-Press enter or click to view image in full size
-
 ![](./img-010.png)
 
 \# Step 1: Remove duplicate rows  
@@ -606,8 +599,6 @@ plt.show()
 
 Once the historical data is cleaned, we can use it to make future price predictions using linear regression.
 
-Press enter or click to view image in full size
-
 ![](./img-011.png)
 
 \# Create subplots  
@@ -668,13 +659,11 @@ for ax in axes:
 plt.tight\_layout()  
 plt.show()
 
-Press enter or click to view image in full size
-
 ![](./img-012.png)
 
-## Conclusion
+## Bilan
 
-Cette analyse parcourt l’univers LEGO — des couleurs aux tendances de prix et aux prévisions. Les outils de science des données permettent de mettre en lumière des motifs sur ces « jouets » devenus objets de collection.
+Les données LEGO, c’est ludique et brouillon : les pièces par set montent sur les décennies, l’arbre des thèmes s’éclate, et les prix BrickEconomy ne suivent pas toujours une régression linéaire — c’est le but. Traitez BrickEconomy comme une recherche, pas un pipeline de prod.
 
 ## Références
 

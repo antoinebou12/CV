@@ -2,6 +2,7 @@
 post_kind: article
 title: Predicting Stock Prices with Monte Carlo Simulations
 date: 2024-05-14T09:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Monte Carlo path simulation in Python from historical returns—risk bands, quantiles, and hold-out coverage checks.
 translationKey: predicting-stock-prices-monte-carlo
 tags:
@@ -12,11 +13,11 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b"
 ---
 
-## Introduction
+Trading decisions are usually about **ranges**, not one magic price. I used **forward Monte Carlo** on Apple daily closes: estimate log-return drift and vol on pre-2023 data, simulate many GBM-style paths, then ask whether 2023 hold-out prices fell inside the simulated 5th–95th band. **[Version française]({{< ref "/posts/predicting-stock-prices-monte-carlo/index.fr.md" >}})**.
 
-In finance, decisions are rarely about a single “forecast” price: they are about **ranges**, **tail risk**, and **how wrong** simple models can be. This article walks through a **Monte Carlo path simulation** in Python: we estimate drift and volatility from historical closes, simulate many future price paths (a geometric Brownian–style discrete step), and summarize the result as a **distribution**—the right object for risk-style questions (bands, percentiles, coverage against a hold-out period).
+<!--more-->
 
-**Markov chain Monte Carlo (MCMC)**, as in Landauskas and Valakevičius’s paper on stock price modelling, is a different tool: it **draws samples** from a distribution that need not be a simple Gaussian—for example one built from a **kernel density estimate** of observed prices—whereas the code below assumes lognormal shocks from estimated drift and volatility. A practical workflow is **MCMC (or other inference) for the law of the data**, then **forward Monte Carlo** for multi-step scenarios. This post implements the forward GBM-style step explicitly; see the references and the linked work-in-progress below if you want to push toward paper-style MCMC.
+**MCMC** (e.g. Landauskas & Valakevičius’s KDE sampling) is a separate step — inference on the law of prices vs **scenario paths** here. WIP with more MCMC experiments: [LinkedIn note](https://lnkd.in/eTUeTsAS). Repo: [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMonteCarlo).
 
 ## Step 1: Setting Up the Environment
 
@@ -116,11 +117,7 @@ plt.plot(prices\_after\_january\_2023\['date'\], prices\_after\_january\_2023\['
 plt.legend()  
 plt.show()
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
-
-Press enter or click to view image in full size
 
 ![](./img-002.png)
 
@@ -152,11 +149,7 @@ def monte\_carlo\_simulation(data, days, iterations):
         current\_price = future\_prices\[t\]  
     return future\_prices
 
-Press enter or click to view image in full size
-
 ![](./img-003.png)
-
-Press enter or click to view image in full size
 
 ![](./img-004.png)
 
@@ -215,27 +208,17 @@ plt.ylabel('Price')
 plt.legend(loc='upper left', fontsize=8)  
 plt.show()
 
-Press enter or click to view image in full size
-
 ![](./img-005.png)
-
-Press enter or click to view image in full size
 
 ![](./img-006.png)
 
-Press enter or click to view image in full size
-
 ![](./img-007.png)
-
-Press enter or click to view image in full size
 
 ![](./img-008.png)
 
-## Conclusion
+## Takeaway
 
-Forward **Monte Carlo** gives you a **distribution** of future prices under an assumed dynamics—ideal for **percentile bands**, **tail behaviour**, and **coverage** checks against data you held out. That is a different step from **MCMC**, which is about **sampling** from a flexible model of the data (as in Landauskas and Valakevičius’s KDE-driven approach) before or alongside forward simulation. A practical pipeline is: **fit or sample the distribution that matches history**, then **push scenarios forward with Monte Carlo**. Combined with strategy **backtesting**, you separate “how wide is model risk?” from “does a rule make money?”
-
-Related exploratory code: [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMonteCarlo) (stratification / MCMC-oriented experiments).
+Monte Carlo answered “how wide could prices swing?” on a hold-out window; **backtesting** (see the [BatchBacktesting]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}}) posts) answers “did a rule pay?” Keep those questions separate.
 
 ## Reference
 

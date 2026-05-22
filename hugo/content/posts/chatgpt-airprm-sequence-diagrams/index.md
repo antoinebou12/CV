@@ -2,6 +2,7 @@
 post_kind: article
 title: "Diagram prompts with ChatGPT and AIPRM (PlantUML, Mermaid, and more)"
 date: 2022-09-06T10:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "AIPRM prompt template for diagram type, elements, purpose, and tool — plus PlantUML and Mermaid sequence examples (React, FastAPI, Redis, MongoDB, cache hit/miss)."
 translationKey: chatgpt-airprm-sequence-diagrams
 tags:
@@ -15,9 +16,9 @@ images:
     - featured.jpeg
 ---
 
-The [AIPRM](https://www.aiprm.com/) browser extension gives you reusable prompt templates inside ChatGPT. Combined with a small **structured prompt** (diagram type, what to draw, why, and which tool), you get consistent output whether you want text-first formats like **PlantUML** or **Mermaid**, or a recipe for redrawing the same flow in a canvas tool.
+I got tired of one-off ChatGPT threads that “draw a sequence diagram” and return half-random syntax. **[AIPRM](https://www.aiprm.com/)** helps because the template lives in the browser; I lock four fields — **diagram type**, **elements**, **purpose**, **tool** — and the model stops guessing whether I want **PlantUML**, **Mermaid**, or notes for Draw.io. Related: the **[D2C OpenAI diagram plugin]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})** post. **[Version française]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})**.
 
-**[Full article in French]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})** (same slug — you can also switch to **FR** in the site header).
+<!--more-->
 
 ## AIPRM prompt template (copy and adapt)
 
@@ -127,10 +128,6 @@ These tools are **canvas-first**: the fastest path is often to generate **PlantU
 
 That avoids blank-canvas syndrome while keeping the diagram editable for styling and annotations your team expects.
 
-## Conclusion
+## Takeaway
 
-Structured prompts make diagramming repeatable: you choose the **diagram type**, the **elements** to emphasize, the **purpose** (and context), and the **tool** so the model’s answer matches how you will ship the artifact. AIPRM simply makes that workflow one click away once the template lives in your library.
-
----
-
-*Hashtags for sharing:* #ChatGPT #diagram #UML #software #designtools #PlantUML #Mermaid #Drawio #Lucidchart #Creately #Gliffy
+Once the four-line template is in AIPRM, diagram requests feel like filling a form instead of negotiating with the model. I still edit the output — but the first draft lands in the right language (PlantUML vs Mermaid vs bullet list for a canvas tool) often enough that reviews are faster.

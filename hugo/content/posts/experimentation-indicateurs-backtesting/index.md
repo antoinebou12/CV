@@ -2,6 +2,7 @@
 post_kind: article
 title: Experimenting with technical indicators using Python and backtesting
 date: 2024-05-14T20:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: BatchBacktesting walkthrough — EMA and MACD on many tickers, FMP/Binance APIs, and results (English counterpart to the French Medium article).
 translationKey: experimentation-indicateurs-backtesting
 tags:
@@ -11,9 +12,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
 ---
 
-## Introduction
+I batch-ran **EMA** and **MACD** strategies across many tickers with [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting) — FMP for equities, Binance for crypto — to see which names reacted to the same rules. Full code and result tables are below (Medium import). Pair with **[multiple indicators backtesting]({{< ref "/posts/multiple-indicators-backtesting/index.md" >}})** and **[Monte Carlo risk bands]({{< ref "/posts/predicting-stock-prices-monte-carlo/index.md" >}})**. **[Version française]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}})**.
 
-In this report, we present an experiment with technical indicators using the BatchBacktesting project available on GitHub at the following link: [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting).
+<!--more-->
 
 ## Installing Dependencies
 
@@ -279,13 +280,11 @@ Here is an example of the results obtained for the instruments with the highest 
 *   LNC: -78.02%
 *   CHRW: -76.38%
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
 
-## Conclusion
+## Takeaway
 
-In conclusion, the BatchBacktesting project offers a flexible and powerful approach for testing and analyzing the performance of technical indicators on stock and cryptocurrency markets. The provided functions allow easy integration with financial services APIs and straightforward data manipulation. The experimental results can be used to develop and refine algorithmic trading strategies based on observed performance.
+Batch runs surface outliers fast — huge winners and blow-ups on the same indicator — but they are not a live trading system. Treat the tables as screening, then dig into one ticker before trusting a rule.
 
 ---
 

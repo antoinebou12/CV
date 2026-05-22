@@ -2,38 +2,41 @@
 post_kind: conference
 title: "Du BMC au pitch : notes de parcours QcES (printemps 2024)"
 date: 2026-04-13T10:00:00-04:00
-description: Synthèse personnelle des séances QcES — canevas d’affaires, segment client, feedback, entrevues, roadmap, marché, proposition de valeur et storytelling.
+lastmod: 2026-05-22T22:00:00-04:00
+description: Notes du programme QcES — canevas d’affaires, entrevues clients, feedback, roadmap et pitch, sans noyer le lecteur dans le jargon.
 translationKey: qces-lean-discovery-pitch
 tags:
-    - QcES
-    - Entrepreneurship
-    - BMC
-    - Lean Startup
-    - Pitch
-    - Education
+  - QcES
+  - Entrepreneurship
+  - BMC
+  - Lean Startup
+  - Pitch
+  - Education
+images:
+  - featured.png
 ---
 
-**[Version anglaise]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}})** — même sujet, même fil d’URL.
+![Logo du programme QcES](./qces-logo.png)
 
-## En bref
+J’ai suivi **QcES** (cohorte printemps 2024) en parallèle d’un parcours de découverte lean : canevas d’affaires, entrevues, pitch court, et le reste. Ce texte est ma synthèse personnelle—pas un document officiel du programme. **[Version anglaise]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}})** sur le même sujet.
 
-- Le **Business Model Canvas (BMC)** décrit comment l’organisation **crée, livre et capture** de la valeur ; il répond à trois questions : **désirabilité**, **faisabilité**, **viabilité**.
-- On commence en général par **segment de clientèle** et **proposition de valeur**, puis on itère : le modèle **change** avec le marché.
-- **Segmenter**, c’est rendre le marché **explicite** (B2B vs B2C, critères concrets) plutôt que des étiquettes vagues (« médecins », « parents »).
-- Les **entrevues** servent à la **découverte** : objectif d’**apprendre**, pas de vendre ; viser **connecter**, pas convaincre — en restant attaché au **problème**, pas à la solution.
-- Le **feedback** structuré (forces + une piste d’amélioration) et une **pitch courte** (sans diapos) aident à clarifier l’idée tôt.
-- Une **roadmap produit** est une **vue stratégique dans le temps**, pas un plan de projet détaillé ; elle s’aligne sur vision, public, horizon, métriques et ressources.
-- **PoC**, **prototype** et **MVP** ne jouent pas le même rôle : technologie, interaction utilisateur, puis **première version sur le marché** à éprouver.
-- **Marché et proposition de valeur** : tenir compte des forces externes (macro, industrie, tendances) et formuler la valeur comme **offre + bénéfice** pour le client.
-- Le **pitch** suit souvent **Intéresser → Croire → Rejoindre** : problème d’abord, preuves et différenciation, puis **demande précise**.
+<!--more-->
 
-*Ce texte est une synthèse personnelle à partir de matériel de cours QcES (cohorte printemps 2024) et d’intervenants ; ce n’est pas un document officiel du programme.*
+## Ce qui m’est resté
 
----
+Le programme revenait souvent aux mêmes idées. Le **Business Model Canvas** sert de carte commune pour créer, livrer et capturer de la valeur—et pour tester désirabilité, faisabilité et viabilité. On commence en général par **pour qui** et **quelle promesse**, puis on ajuste quand le marché répond.
 
-## Pourquoi ces blocs s’enchaînent
+**Segmenter**, ce n’est pas académique : dès qu’on pitch « les médecins » ou « les parents », on voit le flou. Séparer B2B (firmographie) et B2C (démographie, comportement) rend le marché **atteignable**.
 
-En pratique, on ne « remplit » pas le BMC une fois pour toutes. On forme des **hypothèses**, on va chercher des **données qualitatives** (entrevues, observations), on **ajuste** segments et proposition de valeur, puis on **priorise** ce qui part sur une roadmap et ce qui finit dans un pitch. Le schéma suivant résume cette boucle.
+Les **entrevues** servent à apprendre, pas à conclure une vente. Les formateurs l’ont répété : connecter, pas convaincre ; rester curieux du **problème**, pas attaché à la première solution.
+
+Des tours de **feedback** courts (une force réelle, une piste d’amélioration) et un **pitch d’environ 90 secondes sans diapos** forcent la clarté tôt. Une **roadmap**, c’est une vue stratégique dans le temps—pas un diagramme de Gantt. Et **PoC**, **prototype** et **MVP** ne sont pas interchangeables : est-ce que ça peut marcher, comment les gens interagissent, quelle est la plus petite version testable.
+
+Pour le pitch : **Intéresser → Croire → Rejoindre**—problème d’abord, crédibilité ensuite, demande précise à la fin.
+
+## Comment les blocs s’enchaînent
+
+On ne remplit pas le canevas une fois pour l’éternité. Hypothèse, discussions, ajustement des segments et de la proposition de valeur, priorisation sur une roadmap, puis pratique à l’oral.
 
 ```mermaid
 flowchart LR
@@ -44,58 +47,58 @@ flowchart LR
   road --> pit[Pitch]
 ```
 
-## Modèle d’affaires : le BMC comme langage commun
+## Canevas d’affaires
 
-Le BMC regroupe **neuf blocs** (segments, proposition de valeur, canaux, relations clients, revenus, ressources, activités, partenaires, structure de coûts). L’idée forte : **tous les blocs comptent** pour la survie du projet, et le canevas est un **outil vivant** — à réviser quand le marché ou la concurrence bouge.
+Neuf blocs, une page : segments, proposition de valeur, canaux, relations, revenus, ressources, activités, partenaires, coûts. L’enjeu n’est pas le dessin—c’est la survie du projet. Le canevas doit bouger quand le marché ou la concurrence bouge.
 
-Les sessions insistent sur une progression : **comprendre pour qui** on crée de la valeur et **comment** on la promet, avant de sur-optimiser le reste. La **boucle hypothèse–validation** relie recherche, entrevues et décisions : on teste des croyances sur le client et le problème, pas seulement sur la technique.
+On nous a poussés à clarifier **pour qui** et **comment on aide** avant d’optimiser le reste. Ça colle à la boucle hypothèse–validation : tester des croyances sur le client et le problème, pas seulement la pile technique.
 
-## Segment de clientèle : du flou à l’actionnable
+## Segment de clientèle
 
-Distinction utile entre **consommateur**, **utilisateur final** et **client** (celui qui achète n’est pas toujours celui qui utilise). Un **client** au sens « early » a souvent : un **problème**, une **conscience** du problème, une **recherche** de solution, parfois déjà un bricolage, et un **budget** possible.
+Celui qui paie n’est pas toujours celui qui utilise. Un client « early » a souvent un vrai problème, le sait, cherche des options, bricole parfois déjà, et peut avoir un budget.
 
-**B2B** invite à la segmentation **firmographique** (taille, lieu, secteur, dynamique d’achat). **B2C** mobilise démographie, géographie, psychographie, comportement. L’exercice consiste à remplacer des catégories trop larges par des **segments vérifiables** — ceux qu’on peut retrouver, contacter et interviewer.
+B2B : taille, secteur, dynamique d’achat. B2C : profil et comportement. Le gain, c’est de remplacer des étiquettes vagues par des groupes qu’on peut retrouver, contacter et interviewer.
 
-## Partager l’idée et recevoir du feedback
+## Partager l’idée
 
-Une format courte (**environ 90 secondes**, sans slides) force à clarifier : **problème** compréhensible hors jargon, **bénéficiaire**, **solution** et **avantages**. Ce n’est pas une exigence de tout couvrir (taille du marché, concurrence, etc.) au premier passage ; c’est un **premier filtre** de clarté.
+Quatre-vingt-dix secondes, sans deck : problème en langage clair, bénéficiaire, offre, pourquoi ça compte. Pas besoin de citer le TAM au jour un—c’est un filtre de clarté.
 
-Pour **recevoir** du feedback : écoute **active** (comprendre plutôt que répliquer), prise de notes, posture d’**apprentissage**. Pour **donner** du feedback : souligner une **force** réelle, puis une **opportunité** concrète (« j’aimerais en savoir plus sur… », « ceci gagnerait à… »).
+Pour recevoir du feedback : écouter pour comprendre. Pour en donner : nommer ce qui fonctionne, puis une piste concrète « ce serait plus fort si… ».
 
-## Entrevues : la découverte continue
+## Entrevues
 
-Les entrevues sont présentées comme la source **la plus directe** pour combler ce qui manque dans un premier BMC. L’objectif n’est **pas de vendre** ni de « pitcher » sa solution pendant l’échange, mais d’**apprendre** du vécu de l’autre.
+C’était le cœur de la cohorte pour moi. Les entrevues comblent les trous d’un premier canevas. Ne pas pitcher sa solution pendant l’appel—apprendre comment l’autre vit le problème.
 
-Les **personnes à rencontrer** dépassent souvent le « client idéal » : utilisateurs de solutions concurrentes, experts, fournisseurs, communautés, etc. — tout acteur **touché** par le problème visé. Et ce n’est pas ponctuel : la découverte se fait **continuellement** au fil des pivots.
+Rencontrer au-delà du « client idéal » : utilisateurs de solutions de rechange, experts, fournisseurs, communautés. La découverte continue après trois appels, surtout quand on pivote.
 
-Les obstacles classiques — **trouver** les bonnes personnes, **obtenir** un rendez-vous, **mener** un entretien utile — se gagnent avec préparation et humilité. La formule répétée : tomber amoureux du **problème**, pas de la solution ; **connecter** plutôt que convaincre.
+Trouver les gens, obtenir un créneau, mener un échange utile : ça s’apprend. La phrase que je répète encore : tomber amoureux du problème, pas de la solution.
 
-## Roadmap et maturité : PoC, prototype, MVP
+## Roadmap, PoC, prototype, MVP
 
-Une **roadmap** résume **où on va** (vision, initiatives clés) sur un **horizon** choisi, pour une **audience** donnée (équipe, investisseurs, partenaires). Elle se distingue d’un **plan de projet** opérationnel. Avant d’y placer des blocs, les questions types : vision, lecteurs, durée, **métriques**, périmètre, **ressources** et **format** adapté.
+Une roadmap dit où on va, pour quel public (équipe, investisseurs, partenaires), sur quel horizon. Ce n’est pas un plan de projet détaillé.
 
-**Preuve de concept** : la techno ou l’approche **peut fonctionner**. **Prototype** : on explore **comment l’utilisateur interagit** ; souvent hors marché. **MVP** : version **suffisante** pour être mise entre les mains de vrais utilisateurs ou clients, pour **apprendre** vite (y compris en voyant ce qui casse). Les roadmaps **évoluent** avec la phase (découverte, validation, croissance).
+La preuve de concept vérifie si l’approche peut fonctionner. Le prototype explore l’interaction—souvent avant un vrai lancement. Le MVP est la plus petite version mise entre des mains réelles pour apprendre vite, y compris quand ça casse.
 
-## Marché, tendances et proposition de valeur
+La roadmap change de forme en découverte, validation et croissance. Ça m’a évité de sur-planifier trop tôt.
 
-Comprendre le marché, ce n’est pas seulement compter des adresses : c’est situer le projet parmi des **forces externes** — macro (PESTEL), **dynamique sectorielle**, **comportement des clients**, **grandes tendances**. Ces grilles aident à anticiper contraintes et opportunités.
+## Marché et proposition de valeur
 
-La **proposition de valeur** combine ce que vous **fournissez** (produit, service, « véhicule ») et **l’avantage** pour le client. Les supports de cours insistent sur les **points de douleur** et sur une hypothèse sur **pourquoi** la personne se soucie du problème — matière première des entrevues de découverte.
+Comprendre le marché, ce n’est pas compter des courriels. Macro, dynamique sectorielle, comportement client, tendances : contraintes et opportunités.
 
-## Storytelling et pitch : Intéresser, Croire, Rejoindre
+Proposition de valeur = offre + bénéfice client. Les points de douleur deviennent des questions d’entrevue, pas du remplissage de diapositive.
 
-Le pitch est un **discours qui cherche une suite concrète** : temps d’autrui, ressources, introduction, financement. Les formats varient (30 secondes à une demi-heure, avec ou sans diapos).
+## Pitch : Intéresser, Croire, Rejoindre
 
-Une structure efficace vue en session :
+Un pitch cherche une suite concrète : temps, intro, labo, financement. Les formats varient ; la structure aide.
 
-1. **Intéresser** — partir du **problème** et de son importance pour un public identifiable ; ne pas commencer par la solution.
-2. **Croire** — présenter la **solution**, la **différenciation**, les **preuves** (traction, équipe, résultats récents).
-3. **Rejoindre** — formuler une **demande précise** : type d’aide, montant, expertise, partenariat, etc.
+1. **Intéresser** — le problème et pourquoi il compte pour un public identifiable. Ne pas commencer par le produit.
+2. **Croire** — solution, différenciation, preuves (traction, équipe, résultats récents).
+3. **Rejoindre** — demande précise : montant, expertise, partenariat, introduction.
 
-Un gabarit type (~1 min 30) enchaîne : qui vous êtes, **problème**, **offre pour une cible**, **proposition de valeur**, **contraste avec l’existant**, **nouvelle récente**, **appel à l’action**.
+Gabarit simple (~1 min 30) : qui vous êtes, problème, offre pour une cible, proposition de valeur, contraste avec l’existant, nouvelle récente, appel à l’action.
 
 ## En conclusion
 
-Ce parcours QcES relie des outils (BMC, segmentation, roadmap) à des **comportements** (entrevues, feedback, pitch). Le fil conducteur : garder le problème **au centre**, rendre les hypothèses **testables**, et communiquer avec assez de clarté pour que d’autres puissent **aider** — pas seulement applaudir.
+QcES a relié outils et habitudes : canevas, segmentation, roadmap d’un côté ; entrevues, feedback, pitch de l’autre. Le fil conducteur : problème au centre, hypothèses testables, communication assez claire pour que les autres **aident**—pas seulement applaudissent.
 
-Si vous suivez un programme similaire, la valeur est souvent dans la **régularité** : quelques entrevues bien menées valent mieux qu’un canevas parfaitement décoré.
+Dans un programme similaire, quelques entrevues bien menées valent souvent mieux qu’un canevas parfaitement décoré. La régularité bat le polish.

@@ -2,6 +2,7 @@
 post_kind: article
 title: Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together
 date: 2024-05-14T18:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Caddy on EC2, logs to CloudWatch, Python shipping scripts, and Step Functions plus Lambda for a low-cost ops dashboard.
 translationKey: caddy-ec2-cloudwatch-lambda
 tags:
@@ -14,9 +15,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d"
 ---
 
-## Introduction
+I already ran **Caddy** at home for Home Assistant; this write-up is the **cheap AWS mirror**: **EC2** (often `t4g.nano`), Caddy with automatic HTTPS, access logs into **CloudWatch**, Python shippers, and **Step Functions + Lambda** for a scrappy ops dashboard without a SaaS bill. Step-by-step detail is below as imported from Medium. **[Version française]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.fr.md" >}})**.
 
-Creating a robust and scalable web infrastructure can be both complex and costly. However, with the right tools and a little bit of creativity, you can build a cost-effective and efficient solution. In this article, we will walk through setting up a Caddy web server on AWS EC2, integrating it with AWS CloudWatch for monitoring, and using AWS Step Functions and Lambda to automate and streamline operations. This guide aims to provide a comprehensive approach to setting up a low-cost dashboard using these technologies.
+<!--more-->
 
 ### Step 1: Setting Up Caddy on AWS EC2
 
@@ -29,13 +30,9 @@ Launch an EC2 Instance:
 *   Choose an Amazon Linux 2 AMI (or any preferred Linux distribution).
 *   Select an instance type (e.g., t2.micro for the free tier or t4g.nano for 0.10$ a day).
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
 
 *   Configure security group rules to allow HTTP, HTTPS, and SSH access.
-
-Press enter or click to view image in full size
 
 ![](./img-002.png)
 
@@ -304,13 +301,11 @@ fields @timestamp, @message
 | stats count() by ip, location  
 | sort count desc
 
-Press enter or click to view image in full size
-
 ![](./img-005.png)
 
-### Conclusion
+### Takeaway
 
-By integrating Caddy on an AWS EC2 instance with AWS CloudWatch, Step Functions, and Lambda, you can create a robust and scalable web infrastructure with a cost-effective dashboard. This setup not only simplifies the management of your web services but also provides powerful monitoring and automation capabilities, making it easier to maintain and optimize your applications. With these tools, you can achieve a high level of efficiency and reliability without breaking the bank.
+You do not need a managed observability suite to see **which subdomain got traffic** or **where requests clustered** — CloudWatch Insights queries on Caddy JSON logs plus a little Lambda glue go a long way. Watch free-tier limits and log volume on a nano instance.
 
 ---
 

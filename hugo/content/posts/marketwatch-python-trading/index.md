@@ -2,6 +2,7 @@
 post_kind: article
 title: "Python library for MarketWatch virtual trading"
 date: 2026-04-13T10:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "PyPI package `marketwatch`—a Python client for MarketWatch’s virtual stock game (watchlists, games, portfolio, orders, leaderboard)."
 translationKey: marketwatch-python-trading
 tags:
@@ -14,7 +15,9 @@ images:
     - featured.png
 ---
 
-I published **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI: a small Python client for the [MarketWatch](https://www.marketwatch.com) **virtual stock game** (paper trading), not live brokerage access. If you want to script watchlists, pull game or portfolio data, or experiment with automation against the game, it wraps the flows in a straightforward API.
+I wanted to automate a few chores in MarketWatch’s **virtual stock game** (paper trading, not a real broker). **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI is the small client I shipped for that — watchlists, game state, portfolio, orders, leaderboard. **[Version française]({{< ref "/posts/marketwatch-python-trading/index.fr.md" >}})**.
+
+<!--more-->
 
 ## Links
 

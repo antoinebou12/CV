@@ -2,7 +2,7 @@
 post_kind: article
 title: "Snapchat Lens Creator"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-05-20T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Snapchat lenses with multi-million plays and views (2017–2020), Fiverr clients, tooling, and Lens Studio feedback.
 translationKey: snapchat-lens-creator
 tags:
@@ -12,7 +12,7 @@ tags:
     - Side Project
 ---
 
-*Updated May 2026 with current Lens Insights figures.*
+*Updated May 2026 with current Lens Insights figures.* **[Version française]({{< ref "/posts/snapchat-lens-creator/index.fr.md" >}})**.
 
 To date, my Snapchat lenses have accumulated **13.97M plays**, **20.38M views**, **711.8k shares**, **10,092 favorites**, **753 posts**, and **428 unique posters** (all-time, Lens Insights). That started as a personal interest in AR filters and grew into paid work on **Fiverr** alongside my own experiments.
 

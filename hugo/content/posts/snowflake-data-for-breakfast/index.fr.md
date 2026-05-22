@@ -1,51 +1,52 @@
 ---
 post_kind: conference
-title: "Conférence Snowflake Data-for-Breakfast — points saillants"
+title: "Conférence Snowflake Data-for-Breakfast — retour"
 date: 2022-09-06T10:00:00-04:00
-description: Retours sur la conférence Snowflake Data-for-Breakfast — plateforme cloud, entrepôt de données, intégration et analytique, avec une keynote marquante d’Infostrux.
+lastmod: 2026-05-23T00:30:00-04:00
+description: "Notes du petit-déjeuner-conférence Snowflake — santé globale, fiscalité à grande échelle, clean rooms et keynote Infostrux."
 translationKey: snowflake-data-for-breakfast
 tags:
-    - Conference
-    - Snowflake
-    - Data Analytics
+  - Conference
+  - Snowflake
+  - Data Analytics
 images:
-    - featured.jpeg
+  - featured.jpeg
 ---
 
-Notes issues de la conférence **Snowflake Data-for-Breakfast** sur la plateforme de données cloud Snowflake, l’entrepôt de données, l’intégration et l’analytique — dont une keynote forte d’**Infostrux**.
+**Snowflake Data-for-Breakfast**, c’était une matinée sur la plateforme cloud — entrepôt, partage, gouvernance et histoires client qui rendent l’architecture concrète. **Infostrux** a animé une keynote qui a bien cadré la salle. **[English version]({{< ref "/posts/snowflake-data-for-breakfast/index.md" >}})**.
+
+<!--more-->
 
 ## Vue d’ensemble
 
-![Supports de conférence](./images/governed.jpeg)
+![Matériel de conférence](./images/governed.jpeg)
 
-## Enseignements clés
+## Repères
 
 ![Menu de l’événement](./images/menu.jpeg)
 
-### Opérations de données à l’échelle mondiale
+### Opérations santé globales
 
-Une étude de cas dans le secteur de la santé montrait Snowflake gérant des opérations de données sécurisées sur trois continents, en simplifiant le partage avec les partenaires tout en gardant haute disponibilité et SLA solides.
+Un client santé opérait sur **trois continents** avec partage partenaire, disponibilité et SLA tenus — le cas d’école d’un entrepôt cloud quand conformité et réplication fonctionnent en prod.
 
 ![Partage de données](./images/sharethrough.jpeg)
 
-Les plateformes de données cloud restent un socle pratique pour la consolidation et l’analytique ; cet événement offrait un bon aperçu de la trajectoire de Snowflake.
-
 ![Architecture](./images/architecture.jpeg)
 
-### Analytique dans le secteur fiscal
+### Fiscalité et gros volumes
 
-Un autre client devait stocker de très grands jeux de données et les analyser sans connaître toutes les questions à l’avance. Snowflake leur a donné un point unique pour consolider et transformer les données, ce qui a accéléré le diagnostic et amélioré la visibilité sur la traçabilité.
+Une autre équipe devait ingérer d’**énormes** jeux de données et les explorer sans connaître toutes les questions à l’avance. Un seul lieu de consolidation et de transformation a accéléré le dépannage et la **lignée** vis-à-vis des audits.
 
-![Diapositive à propos de nous](./images/aboutus.jpeg)
+![À propos](./images/aboutus.jpeg)
 
-![Témoignage client](./images/customer.jpeg)
+![Histoire client](./images/customer.jpeg)
 
-### Salles de données « clean room »
+### Clean rooms
 
-Le modèle de **clean room** — collaborer sur des données partagées tout en préservant la confidentialité — apparaît pertinent lorsque deux entreprises doivent comparer des jeux lors d’une due diligence sans tout exposer.
+Les **clean rooms** pour la due diligence : deux entreprises comparent des données communes sans tout exposer. Collaboration avec confidentialité, pas seulement une case conformité.
 
 ![Sécurité et gouvernance](./images/security.jpeg)
 
-## En conclusion
+## Pour conclure
 
-Snowflake Data-for-Breakfast valait le détour pour les plateformes de données cloud, les opérations à grande échelle et des schémas plus récents comme les clean rooms. À recommander si vous travaillez en gestion de données ou en analytique.
+Utile si vous touchez aux plateformes de données — bon instantané de la direction Snowflake (échelle, partage, collaboration gouvernée). Je suis reparti·e avec un vocabulaire plus clair pour les échanges client, même hors Snowflake au quotidien.

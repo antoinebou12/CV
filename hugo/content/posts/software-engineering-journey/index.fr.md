@@ -2,45 +2,99 @@
 post_kind: article
 title: "Mon parcours en génie logiciel"
 date: 2023-12-30T10:00:00-04:00
-description: "Réflexions sur la croissance comme ingénieur logiciel — systèmes backend, plateforme et DevSecOps : ce qui reste et ce que j’optimise aujourd’hui."
+lastmod: 2026-05-22T22:30:00-04:00
+description: "Des jeux Flash et démos Unity à Algolux, aux projets à l’ÉTS, aux stages et au backend/plateforme/DevSecOps d’aujourd’hui — chronologie personnelle avec liens vers les projets."
 translationKey: software-engineering-journey
 tags:
-    - Software Engineering
-    - Career
-    - Learning
-    - Backend
-    - DevSecOps
-    - Platform Engineering
+  - Software Engineering
+  - Career
+  - Learning
+  - Backend
+  - DevSecOps
+  - Platform Engineering
+images:
+  - featured.png
 ---
 
-La bio de ce site résume la facette du métier qui m’intéresse le plus : **backend**, **plateforme** et **DevSecOps**. Cet article prolonge ce regard — pas une chronologie d’emplois, mais les idées qui reviennent quand on cesse de ne mesurer que « les features livrées ».
+Je n’ai pas commencé dans Kubernetes. J’ai commencé dans des onglets de navigateur, des boucles de jeu et un makerspace qui sentait le PLA chaud. Cet article raconte ce chemin — **backend**, **plateforme** et **DevSecOps** sont où j’atterris, mais les étapes comptent. **[English version]({{< ref "/posts/software-engineering-journey/index.md" >}})**.
 
-## Des features aux systèmes
+<!--more-->
 
-Au début, le progrès semble linéaire : tickets fermés, endpoints ajoutés, écrans livrés. Ce travail compte. Avec le temps, les problèmes intéressants se situent un cran au-dessus : comment les services communiquent, comment les pannes se propagent, comment un changement dans le dépôt d’une équipe affecte tout le monde le lundi matin. Le backend cesse d’être « écrire le handler » et devient « concevoir quelque chose qui reste compréhensible quand vous n’êtes plus dans la pièce ».
+## L’arc (en un coup d’œil)
 
-La pensée **plateforme** prolonge ça vers l’extérieur. Si vous avez déjà mis en place de la CI, standardisé les logs ou facilité le démarrage local pour un·e collègue, vous avez déjà fait du travail plateforme. L’objectif est de **réduire la taxe** sur le quotidien : moins de runbooks ad hoc, moins de fils « ça marche chez moi », plus de chemins reproductibles de l’idée à la prod.
+Schéma du parcours ([`career-journey-flow.mmd`](./images/career-journey-flow.mmd), rendu avec [uml-mcp](https://github.com/antoinebou12/uml-mcp)) :
 
-## Fiabilité et ownership
+![Parcours — des jeux Flash et du makerspace au collège jusqu’au backend et à la plateforme aujourd’hui](./images/career-journey-flow.svg)
 
-La fiabilité, ce n’est pas seulement des graphiques de disponibilité. C’est aussi la confiance des équipes pour aller vite. Cette confiance vient d’un **ownership** clair (qui répare quoi quand ça casse), d’un comportement **observable** (métriques, traces, logs qui répondent à de vraies questions) et de changements assez petits pour être raisonnés.
+*Couleurs :* vert personnel · bleu école · violet club · gris coop · ardoise emploi temps plein · orange contrat · rose enseignement · ambre aujourd’hui.
 
-J’ai appris à traiter incidents et quasi-incidents comme **retour de conception**. Les post-mortems aident, mais le gain durable, c’est d’intégrer ces leçons dans les défauts : meilleures alertes, déploiements plus sûrs, frontières plus nettes entre composants. L’ownership, c’est faire cette boucle même sans ticket assigné.
+## ~2010 — Jeux Flash et le web
 
-## La sécurité dans la livraison
+Au secondaire, je faisais déjà de petits **jeux navigateur en Flash** et j’apprenais **HTML et JavaScript**. Le progrès, c’était quelque chose de cliquable : une boucle qui tourne, un score qui bouge, une page qui ne te ridiculise pas devant tes amis.
 
-Pour moi, le DevSecOps n’est pas une barrière en fin de sprint. C’est **décaler la vigilance vers l’amont** de façon réaliste pour les équipes : hygiène des dépendances, gestion des secrets, moindre privilège, menace modélisée en assez peu de temps pour tenir dans une planification normale. Une sécurité qui ne vit que dans la tête d’un·e spécialiste ne scale pas ; des habitudes dans les pipelines et les conventions, si.
+Cette habitude — livrer quelque chose de jouable, puis corriger ce qui gêne — n’a jamais vraiment disparu. Plus tard, j’ai emballé une partie de cette nostalgie dans [FlashGames](https://antoinebou12.github.io/FlashGames/) (Ruffle) et un conteneur {{< ref "/projects/retroarch-web-games" >}} pour les consoles classiques.
 
-Le même état d’esprit vaut pour les services tiers et le cloud. Si vous ne pouvez pas expliquer ce qui expose quoi, vous n’avez pas encore une histoire déployable — vous avez un pari avec une belle étiquette.
+## ~2015 — Portfolio de jeux, moteurs plus lourds
 
-## Apprentissage et outils
+Au cégep, je montais un **portfolio de projets jeu** et je refaisais des favoris dans **Unity**, **CryEngine** et **Unreal**. Même motivation, outils plus lourds : lumière, physique, assets qui prennent une semaine pour être « corrects ».
 
-Les outils changent sans cesse. Les cadres, les API cloud et les flux assistés par IA continueront d’évoluer. Ce qui **compose**, c’est le jugement : quand adopter, quand encapsuler, quand refuser. Je lis encore la doc, casse des choses en bac à sable et emprunte des idées à l’open source et aux retours d’autres devs (y compris les brouillons — c’est souvent là qu’on lit les vraies contraintes).
+Ça m’a appris le **périmètre** : un jam et un projet de session n’ont pas la même barre — mais les deux méritent des vrais tests de jeu.
 
-J’accorde aussi de la valeur à l’écrit — billets courts, schémas, notes internes — parce qu’expliquer mal est souvent la première étape vers une bonne compréhension.
+## ~2017 — Makerspace, voiture RC WiFi, le web pour de vrai
+
+Au **Collégial International Sainte-Anne**, je gérais le **makerspace** : imprimantes 3D, VR, étudiants bloqués sur le câblage un vendredi à 16 h. J’ai aussi construit une **voiture télécommandée en WiFi** — le genre de projet où firmware, jeu mécanique et « pourquoi elle ne tourne qu’à gauche ? » partagent le même après-midi.
+
+Cette année-là, je me suis vraiment orienté vers le **développement web** : moins « scène dans un moteur », plus « produit qu’on ouvre chaque semaine ».
+
+## 2018 — Stage Algolux (imagerie computationnelle)
+
+Mon **stage Algolux** : cinq semaines en photographie computationnelle — outils Python, analyse couleur RAW, flux de capture, piles Ansible pour valider l’ISP. J’ai encore l’affiche de recherche de cette période ; c’est le pont entre « j’aime le code » et « j’aime les systèmes qui touchent le monde physique ».
+
+![Affiche de recherche — optimisation de la qualité d’image par l’IA, stage Algolux, Collégial Sainte-Anne](./images/algolux-research-poster.png)
+
+Trace concrète sur le site : {{< ref "/projects/RawAnalyser" >}} (clipping et calibration RAW, lignée Algolux). Le labo, c’était tableurs, caméras et scripts — pas une page produit brillante — mais la même boucle qu’aujourd’hui : **mesurer, automatiser, documenter**.
+
+## ÉTS — Hydroglisseur, AlgoÉTS, pile web
+
+L’**École de technologie supérieure (ÉTS)** est l’endroit où les projets scolaires se sont empilés en parcours.
+
+**Cheminement technologique (2017–2018)** — projet final **hydroglisseur** : jupe bleue, ventilateur de sustentation, pièces imprimées en 3D, bois, mousse et débogage tenace. Le genre de montage qui enseigne l’intégration avant les microservices.
+
+![Prototype hydroglisseur à l’ÉTS — ventilateur, plateau en bois et jupe gonflable bleue dans l’atelier](./images/ets-hydroglisseur-prototype.png)
+
+**Baccalauréat (2018–2023)** — cours et clubs. J’ai aidé à faire vivre **[AlgoÉTS](https://algoets.etsmtl.ca/)** (trading algorithmique) ; nous animions des ateliers comme **Python 101 — science des données** pour les membres qui voulaient passer de « j’utilise Python » à « je fais confiance à mon pandas ».
+
+![AlgoÉTS Python 101 — atelier science des données sur l’écran d’une salle de classe](./images/algoets-python-101.png)
+
+Ce club se relie à l’open source que je maintiens encore : la bibliothèque {{< ref "/projects/MarketWatch" >}} pour le jeu boursier sur MarketWatch. Même réflexe — **automatiser la partie ennuyeuse pour laisser les décisions aux humains**.
+
+**Stages (2019–2022)** — Wandrian, Power Go, Intact : parseurs, API, tableaux de bord ELK, backend — les titres collaient enfin au travail quotidien.
+
+**Temps plein (2023)** — [IONODES](https://ionodes.com/) : développeur infonuagique sur une plateforme IoT — paliers Auth0, Sentry, ONVIF/WebRTC, Azure DevOps.
+
+**Maîtrise (2023–2026)** — ÉTS : **rendu en temps réel**, **physique interactive** et **usure de surface en temps réel**, avec frottement dynamique et textures — le fil qui rattache l’infographie au parcours.
+
+## Années 2020 — Plateforme, sécurité, enseignement
+
+Après le diplôme, les problèmes ont monté d’un cran :
+
+- **GitLab CI/CD**, **GCP**, microservices Java, tests **Playwright** (recherche IMC2).
+- Laboratoires **DevSecOps** à Polytechnique Montréal — gabarits GitLab pour ~20 équipes, Docker/Kubernetes, revues dans l’esprit OWASP.
+- **Enseignement** à l’ÉTS : bases distribuées, mobile/UX, projets intégrateurs — le matériel de cours, c’est aussi de la livraison logicielle.
+- Site {{< ref "/posts/graphquon-2024-ets" >}} ([graphquon.github.io](https://graphquon.github.io/)) et **[uml-mcp](https://github.com/antoinebou12/uml-mcp)** pour les diagrammes depuis le chat — parce qu’expliquer un système bat encore le deviner.
+
+## Ce qui n’a pas changé
+
+Au début, je mesurais le progrès en **features livrées**. Aujourd’hui, je regarde si le système reste compréhensible quand on n’est plus dans la pièce :
+
+- **Backend** — frontières, modes de panne, API qui ne surprennent pas l’équipe suivante.
+- **Plateforme** — CI, logs, dev local sans README héroïque.
+- **DevSecOps** — secrets, dépendances, chemins de déploiement volontairement ennuyeux.
+
+La fiabilité, c’est la confiance. La sécurité n’est pas une barrière de fin de sprint — ce sont des habitudes dans le pipeline. J’écris encore des billets et des schémas parce qu’expliquer mal, c’est souvent la première façon de voir ce qu’on ne comprend pas.
 
 ## Ce que j’optimise ensuite
 
-À suivre, les mêmes thèmes avec des arêtes plus nettes : **plateformes plus claires**, **livraison plus sûre**, **systèmes qui restent lisibles** en grandissant. Si vous débutez, mon conseil (biaisé) est de viser des problèmes où vous voyez toute la boucle : code, déploiement, exploitation, amélioration. C’est là que backend, plateforme et DevSecOps cessent d’être des buzzwords et deviennent le métier.
+Des plateformes plus claires, une livraison plus sûre, des systèmes lisibles en grandissant. Si vous débutez : suivez les problèmes où vous voyez **toute la boucle** — code, déploiement, exploitation, amélioration. Moi, j’ai commencé avec Flash et un hydroglisseur ; vous commencerez peut-être ailleurs. La boucle, c’est le métier.
 
-Merci de lire — si ça parle à quelqu’un, vous trouverez des notes plus concrètes ailleurs sur le site sous articles et projets.
+D’autres notes concrètes sont sous [articles]({{< ref "/posts" >}}) et [projets]({{< ref "/projects" >}}) — dont {{< ref "/posts/rhino-lidar-apartment-scan" >}} et {{< ref "/posts/professional-resume-json-resume" >}} pour des chapitres plus récents.

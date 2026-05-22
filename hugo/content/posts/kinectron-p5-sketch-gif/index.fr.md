@@ -2,6 +2,7 @@
 post_kind: article
 title: "Kinectron + p5.js — contrôle du sketch et export GIF"
 date: 2024-03-15T10:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Brancher Kinectron sur p5.js, arrêter / relancer le sketch et enregistrer la sortie en GIF (Kinect v2 ou Azure Kinect DK).
 translationKey: kinectron-p5-sketch-gif
 tags:
@@ -15,9 +16,9 @@ images:
     - mySketch.gif
 ---
 
-### Introduction
+Pour un cours de creative coding, j’avais besoin des données squelette **Kinectron** dans **p5.js**, avec **lecture / pause** et un export **GIF** court pour les démos. Ci-dessous le squelette utilisé (Kinect v2 ou Azure Kinect DK, serveur Kinectron actif). **[English version]({{< ref "/posts/kinectron-p5-sketch-gif/index.md" >}})**.
 
-Ce tutoriel montre comment monter un sketch **Kinectron** dans **p5.js** avec arrêt / lecture du sketch et enregistrement en **GIF**.
+<!--more-->
 
 ### Prérequis
 - Bases JavaScript et p5.js.
@@ -127,4 +128,4 @@ Exécuter dans un environnement compatible p5.js.
 
 ---
 
-Vous avez maintenant un sketch Kinectron dans p5.js avec contrôle de lecture et export GIF. Expérimentez d’autres gestes pour enrichir le sketch.
+Ensuite, remplacez les gestes ou basculez `liveData` vers des enregistrements — les boutons et le hook `saveGif` sont ce que je réutilisais d’un devoir à l’autre.

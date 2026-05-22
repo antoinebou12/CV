@@ -2,7 +2,7 @@
 post_kind: article
 title: "Exploring movie similarities with vector search algorithms"
 date: 2026-04-13T12:00:00-04:00
-lastmod: 2026-04-18T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: "One thread: pgvector + SQL for movie embeddings, Qdrant + MovieLens for dense and sparse vectors, then LangChain + Ollama RAG grounded on the same catalog."
 translationKey: vector-databases-similar-movies
 images:
@@ -21,7 +21,9 @@ aliases:
     - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-This page is a **single walkthrough** of a movie-similarity thread: embeddings and nearest neighbors, then a second engine with **two vector meanings**, then **retrieval + generation** tied to your own rows. Short animated walkthroughs from that work live in the companion notebooks and Medium series rather than in this static site bundle.
+I taught a thread on “find movies like this” that kept growing: **pgvector** in SQL, then **Qdrant** with dense *and* sparse vectors on MovieLens, then a small **RAG** loop with **LangChain + Ollama** grounded on the same catalog. This page is the merged write-up; animated notebooks stay in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding). **[Version française]({{< ref "/posts/vector-databases-similar-movies/index.fr.md" >}})**.
+
+<!--more-->
 
 **At a glance**
 
@@ -224,9 +226,9 @@ Those issues are normal teaching points: RAG is not only “embed and search”�
 
 You need PostgreSQL with pgvector, movie rows populated through the **Part 1** pipeline (see notebooks linked above), **Ollama** with the chosen model pulled, and the Python stack from the notebook (`langchain`, `langchain-community`, `langchain-huggingface`, `psycopg2`, etc.). Adjust connection strings and model names to match your environment.
 
-## Conclusion
+## Takeaway
 
-**pgvector** (Part 1) gives you transparent SQL and metrics over movie embeddings; **Qdrant** with MovieLens (Part 2) shows dense semantic search and sparse collaborative-style vectors in one engine; **LangChain + Ollama** (Part 3) shows how that same catalog becomes retrieval for grounded natural-language answers. Together they cover vector search, recommender-style signals, and a minimal RAG stack you can reproduce from the course repo.
+Same mental model three times: **embed → store → nearest neighbors**, then decide whether “similar” means plot text, rating overlap, or evidence for an LLM answer. Part 3 is where theory meets mess — bad SQL from the model, `vector` type warnings, Ollama timeouts — which is why I kept the notebook outputs in the course repo.
 
 ---
 

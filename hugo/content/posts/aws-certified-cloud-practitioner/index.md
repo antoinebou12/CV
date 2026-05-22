@@ -2,6 +2,7 @@
 post_kind: article
 title: A Journey to AWS Certified Cloud Practitioner
 date: 2024-05-14T16:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Two-week study plan — Udemy, AWS Skill Builder, Cloud Quest, Escape Room, and Pearson VUE tips (extra time, Credly badge).
 translationKey: aws-certified-cloud-practitioner
 tags:
@@ -12,9 +13,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/a-journey-to-aws-certified-cloud-practitioner-9b17dffe4533"
 ---
 
-I’m thrilled to share that I’ve recently obtained the AWS Certified Cloud Practitioner certification from Amazon Web Services (AWS)! This accomplishment represents a significant milestone in my professional journey, and I want to take this opportunity to highlight some of the incredible tools that made this achievement possible.
+I passed the **AWS Certified Cloud Practitioner (CLF-C02)** after about **two weeks** (~60 hours) of focused study — not because the exam is trivial, but because mixing video, labs, and silly gamified prep kept me moving. This post is the resource stack that worked for me (Udemy, Skill Builder, Cloud Quest, Escape Room) plus **Pearson VUE** practicalities: extra time if English is not your first language, online proctoring, Credly badge. **[Version française]({{< ref "/posts/aws-certified-cloud-practitioner/index.fr.md" >}})**.
 
-AWS Skill Builder and AWS Cloud Quest were instrumental in my preparation, providing an engaging and comprehensive learning experience. In this article, I’ll share my study plan and how these AWS tools can help anyone aiming to enhance their cloud computing skills.
+<!--more-->
 
 ### **My Study Guide: A Two-Week Sprint to Certification**
 
@@ -24,31 +25,21 @@ Here’s a breakdown of the resources I used:
 
 1.  **Ultimate AWS Certified Cloud Practitioner CLF-C02** (Udemy — Paid)
 
-Press enter or click to view image in full size
-
 ![](./img-001.png)
 
 2. **AWS Cloud Quest: Cloud Practitioner** (AWS Skill Builder —Free)
-
-Press enter or click to view image in full size
 
 ![](./img-002.png)
 
 3\. **AWS Escape Room: Exam Prep for AWS Certified Cloud Practitioner** (CLF-C02) (AWS Skill Builder — Paid Free Trial)
 
-Press enter or click to view image in full size
-
 ![](./img-003.png)
 
 4\. **Free Practice Exam** ([https://www.w3schools.com/aws/aws\_cloudessentials\_awscert.php](https://www.w3schools.com/aws/aws_cloudessentials_awscert.php))
 
-Press enter or click to view image in full size
-
 ![](./img-004.png)
 
 5\. **Exam Prep Enhanced Course: AWS Certified Cloud Practitioner** (CLF-C02 — English) (AWS Skill Builder — Paid Free Trial)
-
-Press enter or click to view image in full size
 
 ![](./img-005.png)
 
@@ -95,11 +86,7 @@ One tip I found incredibly helpful was the option to apply for additional exam t
 
 1.  AWS Certification: Before scheduling your exam, go to exam accommodations
 
-Press enter or click to view image in full size
-
 ![](./img-006.png)
-
-Press enter or click to view image in full size
 
 ![](./img-007.png)
 
@@ -122,8 +109,6 @@ If you choose to take your exam online, there are a few additional consideration
 
 Once you’ve passed your exam, you can proudly share your achievement by obtaining a digital badge. AWS uses Credly to issue digital badges. Here’s how you can get yours:
 
-Press enter or click to view image in full size
-
 ![](./img-009.png)
 
 1.  Wait for Notification: After passing the exam, wait for 2–3 days to receive an email notification from Credly that your badge is ready.
@@ -131,17 +116,13 @@ Press enter or click to view image in full size
 3.  Accept Your Badge: Follow the instructions in the email to accept your badge and add it to your Credly account.
 4.  Share Your Badge: You can now share your digital badge on LinkedIn, your resume, or any other platform to showcase your certification.
 
-Press enter or click to view image in full size
-
 ![](./img-010.png)
 
-### Conclusion
+### Takeaway
 
-AWS Skill Builder and AWS Cloud Quest were invaluable resources on my journey to becoming an AWS Certified Cloud Practitioner. These tools provided a comprehensive, engaging, and practical approach to learning AWS, making the certification process not only achievable but enjoyable.
+The certification is a vocabulary checkpoint more than a deep architect exam — but **Cloud Quest** and **Escape Room** made that vocabulary stick better than lectures alone. If you are on a similar sprint, stack one paid course with Skill Builder trials and book the exam while the context is fresh.
 
-If you’re considering pursuing an AWS certification or looking to enhance your cloud skills, I highly recommend leveraging these platforms. They offer a wealth of knowledge, practical experience, and innovative learning methods that cater to various learning styles.
-
-Feel free to reach out if you have any questions about my study process or need advice on your AWS certification journey. Happy learning!
+Questions about the two-week plan or Pearson accommodations are welcome on LinkedIn or GitHub issues on this site.
 
 ### References
 

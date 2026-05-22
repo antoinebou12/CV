@@ -2,36 +2,43 @@
 post_kind: article
 title: "Plugin OpenAI D2C — diagrammes PlantUML, Mermaid et D2"
 date: 2022-09-06T10:00:00-04:00
-description: Plugin ChatGPT pour générer des diagrammes PlantUML, Mermaid et D2 à partir de la conversation.
+lastmod: 2026-05-23T00:30:00-04:00
+description: "Plugin ChatGPT pour générer des diagrammes PlantUML, Mermaid et D2 depuis la conversation."
 translationKey: d2c-openai-diagram-plugin
 tags:
-    - ChatGPT
-    - OpenAI
-    - Plugin
-    - PlantUML
-    - Mermaid
-    - D2
+  - ChatGPT
+  - OpenAI
+  - Plugin
+  - PlantUML
+  - Mermaid
+  - D2
 images:
-    - featured.gif
+  - featured.gif
 ---
 
-GitHub : https://lnkd.in/en3dSVuQ
+**D2COpenAIPlugin** est un plugin ChatGPT qui produit des diagrammes **PlantUML**, **Mermaid** ou **D2** sans quitter le fil de discussion. Je l’ai écrit à l’ère des plugins GPT — pratique pour croquis d’architecture et cours. **[English version]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})**.
 
-URL du plugin : https://lnkd.in/exVNZMnT
+<!--more-->
 
-**D2COpenAIPlugin** est un plugin pour ChatGPT qui permet de générer des diagrammes avec **PlantUML**, **Mermaid** et **D2**. Il enrichit ChatGPT en offrant un moyen fluide de créer des diagrammes variés.
+Pour un flux **prompts dans le chat** (modèles AIPRM, séquences cache, astuces canvas), voir **[Diagrammes ChatGPT et AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams" >}})**.
 
-Pour un flux **prompt dans le chat** (modèle AIPRM, exemples de séquences cache hit/miss, astuces d’outils canvas), voir **[Diagrammes avec ChatGPT et AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})** — complémentaire à cette approche par plugin.
+## Liens
 
-![1692387139389.jpeg](images/1692387139389.jpeg)
+- **Dépôt :** [github.com/antoinebou12/D2COpenAIPlugin](https://github.com/antoinebou12/D2COpenAIPlugin)
+- **Fiche plugin :** [lien court](https://lnkd.in/exVNZMnT)
 
-🤖 ChatGPT UML Plugins - DEMO
+## Démo
 
-![1682544541386.gif](images/1682544541386.gif)
+![Capture du plugin](./images/1692387139389.jpeg)
 
-**Prise en charge UML :** générer des diagrammes UML à la volée pour représenter visuellement vos modèles d’IA et faciliter la compréhension des idées complexes.  
-**Documentation étendue :** un guide qui couvre l’installation jusqu’à l’usage, pour une expérience fluide quel que soit le niveau.
+**Démo plugins UML ChatGPT**
 
-**GitHub :** [dépôt](https://lnkd.in/e7-2gm4j)
+![Animation](./images/1682544541386.gif)
 
-Retours et contributions bienvenus.
+## Fonctions
+
+- Diagrammes **UML / système** depuis le langage naturel dans ChatGPT.
+- **PlantUML**, **Mermaid** et **D2** dans une même surface.
+- Documentation install → premier diagramme sur GitHub.
+
+Retours et PR bienvenus. Travail connexe : **[uml-mcp](https://github.com/antoinebou12/uml-mcp)** pour Cursor et hôtes MCP.

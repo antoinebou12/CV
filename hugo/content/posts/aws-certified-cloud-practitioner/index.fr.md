@@ -2,6 +2,7 @@
 post_kind: article
 title: "Parcours vers la certification AWS Certified Cloud Practitioner"
 date: 2024-05-14T16:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Plan d’étude sur deux semaines — Udemy, AWS Skill Builder, Cloud Quest, Escape Room et astuces Pearson VUE (temps supplémentaire, badge Credly).
 translationKey: aws-certified-cloud-practitioner
 tags:
@@ -12,9 +13,9 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/a-journey-to-aws-certified-cloud-practitioner-9b17dffe4533"
 ---
 
-Je suis heureux d’annoncer que j’ai récemment obtenu la certification **AWS Certified Cloud Practitioner** d’Amazon Web Services (AWS) ! C’est une étape importante dans mon parcours pro, et je profite de ce billet pour mettre en avant les outils qui m’y ont aidé.
+J’ai passé **AWS Certified Cloud Practitioner (CLF-C02)** en environ **deux semaines** (~60 h) — pas parce que l’examen est facile, mais parce que mélanger vidéos, labs et préparation gamifiée m’a gardé en mouvement. Ce billet liste les ressources (Udemy, Skill Builder, Cloud Quest, Escape Room) et les détails **Pearson VUE** : temps supplémentaire si l’anglais n’est pas votre langue maternelle, proctoring en ligne, badge Credly. **[English version]({{< ref "/posts/aws-certified-cloud-practitioner/index.md" >}})**.
 
-**AWS Skill Builder** et **AWS Cloud Quest** ont été centraux dans ma préparation, avec un parcours à la fois structuré et ludique. Voici mon plan d’étude et comment ces ressources peuvent aider quiconque veut renforcer ses compétences cloud.
+<!--more-->
 
 ### **Mon guide d’étude : sprint sur deux semaines**
 
@@ -111,11 +112,9 @@ Après réussite, AWS délivre un badge via **Credly** :
 
 ![](./img-010.png)
 
-### Conclusion
+### Bilan
 
-AWS Skill Builder et AWS Cloud Quest ont rendu le chemin vers **Cloud Practitioner** à la fois complet et agréable. Si vous préparez une certif AWS ou montez en compétence cloud, je recommande fortement ces plateformes.
-
-N’hésitez pas à me contacter pour des questions sur ma méthode ou des conseils sur votre parcours. Bon apprentissage !
+La certif est surtout un test de vocabulaire cloud, pas un examen d’architecte senior — mais **Cloud Quest** et **Escape Room** ont mieux fixé les termes que les seules vidéos. Si vous faites un sprint similaire, empilez un cours payant, les essais Skill Builder, et réservez l’examen tant que le contexte est chaud.
 
 ### Références
 

@@ -2,63 +2,52 @@
 post_kind: article
 title: "Create a portfolio with Hugo (week 1)"
 date: 2024-01-06T10:00:00-04:00
-description: Starting a Hugo-based portfolio — themes, data-heavy pages, and tying in Substack.
+lastmod: 2026-05-23T00:30:00-04:00
+description: "Week one of a Hugo portfolio — theme choice, embedding data stories, Substack, and an iframe shortcode."
 translationKey: portfolio-hugo-week-1
 tags:
-    - Hugo
-    - Portfolio
-    - Static Site
-    - Substack
+  - Hugo
+  - Portfolio
+  - Static Site
+  - Substack
 images:
-    - featured.png
+  - featured.png
 ---
 
-## Introduction
+Week one of moving my site to **Hugo**: pick a theme, ship something fast, and wire in content that is not just a résumé PDF. This post is what I tried first — theme (**HBTheme**), a data-heavy embed, **Substack** on the side, and a reusable **iframe** shortcode. **[Version française]({{< ref "/posts/portfolio-hugo-week-1/index.fr.md" >}})**.
 
-Welcome to my personal blog, a chronicle of my journey in developing a multifaceted portfolio using Hugo. As a software engineer, I am excited to share the nuances of building a dynamic and interactive website, where my professional skills intersect with personal passions. This inaugural post marks the beginning of a series in which I'll delve into various aspects of web development, data analysis, and the integration of advanced web technologies.
+<!--more-->
 
-## What to Expect
+![Site preview](./featured.png)
 
-![Featured Image](featured.png)
+## Why Hugo
 
-### Visual Storytelling
+Static generation, short build times, and modules without a heavy CMS. As an engineer I wanted the repo to be the source of truth — Markdown in, HTML out, deploy somewhere cheap.
 
-This blog will feature screenshots of the Hugo interface, illustrative graphics, and maps to enhance the storytelling aspect.
+**HBTheme** had comments, npm-friendly assets, and enough Hugo modules that I did not rebuild every layout from scratch.
 
-### Helpful Resources
+## Data on the page
 
-I'll share resources such as Hugo templates, links to my Substack, and tech tools like particles.js, providing a valuable resource trove for budding software engineers and web developers.
+Early experiment: embed a Montreal **car-theft** analysis (friend’s Substack project) inside Hugo pages — proof the stack could carry charts and longform, not only posts like this one.
 
-## Choosing Hugo and the HBTheme
+[Étude des vols de voitures à Montréal](https://mohamedilias.substack.com/p/etude-des-vols-de-voitures-a-montreal)
 
-When deciding to create my portfolio, I was drawn to Hugo for its reputation for speed and flexibility. As a software engineer, efficiency and scalability are always at the forefront of my decision-making. After exploring several options, I chose the HBTheme for its comprehensive feature set. The theme's support for comments, its seamless integration with npm (Node Package Manager), and the availability of a variety of Hugo modules made it an obvious choice. These features not only enhanced my blog's functionality but also aligned perfectly with my professional workflow, enabling me to implement advanced web technologies with ease.
+## Substack in parallel
 
-## Merging Data Analysis with Web Development
+**Substack** for longer essays and a different audience. Hugo for the portfolio shell; Substack when the piece needs a newsletter shape.
 
-One of my initial projects involved a detailed analysis of car thefts in Montreal. The project was not just an exercise in data analysis, but also a personal endeavor, inspired by stories from friends and family. Using Hugo's capabilities, I was able to embed and showcase these complex datasets in an accessible and engaging manner. This integration exemplified Hugo's capacity to handle data-intensive content, a crucial aspect for any software engineer looking to present technical work in a clear and compelling manner. You can view the study here: [Étude des vols de voitures à Montréal](https://mohamedilias.substack.com/p/etude-des-vols-de-voitures-a-montreal).
+## Iframe shortcode
 
-## The Versatility of Substack
+Posts can embed HTTPS pages with the site `iframe` shortcode (`src` required; optional `title`, `height`, `loading`, etc.):
 
-Alongside my Hugo blog, I've ventured into Substack. This platform offers a distinct ecosystem conducive to in-depth writing and engaged readership. My Substack page serves as a complementary space where I delve deeper into topics that require more expansive coverage. It allows me to reach a broader audience and provides a different format for interaction and discussion.
+```text
+{{</* iframe src="https://example.com/" title="Example" height="480" */>}}
+```
 
-## Merging Professional Development and Blogging
-
-This blog also serves as a platform for discussing academic and professional development. I plan to share insights on pursuing advanced degrees and balancing them with career objectives. As someone working to complete his master's degree, I'll explore how academic knowledge can be applied in practical software development and the broader tech industry.
-
-## Crafting a Unique Online Presence
-
-In creating my blog, I paid special attention to aesthetics and functionality. By experimenting with various Hugo themes and incorporating interactive elements like particles.js, I aimed to create a visually appealing and user-friendly interface. These design choices reflect my belief in the importance of a clean and efficient user experience, a philosophy I carry over from my software engineering background.
-
-## Embedded content (iframe shortcode)
-
-Blog posts can embed any **HTTPS** page using the site `iframe` shortcode (required: `src`; optional: `title`, `height`, `loading`, `referrerpolicy`, `allowfullscreen`, `class`):
-
-<pre><code>&#123;&#123;&lt; iframe src=&quot;https://example.com/&quot; title=&quot;Example&quot; height=&quot;480&quot; &gt;&#125;&#125;</code></pre>
-
-Example:
+Example — old **FlashGames** demo:
 
 {{< iframe src="https://antoinebou12.github.io/FlashGames/" title="FlashGames" height="420" referrerpolicy="no-referrer-when-downgrade" >}}
 
-## Conclusion
+## Next weeks (then)
 
-This blog is an embodiment of my journey in the tech world, blending personal experiences with professional growth. Through this platform, I aim to share my insights into software engineering, web development, and much more. I invite you to join me on this exploration, to learn, to be inspired, and to discover the endless possibilities in the world of technology.
+More posts on Hugo modules, aesthetics (particles.js experiments), and tying the blog to coursework and projects. The current site evolved from this starting point — see other posts under **Posts** on the blog.

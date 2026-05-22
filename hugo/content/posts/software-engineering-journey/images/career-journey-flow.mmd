@@ -1,0 +1,144 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "ui-sans-serif, system-ui, sans-serif",
+    "fontSize": "13px",
+    "primaryColor": "#e0f2fe",
+    "primaryTextColor": "#0f172a",
+    "primaryBorderColor": "#0284c7",
+    "lineColor": "#475569",
+    "clusterBkg": "#f8fafc",
+    "clusterBorder": "#94a3b8"
+  },
+  "flowchart": { "curve": "basis", "padding": 12, "nodeSpacing": 22, "rankSpacing": 36 }
+}}%%
+flowchart LR
+
+  subgraph p2010["Personal · ~2010"]
+    direction TB
+    flash["Flash browser games"]
+    html["HTML & JavaScript"]
+    flash --> html
+  end
+
+  subgraph p2012["Personal · 2012"]
+    direction TB
+    codecademy["Codecademy"]
+    sideproj["Small repos & experiments"]
+    codecademy --> sideproj
+  end
+
+  subgraph sec2015["Secondary · ~2015"]
+    direction TB
+    engines["Unity · CryEngine · Unreal"]
+    games["Published game demos"]
+    webpf["Web portfolio"]
+    secfinal["Final secondary project"]
+    engines --> games
+    engines --> webpf
+    webpf --> secfinal
+  end
+
+  subgraph col2017["Collège · ~2017"]
+    direction TB
+    makerspace["MakerSpace lead"]
+    rc["WiFi RC car"]
+    webpath["Web developer focus"]
+    makerspace --> webpath
+    rc --> webpath
+  end
+
+  subgraph p1719["Personal · 2017–2020"]
+    lenses["Snapchat AR lenses"]
+  end
+
+  subgraph contract_alg["Contract · Algolux"]
+    direction TB
+    alg17["Intern · summer 2017"]
+    alg18["Intern · summer 2018"]
+    alg17 --> alg18
+  end
+
+  subgraph ets_path["School · ÉTS tech path"]
+    hydro["Hydroglisseur capstone"]
+  end
+
+  subgraph ets_bach["School · ÉTS bachelor"]
+    bach["Coursework · integrators"]
+  end
+
+  subgraph club_algo["Club · AlgoÉTS"]
+    direction TB
+    algo_member["Member · Python 101"]
+    algo_pres["President · infra & web"]
+    algo_member --> algo_pres
+  end
+
+  subgraph coop2019["Co-op · 2019"]
+    wandrian["Wandrian · full stack"]
+  end
+
+  subgraph y2020["Work · 2020"]
+    direction TB
+    divine["Divine Essence · contract"]
+    power20["Power Go co-op"]
+  end
+
+  subgraph y2021["Work · 2021"]
+    power21["Power Go · wrap-up"]
+  end
+
+  subgraph coop2022["Co-op · 2022"]
+    intact["Intact · backend"]
+  end
+
+  subgraph job2023["Job · 2023"]
+    ionodes["IONODES · cloud · full-time"]
+  end
+
+  mast(["Master · ÉTS 2023–2026<br/>Real-time rendering<br/>Real-time physics · surface wear<br/>Dynamic friction · textures"])
+
+  subgraph teach_ets["Teaching · ÉTS"]
+    ets_ta["Labs · SQL · Kafka · Azure"]
+  end
+
+  subgraph teach_poly["Teaching · Poly"]
+    log8100["DevSecOps LOG8100"]
+  end
+
+  subgraph contract_imc["Contract · IMC2"]
+    imc["GCP · CI/CD · microservices"]
+  end
+
+  subgraph p2020s["Personal · 2020s"]
+    direction TB
+    umlmcp["uml-mcp"]
+    graphquon["GraphQuon web"]
+    umlmcp --> graphquon
+  end
+
+  today(["Today<br/>Backend · platform · DevSecOps"])
+
+  p2010 ==> p2012 ==> sec2015 ==> col2017 ==> p1719 ==> contract_alg
+  contract_alg ==> ets_path ==> ets_bach ==> club_algo ==> coop2019
+  coop2019 ==> y2020 ==> y2021 ==> coop2022 ==> job2023
+  job2023 ==> mast ==> teach_ets ==> teach_poly ==> contract_imc ==> p2020s ==> today
+
+  classDef personal fill:#ecfdf5,stroke:#059669,stroke-width:1.5px,color:#0f172a
+  classDef school fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+  classDef club fill:#ede9fe,stroke:#7c3aed,stroke-width:1.5px,color:#0f172a
+  classDef coop fill:#f1f5f9,stroke:#475569,stroke-width:1.5px,color:#0f172a
+  classDef job fill:#e2e8f0,stroke:#334155,stroke-width:1.5px,color:#0f172a
+  classDef contract fill:#ffedd5,stroke:#ea580c,stroke-width:1.5px,color:#0f172a
+  classDef teach fill:#fce7f3,stroke:#db2777,stroke-width:1.5px,color:#0f172a
+  classDef milestone fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#0f172a
+
+  class flash,html,codecademy,sideproj,engines,games,webpf,secfinal,rc,lenses,umlmcp,graphquon personal
+  class makerspace,webpath school
+  class hydro,bach,mast school
+  class algo_member,algo_pres club
+  class wandrian,power20,power21,intact coop
+  class ionodes job
+  class alg17,alg18,divine,imc contract
+  class ets_ta,log8100 teach
+  class today milestone

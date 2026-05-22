@@ -2,6 +2,7 @@
 post_kind: tutorial
 title: "Installer des paquets Python pour les add-ons Blender (Windows, Blender 4.2+)"
 date: 2025-02-08T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Script d’installation automatique des dépendances pip dans l’environnement Python embarqué de Blender — dossier utilisateur, thread d’arrière-plan, popups.
 translationKey: blender-python-packages
 tags:
@@ -14,11 +15,9 @@ images:
     - img-001.png
 ---
 
-## Introduction
+Les add-ons Blender qui demandent **NumPy**, **meshio** ou **requests** butent sur le même mur : Blender a **son Python**, donc `pip install` sur le système ne sert à rien. J’ai écrit un petit installateur qui cible `sys.executable` de Blender, dépose les wheels sous `scripts/modules`, et tourne en **thread d’arrière-plan** (Blender 4.2+, Windows). **[English version]({{< ref "/posts/blender-python-packages/index.md" >}})**.
 
-Blender offre une API Python puissante pour scripts, add-ons et plugins. Un point délicat : **installer des paquets Python tiers** dans l’**environnement Python isolé** de Blender.
-
-Contrairement à une installation Python système, Blender embarque son propre interprète : `pip` « global » ne suffit pas toujours. Cet article propose une méthode **générale et robuste** pour installer les dépendances des add-ons tout en restant compatible entre versions.
+<!--more-->
 
 ![Espace Scripting de Blender avec l’éditeur de texte et Exécuter le script](./img-001.png)
 
@@ -229,9 +228,9 @@ import sys
 print(sys.path)
 ```
 
-## En bref
+## Bilan
 
-Cette méthode permet d’**installer des paquets pip** proprement dans l’environnement sandboxé de Blender et d’**automatiser les dépendances** pour les utilisateurs d’add-ons.
+Embarquez l’installateur dans le `register()` de l’add-on et les utilisateurs arrêtent de demander « quel Python ? ». Redémarrez Blender une fois après la première install si les imports échouent — puis vérifiez que `sys.path` contient le dossier `modules`.
 
 ## Pour aller plus loin
 

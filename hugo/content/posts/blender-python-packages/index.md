@@ -2,6 +2,7 @@
 post_kind: tutorial
 title: A Method to Install Python Packages for Add-ons & Plugins in Blender (Windows, Blender 4.2+)
 date: 2025-02-08T12:00:00-04:00
+lastmod: 2026-05-23T00:30:00-04:00
 description: Automatic pip installs into Blender’s embedded Python via a user-writable modules folder, background thread, and UI popups.
 translationKey: blender-python-packages
 tags:
@@ -14,11 +15,9 @@ images:
     - img-001.png
 ---
 
-## Introduction
+Blender add-ons that need **NumPy**, **meshio**, or **requests** hit the same wall: Blender ships its **own Python**, so `pip install` on your system Python does nothing. I wrote a small installer that targets Blender’s `sys.executable`, drops wheels under `scripts/modules`, and runs in a **background thread** so the UI stays responsive (Blender 4.2+, Windows). **[Version française]({{< ref "/posts/blender-python-packages/index.fr.md" >}})**.
 
-Blender is a powerhouse for 3D creation, offering a Python API that allows users to extend its functionality with scripts, add-ons, and plugins. However, one challenge developers face is **installing external Python packages** within Blender’s **isolated Python environment**.
-
-Unlike system-wide Python installations, Blender bundles its own Python interpreter, making standard package installations tricky. This article presents **a more general and robust method** to install Python dependencies for Blender add-ons and plugins — ensuring a smooth workflow across different versions.
+<!--more-->
 
 ![Blender Scripting workspace with the Text Editor and Run Script](./img-001.png)
 
@@ -229,9 +228,9 @@ import sys
 print(sys.path)
 ```
 
-## ✨ Final Thoughts
+## Takeaway
 
-This **generalized method** allows Blender users and add-on developers to **install Python packages seamlessly** within Blender’s sandboxed environment. By automating dependency installation, you can ensure **maximum compatibility** without requiring users to install external tools manually.
+Ship the installer with your add-on’s `register()` and users stop emailing “which Python do I use?” Restart Blender once after the first run if imports fail — then check `sys.path` includes your `modules` folder.
 
 ## 🔗 Further Reading
 
