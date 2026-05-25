@@ -3,9 +3,8 @@ post_kind: article
 title: "Make figurines with AI for 3D printing"
 date: 2026-05-22T10:00:00-04:00
 lastmod: 2026-05-23T02:00:00-04:00
-description: Chibi vinyl figures, ComfyUI (OmniGen2 → Hunyuan3D v2), sequence diagrams via uml-mcp, and resin printing notes with GLB examples.
+description: Chibi vinyl figures, ComfyUI with OmniGen2 and Hunyuan3D v2, sequence diagrams via uml-mcp, and resin printing notes with GLB examples.
 translationKey: ai-figurines-3d-printing
-card_image: images/photo-to-object-pipeline.png
 tags:
   - 3D Printing
   - AI

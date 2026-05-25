@@ -39,6 +39,15 @@
 {{- end -}}
 {{- end -}}
 
+{{- $years := slice -}}
+{{- range $sorted -}}
+  {{- $y := .Date.Format "2006" -}}
+  {{- if not (in $years $y) -}}
+    {{- $years = $years | append $y -}}
+  {{- end -}}
+{{- end -}}
+{{- $years = sort $years "value" "desc" -}}
+
 <div class="blog-list-page">
 {{- if not $.IsHome -}}
 {{- with .Content -}}
@@ -48,26 +57,38 @@
 {{- end -}}
 {{- end -}}
 
-<div class="post-list-sort-toolbar not-prose mb-12 flex flex-wrap items-center gap-3 border-b border-black/10 pb-5 dark:border-white/15 md:mb-14">
-  <label for="post-list-sort-select" class="text-sm font-medium text-black/80 dark:text-white/80"
-    >{{- i18n "sortLabel" -}}</label
-  >
-  <select
-    id="post-list-sort-select"
-    class="rounded-lg border border-black/15 bg-white/90 px-3 py-2 text-sm text-black shadow-sm outline-none ring-0 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/30 dark:border-white/20 dark:bg-black/40 dark:text-white"
-  >
-    <option value="date-desc">{{ i18n "sortDateDesc" }}</option>
-    <option value="date-asc">{{ i18n "sortDateAsc" }}</option>
-    <option value="title-asc">{{ i18n "sortTitleAsc" }}</option>
-    <option value="title-desc">{{ i18n "sortTitleDesc" }}</option>
-  </select>
+<div class="post-list-filters not-prose mb-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-black/10 pb-5 dark:border-white/15 md:mb-10">
+  <div class="flex flex-wrap items-center gap-2">
+    <label for="post-list-year-filter" class="text-sm font-medium text-black/75 dark:text-white/75"
+      >{{- i18n "filterYearLabel" -}}</label
+    >
+    <select
+      id="post-list-year-filter"
+      class="post-list-filter-select rounded-lg border border-black/12 bg-white/90 px-3 py-2 text-sm text-black outline-none focus:border-orange-500/45 focus:ring-2 focus:ring-orange-500/25 dark:border-white/18 dark:bg-black/35 dark:text-white"
+    >
+      <option value="all">{{- i18n "filterYearAll" -}}</option>
+      {{- range $years -}}
+      <option value="{{ . }}">{{ . }}</option>
+      {{- end -}}
+    </select>
+  </div>
+  <div class="flex flex-wrap items-center gap-2">
+    <label for="post-list-sort-select" class="text-sm font-medium text-black/75 dark:text-white/75"
+      >{{- i18n "sortLabel" -}}</label
+    >
+    <select
+      id="post-list-sort-select"
+      class="post-list-filter-select rounded-lg border border-black/12 bg-white/90 px-3 py-2 text-sm text-black outline-none focus:border-orange-500/45 focus:ring-2 focus:ring-orange-500/25 dark:border-white/18 dark:bg-black/35 dark:text-white"
+    >
+      <option value="date-desc">{{ i18n "sortDateDesc" }}</option>
+      <option value="date-asc">{{ i18n "sortDateAsc" }}</option>
+      <option value="title-asc">{{ i18n "sortTitleAsc" }}</option>
+      <option value="title-desc">{{ i18n "sortTitleDesc" }}</option>
+    </select>
+  </div>
 </div>
 
-{{- if $.IsHome -}}
-{{- partial "home-spotlight-triple.html" (dict "Articles" $articles "Tutorials" $tutorials "Conferences" $conferences) -}}
-{{- end -}}
-
-<div class="post-kind-stack space-y-20 md:space-y-24">
+<div class="post-kind-stack space-y-14 md:space-y-16">
   {{- if gt (len $articles) 0 -}}
   <details open class="post-kind-disclosure post-kind-group" aria-labelledby="post-kind-articles">
     <summary
@@ -151,8 +172,10 @@
 
 <script>
   (function () {
-    var sel = document.getElementById("post-list-sort-select");
-    if (!sel) return;
+    var sortSel = document.getElementById("post-list-sort-select");
+    var yearSel = document.getElementById("post-list-year-filter");
+    if (!sortSel) return;
+
     function cmpTitle(a, b, dir) {
       var ta = (a.getAttribute("data-sort-title") || "").toLowerCase();
       var tb = (b.getAttribute("data-sort-title") || "").toLowerCase();
@@ -160,10 +183,22 @@
       if (ta > tb) return dir === "asc" ? 1 : -1;
       return 0;
     }
-    function sortGrid(grid, mode) {
+
+    function cardVisible(card, year) {
+      if (!year || year === "all") return true;
+      return card.getAttribute("data-sort-year") === year;
+    }
+
+    function sortGrid(grid, mode, year) {
       var cards = Array.prototype.slice.call(grid.querySelectorAll(".post-list-card"));
       if (!cards.length) return;
-      cards.sort(function (a, b) {
+      cards.forEach(function (c) {
+        c.hidden = !cardVisible(c, year);
+      });
+      var visible = cards.filter(function (c) {
+        return !c.hidden;
+      });
+      visible.sort(function (a, b) {
         var da = parseInt(a.getAttribute("data-sort-date") || "0", 10);
         var db = parseInt(b.getAttribute("data-sort-date") || "0", 10);
         if (mode === "date-desc") return db - da;
@@ -172,17 +207,32 @@
         if (mode === "title-desc") return cmpTitle(a, b, "desc");
         return 0;
       });
-      cards.forEach(function (c) {
+      visible.forEach(function (c) {
         grid.appendChild(c);
       });
     }
-    function apply() {
-      var mode = sel.value;
-      document.querySelectorAll("[data-post-sort-cards]").forEach(function (g) {
-        sortGrid(g, mode);
+
+    function syncSections() {
+      document.querySelectorAll("details.post-kind-disclosure").forEach(function (d) {
+        var grid = d.querySelector("[data-post-sort-cards]");
+        if (!grid) return;
+        var any = grid.querySelector(".post-list-card:not([hidden])");
+        d.hidden = !any;
       });
     }
-    sel.addEventListener("change", apply);
+
+    function apply() {
+      var mode = sortSel.value;
+      var year = yearSel ? yearSel.value : "all";
+      document.querySelectorAll("[data-post-sort-cards]").forEach(function (g) {
+        sortGrid(g, mode, year);
+      });
+      syncSections();
+    }
+
+    sortSel.addEventListener("change", apply);
+    if (yearSel) yearSel.addEventListener("change", apply);
+    apply();
   })();
 </script>
 

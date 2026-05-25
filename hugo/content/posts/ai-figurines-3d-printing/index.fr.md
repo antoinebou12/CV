@@ -3,9 +3,8 @@ post_kind: article
 title: "Figurines IA pour impression 3D"
 date: 2026-05-22T10:00:00-04:00
 lastmod: 2026-05-23T02:00:00-04:00
-description: Figurines chibi, ComfyUI (OmniGen2 → Hunyuan3D v2), diagrammes de séquence via uml-mcp, et notes d’impression résine.
+description: Figurines chibi, ComfyUI avec OmniGen2 et Hunyuan3D v2, diagrammes de séquence via uml-mcp, et notes d’impression résine.
 translationKey: ai-figurines-3d-printing
-card_image: images/photo-to-object-pipeline.png
 tags:
   - Impression 3D
   - IA

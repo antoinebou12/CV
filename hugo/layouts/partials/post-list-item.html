@@ -22,10 +22,11 @@
 <article
   class="post-list-card group h-full not-prose{{ if eq $kind "tutorial" }} post-list-card--tutorial{{ end }}{{ if $isProject }} post-list-card--project{{ end }}"
   data-sort-date="{{ $p.Date.Unix }}"
+  data-sort-year="{{ $p.Date.Format "2006" }}"
   data-sort-title="{{ $p.Title | plainify | htmlUnescape }}"
 >
   <div
-    class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-[1.25rem] border border-black/15 bg-white/90 shadow-lg outline-none ring-0 backdrop-blur-md transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl dark:border-white/15 dark:bg-black/70 dark:hover:shadow-2xl{{ if eq $kind "conference" }} post-list-card-inner--conference{{ end }}{{ if $isProject }} post-list-card-inner--project{{ end }}"
+    class="post-list-card-inner relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-black/10 bg-white/95 shadow-sm outline-none ring-0 transition-[box-shadow,border-color] duration-200 ease-out hover:border-black/18 hover:shadow-md dark:border-white/12 dark:bg-black/50 dark:hover:border-white/20 dark:hover:shadow-md{{ if eq $kind "conference" }} post-list-card-inner--conference{{ end }}{{ if $isProject }} post-list-card-inner--project{{ end }}"
   >
     <a
       class="post-list-card-hit relative flex min-h-0 flex-1 flex-col text-inherit no-underline outline-none ring-0 focus-visible:z-[2] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
@@ -54,7 +55,7 @@
             height="540"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.03]"
+            class="h-full w-full object-cover object-center transition duration-300 ease-out group-hover:scale-[1.02]"
           />
         </div>
       </div>

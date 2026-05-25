@@ -390,7 +390,11 @@ main:has(> article:not(.site-search-page)) {
 }
 
 .blog-list-page .post-card-grid {
-  gap: 3rem;
+  gap: 2rem;
+}
+
+.blog-list-page .post-list-filters {
+  margin-top: 0;
 }
 
 .blog-list-page .post-card-grid--conference {
@@ -409,42 +413,9 @@ main:has(> article:not(.site-search-page)) {
   }
 }
 
+/* Blog list: keep cards flat; skip animated gradient wash */
 .blog-list-page .post-list-card-inner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  background:
-    radial-gradient(ellipse 130% 90% at 12% 18%, rgb(249 115 22 / 12%), transparent 52%),
-    radial-gradient(ellipse 100% 70% at 88% 82%, rgb(59 130 246 / 8%), transparent 48%),
-    linear-gradient(155deg, rgb(0 0 0 / 3%), transparent 42%);
-  mix-blend-mode: multiply;
-}
-
-.dark .blog-list-page .post-list-card-inner::before {
-  background:
-    radial-gradient(ellipse 130% 90% at 12% 18%, rgb(249 115 22 / 14%), transparent 52%),
-    radial-gradient(ellipse 100% 70% at 88% 82%, rgb(96 165 250 / 8%), transparent 48%),
-    linear-gradient(155deg, rgb(255 255 255 / 4%), transparent 45%);
-  mix-blend-mode: soft-light;
-}
-
-.blog-list-page .post-list-card:hover .post-list-card-inner::before {
-  opacity: 0.38;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .blog-list-page .post-list-card:hover .post-list-card-inner::before {
-    animation: blog-list-card-wash 50s ease-in-out infinite alternate;
-  }
-
-  .dark .blog-list-page .post-list-card:hover .post-list-card-inner::before {
-    animation-name: blog-list-card-wash-dark;
-  }
+  display: none;
 }
 
 @keyframes blog-list-card-wash {
@@ -834,17 +805,11 @@ details.post-kind-disclosure[open] .post-kind-disclosure__chevron {
 }
 
 .post-list-card-inner--conference {
-  border-color: rgb(249 115 22 / 32%);
-  box-shadow:
-    0 1px 0 rgb(249 115 22 / 12%),
-    0 2px 12px rgb(0 0 0 / 4%);
+  border-color: rgb(249 115 22 / 22%);
 }
 
 .dark .post-list-card-inner--conference {
-  border-color: rgb(251 146 60 / 35%);
-  box-shadow:
-    0 1px 0 rgb(251 146 60 / 14%),
-    0 4px 18px rgb(0 0 0 / 28%);
+  border-color: rgb(251 146 60 / 28%);
 }
 
 .post-list-card-inner--project {
