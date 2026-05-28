@@ -127,9 +127,9 @@ def project_nodes(projects: list[dict]) -> list[dict]:
 def load_aeo_dates() -> tuple[str, str]:
     """Return (dateModified, datePublished) as YYYY-MM-DD."""
     if yaml is None or not AEO_PATH.is_file():
-        return "2026-05-21", "2024-06-01"
+        return "2026-08-01", "2024-06-01"
     aeo = yaml.safe_load(AEO_PATH.read_text(encoding="utf-8")) or {}
-    return aeo.get("lastUpdated", "2026-05-21"), aeo.get(
+    return aeo.get("lastUpdated", "2026-08-01"), aeo.get(
         "datePublished", "2024-06-01"
     )
 

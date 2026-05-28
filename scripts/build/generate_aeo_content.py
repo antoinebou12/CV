@@ -438,7 +438,7 @@ def build_about_html(locale: str, aeo: dict) -> str:
     summary_cards = aeo.get("summaryCards") or []
     tech = aeo.get("technicalProfile") or {}
     knows = (aeo.get("personKnowsAbout") or {}).get(lang)
-    last = aeo.get("lastUpdated", "2026-05-21")
+    last = aeo.get("lastUpdated", "2026-08-01")
     published = aeo.get("datePublished", "2024-06-01")
     mod_iso = iso_modified(last)
     display = format_display_date(last, cfg["date_locale"])
@@ -671,7 +671,7 @@ def patch_cv(locale: str, aeo: dict) -> None:
     html = path.read_text(encoding="utf-8")
     lang = cfg["lang"]
     lead = lang_text(aeo.get("lead"), lang)
-    last = aeo.get("lastUpdated", "2026-05-21")
+    last = aeo.get("lastUpdated", "2026-08-01")
     published = aeo.get("datePublished", "2024-06-01")
     html = patch_cv_about_intro(html, locale)
 
