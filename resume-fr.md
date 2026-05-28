@@ -60,7 +60,7 @@ Ingénieur plateforme et infographie : backends, exploitation cloud et outillage
 
 ### Maîtrise, Génie des technologies de l'information — École de technologie supérieure (ÉTS)
 
-2023-08 — 2026-04
+2023-08 — 2026-08
 - Mémoire : usure de surface en temps réel dans des simulations physiques interactives, avec frottement et textures dynamiques
 
 ### Baccalauréat, Génie des technologies de l'information — École de technologie supérieure (ÉTS)
@@ -77,8 +77,8 @@ Ingénieur plateforme et infographie : backends, exploitation cloud et outillage
 - **Cloud et plateforme:** Docker, Kubernetes, Terraform, GCP, Azure, AWS
 - **CI/CD et livraison:** Git, GitLab CI/CD, GitHub Actions, Azure DevOps
 - **Données:** PostgreSQL, MongoDB, Redis, Kafka, SQL
-- **Tests et observabilité:** Playwright, JUnit, ELK, Grafana, Prometheus, Sentry
-- **Sécurité et pratiques:** Linux, OWASP, DevSecOps, Agile, SCRUM, Kanban, MCP, UML, logiciel libre
+- **Tests et observabilité:** Playwright, JUnit, ELK, Grafana, Prometheus
+- **Sécurité et pratiques:** Linux, OWASP, DevSecOps, Agile, SCRUM, Kanban, UML, logiciel libre
 
 ## Projets sélectionnés
 
@@ -109,7 +109,7 @@ Sink Serilog .NET vers Sentry pour centraliser journaux et erreurs (plusieurs pa
 ## Certifications
 - [AWS Certified Cloud Practitioner](https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564)
 - [Programme québécois d'entrepreneuriat scientifique (QcES)](https://verified.sertifier.com/fr/verify/37471918795197/)
-- [Parcours AWS Cloud Quest (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)
+- [Parcours Cloud Quest (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)
 
 ---
 

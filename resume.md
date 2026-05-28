@@ -60,7 +60,7 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 
 ### Master's Degree, Information Technology Engineering — École de technologie supérieure (ÉTS)
 
-2023-08 — 2026-04
+2023-08 — 2026-08
 - Thesis: real-time surface wear in interactive physics simulations, with dynamic friction and textures
 
 ### Bachelor's Degree, Information Technology Engineering — École de technologie supérieure (ÉTS)
@@ -77,8 +77,8 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 - **Cloud and platform:** Docker, Kubernetes, Terraform, GCP, Azure, AWS
 - **CI/CD and delivery:** Git, GitLab CI/CD, GitHub Actions, Azure DevOps
 - **Data:** PostgreSQL, MongoDB, Redis, Kafka, SQL
-- **Testing and observability:** Playwright, JUnit, ELK, Grafana, Prometheus, Sentry
-- **Security and practice:** Linux, OWASP, DevSecOps, Agile, SCRUM, Kanban, MCP, UML, open source
+- **Testing and observability:** Playwright, JUnit, ELK, Grafana, Prometheus
+- **Security and practice:** Linux, OWASP, DevSecOps, Agile, SCRUM, Kanban, UML, open source
 
 ## Selected projects
 
@@ -109,7 +109,7 @@ Maintained Home Assistant HACS integration for Renpho weight and body-compositio
 ## Certifications
 - [AWS Certified Cloud Practitioner](https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564)
 - [Programme québécois d'entrepreneuriat scientifique (QcES)](https://verified.sertifier.com/fr/verify/37471918795197/)
-- [AWS Cloud Quest tracks (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)
+- [Cloud Quest (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)
 
 ---
 
