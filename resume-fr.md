@@ -16,6 +16,13 @@ Ingénieur plateforme et infographie : backends, exploitation cloud et outillage
 
 ## Expérience
 
+### Stagiaire, Développeur(-euse) — Solutions numériques et analytiques @ La Caisse (Caisse de dépôt et placement du Québec)
+
+2026-09 — 2026-12 | Montréal, QC
+- Participer au cycle complet de développement de solutions applicatives optimisées pour une infrastructure infonuagique
+- Concevoir des modules et des composantes autonomes, réutilisables et testables
+- Collaborer à la création de rapports visuels ainsi qu'aux tests intégrés et d'acceptation
+
 ### Plateformes cloud sécurisées @ IMC2 — Institut multidisciplinaire en cybersécurité et cyberrésilience
 
 2025-03 — 2026-02 | Montréal, QC (Télétravail)

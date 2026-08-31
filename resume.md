@@ -16,6 +16,13 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 
 ## Experience
 
+### Software Developer Intern — Digital and Analytics Solutions @ La Caisse (Caisse de dépôt et placement du Québec)
+
+2026-09 — 2026-12 | Montréal, QC
+- Contribute across the full development lifecycle of cloud-optimized application solutions
+- Design standalone, reusable, and testable modules and components
+- Collaborate on visual reporting and integrated and acceptance testing
+
 ### Secure cloud platforms @ IMC2 — Institut multidisciplinaire en cybersécurité et cyberrésilience
 
 2025-03 — 2026-02 | Montréal, QC (Remote)
