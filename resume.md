@@ -93,6 +93,18 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 
 Open-source MCP server that turns architecture prompts into UML and related diagrams (Mermaid, PlantUML, Kroki) for Cursor and ChatGPT.
 
+### [Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)
+
+Homebrew fork of Moonlight-Switch for Apollo/Sunshine PC streaming on Nintendo Switch with in-app overlay and performance stats.
+
+### [moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)
+
+Maintained fork of zoeyjodon/moonlight-N3DS — GameStream client experiments for New 3DS homebrew.
+
+### [sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)
+
+Nintendo Switch homebrew port of coop-deluxe/sm64coopdx (online co-op SM64; user-supplied ROM).
+
 ### [MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)
 
 Docker Compose homelab stack for media library automation (Servarr, Plex/Jellyfin, monitoring) with companion install scripts.
