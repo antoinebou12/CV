@@ -49,22 +49,22 @@ Source : [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (même cha�
 
 | Dépôt | Rôle |
 |-------|------|
-| [**WearPaper**](https://github.com/ETSim/WearPaper) | Mémoire LaTeX (`Thesis/main.tex` → `Thesis/build/main.pdf`), article ACM, diapositives Beamer de soutenance ; manuscrit et bibliographie de référence. |
+| [**WearPaper**](https://github.com/ETSim/WearPaper) | Sources LaTeX du mémoire, article ACM, diapositives Beamer de soutenance et bibliographie de référence. |
 | **TextureFriction** (local, `E:\master\TextureFriction`) | Simulateur Qt6 + OpenGL 4.3+ : contact PGS/AVBD, passes FBO par cluster, dépôt GPU dans les atlas glissement/usure/direction. Build : `just build`, exécution : `just run-build`. |
 
 WearPaper est la **trace écrite** ; TextureFriction est la boucle interactive.
 
 ## Validation
 
-Des acquisitions sur un banc d'abrasion réciproque ([`banc-abrasion-reciproque`](./images/banc-abrasion-reciproque.pdf)) alimentent cartes normales mesurées et progression d'usure par stades. Jeu public : [ETSim/WearSurfacesDatasets](https://github.com/ETSim/WearSurfacesDatasets). La métrologie de surface rejoint mon travail CV sur [**TrueMapData**](https://github.com/ETSim/TrueMapData) et l'intégration **surfalize**.
+Des acquisitions sur un banc d'abrasion réciproque alimentent cartes normales mesurées et progression d'usure par stades. Jeu public : [ETSim/WearSurfacesDatasets](https://github.com/ETSim/WearSurfacesDatasets). La métrologie de surface rejoint mon travail CV sur [**TrueMapData**](https://github.com/ETSim/TrueMapData) et l'intégration **surfalize**.
 
 ## Résultats (aperçu)
 
 Dans les scénarios testés, les **texels écrits** suivent mieux l'usure cumulée que la trajectoire du corps seul ; la topologie du contact modifie le dépôt. Un cube ou un tore sur plan reste dans un **budget interactif** ; le coût augmente fortement quand plusieurs regroupements de contact sont traités en parallèle. La méthode est un **modèle d'apparence** physiquement motivé, pas une simulation tribologique complète — limites autour de la reconstruction de champs effectifs, de la calibration et de la paramétrisation UV.
 
-## PDF du mémoire
+## Documents de recherche
 
-Le manuscrit, l'article et les diapositives de soutenance sont dans [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper). La CI produit le mémoire complet en `Thesis/build/main.pdf` à partir de `Thesis/main.tex`.
+Les sources du manuscrit, l'article et les diapositives de soutenance sont dans [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper).
 
 ## Voir aussi
 

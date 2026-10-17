@@ -49,22 +49,22 @@ Source: [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (same chain 
 
 | Repo | Role |
 |------|------|
-| [**WearPaper**](https://github.com/ETSim/WearPaper) | LaTeX thesis (`Thesis/main.tex` → `Thesis/build/main.pdf`), ACM article, Beamer defense slides; canonical manuscript and bibliography. |
+| [**WearPaper**](https://github.com/ETSim/WearPaper) | LaTeX thesis sources, ACM article, Beamer defense slides, and canonical bibliography. |
 | **TextureFriction** (local, `E:\master\TextureFriction`) | Qt6 + OpenGL 4.3+ simulator: PGS/AVBD contact, cluster FBO passes, GPU deposition into sliding/wear/direction atlases. Build: `just build`, run: `just run-build`. See `docs/architecture/14-thesis-pipeline-and-rationale.md` in the repo. |
 
 WearPaper is the **paper trail**; TextureFriction is where the loop runs at interactive rates.
 
 ## Validation
 
-Acquisitions on a reciprocal abrasion bench ([`banc-abrasion-reciproque`](./images/banc-abrasion-reciproque.pdf)) feed measured normal maps and staged wear progression. Public dataset: [ETSim/WearSurfacesDatasets](https://github.com/ETSim/WearSurfacesDatasets). Surface metrology tooling connects to my CV work on [**TrueMapData**](https://github.com/ETSim/TrueMapData) and **surfalize** integration.
+Acquisitions on a reciprocal abrasion bench feed measured normal maps and staged wear progression. Public dataset: [ETSim/WearSurfacesDatasets](https://github.com/ETSim/WearSurfacesDatasets). Surface metrology tooling connects to my CV work on [**TrueMapData**](https://github.com/ETSim/TrueMapData) and **surfalize** integration.
 
 ## Results (snapshot)
 
 In tested scenarios, **written texels** track cumulative wear more closely than body travel alone; contact topology changes the deposit pattern. A cube or torus on a plane stays within an **interactive budget**; cost rises sharply when several contact groups are processed together. The method is a physically motivated **appearance model**, not a full tribology simulator — limits remain around effective-field reconstruction, calibration, and UV parameterization.
 
-## Full thesis PDF
+## Research materials
 
-The manuscript, article, and defense slides live in [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper). CI builds the complete thesis to `Thesis/build/main.pdf` from `Thesis/main.tex`.
+The manuscript sources, article, and defense slides live in [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper).
 
 ## Related
 

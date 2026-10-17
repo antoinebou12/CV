@@ -52,8 +52,7 @@ The research line connects to my **ÉTS** work on **3D fabrication and validatio
 
 | Format | File | Notes |
 |--------|------|--------|
-| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Full deck export (28 slides). Best for in-browser reading. |
-| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Original editable deck (~116 MB). Download below; preview works best via the PDF. |
+| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Original editable deck (~116 MB). Download below. |
 
 **PowerPoint (.pptx)** — full talk with embedded assets:
 
@@ -62,7 +61,7 @@ The research line connects to my **ÉTS** work on **3D fabrication and validatio
 ## What I learned presenting
 
 - **Name the evaluation gap early** — reviewers asked how we would validate wear on real garments, not only in simulation.
-- **Slides ≠ paper** — the PDF deck is the fast path; the PPTX is for collaborators who will steal figures.
+- **Slides ≠ paper** — the talk format helped surface evaluation questions before the work became a manuscript.
 - **Community continuity** — same faces as Montréal 2024, new venue; hallway conversations mattered as much as the podium.
 
 ## Toronto, November 2025

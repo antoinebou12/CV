@@ -52,8 +52,7 @@ Ce fil de recherche rejoint mon travail à l’**ÉTS** sur la **fabrication et 
 
 | Format | Fichier | Notes |
 |--------|---------|--------|
-| **PDF** | [graphquon-2025-where-to-wear.pdf](./graphquon-2025-where-to-wear.pdf) | Export complet (28 diapos). Idéal pour lecture dans le navigateur. |
-| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Présentation éditable d’origine (~116 Mo). Téléchargement ci-dessous ; aperçu : préférer le PDF. |
+| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Présentation éditable d’origine (~116 Mo). Téléchargement ci-dessous. |
 
 **PowerPoint (.pptx)** — présentation complète avec actifs embarqués :
 
