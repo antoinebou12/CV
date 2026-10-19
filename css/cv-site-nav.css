@@ -2,8 +2,8 @@
 
 .cv-site-nav {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: max(20px, env(safe-area-inset-top));
+  left: max(20px, env(safe-area-inset-left));
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -11,6 +11,9 @@
 }
 
 .cv-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: rgba(255, 255, 255, 0.9);
   padding: 10px 15px;
   border-radius: 5px;
@@ -35,10 +38,15 @@ a.cv-nav-pill:hover {
 }
 
 .cv-nav-lang a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   color: #334960;
   text-decoration: none;
   font-weight: 600;
-  margin: 0 5px;
+  margin: 0;
 }
 
 .cv-nav-lang a:hover {
@@ -67,4 +75,22 @@ a.cv-nav-pill.cv-nav-about.current {
   font-weight: 700;
   cursor: default;
   text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .cv-site-nav {
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
+    max-width: calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cv-nav-pill {
+    padding: 0 12px;
+  }
+
+  .cv-nav-lang {
+    padding: 0 4px;
+  }
 }

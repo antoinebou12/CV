@@ -242,13 +242,13 @@ PARTICLES_SCRIPT = """  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0
         if (typeof particlesJS !== 'function') return;
         particlesJS('particles-js', {
         particles: {
-          number: { value: 200, density: { enable: true, value_area: 2400 } },
+          number: { value: 90, density: { enable: true, value_area: 2400 } },
           color: { value: "#ffffff" },
           shape: { type: "circle", stroke: { width: 1, color: "#000000" }, polygon: { nb_sides: 6 } },
           opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
           size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
           line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-          move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+          move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
         },
         interactivity: {
           detect_on: "canvas",
@@ -264,10 +264,12 @@ PARTICLES_SCRIPT = """  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0
         retina_detect: true
       });
       }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initParticles);
+      if (document.readyState === 'complete') {
+        requestAnimationFrame(initParticles);
       } else {
-        initParticles();
+        window.addEventListener('load', function () {
+          requestAnimationFrame(initParticles);
+        }, { once: true });
       }
     })();
   </script>"""
@@ -517,7 +519,7 @@ def build_about_html(locale: str, aeo: dict) -> str:
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{esc(cfg["title"])}</title>
   <meta name="description" content="{esc(meta_desc)}">
   <meta name="twitter:card" content="summary">
@@ -539,6 +541,11 @@ def build_about_html(locale: str, aeo: dict) -> str:
   </script>
 {JSONLD_END}
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/cv-site-nav.css">
@@ -556,7 +563,7 @@ def build_about_html(locale: str, aeo: dict) -> str:
       <div class="col-xs-12">
         <div id="photo-header" class="text-center">
           <div id="photo">
-            <img src="antoine.png" alt="{esc(cfg["person_name"])}" width="160" height="160" fetchpriority="high" decoding="async">
+            <img src="antoine.png" alt="{esc(cfg["person_name"])}" width="160" height="160" fetchpriority="high">
           </div>
           <div id="text-header">
             <h1>{esc(cfg["person_name"])}<br><span>{esc(position)}</span></h1>
