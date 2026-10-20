@@ -2,7 +2,8 @@
 post_kind: article
 title: "Exploring movie similarities with vector search algorithms"
 date: 2026-04-13T12:00:00-04:00
-lastmod: 2026-05-22T16:00:00-04:00
+lastmod: 2026-10-20T10:00:00-04:00
+mermaid: true
 description: "A teaching narrative: pgvector kNN in SQL, Qdrant dense and sparse vectors on MovieLens, then LangChain + Ollama RAG on the same catalog."
 translationKey: vector-databases-similar-movies
 images:
@@ -24,6 +25,41 @@ aliases:
 I taught a thread on “find movies like this” that kept growing: **embeddings in PostgreSQL**, the same idea in **Qdrant** with two different vector meanings, then **retrieval + a local LLM** grounded on the same rows. This page is the story; notebooks and animations live in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding). **[Version française]({{< ref "/posts/vector-databases-similar-movies/index.fr.md" >}})**.
 
 <!--more-->
+
+{{< repo_snapshot "AlgoETS/SimilityVectorEmbedding" >}}
+
+## The original demos
+
+These three animations come from the project README. They show recorded interfaces and processing steps, not current latency measurements.
+
+{{< figure src="demo-gradio.gif" alt="Animated demonstration of the Gradio movie-search interface" caption="Gradio interface: exploring similar movies." loading="lazy" >}}
+
+{{< figure src="demo-embeddings.gif" alt="Animated demonstration of embedding generation" caption="Generating vector representations with Sentence Transformers." loading="lazy" >}}
+
+{{< figure src="demo-qdrant.gif" alt="Animated movie-similarity search with Qdrant" caption="The Qdrant search and recommendation workflow." loading="lazy" >}}
+
+## What the notebooks actually build
+
+[`postgres/1.create_table.ipynb`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/postgres/1.create_table.ipynb) combines title, year, genres, actors, director, summary, and country into model input. It compares **five model configurations**: BART, GTE, MiniLM-L12, RoBERTa, and e5-large. This is a code inventory, not an accuracy ranking.
+
+[`qdrant/0.simple.ipynb`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/qdrant/0.simple.ipynb) creates a **384-dimensional** collection with cosine distance and upserts batches of **100** points. The dimension must match the selected encoder. The notebook recreates its collection, so inspect that step before using an existing database.
+
+```mermaid
+flowchart TD
+  J["movies.json metadata"] --> T["Combined and preprocessed text"]
+  T --> E["Selected encoder"]
+  E --> N["Normalize vectors"]
+  N --> P["PostgreSQL / pgvector"]
+  N --> Q["Qdrant vector collection"]
+  R["Query encoded with the same model"] --> P
+  R --> Q
+  P --> K["Nearest movies"]
+  Q --> K
+  K --> G["Interface and explanation"]
+```
+
+This editable Mermaid replaces a static architecture screenshot. It summarizes the shared dense-vector path without pretending different encoders share one interchangeable vector space.
+
 
 ## The question behind all three parts
 

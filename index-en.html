@@ -1622,47 +1622,72 @@
 </script>
   <script>
     (function () {
-      function wireClustrmaps(toggleId, panelId, mountId) {
-        var btn = document.getElementById(toggleId);
-        var panel = document.getElementById(panelId);
-        var mount = document.getElementById(mountId);
-        if (!btn || !panel || !mount) return;
+      document.querySelectorAll('.clustrmaps-toggle').forEach(function (btn) {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        var mount = panel && panel.querySelector('[data-clustrmaps-src]');
+        if (!mount) return;
+        var fr = document.documentElement.lang.indexOf('fr') === 0;
+        var status = mount.querySelector('.clustrmaps-placeholder');
+        var url = new URL(mount.getAttribute('data-clustrmaps-src'));
+        var mapUrl = 'https://clustrmaps.com/map_v2.png?d=' + encodeURIComponent(url.searchParams.get('d')) + '&cl=ffffff&w=300';
+        var link = document.createElement('a');
+        link.href = mapUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = fr ? 'Ouvrir la carte chez ClustrMaps' : 'Open map on ClustrMaps';
+        panel.appendChild(link);
+        var timer;
+        var image;
+        function failed() {
+          clearTimeout(timer);
+          mount.dataset.state = 'error';
+          mount.classList.remove('clustrmaps-mount--ready');
+          if (image) image.hidden = true;
+          if (status) {
+            status.hidden = false;
+            status.textContent = fr ? 'La carte est indisponible. Réessayez ou ouvrez le lien ci-dessous.' : 'The map is unavailable. Retry or open the link below.';
+          }
+          if (!mount.querySelector('.map-retry')) {
+            var retry = document.createElement('button');
+            retry.type = 'button';
+            retry.className = 'map-retry';
+            retry.textContent = fr ? 'Réessayer' : 'Retry';
+            retry.addEventListener('click', loadMap);
+            mount.appendChild(retry);
+          }
+        }
+        function loadMap() {
+          clearTimeout(timer);
+          mount.dataset.state = 'loading';
+          var retry = mount.querySelector('.map-retry');
+          if (retry) retry.remove();
+          if (image) { image.onload = null; image.onerror = null; image.remove(); }
+          if (status) { status.hidden = false; status.textContent = fr ? 'Chargement de la carte…' : 'Loading map…'; }
+          image = new Image();
+          image.alt = fr ? 'Répartition géographique des visiteurs, par ClustrMaps' : 'Visitor locations provided by ClustrMaps';
+          image.width = 300;
+          image.style.maxWidth = '100%';
+          image.style.height = 'auto';
+          image.referrerPolicy = 'no-referrer-when-downgrade';
+          image.onload = function () {
+            if (mount.dataset.state !== 'loading') return;
+            clearTimeout(timer);
+            mount.dataset.state = 'ready';
+            mount.classList.add('clustrmaps-mount--ready');
+            if (status) status.hidden = true;
+          };
+          image.onerror = failed;
+          timer = setTimeout(failed, 10000);
+          mount.appendChild(image);
+          image.src = mapUrl;
+        }
         btn.addEventListener('click', function () {
           var open = btn.getAttribute('aria-expanded') === 'true';
-          if (open) {
-            btn.setAttribute('aria-expanded', 'false');
-            panel.hidden = true;
-            return;
-          }
-          btn.setAttribute('aria-expanded', 'true');
-          panel.hidden = false;
-          if (!mount.querySelector('script#clustrmaps')) {
-            var s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.id = 'clustrmaps';
-            s.src = mount.getAttribute('data-clustrmaps-src');
-            mount.appendChild(s);
-            var placeholder = mount.querySelector('.clustrmaps-placeholder');
-            if (placeholder && !mount.dataset.clustrmapsWatch) {
-              mount.dataset.clustrmapsWatch = '1';
-              var observer = new MutationObserver(function () {
-                if (mount.querySelector('.clustrmaps-map-container, #clustrmaps-widget-v2, .clustrmaps-map')) {
-                  placeholder.hidden = true;
-                  mount.classList.add('clustrmaps-mount--ready');
-                  observer.disconnect();
-                }
-              });
-              observer.observe(mount, { childList: true, subtree: true });
-            }
-          }
+          btn.setAttribute('aria-expanded', String(!open));
+          panel.hidden = open;
+          if (!open && !mount.dataset.state) loadMap();
         });
-      }
-      if (document.getElementById('clustrmaps-toggle-en')) {
-        wireClustrmaps('clustrmaps-toggle-en', 'clustrmaps-panel-en', 'clustrmaps-mount-en');
-      }
-      if (document.getElementById('clustrmaps-toggle-fr')) {
-        wireClustrmaps('clustrmaps-toggle-fr', 'clustrmaps-panel-fr', 'clustrmaps-mount-fr');
-      }
+      });
     })();
 </script>
 </body>

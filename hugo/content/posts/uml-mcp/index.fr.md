@@ -2,7 +2,9 @@
 post_kind: article
 title: "uml-mcp — diagrammes UML depuis le chat via MCP"
 date: 2026-09-02T14:00:00-04:00
-lastmod: 2026-09-02T14:00:00-04:00
+lastmod: 2026-10-20T10:00:00-04:00
+mermaid: true
+images: ["featured.png"]
 description: "Serveur MCP open source pour diagrammes Mermaid, PlantUML et Kroki dans Cursor et ChatGPT — genèse, installation, liens vers les outils diagrammes antérieurs."
 translationKey: uml-mcp-post
 tags:
@@ -16,9 +18,40 @@ tags:
 
 [![Étoiles GitHub](https://img.shields.io/github/stars/antoinebou12/uml-mcp?style=social)](https://github.com/antoinebou12/uml-mcp)
 
-**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** est un serveur Model Context Protocol open source qui transforme des prompts d'architecture en diagrammes **Mermaid**, **PlantUML** ou **Kroki**. On décrit un système en chat ; l'outil rend du syntaxe collable dans Hugo, GitHub ou une revue de design. Il tourne dans **Cursor** et s'apparie à un [GPT personnalisé](https://github.com/antoinebou12/D2COpenAIPlugin) pour ChatGPT. Le dépôt est autour de **★ 97** — la voie diagramme que j'utilise le plus. **[English version]({{< ref "/posts/uml-mcp/index.md" >}})**.
+**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** fournit de vrais outils de diagrammes aux clients MCP : l’assistant transmet une source Mermaid, PlantUML ou un autre format pris en charge, puis le serveur renvoie un rendu et des liens. Le dépôt documente cinq outils et environ 37 types via Kroki. Ces chiffres décrivent l’interface, pas un benchmark. **[English version]({{< ref "/posts/uml-mcp/index.md" >}})**.
+
+{{< repo_snapshot "antoinebou12/uml-mcp" >}}
+
+![Séquence Mermaid client/serveur rendue dans le chat, tirée du dépôt](featured.png)
 
 <!--more-->
+
+## Du code Mermaid aux liens
+
+```mermaid
+sequenceDiagram
+  participant C as Client MCP
+  participant U as UML-MCP
+  participant R as Moteur de rendu
+  C->>U: generate_uml avec source et type
+  U->>U: Vérifier la requête
+  U->>R: Construire la demande de rendu
+  R-->>U: Diagramme rendu
+  U-->>C: URL, lien éditeur ou image
+```
+
+Le module [`tools/kroki/mermaid.py`](https://github.com/antoinebou12/uml-mcp/blob/main/tools/kroki/mermaid.py) construit un état JSON, le compresse avec zlib et l’encode en base64 compatible avec les URL. Cette source alimente un lien d’image et un lien d’édition mermaid.live.
+
+Le code distingue le SVG, servi sous `/svg/`, des images PNG/JPEG/WebP sous `/img/?type=...`. Une erreur de chemin peut donc casser un diagramme même si la source Mermaid est correcte.
+
+Le dépôt propose aussi `generate_uml_image`, `validate_uml`, `list_diagram_types` et `generate_uml_batch`. Le choix dépend du besoin : aperçu dans le chat, contrôle de la source ou plusieurs rendus.
+
+## Le serveur a aussi une interface d’administration
+
+Le README actuel documente `uml-mcp admin`, des métriques et un playground Kroki. Ces outils aident à distinguer une mauvaise source, un moteur indisponible et un problème de configuration. Ils ne remplacent pas la vérification du diagramme produit.
+
+Pour un autre usage de la même idée, voir [ComfyUI-UML]({{< ref "/posts/comfyui-uml-diagram-workflows/index.fr.md" >}}).
+
 
 ## Pourquoi MCP plutôt que des gabarits copiés-collés ?
 

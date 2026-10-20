@@ -1,0 +1,8 @@
+{{- $repo := .Get 0 -}}
+{{- with index hugo.Data.project_repositories $repo -}}
+<aside class="repo-snapshot" aria-label="GitHub">
+  <a href="https://github.com/{{ $repo }}">{{ $repo }}</a>
+  <p><strong>★ {{ .stars }}</strong> · {{ .forks }} forks · {{ if eq $.Page.Language.Lang "fr" }}Dépôt créé le{{ else }}Repository created{{ end }} <time datetime="{{ .created }}">{{ .created }}</time></p>
+  <small>{{ if eq $.Page.Language.Lang "fr" }}Statistiques GitHub relevées le 20 octobre 2026.{{ else }}GitHub statistics recorded October 20, 2026.{{ end }}</small>
+</aside>
+{{- end -}}

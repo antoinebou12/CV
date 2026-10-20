@@ -2,7 +2,8 @@
 post_kind: article
 title: "Similarité entre films et recherche vectorielle"
 date: 2026-04-13T12:00:00-04:00
-lastmod: 2026-05-22T16:00:00-04:00
+lastmod: 2026-10-20T10:00:00-04:00
+mermaid: true
 description: "Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens, puis RAG LangChain + Ollama."
 translationKey: vector-databases-similar-movies
 images:
@@ -24,6 +25,41 @@ aliases:
 Fil conducteur « films similaires » : **embeddings dans PostgreSQL**, même idée dans **Qdrant** avec deux sens du vecteur, puis **récupération + LLM local** sur les mêmes lignes. Récit ici ; notebooks dans [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding). **[English version]({{< ref "/posts/vector-databases-similar-movies/index.md" >}})**.
 
 <!--more-->
+
+{{< repo_snapshot "AlgoETS/SimilityVectorEmbedding" >}}
+
+## Les démonstrations originales
+
+Les trois animations ci-dessous proviennent du README du projet. Elles montrent les interfaces et les étapes enregistrées, pas des mesures de latence actuelles.
+
+{{< figure src="demo-gradio.gif" alt="Démonstration animée de l’interface Gradio de recherche de films" caption="Interface Gradio : explorer des films similaires." loading="lazy" >}}
+
+{{< figure src="demo-embeddings.gif" alt="Démonstration animée de génération des embeddings" caption="Génération des représentations vectorielles avec Sentence Transformers." loading="lazy" >}}
+
+{{< figure src="demo-qdrant.gif" alt="Démonstration animée de recherche de films avec Qdrant" caption="Recherche et recommandations dans le parcours Qdrant." loading="lazy" >}}
+
+## Ce que les notebooks construisent réellement
+
+Dans [`postgres/1.create_table.ipynb`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/postgres/1.create_table.ipynb), le texte combine titre, année, genres, acteurs, réalisateur, résumé et pays. Le notebook compare **cinq configurations de modèles** : BART, GTE, MiniLM-L12, RoBERTa et e5-large. C’est un inventaire du code, pas un classement de qualité.
+
+[`qdrant/0.simple.ipynb`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/qdrant/0.simple.ipynb) crée une collection de **384 dimensions**, utilise la distance cosinus et écrit les points par lots de **100**. La taille doit correspondre au modèle choisi. Le notebook recrée la collection : il faut en tenir compte avant de l’exécuter sur une base existante.
+
+```mermaid
+flowchart TD
+  J["movies.json : métadonnées"] --> T["Texte combiné et prétraité"]
+  T --> E["Encodeur choisi"]
+  E --> N["Normalisation"]
+  N --> P["PostgreSQL / pgvector"]
+  N --> Q["Qdrant : collection de vecteurs"]
+  R["Requête encodée avec le même modèle"] --> P
+  R --> Q
+  P --> K["Voisins proches"]
+  Q --> K
+  K --> G["Interface et explication"]
+```
+
+Ce schéma remplace une capture d’architecture par une source Mermaid modifiable. Il décrit le parcours dense commun aux notebooks, sans fusionner les espaces vectoriels de modèles différents.
+
 
 ## Trois questions différentes
 
