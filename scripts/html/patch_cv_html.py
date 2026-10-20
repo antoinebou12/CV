@@ -152,7 +152,7 @@ def patch_file(path: Path) -> None:
 
     html = html.replace(
         '<img src="antoine.png" alt="Antoine Boucher">',
-        '<img src="antoine.png" alt="Antoine Boucher" width="160" height="160" fetchpriority="high" decoding="async">',
+        '<img src="antoine-320.jpg" srcset="antoine-320.jpg 320w, antoine.jpeg 800w" sizes="160px" alt="Antoine Boucher" width="160" height="160" fetchpriority="high" decoding="async">',
     )
     if '<main id="main"' not in html:
         html = html.replace('<div class="container">', '<main id="main" class="container">', 1)

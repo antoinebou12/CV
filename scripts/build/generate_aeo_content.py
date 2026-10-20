@@ -563,7 +563,7 @@ def build_about_html(locale: str, aeo: dict) -> str:
       <div class="col-xs-12">
         <div id="photo-header" class="text-center">
           <div id="photo">
-            <img src="antoine.png" alt="{esc(cfg["person_name"])}" width="160" height="160" fetchpriority="high">
+            <img src="antoine-320.jpg" srcset="antoine-320.jpg 320w, antoine.jpeg 800w" sizes="160px" alt="{esc(cfg["person_name"])}" width="160" height="160" fetchpriority="high" decoding="async">
           </div>
           <div id="text-header">
             <h1>{esc(cfg["person_name"])}<br><span>{esc(position)}</span></h1>
