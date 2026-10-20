@@ -54,7 +54,7 @@ New-Item -ItemType Directory -Path $Site | Out-Null
 foreach ($f in @('index.html', 'index-en.html', 'index-fr.html', 'about-en.html', 'about-fr.html', '404.html', 'resume.md', 'resume-fr.md', 'resume.json', 'resume-fr.json')) {
     if (Test-Path $f) { Copy-Item $f $Site }
 }
-Get-ChildItem -Path $RepoRoot -File -Include *.png, *.jpg, *.jpeg, *.ico, *.webmanifest, *.xml |
+Get-ChildItem -Path (Join-Path $RepoRoot '*') -File -Include *.png, *.jpg, *.jpeg, *.ico, *.webmanifest, *.xml |
     ForEach-Object { Copy-Item $_.FullName $Site }
 if (Test-Path 'antoine.jpeg') { Copy-Item 'antoine.jpeg' $Site }
 foreach ($d in @('css', 'linktree', 'papers')) {
