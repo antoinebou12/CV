@@ -10,6 +10,11 @@
   box-sizing: border-box;
   max-width: none;
   padding-inline: 1rem;
+  column-gap: 1rem;
+}
+
+.site-header > :first-child {
+  padding-inline-end: 0.75rem;
 }
 
 @media (min-width: 640px) {
@@ -147,13 +152,19 @@
     justify-content: center;
     line-height: 1.25;
     min-height: auto;
+    padding-inline: 0.65rem;
     padding-block: 0.5rem;
+  }
+
+  .site-nav-main + nav {
+    gap: 0.75rem;
+    margin-inline-start: 1.5rem;
   }
 }
 
 /* Main column: fluid horizontal padding + canvas (dark: transparent so body ::before shows) */
 main.site-main {
-  padding-inline: 1rem;
+  padding-inline: 1rem !important;
   background-color: var(--page-bg, var(--bg, #faf8f1));
 }
 
@@ -246,7 +257,7 @@ body {
   border: 1px solid var(--surface-border);
   background: var(--surface-1);
   box-shadow: var(--shadow-elevation-1);
-  padding: clamp(1.25rem, 4vw, 2rem);
+  padding: clamp(1.25rem, 4vw, 2rem) !important;
 }
 
 .dark .single-post-surface {
@@ -317,13 +328,13 @@ body {
 
 @media (min-width: 640px) {
   main.site-main {
-    padding-inline: 1.5rem;
+    padding-inline: 1.5rem !important;
   }
 }
 
 @media (min-width: 1024px) {
   main.site-main {
-    padding-inline: 2rem;
+    padding-inline: 2rem !important;
   }
 }
 
@@ -682,14 +693,14 @@ details.post-kind-disclosure[open] .post-kind-disclosure__chevron {
 /* Kind pill on card image: tutorial (high contrast on busy thumbnails) */
 .post-list-card-badge--tutorial {
   border-color: rgb(29 78 216 / 95%);
-  background-color: rgb(37 99 235);
+  background-color: rgb(29 78 216);
   color: rgb(255 255 255);
   box-shadow: 0 1px 2px rgb(0 0 0 / 18%);
 }
 
 .dark .post-list-card-badge--tutorial {
   border-color: rgb(147 197 253 / 90%);
-  background-color: rgb(59 130 246);
+  background-color: rgb(29 78 216);
   color: rgb(255 255 255);
   box-shadow: 0 1px 3px rgb(0 0 0 / 35%);
 }
@@ -891,4 +902,21 @@ article.conference-post .conference-single-hero img {
 
 .site-lang-switch span[aria-current="true"] {
   color: var(--brand-accent);
+}
+
+/* Keep compact metadata legible and single-page navigation comfortable. */
+.site-footer {
+  font-size: 0.75rem !important;
+  opacity: 0.78 !important;
+}
+
+.single-post-nav {
+  line-height: 1.4 !important;
+}
+
+@media (max-width: 639.98px) {
+  .post-list-card-body,
+  .post-list-card-tags-details {
+    padding-inline: 1.25rem !important;
+  }
 }
