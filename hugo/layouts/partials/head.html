@@ -26,7 +26,8 @@
   <!---->
   {{- $custom := resources.Get "custom.css" -}}
   <!---->
-  {{- $css := slice $main $custom | resources.Concat "main.css" | minify | fingerprint -}}
+  {{- $editorial := resources.Get "editorial.css" -}}
+  {{- $css := slice $main $custom $editorial | resources.Concat "main.css" | minify | fingerprint -}}
   <link rel="preload stylesheet" as="style" href="{{- $css.RelPermalink -}}" integrity="{{ $css.Data.Integrity }}" />
 
   <!-- dark icon -->

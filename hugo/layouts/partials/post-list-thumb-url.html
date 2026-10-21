@@ -5,7 +5,7 @@
     {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
       {{- $thumb = .Permalink -}}
     {{- else -}}
-      {{- with .Fill "720x540 q85" -}}
+      {{- with .Fit "960x540 q85" -}}
         {{- $thumb = .Permalink -}}
       {{- else -}}
         {{- with .Fit "720x540" -}}
@@ -20,8 +20,8 @@
   {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
     {{- $thumb = .Permalink -}}
   {{- else -}}
-    {{- $fillSpec := "720x540 q85" -}}
-    {{- with .Fill $fillSpec -}}
+    {{- $fitSpec := "960x540 q85" -}}
+    {{- with .Fit $fitSpec -}}
       {{- $thumb = .Permalink -}}
     {{- else -}}
       {{- with .Fit "720x540" -}}

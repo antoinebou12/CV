@@ -49,6 +49,11 @@
 {{- $years = sort $years "value" "desc" -}}
 
 <div class="blog-list-page">
+<header class="journal-intro">
+  <p class="journal-eyebrow">{{ if eq .Lang "fr" }}Le carnet technique{{ else }}Engineering notebook{{ end }}</p>
+  <h1>{{ if eq .Lang "fr" }}Du code aux idées.{{ else }}From code to ideas.{{ end }}</h1>
+  <p>{{ if eq .Lang "fr" }}Plateforme, infographie et projets ouverts. Des notes de terrain, du code et les décisions derrière chaque projet.{{ else }}Platform, graphics, and open-source projects. Field notes, working code, and the decisions behind each project.{{ end }}</p>
+</header>
 {{- if not $.IsHome -}}
 {{- with .Content -}}
 <div class="mb-10 prose">
