@@ -19,13 +19,12 @@ CLUSTRMAPS_JS = r"""
         if (!mount) return;
         var fr = document.documentElement.lang.indexOf('fr') === 0;
         var status = mount.querySelector('.clustrmaps-placeholder');
-        var url = new URL(mount.getAttribute('data-clustrmaps-src'));
-        var mapUrl = 'https://clustrmaps.com/map_v2.png?d=' + encodeURIComponent(url.searchParams.get('d')) + '&cl=ffffff&w=300';
+        var mapUrl = 'https://mapmyvisitors.com/map.png?d=SALlTdL7CuZX05Y8yrOrB64GOo5l9xEv4HbMaHu2Znc&cl=ffffff';
         var link = document.createElement('a');
-        link.href = mapUrl;
+        link.href = 'https://mapmyvisitors.com/web/1c8zo';
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
-        link.textContent = fr ? 'Ouvrir la carte chez ClustrMaps' : 'Open map on ClustrMaps';
+        link.textContent = fr ? 'Carte et statistiques sur MapMyVisitors' : 'Map and statistics on MapMyVisitors';
         panel.appendChild(link);
         var timer;
         var image;
@@ -55,7 +54,7 @@ CLUSTRMAPS_JS = r"""
           if (image) { image.onload = null; image.onerror = null; image.remove(); }
           if (status) { status.hidden = false; status.textContent = fr ? 'Chargement de la carte…' : 'Loading map…'; }
           image = new Image();
-          image.alt = fr ? 'Répartition géographique des visiteurs, par ClustrMaps' : 'Visitor locations provided by ClustrMaps';
+          image.alt = fr ? 'Répartition géographique des visiteurs, par MapMyVisitors' : 'Visitor locations provided by MapMyVisitors';
           image.width = 300;
           image.style.maxWidth = '100%';
           image.style.height = 'auto';

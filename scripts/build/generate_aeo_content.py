@@ -590,6 +590,17 @@ def build_about_html(locale: str, aeo: dict) -> str:
     <p class="cv-last-updated">{esc(cfg["last_updated_label"])}: <time datetime="{last}">{display}</time></p>
   </main>
 {PARTICLES_SCRIPT}
+<script>
+(function () {{
+  if (!['antoineboucher.info', 'www.antoineboucher.info'].includes(location.hostname)) return;
+  if (document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]')) return;
+  var beacon = document.createElement('script');
+  beacon.defer = true;
+  beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  beacon.setAttribute('data-cf-beacon', '{{"token":"3571e50d16184cd280a22a9dfe09622e"}}');
+  document.body.appendChild(beacon);
+}})();
+</script>
 </body>
 </html>
 """
