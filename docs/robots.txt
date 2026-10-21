@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# AI and search crawlers (aligned with common SEO/AI discovery checks).
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+# Content Signals (draft extension used by some agents).
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+# Sitemap URL is rewritten in CI to match the deployed site root (see deploy workflow).
+Sitemap: https://antoineboucher.info/CV/sitemap.xml

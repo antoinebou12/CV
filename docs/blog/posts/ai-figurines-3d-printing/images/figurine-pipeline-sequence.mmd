@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Photo as Reference photo
+    participant ComfyUI
+    participant OmniGen2 as OmniGen2 stage
+    participant Hunyuan3D as Hunyuan3D v2 stage
+    participant Slicer as Resin slicer
+    participant Printer
+
+    User->>Photo: Side or front reference
+    User->>ComfyUI: Load chibi workflow + reference-photo.jpg
+    ComfyUI->>OmniGen2: ReferenceLatent + chibi vinyl prompt
+    OmniGen2-->>ComfyUI: PNG (white background)
+    ComfyUI->>Hunyuan3D: CLIPVision + image-to-mesh
+    Hunyuan3D-->>ComfyUI: GLB (VoxelToMesh 0.7 / 0.6)
+    ComfyUI-->>User: mesh/ComfyUI*.glb
+    User->>Slicer: Orient, supports, hollow
+    Slicer-->>User: Sliced job
+    User->>Printer: Resin print
+    Printer-->>User: Chibi figurine

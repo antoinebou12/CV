@@ -1,0 +1,132 @@
+<svg viewBox="0 0 870 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="3" refY="3" orient="auto-start-reverse">
+      <polygon points="0 0, 6 3, 0 6" fill="black"/>
+    </marker>
+    <radialGradient id="spotDeep" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#ff0000" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#ff0000" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ff0000" stop-opacity="0.18"/>
+    </radialGradient>
+    <radialGradient id="spotSoft" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#ff0000" stop-opacity="0.65"/>
+      <stop offset="70%" stop-color="#ff0000" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ff0000" stop-opacity="0.08"/>
+    </radialGradient>
+    <style>
+      .math-label {
+        font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern", "Times New Roman", serif;
+        font-style: italic;
+        fill: #111;
+      }
+      .math-sub {
+        font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern", "Times New Roman", serif;
+        font-style: italic;
+        fill: #111;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="870" height="280" fill="white"/>
+
+  <!-- Body A projected patch in UV space -->
+  <path d="M 95,58
+           C 190,34 330,40 430,52
+           C 565,68 665,52 765,66
+           L 785,202
+           C 655,222 535,206 430,218
+           C 315,230 200,218 82,205
+           Z"
+        fill="#bce0bc" fill-opacity="0.42" stroke="black" stroke-width="1.15" stroke-linejoin="round"/>
+
+  <!-- Body B projected patch in UV space -->
+  <path d="M 70,88
+           C 195,76 300,94 418,82
+           C 555,68 682,86 805,84
+           L 787,222
+           C 660,238 535,223 420,234
+           C 288,246 180,232 65,220
+           Z"
+        fill="#b3d1f0" fill-opacity="0.46" stroke="black" stroke-width="1.15" stroke-linejoin="round"/>
+
+  <!-- Nominal geometric mask boundary, where the two UV projections overlap -->
+  <path d="M 92,90
+           C 195,76 317,88 424,82
+           C 552,75 680,88 778,90
+           L 765,206
+           C 650,224 540,210 423,222
+           C 300,234 188,220 88,204
+           Z"
+       fill="#ff0000" fill-opacity="0.035" stroke="#d00000" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- subtle UV/grid-like sampling hints -->
+  <g opacity="0.14" stroke="black" stroke-width="0.5">
+    <path d="M 150,91 C 150,130 150,170 150,212" fill="none"/>
+    <path d="M 245,84 C 245,125 245,174 245,224" fill="none"/>
+    <path d="M 340,84 C 340,126 340,176 340,228" fill="none"/>
+    <path d="M 435,82 C 435,128 435,176 435,222" fill="none"/>
+    <path d="M 530,80 C 530,128 530,176 530,216" fill="none"/>
+    <path d="M 625,85 C 625,128 625,176 625,216" fill="none"/>
+    <path d="M 720,88 C 720,130 720,174 720,210" fill="none"/>
+    <path d="M 95,121 C 215,112 320,122 425,116 C 560,110 670,121 778,120" fill="none"/>
+    <path d="M 91,154 C 212,145 320,155 425,149 C 555,143 668,154 773,153" fill="none"/>
+    <path d="M 89,185 C 210,177 319,188 424,181 C 553,175 662,186 768,184" fill="none"/>
+  </g>
+
+  <!-- A representative cross-section line matching images 1 and 2 -->
+  <path d="M 90,154 C 210,145 320,155 425,149 C 555,143 668,154 773,153"
+       fill="none" stroke="black" stroke-width="1.0" stroke-dasharray="7 6" opacity="0.35"/>
+
+  <!-- Real contact area mask: W > 0 islands; darker/larger = deeper penetration contribution -->
+  <g>
+    <ellipse cx="122" cy="151" rx="17" ry="8" fill="#ff0000" fill-opacity="0.22" transform="rotate(-10 122 151)"/>
+    <ellipse cx="154" cy="122" rx="10" ry="5" fill="#ff0000" fill-opacity="0.22" transform="rotate(24 154 122)"/>
+    <ellipse cx="187" cy="188" rx="12" ry="6" fill="#ff0000" fill-opacity="0.22" transform="rotate(-18 187 188)"/>
+
+    <ellipse cx="220" cy="150" rx="35" ry="17" fill="#ff0000" fill-opacity="0.40" transform="rotate(8 220 150)"/>
+    <ellipse cx="251" cy="131" rx="14" ry="7" fill="#ff0000" fill-opacity="0.22" transform="rotate(-22 251 131)"/>
+    <ellipse cx="278" cy="181" rx="19" ry="9" fill="#ff0000" fill-opacity="0.22" transform="rotate(18 278 181)"/>
+
+    <ellipse cx="329" cy="154" rx="19" ry="9" fill="#ff0000" fill-opacity="0.22" transform="rotate(-6 329 154)"/>
+    <ellipse cx="365" cy="119" rx="13" ry="6" fill="#ff0000" fill-opacity="0.22" transform="rotate(15 365 119)"/>
+
+    <ellipse cx="430" cy="150" rx="46" ry="22" fill="#ff0000" fill-opacity="0.44" transform="rotate(-3 430 150)"/>
+    <ellipse cx="407" cy="184" rx="20" ry="8" fill="#ff0000" fill-opacity="0.22" transform="rotate(25 407 184)"/>
+    <ellipse cx="463" cy="118" rx="18" ry="8" fill="#ff0000" fill-opacity="0.22" transform="rotate(-18 463 118)"/>
+
+    <ellipse cx="535" cy="151" rx="18" ry="8" fill="#ff0000" fill-opacity="0.22" transform="rotate(15 535 151)"/>
+    <ellipse cx="572" cy="190" rx="13" ry="6" fill="#ff0000" fill-opacity="0.22" transform="rotate(-13 572 190)"/>
+
+    <ellipse cx="648" cy="151" rx="30" ry="14" fill="#ff0000" fill-opacity="0.40" transform="rotate(4 648 151)"/>
+    <ellipse cx="621" cy="122" rx="12" ry="6" fill="#ff0000" fill-opacity="0.22" transform="rotate(18 621 122)"/>
+    <ellipse cx="695" cy="183" rx="17" ry="8" fill="#ff0000" fill-opacity="0.22" transform="rotate(-22 695 183)"/>
+
+    <ellipse cx="742" cy="151" rx="22" ry="10" fill="#ff0000" fill-opacity="0.22" transform="rotate(-8 742 151)"/>
+  </g>
+
+  <!-- stronger centers for the main asperity contacts -->
+  <g fill="#b60000" fill-opacity="0.8">
+    <ellipse cx="220" cy="150" rx="12" ry="5" transform="rotate(8 220 150)"/>
+    <ellipse cx="430" cy="150" rx="17" ry="7" transform="rotate(-3 430 150)"/>
+    <ellipse cx="648" cy="151" rx="11" ry="5" transform="rotate(4 648 151)"/>
+  </g>
+
+  <!-- mathematical symbols only -->
+  <text x="628" y="74" class="math-label" font-size="22">M</text>
+  <text x="648" y="80" class="math-sub" font-size="12">geom</text>
+
+  <text x="506" y="174" class="math-label" font-size="20">A</text>
+  <text x="523" y="179" class="math-sub" font-size="11">nom</text>
+
+  <text x="414" y="150" class="math-label" font-size="24">A</text>
+  <text x="434" y="156" class="math-sub" font-size="12">eff</text>
+
+  <text x="704" y="213" class="math-label" font-size="22">M</text>
+  <text x="724" y="218" class="math-sub" font-size="12">eff</text>
+
+  <!-- small UV axes -->
+  <line x1="52" y1="236" x2="105" y2="236" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="52" y1="236" x2="52" y2="189" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="112" y="241" class="math-label" font-size="18">u</text>
+  <text x="45" y="181" class="math-label" font-size="18">v</text>
+</svg>
