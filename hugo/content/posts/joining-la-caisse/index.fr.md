@@ -15,7 +15,7 @@ tags:
   - .NET
 ---
 
-J'ai rejoint [La Caisse](https://www.lacaisse.com/) comme stagiaire en développement et en automatisation de processus d'affaires. **[English version]({{< ref "/posts/joining-la-caisse/index.md" >}})**.
+J'ai rejoint [La Caisse](https://www.lacaisse.com/) comme stagiaire en développement et en automatisation de processus d'affaires.
 
 <!--more-->
 

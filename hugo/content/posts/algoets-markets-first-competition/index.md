@@ -15,7 +15,7 @@ tags:
   - Education
 ---
 
-While I was president of [AlgoÉTS](https://github.com/AlgoETS), the club ran its first campus-wide paper-trading competition on **MarkÉTS**. The numbers below come from the club summary featured on my LinkedIn profile. **[Version française]({{< ref "/posts/algoets-markets-first-competition/index.fr.md" >}})**.
+While I was president of [AlgoÉTS](https://github.com/AlgoETS), the club ran its first campus-wide paper-trading competition on **MarkÉTS**. The numbers below come from the club summary featured on my LinkedIn profile.
 
 <!--more-->
 

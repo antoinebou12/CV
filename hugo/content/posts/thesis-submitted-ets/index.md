@@ -14,12 +14,12 @@ tags:
   - Simulation
 ---
 
-I submitted my master's thesis at ÉTS. The work is real-time simulation of surface wear, at the meeting point of physical simulation, contact, and graphics rendering. **[Version française]({{< ref "/posts/thesis-submitted-ets/index.fr.md" >}})**.
+I submitted my master's thesis at ÉTS. The work is real-time simulation of surface wear, at the meeting point of physical simulation, contact, and graphics rendering.
 
 <!--more-->
 
 Sheldon Andrews supervised the thesis. Paul Kry, Yinchu Liu, Loïc Nassif, Nicolas Rosset, Quoc-Minh Ton-That, Alexandre Mercier-Aubin, and Mélissa Katz gave advice and help through the project.
 
-The technical write-up is in [the thesis article on wear in texture space]({{< ref "/posts/thesis-wear-texture-space/index.md" >}}).
+The technical write-up on wear in texture space is coming soon. The [thesis article]({{< ref "/posts/thesis-wear-texture-space/index.md" >}}) has the current project overview.
 
 Source: [LinkedIn activity](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/).

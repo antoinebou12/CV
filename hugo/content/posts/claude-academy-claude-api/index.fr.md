@@ -14,7 +14,7 @@ tags:
   - Certification
 ---
 
-Anthropic a délivré **Claude Academy : Building with the Claude API** en octobre 2026. J'ai publié l'attestation au moment où elle est arrivée. **[English version]({{< ref "/posts/claude-academy-claude-api/index.md" >}})**.
+Anthropic a délivré **Claude Academy : Building with the Claude API** en octobre 2026. J'ai publié l'attestation au moment où elle est arrivée.
 
 <!--more-->
 

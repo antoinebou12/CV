@@ -15,7 +15,7 @@ tags:
   - .NET
 ---
 
-I joined [La Caisse](https://www.lacaisse.com/) as an intern in development and business-process automation. **[Version française]({{< ref "/posts/joining-la-caisse/index.fr.md" >}})**.
+I joined [La Caisse](https://www.lacaisse.com/) as an intern in development and business-process automation.
 
 <!--more-->
 

@@ -2,7 +2,7 @@
 post_kind: article
 title: "Website refonte with Hugo (part 2)"
 date: 2026-10-24T14:30:00-04:00
-description: "Hugo portfolio refonte after week 1 — Paper theme, bilingual posts, post_kind and projects catalog, then MCP as the faster editorial loop."
+description: "Rebuilding my Hugo portfolio: shared visual identity, bilingual articles, repository skills, interactive diagrams and local publication."
 translationKey: portfolio-hugo-website-refonte
 tags:
   - Hugo
@@ -11,62 +11,77 @@ tags:
   - MCP
 images:
   - images/featured.png
+lastmod: 2026-10-26T12:00:00-04:00
+show_hero: false
+mermaid: true
 ---
 
-Week 1 proved the repo could carry more than a PDF résumé. This is the **refonte** log: same Hugo root, different product — **Paper** instead of HBTheme, **EN/FR** pairs, typed posts, a projects catalog, and **MCP** when a diagram or draft needs to land in git faster. Sequel to **[Create a portfolio with Hugo (week 1)]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})**. **[Version française]({{< ref "/posts/portfolio-hugo-website-refonte/index.fr.md" >}})**.
+The first version put the CV and a few posts online with Hugo. This rebuild gives the CV, articles and repository notes a shared visual identity, while keeping a layout suited to each kind of reading. It follows [Create a portfolio with Hugo (week 1)]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}}).
 
 <!--more-->
 
-## From HBTheme to Paper
+## A shared canvas, with room for the content
 
-HBTheme got the site online. Opinionated modules and an npm asset path were fine for week one; they fought custom layouts later.
+The slate-blue background and pale paper surface now connect the CV to the blog. Teal marks links, selected filters and useful actions. Fraunces carries the main titles; body text and controls use more restrained type. The palette, spacing and motion rules are recorded in [DESIGN.md](https://github.com/antoinebou12/CV/blob/main/DESIGN.md).
 
-The blog now runs on **[Paper](https://github.com/nanxiaobei/hugo-paper)** with project overrides: bilingual header and language switcher, dark mode, menus in `hugo.toml`, strings in `i18n`. The static HTML résumés stay at the site root (`index-en.html` / `index-fr.html`); the Hugo tree is the editorial shell, not a second CV renderer.
+The same identity has different proportions on each page. The CV puts the name, portrait and PDF action first. An article needs a comfortable reading column and clear sections. A project reference needs room for commands, API tables and diagrams, with page navigation beside it on a wide screen.
 
-Lesson that stuck: pick a thin theme and own the partials you care about, instead of peeling a batteries-included stack for years.
+On a narrow screen, navigation and actions wrap, long code scrolls inside its own block, and the text remains in one column. Figures keep their full contents visible. A surface plot or architecture diagram loses meaning when its axes or labels are cropped.
 
-## Bilingual posts as the default
+## Owning the Paper overrides
 
-Every public article is a pair:
+The blog moved from HBTheme to [Paper](https://github.com/nanxiaobei/hugo-paper). Project templates in `hugo/layouts/` define the article header, lists, search and project pages. Shared styles live in `hugo/assets/`.
 
-- `hugo/content/posts/<slug>/index.md`
-- `hugo/content/posts/<slug>/index.fr.md`
+This makes a template fix apply across articles. The header now groups the content kind, date, reading time and topic badges. Longer articles have a collapsible contents list. English and French remain paired by `translationKey`, with the language switcher in the site header. Repeating a translation link in each introduction adds another navigation choice to a paragraph that should introduce the subject.
 
-Same `translationKey`, same `date`, same `post_kind`. English links French near the top (and the reverse). That discipline beats a late “we should translate the blog” rewrite.
+The article description stays in search and social metadata. The visible opening is the article’s first paragraph, so readers encounter the introduction once.
 
-## `post_kind` and the projects catalog
+## Articles and project references have different jobs
 
-List and search templates group content by kind — **article**, **conference**, **tutorial** — instead of one flat chronological dump. Conference posts get a distinct treatment (kicker, featured image from the page bundle); project work lives under `projects/` with repository notes so a repo can have a stable local write-up without stuffing everything into `/posts`.
+The `post_kind` field distinguishes articles, conferences and tutorials in lists and search. Recipes keep their own section. Repository pages live under `projects/notes/`, where the catalog can link to a stable technical reference.
 
-The site stopped being “a theme with posts” and became a small content model: posts for narrative, projects for inventory, kinds for how cards and singles render.
+An article can follow one idea through the code. Its project note holds setup commands, source references and optional API or deployment details. For example, a Docker project needs service ports, storage and startup relationships. A numerical library needs its data structures and the path into its algorithms. Empty sections make both harder to read.
 
-## What the stack looks like now
+The catalog supports searching and combining filters. Documentation and GitHub remain separate actions on each card. Archive and fork badges describe repository status; they do not replace the project’s title or summary.
 
-Source of truth is still Markdown in git. The shape around it changed — static PNG below (light-theme capture; live Mermaid contrast is weak in dark mode). Source: [`site-refonte-flow.mmd`](./images/site-refonte-flow.mmd).
+## Diagrams should be useful at the reading size
 
-![Content in git → Paper site → static deploy, with uml-mcp and Cursor feeding Markdown](images/site-refonte-flow.png)
+Mermaid diagrams now have zoom, Fit, full-size, fullscreen and SVG export controls. A diagram starts fitted to the available space. Readers can then inspect a particular label without scrolling the whole page sideways.
 
-## MCP as the faster editorial loop
+Text and source links still explain the relationships. In deployment diagrams, a dependency arrow needs a precise meaning: Compose’s `depends_on` records startup order, while readiness is a separate concern.
 
-Week 1 embeds were iframes and link-outs. Diagrams for systems and pipelines now start in chat: **[uml-mcp]({{< ref "/posts/uml-mcp/index.md" >}})** turns Mermaid (or other Kroki-backed types) into something you save beside the post — `.mmd` in the page bundle, often with an SVG — then Hugo (or the Mermaid fence) shows it.
+```mermaid
+flowchart TB
+  Source["Files in git"] --> CV["English and French CV"]
+  Source --> Posts["Paired Markdown articles"]
+  Source --> Notes["Repository notes and data"]
+  Posts --> Hugo["Paper and Hugo overrides"]
+  Notes --> Hugo
+  CV --> Build["Local production build"]
+  Hugo --> Build
+  Build --> Pages["Published static site"]
+```
 
-That is the improvement that matters for shipping posts: less copy-paste from a plugin playground, more “agent writes the diagram source into the repo.” When the live renderer fights dark mode, I keep the `.mmd` and ship a **light-theme PNG** in the page bundle (this post’s stack diagram). Cursor agents also draft and edit bilingual Markdown against the same tree, so the portfolio stays reviewable diffs instead of a CMS draft queue.
+The earlier [stack diagram source](./images/site-refonte-flow.mmd) records the theme and editorial tools used during the rebuild.
 
-I still treat agent output as a first draft. The publish bar is the same as week 1: readable English and French, working links, diagrams that match the text.
+## Skills make editing rules explicit
 
-## What did not change
+I use repository skills to keep recurring changes consistent. `cv-hero` identifies the canonical CV pages and their generated English copy. `hugo-site` describes the templates, bilingual page bundles and navigation. `project-docs` specifies the repository-note structure and the evidence needed for technical claims.
 
-| Still true | Why |
-|------------|-----|
-| **Repo as source of truth** | Markdown in, HTML out |
-| **Static hosting** | Cheap, fast, no admin to patch |
-| **Substack optional** | Longform / email when needed; Hugo remains the professional home |
-| **Iframes sparingly** | Demos and guest embeds — not the core content model |
+The Apple design guidance helps review hierarchy, target sizes, contrast and motion. For this website, those principles apply to browser controls and responsive layouts. The humanizer pass focuses on the writing: direct explanations, concrete details and fewer repeated introductions.
 
-JSON Resume and the HTML CV sit next to this shell; see **[professional résumé + JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.md" >}})**.
+These skills give an editor a place to look before changing a shared component. The result still needs review against the actual page. A rule cannot tell whether a chosen image belongs to the project or whether a diagram’s labels are legible.
 
-## Related posts
+## Previewing and publishing
 
-- [Create a portfolio with Hugo (week 1)]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}}) — HBTheme, Substack split, iframe shortcode
-- [uml-mcp — diagrams from chat via MCP]({{< ref "/posts/uml-mcp/index.md" >}}) — the diagram tooling this loop uses
-- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — career context the portfolio supports
+The source remains in git: HTML for the CV, paired Markdown bundles for articles, and data files for repository references. The [JSON Resume article]({{< ref "/posts/professional-resume-json-resume/index.md" >}}) explains the machine-readable CV alongside those pages.
+
+I build the production output locally, check the generated pages, and publish the static tree. The last-updated labels use the release date in America/Toronto. Original article dates keep their historical meaning.
+
+A preview needs more than a successful build. I check light and dark mode, small and wide viewports, language links, image loading and the controls that a reader can use. Reduced-motion settings also need to leave every piece of content accessible. The slide-deck preview now serves rendered slides locally, which lets it work during development as well as after publication.
+
+## Related reading
+
+- [Create a portfolio with Hugo (week 1)]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})
+- [uml-mcp: diagrams from chat]({{< ref "/posts/uml-mcp/index.md" >}})
+- [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}})

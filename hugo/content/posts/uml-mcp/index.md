@@ -18,7 +18,7 @@ tags:
 
 [![GitHub stars](https://img.shields.io/github/stars/antoinebou12/uml-mcp?style=social)](https://github.com/antoinebou12/uml-mcp)
 
-**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** gives an MCP client real diagram tools: an assistant supplies Mermaid, PlantUML, or another supported diagram source, and the server returns rendered output and useful links. The current repository documents five tools and a catalog of roughly 37 Kroki-backed types. Those counts describe the documented interface, not a rendering benchmark. **[Version française]({{< ref "/posts/uml-mcp/index.fr.md" >}})**.
+**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** gives an MCP client real diagram tools: an assistant supplies Mermaid, PlantUML, or another supported diagram source, and the server returns rendered output and useful links. The current repository documents five tools and a catalog of roughly 37 Kroki-backed types. Those counts describe the documented interface, not a rendering benchmark.
 
 {{< repo_snapshot "antoinebou12/uml-mcp" >}}
 

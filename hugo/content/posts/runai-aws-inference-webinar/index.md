@@ -16,7 +16,7 @@ images:
   - images/featured.jpeg
 ---
 
-I joined a **Run:ai** webinar (Americas) about running and **autoscaling ML inference on AWS**. At the time I was deep in coursework and side projects that touched GPUs and containers, but production inference was still mostly “someone SSH’d to a box.” The session was useful because it framed inference as a **scheduling and capacity** problem—not only a model-export problem. **[Version française]({{< ref "/posts/runai-aws-inference-webinar/index.fr.md" >}})**.
+I joined a **Run:ai** webinar (Americas) about running and **autoscaling ML inference on AWS**. At the time I was deep in coursework and side projects that touched GPUs and containers, but production inference was still mostly “someone SSH’d to a box.” The session was useful because it framed inference as a **scheduling and capacity** problem—not only a model-export problem.
 
 <!--more-->
 

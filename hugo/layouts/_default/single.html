@@ -6,7 +6,7 @@
 {{- $isConference := and (eq $page.Section "posts") (eq $pk "conference") -}}
 {{- $isRepoNote := .Params.repository_note -}}
 
-<article class="{{ if $isRepoNote }}repo-doc{{ else if $isConference }}conference-post{{ else if eq .Section "recipes" }}recipe-post{{ end }}">
+<article class="{{ if $isRepoNote }}repo-doc{{ else }}journal-article{{ if $isConference }} conference-post{{ else if eq .Section "recipes" }} recipe-post{{ end }}{{ end }}">
   <header class="{{ if $isRepoNote }}repo-doc-heading{{ else }}article-heading mb-14{{ end }}">
     {{ if $isRepoNote }}
     {{ with site.GetPage "/projects" }}<nav class="repo-breadcrumbs" aria-label="{{ if eq .Lang "fr" }}Fil d’Ariane{{ else }}Breadcrumb{{ end }}"><a class="article-back repo-doc-back" href="{{ .RelPermalink }}"><span aria-hidden="true">←</span> {{ if eq .Lang "fr" }}Projets{{ else }}Projects{{ end }}</a><span aria-hidden="true">/</span><span aria-current="page">{{ $.Title }}</span></nav>{{ end }}
@@ -14,18 +14,15 @@
     {{- if eq .Section "recipes" -}}
     {{ with site.GetPage "/recipes" }}<a class="article-back" href="{{ .RelPermalink }}">← {{ if eq $.Lang "fr" }}Toutes les recettes{{ else }}All recipes{{ end }}</a>{{ end }}
     {{- else -}}
-    <a class="article-back" href="{{ site.Home.RelPermalink }}">← {{ if eq .Lang "fr" }}Tous les articles{{ else }}All articles{{ end }}</a>
+    {{ with site.GetPage "/posts" }}<a class="article-back" href="{{ .RelPermalink }}">← {{ if eq $.Lang "fr" }}Tous les articles{{ else }}All articles{{ end }}</a>{{ end }}
     {{- end -}}
+    <div class="article-kicker"><span class="article-kind-badge">{{ if eq .Section "recipes" }}{{ i18n "searchPillRecipe" }}{{ else if $isConference }}{{ i18n "searchPillConference" }}{{ else if eq $pk "tutorial" }}{{ if eq .Lang "fr" }}Tutoriel{{ else }}Tutorial{{ end }}{{ else }}Article{{ end }}</span>{{ with .Params.series }}<span>{{ . }}</span>{{ end }}</div>
     <h1 id="single-post-title" class="my-0! pb-2.5">{{- .Title -}}</h1>
-    {{- if eq .Section "recipes" -}}
-    <p class="mb-0 mt-2 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200/95">{{- i18n "searchPillRecipe" -}}</p>
-    {{- else if $isConference -}}
-    <p class="mb-0 mt-2 text-xs font-semibold uppercase tracking-wider text-orange-700 dark:text-orange-300/95">{{- i18n "searchPillConference" -}}</p>
-    {{- end -}}
     {{- if ne .Type "page" -}}
-    <div class="text-xs antialiased opacity-60">
+    <div class="article-meta">
       {{- if .Date -}}
-      <time>{{- .Date | time.Format ":date_medium" -}}</time>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{- .Date | time.Format ":date_medium" -}}</time>
+      <span class="article-reading-time">{{ .ReadingTime }} min {{ if eq .Lang "fr" }}de lecture{{ else }}read{{ end }}</span>
       {{- end -}}<!---->
       {{- $single_author := or .Params.author site.Params.author -}}
       <!---->
@@ -35,11 +32,12 @@
       {{- end -}}
     </div>
     {{- end -}}
+    <div class="article-topic-badges" aria-label="{{ if eq .Lang "fr" }}Sujets{{ else }}Topics{{ end }}">{{ range .GetTerms "tags" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
     {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
 
-  {{- if not $isRepoNote -}}
+  {{- if and (not $isRepoNote) (ne .Params.show_hero false) -}}
   {{- with partial "featured-image-resource.html" $page -}}
   <figure class="{{ if $isConference }}conference-single-hero border-orange-500/25 dark:border-orange-400/30{{ else }}article-single-hero border-black/10 dark:border-white/12{{ end }} mb-10 overflow-hidden rounded-xl border bg-black/[0.03] dark:bg-white/[0.04]">
     {{- $hero := . -}}
@@ -72,18 +70,20 @@
     />
     {{- end -}}
     {{- end -}}
+    {{ with $page.Params.image_caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
   </figure>
   {{- end -}}
   {{- end -}}
 
   <div class="{{ if $isRepoNote }}repo-doc-surface{{ else }}single-post-surface single-post-body not-prose mb-10{{ end }} min-w-0">
     <div class="{{ if $isRepoNote }}repo-doc-prose{{ else }}single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert{{ end }}">
+      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 3) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Dans cet article{{ else }}In this article{{ end }}</summary>{{ .TableOfContents }}</details>{{ end }}
       <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- $page.Content -}}{{ if not $isRepoNote }}{{ partial "repository-article-guides.html" $page }}{{ end }}</section>
     </div>
   </div>
 
   <!-- Post Tags -->
-  {{- if .Params.tags -}}
+  {{- if and $isRepoNote .Params.tags -}}
   <footer class="article-tags mt-12 flex flex-wrap gap-2">
     {{- range .GetTerms "tags" -}}
     <a

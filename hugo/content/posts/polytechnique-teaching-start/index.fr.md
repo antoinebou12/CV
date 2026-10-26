@@ -13,7 +13,7 @@ tags:
   - DevSecOps
 ---
 
-J'ai commencé comme chargé de travaux pratiques à [Polytechnique Montréal](https://www.polymtl.ca/). **[English version]({{< ref "/posts/polytechnique-teaching-start/index.md" >}})**.
+J'ai commencé comme chargé de travaux pratiques à [Polytechnique Montréal](https://www.polymtl.ca/).
 
 <!--more-->
 

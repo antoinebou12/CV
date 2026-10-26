@@ -15,7 +15,7 @@ images:
   - images/img-001.png
 ---
 
-Les add-ons qui demandent **NumPy**, **meshio** ou **requests** butent sur le **Python de Blender**. Petit installateur ciblant `sys.executable`, dossier `scripts/modules`, thread d’arrière-plan (Blender 4.2+, Windows). **[English version]({{< ref "/posts/blender-python-packages/index.md" >}})**.
+Les add-ons qui demandent **NumPy**, **meshio** ou **requests** butent sur le **Python de Blender**. Petit installateur ciblant `sys.executable`, dossier `scripts/modules`, thread d’arrière-plan (Blender 4.2+, Windows).
 
 <!--more-->
 

@@ -15,7 +15,7 @@ tags:
   - Optics
 ---
 
-I presented a poster at CAÉC 2026, the annual congress of student researchers, on real-time simulation of visual texture wear fed by experimental data. I placed second in the Optics category. **[Version française]({{< ref "/posts/caec-2026-optics-poster/index.fr.md" >}})**.
+I presented a poster at CAÉC 2026, the annual congress of student researchers, on real-time simulation of visual texture wear fed by experimental data. I placed second in the Optics category.
 
 <!--more-->
 

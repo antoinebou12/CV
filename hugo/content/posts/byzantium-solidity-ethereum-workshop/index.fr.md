@@ -23,7 +23,7 @@ Retour sur notre tout premier workshop sur Ethereum.
 
 Lundi dernier (11 mars 2024), notre tout premier workshop sur Ethereum a eu lieu à l’ÉTS : novices comme avancés ont pu créer et déployer leur propre token sur la blockchain et s’échanger leurs tokens entre eux. Nous tenons à remercier tout le monde d’avoir assisté à cet atelier. Merci également à **Khalil Anis Zabat** d’avoir animé et organisé l’atelier !
 
-**[English version]({{< ref "/posts/byzantium-solidity-ethereum-workshop/index.md" >}})**
+
 
 <!--more-->
 

@@ -12,7 +12,7 @@ tags:
   - Side Project
 ---
 
-*Mise à jour octobre 2026 avec les chiffres Lens Insights de ma publication LinkedIn mise en avant.* J’ai commencé les **lenses Snapchat** pour le fun en **2017** et je me suis retrouvé avec un petit **Fiverr**, un utilitaire encore utilisé par d’autres créateurs, et un appel Snapchat sur **Lens Studio**. **[English version]({{< ref "/posts/snapchat-lens-creator/index.md" >}})**.
+*Mise à jour octobre 2026 avec les chiffres Lens Insights de ma publication LinkedIn mise en avant.* J’ai commencé les **lenses Snapchat** pour le fun en **2017** et je me suis retrouvé avec un petit **Fiverr**, un utilitaire encore utilisé par d’autres créateurs, et un appel Snapchat sur **Lens Studio**.
 
 <!--more-->
 

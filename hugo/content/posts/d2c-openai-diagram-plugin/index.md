@@ -16,7 +16,7 @@ images:
   - images/featured.gif
 ---
 
-**D2COpenAIPlugin** is a ChatGPT plugin that turns conversation into **PlantUML**, **Mermaid**, or **D2** without leaving the thread. I built it when OpenAI plugins were the main extension story — useful for architecture sketches, lab docs, and “draw this flow” moments in chat. **[Version française]({{< ref "/posts/d2c-openai-diagram-plugin/index.fr.md" >}})**.
+**D2COpenAIPlugin** is a ChatGPT plugin that turns conversation into **PlantUML**, **Mermaid**, or **D2** without leaving the thread. I built it when OpenAI plugins were the main extension story — useful for architecture sketches, lab docs, and “draw this flow” moments in chat.
 
 <!--more-->
 

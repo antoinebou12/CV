@@ -16,7 +16,7 @@ images:
 
 ![JSON Resume — aperçu de thèmes (Elegant, Paper, Kendall, Flat, etc.)](images/json-resume-themes.png)
 
-La plupart des parcours passent par le web. **JSON Resume** permet de garder un `resume.json` structuré et de le rendre en HTML, PDF ou données intégrées à votre site. **[English version]({{< ref "/posts/professional-resume-json-resume/index.md" >}})** du même article.
+La plupart des parcours passent par le web. **JSON Resume** permet de garder un `resume.json` structuré et de le rendre en HTML, PDF ou données intégrées à votre site. du même article.
 
 <!--more-->
 

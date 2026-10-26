@@ -15,7 +15,7 @@ tags:
   - Optique
 ---
 
-J'ai présenté une affiche au CAÉC 2026, le congrès annuel des étudiant·e·s chercheur·euse·s, sur la simulation en temps réel de l'usure visuelle des textures, alimentée par des données expérimentales. J'ai eu la 2e place dans la catégorie Optique. **[English version]({{< ref "/posts/caec-2026-optics-poster/index.md" >}})**.
+J'ai présenté une affiche au CAÉC 2026, le congrès annuel des étudiant·e·s chercheur·euse·s, sur la simulation en temps réel de l'usure visuelle des textures, alimentée par des données expérimentales. J'ai eu la 2e place dans la catégorie Optique.
 
 <!--more-->
 

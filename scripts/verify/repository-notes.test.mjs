@@ -80,7 +80,7 @@ test('automatic documentation covers the inventory with source-pinned exports', 
       assert.ok(html.includes(data.commit.slice(0, 8)));
       assert.doesNotMatch(html, /<video[\s>]|View video options|Voir les options vidéo/);
       if (data.types.length) {
-        assert.ok(html.includes(lang === 'fr' ? 'Types, méthodes et bases déclarées' : 'Types, methods and declared bases'));
+        assert.ok(html.includes(lang === 'fr' ? 'Index des types' : 'Type index'));
       }
     }
   }
@@ -265,7 +265,7 @@ test('directory cards link to all local notes, with separate GitHub links', () =
 
 test('featured posts retain images and include architecture and related note links', () => {
   for (const [slug, name, image] of [
-    ['dimension-rust-math-rendering', 'dimension', 'waves.png'],
+    ['dimension-rust-math-rendering', 'dimension', 'renderer-architecture'],
     ['dashercontrol-homelab-workspaces', 'dashercontrol', 'dashboard.png'],
     ['bloc-blender-cloud-storage', 'bloc', null],
   ]) {

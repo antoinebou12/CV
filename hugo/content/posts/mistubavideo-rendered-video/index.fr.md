@@ -7,7 +7,7 @@ tags: [Mitsuba, Vidéo]
 post_kind: article
 ---
 
-Certains projets de rendu se comprennent surtout à partir du dépôt qui conserve le travail vidéo. **[English version]({{< ref "/posts/mistubavideo-rendered-video/index.md" >}})**.
+Certains projets de rendu se comprennent surtout à partir du dépôt qui conserve le travail vidéo.
 
 <!--more-->
 

@@ -20,7 +20,7 @@ images:
 
 ![GraphQuon 2025 name badge — Antoine Boucher, École de technologie supérieure, Toronto skyline](./images/graphquon-name-badge.png)
 
-**GraphQuon** is the annual Quebec–Ontario pre-SIGGRAPH workshop. The **2025** edition ran **15–16 November 2025** at the **University of Toronto** ([series page](https://www.dgp.toronto.edu/graphquon/)). I **presented** there with **Sheldon Andrews** (ÉTS): **Where to Wear?** — how frictional contact leaves a readable history on surfaces, and how we can turn that into graphics and engineering feedback. **[Version française]({{< ref "/posts/graphquon-2025-university-of-toronto/index.fr.md" >}})**.
+**GraphQuon** is the annual Quebec–Ontario pre-SIGGRAPH workshop. The **2025** edition ran **15–16 November 2025** at the **University of Toronto** ([series page](https://www.dgp.toronto.edu/graphquon/)). I **presented** there with **Sheldon Andrews** (ÉTS): **Where to Wear?** — how frictional contact leaves a readable history on surfaces, and how we can turn that into graphics and engineering feedback.
 
 <!--more-->
 

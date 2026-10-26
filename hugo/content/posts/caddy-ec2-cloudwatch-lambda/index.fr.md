@@ -17,7 +17,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d"
 ---
 
-**Caddy** déjà à la maison pour Home Assistant ; ici la version **bordure AWS** : **EC2**, HTTPS auto, logs JSON vers **CloudWatch**, shipper Python en cron, **Lambda** pour requêtes Insights. **[English version]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}})**.
+**Caddy** déjà à la maison pour Home Assistant ; ici la version **bordure AWS** : **EC2**, HTTPS auto, logs JSON vers **CloudWatch**, shipper Python en cron, **Lambda** pour requêtes Insights.
 
 <!--more-->
 

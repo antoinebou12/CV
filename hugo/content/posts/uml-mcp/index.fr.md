@@ -18,7 +18,7 @@ tags:
 
 [![Étoiles GitHub](https://img.shields.io/github/stars/antoinebou12/uml-mcp?style=social)](https://github.com/antoinebou12/uml-mcp)
 
-**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** fournit de vrais outils de diagrammes aux clients MCP : l’assistant transmet une source Mermaid, PlantUML ou un autre format pris en charge, puis le serveur renvoie un rendu et des liens. Le dépôt documente cinq outils et environ 37 types via Kroki. Ces chiffres décrivent l’interface, pas un benchmark. **[English version]({{< ref "/posts/uml-mcp/index.md" >}})**.
+**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** fournit de vrais outils de diagrammes aux clients MCP : l’assistant transmet une source Mermaid, PlantUML ou un autre format pris en charge, puis le serveur renvoie un rendu et des liens. Le dépôt documente cinq outils et environ 37 types via Kroki. Ces chiffres décrivent l’interface, pas un benchmark.
 
 {{< repo_snapshot "antoinebou12/uml-mcp" >}}
 

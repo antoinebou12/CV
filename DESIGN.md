@@ -148,6 +148,14 @@ On `index-en.html` / `index-fr.html`, each `.year` is one compact Apple-style ca
 - Keep EN/FR month abbreviations clean (FR: `sept.`, `janv.`, `fév.`, …). Do not leave English month stubs in `index-fr.html`.
 - Long org names on the index use a short display label plus `title` for the full name (e.g. IMC2).
 
+## Article reading and slide previews
+
+Article headers show one content-kind badge, the title, publication date, reading time and topic links. The header language switcher handles translations; do not repeat translation links in article introductions. Long articles expose a collapsible contents list. Keep one visible introduction and preserve the original publication date when updating content.
+
+Figures display their complete contents with captions where scale, provenance or interpretation matters. A math fixture is not a renderer screenshot. Set `show_hero: false` when the article is better served by its inline figures or interactive diagram.
+
+Slide previews use local images exported from the original presentation, with a PDF and PowerPoint download. Previous, next, slide selection and arrow keys expose the same slides; without JavaScript, the horizontal gallery remains scrollable. Resolve shared bundle resources through Hugo so French download links use the real asset URL. Avoid external viewers that need access to localhost.
+
 ## Do's and Don'ts
 
 - Do paint every project-page text node from `--text` or `--muted`.

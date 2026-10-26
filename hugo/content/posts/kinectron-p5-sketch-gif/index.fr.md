@@ -16,7 +16,7 @@ images:
     - images/mySketch.gif
 ---
 
-Pour un cours de creative coding, j’avais besoin des données squelette **Kinectron** dans **p5.js**, avec **lecture / pause** et un export **GIF** court pour les démos. Ci-dessous le squelette utilisé (Kinect v2 ou Azure Kinect DK, serveur Kinectron actif). **[English version]({{< ref "/posts/kinectron-p5-sketch-gif/index.md" >}})**.
+Pour un cours de creative coding, j’avais besoin des données squelette **Kinectron** dans **p5.js**, avec **lecture / pause** et un export **GIF** court pour les démos. Ci-dessous le squelette utilisé (Kinect v2 ou Azure Kinect DK, serveur Kinectron actif).
 
 <!--more-->
 

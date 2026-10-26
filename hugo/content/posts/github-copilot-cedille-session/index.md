@@ -15,7 +15,7 @@ images:
   - images/featured.jpeg
 ---
 
-**Cédille** (ÉTS consulting club) hosted **GitHub** and **Arctiq** for a session on **Copilot** and the AI tooling around modern dev workflows — fall 2022, when “AI pair programmer” still felt novel in a university room. **[Version française]({{< ref "/posts/github-copilot-cedille-session/index.fr.md" >}})**.
+**Cédille** (ÉTS consulting club) hosted **GitHub** and **Arctiq** for a session on **Copilot** and the AI tooling around modern dev workflows — fall 2022, when “AI pair programmer” still felt novel in a university room.
 
 <!--more-->
 

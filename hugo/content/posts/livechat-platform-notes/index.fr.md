@@ -18,7 +18,7 @@ images:
 
 ![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](./images/chatwoot-inbox.png)
 
-J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur. **[English version]({{< ref "/posts/livechat-platform-notes/index.md" >}})**.
+J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur.
 
 <!--more-->
 

@@ -18,7 +18,7 @@ images:
 
 ![Chatwoot agent inbox — unified conversations view (screenshot from the open-source project, 2024 UI refresh)](./images/chatwoot-inbox.png)
 
-I wrote these notes while helping a bilingual storefront team choose **live chat**, a **bot**, and something agents could actually work from. The four products below are **not** interchangeable: one is a phone system with chat bolted on, one is marketing automation, one is managed bot-to-human handoff, and one is an open-source helpdesk you can host yourself. **Pricing and channels change often**—use this as a map, then confirm on each vendor’s site. **[Version française]({{< ref "/posts/livechat-platform-notes/index.fr.md" >}})**.
+I wrote these notes while helping a bilingual storefront team choose **live chat**, a **bot**, and something agents could actually work from. The four products below are **not** interchangeable: one is a phone system with chat bolted on, one is marketing automation, one is managed bot-to-human handoff, and one is an open-source helpdesk you can host yourself. **Pricing and channels change often**—use this as a map, then confirm on each vendor’s site.
 
 <!--more-->
 

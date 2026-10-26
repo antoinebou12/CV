@@ -61,8 +61,6 @@ sequenceDiagram
 
 {{< deck src="make-figurines-using-ai-for-3d-printing.pptx" title="Make figurines using AI for 3D printing" label="Download slide deck (.pptx)" size="~17 MB" >}}
 
-![Title slide — Make figurines using AI for 3D printing](./images/slide01-title.png)
-
 ## Step 1 — 2D toy / chibi
 
 ![ChatGPT or Midjourney for a toy plastic figure](./images/slide02-chatgpt-midjourney.png)

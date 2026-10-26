@@ -13,7 +13,7 @@ images:
   - images/featured.jpeg
 ---
 
-**Snowflake Data-for-Breakfast** was a morning conference on the cloud data platform — warehousing, sharing, governance, and customer stories that make abstract architecture feel operational. I went to hear how teams actually run Snowflake, not to collect swag. **Infostrux** ran a keynote that tied the room together. **[Version française]({{< ref "/posts/snowflake-data-for-breakfast/index.fr.md" >}})**.
+**Snowflake Data-for-Breakfast** was a morning conference on the cloud data platform — warehousing, sharing, governance, and customer stories that make abstract architecture feel operational. I went to hear how teams actually run Snowflake, not to collect swag. **Infostrux** ran a keynote that tied the room together.
 
 <!--more-->
 

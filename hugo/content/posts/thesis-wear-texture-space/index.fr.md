@@ -17,7 +17,7 @@ images:
   - images/wear-pipeline-flow.svg
 ---
 
-**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — mon mémoire de maîtrise à l'ÉTS (titre anglais du résumé : *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Direction : **Sheldon Andrews**. Soutenance le **14 août 2026**. L'idée centrale : donner aux cartes de matériau une **mémoire locale persistante** du contact. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît. **[English version]({{< ref "/posts/thesis-wear-texture-space/index.md" >}})**.
+**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — mon mémoire de maîtrise à l'ÉTS (titre anglais du résumé : *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Direction : **Sheldon Andrews**. Soutenance le **14 août 2026**. L'idée centrale : donner aux cartes de matériau une **mémoire locale persistante** du contact. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît.
 
 <!--more-->
 

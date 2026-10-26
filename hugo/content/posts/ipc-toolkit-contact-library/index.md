@@ -7,7 +7,7 @@ tags: [C++, Simulation, Open source]
 post_kind: article
 ---
 
-The useful boundary in IPC Toolkit is clear: it provides contact routines, while the calling simulation owns time stepping and solving. **[Version française]({{< ref "/posts/ipc-toolkit-contact-library/index.fr.md" >}})**.
+The useful boundary in IPC Toolkit is clear: it provides contact routines, while the calling simulation owns time stepping and solving.
 
 <!--more-->
 

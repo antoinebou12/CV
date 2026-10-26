@@ -15,7 +15,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/a-journey-to-aws-certified-cloud-practitioner-9b17dffe4533"
 ---
 
-I passed the **AWS Certified Cloud Practitioner (CLF-C02)** after about **two weeks** (~60 hours) of focused study — not because the exam is trivial, but because mixing video, labs, and silly gamified prep kept me moving. This post is the resource stack that worked for me (Udemy, Skill Builder, Cloud Quest, Escape Room) plus **Pearson VUE** practicalities: extra time if English is not your first language, online proctoring, Credly badge. **[Version française]({{< ref "/posts/aws-certified-cloud-practitioner/index.fr.md" >}})**.
+I passed the **AWS Certified Cloud Practitioner (CLF-C02)** after about **two weeks** (~60 hours) of focused study — not because the exam is trivial, but because mixing video, labs, and silly gamified prep kept me moving. This post is the resource stack that worked for me (Udemy, Skill Builder, Cloud Quest, Escape Room) plus **Pearson VUE** practicalities: extra time if English is not your first language, online proctoring, Credly badge.
 
 <!--more-->
 

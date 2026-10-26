@@ -15,7 +15,7 @@ tags:
   - Formation
 ---
 
-Pendant ma présidence d'[AlgoÉTS](https://github.com/AlgoETS), le club a tenu sa première compétition de paper trading à l'échelle de l'ÉTS sur **MarkÉTS**. Les chiffres ci-dessous viennent du bilan du club mis en avant sur mon profil LinkedIn. **[English version]({{< ref "/posts/algoets-markets-first-competition/index.md" >}})**.
+Pendant ma présidence d'[AlgoÉTS](https://github.com/AlgoETS), le club a tenu sa première compétition de paper trading à l'échelle de l'ÉTS sur **MarkÉTS**. Les chiffres ci-dessous viennent du bilan du club mis en avant sur mon profil LinkedIn.
 
 <!--more-->
 

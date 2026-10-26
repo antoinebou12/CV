@@ -15,7 +15,7 @@ images:
   - images/artemis-performance.png
 ---
 
-Trois dépôts que je maintiens à côté : **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** pour le streaming Apollo/Sunshine sur Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** pour GameStream sur New 3DS, et **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** comme build Switch du Mario 64 coopératif. Même motivation — faire tourner quelque chose d'intéressant sur du matériel qui n'était pas prévu pour — mais piles et contraintes différentes. **[English version]({{< ref "/posts/handheld-streaming-homebrew/index.md" >}})**.
+Trois dépôts que je maintiens à côté : **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** pour le streaming Apollo/Sunshine sur Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** pour GameStream sur New 3DS, et **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** comme build Switch du Mario 64 coopératif. Même motivation — faire tourner quelque chose d'intéressant sur du matériel qui n'était pas prévu pour — mais piles et contraintes différentes.
 
 <!--more-->
 

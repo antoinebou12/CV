@@ -16,7 +16,7 @@ images:
   - images/featured.jpeg
 ---
 
-I kept a private list of self-hosted apps I wanted to try — mostly so I would stop assigning random ports and forgetting what lived on `:8096`. That list turned into **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** on GitHub. This post is the short version: what I wired up, how I install on Proxmox when compose is not the right shape, and where the full port map lives so this page does not become a spreadsheet with SEO. **[Version française]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}})**.
+I kept a private list of self-hosted apps I wanted to try — mostly so I would stop assigning random ports and forgetting what lived on `:8096`. That list turned into **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** on GitHub. This post is the short version: what I wired up, how I install on Proxmox when compose is not the right shape, and where the full port map lives so this page does not become a spreadsheet with SEO.
 
 <!--more-->
 

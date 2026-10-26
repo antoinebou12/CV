@@ -14,7 +14,7 @@ images:
   - images/featured.jpeg
 ---
 
-I had boards leaning in every corner, so I designed a **vertical rack** in CAD, cut **angled slots** in plywood, and built something that could hold **skateboards and a snowboard** without drilling into rental walls. December 2021; photos cropped from old stories. **[Version française]({{< ref "/posts/skate-rack-cad-to-object/index.fr.md" >}})**.
+I had boards leaning in every corner, so I designed a **vertical rack** in CAD, cut **angled slots** in plywood, and built something that could hold **skateboards and a snowboard** without drilling into rental walls. December 2021; photos cropped from old stories.
 
 <!--more-->
 

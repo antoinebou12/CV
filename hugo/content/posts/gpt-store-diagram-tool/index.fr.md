@@ -14,7 +14,7 @@ tags:
   - Diagrammes
 ---
 
-L'outil de diagrammes a atteint **25k utilisations** sur le GPT Store. À l'école, l'UML est la langue du quotidien pour partager une idée, et j'ai fait l'outil pour arrêter de déplacer des boîtes et des flèches dans Lucidchart. **[English version]({{< ref "/posts/gpt-store-diagram-tool/index.md" >}})**.
+L'outil de diagrammes a atteint **25k utilisations** sur le GPT Store. À l'école, l'UML est la langue du quotidien pour partager une idée, et j'ai fait l'outil pour arrêter de déplacer des boîtes et des flèches dans Lucidchart.
 
 <!--more-->
 

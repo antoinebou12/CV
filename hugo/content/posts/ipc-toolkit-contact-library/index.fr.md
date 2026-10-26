@@ -7,7 +7,7 @@ tags: [C++, Simulation, Logiciel libre]
 post_kind: article
 ---
 
-La frontière d’IPC Toolkit est simple : la bibliothèque fournit les routines de contact, tandis que la simulation appelante gère le temps et la résolution. **[English version]({{< ref "/posts/ipc-toolkit-contact-library/index.md" >}})**.
+La frontière d’IPC Toolkit est simple : la bibliothèque fournit les routines de contact, tandis que la simulation appelante gère le temps et la résolution.
 
 <!--more-->
 

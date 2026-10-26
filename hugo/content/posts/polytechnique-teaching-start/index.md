@@ -13,7 +13,7 @@ tags:
   - DevSecOps
 ---
 
-I started as a teaching assistant (chargé de travaux pratiques) at [Polytechnique Montréal](https://www.polymtl.ca/). **[Version française]({{< ref "/posts/polytechnique-teaching-start/index.fr.md" >}})**.
+I started as a teaching assistant (chargé de travaux pratiques) at [Polytechnique Montréal](https://www.polymtl.ca/).
 
 <!--more-->
 

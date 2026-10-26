@@ -14,7 +14,7 @@ images:
   - images/featured.png
 ---
 
-Week one of moving my site to **Hugo** (January 2024): pick a theme, ship something fast, and prove the repo could carry more than a PDF résumé. This post is the log — **HBTheme**, a data story embed, **Substack** in parallel, and a reusable **iframe** shortcode. **[Version française]({{< ref "/posts/portfolio-hugo-week-1/index.fr.md" >}})**.
+Week one of moving my site to **Hugo** (January 2024): pick a theme, ship something fast, and prove the repo could carry more than a PDF résumé. This post is the log — **HBTheme**, a data story embed, **Substack** in parallel, and a reusable **iframe** shortcode.
 
 <!--more-->
 

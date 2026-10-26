@@ -16,7 +16,7 @@ images:
     - images/mySketch.gif
 ---
 
-For a creative-coding class I needed **Kinectron** skeleton data inside **p5.js**, with simple **play / stop** controls and a way to export a short **GIF** for demos. Notes below are the skeleton I used (Kinect v2 or Azure Kinect DK, Kinectron server running). **[Version française]({{< ref "/posts/kinectron-p5-sketch-gif/index.fr.md" >}})**.
+For a creative-coding class I needed **Kinectron** skeleton data inside **p5.js**, with simple **play / stop** controls and a way to export a short **GIF** for demos. Notes below are the skeleton I used (Kinect v2 or Azure Kinect DK, Kinectron server running).
 
 <!--more-->
 

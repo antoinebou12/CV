@@ -17,7 +17,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d"
 ---
 
-I already ran **Caddy** at home for Home Assistant. This article is the **AWS edge** version: **EC2** (often `t4g.nano`), automatic HTTPS, JSON access logs in **CloudWatch**, a nightly Python shipper, and **Lambda + Step Functions** for cheap observability — not a SaaS dashboard bill. **[Version française]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.fr.md" >}})**.
+I already ran **Caddy** at home for Home Assistant. This article is the **AWS edge** version: **EC2** (often `t4g.nano`), automatic HTTPS, JSON access logs in **CloudWatch**, a nightly Python shipper, and **Lambda + Step Functions** for cheap observability — not a SaaS dashboard bill.
 
 <!--more-->
 

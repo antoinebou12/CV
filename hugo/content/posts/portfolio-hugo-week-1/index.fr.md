@@ -14,7 +14,7 @@ images:
   - images/featured.png
 ---
 
-Semaine 1 de migration vers **Hugo** (janvier 2024) : thème, déploiement rapide, prouver que le dépôt peut porter plus qu’un PDF de CV. **HBTheme**, embed data, **Substack** à côté, shortcode **iframe**. **[English version]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})**.
+Semaine 1 de migration vers **Hugo** (janvier 2024) : thème, déploiement rapide, prouver que le dépôt peut porter plus qu’un PDF de CV. **HBTheme**, embed data, **Substack** à côté, shortcode **iframe**.
 
 <!--more-->
 

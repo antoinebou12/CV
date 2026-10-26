@@ -7,12 +7,12 @@ translationKey: dimension-rust-math-rendering
 mermaid: true
 repository_diagram: true
 tags: ["Rust", "Graphics", "Linear algebra", "wgpu"]
-images: ["images/waves.png"]
+images: ["images/renderer-architecture.png"]
+image_caption: "Architecture of Dimension’s mathematics and rendering components."
+show_hero: false
 ---
 
 Dimension is my Rust workspace for mathematics and graphics experiments. The useful starting point is `mathlib`: it exposes matrix storage, numerical solvers and the transformations that the rendering crate uses on the CPU.
-
-![Wave heightmap included in the Dimension mathlib repository](images/waves.png)
 
 <!--more-->
 
@@ -44,4 +44,4 @@ The root [`Cargo.toml`](https://github.com/antoinebou12/Dimension/blob/main/Carg
 
 This is exploratory code. Performance comparisons would need a reproducible benchmark with its input size and target hardware.
 
-The heightmap above comes from [`mathlib/waves_heightmap.png`](https://github.com/antoinebou12/Dimension/blob/main/mathlib/waves_heightmap.png). [Browse Dimension on GitHub](https://github.com/antoinebou12/Dimension).
+[Browse Dimension on GitHub](https://github.com/antoinebou12/Dimension).

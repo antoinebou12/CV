@@ -14,12 +14,12 @@ tags:
   - Simulation
 ---
 
-J'ai déposé mon mémoire de maîtrise à l'ÉTS. Le travail porte sur la simulation en temps réel de l'usure des surfaces, entre simulation physique, contact et rendu. **[English version]({{< ref "/posts/thesis-submitted-ets/index.md" >}})**.
+J'ai déposé mon mémoire de maîtrise à l'ÉTS. Le travail porte sur la simulation en temps réel de l'usure des surfaces, entre simulation physique, contact et rendu.
 
 <!--more-->
 
 Sheldon Andrews a dirigé le mémoire. Paul Kry, Yinchu Liu, Loïc Nassif, Nicolas Rosset, Quoc-Minh Ton-That, Alexandre Mercier-Aubin et Mélissa Katz ont conseillé et aidé tout au long du projet.
 
-Le texte technique est dans [l'article sur le mémoire, usure en espace texture]({{< ref "/posts/thesis-wear-texture-space/index.fr.md" >}}).
+Le texte technique sur l’usure en espace texture arrive bientôt. L’[article sur le mémoire]({{< ref "/posts/thesis-wear-texture-space/index.fr.md" >}}) présente déjà un aperçu du projet.
 
 Source : [activité LinkedIn](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/).

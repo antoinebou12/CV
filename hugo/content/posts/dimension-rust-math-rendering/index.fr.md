@@ -7,12 +7,12 @@ translationKey: dimension-rust-math-rendering
 mermaid: true
 repository_diagram: true
 tags: ["Rust", "Graphics", "Linear algebra", "wgpu"]
-images: ["images/waves.png"]
+images: ["images/renderer-architecture.png"]
+image_caption: "Composants mathématiques et de rendu de Dimension. Schéma d’architecture."
+show_hero: false
 ---
 
 Dimension est mon workspace Rust pour mes expériences en mathématiques et en infographie. Le point de départ est `mathlib` : la bibliothèque expose le stockage matriciel, des solveurs numériques et les transformations utilisées côté CPU par le module de rendu.
-
-![Carte de hauteur d’une onde présente dans le dépôt mathlib de Dimension](images/waves.png)
 
 <!--more-->
 
@@ -44,4 +44,4 @@ Le [`Cargo.toml`](https://github.com/antoinebou12/Dimension/blob/main/Cargo.toml
 
 Ce code reste exploratoire. Pour justifier un résultat de performance, il faudrait un benchmark reproductible avec la taille des données et le matériel utilisé. Le dépôt montre pour l’instant comment je relie les calculs numériques à mes travaux d’infographie.
 
-L’image provient de [`mathlib/waves_heightmap.png`](https://github.com/antoinebou12/Dimension/blob/main/mathlib/waves_heightmap.png). [Voir Dimension sur GitHub](https://github.com/antoinebou12/Dimension).
+[Voir Dimension sur GitHub](https://github.com/antoinebou12/Dimension).

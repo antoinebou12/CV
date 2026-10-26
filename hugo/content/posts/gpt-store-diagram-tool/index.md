@@ -14,7 +14,7 @@ tags:
   - Diagrams
 ---
 
-The diagram tool reached **25k uses** on the GPT Store. At school, UML is how we share an idea, and I built the tool so I would stop dragging boxes and arrows in Lucidchart. **[Version française]({{< ref "/posts/gpt-store-diagram-tool/index.fr.md" >}})**.
+The diagram tool reached **25k uses** on the GPT Store. At school, UML is how we share an idea, and I built the tool so I would stop dragging boxes and arrows in Lucidchart.
 
 <!--more-->
 

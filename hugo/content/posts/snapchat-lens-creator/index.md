@@ -12,7 +12,7 @@ tags:
   - Side Project
 ---
 
-*Updated October 2026 with current Lens Insights figures from my LinkedIn featured post.* I started making **Snapchat lenses** for fun in **2017** and ended up with a small **Fiverr** side business, a utility other creators still use, and a phone call with Snapchat about **Lens Studio**. **[Version française]({{< ref "/posts/snapchat-lens-creator/index.fr.md" >}})**.
+*Updated October 2026 with current Lens Insights figures from my LinkedIn featured post.* I started making **Snapchat lenses** for fun in **2017** and ended up with a small **Fiverr** side business, a utility other creators still use, and a phone call with Snapchat about **Lens Studio**.
 
 <!--more-->
 

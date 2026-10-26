@@ -15,7 +15,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
 ---
 
-Même moteur **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** que l’[expérience indicateurs]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}}), accent sur **beaucoup de tickers** actions + crypto. **[English version]({{< ref "/posts/multiple-indicators-backtesting/index.md" >}})**.
+Même moteur **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** que l’[expérience indicateurs]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}}), accent sur **beaucoup de tickers** actions + crypto.
 
 <!--more-->
 

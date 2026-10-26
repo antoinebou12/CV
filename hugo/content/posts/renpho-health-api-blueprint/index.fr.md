@@ -15,7 +15,7 @@ images:
   - images/featured.jpeg
 ---
 
-Je voulais les pesées dans **Home Assistant** avec le reste des automations — pas une app santé de plus. Ça a mené à **[hass_renpho](https://github.com/antoinebou12/hass_renpho)** (fork d’une intégration communautaire devenue silencieuse), **APKLeaks** sur le client Android, et un tableau Lovelace que j’ouvre encore quand l’entraînement ou le sommeil bougent. **[English version]({{< ref "/posts/renpho-health-api-blueprint/index.md" >}})**.
+Je voulais les pesées dans **Home Assistant** avec le reste des automations — pas une app santé de plus. Ça a mené à **[hass_renpho](https://github.com/antoinebou12/hass_renpho)** (fork d’une intégration communautaire devenue silencieuse), **APKLeaks** sur le client Android, et un tableau Lovelace que j’ouvre encore quand l’entraînement ou le sommeil bougent.
 
 <!--more-->
 

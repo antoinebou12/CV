@@ -7,7 +7,7 @@ tags: [Mitsuba, Video]
 post_kind: article
 ---
 
-Some rendering projects are easiest to understand through the repository that holds the video work. **[Version française]({{< ref "/posts/mistubavideo-rendered-video/index.fr.md" >}})**.
+Some rendering projects are easiest to understand through the repository that holds the video work.
 
 <!--more-->
 

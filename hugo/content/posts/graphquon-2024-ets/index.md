@@ -19,7 +19,7 @@ images:
 
 ![GraphQuon 2024 auditorium at ÉTS — red carpet, white chairs, projection screen and ÉTS podium](./images/ets-auditorium-stage.png)
 
-**GraphQuon** (formerly MOTOGRAPH) is the annual Quebec–Ontario pre-SIGGRAPH workshop for East-Canadian computer graphics labs. The **2024** edition ran **9–10 November 2024** at **École de technologie supérieure (ÉTS)** in Montréal. I helped **build and host the conference website** at [graphquon.github.io](https://graphquon.github.io/) so schedules, registration, and past editions stayed in one place. **[Version française]({{< ref "/posts/graphquon-2024-ets/index.fr.md" >}})**.
+**GraphQuon** (formerly MOTOGRAPH) is the annual Quebec–Ontario pre-SIGGRAPH workshop for East-Canadian computer graphics labs. The **2024** edition ran **9–10 November 2024** at **École de technologie supérieure (ÉTS)** in Montréal. I helped **build and host the conference website** at [graphquon.github.io](https://graphquon.github.io/) so schedules, registration, and past editions stayed in one place.
 
 <!--more-->
 

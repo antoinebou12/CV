@@ -23,7 +23,7 @@ A quick recap of Byzantium’s **first Ethereum workshop**.
 
 On **11 March 2024** at ÉTS, beginners and more advanced folks created and deployed their own token on-chain and transferred tokens to each other. Thanks to everyone who showed up — and to **Khalil Anis Zabat** for leading and organizing the session.
 
-**[Version française]({{< ref "/posts/byzantium-solidity-ethereum-workshop/index.fr.md" >}})**
+
 
 <!--more-->
 

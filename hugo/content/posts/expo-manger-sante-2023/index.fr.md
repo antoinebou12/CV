@@ -15,7 +15,7 @@ images:
   - images/featured.jpeg
 ---
 
-Deux jours à **Expo Manger Santé 2023** au **Palais des congrès** — un pied au **kiosque olives**, l’autre dans les allées avec un carnet et l’estomac vide. Photos événement : **OS7Media** (os7mediamatrix@gmail.com). **[English version]({{< ref "/posts/expo-manger-sante-2023/index.md" >}})**.
+Deux jours à **Expo Manger Santé 2023** au **Palais des congrès** — un pied au **kiosque olives**, l’autre dans les allées avec un carnet et l’estomac vide. Photos événement : **OS7Media** (os7mediamatrix@gmail.com).
 
 <!--more-->
 

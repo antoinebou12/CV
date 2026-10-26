@@ -16,7 +16,7 @@ images:
   - images/featured.png
 ---
 
-Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally. **[Version française]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})**.
+Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally.
 
 <!--more-->
 

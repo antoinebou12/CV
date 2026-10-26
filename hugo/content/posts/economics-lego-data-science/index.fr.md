@@ -16,7 +16,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb"
 ---
 
-Je collectionne le LEGO et j’écris du Python — croisement des exports **Rebrickable** avec un scraper **BrickEconomy** pour voir l’évolution des sets, couleurs et thèmes, et tester une régression simple sur le **001-1**. Récit et graphiques ici ; notebooks complets dans **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**. **[English version]({{< ref "/posts/economics-lego-data-science/index.md" >}})**.
+Je collectionne le LEGO et j’écris du Python — croisement des exports **Rebrickable** avec un scraper **BrickEconomy** pour voir l’évolution des sets, couleurs et thèmes, et tester une régression simple sur le **001-1**. Récit et graphiques ici ; notebooks complets dans **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**.
 
 <!--more-->
 

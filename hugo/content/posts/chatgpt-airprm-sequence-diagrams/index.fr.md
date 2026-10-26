@@ -16,7 +16,7 @@ images:
     - images/featured.jpeg
 ---
 
-J’en avais assez des fils ChatGPT « dessine un diagramme de séquence » qui renvoient une syntaxe à moitié au hasard. **[AIPRM](https://www.aiprm.com/)** garde le gabarit dans le navigateur ; je verrouille quatre champs — **type**, **éléments**, **objectif**, **outil** — et le modèle arrête de deviner entre **PlantUML**, **Mermaid** ou des notes pour Draw.io. Voir aussi le billet **[plugin D2C OpenAI]({{< ref "/posts/d2c-openai-diagram-plugin/index.fr.md" >}})**. **[English version]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})**.
+J’en avais assez des fils ChatGPT « dessine un diagramme de séquence » qui renvoient une syntaxe à moitié au hasard. **[AIPRM](https://www.aiprm.com/)** garde le gabarit dans le navigateur ; je verrouille quatre champs — **type**, **éléments**, **objectif**, **outil** — et le modèle arrête de deviner entre **PlantUML**, **Mermaid** ou des notes pour Draw.io. Voir aussi le billet **[plugin D2C OpenAI]({{< ref "/posts/d2c-openai-diagram-plugin/index.fr.md" >}})**.
 
 <!--more-->
 

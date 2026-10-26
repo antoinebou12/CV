@@ -16,7 +16,7 @@ images:
   - images/featured.png
 ---
 
-Je n’ai pas commencé dans Kubernetes. J’ai commencé dans des onglets de navigateur, des boucles de jeu et un makerspace qui sentait le PLA chaud. Cet article raconte ce chemin — **backend**, **plateforme** et **DevSecOps** sont où j’atterris, mais les étapes comptent. **[English version]({{< ref "/posts/software-engineering-journey/index.md" >}})**.
+Je n’ai pas commencé dans Kubernetes. J’ai commencé dans des onglets de navigateur, des boucles de jeu et un makerspace qui sentait le PLA chaud. Cet article raconte ce chemin — **backend**, **plateforme** et **DevSecOps** sont où j’atterris, mais les étapes comptent.
 
 <!--more-->
 

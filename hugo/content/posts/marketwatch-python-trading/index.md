@@ -15,7 +15,7 @@ images:
   - images/featured.png
 ---
 
-I wanted to automate chores in MarketWatch’s **virtual stock game** (paper trading, not a real broker). **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI is the small client I shipped — watchlists, game state, portfolio, orders, leaderboard. **[Version française]({{< ref "/posts/marketwatch-python-trading/index.fr.md" >}})**.
+I wanted to automate chores in MarketWatch’s **virtual stock game** (paper trading, not a real broker). **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI is the small client I shipped — watchlists, game state, portfolio, orders, leaderboard.
 
 <!--more-->
 

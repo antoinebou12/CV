@@ -15,7 +15,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b"
 ---
 
-Trading is about **ranges**, not one magic price. I used **forward Monte Carlo** on Apple daily closes: estimate log-return drift and volatility before 2023, simulate many paths, then check whether 2023 hold-out prices fell inside a **5th–95th percentile band**. **[Version française]({{< ref "/posts/predicting-stock-prices-monte-carlo/index.fr.md" >}})**.
+Trading is about **ranges**, not one magic price. I used **forward Monte Carlo** on Apple daily closes: estimate log-return drift and volatility before 2023, simulate many paths, then check whether 2023 hold-out prices fell inside a **5th–95th percentile band**.
 
 <!--more-->
 

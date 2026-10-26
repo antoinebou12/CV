@@ -15,7 +15,7 @@ images:
   - images/featured.png
 ---
 
-Automatiser quelques tâches dans le **jeu boursier virtuel** MarketWatch (paper trading, pas un courtier réel). **[marketwatch](https://pypi.org/project/marketwatch/)** sur PyPI — listes de suivi, état de partie, portefeuille, ordres, classement. **[English version]({{< ref "/posts/marketwatch-python-trading/index.md" >}})**.
+Automatiser quelques tâches dans le **jeu boursier virtuel** MarketWatch (paper trading, pas un courtier réel). **[marketwatch](https://pypi.org/project/marketwatch/)** sur PyPI — listes de suivi, état de partie, portefeuille, ordres, classement.
 
 <!--more-->
 
