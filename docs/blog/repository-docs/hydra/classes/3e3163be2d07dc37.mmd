@@ -1,0 +1,101 @@
+classDiagram
+direction TB
+class ta62f94b02ba6["FocusNode"] {
+  <<interface>>
+}
+class t05e1df9e0975["FocusRegion"] {
+  <<interface>>
+}
+class tbb1bebc15902["FocusLayer"] {
+  <<interface>>
+}
+class t40af1d8fc61d["FocusRegionRecord"] {
+  <<interface>>
+}
+class t3bcaf9b26a80["FocusLayerRecord"] {
+  <<interface>>
+}
+class t840b7a41c8a8["SetFocusRegionOptions"] {
+  <<interface>>
+}
+class tc78b54632b3b["NavigationDebugSnapshot"] {
+  <<interface>>
+}
+class t2e795ee8189b["NavigationService"] {
+  constructor()
+  getInstance()
+  registerLayer()
+  focusInitialInLayer()
+  registerRegion()
+  updateRegion()
+  registerNavigationNode()
+  updateNavigationNode()
+  getCurrentFocusId()
+  getNode()
+  isNodeActive()
+  getActiveLayerId()
+  getNodes()
+  getRegions()
+  getLayers()
+  clearFocus()
+  setFocus()
+  requestFocusWhenAvailable()
+  setFocusRegion()
+  moveFocus()
+  getDebugSnapshot()
+  subscribe()
+  resolveInitialFocusInLayer()
+  resolvePendingInitialFocusRequest()
+  restoreFocusForLayer()
+  ensureRegionChildren()
+  appendChildTarget()
+  removeChildTarget()
+  getTargetKey()
+  getNavigationOrderForTarget()
+  getHistoricalOrderForTarget()
+  sortRegionChildren()
+  hasPendingInitialFocus()
+  reconcileLayerRootRegion()
+  tryResolvePendingInitialFocus()
+  tryResolvePendingRequestedFocus()
+  getTopLevelRegionIdsForLayer()
+  getEffectiveRootRegionIdForLayer()
+  hasValidCurrentFocus()
+  ensureCurrentFocus()
+  updateLastFocusedForNode()
+  resolveRecoveryFocus()
+  resolveFirstAvailableFocus()
+  moveFocusByTree()
+  getNextNodeInRegion()
+  getNextNodeInGridRegion()
+  getTargetRect()
+  getTargetElement()
+  getGridCandidateScore()
+  getAxisOverlap()
+  getRectCenter()
+  resolveTargetToNode()
+  resolveOverrideTargetToNode()
+  resolveItemOverrideTarget()
+  resolveRegionOverrideTarget()
+  getEntryNodeForRegion()
+  getBoundaryNodeInRegion()
+  getDirectChildTargetForNode()
+  isNodeWithinRegion()
+  isNodeInLayer()
+  isNodeInActiveLayer()
+  isRegionInLayer()
+  isRegionInActiveLayer()
+  doesDirectionMatchOrientation()
+  getDirectionStep()
+  getBoundaryForEntryDirection()
+  areFocusOverridesEqual()
+  areFocusOverrideTargetsEqual()
+  getActiveNodeIdsWithinRegion()
+  getOverrideTargetDebugInfo()
+  logMoveFocusOverrideResolution()
+  warnInvalidOverride()
+  getOverrideFailureReason()
+  notify()
+}
+t05e1df9e0975 <|.. t40af1d8fc61d
+tbb1bebc15902 <|.. t3bcaf9b26a80

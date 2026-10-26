@@ -19,16 +19,15 @@ You can use the plugin [here](https://openai-uml-plugin.vercel.app)
 
 > **Join the [ChatGPT plugins waitlist here](https://openai.com/waitlist/plugins)!**
 
-D2COpenAIPlugin is a plugin for ChatGPT that enables users to generate diagrams using PlantUML or Mermaid. This plugin enhances the capabilities of ChatGPT by providing a seamless way to create diverse and creative diagrams.
+D2COpenAIPlugin is a ChatGPT plugin that generates diagrams with PlantUML or Mermaid from the conversation.
 
 ![Diagram generator plugin demo](https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif)
 ![image](https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41)
 
 ## Features
 - Generate diagrams using PlantUML or Mermaid
-- Seamless integration with ChatGPT
-- User-friendly interface for creating diagrams
-- Enhances the versatility of ChatGPT
+- Works as a ChatGPT plugin
+- Diagram-oriented UI
 
 ## Installation
 Before using the plugin, make sure to have the following prerequisites installed:

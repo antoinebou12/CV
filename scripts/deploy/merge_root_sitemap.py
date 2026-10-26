@@ -19,7 +19,6 @@ XHTML_NS = "http://www.w3.org/1999/xhtml"
 # (english path, french path) — x-default is always the English path
 HREFLANG_PAIRS: tuple[tuple[str, str], ...] = (
     ("index-en.html", "index-fr.html"),
-    ("about-en.html", "about-fr.html"),
     ("resume.md", "resume-fr.md"),
     ("resume.json", "resume-fr.json"),
 )
@@ -174,8 +173,6 @@ def main() -> int:
         "index-en.html",
         "index-fr.html",
         "index.html",
-        "about-en.html",
-        "about-fr.html",
         "linktree/",
         "resume.md",
         "resume-fr.md",

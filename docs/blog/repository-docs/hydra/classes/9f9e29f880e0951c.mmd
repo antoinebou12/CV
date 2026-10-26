@@ -1,0 +1,91 @@
+classDiagram
+direction TB
+class t833585046ce4["ButtonRawState"] {
+  <<interface>>
+}
+class tef8726f2ef72["AxisRawState"] {
+  <<interface>>
+}
+class t5938cb6094ab["GamepadRawState"] {
+  <<interface>>
+}
+class te9978ddfcc44["GamepadStickState"] {
+  <<interface>>
+}
+class t86506ae52cf4["GamepadService"] {
+  getInstance()
+  constructor()
+  isWindowAvailable()
+  setupListeners()
+  createInitialStickState()
+  createInitialStickStateSet()
+  getStickState()
+  getRepeatOwners()
+  getRepeatCandidates()
+  pollGamepads()
+  startPolling()
+  stopPolling()
+  updateButtonState()
+  isRepeatableButton()
+  isButtonPressed()
+  getButtonRepeatTimers()
+  getRepeatLane()
+  isSameInputDescriptor()
+  clearRepeatForInput()
+  isInputStillActive()
+  resumeRepeatForInput()
+  claimRepeatOwnership()
+  releaseRepeatOwnership()
+  isRepeatOwner()
+  setupButtonRepeat()
+  repeatButtonCallback()
+  normalizeAxisValue()
+  getAxisButtonState()
+  getAxisTriggerState()
+  getPhysicalAxisValue()
+  triggerButtonPressCallbacks()
+  onButtonPress()
+  onAnyButtonPress()
+  notifyStateChange()
+  updateMappedButtonState()
+  updateMappedAxisState()
+  setStickPositionAxis()
+  applyGamepadMapping()
+  updateGamepadState()
+  updateStickState()
+  setupStickRepeat()
+  repeatStickCallback()
+  clearStickTimer()
+  clearButtonRepeatTimer()
+  clearButtonRepeatTimersForGamepad()
+  clearAllButtonRepeatTimers()
+  clearAllTimers()
+  clearTimersForGamepad()
+  triggerStickCallbacks()
+  getCurrentState()
+  getActiveGamepadIndex()
+  setInputEnabled()
+  getLastActiveGamepad()
+  markGamepadActivity()
+  wasGamepadRecentlyActive()
+  isAnyGamepadButtonPressed()
+  setActiveGamepadIndex()
+  onStateChange()
+  onStickMove()
+  vibrate()
+  dispose()
+  getNewLayoutOrCached()
+  getGamepadHardwareKey()
+  getInputSignatureKey()
+  getEchoSuppressionWindow()
+  pruneRecentAcceptedInputs()
+  recordAcceptedInput()
+  findEchoInput()
+  resolveGamepadInput()
+}
+class td751bd391bc6["Vector2D"] {
+  constructor()
+  magnitude()
+  normalize()
+  dominantDirection()
+}

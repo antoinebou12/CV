@@ -13,7 +13,7 @@ tags:
   - MCP
   - Chibi
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 Good **2D toy art** beats a fancy image-to-3D model. This post walks the steps in order, links a [**slide deck**](./make-figurines-using-ai-for-3d-printing.pptx), a [**ComfyUI workflow**](./workflows/image_omnigen2_image_edit.json), and how I sketch the flow with [**uml-mcp**](https://github.com/antoinebou12/uml-mcp).

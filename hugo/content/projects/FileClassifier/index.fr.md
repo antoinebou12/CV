@@ -15,7 +15,7 @@ Outil en ligne de commande qui organise automatiquement les fichiers d’un doss
 - Catégories prédéfinies pour les formats courants  
 - Classifieur extensible (modélisation de sujets)  
 - Structure de sortie configurable  
-- Léger et simple à utiliser  
+
 
 ## Installation
 

@@ -1,0 +1,86 @@
+flowchart TD
+
+subgraph group_workflow["ComfyUI Workflow"]
+  node_workflow_nodes["ComfyUI Nodes<br/>[__init__.py]"]
+  node_render_node["UML Render<br/>[uml_diagram.py]"]
+  node_viewer_url_node["Diagram Viewer URL<br/>[uml_viewer_url.py]"]
+  node_diagram_result["Diagram Result"]
+end
+
+subgraph group_rendering["Diagram Rendering"]
+  node_diagram_defaults["Diagram Defaults<br/>[default_code.py]"]
+  node_render_client["Render Backends<br/>[kroki_client.py]"]
+  node_local_mermaid["Local Mermaid<br/>[render_mermaid.mjs]"]
+end
+
+subgraph group_generation["LLM Generation"]
+  node_prompt_engine["Prompt Engine"]
+  node_llm_call["LLM Call<br/>[uml_llm_call.py]"]
+  node_code_assistant["LLM Code Assistant<br/>[uml_llm.py]"]
+  node_llm_shared["LLM Providers<br/>[uml_llm_shared.py]"]
+  node_prompt_templates["Prompt Templates"]
+end
+
+subgraph group_viewer["Viewer Experience"]
+  node_frontend_extension["ComfyUI Extension<br/>[ComfyUI-UML.js]"]
+  node_viewer_shell["Viewer Shell<br/>[viewer_shell.mjs]"]
+  node_url_utils["Viewer URL Utilities<br/>[viewerUrlUtils.mjs]"]
+  node_view_registry["View Registry<br/>[view_manifest.js]"]
+  node_format_views["Format Views"]
+end
+
+node_user(("ComfyUI User"))
+node_kroki["Kroki API"]
+
+node_user -->|"configures"| node_workflow_nodes
+node_workflow_nodes -->|"runs"| node_render_node
+node_prompt_engine -->|"supplies prompt"| node_llm_call
+node_llm_call -->|"calls provider"| node_llm_shared
+node_code_assistant -->|"calls provider"| node_llm_shared
+node_prompt_engine -->|"loads templates"| node_llm_shared
+node_prompt_engine -.->|"loads presets"| node_prompt_templates
+node_code_assistant -.->|"loads presets"| node_prompt_templates
+node_code_assistant -->|"provides diagram code"| node_render_node
+node_render_node -->|"uses defaults"| node_diagram_defaults
+node_render_node -->|"requests rendering"| node_render_client
+node_render_client -->|"posts diagram"| node_kroki
+node_render_client -->|"runs local renderer"| node_local_mermaid
+node_render_node -.->|"returns output"| node_diagram_result
+node_render_node -->|"provides Kroki URL"| node_viewer_url_node
+node_viewer_url_node -->|"opens preview"| node_frontend_extension
+node_render_node -->|"opens viewer"| node_frontend_extension
+node_frontend_extension -->|"builds viewer query"| node_url_utils
+node_frontend_extension -.->|"opens viewer"| node_viewer_shell
+node_viewer_shell -->|"infers format"| node_url_utils
+node_viewer_shell -->|"selects view"| node_view_registry
+node_view_registry -->|"loads format view"| node_format_views
+node_viewer_shell -.->|"fetches diagram"| node_diagram_result
+
+click node_workflow_nodes "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/__init__.py"
+click node_render_node "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_diagram.py"
+click node_prompt_engine "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_llm_prompt_engine.py"
+click node_llm_call "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_llm_call.py"
+click node_code_assistant "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_llm.py"
+click node_llm_shared "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_llm_shared.py"
+click node_prompt_templates "https://github.com/antoinebou12/comfyui-uml/tree/main/prompts"
+click node_diagram_defaults "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/default_code.py"
+click node_render_client "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/kroki_client.py"
+click node_local_mermaid "https://github.com/antoinebou12/comfyui-uml/blob/main/web/js/render_mermaid.mjs"
+click node_viewer_url_node "https://github.com/antoinebou12/comfyui-uml/blob/main/nodes/uml_viewer_url.py"
+click node_frontend_extension "https://github.com/antoinebou12/comfyui-uml/blob/main/web/ComfyUI-UML.js"
+click node_viewer_shell "https://github.com/antoinebou12/comfyui-uml/blob/main/web/viewer_shell.mjs"
+click node_url_utils "https://github.com/antoinebou12/comfyui-uml/blob/main/web/viewerUrlUtils.mjs"
+click node_view_registry "https://github.com/antoinebou12/comfyui-uml/blob/main/web/views/view_manifest.js"
+click node_format_views "https://github.com/antoinebou12/comfyui-uml/tree/main/web/views"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_workflow_nodes,node_render_node,node_viewer_url_node,node_diagram_result,node_user toneBlue
+class node_diagram_defaults,node_render_client,node_local_mermaid toneAmber
+class node_prompt_engine,node_llm_call,node_code_assistant,node_llm_shared,node_prompt_templates,node_kroki toneMint
+class node_frontend_extension,node_viewer_shell,node_url_utils,node_view_registry,node_format_views toneRose

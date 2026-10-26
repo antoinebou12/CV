@@ -4,6 +4,8 @@ title: A Journey to AWS Certified Cloud Practitioner
 date: 2024-05-14T16:00:00-04:00
 lastmod: 2026-05-23T00:30:00-04:00
 description: Two-week study plan — Udemy, AWS Skill Builder, Cloud Quest, Escape Room, and Pearson VUE tips (extra time, Credly badge).
+images:
+  - images/featured.png
 translationKey: aws-certified-cloud-practitioner
 tags:
     - AWS
@@ -21,100 +23,98 @@ I passed the **AWS Certified Cloud Practitioner (CLF-C02)** after about **two we
 
 **Time Commitment**: Approximately 60 hours over two weeks
 
-Here’s a breakdown of the resources I used:
+Resources I used:
 
 1.  **Ultimate AWS Certified Cloud Practitioner CLF-C02** (Udemy — Paid)
 
-![](./img-001.png)
+![](images/img-001.png)
 
 2. **AWS Cloud Quest: Cloud Practitioner** (AWS Skill Builder —Free)
 
-![](./img-002.png)
+![](images/img-002.png)
 
 3\. **AWS Escape Room: Exam Prep for AWS Certified Cloud Practitioner** (CLF-C02) (AWS Skill Builder — Paid Free Trial)
 
-![](./img-003.png)
+![](images/img-003.png)
 
 4\. **Free Practice Exam** ([https://www.w3schools.com/aws/aws\_cloudessentials\_awscert.php](https://www.w3schools.com/aws/aws_cloudessentials_awscert.php))
 
-![](./img-004.png)
+![](images/img-004.png)
 
 5\. **Exam Prep Enhanced Course: AWS Certified Cloud Practitioner** (CLF-C02 — English) (AWS Skill Builder — Paid Free Trial)
 
-![](./img-005.png)
+![](images/img-005.png)
 
 ### AWS Skill Builder
 
-AWS Skill Builder is an online learning center designed to help users of all skill levels deepen their understanding of AWS services. It offers a wide range of courses, from beginner to advanced levels, covering various aspects of cloud computing.
+AWS Skill Builder is AWS’s online learning hub: courses from beginner through advanced, plus labs tied to the services on the exam.
 
-**Features:**
+**What I used there:**
 
-\- **Structured Learning Paths:** AWS Skill Builder provides well-organized learning paths, making it easy to follow a structured approach to learning. For the Cloud Practitioner certification, the platform offers a dedicated path that covers all the exam objectives.  
-\- **Hands-On Labs:** Practical experience is crucial, and Skill Builder includes hands-on labs that allow you to apply what you’ve learned in real-world scenarios.  
-\- **Variety of Content**: The platform offers video tutorials, quizzes, and reading materials, catering to different learning styles.
+\- **Structured Learning Paths:** Cloud Practitioner has a dedicated path that tracks the exam objectives.  
+\- **Hands-On Labs:** Console walkthroughs so you click through workflows instead of only watching videos.  
+\- **Variety of Content**: Videos, quizzes, and reading — I switched formats when one got dull.
 
-**AWS Cloud Quest: Gamifying Cloud Learning**
+**AWS Cloud Quest**
 
-AWS Cloud Quest: Cloud Practitioner is a unique, gamified learning experience. It turns cloud learning into an adventure where users complete quests and solve puzzles to learn about AWS services.
+AWS Cloud Quest: Cloud Practitioner is a game-shaped course: quests and puzzles that still teach the same AWS services.
 
-\- **Interactive Learning**  
-\- **Real-World Scenarios**  
-\- **Engagement**
+\- **Interactive** — you play through tasks instead of clicking Next on slides  
+\- **Scenarios** — quests map to common cloud decisions, not trivia alone  
+\- **Pace** — easier to finish a “quest” on a tired evening than another lecture chapter
 
-**AWS Escape Room: A Fun and Challenging Prep Tool**
+**AWS Escape Room**
 
-The AWS Escape Room is an innovative and engaging way to prepare for the certification exam. It simulates real-life scenarios where you need to solve challenges to “escape” from virtual rooms.
+The Escape Room packs exam-style problems into timed “escape” challenges — lighter than another straight practice quiz, still useful for format and pressure.
 
-\- **Exam Simulation**: It provides a realistic exam experience, helping you get used to the format and time constraints.  
-\- **Critical Thinking**: The escape room challenges require critical thinking and problem-solving skills, essential for the exam and real-world applications.  
-\- **Interactive**: It’s a fun way to test your knowledge and keep yourself engaged during the preparation process.
+\- **Exam Simulation**: Format and time pressure closer to the real test.  
+\- **Problem-solving**: You reason through scenarios, not only recall definitions.  
+\- **Pace**: Kept me studying on days when another video chapter would have stalled.
 
-**Putting It All Together: My Certification Journey**
+**How I sequenced the two weeks**
 
-Combining these resources, I followed a structured study plan:
+*   **Week 1**: Ultimate AWS Certified Cloud Practitioner on Udemy — videos and hands-on labs.
+*   **Week 2**: Cloud Quest, Escape Room, practice exams, and the Exam Prep Enhanced Course on Skill Builder.
 
-*   **Week 1**: Focused on the Ultimate AWS Certified Cloud Practitioner course on Udemy, completing video lectures and hands-on labs.
-*   **Week 2**: Utilized AWS Cloud Quest for interactive learning and engaged with the AWS Escape Room for exam simulation. Also, supplemented with practice exams and the Exam Prep Enhanced Course on AWS Skill Builder.
+## Pearson VUE and extra exam time
 
-## My Experience with Person Vue and Getting Extra Exam Time
+I booked through Pearson VUE — in-person or online proctoring. Scheduling and exam day went without drama.
 
-During my certification process, I took my exam through Pearson VUE. Pearson VUE provides a flexible and convenient way to take certification exams, offering both in-person and online proctoring options. My experience with Pearson VUE was seamless, from scheduling the exam to taking it on the day.
-
-One tip I found incredibly helpful was the option to apply for additional exam time. If English is not your primary language, AWS allows you to request a 50% extension for your exam duration. Here’s how you can do it:
+Useful tip: if English is not your primary language, AWS lets you request a 50% longer exam. Steps:
 
 1.  AWS Certification: Before scheduling your exam, go to exam accommodations
 
-![](./img-006.png)
+![](images/img-006.png)
 
-![](./img-007.png)
+![](images/img-007.png)
 
-2\. **ID Verification**: Ensure you have a valid ID for verification purposes. This is a crucial step for both in-person and online exams.
+2\. **ID Verification**: Have a valid ID ready — required for both in-person and online exams.
 
-3\. **Schedule Your Exam with the Extension**: Once approved, you can schedule your exam with the additional time included. This extension can make a significant difference, allowing you more time to carefully consider each question and reduce exam stress.
+3\. **Schedule Your Exam with the Extension**: Once approved, book with the extra time included. The buffer helps when you’re parsing longer scenario stems in a second language.
 
-![](./img-008.png)
+![](images/img-008.png)
 
 ## Preparing for the Online Proctored Exam
 
-If you choose to take your exam online, there are a few additional considerations to keep in mind:
+If you take the exam online:
 
-1.  Long Wait Times: Be prepared for potentially long wait times before your exam begins. It’s advisable to log in at least 30 minutes before your scheduled time to complete the necessary check-in procedures.
-2.  Room Setup: Ensure your room is clean, free of any food, and without a second monitor. The proctor will ask you to show a 360-degree view of your room using your webcam to ensure there are no unauthorized materials.
-3.  Proctoring Software: Pearson VUE uses specific software to administer online exams. Make sure you have this software installed and tested on your computer before the exam day to avoid any technical issues.
-4.  Quiet Environment: Choose a quiet environment where you won’t be disturbed during the exam. Inform family members or roommates about your exam schedule to minimize interruptions.
+1.  Long Wait Times: Log in at least 30 minutes early — check-in can drag before the timer starts.
+2.  Room Setup: Clean room, no food, no second monitor. The proctor will ask for a 360° webcam sweep for unauthorized materials.
+3.  Proctoring Software: Install and test Pearson VUE’s software before exam day.
+4.  Quiet Environment: Tell roommates or family the schedule so nobody knocks mid-question.
 
 ## Getting Your Digital Badge
 
-Once you’ve passed your exam, you can proudly share your achievement by obtaining a digital badge. AWS uses Credly to issue digital badges. Here’s how you can get yours:
+After you pass, AWS issues a digital badge through Credly:
 
-![](./img-009.png)
+![](images/img-009.png)
 
-1.  Wait for Notification: After passing the exam, wait for 2–3 days to receive an email notification from Credly that your badge is ready.
-2.  Create a Credly Account: If you don’t have one already, create a Credly account using the same email address you used for your AWS Certification.
-3.  Accept Your Badge: Follow the instructions in the email to accept your badge and add it to your Credly account.
-4.  Share Your Badge: You can now share your digital badge on LinkedIn, your resume, or any other platform to showcase your certification.
+1.  Wait for Notification: After passing, wait 2–3 days for the Credly email that the badge is ready.
+2.  Create a Credly Account: Same email address as your AWS Certification account.
+3.  Accept Your Badge: Follow the email instructions and add the badge to Credly.
+4.  Share Your Badge: Add it to LinkedIn, your resume, or anywhere else you list credentials.
 
-![](./img-010.png)
+![](images/img-010.png)
 
 ### When to use this sprint plan
 

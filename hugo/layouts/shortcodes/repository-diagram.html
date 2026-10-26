@@ -1,0 +1,4 @@
+{{- $name := .Get 0 -}}
+{{- $matches := where hugo.Data.repository_notes.notes "repo" $name -}}
+{{- if ne (len $matches) 1 -}}{{ errorf "Expected one diagram for %q" $name }}{{- end -}}
+{{- partial "repository-diagram.html" (dict "note" (index $matches 0) "lang" .Page.Lang) -}}

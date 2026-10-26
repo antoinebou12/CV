@@ -4,6 +4,8 @@ title: "Porting sm64coopdx to Switch and New 3DS: keep the platform boundary sma
 date: 2026-10-20T10:00:00-04:00
 lastmod: 2026-10-20T10:00:00-04:00
 description: "A code-based tour of the Switch and New 3DS CoopDX targets: graphics, controllers, audio, build isolation and current hardware-validation limits."
+images:
+  - images/featured.png
 translationKey: sm64coopdx-switch-new3ds-port
 mermaid: true
 tags: ["Nintendo Switch","Nintendo 3DS","C","Graphics","Homebrew"]

@@ -4,6 +4,8 @@ title: "Backtest d’indicateurs techniques sur plusieurs tickers avec Python"
 date: 2024-05-30T15:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "BatchBacktesting à l’échelle — lire les classements agrégés sans confondre criblage et stratégie."
+images:
+  - images/featured.png
 translationKey: multiple-indicators-backtesting
 tags:
   - Python
@@ -34,7 +36,7 @@ Résultats locaux dans `output/` — pas versionnés par défaut.
 
 Comparer **médiane** et extrêmes avant de dire « MACD bat EMA ».
 
-![Sortie graphique](./img-001.png)
+![Sortie graphique](images/img-001.png)
 
 ## Bilan
 

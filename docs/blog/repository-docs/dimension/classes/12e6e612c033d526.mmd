@@ -1,0 +1,27 @@
+classDiagram
+direction TB
+class ta7c3ae7c2bed["TickCounter"] {
+  <<struct>>
+  new()
+  advance()
+  current()
+  elapsed()
+}
+class t1d8f2388b03d["SimTime"] {
+  <<struct>>
+  new()
+  now_ms()
+  tick()
+  advance_tick()
+  set_tick()
+  tick_duration_ms()
+  base_ms()
+}
+class t36abe05481f6["TickScheduler"] {
+  <<struct>>
+  new()
+  schedule()
+  schedule_after()
+  poll()
+  pending_count()
+}

@@ -13,7 +13,7 @@ tags:
   - 3CX
   - Chatwoot
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](./images/chatwoot-inbox.png)

@@ -4,6 +4,8 @@ title: "Économie des boîtes LEGO avec science des données"
 date: 2024-05-30T12:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Tendances Rebrickable, prix BrickEconomy, scraping Playwright, régression sur le set 001-1 — récit avec graphiques, code dans LegosTracker."
+images:
+  - images/featured.png
 translationKey: economics-lego-data-science
 tags:
   - LEGO
@@ -25,42 +27,42 @@ Je collectionne le LEGO et j’écris du Python — croisement des exports **Reb
 | **CSV Rebrickable** | sets, thèmes, pièces, couleurs, inventaires |
 | **BrickEconomy (scrapé)** | prix secondaire que Rebrickable ne fournit pas |
 
-![Vue d’ensemble des tables](./img-001.png)
+![Vue d’ensemble des tables](images/img-001.png)
 
 ## Sets dans le temps
 
 1. **Nombre de sets par an** augmente.
 2. **Pièces moyennes par set** monte — modèles plus denses.
 
-![Sets par année](./img-002.png)
+![Sets par année](images/img-002.png)
 
-![Pièces moyennes par année](./img-003.png)
+![Pièces moyennes par année](images/img-003.png)
 
 ## Thèmes dominants
 
 Jointure `theme_id`, thèmes racine, top 10 par volume.
 
-![Top 10 thèmes](./img-004.png)
+![Top 10 thèmes](images/img-004.png)
 
 ## Scraper BrickEconomy
 
 **Playwright + asyncio**, validation **pydantic** — code et garde-fous dans le dépôt `LegosTracker`.
 
-![Workflow scraper](./img-005.png)
+![Workflow scraper](images/img-005.png)
 
 ## Prix du 001-1
 
 Charger `001-1_history.csv` / `001-1_new.csv`, nettoyer, tracer dans le temps.
 
-![Série de prix 001-1](./img-006.png)
+![Série de prix 001-1](images/img-006.png)
 
 ## Régression linéaire
 
 Modèle simple pour pratiquer l’interprétation — pas de « alpha » boursier sur la brique.
 
-![Ajustement et résidus](./img-010.png)
+![Ajustement et résidus](images/img-010.png)
 
-![Prédit vs observé](./img-011.png)
+![Prédit vs observé](images/img-011.png)
 
 Détails : [Medium](https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb) et notebooks GitHub.
 
@@ -68,7 +70,7 @@ Détails : [Medium](https://medium.com/@antoine.boucher012/economics-of-lego-set
 
 Les one-liners pandas restent dans le dépôt — pas recollés ici.
 
-![Graphiques exploratoires](./img-012.png)
+![Graphiques exploratoires](images/img-012.png)
 
 ## Limites
 

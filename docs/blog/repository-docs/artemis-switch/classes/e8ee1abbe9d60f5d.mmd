@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class tfec27ebe900d["HIDDeviceUSB"] {
+  HIDDeviceUSB()
+  getIdentifier()
+  getId()
+  getVendorId()
+  getProductId()
+  getSerialNumber()
+  getVersion()
+  getManufacturerName()
+  getProductName()
+  getDevice()
+  getDeviceName()
+  open()
+  writeReport()
+  readReport()
+  close()
+  shutdown()
+  setFrozen()
+}
+class t700cff482e32["InputThread"] {
+  run()
+}
+class b73c5ec6ce9a6["HIDDevice"] {
+  <<unresolved_base>>
+}
+tfec27ebe900d ..> b73c5ec6ce9a6 : declared base
+class b79267bde556e["Thread"] {
+  <<unresolved_base>>
+}
+t700cff482e32 ..> b79267bde556e : declared base

@@ -12,7 +12,7 @@ tags:
   - Food
   - Photography
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 I spent two days at **Expo Manger Santé 2023** in **Place des Congrès**, Montreal — part work on an **olive kiosk**, part wandering the aisles with a notebook and an empty stomach. Event photos by **OS7Media** (os7mediamatrix@gmail.com); thanks for letting me use a few here. **[Version française]({{< ref "/posts/expo-manger-sante-2023/index.fr.md" >}})**.

@@ -12,7 +12,7 @@ tags:
   - Finance
   - Open Source
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 Automatiser quelques tâches dans le **jeu boursier virtuel** MarketWatch (paper trading, pas un courtier réel). **[marketwatch](https://pypi.org/project/marketwatch/)** sur PyPI — listes de suivi, état de partie, portefeuille, ordres, classement. **[English version]({{< ref "/posts/marketwatch-python-trading/index.md" >}})**.
@@ -57,7 +57,7 @@ mw.get_price("AAPL")
 
 Cas limites de connexion documentés sur le site.
 
-![Client Python MarketWatch](./featured.png)
+![Client Python MarketWatch](images/featured.png)
 
 ## Limites
 

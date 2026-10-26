@@ -1,0 +1,7 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- with .Page.Resources.GetMatch $src -}}
+<img src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- else -}}
+{{- errorf "bundle image %q not found for %s" $src .Page.RelPermalink -}}
+{{- end -}}

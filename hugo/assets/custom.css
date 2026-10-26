@@ -114,7 +114,7 @@
   }
 
   .nav-drawer .site-nav-main a {
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     padding-block: 0.5rem;
     font-size: 1.04rem;
   }
@@ -271,6 +271,73 @@ body {
 
 .single-post-surface .single-post-prose {
   min-width: 0;
+}
+
+.post-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.single-post-surface .prose .post-table-scroll :where(table) {
+  width: max-content !important;
+  min-width: 100%;
+  margin: 0;
+}
+
+.post-table-scroll :where(th, td) {
+  overflow-wrap: normal;
+  word-break: normal;
+  vertical-align: top;
+}
+
+.post-table-scroll :where(th, td):not(:last-child) {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .post-table-scroll {
+    overflow: visible;
+  }
+
+  .single-post-surface .prose .post-table-scroll :where(table) {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .post-table-scroll :where(thead) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .post-table-scroll :where(tr, th, td) {
+    display: block;
+    width: auto;
+    white-space: normal;
+  }
+
+  .post-table-scroll :where(tr) {
+    margin: 0 0 1rem;
+  }
+
+  .post-table-scroll :where(td) {
+    padding: 0.2rem 0;
+  }
+
+  .post-table-scroll :where(td)::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.15rem;
+    font-weight: 700;
+  }
 }
 
 .single-post-surface .prose :where(.highlight) {

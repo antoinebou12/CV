@@ -8,7 +8,7 @@
 
   <!-- title -->
   <title>
-    {{- if not .IsHome -}}{{- .Title }} - {{ end -}}{{- site.Title -}}
+    {{- if not .IsHome -}}{{- if .Params.repository_note -}}{{ .Params.repository_note }}: architecture{{ else }}{{ .Title }}{{ end }} - {{ end -}}{{- site.Title -}}
   </title>
 
   <!-- meta -->
@@ -22,15 +22,36 @@
   <meta name="author" content="{{- or .Params.author $site_author -}}" />
 
   <!-- css & js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+  {{- $tokens := resources.Get "design-tokens.css" -}}
   {{- $main := resources.Get "main.css" -}}
   <!---->
   {{- $custom := resources.Get "custom.css" -}}
   <!---->
   {{- $editorial := resources.Get "editorial.css" -}}
-  {{- $css := slice $main $custom $editorial | resources.Concat "main.css" | minify | fingerprint -}}
-  <link rel="preload stylesheet" as="style" href="{{- $css.RelPermalink -}}" integrity="{{ $css.Data.Integrity }}" />
+  {{- $css := slice $tokens $main $custom $editorial | resources.Concat "main.css" | minify | fingerprint -}}
+  <link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+  {{- if eq .Section "projects" -}}
+  {{- $directoryCSS := resources.Get "projects-directory.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $directoryCSS.RelPermalink }}" integrity="{{ $directoryCSS.Data.Integrity }}" />
+  {{- end -}}
+  {{- if or .Params.repository_note .Params.repository_diagram .Params.mermaid (eq .Section "posts") (eq .Section "projects") -}}
+  {{- $notesCSS := resources.Get "repository-notes.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $notesCSS.RelPermalink }}" integrity="{{ $notesCSS.Data.Integrity }}" />
+  {{- end -}}
 
   <!-- dark icon -->
+  {{ if eq .Section "projects" }}
+  {{ $projectTheme := resources.Get "projects-editorial.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $projectTheme.RelPermalink }}" />
+  {{ end }}
+  {{ if and (eq .Section "projects") (eq .Kind "section") }}
+  {{ $projectParticles := resources.Get "project-particles.js" | minify | fingerprint }}
+  <script defer src="{{ $projectParticles.RelPermalink }}" integrity="{{ $projectParticles.Data.Integrity }}"></script>
+  {{ end }}
   {{- $dark_icon := "theme.png" -}}
   <!---->
   {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}

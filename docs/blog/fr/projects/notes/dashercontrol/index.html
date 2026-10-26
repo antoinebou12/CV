@@ -1,0 +1,564 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>DasherControl: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.5eeb6b3870c7deb66a10043b10ff01f264a7b584240d7d6323a0de1febb0b0d1.css integrity="sha256-XutrOHDH3rZqEAQ7EP8B8mSntYQkDX1jI6DeH+uwsNE="><link rel=stylesheet href=/CV/blog/projects-editorial.min.de547dbb958693860bcd9fa3b30f31b7b58654ff6a74a17d219ccab790becf4a.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="DasherControl : Un tableau de bord et ses trois frontières"><meta itemprop=description content="DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="1411"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/dashercontrol/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="DasherControl : Un tableau de bord et ses trois frontières"><meta property="og:description" content="DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="DasherControl : Un tableau de bord et ses trois frontières"><meta name=twitter:description content="DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/dashercontrol/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/dashercontrol/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/dashercontrol/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>DasherControl : Un tableau de bord et ses trois frontières</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#architecture>Architecture</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#deployment>Déploiement</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>DasherControl : Un tableau de bord et ses trois frontières</h1><p class=repo-hero-lede>DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent l’API, et Diesel conserve la disposition dans PostgreSQL. Le contrôle Docker suit un parcours distinct.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Application et services</span>
+<span class="repo-badge docker">Docker</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/DasherControl/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>8</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>Rust · 46.84%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"><span class="tag tool" title="Rocket web framework in Cargo.toml">Rust (Rocket)</span><span class="tag tool" title="Frontend SPA in package.json">Vue 3</span><span class="tag tool" title="Diesel ORM migrations with PostgreSQL">PostgreSQL</span><span class="tag tool" title="Multi-stage Dockerfile and docker-compose.yml">Docker Compose</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/DasherControl><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/DasherControl#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>Rust 46.84%</span><span class=repo-count>6</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="Rust 46.84%. Vue 43.67%. JavaScript 4%. Shell 2.55%. Dockerfile 2.05%. PLpgSQL 0.89%."><span style=width:46.84% title="Rust 46.84%"></span><span style=width:43.67% title="Vue 43.67%"></span><span style=width:4% title="JavaScript 4%"></span><span style=width:2.55% title="Shell 2.55%"></span><span style=width:2.05% title="Dockerfile 2.05%"></span><span style=width:.89% title="PLpgSQL 0.89%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>Rust</td><td><span class=repo-lang-bar style=--p:46.84%><span>46.84%</span></span></td><td class=num>60 028</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>Vue</td><td><span class=repo-lang-bar style=--p:43.67%><span>43.67%</span></span></td><td class=num>55 958</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>JavaScript</td><td><span class=repo-lang-bar style=--p:4%><span>4%</span></span></td><td class=num>5 121</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Shell</td><td><span class=repo-lang-bar style=--p:2.55%><span>2.55%</span></span></td><td class=num>3 267</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Dockerfile</td><td><span class=repo-lang-bar style=--p:2.05%><span>2.05%</span></span></td><td class=num>2 628</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>PLpgSQL</td><td><span class=repo-lang-bar style=--p:0.89%><span>0.89%</span></span></td><td class=num>1 145</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/DasherControl>GitHub</a> · <a href=https://github.com/antoinebou12/DasherControl#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/DasherControl/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Architecture homelab découplée : backend Rust/Rocket pilotant le démon Docker via Shiplift, associé à un frontend Vue réactif.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Tableau de bord centralisé pour services conteneurisés en homelab, signets et gestion d'espaces de travail.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Articles et retours d’expérience liés</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/fr/posts/dashercontrol-homelab-workspaces/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>DasherControl : un tableau de bord homelab organisé en espaces de travail</h4><p>Retour sur DasherControl : applets Vue, backend Rust et Rocket, espaces de travail persistants et interface Docker.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabs role=tablist aria-label="Mode d’installation" data-install-tabs><button type=button class=tab role=tab data-tab=native aria-selected=true aria-controls=install-native id=tab-native>Natif</button>
+<button type=button class=tab role=tab data-tab=docker aria-selected=false aria-controls=install-docker id=tab-docker>Docker</button></div><div class=tabbody id=install-native data-tab-panel=native role=tabpanel aria-labelledby=tab-native><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Install (Tested only on Ubuntu 20.04)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>// bash scripts/rust-setup-dev.sh
+// bash scripts/js-dev-setup.sh
+cd frontend &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; cd ..
+cargo install diesel_cli --no-default-features --features postgres
+// go in Rocket.toml and .env and change DATABASE_URL to your postgresql server
+diesel migration run
+// create admin user
+cargo run --bin create_admin
+// run web app
+cargo run</code></pre></div></div><details class=repo-manifest-tasks><summary>Commandes déclarées dans les manifestes</summary><h3><a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/package.json><code>frontend/package.json</code></a></h3><dl class=repo-deflist><div><dt><code>lint</code></dt><dd><code>eslint --ext .js,.vue frontend tests/unit</code></dd></div><div><dt><code>build</code></dt><dd><code>npm run clean && webpack --mode production</code></dd></div><div><dt><code>test</code></dt><dd><code>echo "Error: no test specified" && exit 1</code></dd></div></dl></details></div><div class=tabbody id=install-docker data-tab-panel=docker role=tabpanel aria-labelledby=tab-docker><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>docker-compose.yml · Docker</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>DOCKER_BUILDKIT=1 docker build -t antoinebou13/dashercontrol .
+DOCKER_BUILDKIT=1 docker-compose up -d --build &amp;&amp; docker-compose logs -f</code></pre></div></div><aside class=repo-admonition>Tableau de bord homelab unifiant métriques de conteneurs, raccourcis de services et flux administratifs derrière un backend Rust performant et une interface réactive Vue 3.</aside></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p>Le dépôt ne fournit pas de guide détaillé pour ces étapes. Commencez par le README et les fichiers commentés ci-dessus.</p><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/.github/CONTRIBUTING.md><code>.github/CONTRIBUTING.md</code></a></li></ul><p class=repo-evidence-label>2 documents lus parmi 2 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Propriété des espaces</dt><dd>Les routes de liste obtiennent l’identifiant du tenant depuis un jeton. La route de lecture des applets vérifie le tenant de l’espace avant de retourner son contenu. L’espace et ses applets constituent ainsi une disposition persistante liée à un utilisateur.</dd></div><div class=repo-feature><dt>Opérations sur les conteneurs</dt><dd>src/containers/docker.rs regroupe des opérations Docker avec Shiplift. Ces appels gèrent des conteneurs et des images, plutôt que les dispositions. Leur gestion d’échec est importante: une liste en erreur affiche un message et retourne un vecteur vide.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Les composants et leurs liens restent lisibles en texte. Le diagramme ajoute une vue interactive.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title>Contexte système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=tabpanel aria-labelledby=tab-arch-context><ol class=repo-flow><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Interface Vue</span><span class=repo-flow-step aria-hidden=true>01</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Routes Rocket</span><span class=repo-flow-step aria-hidden=true>02</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Diesel et PostgreSQL</span><span class=repo-flow-step aria-hidden=true>03</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Adaptateur Shiplift</span><span class=repo-flow-step aria-hidden=true>04</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Démon Docker</span><span class=repo-flow-step aria-hidden=true>05</span></li></ol><p class=figdesc>Liens vérifiés dans le dépôt.</p></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-dashercontrol><p id=architecture-dashercontrol class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/dashercontrol/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de DasherControl"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_dashboard[&#34;Dashboard UI&#34;]
+  node_main_ui[&#34;Dashboard Shell&lt;br/&gt;[Main.vue]&#34;]
+  node_grid[&#34;Workspace Grid&lt;br/&gt;[GridLayoutMain.vue]&#34;]
+  node_grid_item[&#34;Grid Items&lt;br/&gt;[GridItemApplet.vue]&#34;]
+  node_applet_router[&#34;Applet Selector&lt;br/&gt;[Applet.vue]&#34;]
+  node_applet_authoring[&#34;Applet Creation&lt;br/&gt;[CreateNew.vue]&#34;]
+  node_editor[&#34;Applet Editor&lt;br/&gt;[Editor.vue]&#34;]
+  node_iframe[&#34;Embedded Sites&#34;]
+  node_shortcut[&#34;Shortcuts&lt;br/&gt;[Shortcut.vue]&#34;]
+  node_canvas[&#34;Canvas Applet&lt;br/&gt;[Canvas.vue]&#34;]
+  node_login_ui[&#34;Login Screen&lt;br/&gt;[Login.vue]&#34;]
+end
+
+subgraph group_identity[&#34;Tenant Identity&#34;]
+  node_tenant_api[&#34;Tenant Endpoints&lt;br/&gt;[handler.rs]&#34;]
+  node_tenant_model[&#34;Tenant Accounts&lt;br/&gt;[model.rs]&#34;]
+  node_token_auth[&#34;Token Validation&lt;br/&gt;[token.rs]&#34;]
+end
+
+subgraph group_workspace[&#34;Workspace Data&#34;]
+  node_workspace_api[&#34;Workspace Endpoints&lt;br/&gt;[handler.rs]&#34;]
+  node_workspace_model[&#34;Workspace Records&lt;br/&gt;[model.rs]&#34;]
+  node_database[(&#34;PostgreSQL Access&lt;br/&gt;[db.rs]&#34;)]
+  node_schema[&#34;Database Schema&lt;br/&gt;[schema.rs]&#34;]
+end
+
+subgraph group_integrations[&#34;Runtime Integrations&#34;]
+  node_docker_ui[&#34;Docker Manager&lt;br/&gt;[DockerManager.vue]&#34;]
+  node_container_api[&#34;Container Endpoints&lt;br/&gt;[handler.rs]&#34;]
+  node_docker_engine[&#34;Docker Engine&lt;br/&gt;[docker.rs]&#34;]
+  node_terminal_ui[&#34;Terminal Applet&lt;br/&gt;[Terminal.vue]&#34;]
+  node_terminal_ws[&#34;Terminal WebSocket&lt;br/&gt;[websocket.rs]&#34;]
+  node_server[&#34;Rocket Server&lt;br/&gt;[main.rs]&#34;]
+end
+
+node_user((&#34;Dashboard User&#34;))
+
+node_user --&gt;|&#34;uses&#34;| node_main_ui
+node_main_ui --&gt;|&#34;renders&#34;| node_grid
+node_grid --&gt;|&#34;renders&#34;| node_grid_item
+node_grid_item --&gt;|&#34;renders&#34;| node_applet_router
+node_applet_router --&gt;|&#34;selects&#34;| node_applet_authoring
+node_applet_router --&gt;|&#34;selects&#34;| node_editor
+node_applet_router --&gt;|&#34;selects&#34;| node_iframe
+node_applet_router --&gt;|&#34;selects&#34;| node_shortcut
+node_applet_authoring --&gt;|&#34;configures&#34;| node_applet_authoring
+node_grid --&gt;|&#34;requests&#34;| node_workspace_api
+node_tenant_api --&gt;|&#34;authenticates&#34;| node_tenant_model
+node_tenant_api --&gt;|&#34;issues tokens&#34;| node_token_auth
+node_token_auth --&gt;|&#34;checks session&#34;| node_tenant_model
+node_workspace_api --&gt;|&#34;queries&#34;| node_workspace_model
+node_workspace_api --&gt;|&#34;validates&#34;| node_token_auth
+node_tenant_model --&gt;|&#34;queries&#34;| node_schema
+node_workspace_model --&gt;|&#34;queries&#34;| node_schema
+node_tenant_api --&gt;|&#34;uses connection&#34;| node_database
+node_workspace_api --&gt;|&#34;uses connection&#34;| node_database
+node_docker_ui --&gt;|&#34;requests&#34;| node_container_api
+node_container_api --&gt;|&#34;controls&#34;| node_docker_engine
+node_applet_router --&gt;|&#34;selects&#34;| node_docker_ui
+node_applet_router --&gt;|&#34;selects&#34;| node_terminal_ui
+node_server --&gt;|&#34;mounts routes&#34;| node_tenant_api
+node_server --&gt;|&#34;mounts routes&#34;| node_workspace_api
+node_server --&gt;|&#34;mounts routes&#34;| node_container_api
+node_server --&gt;|&#34;references&#34;| node_terminal_ws
+node_user -.-&gt;|&#34;may use&#34;| node_canvas
+node_terminal_ui -.-&gt;|&#34;SSH terminal&#34;| node_terminal_ws
+
+
+class node_main_ui,node_grid,node_grid_item,node_applet_router,node_applet_authoring,node_editor,node_iframe,node_shortcut,node_canvas,node_login_ui,node_user toneBlue
+class node_tenant_api,node_tenant_model,node_token_auth toneAmber
+class node_workspace_api,node_workspace_model,node_database,node_schema toneMint
+class node_docker_ui,node_container_api,node_docker_engine,node_terminal_ui,node_terminal_ws,node_server toneRose</code></pre></div><div class=repo-system-summary><p>Un tableau de bord homelab configurable où les utilisateurs organisent des espaces de travail composés d’applets. Vue appelle des routes Rocket pour la persistance, les contrôles de locataire et les actions Docker; PostgreSQL conserve les espaces et un adaptateur séparé communique avec Docker.</p><dl><div><dt>Composants</dt><dd>24</dd></div><div><dt>Connexions</dt><dd>29</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>26/29</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Interface Vue → Routes Rocket</li><li>Routes Rocket → Diesel et PostgreSQL</li><li>Routes Rocket → Adaptateur Shiplift</li><li>Adaptateur Shiplift → Démon Docker</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Le chargement d’un espace passe par ses routes et ses applets. Le redémarrage d’un conteneur passe plutôt par l’adaptateur Docker. L’interface doit distinguer un espace vide, Docker indisponible et une iframe bloquée par l’application intégrée.</p></details></section><section class=repo-runtime aria-labelledby=deployment><div class=repo-section-title><span class=repo-section-icon aria-hidden=true><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7.5h16v9H4z"/><path d="M7 11h.01M10 11h.01M7 14h.01M10 14h.01M16 10v4m2-4v4"/></svg></span><h2 id=deployment>Déploiement et exploitation</h2></div><p>Les ports, le stockage et les relations de démarrage ci-dessous viennent de la configuration du dépôt. <code>depends_on</code> indique l’ordre de démarrage, pas la disponibilité du service.</p><p><strong>Réseau.</strong> Bridge network dasher-net linking the DasherControl web app with PostgreSQL.</p><details class="repo-diagram-details repo-deployment-diagram" data-mermaid-lazy open><summary>Carte du déploiement</summary><div class=repo-diagram-block role=group aria-labelledby=architecture-dashercontrol><p id=architecture-dashercontrol class=repo-diagram-caption>Topologie Compose des services, ports et dépendances de démarrage documentés.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/dashercontrol/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de DasherControl"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  classDef svc fill:#1b3040,stroke:#6fdbd0,color:#edf4fb
+  dashercontrol[&#34;dashercontrol&lt;br/&gt;8000:8000&#34;]:::svc
+  postgres[&#34;postgres&lt;br/&gt;5432:5432&#34;]:::svc
+  postgres --&gt; dashercontrol</code></pre></div><div class=repo-system-summary><p>Un tableau de bord homelab configurable où les utilisateurs organisent des espaces de travail composés d’applets. Vue appelle des routes Rocket pour la persistance, les contrôles de locataire et les actions Docker; PostgreSQL conserve les espaces et un adaptateur séparé communique avec Docker.</p><dl><div><dt>Composants</dt><dd>24</dd></div><div><dt>Connexions</dt><dd>29</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>26/29</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li><strong>dashercontrol</strong> — Build from multi-stage Dockerfile · 8000:8000 → postgres, startup healthcheck</li><li><strong>postgres</strong> — postgres:14-alpine · 5432:5432</li></ul></details></div></details><table class=repo-permission-table><thead><tr><th>Service</th><th>Image ou build</th><th>Ports publiés</th><th>Démarrage</th><th>Stockage</th></tr></thead><tbody><tr><th scope=row>dashercontrol</th><td>Build from multi-stage Dockerfile</td><td>8000:8000</td><td>postgres, startup healthcheck</td><td>Named volume dasher-data</td></tr><tr><th scope=row>postgres</th><td>postgres:14-alpine</td><td>5432:5432</td><td></td><td>Named volume pgdata</td></tr></tbody></table></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>L’analyse a trouvé 36 déclarations de types. Le diagramme en montre 12 et conserve les relations de base déclarées.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types (Mermaid)</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t883aa4939d84[&#34;DockerInterface&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  new()
+  init()
+  get_containers()
+  get_images()
+}
+class t6c6e876f9471[&#34;NewTenant&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class td007a4775b01[&#34;NewTenantConfiguration&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t9d91c22b8e18[&#34;DBJsonType&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  from_sql()
+  to_sql()
+}
+class t11bf41e6278b[&#34;Container&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  create()
+  all()
+}
+class ta9679a334153[&#34;NewContainer&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tdc82d141f21c[&#34;DbConn&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  from_request()
+  deref()
+}
+class t981fd8c93b75[&#34;CORS&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  info()
+  on_response()
+}
+class te127dc44374a[&#34;HitCount&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t6437f975dc23[&#34;TemplateContext&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tb361ddc722e9[&#34;JsonMessage&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t8722c44b4eb9[&#34;MyError&#34;] {
+  &lt;&lt;enum&gt;&gt;
+  from()
+  fmt()
+}
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées. Les signatures complètes ne sont pas reconstruites.</p></details><details class=repo-structure-details><summary>Types, méthodes et bases déclarées</summary><ul class=repo-structure-list><li><code>DockerInterface</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/docker.rs#L27><code>src/containers/docker.rs:27</code></a><p>Méthodes dans l’aperçu : <code>new, init, get_containers, get_images</code>.</p></li><li><code>NewTenant</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/create_admin.rs#L48><code>src/bin/create_admin.rs:48</code></a></li><li><code>NewTenantConfiguration</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/create_admin.rs#L60><code>src/bin/create_admin.rs:60</code></a></li><li><code>DBJsonType</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/create_admin.rs#L137><code>src/bin/create_admin.rs:137</code></a><p>Méthodes dans l’aperçu : <code>from_sql, to_sql</code>.</p></li><li><code>Container</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/model.rs#L9><code>src/containers/model.rs:9</code></a><p>Méthodes dans l’aperçu : <code>create, all</code>.</p></li><li><code>NewContainer</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/model.rs#L18><code>src/containers/model.rs:18</code></a></li><li><code>DbConn</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/db.rs#L26><code>src/db.rs:26</code></a><p>Méthodes dans l’aperçu : <code>from_request, deref</code>.</p></li><li><code>CORS</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/fairing.rs#L7><code>src/fairing.rs:7</code></a><p>Méthodes dans l’aperçu : <code>info, on_response</code>.</p></li><li><code>HitCount</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/router.rs#L18><code>src/router.rs:18</code></a></li><li><code>TemplateContext</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/router.rs#L21><code>src/router.rs:21</code></a></li><li><code>JsonMessage</code> (struct) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/router.rs#L27><code>src/router.rs:27</code></a></li><li><code>MyError</code> (enum) · <a href=https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/error.rs#L6><code>src/tenants/error.rs:6</code></a><p>Méthodes dans l’aperçu : <code>from, fmt</code>.</p></li></ul></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><details class=repo-analysis-coverage><summary>Périmètre et limites de l’analyse</summary><p>49 fichiers lus sur 49 fichiers admissibles dans l’arbre GitHub (139 fichiers au total). Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus.</p><p>La collecte couvre les README, les manifestes reconnus et les fichiers source dont le langage est pris en charge par l’analyseur. Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p><p>0 fichiers dépassent la limite de taille, 0 lectures ont échoué et 0 fichiers ont produit un diagnostic de syntaxe.</p></details><details class=repo-diagram-details data-mermaid-lazy><summary>Carte des fichiers</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TD
+  root[&#34;DasherControl&#34;]
+  f0[&#34;Cargo.toml&#34;]
+  root --&gt; f0
+  f1[&#34;src/containers/docker.rs&#34;]
+  root --&gt; f1
+  f2[&#34;src/workspaces/handler.rs&#34;]
+  root --&gt; f2
+  f3[&#34;README.md&#34;]
+  root --&gt; f3
+  f4[&#34;docker-compose.yml&#34;]
+  root --&gt; f4
+  f5[&#34;start-server.sh&#34;]
+  root --&gt; f5
+  f6[&#34;certs/create_aes128key.sh&#34;]
+  root --&gt; f6
+  f7[&#34;certs/create_jwt_key.sh&#34;]
+  root --&gt; f7
+  f8[&#34;certs/create_tls.sh&#34;]
+  root --&gt; f8
+  f9[&#34;frontend/main.js&#34;]
+  root --&gt; f9
+  f10[&#34;frontend/package.json&#34;]
+  root --&gt; f10
+  f11[&#34;frontend/utils.js&#34;]
+  root --&gt; f11
+  f12[&#34;frontend/webpack.config.js&#34;]
+  root --&gt; f12
+  f13[&#34;scripts/create_db.sh&#34;]
+  root --&gt; f13
+  f14[&#34;scripts/install-docker-compose.sh&#34;]
+  root --&gt; f14
+  f15[&#34;scripts/js-dev-setup.sh&#34;]
+  root --&gt; f15
+</code></pre></div></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">D’anciennes routes de création et suppression appliquent des vérifications différentes. Ce prototype nécessite une revue des autorisations opération par opération avant un déploiement partagé.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/DasherControl/blob/main/src/workspaces/handler.rs><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/workspaces/handler.rs</code></a></li><li><a href=https://github.com/antoinebou12/DasherControl/blob/main/src/containers/docker.rs><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/containers/docker.rs</code></a></li><li><a href=https://github.com/antoinebou12/DasherControl/blob/main/Cargo.toml><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>Cargo.toml</code></a></li></ul></section><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Références</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/DasherControl>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/DasherControl#readme>README</a><span>Documentation du dépôt</span></li><li><a href=/CV/blog/fr/posts/dashercontrol-homelab-workspaces/>DasherControl : un tableau de bord homelab organisé en espaces de travail</a><span>Article du blog</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Exécution</span><b>Rust + Vue 3</b></div><div class=kv><span>Interface</span><b>Tableau de bord Web SPA</b></div><div class=kv><span>Base de données</span><b>PostgreSQL (Diesel)</b></div><div class=kv><span>Déploiement</span><b>Docker / Ubuntu</b></div><div class=kv><span>Port app</span><b>8000 (Rocket)</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/DasherControl>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.className = 'post-diagram';
+              figure.tabIndex = 0;
+              figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+              figure.innerHTML = svg;
+              const fr = document.documentElement.lang.startsWith('fr');
+              const container = document.createElement('div');
+              container.className = 'diagram-interactive';
+              const toolbar = document.createElement('div');
+              toolbar.className = 'diagram-tools';
+              toolbar.setAttribute('role', 'group');
+              toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+              const status = document.createElement('output');
+              status.setAttribute('aria-live', 'polite');
+              const svgElement = figure.querySelector('svg');
+              const natural = svgElement?.viewBox?.baseVal?.width || 800;
+              function resize(width, minimum = Math.min(160, natural)) {
+                block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+                svgElement.style.width = block.zoom + 'px';
+                svgElement.style.minWidth = '0';
+                svgElement.style.maxWidth = 'none';
+                svgElement.style.maxHeight = 'none';
+                status.textContent = Math.round(block.zoom / natural * 100) + '%';
+              }
+              function fit() {
+                const style = getComputedStyle(figure);
+                const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+                if (available <= 0) return;
+                resize(Math.min(natural, available), 1);
+                figure.scrollLeft = 0;
+                figure.scrollTop = 0;
+              }
+              function button(label, action, handler) {
+                const control = document.createElement('button');
+                control.type = 'button';
+                control.textContent = label;
+                control.dataset.diagramAction = action;
+                control.addEventListener('click', handler);
+                toolbar.append(control);
+                return control;
+              }
+              button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+              button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+              button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+              button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+              button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+                try {
+                  if (document.fullscreenElement === container) await document.exitFullscreen();
+                  else await container.requestFullscreen();
+                } catch {
+                  status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+                }
+              });
+              button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+                const copy = svgElement.cloneNode(true);
+                copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                copy.setAttribute('width', String(natural));
+                copy.removeAttribute('style');
+                const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `diagram-${index + 1}.svg`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+              });
+              toolbar.append(status);
+              container.append(toolbar, figure);
+              let drag = null;
+              let suppressClick = false;
+              figure.addEventListener('pointerdown', event => {
+                suppressClick = false;
+                if (!event.isPrimary) { stopPan(); return; }
+                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+                    !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+              });
+              figure.addEventListener('pointermove', event => {
+                if (!drag || event.pointerId !== drag.id) return;
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+                if (!drag.active) {
+                  if (Math.hypot(dx, dy) < 6) return;
+                  
+                  if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+                  if (figure.scrollWidth <= figure.clientWidth &&
+                      (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+                  drag.active = true;
+                  figure.setPointerCapture(event.pointerId);
+                  figure.classList.add('is-panning');
+                  figure.focus({ preventScroll: true });
+                }
+                event.preventDefault();
+                figure.scrollLeft = drag.left - dx;
+                if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+              });
+              function stopPan(event) {
+                if (!drag || (event && event.pointerId !== drag.id)) return;
+                const previous = drag;
+                drag = null;
+                suppressClick = previous.active && (!event || event.type === 'pointerup');
+                figure.classList.remove('is-panning');
+                if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+              }
+              figure.addEventListener('pointerup', stopPan);
+              figure.addEventListener('pointercancel', stopPan);
+              figure.addEventListener('lostpointercapture', event => {
+                
+                
+                if (event.target === figure) stopPan(event);
+              });
+              figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+              figure.addEventListener('click', event => {
+                if (!suppressClick || event.detail === 0) return;
+                suppressClick = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }, true);
+              figure.addEventListener('keydown', event => {
+                if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+                if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+                else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+                else if (event.key === '0') resize(natural);
+                else if (event.key === 'f' || event.key === 'F') fit();
+                else if (event.key.startsWith('Arrow')) {
+                  const delta = 80;
+                  if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+                  if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+                  if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+                  if (event.key === 'ArrowDown') figure.scrollTop += delta;
+                }
+                else return;
+                event.preventDefault();
+              });
+              const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+              (block.container || block.original).replaceWith(container);
+              block.container = container;
+              block.figure = figure;
+              block.painted = true;
+              if (block.imageFallback) block.imageFallback.hidden = true;
+              requestAnimationFrame(() => fit());
+              if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

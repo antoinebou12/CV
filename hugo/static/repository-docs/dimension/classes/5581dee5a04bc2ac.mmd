@@ -1,0 +1,53 @@
+classDiagram
+direction TB
+class ta3e9262d1644["WasmMatrix"] {
+  <<struct>>
+  new()
+  from_array()
+  identity()
+  rows()
+  cols()
+  get()
+  set()
+  to_array()
+  transpose()
+  add()
+  sub()
+  mul()
+  scale()
+  mul_vector()
+  solve()
+  damped_least_squares()
+  svd_econ()
+  svd_econ_async()
+}
+class t31bf50696fb0["WasmSvd"] {
+  <<struct>>
+  get_u()
+  get_v()
+  get_sigma()
+}
+class t2e99aa92ecbd["WasmMatrix32"] {
+  <<struct>>
+  from_inner()
+  clone_inner()
+  new()
+  identity4()
+  rotation()
+  from_array()
+  rows()
+  cols()
+  get()
+  set()
+  to_array()
+  transpose()
+  inverse()
+  transform_point()
+  transform_vector()
+  add()
+  scale()
+  mul()
+  mul_vector_f32()
+  matmul_f32_cpu()
+  matmul_f32_cpu_with_progress()
+}

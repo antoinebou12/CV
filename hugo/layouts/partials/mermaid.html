@@ -1,25 +1,367 @@
-{{- if or .Params.mermaid (in .RawContent "```mermaid") -}}
+{{- if or .Params.mermaid .Params.repository_note (in .RawContent "```mermaid") (not (eq .Params.comments false)) -}}
 <script type="module">
-  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')];
-  try {
-    const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
-    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: document.documentElement.classList.contains('dark') ? 'dark' : 'neutral' });
-    for (const [index, block] of blocks.entries()) {
-      const source = block.textContent;
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
       try {
-        const { svg } = await mermaid.render(`post-diagram-${index}`, source);
-        const figure = document.createElement('figure');
-        figure.className = 'post-diagram';
-        figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
-        figure.innerHTML = svg;
-        const details = document.createElement('details');
-        const summary = document.createElement('summary');
-        summary.textContent = document.documentElement.lang.startsWith('fr') ? 'Code Mermaid' : 'Mermaid source';
-        details.append(summary, block.parentElement.cloneNode(true));
-        figure.append(details);
-        block.parentElement.replaceWith(figure);
-      } catch (error) { console.warn('Diagram source remains available:', error); }
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
     }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.className = 'post-diagram';
+              figure.tabIndex = 0;
+              figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+              figure.innerHTML = svg;
+              const fr = document.documentElement.lang.startsWith('fr');
+              const container = document.createElement('div');
+              container.className = 'diagram-interactive';
+              const toolbar = document.createElement('div');
+              toolbar.className = 'diagram-tools';
+              toolbar.setAttribute('role', 'group');
+              toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+              const status = document.createElement('output');
+              status.setAttribute('aria-live', 'polite');
+              const svgElement = figure.querySelector('svg');
+              const natural = svgElement?.viewBox?.baseVal?.width || 800;
+              function resize(width, minimum = Math.min(160, natural)) {
+                block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+                svgElement.style.width = block.zoom + 'px';
+                svgElement.style.minWidth = '0';
+                svgElement.style.maxWidth = 'none';
+                svgElement.style.maxHeight = 'none';
+                status.textContent = Math.round(block.zoom / natural * 100) + '%';
+              }
+              function fit() {
+                const style = getComputedStyle(figure);
+                const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+                if (available <= 0) return;
+                resize(Math.min(natural, available), 1);
+                figure.scrollLeft = 0;
+                figure.scrollTop = 0;
+              }
+              function button(label, action, handler) {
+                const control = document.createElement('button');
+                control.type = 'button';
+                control.textContent = label;
+                control.dataset.diagramAction = action;
+                control.addEventListener('click', handler);
+                toolbar.append(control);
+                return control;
+              }
+              button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+              button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+              button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+              button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+              button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+                try {
+                  if (document.fullscreenElement === container) await document.exitFullscreen();
+                  else await container.requestFullscreen();
+                } catch {
+                  status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+                }
+              });
+              button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+                const copy = svgElement.cloneNode(true);
+                copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                copy.setAttribute('width', String(natural));
+                copy.removeAttribute('style');
+                const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `diagram-${index + 1}.svg`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+              });
+              toolbar.append(status);
+              container.append(toolbar, figure);
+              let drag = null;
+              let suppressClick = false;
+              figure.addEventListener('pointerdown', event => {
+                suppressClick = false;
+                if (!event.isPrimary) { stopPan(); return; }
+                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+                    !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+              });
+              figure.addEventListener('pointermove', event => {
+                if (!drag || event.pointerId !== drag.id) return;
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+                if (!drag.active) {
+                  if (Math.hypot(dx, dy) < 6) return;
+                  // Vertical touch gestures belong to native scrolling (touch-action: pan-y).
+                  if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+                  if (figure.scrollWidth <= figure.clientWidth &&
+                      (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+                  drag.active = true;
+                  figure.setPointerCapture(event.pointerId);
+                  figure.classList.add('is-panning');
+                  figure.focus({ preventScroll: true });
+                }
+                event.preventDefault();
+                figure.scrollLeft = drag.left - dx;
+                if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+              });
+              function stopPan(event) {
+                if (!drag || (event && event.pointerId !== drag.id)) return;
+                const previous = drag;
+                drag = null;
+                suppressClick = previous.active && (!event || event.type === 'pointerup');
+                figure.classList.remove('is-panning');
+                if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+              }
+              figure.addEventListener('pointerup', stopPan);
+              figure.addEventListener('pointercancel', stopPan);
+              figure.addEventListener('lostpointercapture', event => {
+                // Touch starts with implicit capture on the SVG node; transferring it
+                // to the figure also emits a bubbling loss event from that node.
+                if (event.target === figure) stopPan(event);
+              });
+              figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+              figure.addEventListener('click', event => {
+                if (!suppressClick || event.detail === 0) return;
+                suppressClick = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }, true);
+              figure.addEventListener('keydown', event => {
+                if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+                if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+                else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+                else if (event.key === '0') resize(natural);
+                else if (event.key === 'f' || event.key === 'F') fit();
+                else if (event.key.startsWith('Arrow')) {
+                  const delta = 80;
+                  if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+                  if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+                  if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+                  if (event.key === 'ArrowDown') figure.scrollTop += delta;
+                }
+                else return;
+                event.preventDefault();
+              });
+              const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+              (block.container || block.original).replaceWith(container);
+              block.container = container;
+              block.figure = figure;
+              block.painted = true;
+              if (block.imageFallback) block.imageFallback.hidden = true;
+              requestAnimationFrame(() => fit());
+              if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
 </script>
 {{- end -}}

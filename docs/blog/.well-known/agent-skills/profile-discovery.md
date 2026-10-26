@@ -12,11 +12,10 @@ Use this skill when you need a compact machine-readable overview of Antoine Bouc
 
 1. `/.well-known/api-catalog`
 2. `/llms.txt` (or `/blog/llms.txt` before root promotion)
-3. `/CV/about-en.html` or `/CV/about-fr.html` (FAQ and entity summary)
-4. `/CV/resume.md` (English default) or `/CV/resume.json`
-5. `/CV/index-en.html` or `/CV/index-fr.html`
-6. `/blog/index.json`
-7. `/blog/index.xml`
+3. `/CV/resume.md` (English default) or `/CV/resume.json`
+4. `/CV/index-en.html` or `/CV/index-fr.html`
+5. `/blog/index.json`
+6. `/blog/index.xml`
 
 ## Notes
 

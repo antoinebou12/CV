@@ -1,0 +1,1873 @@
+{
+  "repo": "Artemis-N3DS",
+  "slug": "artemis-n3ds",
+  "commit": "c5eb0205ba4eb00f4fff96097d987b3267a7be08",
+  "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/",
+  "tree_url": "https://github.com/antoinebou12/Artemis-N3DS/tree/c5eb0205ba4eb00f4fff96097d987b3267a7be08",
+  "fetched_at": "2026-10-24T01:37:45.750815+00:00",
+  "languages": [
+    {
+      "name": "C++",
+      "bytes": 385430,
+      "percent": 76.05
+    },
+    {
+      "name": "C",
+      "bytes": 79616,
+      "percent": 15.71
+    },
+    {
+      "name": "CMake",
+      "bytes": 22072,
+      "percent": 4.36
+    },
+    {
+      "name": "Makefile",
+      "bytes": 14414,
+      "percent": 2.84
+    },
+    {
+      "name": "Shell",
+      "bytes": 3221,
+      "percent": 0.64
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 2051,
+      "percent": 0.4
+    }
+  ],
+  "language_bytes": 506804,
+  "coverage": {
+    "tree_files": 174,
+    "eligible_files": 101,
+    "read_files": 101,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [
+      {
+        "file": "libgamestream/client.h",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "libgamestream/http.h",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "libgamestream/xml.c",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "src/host_discovery.hpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "src/util.h",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "src/video/ffmpeg.h",
+        "error": "syntax-errors"
+      }
+    ],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 71,
+      "heading": "Docker (easiest)",
+      "commands": "docker build --network=host -t moonlight-n3ds .\ndocker run --rm -it -v .:/moonlight-N3DS -w /moonlight-N3DS moonlight-n3ds:latest\nmake"
+    },
+    {
+      "file": "README.md",
+      "line": 85,
+      "heading": "Local (devkitPro)",
+      "commands": "make"
+    }
+  ],
+  "manifests": [],
+  "type_count": 77,
+  "types": [
+    {
+      "id": "tc0387bd4c68b",
+      "name": "SelectedHost",
+      "kind": "struct",
+      "file": "src/n3ds_main.cpp",
+      "line": 74,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t72fa5c6e15be",
+      "name": "RemoteApp",
+      "kind": "struct",
+      "file": "src/n3ds_main.cpp",
+      "line": 79,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tf7c6d6aec7da",
+      "name": "InputLoopContext",
+      "kind": "struct",
+      "file": "src/n3ds_main.cpp",
+      "line": 943,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "ta7f589e4be09",
+      "name": "VideoDecoderBase",
+      "kind": "class",
+      "file": "src/video/video.hpp",
+      "line": 48,
+      "language": "cpp",
+      "methods": [
+        "accept",
+        "_accept_touch_state_changed",
+        "_accept_keyboard_state_changed"
+      ],
+      "bases": [
+        "ISubscriber"
+      ]
+    },
+    {
+      "id": "tb2f58dc75feb",
+      "name": "MockVideoDecoder",
+      "kind": "class",
+      "file": "src/video/video.hpp",
+      "line": 66,
+      "language": "cpp",
+      "methods": [],
+      "bases": [
+        "VideoDecoderBase"
+      ]
+    },
+    {
+      "id": "t391f53097446",
+      "name": "SoftVideoDecoder",
+      "kind": "class",
+      "file": "src/video/video.hpp",
+      "line": 73,
+      "language": "cpp",
+      "methods": [
+        "submit_decode_unit",
+        "_write_yuv_to_framebuffer"
+      ],
+      "bases": [
+        "VideoDecoderBase"
+      ]
+    },
+    {
+      "id": "t4ad2ea8a811e",
+      "name": "MvdDecoder",
+      "kind": "class",
+      "file": "src/video/video.hpp",
+      "line": 90,
+      "language": "cpp",
+      "methods": [
+        "submit_decode_unit",
+        "_decode"
+      ],
+      "bases": [
+        "VideoDecoderBase"
+      ]
+    },
+    {
+      "id": "t891d7e467987",
+      "name": "_SERVER_DATA",
+      "kind": "struct",
+      "file": "libgamestream/client.h",
+      "line": 36,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "ta59617f1a5fa",
+      "name": "cb_ctx",
+      "kind": "struct",
+      "file": "libgamestream/discover.c",
+      "line": 38,
+      "language": "c",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tcb0c88684e67",
+      "name": "_HTTP_DATA",
+      "kind": "struct",
+      "file": "libgamestream/http.h",
+      "line": 32,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "taa2e3cf225d0",
+      "name": "_CERT_KEY_PAIR",
+      "kind": "struct",
+      "file": "libgamestream/mkcert.h",
+      "line": 24,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t91f7677e0266",
+      "name": "xml_query",
+      "kind": "struct",
+      "file": "libgamestream/xml.c",
+      "line": 29,
+      "language": "c",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t63b7c1377a8b",
+      "name": "xml_applist_query",
+      "kind": "struct",
+      "file": "libgamestream/xml.c",
+      "line": 42,
+      "language": "c",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "te3fdc7c08e24",
+      "name": "_APP_LIST",
+      "kind": "struct",
+      "file": "libgamestream/xml.h",
+      "line": 23,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t948e97c055f5",
+      "name": "_DISPLAY_MODE",
+      "kind": "struct",
+      "file": "libgamestream/xml.h",
+      "line": 29,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t94deab5f18db",
+      "name": "CachedRemoteApp",
+      "kind": "struct",
+      "file": "src/app_list_cache.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tf50ac610623a",
+      "name": "_CONFIGURATION",
+      "kind": "struct",
+      "file": "src/config.hpp",
+      "line": 34,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t5a36ae513262",
+      "name": "GraphicsLifecycleState",
+      "kind": "class",
+      "file": "src/graphics_lifecycle_state.hpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [
+        "acquire_shell",
+        "acquire_stream",
+        "shutdown",
+        "finish_stream",
+        "mode",
+        "shell_active"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t635e991a8ce5",
+      "name": "HardwareCapabilities",
+      "kind": "struct",
+      "file": "src/hardware_capabilities.hpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td0f287231b4f",
+      "name": "PendingSocket",
+      "kind": "struct",
+      "file": "src/host_discovery.cpp",
+      "line": 30,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t49234283d677",
+      "name": "DiscoveredHost",
+      "kind": "struct",
+      "file": "src/host_discovery.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t70f86175f07e",
+      "name": "DiscoveryProgress",
+      "kind": "struct",
+      "file": "src/host_discovery.hpp",
+      "line": 20,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t616f15e78a33",
+      "name": "N3dsInput",
+      "kind": "class",
+      "file": "src/input/n3ds_input.hpp",
+      "line": 27,
+      "language": "cpp",
+      "methods": [
+        "accept",
+        "n3dsinput_handle_event",
+        "force_touchscreen_menu",
+        "_add_gamepad",
+        "_remove_gamepad",
+        "_n3ds_to_li_buttons",
+        "_gamepad_state_changed",
+        "_accelerometer_state_changed",
+        "_gyroscope_state_changed"
+      ],
+      "bases": [
+        "ISubscriber"
+      ]
+    },
+    {
+      "id": "tda03dc84a388",
+      "name": "GamepadPaintState",
+      "kind": "struct",
+      "file": "src/input/touch/GamepadTouchHandler.cpp",
+      "line": 36,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t80d890429737",
+      "name": "MenuTile",
+      "kind": "struct",
+      "file": "src/input/touch/MenuTouchHandler.cpp",
+      "line": 56,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6c4b0e424138",
+      "name": "MousePaintState",
+      "kind": "struct",
+      "file": "src/input/touch/MouseTouchHandler.cpp",
+      "line": 35,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "taa8bd3e86b89",
+      "name": "N3dsTouchscreenInput",
+      "kind": "class",
+      "file": "src/input/touch/N3dsTouchscreenInput.hpp",
+      "line": 27,
+      "language": "cpp",
+      "methods": [
+        "accept",
+        "n3dsinput_handle_touch",
+        "n3dsinput_handle_navigation",
+        "captures_gamepad_input",
+        "open_menu",
+        "_n3dsinput_set_touch"
+      ],
+      "bases": [
+        "ISubscriber"
+      ]
+    },
+    {
+      "id": "t265698f60619",
+      "name": "ShortcutDef",
+      "kind": "struct",
+      "file": "src/input/touch/ShortcutsTouchHandler.cpp",
+      "line": 10,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb64aad1dc459",
+      "name": "_GAMEPAD_STATE",
+      "kind": "struct",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 26,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t665557cda82f",
+      "name": "TouchHandlerBase",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 42,
+      "language": "cpp",
+      "methods": [
+        "handle_touch_down",
+        "handle_touch_up",
+        "handle_touch_hold",
+        "captures_gamepad_input",
+        "handle_navigation",
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t659ba12f1334",
+      "name": "DebugTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 69,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "t9c6b5e983552",
+      "name": "MenuTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 84,
+      "language": "cpp",
+      "methods": [
+        "captures_gamepad_input",
+        "handle_navigation",
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "paint_page",
+        "update_touch_target",
+        "activate_selected",
+        "move_selection",
+        "change_page"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "tf866d7956919",
+      "name": "PerformanceTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 120,
+      "language": "cpp",
+      "methods": [
+        "captures_gamepad_input",
+        "handle_navigation",
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "redraw",
+        "save_csv",
+        "go_back"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "t1bbf5a40b380",
+      "name": "GamepadTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 142,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "apply_host_buttons"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "t114d95ceef2a",
+      "name": "MouseTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 157,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "t6cae4644cc37",
+      "name": "KeyInfo",
+      "kind": "struct",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 176,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t99957b7f73ce",
+      "name": "KeyboardTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 184,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "get_keycode",
+        "set_screen",
+        "set_screen_key",
+        "set_shift_keys",
+        "handle_default",
+        "cycle_key_state",
+        "handle_alt_keyboard",
+        "get_key_mod"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "tf1d9939b727b",
+      "name": "ShortcutsTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 214,
+      "language": "cpp",
+      "methods": [
+        "captures_gamepad_input",
+        "handle_navigation",
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "paint_page",
+        "activate",
+        "change_page",
+        "hit_shortcut"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "tb469a30c443d",
+      "name": "MirrorTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 238,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "td30b3d844e55",
+      "name": "StretchTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 249,
+      "language": "cpp",
+      "methods": [
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "tef7b91a0eedd",
+      "name": "MagnifyTouchHandler",
+      "kind": "class",
+      "file": "src/input/touch/TouchHandler.hpp",
+      "line": 260,
+      "language": "cpp",
+      "methods": [
+        "captures_gamepad_input",
+        "handle_navigation",
+        "_handle_touch_down",
+        "_handle_touch_up",
+        "_handle_touch_hold",
+        "_set_touch_offsets",
+        "_lock_view"
+      ],
+      "bases": [
+        "TouchHandlerBase"
+      ]
+    },
+    {
+      "id": "td333b8348804",
+      "name": "key_boundary",
+      "kind": "struct",
+      "file": "src/input/touch/keycode_map.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb837f998c96a",
+      "name": "row_boundary",
+      "kind": "struct",
+      "file": "src/input/touch/keycode_map.hpp",
+      "line": 13,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t7fada32be2ca",
+      "name": "keycode_info",
+      "kind": "struct",
+      "file": "src/input/touch/keycode_map.hpp",
+      "line": 89,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6c041bac0b34",
+      "name": "SelectMenuLayout",
+      "kind": "struct",
+      "file": "src/input/touch/select_menu_layout.hpp",
+      "line": 6,
+      "language": "cpp",
+      "methods": [
+        "tile_width",
+        "tile_height",
+        "tile_x",
+        "tile_y",
+        "tab_width",
+        "tab_x",
+        "hit"
+      ],
+      "bases": []
+    },
+    {
+      "id": "td224a0d86da6",
+      "name": "BottomCanvas",
+      "kind": "struct",
+      "file": "src/input/touch/stream_bottom_ui.hpp",
+      "line": 31,
+      "language": "cpp",
+      "methods": [
+        "ready",
+        "put",
+        "fill",
+        "clear",
+        "round_fill",
+        "glyph",
+        "text_width",
+        "text",
+        "text_centered",
+        "present"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t53776e1b31d3",
+      "name": "TouchMenuState",
+      "kind": "struct",
+      "file": "src/n3ds_ui.cpp",
+      "line": 60,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tf9c6fdf85481",
+      "name": "AnalogNavState",
+      "kind": "struct",
+      "file": "src/n3ds_ui.cpp",
+      "line": 72,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6588fff1e5ae",
+      "name": "DetailsTouchState",
+      "kind": "struct",
+      "file": "src/n3ds_ui.cpp",
+      "line": 79,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tbf0ff08f0c19",
+      "name": "VisibleAction",
+      "kind": "struct",
+      "file": "src/n3ds_ui.cpp",
+      "line": 207,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tf0c742bd89f3",
+      "name": "BusyWaitState",
+      "kind": "struct",
+      "file": "src/n3ds_ui.cpp",
+      "line": 1073,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9e5826e25cea",
+      "name": "UiMenuResult",
+      "kind": "struct",
+      "file": "src/n3ds_ui.hpp",
+      "line": 16,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t82636b388c3c",
+      "name": "PresentationState",
+      "kind": "struct",
+      "file": "src/presentation_state.hpp",
+      "line": 13,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tfd96c3d10ae1",
+      "name": "PresentationGeometry",
+      "kind": "struct",
+      "file": "src/presentation_state.hpp",
+      "line": 21,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6b3fba6c7cab",
+      "name": "StreamProfilePreset",
+      "kind": "struct",
+      "file": "src/stream_profile.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t3b018d170b82",
+      "name": "StreamTelemetrySample",
+      "kind": "struct",
+      "file": "src/stream_telemetry.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t71fc11d3c1fa",
+      "name": "StreamTelemetrySummary",
+      "kind": "struct",
+      "file": "src/stream_telemetry.hpp",
+      "line": 16,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb1ba05d08fb8",
+      "name": "StreamTelemetry",
+      "kind": "class",
+      "file": "src/stream_telemetry.hpp",
+      "line": 27,
+      "language": "cpp",
+      "methods": [
+        "reset",
+        "push",
+        "summary",
+        "copy_samples",
+        "size"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf0fa285c0dd5",
+      "name": "AtomicVar",
+      "kind": "class",
+      "file": "src/system/AtomicVar.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [
+        "AtomicVar",
+        "load",
+        "store"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t45a344c7ec7e",
+      "name": "ThreadLock",
+      "kind": "class",
+      "file": "src/system/ThreadLock.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [
+        "lock",
+        "unlock"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t512092318dfc",
+      "name": "MessageDispatcher",
+      "kind": "class",
+      "file": "src/system/dispatcher.hpp",
+      "line": 11,
+      "language": "cpp",
+      "methods": [
+        "get_instance",
+        "subscribe",
+        "unsubscribe",
+        "post_immediate",
+        "post",
+        "dispatch_all",
+        "_is_queue_empty"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t776075bd9dd1",
+      "name": "IMessage",
+      "kind": "class",
+      "file": "src/system/message.hpp",
+      "line": 15,
+      "language": "cpp",
+      "methods": [
+        "getMessageType"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf0672640b604",
+      "name": "TouchscreenEventMsg",
+      "kind": "class",
+      "file": "src/system/message.hpp",
+      "line": 22,
+      "language": "cpp",
+      "methods": [
+        "TouchscreenEventMsg",
+        "getMessageType"
+      ],
+      "bases": [
+        "IMessage"
+      ]
+    },
+    {
+      "id": "t002418d693f6",
+      "name": "TouchStateChangedMsg",
+      "kind": "class",
+      "file": "src/system/message.hpp",
+      "line": 48,
+      "language": "cpp",
+      "methods": [
+        "TouchStateChangedMsg",
+        "getMessageType"
+      ],
+      "bases": [
+        "IMessage"
+      ]
+    },
+    {
+      "id": "td0812fe95a5e",
+      "name": "KeyboardStateChangedMsg",
+      "kind": "class",
+      "file": "src/system/message.hpp",
+      "line": 58,
+      "language": "cpp",
+      "methods": [
+        "KeyboardStateChangedMsg",
+        "getMessageType"
+      ],
+      "bases": [
+        "IMessage"
+      ]
+    },
+    {
+      "id": "t6be89ea54ef9",
+      "name": "GenericEventMsg",
+      "kind": "class",
+      "file": "src/system/message.hpp",
+      "line": 73,
+      "language": "cpp",
+      "methods": [
+        "GenericEventMsg",
+        "getMessageType"
+      ],
+      "bases": [
+        "IMessage"
+      ]
+    },
+    {
+      "id": "ta4602d368c82",
+      "name": "N3dsConnectionListener",
+      "kind": "class",
+      "file": "src/system/n3ds_connection.hpp",
+      "line": 29,
+      "language": "cpp",
+      "methods": [
+        "accept",
+        "create_instance",
+        "get_instance",
+        "destroy_instance",
+        "connection_terminated",
+        "connection_log_message",
+        "connection_status_update",
+        "set_motion_event_state",
+        "is_connection_closed",
+        "termination_user_message"
+      ],
+      "bases": [
+        "ISubscriber"
+      ]
+    },
+    {
+      "id": "t90f7725435f4",
+      "name": "ISubscriber",
+      "kind": "class",
+      "file": "src/system/subscriber.hpp",
+      "line": 5,
+      "language": "cpp",
+      "methods": [
+        "accept"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tebbaa609bb53",
+      "name": "IN3dsRenderer",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 32,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t2fc2c390941e",
+      "name": "N3dsRendererBase",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 39,
+      "language": "cpp",
+      "methods": [
+        "draw_perf_counters",
+        "write_px_to_framebuffer_gpu",
+        "ensure_3d_enabled",
+        "ensure_3d_disabled",
+        "write24"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tab947c2845a3",
+      "name": "N3dsRendererTop",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 80,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks"
+      ],
+      "bases": [
+        "N3dsRendererBase"
+      ]
+    },
+    {
+      "id": "t746bd7df75e3",
+      "name": "N3dsRendererBottom",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 89,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "write_px_to_framebuffer_raw"
+      ],
+      "bases": [
+        "N3dsRendererBase"
+      ]
+    },
+    {
+      "id": "tf26065d20f98",
+      "name": "N3dsRendererMock",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 100,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks"
+      ],
+      "bases": [
+        "IN3dsRenderer"
+      ]
+    },
+    {
+      "id": "t6fdc2ae403c8",
+      "name": "N3dsRendererNormal",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 108,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks",
+        "set_bottom_screen"
+      ],
+      "bases": [
+        "IN3dsRenderer"
+      ]
+    },
+    {
+      "id": "tb4820c423198",
+      "name": "N3dsRendererDualScreenStretch",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 123,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks"
+      ],
+      "bases": [
+        "IN3dsRenderer"
+      ]
+    },
+    {
+      "id": "t3905aff9b48e",
+      "name": "N3dsRendererDualScreenMirror",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 137,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks"
+      ],
+      "bases": [
+        "IN3dsRenderer"
+      ]
+    },
+    {
+      "id": "t4d46a2b1cc67",
+      "name": "N3dsRendererDualScreenMagnify",
+      "kind": "class",
+      "file": "src/video/renderer/N3dsRenderer.hpp",
+      "line": 150,
+      "language": "cpp",
+      "methods": [
+        "write_px_to_framebuffer",
+        "set_perf_decode_ticks",
+        "set_crop_region",
+        "accept"
+      ],
+      "bases": [
+        "IN3dsRenderer",
+        "ISubscriber"
+      ]
+    }
+  ],
+  "class_files": [
+    {
+      "path": "libgamestream/client.h",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/client.h",
+      "download": "repository-docs/artemis-n3ds/classes/598b123c7a360e6f.mmd"
+    },
+    {
+      "path": "libgamestream/discover.c",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/discover.c",
+      "download": "repository-docs/artemis-n3ds/classes/08950d874d819c0a.mmd"
+    },
+    {
+      "path": "libgamestream/http.h",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/http.h",
+      "download": "repository-docs/artemis-n3ds/classes/7e700feec0373f08.mmd"
+    },
+    {
+      "path": "libgamestream/mkcert.h",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/mkcert.h",
+      "download": "repository-docs/artemis-n3ds/classes/c569349f31efa9a2.mmd"
+    },
+    {
+      "path": "libgamestream/xml.c",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/xml.c",
+      "download": "repository-docs/artemis-n3ds/classes/94707cef6df92b0d.mmd"
+    },
+    {
+      "path": "libgamestream/xml.h",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/xml.h",
+      "download": "repository-docs/artemis-n3ds/classes/dc04d7b31e5df463.mmd"
+    },
+    {
+      "path": "src/app_list_cache.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/app_list_cache.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/e169b7c7322a6a43.mmd"
+    },
+    {
+      "path": "src/config.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/config.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/7d36a3982a659a42.mmd"
+    },
+    {
+      "path": "src/graphics_lifecycle_state.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/graphics_lifecycle_state.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/3617455d4528f675.mmd"
+    },
+    {
+      "path": "src/hardware_capabilities.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/hardware_capabilities.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/0a7753d23169fb7d.mmd"
+    },
+    {
+      "path": "src/host_discovery.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/host_discovery.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/27bcd56c0b8b34da.mmd"
+    },
+    {
+      "path": "src/host_discovery.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/host_discovery.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/9e962c85143f8db5.mmd"
+    },
+    {
+      "path": "src/input/n3ds_input.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/n3ds_input.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/bf9d1447f17b5651.mmd"
+    },
+    {
+      "path": "src/input/touch/GamepadTouchHandler.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/GamepadTouchHandler.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/3601cb26b9e7383b.mmd"
+    },
+    {
+      "path": "src/input/touch/MenuTouchHandler.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MenuTouchHandler.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/64d82d4a07f8198c.mmd"
+    },
+    {
+      "path": "src/input/touch/MouseTouchHandler.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MouseTouchHandler.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/acaa26cb149d0a20.mmd"
+    },
+    {
+      "path": "src/input/touch/N3dsTouchscreenInput.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/N3dsTouchscreenInput.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/7197a2f865c92018.mmd"
+    },
+    {
+      "path": "src/input/touch/ShortcutsTouchHandler.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/ShortcutsTouchHandler.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/47c394bdcc9457c2.mmd"
+    },
+    {
+      "path": "src/input/touch/TouchHandler.hpp",
+      "types": 13,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/TouchHandler.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/08d62f72b384b920.mmd"
+    },
+    {
+      "path": "src/input/touch/keycode_map.hpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/keycode_map.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/54bbafe0b9ab8ffe.mmd"
+    },
+    {
+      "path": "src/input/touch/select_menu_layout.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/select_menu_layout.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/17e6f994af65e7a6.mmd"
+    },
+    {
+      "path": "src/input/touch/stream_bottom_ui.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/stream_bottom_ui.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/c9bfc09f98349b26.mmd"
+    },
+    {
+      "path": "src/n3ds_main.cpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_main.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/ee7c06c00caa3fb7.mmd"
+    },
+    {
+      "path": "src/n3ds_ui.cpp",
+      "types": 5,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_ui.cpp",
+      "download": "repository-docs/artemis-n3ds/classes/eae392e67bc0221c.mmd"
+    },
+    {
+      "path": "src/n3ds_ui.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_ui.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/d75273cc39e04433.mmd"
+    },
+    {
+      "path": "src/presentation_state.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/presentation_state.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/d007d39aca1d786e.mmd"
+    },
+    {
+      "path": "src/stream_profile.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_profile.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/da80397ee7bec52a.mmd"
+    },
+    {
+      "path": "src/stream_telemetry.hpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_telemetry.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/ae00d5b284d53451.mmd"
+    },
+    {
+      "path": "src/system/AtomicVar.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/AtomicVar.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/1d6213c4b92335d7.mmd"
+    },
+    {
+      "path": "src/system/ThreadLock.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/ThreadLock.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/329c2d0ebd5048ef.mmd"
+    },
+    {
+      "path": "src/system/dispatcher.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/dispatcher.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/54a159bce5aff3b0.mmd"
+    },
+    {
+      "path": "src/system/message.hpp",
+      "types": 5,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/message.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/ee86b58eaa5a4d45.mmd"
+    },
+    {
+      "path": "src/system/n3ds_connection.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/n3ds_connection.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/8ddfc0d9af8375ce.mmd"
+    },
+    {
+      "path": "src/system/subscriber.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/subscriber.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/9bb9657fff836686.mmd"
+    },
+    {
+      "path": "src/video/renderer/N3dsRenderer.hpp",
+      "types": 9,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRenderer.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/2f0c2d0baacb9515.mmd"
+    },
+    {
+      "path": "src/video/video.hpp",
+      "types": 4,
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp",
+      "download": "repository-docs/artemis-n3ds/classes/dd443fdb352a0ff5.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "src/hardware_capabilities.cpp",
+      "blob_sha": "1a61ff009aa52a21a3ba0c788f62adb67d9624e1",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/hardware_capabilities.cpp"
+    },
+    {
+      "path": "src/n3ds_main.cpp",
+      "blob_sha": "96d6a79417d2226ea70f5a65539cfec359f8eac5",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_main.cpp"
+    },
+    {
+      "path": "src/video/video.hpp",
+      "blob_sha": "aabf46149801514ec94afe671bdb76b7d6745ff7",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "blob_sha": "2be10fda4ad16df3dced458da5aead196252bf10",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/CMakeLists.txt"
+    },
+    {
+      "path": "Makefile",
+      "blob_sha": "bd0771674f4d6812b3f4bf8c3a5c423ee0721086",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/Makefile"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "4634a4cade94a6746a365560d525b11d080f38d4",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md"
+    },
+    {
+      "path": "3ds/build-expat.sh",
+      "blob_sha": "3631c514c5cb5f409c20b98cc685483abd1558d4",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/3ds/build-expat.sh"
+    },
+    {
+      "path": "3ds/build-ffmpeg.sh",
+      "blob_sha": "a5dd753c5c03d6c6373a25aa72c85823faf37ddd",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/3ds/build-ffmpeg.sh"
+    },
+    {
+      "path": "3ds/build-openssl.sh",
+      "blob_sha": "9997215a93e3b168812856a437e41c1a96cbea35",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/3ds/build-openssl.sh"
+    },
+    {
+      "path": "libgamestream/CMakeLists.txt",
+      "blob_sha": "d8dd04e523f56024e1210e34fb8dedaadc73971e",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/CMakeLists.txt"
+    },
+    {
+      "path": "libgamestream/client.c",
+      "blob_sha": "869b8618f1d25b7312f00f19ab8bda45404fe3a0",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/client.c"
+    },
+    {
+      "path": "libgamestream/client.h",
+      "blob_sha": "28537ea2a43d1cee7e2796261ae292b0037944d2",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/client.h"
+    },
+    {
+      "path": "libgamestream/discover.c",
+      "blob_sha": "db6323e9444314b24f6a5684ee80c9a5aa108562",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/discover.c"
+    },
+    {
+      "path": "libgamestream/discover.h",
+      "blob_sha": "4bfd600fd3b84e6e25516d941e6006e100000163",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/discover.h"
+    },
+    {
+      "path": "libgamestream/errors.h",
+      "blob_sha": "6ec0e3770ec781e1c3f0fad21d0f9b6169329fe4",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/errors.h"
+    },
+    {
+      "path": "libgamestream/http.c",
+      "blob_sha": "97c8405ca9947446003a9108eb2685d2779b3bdf",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/http.c"
+    },
+    {
+      "path": "libgamestream/http.h",
+      "blob_sha": "e71b6588c2a4fee28bb497b4d5162eef68643569",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/http.h"
+    },
+    {
+      "path": "libgamestream/mkcert.c",
+      "blob_sha": "b0d2819b5b2dd0e9ce8ec88989f48825b8e09a5e",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/mkcert.c"
+    },
+    {
+      "path": "libgamestream/mkcert.h",
+      "blob_sha": "745aaa666c0337ba73ea6fc77b9722dc42f4df06",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/mkcert.h"
+    },
+    {
+      "path": "libgamestream/sps.c",
+      "blob_sha": "e502aa2f83553b7a235f15286ce3717a93d648bf",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/sps.c"
+    },
+    {
+      "path": "libgamestream/sps.h",
+      "blob_sha": "b47156055785e9d2162488cffd8a6a7dc62b62a6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/sps.h"
+    },
+    {
+      "path": "libgamestream/xml.c",
+      "blob_sha": "69dbde60db2613c5253619afe2023512dad1ed5a",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/xml.c"
+    },
+    {
+      "path": "libgamestream/xml.h",
+      "blob_sha": "fb194776a60c2a6332430561190a3603b398aa98",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/xml.h"
+    },
+    {
+      "path": "src/app_list_cache.cpp",
+      "blob_sha": "20af63cab4c8f470ec24ab7a010f9cd53ea57a19",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/app_list_cache.cpp"
+    },
+    {
+      "path": "src/app_list_cache.hpp",
+      "blob_sha": "c1ed3ab155e885849a6fe34db1f1baf47455b5dd",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/app_list_cache.hpp"
+    },
+    {
+      "path": "src/config.cpp",
+      "blob_sha": "ad4c715462ccc3318fc410c719d2710ad2729bcc",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/config.cpp"
+    },
+    {
+      "path": "src/config.hpp",
+      "blob_sha": "680d4f88829ce64359f6f6c3f8ccfcaa010bdd78",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/config.hpp"
+    },
+    {
+      "path": "src/connection_status.hpp",
+      "blob_sha": "e96527493e0ba8b2210896de71526837f82ea0c2",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/connection_status.hpp"
+    },
+    {
+      "path": "src/graphics_lifecycle.cpp",
+      "blob_sha": "fc9769bca20052b23464c3ae9925e6e5771f18d1",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/graphics_lifecycle.cpp"
+    },
+    {
+      "path": "src/graphics_lifecycle.hpp",
+      "blob_sha": "67fd8a3f0d16fc041f0b0ea7115b227b379c60e0",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/graphics_lifecycle.hpp"
+    },
+    {
+      "path": "src/graphics_lifecycle_state.hpp",
+      "blob_sha": "62b1fd0c6e7900fe39d94356d2e5d545391d52c9",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/graphics_lifecycle_state.hpp"
+    },
+    {
+      "path": "src/hardware_capabilities.hpp",
+      "blob_sha": "99227c23208f50a842cd28d3aadb67488f19bdf0",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/hardware_capabilities.hpp"
+    },
+    {
+      "path": "src/host_discovery.cpp",
+      "blob_sha": "97528f59d665488cd27880d053557d9d4aa46a0d",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/host_discovery.cpp"
+    },
+    {
+      "path": "src/host_discovery.hpp",
+      "blob_sha": "e6d5a91f8edcf369db7b115a153f8e205e24c91e",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/host_discovery.hpp"
+    },
+    {
+      "path": "src/host_discovery_scan.hpp",
+      "blob_sha": "1ced15f229be7651d58eae81f2ffc6981825f7c8",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/host_discovery_scan.hpp"
+    },
+    {
+      "path": "src/n3ds_ui.cpp",
+      "blob_sha": "a5821b0650b47e700c663811546fce50783c8a97",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_ui.cpp"
+    },
+    {
+      "path": "src/n3ds_ui.hpp",
+      "blob_sha": "3aa9c48c0cc1ad1a8e9a8b807ea4c3672b51f9db",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_ui.hpp"
+    },
+    {
+      "path": "src/presentation_state.cpp",
+      "blob_sha": "8a0d02c8d69f52603606e67ee7cdc096a571e81a",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/presentation_state.cpp"
+    },
+    {
+      "path": "src/presentation_state.hpp",
+      "blob_sha": "39fe42a78de436ebcb8b97916b3dd7feb902d95b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/presentation_state.hpp"
+    },
+    {
+      "path": "src/stream_benchmark.cpp",
+      "blob_sha": "7faee0957245646423f39b7780e8b9030edf2ae6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_benchmark.cpp"
+    },
+    {
+      "path": "src/stream_benchmark.hpp",
+      "blob_sha": "aaf8202aa30c7f134ee5d95a5dfffc8d05567246",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_benchmark.hpp"
+    },
+    {
+      "path": "src/stream_profile.cpp",
+      "blob_sha": "2eff95af129ec679ea5f4a19dc9f052d2b6e159c",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_profile.cpp"
+    },
+    {
+      "path": "src/stream_profile.hpp",
+      "blob_sha": "4c83d5d9ab12b79596234ae209098124f01bafa0",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_profile.hpp"
+    },
+    {
+      "path": "src/stream_profile_catalog.cpp",
+      "blob_sha": "d30322fc773fdfae0e8bf87d07aa197f58e9e719",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_profile_catalog.cpp"
+    },
+    {
+      "path": "src/stream_telemetry.cpp",
+      "blob_sha": "ba95337ac031b939917fc40c2f997b4d5bc0d1f6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_telemetry.cpp"
+    },
+    {
+      "path": "src/stream_telemetry.hpp",
+      "blob_sha": "cb5f1622de17b92c98cb07fe4e13ab01beeb8ba5",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_telemetry.hpp"
+    },
+    {
+      "path": "src/stream_telemetry_store.cpp",
+      "blob_sha": "87cf01c5324b21a8b9d1f4fe119fa80a3483114a",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_telemetry_store.cpp"
+    },
+    {
+      "path": "src/stream_telemetry_store.hpp",
+      "blob_sha": "d1b850d32991ece45a8f2a7a8ed6d3dab4161bb3",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/stream_telemetry_store.hpp"
+    },
+    {
+      "path": "src/util.c",
+      "blob_sha": "128a16f5a7264da72c07fcb235555bac0b832112",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/util.c"
+    },
+    {
+      "path": "src/util.h",
+      "blob_sha": "2a276c76a11c4dd8912c96cfae2ed5920ee1b6b6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/util.h"
+    },
+    {
+      "path": "tests/foundation_smoke.cpp",
+      "blob_sha": "504bf5a9930c070704356a6ad3f89cd25144485f",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/tests/foundation_smoke.cpp"
+    },
+    {
+      "path": "src/audio/audio.h",
+      "blob_sha": "c6a0b21aadaaa4cfcb7c814285c40b80ae487ab9",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/audio/audio.h"
+    },
+    {
+      "path": "src/audio/n3ds_audio.cpp",
+      "blob_sha": "a1ed1b9eda22eb72cdbe58685cb1c09be127b683",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/audio/n3ds_audio.cpp"
+    },
+    {
+      "path": "src/input/n3ds_input.cpp",
+      "blob_sha": "f2d1d4fb41cd278104cb746508cea4fbcaa46371",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/n3ds_input.cpp"
+    },
+    {
+      "path": "src/input/n3ds_input.hpp",
+      "blob_sha": "9416e2f8267359ae2cf7ede0356b13431b561187",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/n3ds_input.hpp"
+    },
+    {
+      "path": "src/system/AtomicVar.hpp",
+      "blob_sha": "6493240dde854555fe9a609b398e6907413d4dec",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/AtomicVar.hpp"
+    },
+    {
+      "path": "src/system/ThreadLock.cpp",
+      "blob_sha": "278ebe356d112029432fd01456f8fec289b91320",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/ThreadLock.cpp"
+    },
+    {
+      "path": "src/system/ThreadLock.hpp",
+      "blob_sha": "ba06ffeb1fa2905845f6ced4e84786d411fda7e6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/ThreadLock.hpp"
+    },
+    {
+      "path": "src/system/compat_3ds.c",
+      "blob_sha": "e05758b7cb6b536c62ba582a8cf3ebe3d8584121",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/compat_3ds.c"
+    },
+    {
+      "path": "src/system/dispatcher.cpp",
+      "blob_sha": "62b3132a3f8162f0b62eccbf577d589aab699397",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/dispatcher.cpp"
+    },
+    {
+      "path": "src/system/dispatcher.hpp",
+      "blob_sha": "ceda42ffde397b2ad2d9b6a86ad80f1a4d84cd0e",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/dispatcher.hpp"
+    },
+    {
+      "path": "src/system/message.hpp",
+      "blob_sha": "6cd683f8287b70517075273a3eb32bab0c6d874b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/message.hpp"
+    },
+    {
+      "path": "src/system/n3ds_connection.cpp",
+      "blob_sha": "e6d4b38e1cf761b1643ebbd53193836e06f93415",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/n3ds_connection.cpp"
+    },
+    {
+      "path": "src/system/n3ds_connection.hpp",
+      "blob_sha": "c4ac864652a1ed28f3704d216fdf17211f7a0869",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/n3ds_connection.hpp"
+    },
+    {
+      "path": "src/system/pair_record.cpp",
+      "blob_sha": "3012c2ebfd06dee220a77e67e35a68ce177ebf42",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/pair_record.cpp"
+    },
+    {
+      "path": "src/system/pair_record.hpp",
+      "blob_sha": "aa61d4e25eab844dd7229bb431fd91b2dbe72db6",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/pair_record.hpp"
+    },
+    {
+      "path": "src/system/subscriber.hpp",
+      "blob_sha": "50d7fef5a94e8f201143088351ca1de44369c9ce",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/subscriber.hpp"
+    },
+    {
+      "path": "src/video/ffmpeg.c",
+      "blob_sha": "0839416f358fa15f983c6682de3ed80924dff7c5",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/ffmpeg.c"
+    },
+    {
+      "path": "src/video/ffmpeg.h",
+      "blob_sha": "fc961ad58653dccaf6d01b74da56ecef425f13fd",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/ffmpeg.h"
+    },
+    {
+      "path": "src/video/n3ds_video_base.cpp",
+      "blob_sha": "131c7e54e8dc797e371cf19f7e4e04b7924e7bd7",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/n3ds_video_base.cpp"
+    },
+    {
+      "path": "src/video/n3ds_video_mock.cpp",
+      "blob_sha": "22cf259340fb3d4c6b154572deba8f60bd08d561",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/n3ds_video_mock.cpp"
+    },
+    {
+      "path": "src/video/n3ds_video_mvd.cpp",
+      "blob_sha": "3b7b0f150c981abb2c9eb3cab1eacb7a48c8fc4e",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/n3ds_video_mvd.cpp"
+    },
+    {
+      "path": "src/video/n3ds_video_soft.cpp",
+      "blob_sha": "08bd050922de9f473676150301520faef995100c",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/n3ds_video_soft.cpp"
+    },
+    {
+      "path": "src/video/video_layout.hpp",
+      "blob_sha": "45d2655241b18d66b83010c82f42bc626b41cb63",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video_layout.hpp"
+    },
+    {
+      "path": "src/input/touch/DebugTouchHandler.cpp",
+      "blob_sha": "29bf09922f385a44edf84c42a3ff84da0647af60",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/DebugTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/GamepadTouchHandler.cpp",
+      "blob_sha": "aae3188936d764e4930e7c5f69b73e9c80a74780",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/GamepadTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/KeyboardTouchHandler.cpp",
+      "blob_sha": "e2ad312e42e9e572869f20783e0bc77bef9fa84d",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/KeyboardTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/MagnifyTouchHandler.cpp",
+      "blob_sha": "b0ba263d8eb164d62a40a6812d6fb51f8743436b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MagnifyTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/MenuTouchHandler.cpp",
+      "blob_sha": "82079df2792cfcfcfbae65cf7529d952f7325df9",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MenuTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/MirrorTouchHandler.cpp",
+      "blob_sha": "e14c298a986f62c7829ad3fc4333867b70c8ae1b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MirrorTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/MouseTouchHandler.cpp",
+      "blob_sha": "0998679c740c66c9e65170d1fbb7040660a5d9dd",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/MouseTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/N3dsTouchscreenInput.cpp",
+      "blob_sha": "ebaa2ce29d013dea12a9af55c1ea0e2a64fd3a9d",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/N3dsTouchscreenInput.cpp"
+    },
+    {
+      "path": "src/input/touch/N3dsTouchscreenInput.hpp",
+      "blob_sha": "9b2bed67fb9f64caacc7910917ed9346ad387461",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/N3dsTouchscreenInput.hpp"
+    },
+    {
+      "path": "src/input/touch/PerformanceTouchHandler.cpp",
+      "blob_sha": "a6e7bdae7289775ba8bccec6515f11da147f557b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/PerformanceTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/ShortcutsTouchHandler.cpp",
+      "blob_sha": "d5e9d0b534ccb936ff50c533d78a3a37122ff01c",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/ShortcutsTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/StretchTouchHandler.cpp",
+      "blob_sha": "94833f91788ce39bc2d8e160dd3b8eb97817cf13",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/StretchTouchHandler.cpp"
+    },
+    {
+      "path": "src/input/touch/TouchHandler.hpp",
+      "blob_sha": "137565065f0b2f787e048a9dd9c27627d5ed69ad",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/TouchHandler.hpp"
+    },
+    {
+      "path": "src/input/touch/TouchHandlerBase.cpp",
+      "blob_sha": "9e1fa085ad2caed4199370dd22a386c9e837f87d",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/TouchHandlerBase.cpp"
+    },
+    {
+      "path": "src/input/touch/keycode_map.hpp",
+      "blob_sha": "10beb3b3db2c3d2eeaac42b00af047e1808113ce",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/keycode_map.hpp"
+    },
+    {
+      "path": "src/input/touch/select_menu_layout.hpp",
+      "blob_sha": "bcc6ac4a149904cc14f7cbf8f7c7b4984f191857",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/select_menu_layout.hpp"
+    },
+    {
+      "path": "src/input/touch/stream_bottom_ui.cpp",
+      "blob_sha": "7ae08a057c1844f37822a788964911effe02697d",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/stream_bottom_ui.cpp"
+    },
+    {
+      "path": "src/input/touch/stream_bottom_ui.hpp",
+      "blob_sha": "15f873d34208a0be55c511ff1062c11abcc6cd09",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/input/touch/stream_bottom_ui.hpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRenderer.hpp",
+      "blob_sha": "8243504ec74272cd3a19a52e4f3fc895e3c6e9a4",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRenderer.hpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererBase.cpp",
+      "blob_sha": "04f8ea81f69995657f88291e155885de34e4da6f",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererBase.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererBottom.cpp",
+      "blob_sha": "63cb2d49c05304bbb4c92bde8e25e71d6431b56b",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererBottom.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererDualScreenMagnify.cpp",
+      "blob_sha": "e924e439036de39d49e6fbc61baf8deb3810e4cb",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererDualScreenMagnify.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererDualScreenMirror.cpp",
+      "blob_sha": "22c2bd3e84464d87a6e6ccd6ad8c10ccf0d929e0",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererDualScreenMirror.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererDualScreenStretch.cpp",
+      "blob_sha": "73f9f2a7a287b864a15eff8290dccfa85673f5e8",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererDualScreenStretch.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererMock.cpp",
+      "blob_sha": "f636b319053bedc698bddab958dfc0082624c634",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererMock.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererNormal.cpp",
+      "blob_sha": "4ee5e59367b93c0a517050bd623a837ba21d3873",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererNormal.cpp"
+    },
+    {
+      "path": "src/video/renderer/N3dsRendererTop.cpp",
+      "blob_sha": "e0e28fff768fbd41d514cae50e06a4afdd88b864",
+      "source_url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/renderer/N3dsRendererTop.cpp"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"Artemis-N3DS\"]\n  f0[\"src/hardware_capabilities.cpp\"]\n  root --> f0\n  f1[\"src/n3ds_main.cpp\"]\n  root --> f1\n  f2[\"src/video/video.hpp\"]\n  root --> f2\n  f3[\"CMakeLists.txt\"]\n  root --> f3\n  f4[\"Makefile\"]\n  root --> f4\n  f5[\"README.md\"]\n  root --> f5\n  f6[\"3ds/build-expat.sh\"]\n  root --> f6\n  f7[\"3ds/build-ffmpeg.sh\"]\n  root --> f7\n  f8[\"3ds/build-openssl.sh\"]\n  root --> f8\n  f9[\"libgamestream/CMakeLists.txt\"]\n  root --> f9\n  f10[\"libgamestream/client.c\"]\n  root --> f10\n  f11[\"libgamestream/client.h\"]\n  root --> f11\n  f12[\"libgamestream/discover.c\"]\n  root --> f12\n  f13[\"libgamestream/discover.h\"]\n  root --> f13\n  f14[\"libgamestream/errors.h\"]\n  root --> f14\n  f15[\"libgamestream/http.c\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass tc0387bd4c68b[\"SelectedHost\"] {\n  <<struct>>\n}\nclass t72fa5c6e15be[\"RemoteApp\"] {\n  <<struct>>\n}\nclass tf7c6d6aec7da[\"InputLoopContext\"] {\n  <<struct>>\n}\nclass ta7f589e4be09[\"VideoDecoderBase\"] {\n  accept()\n  _accept_touch_state_changed()\n  _accept_keyboard_state_changed()\n}\nclass tb2f58dc75feb[\"MockVideoDecoder\"] {\n}\nclass t391f53097446[\"SoftVideoDecoder\"] {\n  submit_decode_unit()\n  _write_yuv_to_framebuffer()\n}\nclass t4ad2ea8a811e[\"MvdDecoder\"] {\n  submit_decode_unit()\n  _decode()\n}\nclass t891d7e467987[\"_SERVER_DATA\"] {\n  <<struct>>\n}\nclass ta59617f1a5fa[\"cb_ctx\"] {\n  <<struct>>\n}\nclass tcb0c88684e67[\"_HTTP_DATA\"] {\n  <<struct>>\n}\nclass taa2e3cf225d0[\"_CERT_KEY_PAIR\"] {\n  <<struct>>\n}\nclass t91f7677e0266[\"xml_query\"] {\n  <<struct>>\n}\nclass b34b203f09b57[\"ISubscriber\"] {\n  <<unresolved_base>>\n}\nb34b203f09b57 <|-- ta7f589e4be09\nta7f589e4be09 <|-- tb2f58dc75feb\nta7f589e4be09 <|-- t391f53097446\nta7f589e4be09 <|-- t4ad2ea8a811e\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/Artemis-N3DS",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/artemis-n3ds/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_host[\"Hosts and pairing\"]\n  node_discovery[\"Host discovery<br/>[host_discovery.cpp]\"]\n  node_pairing[(\"Pair records<br/>[pair_record.cpp]\")]\n  node_gamestream[\"GameStream client<br/>[client.c]\"]\n  node_xml[\"Protocol XML<br/>[xml.c]\"]\nend\n\nsubgraph group_session[\"Session coordination\"]\n  node_main[\"Application flow<br/>[n3ds_main.cpp]\"]\n  node_ui[\"Console menus<br/>[n3ds_ui.cpp]\"]\n  node_connection[\"Stream connection\"]\n  node_dispatcher[\"Message dispatcher<br/>[dispatcher.cpp]\"]\nend\n\nsubgraph group_stream[\"Stream pipeline\"]\n  node_presentation[\"Presentation state\"]\n  node_decoder[\"Video decoders\"]\n  node_mvd[\"Hardware decode<br/>[n3ds_video_mvd.cpp]\"]\n  node_software[\"Software decode\"]\n  node_renderer[\"Screen renderers\"]\n  node_graphics[\"Graphics lifecycle\"]\n  node_audio[\"Audio output<br/>[n3ds_audio.cpp]\"]\nend\n\nsubgraph group_interaction[\"Input and helpers\"]\n  node_input[\"Console input<br/>[n3ds_input.cpp]\"]\n  node_touch[\"Touch handlers<br/>[TouchHandler.hpp]\"]\n  node_menuhub[\"In-stream helper hub\"]\n  node_bottomui[\"Bottom-screen UI\"]\nend\n\nsubgraph group_state[\"Settings and telemetry\"]\n  node_config[(\"Configuration<br/>[config.cpp]\")]\n  node_appcache[(\"App list cache<br/>[app_list_cache.cpp]\")]\n  node_profiles[\"Stream profiles<br/>[stream_profile.cpp]\"]\n  node_telemetry[(\"Stream telemetry\")]\n  node_benchmark[\"Performance metrics\"]\nend\n\nnode_user((\"3DS user\"))\n\nnode_user -->|\"uses\"| node_main\nnode_main -->|\"finds hosts\"| node_discovery\nnode_main -->|\"pairs host\"| node_pairing\nnode_main -.->|\"manages host\"| node_gamestream\nnode_gamestream -->|\"parses responses\"| node_xml\nnode_discovery -->|\"uses records\"| node_pairing\nnode_main -->|\"shows menus\"| node_ui\nnode_main -->|\"lists apps\"| node_appcache\nnode_main -->|\"starts session\"| node_connection\nnode_main -->|\"loads settings\"| node_config\nnode_main -->|\"selects profile\"| node_profiles\nnode_main -->|\"handles controls\"| node_input\nnode_input -->|\"posts events\"| node_dispatcher\nnode_input -->|\"owns handlers\"| node_touch\nnode_main -->|\"dispatches events\"| node_dispatcher\nnode_user -->|\"opens helpers\"| node_menuhub\nnode_menuhub -->|\"posts actions\"| node_dispatcher\nnode_menuhub -.->|\"draws interface\"| node_bottomui\nnode_user -->|\"chooses stream\"| node_connection\nnode_connection -.->|\"receives video\"| node_decoder\nnode_decoder -.->|\"hardware path\"| node_mvd\nnode_decoder -.->|\"software path\"| node_software\nnode_decoder -->|\"renders frames\"| node_renderer\nnode_renderer -->|\"uses layout state\"| node_presentation\nnode_renderer -->|\"uses graphics lifecycle\"| node_graphics\nnode_connection -.->|\"streams audio\"| node_audio\nnode_user -->|\"views or saves metrics\"| node_telemetry\nnode_user -->|\"views performance\"| node_benchmark\nnode_main -->|\"uses telemetry store\"| node_telemetry\n\n\nclass node_discovery,node_pairing,node_gamestream,node_xml,node_user toneBlue\nclass node_main,node_ui,node_connection,node_dispatcher toneAmber\nclass node_presentation,node_decoder,node_mvd,node_software,node_renderer,node_graphics,node_audio toneMint\nclass node_input,node_touch,node_menuhub,node_bottomui toneRose\nclass node_config,node_appcache,node_profiles,node_telemetry,node_benchmark toneIndigo",
+    "linked_paths": 24
+  }
+}

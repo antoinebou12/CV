@@ -7,7 +7,7 @@ mermaid: true
 description: "Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens, puis RAG LangChain + Ollama."
 translationKey: vector-databases-similar-movies
 images:
-  - featured.png
+  - images/featured.png
 tags:
   - PostgreSQL
   - pgvector
@@ -32,11 +32,17 @@ Fil conducteur « films similaires » : **embeddings dans PostgreSQL**, même id
 
 Les trois animations ci-dessous proviennent du README du projet. Elles montrent les interfaces et les étapes enregistrées, pas des mesures de latence actuelles.
 
-{{< figure src="demo-gradio.gif" alt="Démonstration animée de l’interface Gradio de recherche de films" caption="Interface Gradio : explorer des films similaires." loading="lazy" >}}
+{{< figure src="images/demo-gradio.gif" alt="Démonstration animée de l’interface Gradio de recherche de films" caption="Interface Gradio : explorer des films similaires." loading="lazy" >}}
 
-{{< figure src="demo-embeddings.gif" alt="Démonstration animée de génération des embeddings" caption="Génération des représentations vectorielles avec Sentence Transformers." loading="lazy" >}}
+{{< figure src="images/gradio-movie-search.png" alt="Interface Gradio Movie Similarity Search avec Matrix comme requête" caption="Capture Gradio — recherche sur un titre." loading="lazy" >}}
 
-{{< figure src="demo-qdrant.gif" alt="Démonstration animée de recherche de films avec Qdrant" caption="Recherche et recommandations dans le parcours Qdrant." loading="lazy" >}}
+{{< figure src="images/demo-embeddings.gif" alt="Démonstration animée de génération des embeddings" caption="Génération des représentations vectorielles avec Sentence Transformers." loading="lazy" >}}
+
+{{< figure src="images/tsne-embeddings.png" alt="Embeddings de films visualisés avec t-SNE, colorés par cluster" caption="t-SNE des embeddings — structure des clusters en 2D." loading="lazy" >}}
+
+{{< figure src="images/demo-qdrant.gif" alt="Démonstration animée de recherche de films avec Qdrant" caption="Recherche et recommandations dans le parcours Qdrant." loading="lazy" >}}
+
+{{< figure src="images/superman-graph.jpg" alt="Graphe de Superman et films similaires avec nœuds genres et casting" caption="Vue graphe : voisinage de Superman, genres et centralité du casting." loading="lazy" >}}
 
 ## Ce que les notebooks construisent réellement
 

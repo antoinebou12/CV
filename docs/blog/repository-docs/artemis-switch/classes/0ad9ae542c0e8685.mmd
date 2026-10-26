@@ -1,0 +1,40 @@
+classDiagram
+direction TB
+class tb9adefeb7e75["IControlSession"] {
+  connect()
+  poll()
+  sendHostinfoUpdate()
+  setInitialPreferredDerp()
+  setLocalEndpoints()
+  close()
+  interrupt()
+}
+class tdf479a52510d["IOverlayRoute"] {
+  start()
+  prepareForStreaming()
+  stop()
+}
+class taba503cc7736["TailscaleCore"] {
+  TailscaleCore()
+  start()
+  stop()
+  snapshot()
+  resolveRoute()
+  activateRoute()
+  prepareRouteForStreaming()
+  deactivateRoute()
+  pathInfo()
+  identity()
+  replacePeers()
+  applyPeerDelta()
+  updateDerpMap()
+  workerMain()
+  advertiseHomeDerp()
+  runControlSession()
+  waitBeforeReconnect()
+  loadHomeDerpHint()
+  publishEndpoints()
+  saveHomeDerpHint()
+  chooseDefaultHomeDerp()
+  setState()
+}

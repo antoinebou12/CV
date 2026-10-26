@@ -1,0 +1,25 @@
+classDiagram
+direction TB
+class taed90b5aa28b["TestOverlayCoverage"] {
+  test_every_overlay_has_a_known_source()
+  test_every_overlay_has_a_marker()
+}
+class t00ee25bb801f["TestOverlaysApplyToRealSources"] {
+  test_each_overlay_changes_its_source()
+  test_passthrough_overlays_are_exactly_passthrough()
+  test_each_overlay_introduces_its_marker()
+  test_each_overlay_stays_a_narrow_patch()
+  test_each_overlay_rejects_a_source_it_does_not_match()
+}
+class t16bce57b32ec["TestReplaceHelpers"] {
+  test_replace_once_replaces_a_unique_anchor()
+  test_replace_once_rejects_a_missing_anchor()
+  test_replace_once_rejects_an_ambiguous_anchor()
+  test_replace_exact_count_requires_the_stated_count()
+}
+class be0ae714e1952["unittest.TestCase"] {
+  <<unresolved_base>>
+}
+be0ae714e1952 <|-- taed90b5aa28b
+be0ae714e1952 <|-- t00ee25bb801f
+be0ae714e1952 <|-- t16bce57b32ec

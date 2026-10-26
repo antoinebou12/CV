@@ -4,6 +4,8 @@ title: Expérimentation des indicateurs technique avec Python et Backtesting
 date: 2024-05-14T20:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "BatchBacktesting EMA/MACD — lecture des extrêmes, pas conseil de trading."
+images:
+  - images/featured.png
 translationKey: experimentation-indicateurs-backtesting
 tags:
   - Python
@@ -27,7 +29,7 @@ Screening massif : CSV + graphiques optionnels sous `output/`. Pas un gestionnai
 | BTCBUSD | +293 % | Vol crypto |
 | BTTBUSD | -99 % | Liquidité non modélisée |
 
-![Graphique exemple](./img-001.png)
+![Graphique exemple](images/img-001.png)
 
 Code détaillé : [GitHub BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting) et [Medium FR](https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc).
 

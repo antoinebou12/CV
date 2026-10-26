@@ -1,4 +1,1174 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects on Antoine Boucher</title><link>https://antoineboucher.info/CV/blog/projects/</link><description>Recent content in Projects on Antoine Boucher</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 02 Sep 2026 14:00:00 -0400</lastBuildDate><atom:link href="https://antoineboucher.info/CV/blog/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>uml-mcp</title><link>https://antoineboucher.info/CV/blog/projects/uml-mcp/</link><pubDate>Wed, 02 Sep 2026 14:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/uml-mcp/</guid><description>&lt;h1 id="uml-mcp"&gt;uml-mcp&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Open-source projects on Antoine Boucher</title><link>https://antoineboucher.info/CV/blog/projects/</link><description>Recent content in Open-source projects on Antoine Boucher</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 24 Oct 2026 12:00:00 -0400</lastBuildDate><atom:link href="https://antoineboucher.info/CV/blog/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>AINewsTracker: Financial news analysis and backtesting</title><link>https://antoineboucher.info/CV/blog/projects/notes/ainewstracker/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/ainewstracker/</guid><description>&lt;h1 id="ainewstracker"&gt;AINewsTracker&lt;/h1&gt;
+&lt;div class="repo-status-row"&gt;&lt;span class="repo-badge kind"&gt;Web API&lt;/span&gt;&lt;span class="repo-badge api"&gt;API&lt;/span&gt;&lt;span class="repo-badge docker"&gt;Docker&lt;/span&gt;&lt;/div&gt;
+&lt;div class="repo-tech-badges"&gt;&lt;span class="tag tool"&gt;Python&lt;/span&gt;&lt;span class="tag tool"&gt;FastAPI&lt;/span&gt;&lt;span class="tag tool"&gt;MongoDB&lt;/span&gt;&lt;span class="tag tool"&gt;Redis&lt;/span&gt;&lt;span class="tag tool"&gt;Poetry&lt;/span&gt;&lt;span class="tag tool"&gt;Pytest&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;AINewsTracker collects financial news, analyses article text and exposes the resulting data through FastAPI. A separate strategy path uses stored information for historical backtests.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AlgoETS/AINewsTracker"&gt;Source code&lt;/a&gt; · &lt;a href="https://algoets.github.io/AINewsTracker/"&gt;Published documentation&lt;/a&gt; · &lt;a href="https://gitdiagram.com/algoets/ainewstracker"&gt;Interactive GitDiagram&lt;/a&gt; · &lt;a href="https://antoineboucher.info/CV/blog/projects/notes/ainewstracker/"&gt;Français&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;app/main.py&lt;/code&gt; assembles the service, registers the route groups and configures Redis caching. News processing moves through a service, text metrics and the article repository before reaching MongoDB.&lt;/p&gt;</description></item><item><title>BatchBacktesting: comparable strategy runs</title><link>https://antoineboucher.info/CV/blog/projects/notes/batchbacktesting/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/batchbacktesting/</guid><description>&lt;h1 id="batchbacktesting"&gt;BatchBacktesting&lt;/h1&gt;
+&lt;p&gt;BatchBacktesting turns a backtest into a repeatable batch: choose instruments, obtain and clean prices, run a strategy, and save comparable results. Its existing &lt;a href="https://antoineboucher.info/CV/blog/posts/batchbacktesting-engine/"&gt;article&lt;/a&gt; covers the worker pool, indicators, commission and analysis caveats.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/AlgoETS/BatchBacktesting"&gt;Repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://algoets.github.io/BatchBacktesting/"&gt;Published example&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>MistubaVideo</title><link>https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/</guid><description>&lt;h1 id="mistubavideo"&gt;MistubaVideo&lt;/h1&gt;
+&lt;p&gt;MistubaVideo is an ETSim repository for video-related work with Mitsuba. This short note keeps the project visible in the Hugo catalog while leaving implementation details to the &lt;a href="https://github.com/ETSim/MistubaVideo"&gt;source repository&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>TrueMapData: height maps for metrology and graphics</title><link>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</guid><description>&lt;h1 id="truemapdata"&gt;TrueMapData&lt;/h1&gt;
+&lt;p&gt;TrueMapData is a Python library and &lt;code&gt;tmd-process&lt;/code&gt; CLI for TrueMap and GelSight height maps. The repository covers binary I/O, filters and transforms, derived maps, defect detection, sequences, compression, visualisation and mesh export.&lt;/p&gt;
+&lt;p&gt;The toolkit also includes tribology and wear-oriented commands, with optional roughness support through Surfalize. The &lt;a href="https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/"&gt;companion article&lt;/a&gt; explains where the data pipeline meets surface metrology and graphics.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ETSim/TrueMapData"&gt;Repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://etsim.github.io/TrueMapData/"&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Workshop1: Python learning notebooks</title><link>https://antoineboucher.info/CV/blog/projects/notes/workshop1/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/workshop1/</guid><description>&lt;h1 id="workshop1"&gt;Workshop1&lt;/h1&gt;
+&lt;p&gt;Workshop1 is a notebook-based Python workshop. Its sequence moves from basic syntax and setup through API calls, pandas data and visualisation, then ends with an Apple-price EMA exercise.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://antoineboucher.info/CV/blog/posts/algoets-python-workshop/"&gt;companion article&lt;/a&gt; contains the detailed walkthrough. See the &lt;a href="https://github.com/AlgoETS/Workshop1"&gt;repository&lt;/a&gt; for the notebooks and setup instructions.&lt;/p&gt;</description></item><item><title>.dotfiles: A shell environment in scripts</title><link>https://antoineboucher.info/CV/blog/projects/notes/dotfiles/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/dotfiles/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;.dotfiles: A shell environment in scripts&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;These dotfiles collect the shell and editor setup I used across machines. The interesting part is the installer: it turns a set of personal preferences into operations on packages, configuration files and upstream projects.&lt;/p&gt;</description></item><item><title>another-install-script: A menu for homelab installation</title><link>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;another-install-script: A menu for homelab installation&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;another-install-script is a shell entry point for choosing system setup and container installations. Its structure separates the menu from the service definitions so that adding a service does not require putting every command in setup.sh.&lt;/p&gt;</description></item><item><title>antoinebou12: How the GitHub profile is assembled</title><link>https://antoineboucher.info/CV/blog/projects/notes/antoinebou12/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/antoinebou12/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;antoinebou12: How the GitHub profile is assembled&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This is the repository behind my GitHub profile README. It combines ordinary Markdown with images, embedded widgets and scheduled updates. There is no application server in the profile itself.&lt;/p&gt;</description></item><item><title>architecture: Architecture as editable documentation</title><link>https://antoineboucher.info/CV/blog/projects/notes/architecture/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/architecture/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;architecture: Architecture as editable documentation&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This archived repository stores a home-infrastructure diagram in several formats. Its architecture is a documentation workflow: editable sources produce diagrams that can be opened or viewed without a running application.&lt;/p&gt;</description></item><item><title>Artemis-N3DS: Streaming within a dual-screen client</title><link>https://antoineboucher.info/CV/blog/projects/notes/artemis-n3ds/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/artemis-n3ds/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Artemis-N3DS: Streaming within a dual-screen client&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;Artemis-N3DS adapts Moonlight Embedded to the Nintendo 3DS family. It combines host discovery and pairing with a console-specific interface, input handling and video presentation. The New 3DS hardware path is a particular concern.&lt;/p&gt;</description></item><item><title>Artemis-Switch: A streamed frame from host to screen</title><link>https://antoineboucher.info/CV/blog/projects/notes/artemis-switch/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/artemis-switch/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Artemis-Switch: A streamed frame from host to screen&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;Artemis-Switch is a fork in the Moonlight streaming family. The host runs the game; the client receives compressed video and audio while sending controller input back. Rendering a frame is only one part of that round trip.&lt;/p&gt;</description></item><item><title>AudioTranscript: From WAV chunks to transcription</title><link>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;AudioTranscript: From WAV chunks to transcription&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;AudioTranscript breaks a WAV recording into chunks around silence, sends each chunk to a recognition service and concatenates the results. The current implementation uses Amazon recognition, even though its docstrings still mention Google.&lt;/p&gt;</description></item><item><title>AuthLaravel: Sessions, roles and Inertia pages</title><link>https://antoineboucher.info/CV/blog/projects/notes/authlaravel/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/authlaravel/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;AuthLaravel: Sessions, roles and Inertia pages&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;AuthLaravel is an access-control learning project with a Laravel backend and Vue pages delivered through Inertia. The route definitions show how authenticated users reach their dashboard and how administrators receive a different view.&lt;/p&gt;</description></item><item><title>bloc: Object storage inside Blender</title><link>https://antoineboucher.info/CV/blog/projects/notes/bloc/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/bloc/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;bloc: Object storage inside Blender&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;My bloc fork adds a Blender-facing workflow around S3 and MinIO storage. It preserves the upstream Blender-Cloud-Storage credit. The add-on translates object keys into a folder browser, then downloads assets before asking Blender to import them.&lt;/p&gt;</description></item><item><title>ChitUI: A local bridge to resin printers</title><link>https://antoineboucher.info/CV/blog/projects/notes/chitui/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/chitui/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ &lt;a href="#workflow"&gt;Workflow&lt;/a&gt;
+ &lt;a href="#api-contract"&gt;API&lt;/a&gt;
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;ChitUI: A local bridge to resin printers&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;ChitUI places a browser interface in front of SDCP resin printers. A Python process serves the web assets, discovers printers on the local network and translates browser actions into printer communication.&lt;/p&gt;</description></item><item><title>ComfyUI-UML: Diagram rendering inside a node graph</title><link>https://antoineboucher.info/CV/blog/projects/notes/comfyui-uml/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/comfyui-uml/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;ComfyUI-UML: Diagram rendering inside a node graph&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the source and viewer links alongside that output.&lt;/p&gt;</description></item><item><title>CV: One repository, several publishing paths</title><link>https://antoineboucher.info/CV/blog/projects/notes/cv/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/cv/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;CV: One repository, several publishing paths&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This website combines hand-edited bilingual CV pages, structured resume data, generated About pages, LaTeX PDFs and a Hugo blog. The build brings those outputs into one static deployment without requiring a public application backend.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin: Routing text to diagram backends</title><link>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;D2COpenAIPlugin: Routing text to diagram backends&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;D2COpenAIPlugin is a FastAPI diagram service with a plugin manifest and an OpenAPI surface. Its implementation selects among PlantUML, Mermaid and Kroki paths based on the request’s diagram language.&lt;/p&gt;</description></item><item><title>DasherControl: A workspace dashboard across three boundaries</title><link>https://antoineboucher.info/CV/blog/projects/notes/dashercontrol/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/dashercontrol/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;DasherControl: A workspace dashboard across three boundaries&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;DasherControl brings homelab links and embedded applications into saved workspaces. Vue handles the interface, Rust and Rocket expose the API, and Diesel persists the layout in PostgreSQL. Docker control follows a separate path.&lt;/p&gt;</description></item><item><title>Dimension: From matrix storage to a rendered scene</title><link>https://antoineboucher.info/CV/blog/projects/notes/dimension/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/dimension/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Dimension: From matrix storage to a rendered scene&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;Dimension is my Rust workspace for mathematics and graphics experiments. mathlib provides numerical building blocks; render uses them for CPU-side transforms and cameras before submitting graphics work through wgpu.&lt;/p&gt;</description></item><item><title>donneesqc-mcp: An MCP gateway to public data</title><link>https://antoineboucher.info/CV/blog/projects/notes/donneesqc-mcp/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/donneesqc-mcp/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;donneesqc-mcp: An MCP gateway to public data&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;donneesqc-mcp is a fork exposing Québec and Montréal open-data operations through MCP tools. Its entry point registers the tool collection and starts an HTTP transport, leaving dataset access and geographic helpers in separate modules.&lt;/p&gt;</description></item><item><title>ESP32-7SEG: An embedded clock with network setup</title><link>https://antoineboucher.info/CV/blog/projects/notes/esp32-7seg/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/esp32-7seg/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;ESP32-7SEG: An embedded clock with network setup&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;ESP32-7SEG connects an ESP32 clock display to network configuration and an HTTP interface. The firmware startup decides whether saved Wi-Fi settings can be reused or whether the device needs its setup path.&lt;/p&gt;</description></item><item><title>FlashGames: A static shell around a Flash runtime</title><link>https://antoineboucher.info/CV/blog/projects/notes/flashgames/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/flashgames/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;FlashGames: A static shell around a Flash runtime&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;FlashGames preserves small Flash games in a browser-facing collection. The page selects a SWF and hosts the Ruffle player. The game binary and the surrounding HTML interface remain separate pieces.&lt;/p&gt;</description></item><item><title>GithubSimpleFileDownloader: A browser extension tied to page structure</title><link>https://antoineboucher.info/CV/blog/projects/notes/githubsimplefiledownloader/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/githubsimplefiledownloader/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;GithubSimpleFileDownloader: A browser extension tied to page structure&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This archived extension attempted to add individual-file download controls to repository browsers. Its GitHub implementation shows the fragility of building an integration around another website’s DOM rather than a stable application interface.&lt;/p&gt;</description></item><item><title>GreenScreenVideotoAlphaPNGs: A transparent-frame production pipeline</title><link>https://antoineboucher.info/CV/blog/projects/notes/greenscreenvideotoalphapngs/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/greenscreenvideotoalphapngs/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;GreenScreenVideotoAlphaPNGs: A transparent-frame production pipeline&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;GreenScreenVideotoAlphaPNGs separates video acquisition, frame extraction and chroma keying from final encoding. RGBA PNG frames are an intermediate output that can feed either the GIF path or an alpha-capable video codec.&lt;/p&gt;</description></item><item><title>hass_renpho: Polling a cloud API into Home Assistant sensors</title><link>https://antoineboucher.info/CV/blog/projects/notes/hass-renpho/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/hass-renpho/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;hass_renpho: Polling a cloud API into Home Assistant sensors&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;hass_renpho is a fork of a Home Assistant integration for Renpho measurements. A shared coordinator refreshes cloud data and sensor entities expose that state. The repository warns that its old-app API path is no longer reliably working.&lt;/p&gt;</description></item><item><title>HDR-10bpp-Display-Test: Packing ten-bit channels for a Cairo surface</title><link>https://antoineboucher.info/CV/blog/projects/notes/hdr-10bpp-display-test/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/hdr-10bpp-display-test/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;HDR-10bpp-Display-Test: Packing ten-bit channels for a Cairo surface&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This display experiment loads image data into a GTK drawing area through Cairo. Viewer3.py makes the pixel representation explicit: channel samples are masked and packed into a uint32 buffer before creating an RGB30 surface.&lt;/p&gt;</description></item><item><title>hydra: An Electron application across process boundaries</title><link>https://antoineboucher.info/CV/blog/projects/notes/hydra/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/hydra/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;hydra: An Electron application across process boundaries&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those boundaries explain why the project has several toolchains rather than one frontend build.&lt;/p&gt;</description></item><item><title>ipc-toolkit: Collision queries as a library boundary</title><link>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ &lt;a href="#algorithm"&gt;Algorithm&lt;/a&gt;
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;ipc-toolkit: Collision queries as a library boundary&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous collision detection and contact-related energies. An external simulation still owns its time stepping and solve loop.&lt;/p&gt;</description></item><item><title>jsonresume-theme-kendall: A JSON document into a resume template</title><link>https://antoineboucher.info/CV/blog/projects/notes/jsonresume-theme-kendall/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/jsonresume-theme-kendall/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;jsonresume-theme-kendall: A JSON document into a resume template&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This fork of the Kendall JSON Resume theme turns structured resume data into HTML. The renderer prepares presentation fields before handing the result to a Mustache template and the accompanying screen and print styles.&lt;/p&gt;</description></item><item><title>kroki-playground: An editor, an API and a renderer</title><link>https://antoineboucher.info/CV/blog/projects/notes/kroki-playground/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/kroki-playground/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ &lt;a href="#api-contract"&gt;API&lt;/a&gt;
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;kroki-playground: An editor, an API and a renderer&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;kroki-playground is a Next.js interface for editing text diagrams and previewing their output. Its server route validates the requested diagram type and format, encodes the source and fetches the rendered result from Kroki.&lt;/p&gt;</description></item><item><title>linkshare: A Rails application for shared links</title><link>https://antoineboucher.info/CV/blog/projects/notes/linkshare/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/linkshare/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;linkshare: A Rails application for shared links&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;linkshare is an archived Rails learning project for publishing links, commenting and voting. Its routes reveal a conventional server-rendered application with account management and an administrative interface.&lt;/p&gt;</description></item><item><title>LLM2SVG: Dataset analysis before model claims</title><link>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;LLM2SVG: Dataset analysis before model claims&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This LLM2SVG fork contains SVG dataset utilities and an evaluation-oriented scaffold. The visible implementation is useful for inspecting examples and constraints; it does not establish a completed or trained text-to-SVG model.&lt;/p&gt;</description></item><item><title>Maestro: Sheet music through an external conversion pipeline</title><link>https://antoineboucher.info/CV/blog/projects/notes/maestro/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/maestro/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Maestro: Sheet music through an external conversion pipeline&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This Maestro fork connects a React upload interface to a Spring backend and external music-conversion tools. Turning a score image into MIDI passes through an optical-recognition stage and an intermediate score representation.&lt;/p&gt;</description></item><item><title>marketwatch: A client around a virtual trading game</title><link>https://antoineboucher.info/CV/blog/projects/notes/marketwatch/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/marketwatch/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;marketwatch: A client around a virtual trading game&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;marketwatch is an archived Python client for MarketWatch’s virtual trading game. It wraps login, game queries and simulated order operations. These are game interactions, not connections to a brokerage account.&lt;/p&gt;</description></item><item><title>MediaBoxDockerCompose: A media stack connected by volumes and networks</title><link>https://antoineboucher.info/CV/blog/projects/notes/mediaboxdockercompose/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/mediaboxdockercompose/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;MediaBoxDockerCompose: A media stack connected by volumes and networks&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;MediaBoxDockerCompose brings several homelab services together in Docker Compose. Its architecture lives mainly in service definitions, shared filesystem paths and network reachability, rather than in one application’s source code.&lt;/p&gt;</description></item><item><title>nova-backtest: Historical candles into a strategy simulation</title><link>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;nova-backtest: Historical candles into a strategy simulation&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;nova-backtest is an archived fork of a strategy-backtesting framework. The core class selects an exchange client, loads a historical interval and manages a simulated bankroll and position constraints.&lt;/p&gt;</description></item><item><title>novatorem: Music-provider data into an SVG widget</title><link>https://antoineboucher.info/CV/blog/projects/notes/novatorem/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/novatorem/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;novatorem: Music-provider data into an SVG widget&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This novatorem fork builds music-status widgets from provider data. A Flask orchestrator handles rendering, while Spotify and Last.fm have separate modules. Album artwork supplies both an image and colors for the SVG.&lt;/p&gt;</description></item><item><title>NX-Activity-Log: Turning console play records into views</title><link>https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;NX-Activity-Log: Turning console play records into views&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title summaries. Those records are inputs from the console rather than events generated by the UI.&lt;/p&gt;</description></item><item><title>nxsand: A GPU grid for falling sand</title><link>https://antoineboucher.info/CV/blog/projects/notes/nxsand/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/nxsand/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;nxsand: A GPU grid for falling sand&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;nxsand is a falling-sand simulation for Switch with a desktop development target. Materials live in an integer grid. Simulation passes update that grid, and a separate rendering path turns material identifiers into the displayed image.&lt;/p&gt;</description></item><item><title>Pan-Tilt-Controller: Keyboard input to serial motor commands</title><link>https://antoineboucher.info/CV/blog/projects/notes/pan-tilt-controller/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/pan-tilt-controller/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Pan-Tilt-Controller: Keyboard input to serial motor commands&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This archived pan-tilt controller connects a desktop interface to a serial-controlled positioning unit. The implementation mixes a Qt event loop with pyserial commands and keeps the requested pan and tilt positions in global state.&lt;/p&gt;</description></item><item><title>RawAnalyser: From raw sensor values to diagnostic plots</title><link>https://antoineboucher.info/CV/blog/projects/notes/rawanalyser/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/rawanalyser/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;RawAnalyser: From raw sensor values to diagnostic plots&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;RawAnalyser is an older Python image-analysis experiment for clipping, channel values, gamma and vignetting. Its input assumptions are visible in the implementation, including a fixed raw frame shape and regions selected through a JSON file.&lt;/p&gt;</description></item><item><title>retroarch-web-games: Packaging an emulator for a static web server</title><link>https://antoineboucher.info/CV/blog/projects/notes/retroarch-web-games/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/retroarch-web-games/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;retroarch-web-games: Packaging an emulator for a static web server&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;retroarch-web-games is an archived container setup around a web build of RetroArch. The repository combines browser runtime files with scripts and container assembly. Hosting the player and supplying game content are separate concerns.&lt;/p&gt;</description></item><item><title>Serilog.Sinks.SentrySDK: Adapting log events to Sentry</title><link>https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Serilog.Sinks.SentrySDK: Adapting log events to Sentry&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information for Sentry rather than asking every call site to invoke the SDK directly.&lt;/p&gt;</description></item><item><title>sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces</title><link>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The platform probe is a smaller executable with a narrower purpose than the full game.&lt;/p&gt;</description></item><item><title>SpringBootFilesUploader: File bytes and metadata on separate paths</title><link>https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;SpringBootFilesUploader: File bytes and metadata on separate paths&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;SpringBootFilesUploader is a Kotlin and Spring backend with a file-upload path that separates binary storage from document metadata. A file identifier returned to the client connects those two representations during download.&lt;/p&gt;</description></item><item><title>switch-wifi: Separating network measurements from the UI</title><link>https://antoineboucher.info/CV/blog/projects/notes/switch-wifi/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/switch-wifi/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;switch-wifi: Separating network measurements from the UI&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;switch-wifi is a Switch network dashboard with a Borealis interface. It separates portable metric calculations from the console application so that host tests can exercise the core without requiring the Switch toolchain.&lt;/p&gt;</description></item><item><title>TCH099: One PHP router for pages and API calls</title><link>https://antoineboucher.info/CV/blog/projects/notes/tch099/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/tch099/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ &lt;a href="#api-contract"&gt;API&lt;/a&gt;
+ &lt;a href="#deployment"&gt;Deployment&lt;/a&gt;
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;TCH099: One PHP router for pages and API calls&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;TCH099 is a teaching-oriented web project that combines static frontend pages with PHP API handlers. The route file makes the boundary visible: some paths return HTML files, while others dispatch to server-side scripts.&lt;/p&gt;</description></item><item><title>uml-mcp: From an MCP tool call to a diagram</title><link>https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ &lt;a href="#api-contract"&gt;API&lt;/a&gt;
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;uml-mcp: From an MCP tool call to a diagram&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;uml-mcp exposes diagram tools to MCP clients. The client supplies diagram source and options; the server validates and routes the request to rendering services, then returns diagram results and useful editor links.&lt;/p&gt;</description></item><item><title>uml-skill: Instructions with a small encoding fallback</title><link>https://antoineboucher.info/CV/blog/projects/notes/uml-skill/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/uml-skill/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;uml-skill: Instructions with a small encoding fallback&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;uml-skill packages diagram-writing instructions and a small Python helper. It is a skill bundle, not an MCP server or an image-generation model. The helper can produce a Kroki URL from diagram source.&lt;/p&gt;</description></item><item><title>WordsEnigma: A word game across Redwood and Prisma</title><link>https://antoineboucher.info/CV/blog/projects/notes/wordsenigma/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/wordsenigma/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;div class="repo-shell-layout"&gt;
+ &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
+ &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
+ &lt;a href="#overview" class="active"&gt;Overview&lt;/a&gt;
+ &lt;a href="#architecture"&gt;Architecture&lt;/a&gt;
+ &lt;a href="#installation"&gt;Getting started&lt;/a&gt;
+ &lt;a href="#features"&gt;Features&lt;/a&gt;
+ 
+ 
+ 
+ 
+ &lt;a href="#reader-guide"&gt;Reference&lt;/a&gt;
+ &lt;a href="#project-references"&gt;Links&lt;/a&gt;
+ &lt;/nav&gt;
+
+ &lt;div class="repo-shell-main"&gt;
+ &lt;header class="repo-hero"&gt;
+ &lt;div class="repo-hero-panel"&gt;
+ 
+&lt;span class="repo-mark" aria-hidden="true"&gt;
+&lt;svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 3h13a1 1 0 0 1 1 1v17H6a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2Z"/&gt;&lt;path d="M3 18a3 3 0 0 1 3-3h13M7 3v7l2-1 2 1V3M8 19h7"/&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+ &lt;h1 id="single-post-title" class="repo-doc-title"&gt;WordsEnigma: A word game across Redwood and Prisma&lt;/h1&gt;
+ &lt;p class="repo-hero-lede"&gt;WordsEnigma is a fork with separate Redwood web and API workspaces. Its data model links users, languages, word banks, games and individual guesses. GraphQL services translate application operations into Prisma database calls.&lt;/p&gt;</description></item><item><title>uml-mcp</title><link>https://antoineboucher.info/CV/blog/projects/uml-mcp/</link><pubDate>Wed, 02 Sep 2026 14:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/uml-mcp/</guid><description>&lt;h1 id="uml-mcp"&gt;uml-mcp&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/uml-mcp/stargazers"&gt;&lt;img src="https://img.shields.io/github/stars/antoinebou12/uml-mcp" alt="GitHub stars"&gt;&lt;/a&gt;
 &lt;a href="https://github.com/antoinebou12/uml-mcp"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/uml-mcp" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/uml-mcp"&gt;Repository&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/uml-mcp/blob/main/LICENSE"&gt;MIT License&lt;/a&gt; · &lt;a href="https://antoinebou12.github.io/uml-mcp/"&gt;Docs&lt;/a&gt; · &lt;a href="https://uml-mcp.vercel.app/mcp"&gt;Hosted MCP&lt;/a&gt;&lt;/p&gt;
@@ -87,21 +1257,29 @@
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/ESP32-7SEG.git
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd ESP32-7SEG
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Open the project in PlatformIO (or Arduino IDE with equivalent libraries), build, and flash the ESP32. After boot, check the &lt;strong&gt;serial monitor&lt;/strong&gt; for the device IP address, then open it in a browser on the same network to use the web UI.&lt;/p&gt;</description></item><item><title>HDR-10bpp-Display-Test</title><link>https://antoineboucher.info/CV/blog/projects/hdr-10bpp-display-test/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/hdr-10bpp-display-test/</guid><description>&lt;h2 id="hdr-10bpp-display-test"&gt;HDR-10bpp-Display-Test&lt;/h2&gt;
-&lt;p&gt;The HDR-10bpp-Display-Test is a simple yet effective way to verify the HDR 4K display capabilities on Linux systems, specifically testing the color depth of 10 bits per channel. This test is essential for anyone looking to ensure the highest quality display performance on their Linux environment.&lt;/p&gt;
+&lt;p&gt;HDR-10bpp-Display-Test checks HDR 4K display on Linux, including 10 bits per channel. Useful for validating the graphics stack, drivers, and monitor.&lt;/p&gt;
 &lt;h3 id="getting-started"&gt;Getting Started&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/hdr-10bpp-display-test"&gt;HDR-10bpp-Display-Test&lt;/a&gt;: A test project for HDR 4K display on Linux.&lt;/p&gt;
 &lt;h4 id="prerequisites"&gt;Prerequisites&lt;/h4&gt;
-&lt;p&gt;Before running the test, ensure your system has the following software installed:&lt;/p&gt;</description></item><item><title>MediaBoxDockerCompose</title><link>https://antoineboucher.info/CV/blog/projects/mediaboxdockercompose/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/mediaboxdockercompose/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Before running the test, ensure your system has the following software installed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;X server&lt;/li&gt;
+&lt;li&gt;Python 3&lt;/li&gt;
+&lt;li&gt;GTK 3&lt;/li&gt;
+&lt;li&gt;ImageJ (for 10-bit color depth image display)&lt;/li&gt;
+&lt;li&gt;ImageIO (for reading image files)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On Ubuntu or Debian-based systems, install these packages using the command:&lt;/p&gt;</description></item><item><title>MediaBoxDockerCompose</title><link>https://antoineboucher.info/CV/blog/projects/mediaboxdockercompose/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/mediaboxdockercompose/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;&lt;img src="https://img.shields.io/github/last-commit/antoinebou12/MediaBoxDockerCompose" alt="GitHub last commit"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose"&gt;Repository&lt;/a&gt; · &lt;a href="https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/LICENSE"&gt;MIT License&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Compose-first homelab media stack: fetch content (torrents and Usenet), route it through *Arr apps, add subtitles where needed, then serve libraries with &lt;strong&gt;Plex&lt;/strong&gt; or &lt;strong&gt;Jellyfin&lt;/strong&gt;, with request UIs and monitoring. Configuration is meant to live under a shared &lt;code&gt;ROOT&lt;/code&gt; tree on disk as in the repo’s &lt;code&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Blog:&lt;/strong&gt; what I run in compose, Proxmox helper-scripts, and where the full wish list lives — &lt;a href="https://antoineboucher.info/CV/blog/posts/mediabox-homelab-docker-catalog/"&gt;MediaBox homelab notes&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>RetroArch Web Games</title><link>https://antoineboucher.info/CV/blog/projects/retroarch-web-games/</link><pubDate>Mon, 01 Jan 2024 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/retroarch-web-games/</guid><description>&lt;h2 id="retroarch-web-games"&gt;RetroArch Web Games&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/retroarch-web-games"&gt;retroarch-web-games&lt;/a&gt;: Docker Retroarch Web with pre-downloaded games.&lt;/p&gt;
-&lt;p&gt;This repository offers a self-hosted RetroArch web player, allowing you to enjoy classic NES, SNES, Genesis, and Gameboy games right in your browser. Set up is a breeze with our Docker container.&lt;/p&gt;
+&lt;p&gt;Self-hosted RetroArch in the browser with NES, SNES, Genesis, and Game Boy games packaged in a Docker image.&lt;/p&gt;
 &lt;h3 id="features"&gt;Features&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Pre-loaded Games&lt;/strong&gt;: Enjoy a variety of games for NES, SNES, Genesis, and Gameboy.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Self-hosted Web Player&lt;/strong&gt;: Easily host the RetroArch player on your own server.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Easy Deployment&lt;/strong&gt;: Utilize Docker for straightforward setup and deployment.&lt;/li&gt;
+&lt;li&gt;Pre-loaded games for NES, SNES, Genesis, and Game Boy&lt;/li&gt;
+&lt;li&gt;Self-hosted web player&lt;/li&gt;
+&lt;li&gt;Docker / Docker Compose deploy&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="related-project"&gt;Related project&lt;/h3&gt;
 &lt;ul&gt;
@@ -110,41 +1288,63 @@
 &lt;/ul&gt;
 &lt;h3 id="how-to-use"&gt;How to Use&lt;/h3&gt;
 &lt;p&gt;To get started, run the Docker image with the following command:&lt;/p&gt;</description></item><item><title>Portfolio</title><link>https://antoineboucher.info/CV/blog/projects/porfolio/</link><pubDate>Sat, 30 Dec 2023 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/porfolio/</guid><description>&lt;h2 id="portfolio-project"&gt;Portfolio Project&lt;/h2&gt;
-&lt;p&gt;This project is about creating a personal portfolio website using Hugo. You can view the project &lt;a href="https://github.com/antoinebou12/portfolio"&gt;here&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin</title><link>https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/</guid><description>&lt;h1 id="d2copenaiplugin"&gt;D2COpenAIPlugin&lt;/h1&gt;
+&lt;p&gt;Personal static site built with Hugo. Repository: &lt;a href="https://github.com/antoinebou12/portfolio"&gt;github.com/antoinebou12/portfolio&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin</title><link>https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/</guid><description>&lt;h1 id="d2copenaiplugin"&gt;D2COpenAIPlugin&lt;/h1&gt;
 &lt;p&gt;You can view the project &lt;a href="https://github.com/antoinebou12/D2COpenAIPlugin/tree/main"&gt;here&lt;/a&gt;
 You can use the plugin &lt;a href="https://openai-uml-plugin.vercel.app"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Join the &lt;a href="https://openai.com/waitlist/plugins"&gt;ChatGPT plugins waitlist here&lt;/a&gt;!&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;D2COpenAIPlugin is a plugin for ChatGPT that enables users to generate diagrams using PlantUML or Mermaid. This plugin enhances the capabilities of ChatGPT by providing a seamless way to create diverse and creative diagrams.&lt;/p&gt;
+&lt;p&gt;D2COpenAIPlugin is a ChatGPT plugin that generates diagrams with PlantUML or Mermaid from the conversation.&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif" alt="Diagram generator plugin demo"&gt;
 &lt;img src="https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41" alt="image"&gt;&lt;/p&gt;
 &lt;h2 id="features"&gt;Features&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Generate diagrams using PlantUML or Mermaid&lt;/li&gt;
-&lt;li&gt;Seamless integration with ChatGPT&lt;/li&gt;
-&lt;li&gt;User-friendly interface for creating diagrams&lt;/li&gt;
-&lt;li&gt;Enhances the versatility of ChatGPT&lt;/li&gt;
+&lt;li&gt;Works as a ChatGPT plugin&lt;/li&gt;
+&lt;li&gt;Diagram-oriented UI&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
-&lt;p&gt;Before using the plugin, make sure to have the following prerequisites installed:&lt;/p&gt;</description></item><item><title>DasherControl</title><link>https://antoineboucher.info/CV/blog/projects/dashcontrol/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/dashcontrol/</guid><description>&lt;h1 id="dashercontrol"&gt;DasherControl&lt;/h1&gt;
+&lt;p&gt;Before using the plugin, make sure to have the following prerequisites installed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python 3.6+&lt;/li&gt;
+&lt;li&gt;FastAPI&lt;/li&gt;
+&lt;li&gt;uvicorn&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Python 3.10, if not already installed.&lt;/li&gt;
+&lt;li&gt;Clone the repository: &lt;code&gt;git clone https://github.com/antoinebou12/D2COpenAIPlugin.git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Navigate to the cloned repository directory: &lt;code&gt;cd /path/to/D2COpenAIPlugin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install poetry: &lt;code&gt;pip install poetry&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Create a new virtual environment with Python 3.10: &lt;code&gt;poetry env use python3.10&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Activate the virtual environment: &lt;code&gt;poetry shell&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install app dependencies: &lt;code&gt;poetry install&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Create a &lt;a href="https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/#general-environment-variables"&gt;bearer token&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Set the required environment variables:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="setup"&gt;Setup&lt;/h2&gt;
+&lt;p&gt;To install the required packages for this plugin, run the following command:&lt;/p&gt;</description></item><item><title>DasherControl</title><link>https://antoineboucher.info/CV/blog/projects/dashcontrol/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/dashcontrol/</guid><description>&lt;h1 id="dashercontrol"&gt;DasherControl&lt;/h1&gt;
 &lt;p&gt;Another Interactive Configurable Dashboard with Customisable GridItem with IFrame and Bookmark and other cool features with basic Container Controller for Docker made with Vuejs and Rust (rocket).&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"&gt;
 &lt;img src="https://img.shields.io/github/workflow/status/antoinebou12/DasherControl/build" alt="GitHub Workflow Status"&gt;
 &lt;img src="https://img.shields.io/github/v/release/antoinebou12/DasherControl" alt="GitHub release (latest by date)"&gt;&lt;/p&gt;
 &lt;h2 id="why-"&gt;Why &amp;hellip;&lt;/h2&gt;
 &lt;p&gt;Everything is a web app that can be installed with a docker in a container. I want to manage all my web applications on one dashboard like Sonarr and Jellyfin without opening like 10 tabs in chrome (rip my ram). When using services like Portainer or the Docker CLI, it&amp;rsquo;s long to set up a reverse proxy with SSL to secure your homelab. So I want to write widgets (Applets) that can do all my tasks that I do on the daily when managing my homelab. Also, I want to make a simple dashboard with widgets (vuejs component) like Windows Vista, but on the web and saved in a database.&lt;/p&gt;</description></item><item><title>File Classifier</title><link>https://antoineboucher.info/CV/blog/projects/fileclassifier/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/fileclassifier/</guid><description>&lt;h1 id="fileclassifier"&gt;FileClassifier&lt;/h1&gt;
-&lt;p&gt;FileClassifier is a Python-based command-line tool that automatically organizes files in a specified directory into predefined categories based on their file types. The tool supports multiple file formats, such as images, documents, videos, and more. It also comes with an extendable classifier that allows you to add topic modeling for better organization.&lt;/p&gt;
+&lt;p&gt;FileClassifier is a Python CLI that organizes files in a directory into categories by type (images, documents, videos, and so on). An extendable classifier can add topic modeling.&lt;/p&gt;
 &lt;h2 id="features"&gt;Features&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Automatic file organization based on file types.&lt;/li&gt;
 &lt;li&gt;Predefined categories for common file formats.&lt;/li&gt;
 &lt;li&gt;Extendable classifier with topic modeling support.&lt;/li&gt;
 &lt;li&gt;Customizable output directory structure.&lt;/li&gt;
-&lt;li&gt;Lightweight and easy to use.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
-&lt;p&gt;To install FileClassifier, simply clone the repository and install the required dependencies:&lt;/p&gt;</description></item><item><title>Movie Trailer Analyzer</title><link>https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/</guid><description>&lt;p&gt;You can view the project &lt;a href="https://github.com/antoinebou12/MovieTrailerAnalyzer/tree/main"&gt;here&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PlantUMLApi</title><link>https://antoineboucher.info/CV/blog/projects/plantumlapi/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/plantumlapi/</guid><description>&lt;h1 id="plantumlapi"&gt;PlantUMLApi&lt;/h1&gt;
+&lt;p&gt;Clone the repository and install dependencies:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/antoinebou12/FileClassifier.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd FileClassifier
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install poetry
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;poetry install
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;p&gt;To use FileClassifier, navigate to the project directory and run the &lt;code&gt;main.py&lt;/code&gt; script with the required arguments:&lt;/p&gt;</description></item><item><title>Movie Trailer Analyzer</title><link>https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/</guid><description>&lt;p&gt;You can view the project &lt;a href="https://github.com/antoinebou12/MovieTrailerAnalyzer/tree/main"&gt;here&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PlantUMLApi</title><link>https://antoineboucher.info/CV/blog/projects/plantumlapi/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/plantumlapi/</guid><description>&lt;h1 id="plantumlapi"&gt;PlantUMLApi&lt;/h1&gt;
 &lt;p&gt;Python interface with the PlantUML web. PlantUML is a library for generating UML diagrams from a simple text markup language.&lt;/p&gt;
 &lt;p&gt;PyPlantUML is a simple remote client interface to a PlantUML server using the same custom encoding used by most other PlantUML clients.&lt;/p&gt;
 &lt;p&gt;This client defaults to the public PlantUML server but can be used against any server.&lt;/p&gt;
@@ -184,7 +1384,7 @@ p = PlantUML(url=&amp;#34;http://localhost:8080/png&amp;#34;)
 p.process(&amp;#34;@startuml\nclass Foo\n@enduml&amp;#34;)
 &lt;/code&gt;&lt;/pre&gt;</description></item><item><title>RawAnalyser</title><link>https://antoineboucher.info/CV/blog/projects/rawanalyser/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/rawanalyser/</guid><description>&lt;p&gt;&lt;a href="https://github.com/antoinebou12/RawAnalyser"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id="rawanalyser"&gt;RawAnalyser&lt;/h1&gt;
-&lt;p&gt;RawAnalyser is a simple Python-based tool designed for analyzing raw images. It provides functionality for black and white clipping detection, gamma calculation, and flatness with vignette detection (Algolux).&lt;/p&gt;
+&lt;p&gt;RawAnalyser is a Python tool for analyzing raw images: black and white clipping detection, gamma calculation, and flatness with vignette detection (Algolux).&lt;/p&gt;
 &lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
 &lt;p&gt;You need to have Python 2.7 installed and the following libraries:&lt;/p&gt;
 &lt;ul&gt;
@@ -216,8 +1416,8 @@ p.process(&amp;#34;@startuml\nclass Foo\n@enduml&amp;#34;)
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python RawPixel.pt input&amp;lt;file&amp;gt; x y --bitdepth &amp;lt;8,10,16,default 16&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="scripts-description"&gt;Scripts Description&lt;/h2&gt;
 &lt;h3 id="rawanalyserpy"&gt;RawAnalyser.py&lt;/h3&gt;
-&lt;p&gt;A script designed for checking black and white level of clipping in a raw image. You need to provide a path to the folder to be checked and a json file with the region of interest and the gray patches.&lt;/p&gt;</description></item><item><title>Serilog.Sinks.SentrySDK</title><link>https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/</guid><description>&lt;h1 id="serilogsinkssentrysdk"&gt;Serilog.Sinks.SentrySDK&lt;/h1&gt;
-&lt;p&gt;A Serilog sink for Sentry that simplifies error and log management in your applications.&lt;/p&gt;
+&lt;p&gt;Checks black and white clipping levels in a raw image. Takes a folder path and a JSON file with the region of interest and gray patches.&lt;/p&gt;</description></item><item><title>Serilog.Sinks.SentrySDK</title><link>https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/</guid><description>&lt;h1 id="serilogsinkssentrysdk"&gt;Serilog.Sinks.SentrySDK&lt;/h1&gt;
+&lt;p&gt;A Serilog sink that sends events to Sentry through the official Sentry SDK.&lt;/p&gt;
 &lt;p&gt;Based on &lt;a href="https://github.com/serilog-contrib/serilog-sinks-sentry"&gt;serilog-contrib/serilog-sinks-sentry&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="project-status"&gt;Project Status&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml"&gt;&lt;img src="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/actions/workflows/tests.yml/badge.svg" alt=".NET Core Test"&gt;&lt;/a&gt;
@@ -252,18 +1452,36 @@ p.process(&amp;#34;@startuml\nclass Foo\n@enduml&amp;#34;)
 &lt;pre tabindex="0"&gt;&lt;code&gt;dotnet add package Serilog.Sinks.SentrySDK
 Install-Package Serilog.Sinks.SentrySDK
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="demos"&gt;Demos&lt;/h2&gt;
-&lt;p&gt;Usage examples and demo-style snippets are maintained in the &lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"&gt;GitHub repository README&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>WordUnveil</title><link>https://antoineboucher.info/CV/blog/projects/wordunveil/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/wordunveil/</guid><description>&lt;h1 id="wordsunveil"&gt;WordsUnveil&lt;/h1&gt;
+&lt;p&gt;Usage examples and demo-style snippets are maintained in the &lt;a href="https://github.com/antoinebou12/Serilog.Sinks.SentrySDK"&gt;GitHub repository README&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="getting-started"&gt;Getting Started&lt;/h2&gt;
+&lt;h3 id="adding-the-sentry-sink"&gt;Adding the Sentry Sink&lt;/h3&gt;
+&lt;p&gt;Add the Sentry sink to your Serilog logger configuration, so that the logs will be sent to your Sentry instance. The Sentry DSN must be provided.&lt;/p&gt;</description></item><item><title>WordUnveil</title><link>https://antoineboucher.info/CV/blog/projects/wordunveil/</link><pubDate>Mon, 06 Sep 2021 22:42:23 +0800</pubDate><guid>https://antoineboucher.info/CV/blog/projects/wordunveil/</guid><description>&lt;h1 id="wordsunveil"&gt;WordsUnveil&lt;/h1&gt;
 &lt;p&gt;&lt;img src="https://img.shields.io/badge/license-MIT-green" alt="License"&gt;
 &lt;img src="https://img.shields.io/badge/-RedwoodJS-B7410E?logo=redwoodjs" alt="Redwood"&gt;
 &lt;img src="https://img.shields.io/badge/-GraphQL-E10098?logo=graphql" alt="GraphQL"&gt;
 &lt;img src="https://img.shields.io/badge/-Prisma-2D3748?logo=prisma" alt="Prisma"&gt;
 &lt;img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql" alt="MySQL"&gt;&lt;/p&gt;
-&lt;p&gt;WordsEnigma is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.&lt;/p&gt;
+&lt;p&gt;WordUnveil is a multilingual Wordle-style game. Stack: RedwoodJS, GraphQL, Prisma, and MySQL.&lt;/p&gt;
 &lt;h2 id="getting-started"&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Development Setup&lt;/strong&gt;
-WordsUnveil is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.&lt;/p&gt;
-&lt;h2 id="getting-started-1"&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Development Setup&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>MarketWatch API Python library</title><link>https://antoineboucher.info/CV/blog/projects/marketwatch/</link><pubDate>Mon, 06 Sep 2021 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/marketwatch/</guid><description>&lt;h1 id="marketwatch-api-python-library"&gt;Marketwatch API Python Library&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Development Setup&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Navigate to the WordsUnveil directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd WordsUnveil
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Install dependencies&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn install
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Copy default environment variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cp .env.default .env
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Run database migrations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw prisma migrate dev
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# (Optional) Seed the database&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw exec seed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Start the development server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;yarn rw dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Docker-Compose Setup&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>MarketWatch API Python library</title><link>https://antoineboucher.info/CV/blog/projects/marketwatch/</link><pubDate>Mon, 06 Sep 2021 12:00:00 +0000</pubDate><guid>https://antoineboucher.info/CV/blog/projects/marketwatch/</guid><description>&lt;h1 id="marketwatch-api-python-library"&gt;Marketwatch API Python Library&lt;/h1&gt;
 &lt;p&gt;&lt;img src="https://img.shields.io/pypi/v/marketwatch" alt="PyPI"&gt;
 &lt;img src="https://img.shields.io/pypi/pyversions/marketwatch" alt="PyPI - Python Version"&gt;
 &lt;img src="https://img.shields.io/pypi/l/marketwatch" alt="PyPI - License"&gt;

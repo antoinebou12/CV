@@ -17,14 +17,14 @@ tags:
   - HTML
   - WebRTC
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 CodePen, c’était mon **carnet de labo public** avant ce blog Hugo — aperçu instantané, commentaires et forks sans déployer. Voici des **intégrations CodePen live** de l’ère jQuery et vanilla (~2016–2017) : petits labos UI, puis deux démos plus longues (Canvas et Three.js). Chaque carte reprend le **titre du pen** — pas seulement le slug. Forkez sur CodePen pour adapter. **[English version]({{< ref "/posts/codepen-demos-antoinebou13/index.md" >}})**.
 
 <!--more-->
 
-![Collection de démos CodePen — éditeur et grille type vague Three.js (illustration du billet)](./featured.jpeg)
+![Collection de démos CodePen — éditeur et grille type vague Three.js (illustration du billet)](images/featured.jpeg)
 
 ## Expériences UI et formulaires
 

@@ -1,0 +1,455 @@
+{
+  "repo": "marketwatch",
+  "slug": "marketwatch",
+  "commit": "9a8bd76c464501f249aff141f1e105e7345155c6",
+  "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/",
+  "tree_url": "https://github.com/antoinebou12/marketwatch/tree/9a8bd76c464501f249aff141f1e105e7345155c6",
+  "fetched_at": "2026-10-24T01:40:00.625645+00:00",
+  "languages": [
+    {
+      "name": "Python",
+      "bytes": 103813,
+      "percent": 77.68
+    },
+    {
+      "name": "Jupyter Notebook",
+      "bytes": 17674,
+      "percent": 13.22
+    },
+    {
+      "name": "Jinja",
+      "bytes": 10228,
+      "percent": 7.65
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 1934,
+      "percent": 1.45
+    }
+  ],
+  "language_bytes": 133649,
+  "coverage": {
+    "tree_files": 65,
+    "eligible_files": 20,
+    "read_files": 20,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 35,
+      "heading": "Installation",
+      "commands": "pip install marketwatch"
+    },
+    {
+      "file": "README.md",
+      "line": 39,
+      "heading": "Installation",
+      "commands": "pip install git+https://github.com/antoinebou12/marketwatch.git"
+    },
+    {
+      "file": "README.md",
+      "line": 43,
+      "heading": "Installation",
+      "commands": "git clone https://github.com/antoinebou12/marketwatch.git"
+    }
+  ],
+  "manifests": [],
+  "type_count": 13,
+  "types": [
+    {
+      "id": "t342c57589891",
+      "name": "MarketWatch",
+      "kind": "class",
+      "file": "marketwatch/__init__.py",
+      "line": 37,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "create_session",
+        "generate_csrf_token",
+        "get_client_id",
+        "get_user_id",
+        "get_ledger_id",
+        "get_user_agent",
+        "generate_nonce",
+        "generate_state",
+        "generate_multiple_nonces",
+        "login",
+        "handler_login",
+        "check_login",
+        "auth",
+        "get_games",
+        "create_game",
+        "reset_game",
+        "get_game",
+        "get_price",
+        "get_ticker_info",
+        "get_holdings",
+        "get_portfolio",
+        "get_portfolio_performance",
+        "get_transactions",
+        "get_leaderboard",
+        "get_search",
+        "buy",
+        "short",
+        "sell",
+        "cover",
+        "_create_payload",
+        "_get_ticker_uid",
+        "_submit",
+        "cancel_order",
+        "cancel_all_orders",
+        "get_pending_orders",
+        "_get_order_type",
+        "_get_price_type",
+        "_get_order_price",
+        "get_positions",
+        "get_game_settings",
+        "_clean_text",
+        "check_error_game",
+        "check_error",
+        "_get_ticker_uids",
+        "create_watchlist",
+        "add_to_watchlist",
+        "get_watchlists",
+        "get_watchlist",
+        "delete_watchlist",
+        "delete_watchlist_item"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te2660179edef",
+      "name": "MarketWatchGame",
+      "kind": "class",
+      "file": "marketwatch/game.py",
+      "line": 23,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "create_game",
+        "buy",
+        "sell",
+        "short",
+        "cover",
+        "reset_game",
+        "cancel",
+        "cancel_all",
+        "settings",
+        "leaderboard",
+        "orders",
+        "portfolio",
+        "game",
+        "portfolio_performance",
+        "transactions",
+        "positions",
+        "game_id"
+      ],
+      "bases": [
+        "MarketWatch"
+      ]
+    },
+    {
+      "id": "tc6adc7beb6df",
+      "name": "MarketWatchException",
+      "kind": "class",
+      "file": "marketwatch/exceptions.py",
+      "line": 11,
+      "language": "python",
+      "methods": [
+        "__init__"
+      ],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "tc9e9c1f2c012",
+      "name": "MarketWatchGameException",
+      "kind": "class",
+      "file": "marketwatch/exceptions.py",
+      "line": 23,
+      "language": "python",
+      "methods": [
+        "__init__"
+      ],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "td4c12f6259f0",
+      "name": "Term",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 11,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "tb06037cc6ec7",
+      "name": "PriceType",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 22,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "t3d7a45c40645",
+      "name": "OrderType",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 34,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "t7d8a40bf3f38",
+      "name": "GameSettings",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 47,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tc2b2eb26d380",
+      "name": "Order",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 68,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__",
+        "__repr__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t45b8a20e40d7",
+      "name": "Position",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 99,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__",
+        "__repr__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t0783a857f7ca",
+      "name": "Player",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 125,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__",
+        "__repr__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6ddf82fcb3c7",
+      "name": "Game",
+      "kind": "class",
+      "file": "marketwatch/schemas.py",
+      "line": 143,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__",
+        "__repr__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t7792f7878290",
+      "name": "MarketWatchWatchlist",
+      "kind": "class",
+      "file": "marketwatch/watchlist.py",
+      "line": 22,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "delete_item",
+        "add_item",
+        "create",
+        "delete",
+        "watchlists",
+        "watchlist",
+        "watchlist_id"
+      ],
+      "bases": [
+        "MarketWatch"
+      ]
+    }
+  ],
+  "class_files": [
+    {
+      "path": "marketwatch/__init__.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/__init__.py",
+      "download": "repository-docs/marketwatch/classes/40d740a2d455c2bd.mmd"
+    },
+    {
+      "path": "marketwatch/exceptions.py",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/exceptions.py",
+      "download": "repository-docs/marketwatch/classes/d10cbfe55973435e.mmd"
+    },
+    {
+      "path": "marketwatch/game.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/game.py",
+      "download": "repository-docs/marketwatch/classes/c35886234e390da2.mmd"
+    },
+    {
+      "path": "marketwatch/schemas.py",
+      "types": 8,
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/schemas.py",
+      "download": "repository-docs/marketwatch/classes/2079da8efa091373.mmd"
+    },
+    {
+      "path": "marketwatch/watchlist.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/watchlist.py",
+      "download": "repository-docs/marketwatch/classes/73fde420a90e8b95.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "README.md",
+      "blob_sha": "3e24f91f75144daf05039287178c58056e6bd35d",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/README.md"
+    },
+    {
+      "path": "marketwatch/__init__.py",
+      "blob_sha": "4f605e94513379d648ae80d973b6ca1fb877eb22",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/__init__.py"
+    },
+    {
+      "path": "marketwatch/game.py",
+      "blob_sha": "d9aef9b07510af4914700911e4cf60a437c405e3",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/game.py"
+    },
+    {
+      "path": "pyproject.toml",
+      "blob_sha": "339c0ea326433895da517ef09ca540dd415a10e7",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/pyproject.toml"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "bfa2ea6cf97940b5df1f398f74ea02f0ed616982",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/requirements.txt"
+    },
+    {
+      "path": "setup.py",
+      "blob_sha": "a87d923cd2d95f79866b7f6ee0299395956277db",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/setup.py"
+    },
+    {
+      "path": "api/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/api/__init__.py"
+    },
+    {
+      "path": "api/app.py",
+      "blob_sha": "57b4e645a7aa6f200a5d8cebd56d2682c6c03ddb",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/api/app.py"
+    },
+    {
+      "path": "api/docker-compose.yml",
+      "blob_sha": "676f563afd8e62fe0ecf1dc4c34ef181aa929dcf",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/api/docker-compose.yml"
+    },
+    {
+      "path": "api/requirements.txt",
+      "blob_sha": "a43a0bd0ffe93e74ae4143d1157325117f635052",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/api/requirements.txt"
+    },
+    {
+      "path": "marketwatch/exceptions.py",
+      "blob_sha": "04fb474077201cc7051cabcdcfbd1e6b09417232",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/exceptions.py"
+    },
+    {
+      "path": "marketwatch/schemas.py",
+      "blob_sha": "3f8c24f90fda5d5ab14df94e09a67f7f5bf7f8b6",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/schemas.py"
+    },
+    {
+      "path": "marketwatch/watchlist.py",
+      "blob_sha": "bcbe3b347e1cedf50e2ff784a686b4a3a48e5389",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/marketwatch/watchlist.py"
+    },
+    {
+      "path": "test/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/__init__.py"
+    },
+    {
+      "path": "test/test_exceptions.py",
+      "blob_sha": "de2221a5c26b55786d2b182399c879ccba5d61a9",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_exceptions.py"
+    },
+    {
+      "path": "test/test_game.py",
+      "blob_sha": "da0661fbef71ea500fab232e91b453fe51cab15f",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_game.py"
+    },
+    {
+      "path": "test/test_marketwatch.py",
+      "blob_sha": "66d073d2565a90e3be67bf66977513e8a5c571e3",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_marketwatch.py"
+    },
+    {
+      "path": "test/test_schemas.py",
+      "blob_sha": "3972cb34553e4f78e89188665b0be4274e5e92f5",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_schemas.py"
+    },
+    {
+      "path": "test/test_ticker.py",
+      "blob_sha": "850212404541383a56ee90192e183cbac6797838",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_ticker.py"
+    },
+    {
+      "path": "test/test_watchlist.py",
+      "blob_sha": "2b55607ae95a862188acb84b7c0190143f21362a",
+      "source_url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/test/test_watchlist.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"marketwatch\"]\n  f0[\"README.md\"]\n  root --> f0\n  f1[\"marketwatch/__init__.py\"]\n  root --> f1\n  f2[\"marketwatch/game.py\"]\n  root --> f2\n  f3[\"pyproject.toml\"]\n  root --> f3\n  f4[\"requirements.txt\"]\n  root --> f4\n  f5[\"setup.py\"]\n  root --> f5\n  f6[\"api/__init__.py\"]\n  root --> f6\n  f7[\"api/app.py\"]\n  root --> f7\n  f8[\"api/docker-compose.yml\"]\n  root --> f8\n  f9[\"api/requirements.txt\"]\n  root --> f9\n  f10[\"marketwatch/exceptions.py\"]\n  root --> f10\n  f11[\"marketwatch/schemas.py\"]\n  root --> f11\n  f12[\"marketwatch/watchlist.py\"]\n  root --> f12\n  f13[\"test/__init__.py\"]\n  root --> f13\n  f14[\"test/test_exceptions.py\"]\n  root --> f14\n  f15[\"test/test_game.py\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t342c57589891[\"MarketWatch\"] {\n  __init__()\n  create_session()\n  generate_csrf_token()\n  get_client_id()\n}\nclass te2660179edef[\"MarketWatchGame\"] {\n  __init__()\n  create_game()\n  buy()\n  sell()\n}\nclass tc6adc7beb6df[\"MarketWatchException\"] {\n  __init__()\n}\nclass tc9e9c1f2c012[\"MarketWatchGameException\"] {\n  __init__()\n}\nclass td4c12f6259f0[\"Term\"] {\n}\nclass tb06037cc6ec7[\"PriceType\"] {\n}\nclass t3d7a45c40645[\"OrderType\"] {\n}\nclass t7d8a40bf3f38[\"GameSettings\"] {\n  __init__()\n  __str__()\n}\nclass tc2b2eb26d380[\"Order\"] {\n  __init__()\n  __str__()\n  __repr__()\n}\nclass t45b8a20e40d7[\"Position\"] {\n  __init__()\n  __str__()\n  __repr__()\n}\nclass t0783a857f7ca[\"Player\"] {\n  __init__()\n  __str__()\n  __repr__()\n}\nclass t6ddf82fcb3c7[\"Game\"] {\n  __init__()\n  __str__()\n  __repr__()\n}\nclass b4a739b8cc727[\"MarketWatch\"] {\n  <<unresolved_base>>\n}\nb4a739b8cc727 <|-- te2660179edef\nclass b218d46208022[\"Exception\"] {\n  <<unresolved_base>>\n}\nb218d46208022 <|-- tc6adc7beb6df\nb218d46208022 <|-- tc9e9c1f2c012\nclass bcdccbbebe0a2[\"Enum\"] {\n  <<unresolved_base>>\n}\nbcdccbbebe0a2 <|-- td4c12f6259f0\nbcdccbbebe0a2 <|-- tb06037cc6ec7\nbcdccbbebe0a2 <|-- t3d7a45c40645\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/marketwatch",
+    "status": "missing"
+  }
+}

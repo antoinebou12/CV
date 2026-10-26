@@ -13,7 +13,7 @@ tags:
   - MCP
   - Chibi
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 Une bonne **image jouet en 2D** compte plus qu’un modèle image→3D sophistiqué. Étapes dans l’ordre, [**diapositives**](./make-figurines-using-ai-for-3d-printing.pptx), [**workflow ComfyUI**](./workflows/image_omnigen2_image_edit.json), et schémas avec [**uml-mcp**](https://github.com/antoinebou12/uml-mcp).

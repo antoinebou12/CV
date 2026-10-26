@@ -1,0 +1,31 @@
+classDiagram
+direction TB
+class t7a7bf1771830["SentrySinkTests"] {
+  SentrySinkTests()
+  Emit_CapturesMessage_WhenLogEventHasNoException()
+  Emit_CapturesException_WhenLogEventHasException()
+  Emit_WhenLogEventHasNoException_CallsCaptureMessageWithCorrectValues()
+  Emit_WhenLogEventHasException_CallsCaptureExceptionWithCorrectValues()
+  Emit_ShouldNotThrowException_WhenLogEventIsNull()
+  Emit_WhenTracingDisabled_DoesNotStartTransaction_CapturesMessage()
+  Emit_WhenTracingDisabled_CapturesException()
+  Constructor_InvokesConfigureSentryOptions()
+  BeforeSendPipeline_WithEventIdInExceptionData_RemapsExtras()
+  BeforeSendPipeline_UserCallbackReceivesProcessedEvent()
+  BeforeSendPipeline_UserCallbackCanDropEvent()
+  Constructor_UsesBuiltInTransactionService_WhenTransactionServiceIsNull()
+  Constructor_DoesNotSetMaxCacheItems_WhenMaxCacheItemsIsZero()
+  BeforeSendPipeline_NullIncomingEvent_ShortCircuitsBeforeUserCallback()
+  BeforeSendPipeline_EventIdExtraIsEmptyString_WhenEventIdDataValueIsNull()
+  BeforeSendPipeline_SkipsExceptionDataEntriesWithEmptyKeyStringAlongsideEventId()
+  BeforeSendPipeline_MapsNullNonEventIdDataToEmptyExtraString()
+  Emit_WithTracing_UsesEmptySpanDescriptionAndEmptyTags_WhenSpanHasNullDescriptionAndTags()
+  Emit_WithTracing_Exception_WhenExceptionDataHasEmptyKeyAndNullValue()
+  Emit_WithNullFormatProvider_RendersNonStringScalarWithoutThrowing()
+  CreateTestSentrySink()
+  GetSentryOptionsFromSink()
+  InvokeBeforeSendInternal()
+}
+class t63bcacfaba11["DictionaryKeyWithEmptyStringName"] {
+  ToString()
+}

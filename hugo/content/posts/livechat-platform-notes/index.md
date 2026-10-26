@@ -13,7 +13,7 @@ tags:
   - 3CX
   - Chatwoot
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![Chatwoot agent inbox — unified conversations view (screenshot from the open-source project, 2024 UI refresh)](./images/chatwoot-inbox.png)

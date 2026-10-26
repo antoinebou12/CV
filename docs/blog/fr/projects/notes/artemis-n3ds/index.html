@@ -1,0 +1,557 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Artemis-N3DS: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.5eeb6b3870c7deb66a10043b10ff01f264a7b584240d7d6323a0de1febb0b0d1.css integrity="sha256-XutrOHDH3rZqEAQ7EP8B8mSntYQkDX1jI6DeH+uwsNE="><link rel=stylesheet href=/CV/blog/projects-editorial.min.de547dbb958693860bcd9fa3b30f31b7b58654ff6a74a17d219ccab790becf4a.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Artemis-N3DS : Le streaming sur un client à deux écrans"><meta itemprop=description content="Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="1352"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-n3ds/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Artemis-N3DS : Le streaming sur un client à deux écrans"><meta property="og:description" content="Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="Artemis-N3DS : Le streaming sur un client à deux écrans"><meta name=twitter:description content="Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-n3ds/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/artemis-n3ds/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/artemis-n3ds/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>Artemis-N3DS : Le streaming sur un client à deux écrans</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#architecture>Architecture</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#deployment>Déploiement</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>Artemis-N3DS : Le streaming sur un client à deux écrans</h1><p class=repo-hero-lede>Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et affichage vidéo. Le parcours matériel de la New 3DS demande une attention particulière.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Matériel et infographie</span>
+<span class="repo-badge fork">Fork</span>
+<span class="repo-badge docker">Docker</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>C++ · 76.05%</span></li><li class=repo-chip><span>GPL-3.0</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"><span class="tag status">Crédit amont</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/Artemis-N3DS><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/Artemis-N3DS#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>C++ 76.05%</span><span class=repo-count>6</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="C++ 76.05%. C 15.71%. CMake 4.36%. Makefile 2.84%. Shell 0.64%."><span style=width:76.05% title="C++ 76.05%"></span><span style=width:15.71% title="C 15.71%"></span><span style=width:4.36% title="CMake 4.36%"></span><span style=width:2.84% title="Makefile 2.84%"></span><span style=width:.64% title="Shell 0.64%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:76.05%><span>76.05%</span></span></td><td class=num>385 430</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>C</td><td><span class=repo-lang-bar style=--p:15.71%><span>15.71%</span></span></td><td class=num>79 616</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>CMake</td><td><span class=repo-lang-bar style=--p:4.36%><span>4.36%</span></span></td><td class=num>22 072</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Makefile</td><td><span class=repo-lang-bar style=--p:2.84%><span>2.84%</span></span></td><td class=num>14 414</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Shell</td><td><span class=repo-lang-bar style=--p:0.64%><span>0.64%</span></span></td><td class=num>3 221</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>Dockerfile</td><td><span class=repo-lang-bar style=--p:0.4%><span>0.4%</span></span></td><td class=num>2 051</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/Artemis-N3DS>GitHub</a> · <a href=https://github.com/antoinebou12/Artemis-N3DS#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/Artemis-N3DS/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Défi d'ingénierie sous fortes contraintes : streaming 60 FPS sur architecture ARM11 double écran.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Accès distant et jeu PC sur matériel New 3DS.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Articles et retours d’expérience liés</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/fr/posts/handheld-streaming-homebrew/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>Streaming portable et homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch</h4><p>Streaming PC sur Nintendo Switch avec Artemis (Apollo/Sunshine), Moonlight sur New 3DS, et un port Switch de sm64coopdx — trois dépôts homebrew et leur rôle.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabs role=tablist aria-label="Mode d’installation" data-install-tabs><button type=button class=tab role=tab data-tab=native aria-selected=true aria-controls=install-native id=tab-native>Natif</button>
+<button type=button class=tab role=tab data-tab=docker aria-selected=false aria-controls=install-docker id=tab-docker>Docker</button></div><div class=tabbody id=install-native data-tab-panel=native role=tabpanel aria-labelledby=tab-native><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Local (devkitPro)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>make</code></pre></div></div></div><div class=tabbody id=install-docker data-tab-panel=docker role=tabpanel aria-labelledby=tab-docker><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Docker (easiest)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>docker build --network=host -t moonlight-n3ds .
+docker run --rm -it -v .:/moonlight-N3DS -w /moonlight-N3DS moonlight-n3ds:latest
+make</code></pre></div></div></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p class=repo-evidence-label>Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prérequis et premier essai</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L14>Requirements</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>New 3DS / New 3DS XL / New 2DS XL recommended (hardware H.264 decode)</li><li>Original 3DS / 2DS works with software decode only — expect lower FPS</li><li>PC running Sunshine (or compatible GameStream host) on the same network</li><li>CFW + FBI for CIA install</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L14>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L21>Install</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Full FBI steps: dist/INSTALL.md.
+CIA (HOME Menu): copy dist/artemis.cia to the SD card → open FBI → Install and delete CIA.
+3DSX: copy dist/artemis.3dsx to sd:/3ds/artemis/artemis.3dsx and launch from the Homebrew Launcher.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L21>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Configuration et utilisation</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L55>Configuration</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Settings can be changed in-app or in:
+That path is legacy (kept so existing pairing and configs keep working). See dist/SD-DATA.md for the full SD layout (keys, paired hosts, diagnostics).
+Default settings are aimed at New 3DS.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L55>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Développement et contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L95>Contribute</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ol><li>Fork the repo</li><li>Make your changes</li><li>Open a pull request</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md#L95>Lire les instructions complètes ↗</a></section></details></div><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/.github/CONTRIBUTING.md><code>.github/CONTRIBUTING.md</code></a></li></ul><p class=repo-evidence-label>2 documents lus parmi 2 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Gestion de la session</dt><dd>n3ds_main.cpp réunit découverte, jumelage, profils et état de connexion. L’hôte et l’application sélectionnés déterminent la demande de streaming. Le cycle de vie graphique est suivi séparément de la configuration du flux.</dd></div><div class=repo-feature><dt>Médias et interaction</dt><dd>L’audio, les commandes et la vidéo ont leurs modules dans src. Les capacités matérielles influencent les indications affichées. L’interface peut reprendre après un flux, tandis qu’une fermeture système explicite doit terminer l’application.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Les composants et leurs liens restent lisibles en texte. Le diagramme ajoute une vue interactive.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title>Contexte système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=tabpanel aria-labelledby=tab-arch-context><ol class=repo-flow><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Découverte et jumelage</span><span class=repo-flow-step aria-hidden=true>01</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Application et profil</span><span class=repo-flow-step aria-hidden=true>02</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Connexion GameStream</span><span class=repo-flow-step aria-hidden=true>03</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Moteurs vidéo et audio</span><span class=repo-flow-step aria-hidden=true>04</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Écrans et commandes 3DS</span><span class=repo-flow-step aria-hidden=true>05</span></li></ol><p class=figdesc>Liens vérifiés dans le dépôt.</p></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-artemis-n3ds><p id=architecture-artemis-n3ds class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/artemis-n3ds/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de Artemis-N3DS"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_host[&#34;Hosts and pairing&#34;]
+  node_discovery[&#34;Host discovery&lt;br/&gt;[host_discovery.cpp]&#34;]
+  node_pairing[(&#34;Pair records&lt;br/&gt;[pair_record.cpp]&#34;)]
+  node_gamestream[&#34;GameStream client&lt;br/&gt;[client.c]&#34;]
+  node_xml[&#34;Protocol XML&lt;br/&gt;[xml.c]&#34;]
+end
+
+subgraph group_session[&#34;Session coordination&#34;]
+  node_main[&#34;Application flow&lt;br/&gt;[n3ds_main.cpp]&#34;]
+  node_ui[&#34;Console menus&lt;br/&gt;[n3ds_ui.cpp]&#34;]
+  node_connection[&#34;Stream connection&#34;]
+  node_dispatcher[&#34;Message dispatcher&lt;br/&gt;[dispatcher.cpp]&#34;]
+end
+
+subgraph group_stream[&#34;Stream pipeline&#34;]
+  node_presentation[&#34;Presentation state&#34;]
+  node_decoder[&#34;Video decoders&#34;]
+  node_mvd[&#34;Hardware decode&lt;br/&gt;[n3ds_video_mvd.cpp]&#34;]
+  node_software[&#34;Software decode&#34;]
+  node_renderer[&#34;Screen renderers&#34;]
+  node_graphics[&#34;Graphics lifecycle&#34;]
+  node_audio[&#34;Audio output&lt;br/&gt;[n3ds_audio.cpp]&#34;]
+end
+
+subgraph group_interaction[&#34;Input and helpers&#34;]
+  node_input[&#34;Console input&lt;br/&gt;[n3ds_input.cpp]&#34;]
+  node_touch[&#34;Touch handlers&lt;br/&gt;[TouchHandler.hpp]&#34;]
+  node_menuhub[&#34;In-stream helper hub&#34;]
+  node_bottomui[&#34;Bottom-screen UI&#34;]
+end
+
+subgraph group_state[&#34;Settings and telemetry&#34;]
+  node_config[(&#34;Configuration&lt;br/&gt;[config.cpp]&#34;)]
+  node_appcache[(&#34;App list cache&lt;br/&gt;[app_list_cache.cpp]&#34;)]
+  node_profiles[&#34;Stream profiles&lt;br/&gt;[stream_profile.cpp]&#34;]
+  node_telemetry[(&#34;Stream telemetry&#34;)]
+  node_benchmark[&#34;Performance metrics&#34;]
+end
+
+node_user((&#34;3DS user&#34;))
+
+node_user --&gt;|&#34;uses&#34;| node_main
+node_main --&gt;|&#34;finds hosts&#34;| node_discovery
+node_main --&gt;|&#34;pairs host&#34;| node_pairing
+node_main -.-&gt;|&#34;manages host&#34;| node_gamestream
+node_gamestream --&gt;|&#34;parses responses&#34;| node_xml
+node_discovery --&gt;|&#34;uses records&#34;| node_pairing
+node_main --&gt;|&#34;shows menus&#34;| node_ui
+node_main --&gt;|&#34;lists apps&#34;| node_appcache
+node_main --&gt;|&#34;starts session&#34;| node_connection
+node_main --&gt;|&#34;loads settings&#34;| node_config
+node_main --&gt;|&#34;selects profile&#34;| node_profiles
+node_main --&gt;|&#34;handles controls&#34;| node_input
+node_input --&gt;|&#34;posts events&#34;| node_dispatcher
+node_input --&gt;|&#34;owns handlers&#34;| node_touch
+node_main --&gt;|&#34;dispatches events&#34;| node_dispatcher
+node_user --&gt;|&#34;opens helpers&#34;| node_menuhub
+node_menuhub --&gt;|&#34;posts actions&#34;| node_dispatcher
+node_menuhub -.-&gt;|&#34;draws interface&#34;| node_bottomui
+node_user --&gt;|&#34;chooses stream&#34;| node_connection
+node_connection -.-&gt;|&#34;receives video&#34;| node_decoder
+node_decoder -.-&gt;|&#34;hardware path&#34;| node_mvd
+node_decoder -.-&gt;|&#34;software path&#34;| node_software
+node_decoder --&gt;|&#34;renders frames&#34;| node_renderer
+node_renderer --&gt;|&#34;uses layout state&#34;| node_presentation
+node_renderer --&gt;|&#34;uses graphics lifecycle&#34;| node_graphics
+node_connection -.-&gt;|&#34;streams audio&#34;| node_audio
+node_user --&gt;|&#34;views or saves metrics&#34;| node_telemetry
+node_user --&gt;|&#34;views performance&#34;| node_benchmark
+node_main --&gt;|&#34;uses telemetry store&#34;| node_telemetry
+
+
+class node_discovery,node_pairing,node_gamestream,node_xml,node_user toneBlue
+class node_main,node_ui,node_connection,node_dispatcher toneAmber
+class node_presentation,node_decoder,node_mvd,node_software,node_renderer,node_graphics,node_audio toneMint
+class node_input,node_touch,node_menuhub,node_bottomui toneRose
+class node_config,node_appcache,node_profiles,node_telemetry,node_benchmark toneIndigo</code></pre></div><div class=repo-system-summary><p>Un client GameStream pour Nintendo 3DS. Les utilisateurs découvrent ou ajoutent un hôte compatible Sunshine, associent la console, choisissent une application et lancent la diffusion par les sous-systèmes de session, vidéo, rendu, entrées et écran inférieur.</p><dl><div><dt>Composants</dt><dd>25</dd></div><div><dt>Connexions</dt><dd>29</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>23/29</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Découverte et jumelage → Application et profil</li><li>Application et profil → Connexion GameStream</li><li>Connexion GameStream → Moteurs vidéo et audio</li><li>Moteurs vidéo et audio → Écrans et commandes 3DS</li><li>Écrans et commandes 3DS → Connexion GameStream</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Suivez SelectedHost et le profil avant d’entrer dans le traitement des médias. Une fermeture système et un retour normal au menu sont deux transitions distinctes; un indicateur explicite évite de les confondre.</p></details></section><section class=repo-runtime aria-labelledby=deployment><div class=repo-section-title><span class=repo-section-icon aria-hidden=true><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7.5h16v9H4z"/><path d="M7 11h.01M10 11h.01M7 14h.01M10 14h.01M16 10v4m2-4v4"/></svg></span><h2 id=deployment>Déploiement et exploitation</h2></div><p>Les ports, le stockage et les relations de démarrage ci-dessous viennent de la configuration du dépôt. <code>depends_on</code> indique l’ordre de démarrage, pas la disponibilité du service.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>L’analyse a trouvé 77 déclarations de types. Le diagramme en montre 12 et conserve les relations de base déclarées.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types (Mermaid)</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class tc0387bd4c68b[&#34;SelectedHost&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t72fa5c6e15be[&#34;RemoteApp&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tf7c6d6aec7da[&#34;InputLoopContext&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class ta7f589e4be09[&#34;VideoDecoderBase&#34;] {
+  accept()
+  _accept_touch_state_changed()
+  _accept_keyboard_state_changed()
+}
+class tb2f58dc75feb[&#34;MockVideoDecoder&#34;] {
+}
+class t391f53097446[&#34;SoftVideoDecoder&#34;] {
+  submit_decode_unit()
+  _write_yuv_to_framebuffer()
+}
+class t4ad2ea8a811e[&#34;MvdDecoder&#34;] {
+  submit_decode_unit()
+  _decode()
+}
+class t891d7e467987[&#34;_SERVER_DATA&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class ta59617f1a5fa[&#34;cb_ctx&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tcb0c88684e67[&#34;_HTTP_DATA&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class taa2e3cf225d0[&#34;_CERT_KEY_PAIR&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t91f7677e0266[&#34;xml_query&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class b34b203f09b57[&#34;ISubscriber&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b34b203f09b57 &lt;|-- ta7f589e4be09
+ta7f589e4be09 &lt;|-- tb2f58dc75feb
+ta7f589e4be09 &lt;|-- t391f53097446
+ta7f589e4be09 &lt;|-- t4ad2ea8a811e
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées. Les signatures complètes ne sont pas reconstruites.</p></details><details class=repo-structure-details><summary>Types, méthodes et bases déclarées</summary><ul class=repo-structure-list><li><code>SelectedHost</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_main.cpp#L74><code>src/n3ds_main.cpp:74</code></a></li><li><code>RemoteApp</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_main.cpp#L79><code>src/n3ds_main.cpp:79</code></a></li><li><code>InputLoopContext</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/n3ds_main.cpp#L943><code>src/n3ds_main.cpp:943</code></a></li><li><code>VideoDecoderBase</code> (class) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp#L48><code>src/video/video.hpp:48</code></a><p>Méthodes dans l’aperçu : <code>accept, _accept_touch_state_changed, _accept_keyboard_state_changed</code>.</p><p>Bases déclarées : <code>ISubscriber</code>.</p></li><li><code>MockVideoDecoder</code> (class) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp#L66><code>src/video/video.hpp:66</code></a><p>Bases déclarées : <code>VideoDecoderBase</code>.</p></li><li><code>SoftVideoDecoder</code> (class) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp#L73><code>src/video/video.hpp:73</code></a><p>Méthodes dans l’aperçu : <code>submit_decode_unit, _write_yuv_to_framebuffer</code>.</p><p>Bases déclarées : <code>VideoDecoderBase</code>.</p></li><li><code>MvdDecoder</code> (class) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/video/video.hpp#L90><code>src/video/video.hpp:90</code></a><p>Méthodes dans l’aperçu : <code>submit_decode_unit, _decode</code>.</p><p>Bases déclarées : <code>VideoDecoderBase</code>.</p></li><li><code>_SERVER_DATA</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/client.h#L36><code>libgamestream/client.h:36</code></a></li><li><code>cb_ctx</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/discover.c#L38><code>libgamestream/discover.c:38</code></a></li><li><code>_HTTP_DATA</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/http.h#L32><code>libgamestream/http.h:32</code></a></li><li><code>_CERT_KEY_PAIR</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/mkcert.h#L24><code>libgamestream/mkcert.h:24</code></a></li><li><code>xml_query</code> (struct) · <a href=https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/libgamestream/xml.c#L29><code>libgamestream/xml.c:29</code></a></li></ul></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><details class=repo-analysis-coverage><summary>Périmètre et limites de l’analyse</summary><p>101 fichiers lus sur 101 fichiers admissibles dans l’arbre GitHub (174 fichiers au total). Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus.</p><p>La collecte couvre les README, les manifestes reconnus et les fichiers source dont le langage est pris en charge par l’analyseur. Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p><p>0 fichiers dépassent la limite de taille, 0 lectures ont échoué et 6 fichiers ont produit un diagnostic de syntaxe.</p></details><details class=repo-diagram-details data-mermaid-lazy><summary>Carte des fichiers</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TD
+  root[&#34;Artemis-N3DS&#34;]
+  f0[&#34;src/hardware_capabilities.cpp&#34;]
+  root --&gt; f0
+  f1[&#34;src/n3ds_main.cpp&#34;]
+  root --&gt; f1
+  f2[&#34;src/video/video.hpp&#34;]
+  root --&gt; f2
+  f3[&#34;CMakeLists.txt&#34;]
+  root --&gt; f3
+  f4[&#34;Makefile&#34;]
+  root --&gt; f4
+  f5[&#34;README.md&#34;]
+  root --&gt; f5
+  f6[&#34;3ds/build-expat.sh&#34;]
+  root --&gt; f6
+  f7[&#34;3ds/build-ffmpeg.sh&#34;]
+  root --&gt; f7
+  f8[&#34;3ds/build-openssl.sh&#34;]
+  root --&gt; f8
+  f9[&#34;libgamestream/CMakeLists.txt&#34;]
+  root --&gt; f9
+  f10[&#34;libgamestream/client.c&#34;]
+  root --&gt; f10
+  f11[&#34;libgamestream/client.h&#34;]
+  root --&gt; f11
+  f12[&#34;libgamestream/discover.c&#34;]
+  root --&gt; f12
+  f13[&#34;libgamestream/discover.h&#34;]
+  root --&gt; f13
+  f14[&#34;libgamestream/errors.h&#34;]
+  root --&gt; f14
+  f15[&#34;libgamestream/http.c&#34;]
+  root --&gt; f15
+</code></pre></div></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">La 3DS d’origine et la New 3DS ont des capacités de décodage différentes. Les profils proposés dans le code ne garantissent pas une cadence ou des performances réseau mesurées.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/n3ds_main.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/n3ds_main.cpp</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/hardware_capabilities.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/hardware_capabilities.cpp</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/video/video.hpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/video/video.hpp</code></a></li></ul></section><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Références</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/Artemis-N3DS>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/Artemis-N3DS#readme>README</a><span>Documentation du dépôt</span></li><li><a href=/CV/blog/fr/posts/handheld-streaming-homebrew/>Streaming portable et homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch</a><span>Article du blog</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Langage</span><b>C++</b></div><div class=kv><span>Catégorie</span><b>Matériel et infographie</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/Artemis-N3DS>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.className = 'post-diagram';
+              figure.tabIndex = 0;
+              figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+              figure.innerHTML = svg;
+              const fr = document.documentElement.lang.startsWith('fr');
+              const container = document.createElement('div');
+              container.className = 'diagram-interactive';
+              const toolbar = document.createElement('div');
+              toolbar.className = 'diagram-tools';
+              toolbar.setAttribute('role', 'group');
+              toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+              const status = document.createElement('output');
+              status.setAttribute('aria-live', 'polite');
+              const svgElement = figure.querySelector('svg');
+              const natural = svgElement?.viewBox?.baseVal?.width || 800;
+              function resize(width, minimum = Math.min(160, natural)) {
+                block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+                svgElement.style.width = block.zoom + 'px';
+                svgElement.style.minWidth = '0';
+                svgElement.style.maxWidth = 'none';
+                svgElement.style.maxHeight = 'none';
+                status.textContent = Math.round(block.zoom / natural * 100) + '%';
+              }
+              function fit() {
+                const style = getComputedStyle(figure);
+                const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+                if (available <= 0) return;
+                resize(Math.min(natural, available), 1);
+                figure.scrollLeft = 0;
+                figure.scrollTop = 0;
+              }
+              function button(label, action, handler) {
+                const control = document.createElement('button');
+                control.type = 'button';
+                control.textContent = label;
+                control.dataset.diagramAction = action;
+                control.addEventListener('click', handler);
+                toolbar.append(control);
+                return control;
+              }
+              button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+              button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+              button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+              button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+              button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+                try {
+                  if (document.fullscreenElement === container) await document.exitFullscreen();
+                  else await container.requestFullscreen();
+                } catch {
+                  status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+                }
+              });
+              button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+                const copy = svgElement.cloneNode(true);
+                copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                copy.setAttribute('width', String(natural));
+                copy.removeAttribute('style');
+                const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `diagram-${index + 1}.svg`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+              });
+              toolbar.append(status);
+              container.append(toolbar, figure);
+              let drag = null;
+              let suppressClick = false;
+              figure.addEventListener('pointerdown', event => {
+                suppressClick = false;
+                if (!event.isPrimary) { stopPan(); return; }
+                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+                    !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+              });
+              figure.addEventListener('pointermove', event => {
+                if (!drag || event.pointerId !== drag.id) return;
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+                if (!drag.active) {
+                  if (Math.hypot(dx, dy) < 6) return;
+                  
+                  if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+                  if (figure.scrollWidth <= figure.clientWidth &&
+                      (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+                  drag.active = true;
+                  figure.setPointerCapture(event.pointerId);
+                  figure.classList.add('is-panning');
+                  figure.focus({ preventScroll: true });
+                }
+                event.preventDefault();
+                figure.scrollLeft = drag.left - dx;
+                if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+              });
+              function stopPan(event) {
+                if (!drag || (event && event.pointerId !== drag.id)) return;
+                const previous = drag;
+                drag = null;
+                suppressClick = previous.active && (!event || event.type === 'pointerup');
+                figure.classList.remove('is-panning');
+                if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+              }
+              figure.addEventListener('pointerup', stopPan);
+              figure.addEventListener('pointercancel', stopPan);
+              figure.addEventListener('lostpointercapture', event => {
+                
+                
+                if (event.target === figure) stopPan(event);
+              });
+              figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+              figure.addEventListener('click', event => {
+                if (!suppressClick || event.detail === 0) return;
+                suppressClick = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }, true);
+              figure.addEventListener('keydown', event => {
+                if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+                if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+                else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+                else if (event.key === '0') resize(natural);
+                else if (event.key === 'f' || event.key === 'F') fit();
+                else if (event.key.startsWith('Arrow')) {
+                  const delta = 80;
+                  if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+                  if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+                  if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+                  if (event.key === 'ArrowDown') figure.scrollTop += delta;
+                }
+                else return;
+                event.preventDefault();
+              });
+              const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+              (block.container || block.original).replaceWith(container);
+              block.container = container;
+              block.figure = figure;
+              block.painted = true;
+              if (block.imageFallback) block.imageFallback.hidden = true;
+              requestAnimationFrame(() => fit());
+              if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

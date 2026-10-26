@@ -1,0 +1,35 @@
+classDiagram
+direction TB
+class tf265ed91c0f7["TestDiagramType"] {
+  test_diagram_type_required_fields()
+  test_diagram_type_custom_formats()
+}
+class tbdb1bba0bc0d["TestMCPSettingsDefaults"] {
+  test_default_server_name_version_description()
+  test_default_output_dir_contains_output()
+  test_output_path_is_path()
+  test_default_kroki_and_plantuml_servers()
+  test_default_lists_empty()
+}
+class tdca67197c48e["TestDiagramFallbackEnv"] {
+  test_diagram_fallback_enabled_desktop_default()
+  test_diagram_fallback_disabled_on_vercel()
+  test_diagram_fallback_disabled_with_use_local_kroki()
+  test_mcp_diagram_fallback_true_overrides_vercel()
+}
+class t44397aad6ecc["TestMCPSettingsFromEnv"] {
+  test_explicit_output_dir()
+  test_explicit_kroki_server()
+  test_explicit_plantuml_server()
+}
+class t63b27cb254a6["TestMCPModuleLevel"] {
+  test_diagram_types_has_expected_keys()
+  test_mcp_settings_has_diagram_types()
+  test_config_backends_and_formats_match_kroki()
+}
+class t04b8e5a4d987["TestMermaidInkServer"] {
+  test_defaults_to_public_mermaid_ink()
+  test_empty_value_means_public()
+  test_use_local_defaults_to_compose_service()
+  test_explicit_server_wins()
+}

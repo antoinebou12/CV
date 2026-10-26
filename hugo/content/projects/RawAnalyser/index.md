@@ -8,7 +8,8 @@ draft: false
 [here](https://github.com/antoinebou12/RawAnalyser)
 
 # RawAnalyser
-RawAnalyser is a simple Python-based tool designed for analyzing raw images. It provides functionality for black and white clipping detection, gamma calculation, and flatness with vignette detection (Algolux). 
+RawAnalyser is a Python tool for analyzing raw images: black and white clipping detection, gamma calculation, and flatness with vignette detection (Algolux).
+
 
 ## Prerequisites
 You need to have Python 2.7 installed and the following libraries:
@@ -42,7 +43,7 @@ python RawPixel.pt input<file> x y  --bitdepth <8,10,16,default 16>
 ## Scripts Description
 
 ### RawAnalyser.py
-A script designed for checking black and white level of clipping in a raw image. You need to provide a path to the folder to be checked and a json file with the region of interest and the gray patches.
+Checks black and white clipping levels in a raw image. Takes a folder path and a JSON file with the region of interest and gray patches.
 
 #### points.json
 The JSON file specifying the region of interest. An example of its structure is as follows:
@@ -66,7 +67,7 @@ A GUI script for image selection. It allows you to select the region of interest
 A script to inspect the value of a specific pixel and determine its color using the Bayer pattern.
 
 ### 20MPto5MP.py
-A script for converting 20-megapixel images to 5-megapixel images, specifically designed for the new OV20880 sensor.
+Converts 20-megapixel images to 5-megapixel images for the OV20880 sensor.
 
 #### Camera
 Example of camera sensor information:
@@ -78,5 +79,3 @@ ImageType: BINARY16U
 Sensor value: 10 bit
 Bayer pattern: 'bggr'
 ```
-
-This tool provides a simple and efficient way to analyze raw images, making it a vital part of any image processing workflow.

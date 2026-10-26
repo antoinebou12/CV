@@ -1,0 +1,966 @@
+{
+  "repo": "Serilog.Sinks.SentrySDK",
+  "slug": "serilog-sinks-sentrysdk",
+  "commit": "d0b5c252b942f61f097feccef10ac2d2b43aad7b",
+  "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/",
+  "tree_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b",
+  "fetched_at": "2026-10-24T01:37:20.144333+00:00",
+  "languages": [
+    {
+      "name": "C#",
+      "bytes": 89769,
+      "percent": 98.04
+    },
+    {
+      "name": "PowerShell",
+      "bytes": 1795,
+      "percent": 1.96
+    }
+  ],
+  "language_bytes": 91564,
+  "coverage": {
+    "tree_files": 117,
+    "eligible_files": 32,
+    "read_files": 32,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 52,
+      "heading": "Installation",
+      "commands": "dotnet add package Serilog.Sinks.SentrySDK\nInstall-Package Serilog.Sinks.SentrySDK"
+    },
+    {
+      "file": "README.md",
+      "line": 69,
+      "heading": "Build, run tests, and coverage (local development)",
+      "commands": "dotnet restore src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj\ndotnet build src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj -c Release\ndotnet build src/Serilog.Sinks.SentrySDK.AspNetCore/Serilog.Sinks.SentrySDK.AspNetCore.csproj -c Release\ndotnet test src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj\ndotnet test src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/Serilog.Sinks.SentrySDK.AspNetCore.Tests.csproj"
+    },
+    {
+      "file": "README.md",
+      "line": 84,
+      "heading": "Build, run tests, and coverage (local development)",
+      "commands": "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./reports/coverage src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj"
+    },
+    {
+      "file": "README.md",
+      "line": 96,
+      "heading": "Code formatting (dotnet format)",
+      "commands": "dotnet restore src/Serilog.Sinks.SentrySDK.sln\ndotnet format src/Serilog.Sinks.SentrySDK.sln"
+    },
+    {
+      "file": "README.md",
+      "line": 103,
+      "heading": "Code formatting (dotnet format)",
+      "commands": "dotnet format src/Serilog.Sinks.SentrySDK.sln --verify-no-changes"
+    }
+  ],
+  "manifests": [],
+  "type_count": 38,
+  "types": [
+    {
+      "id": "ta0f4fc6d8b31",
+      "name": "ISentryRequestFactory",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "line": 9,
+      "language": "csharp",
+      "methods": [
+        "Create"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tab0f434b248f",
+      "name": "SentryRequestFactory",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "line": 21,
+      "language": "csharp",
+      "methods": [
+        "SentryRequestFactory",
+        "Create"
+      ],
+      "bases": [
+        "ISentryRequestFactory"
+      ]
+    },
+    {
+      "id": "t94a164d611c8",
+      "name": "ISentryRequest",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "line": 58,
+      "language": "csharp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t66938c58944a",
+      "name": "SentryRequest",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "line": 79,
+      "language": "csharp",
+      "methods": [],
+      "bases": [
+        "ISentryRequest"
+      ]
+    },
+    {
+      "id": "td9dd9f1be134",
+      "name": "ISentrySdkWrapper",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "line": 20,
+      "language": "csharp",
+      "methods": [
+        "CaptureMessage",
+        "CaptureException",
+        "StartTransaction"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t436d77520181",
+      "name": "SentrySdkWrapper",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "line": 45,
+      "language": "csharp",
+      "methods": [
+        "SentrySdkWrapper",
+        "CaptureMessage",
+        "CaptureException",
+        "StartTransaction"
+      ],
+      "bases": [
+        "ISentrySdkWrapper"
+      ]
+    },
+    {
+      "id": "t9aa877270a99",
+      "name": "ITransactionService",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "line": 77,
+      "language": "csharp",
+      "methods": [
+        "StartChild"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t7f1535817357",
+      "name": "TransactionService",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "line": 93,
+      "language": "csharp",
+      "methods": [
+        "StartChild"
+      ],
+      "bases": [
+        "ITransactionService"
+      ]
+    },
+    {
+      "id": "t53092b4cd27d",
+      "name": "SentrySink",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "line": 106,
+      "language": "csharp",
+      "methods": [
+        "SentrySink",
+        "Emit",
+        "EmitWithoutTracing",
+        "GetBreadcrumbLevel",
+        "GetSentryLevel",
+        "ExceptionDataToScopeExtrasDictionary",
+        "RenderPropertyValuesToStringDictionary",
+        "ExceptionDataToStringDictionary",
+        "SpanTagsToStringDictionary",
+        "Render",
+        "Dispose"
+      ],
+      "bases": [
+        "ILogEventSink",
+        "IDisposable"
+      ]
+    },
+    {
+      "id": "t3bef4532763b",
+      "name": "SentrySinkExtensions",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs",
+      "line": 13,
+      "language": "csharp",
+      "methods": [
+        "Sentry"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6b344cd3bb4d",
+      "name": "Program",
+      "kind": "class",
+      "file": "demos/SentryConsole/Program.cs",
+      "line": 15,
+      "language": "csharp",
+      "methods": [
+        "Main",
+        "ThrowDivideByZeroSecondTier",
+        "DivByZero",
+        "ThrowParseExceptionSecondTier",
+        "ConvertToInt"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t0108ee6641d7",
+      "name": "HomeController",
+      "kind": "class",
+      "file": "demos/SentryWeb/Controllers/HomeController.cs",
+      "line": 12,
+      "language": "csharp",
+      "methods": [
+        "Index",
+        "About",
+        "Contact",
+        "Error",
+        "DivByZero"
+      ],
+      "bases": [
+        "Controller"
+      ]
+    },
+    {
+      "id": "t3e6d5bddf586",
+      "name": "ErrorViewModel",
+      "kind": "class",
+      "file": "demos/SentryWeb/Models/ErrorViewModel.cs",
+      "line": 5,
+      "language": "csharp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t35403c1496c8",
+      "name": "Program",
+      "kind": "class",
+      "file": "demos/SentryWeb/Program.cs",
+      "line": 8,
+      "language": "csharp",
+      "methods": [
+        "Main",
+        "CreateHostBuilder"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t07e5fd07fa4e",
+      "name": "DivisionByZeroFilter",
+      "kind": "class",
+      "file": "demos/SentryWeb/Scrubbing/DivisionByZeroFilter.cs",
+      "line": 6,
+      "language": "csharp",
+      "methods": [
+        "Enrich"
+      ],
+      "bases": [
+        "ILogEventEnricher"
+      ]
+    },
+    {
+      "id": "t100ae4234b99",
+      "name": "Startup",
+      "kind": "class",
+      "file": "demos/SentryWeb/Startup.cs",
+      "line": 15,
+      "language": "csharp",
+      "methods": [
+        "Startup",
+        "ConfigureLogging",
+        "ConfigureServices",
+        "Configure"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t63d4ae67e9ca",
+      "name": "AspCoreHttpContextAdapterTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs",
+      "line": 20,
+      "language": "csharp",
+      "methods": [
+        "AspCoreHttpContextAdapterTests",
+        "RemoteIpAddress_ReturnsCorrectIpAddress",
+        "RemoteIpAddress_ReturnsEmptyString_WhenRemoteIpAddressIsNull",
+        "RequestCookies_ReturnsCorrectCookies",
+        "RequestHeaders_ReturnsCorrectHeaders",
+        "RequestMethod_ReturnsCorrectMethod",
+        "RequestPath_ReturnsCorrectPath",
+        "RequestQueryString_ReturnsCorrectQueryString",
+        "User_ReturnsCorrectUser",
+        "GetRequestBody_ReturnsCorrectRequestBody_WhenBodyCanSeek",
+        "GetRequestBody_ReturnsNull_WhenBodyCannotSeek",
+        "RequestProtocol_ReturnsCorrectProtocol",
+        "RequestScheme_ReturnsCorrectScheme",
+        "RequestUserAgent_ReturnsCorrectUserAgent",
+        "ResponseStatusCode_ReturnsCorrectStatusCode",
+        "GetRequestBodyAsync_ReturnsCorrectRequestBody_WhenBodyCanSeek",
+        "GetRequestBodyAsync_ReturnsNull_WhenBodyCannotSeek"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t768c61c0d02a",
+      "name": "ExceptionExtensionsTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs",
+      "line": 10,
+      "language": "csharp",
+      "methods": [
+        "CheckIfCaptured_ThrowsArgumentNullException_WhenExceptionIsNull",
+        "CheckIfCaptured_ReturnsFalse_WhenExceptionNotCaptured",
+        "SetCaptured_DoesNotThrow_WhenExceptionIsNull",
+        "CheckIfCaptured_ReturnsTrue_WhenExceptionCaptured"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t54572d2e7d77",
+      "name": "HttpContextDestructingPolicyTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs",
+      "line": 12,
+      "language": "csharp",
+      "methods": [
+        "HttpContextDestructingPolicyTests",
+        "TryDestructure_ReturnsFalse_WhenValueIsNotISentryHttpContext",
+        "TryDestructure_ReturnsTrue_WhenValueIsISentryHttpContext"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta3a3e02b91f8",
+      "name": "SentrySinkContextMiddlewareTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs",
+      "line": 18,
+      "language": "csharp",
+      "methods": [
+        "SentrySinkContextMiddlewareTests",
+        "Invoke_CallsNextDelegate",
+        "Invoke_LogsException_WhenNextDelegateThrows"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t82e4b02b9553",
+      "name": "DelegatingSink",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs",
+      "line": 20,
+      "language": "csharp",
+      "methods": [
+        "DelegatingSink",
+        "Emit"
+      ],
+      "bases": [
+        "ILogEventSink"
+      ]
+    },
+    {
+      "id": "t7a4f643a3475",
+      "name": "SentrySinkContextMiddlewareExtensionsTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs",
+      "line": 14,
+      "language": "csharp",
+      "methods": [
+        "SentrySinkContextMiddlewareExtensionsTests",
+        "AddSentryContext_ShouldUseMiddleware"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t5b91ca30fa1a",
+      "name": "AspCoreHttpContextAdapter",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs",
+      "line": 20,
+      "language": "csharp",
+      "methods": [
+        "AspCoreHttpContextAdapter",
+        "GetRequestBody",
+        "GetRequestBodyAsync"
+      ],
+      "bases": [
+        "ISentryHttpContext"
+      ]
+    },
+    {
+      "id": "t398e1247cf14",
+      "name": "ExceptionExtensions",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs",
+      "line": 8,
+      "language": "csharp",
+      "methods": [
+        "CheckIfCaptured",
+        "SetCaptured"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t16d21a17d476",
+      "name": "HttpContextDestructingPolicy",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs",
+      "line": 14,
+      "language": "csharp",
+      "methods": [
+        "TryDestructure"
+      ],
+      "bases": [
+        "IDestructuringPolicy"
+      ]
+    },
+    {
+      "id": "tc74a5e7302af",
+      "name": "SentrySinkContextMiddleware",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs",
+      "line": 11,
+      "language": "csharp",
+      "methods": [
+        "SentrySinkContextMiddleware",
+        "Invoke"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6c588afb6d41",
+      "name": "SentrySinkContextMiddlewareExtensions",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.AspNetCore/SerilogSentryExtensions.cs",
+      "line": 10,
+      "language": "csharp",
+      "methods": [
+        "AddSentryContext"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t14477a4eecfe",
+      "name": "SentryRequestFactoryTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryRequestFactoryTests.cs",
+      "line": 15,
+      "language": "csharp",
+      "methods": [
+        "SentryRequestFactoryTests",
+        "Create_ShouldReturnCorrectSentryRequest"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t1d5b74f93534",
+      "name": "SentryUserFactoryTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryUserFactoryTests.cs",
+      "line": 14,
+      "language": "csharp",
+      "methods": [
+        "SentryUserFactoryTests",
+        "TestCreateUser"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf611891a4198",
+      "name": "SentrySinkConstantsTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/ConstantsTests.cs",
+      "line": 8,
+      "language": "csharp",
+      "methods": [
+        "TestHttpContextKey"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6f7a33684eb9",
+      "name": "SentrySinkExtensionsTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkExtensionsTests.cs",
+      "line": 8,
+      "language": "csharp",
+      "methods": [
+        "Sentry_Extension_WiresSinkAndOptionalCallbacks"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t7a7bf1771830",
+      "name": "SentrySinkTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs",
+      "line": 14,
+      "language": "csharp",
+      "methods": [
+        "SentrySinkTests",
+        "Emit_CapturesMessage_WhenLogEventHasNoException",
+        "Emit_CapturesException_WhenLogEventHasException",
+        "Emit_WhenLogEventHasNoException_CallsCaptureMessageWithCorrectValues",
+        "Emit_WhenLogEventHasException_CallsCaptureExceptionWithCorrectValues",
+        "Emit_ShouldNotThrowException_WhenLogEventIsNull",
+        "Emit_WhenTracingDisabled_DoesNotStartTransaction_CapturesMessage",
+        "Emit_WhenTracingDisabled_CapturesException",
+        "Constructor_InvokesConfigureSentryOptions",
+        "BeforeSendPipeline_WithEventIdInExceptionData_RemapsExtras",
+        "BeforeSendPipeline_UserCallbackReceivesProcessedEvent",
+        "BeforeSendPipeline_UserCallbackCanDropEvent",
+        "Constructor_UsesBuiltInTransactionService_WhenTransactionServiceIsNull",
+        "Constructor_DoesNotSetMaxCacheItems_WhenMaxCacheItemsIsZero",
+        "BeforeSendPipeline_NullIncomingEvent_ShortCircuitsBeforeUserCallback",
+        "BeforeSendPipeline_EventIdExtraIsEmptyString_WhenEventIdDataValueIsNull",
+        "BeforeSendPipeline_SkipsExceptionDataEntriesWithEmptyKeyStringAlongsideEventId",
+        "BeforeSendPipeline_MapsNullNonEventIdDataToEmptyExtraString",
+        "Emit_WithTracing_UsesEmptySpanDescriptionAndEmptyTags_WhenSpanHasNullDescriptionAndTags",
+        "Emit_WithTracing_Exception_WhenExceptionDataHasEmptyKeyAndNullValue",
+        "Emit_WithNullFormatProvider_RendersNonStringScalarWithoutThrowing",
+        "CreateTestSentrySink",
+        "GetSentryOptionsFromSink",
+        "InvokeBeforeSendInternal"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t63bcacfaba11",
+      "name": "DictionaryKeyWithEmptyStringName",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs",
+      "line": 422,
+      "language": "csharp",
+      "methods": [
+        "ToString"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t3ea384423fe6",
+      "name": "TransactionServiceTests",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK.Tests/TransactionServiceTests.cs",
+      "line": 9,
+      "language": "csharp",
+      "methods": [
+        "StartChild_DelegatesToTransaction_StartChild"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t0e76b61386cd",
+      "name": "ISentryUserFactory",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs",
+      "line": 9,
+      "language": "csharp",
+      "methods": [
+        "Create"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t75e18637d7fe",
+      "name": "SentryUserFactory",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs",
+      "line": 22,
+      "language": "csharp",
+      "methods": [
+        "SentryUserFactory",
+        "Create"
+      ],
+      "bases": [
+        "ISentryUserFactory"
+      ]
+    },
+    {
+      "id": "t9f37aa55b446",
+      "name": "SentrySinkConstants",
+      "kind": "class",
+      "file": "src/Serilog.Sinks.SentrySDK/Constants.cs",
+      "line": 6,
+      "language": "csharp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tc1ac22418d63",
+      "name": "ISentryHttpContext",
+      "kind": "interface",
+      "file": "src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs",
+      "line": 9,
+      "language": "csharp",
+      "methods": [
+        "GetRequestBody"
+      ],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "demos/SentryConsole/Program.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/9068b392fb0887c0.mmd"
+    },
+    {
+      "path": "demos/SentryWeb/Controllers/HomeController.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Controllers/HomeController.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/4c03a007f8a65757.mmd"
+    },
+    {
+      "path": "demos/SentryWeb/Models/ErrorViewModel.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Models/ErrorViewModel.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/d252b47feec096b9.mmd"
+    },
+    {
+      "path": "demos/SentryWeb/Program.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Program.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/136ac54e536055ee.mmd"
+    },
+    {
+      "path": "demos/SentryWeb/Scrubbing/DivisionByZeroFilter.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Scrubbing/DivisionByZeroFilter.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/6e2e72d126efa8bc.mmd"
+    },
+    {
+      "path": "demos/SentryWeb/Startup.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Startup.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/3f0a1d739953642f.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/045295bf277cd01d.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/20f8439560848a4d.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/1b522301a04a18ce.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/ddc14cf3182e0131.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/14ee5dc631139933.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/e2a45c0f83865225.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/b279b819153be643.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/57aac5e976dd6128.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/681da52d5b03c848.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/SerilogSentryExtensions.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/SerilogSentryExtensions.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/ce22a101f8f94334.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryRequestFactoryTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryRequestFactoryTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/c325fe003636661f.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryUserFactoryTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryUserFactoryTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/b4ca94e7729920e9.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/ConstantsTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/ConstantsTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/5cc95ecf42b5cf6d.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkExtensionsTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/SentrySinkExtensionsTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/106f551db7e3be7d.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/a6ea607e23799115.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/TransactionServiceTests.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/TransactionServiceTests.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/bc4438f2d4bb414a.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "types": 4,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/d27c721f2276b990.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/02476e876fa94ba7.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/Constants.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/Constants.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/ead583319cc094e4.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/bbf82d0ab2eb814e.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "types": 5,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/65e68de5b969b42e.mmd"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs",
+      "download": "repository-docs/serilog-sinks-sentrysdk/classes/f840b290b96f176a.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs",
+      "blob_sha": "c5d96fa68f2e214d3b3c98b9de463616962fa411",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/SentrySink.cs",
+      "blob_sha": "074762ac273b20155f9f7f8877cf0ce7a3dd04a9",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs",
+      "blob_sha": "1d5ba53cfec614a6f37adb29fdeecd5c57d45a3b",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "bc232941428989ebdf64c0846433b57b19d74cf5",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md"
+    },
+    {
+      "path": "demos/README.md",
+      "blob_sha": "86f011b9a732ea66dde8917ca3e5bc30960e1cdc",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/README.md"
+    },
+    {
+      "path": "demos/SentryConsole/Program.cs",
+      "blob_sha": "203749eb2baf6664280e14482702f11dd4eff940",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs"
+    },
+    {
+      "path": "demos/SentryWeb/Program.cs",
+      "blob_sha": "92c9fb37be30484fd23e66efd2875c3462879c2f",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Program.cs"
+    },
+    {
+      "path": "demos/SentryWeb/Startup.cs",
+      "blob_sha": "05f3da85a784725f513a22c36e2713c44d87e5a3",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Startup.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs",
+      "blob_sha": "f43a9cea1cdc5afbafbb186ef524f7e547474ff1",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs",
+      "blob_sha": "82da80457eb470a2ea3b89d62d9817962c361371",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs",
+      "blob_sha": "37ed86c0cdf0b088a4df9faefa442c4fd326934c",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs",
+      "blob_sha": "79ddf8c7c6b84115a26e6c10860a7ba49dd5680a",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs",
+      "blob_sha": "b4a59db6f225a9fe066360040d1e993a24e432f9",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs",
+      "blob_sha": "3dccd2bfced7b9c992d60564db4010abc35c7b3f",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs",
+      "blob_sha": "a113e4ca59861864dea5a08deb80248d2bdf6e49",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs",
+      "blob_sha": "37e372dbe5d0e4ec1b10bb51f1499e0767d4dd15",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs",
+      "blob_sha": "6406d212b000a97e3105491907fbf5e2a479aa2e",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.AspNetCore/SerilogSentryExtensions.cs",
+      "blob_sha": "dbe61232c815986fb99932e8579b1e71df8ea8c5",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/SerilogSentryExtensions.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryRequestFactoryTests.cs",
+      "blob_sha": "4d2ea0a1c5d9817918184eb06d0c6a21578ebb8e",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryRequestFactoryTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryUserFactoryTests.cs",
+      "blob_sha": "d11ab9dea47009e7a695d91beb41a4800fc17675",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/AspNetCoreSentryUserFactoryTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/ConstantsTests.cs",
+      "blob_sha": "0f12624a09ef7e92ea956ea2ed6a4872ff0928c3",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/ConstantsTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkExtensionsTests.cs",
+      "blob_sha": "ff8ed0bf0b6f7bb2c6b3974c6a6e7f8f9028b283",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/SentrySinkExtensionsTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs",
+      "blob_sha": "94c1a6c4d5bf6c92bc95aecd6cadacbe2de4c318",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/SentrySinkTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK.Tests/TransactionServiceTests.cs",
+      "blob_sha": "d77b8ef95cf6aa468ca3406d30aca19a079733f5",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/TransactionServiceTests.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs",
+      "blob_sha": "e485d862835428fd36c11aa2354fa04771183046",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/Constants.cs",
+      "blob_sha": "3fb07514917d00f0d52ef6b339e2967e0813ea56",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/Constants.cs"
+    },
+    {
+      "path": "src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs",
+      "blob_sha": "ee0b017b0ac821de146e069762ac537b90ad2d77",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs"
+    },
+    {
+      "path": "demos/SentryWeb/Controllers/HomeController.cs",
+      "blob_sha": "8b974c258c46ce83d8b2325a46a318ffec17ecbb",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Controllers/HomeController.cs"
+    },
+    {
+      "path": "demos/SentryWeb/Models/ErrorViewModel.cs",
+      "blob_sha": "003e7498f2f66c72639b541e9d8a55e7747807b0",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Models/ErrorViewModel.cs"
+    },
+    {
+      "path": "demos/SentryWeb/Scrubbing/DivisionByZeroFilter.cs",
+      "blob_sha": "4678cdc37af07f3328ac74dece987ede0db5eb84",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Scrubbing/DivisionByZeroFilter.cs"
+    },
+    {
+      "path": "demos/SentryWeb/wwwroot/js/site.js",
+      "blob_sha": "0f3411a45b2618d743849ded49b96d69130c7142",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/wwwroot/js/site.js"
+    },
+    {
+      "path": "demos/SentryWeb/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "blob_sha": "1b0de12496131b2f845ea06a3b5adc0f8f050c99",
+      "source_url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"Serilog.Sinks.SentrySDK\"]\n  f0[\"src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs\"]\n  root --> f0\n  f1[\"src/Serilog.Sinks.SentrySDK/SentrySink.cs\"]\n  root --> f1\n  f2[\"src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs\"]\n  root --> f2\n  f3[\"README.md\"]\n  root --> f3\n  f4[\"demos/README.md\"]\n  root --> f4\n  f5[\"demos/SentryConsole/Program.cs\"]\n  root --> f5\n  f6[\"demos/SentryWeb/Program.cs\"]\n  root --> f6\n  f7[\"demos/SentryWeb/Startup.cs\"]\n  root --> f7\n  f8[\"src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs\"]\n  root --> f8\n  f9[\"src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/ExceptionExtensionsTests.cs\"]\n  root --> f9\n  f10[\"src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/HttpContextDestructingPolicyTests.cs\"]\n  root --> f10\n  f11[\"src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SentrySinkContextMiddlewareTests.cs\"]\n  root --> f11\n  f12[\"src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/SerilogSentryExtensionsTests.cs\"]\n  root --> f12\n  f13[\"src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs\"]\n  root --> f13\n  f14[\"src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs\"]\n  root --> f14\n  f15[\"src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass ta0f4fc6d8b31[\"ISentryRequestFactory\"] {\n  <<interface>>\n  Create()\n}\nclass tab0f434b248f[\"SentryRequestFactory\"] {\n  SentryRequestFactory()\n  Create()\n}\nclass t94a164d611c8[\"ISentryRequest\"] {\n  <<interface>>\n}\nclass t66938c58944a[\"SentryRequest\"] {\n}\nclass td9dd9f1be134[\"ISentrySdkWrapper\"] {\n  <<interface>>\n  CaptureMessage()\n  CaptureException()\n  StartTransaction()\n}\nclass t436d77520181[\"SentrySdkWrapper\"] {\n  SentrySdkWrapper()\n  CaptureMessage()\n  CaptureException()\n  StartTransaction()\n}\nclass t9aa877270a99[\"ITransactionService\"] {\n  <<interface>>\n  StartChild()\n}\nclass t7f1535817357[\"TransactionService\"] {\n  StartChild()\n}\nclass t53092b4cd27d[\"SentrySink\"] {\n  SentrySink()\n  Emit()\n  EmitWithoutTracing()\n  GetBreadcrumbLevel()\n}\nclass t3bef4532763b[\"SentrySinkExtensions\"] {\n  Sentry()\n}\nclass t6b344cd3bb4d[\"Program\"] {\n  Main()\n  ThrowDivideByZeroSecondTier()\n  DivByZero()\n  ThrowParseExceptionSecondTier()\n}\nclass t0108ee6641d7[\"HomeController\"] {\n  Index()\n  About()\n  Contact()\n  Error()\n}\nta0f4fc6d8b31 <|.. tab0f434b248f\nt94a164d611c8 <|.. t66938c58944a\ntd9dd9f1be134 <|.. t436d77520181\nt9aa877270a99 <|.. t7f1535817357\nclass bc2d528bdb08a[\"ILogEventSink\"] {\n  <<unresolved_base>>\n}\nt53092b4cd27d ..> bc2d528bdb08a : declared base\nclass b06fa01e7e2b1[\"IDisposable\"] {\n  <<unresolved_base>>\n}\nt53092b4cd27d ..> b06fa01e7e2b1 : declared base\nclass bd8f3faa41a98[\"Controller\"] {\n  <<unresolved_base>>\n}\nt0108ee6641d7 ..> bd8f3faa41a98 : declared base\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/Serilog.Sinks.SentrySDK",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/serilog-sinks-sentrysdk/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_logging[\"Serilog integration\"]\n  node_sinkconfig[\"Sink registration\"]\n  node_sink[\"Event sink<br/>[SentrySink.cs]\"]\nend\n\nsubgraph group_sentry[\"Sentry event delivery\"]\n  node_requestfactory[\"Request factory\"]\n  node_userfactory[\"User factory\"]\n  node_sentrysdk[\"Sentry SDK\"]\nend\n\nsubgraph group_web[\"ASP.NET Core context\"]\n  node_contextadapter[\"HTTP adapter\"]\n  node_middleware[\"Request middleware\"]\n  node_destructure[\"Context destructuring\"]\n  node_contextcontract[\"HTTP context contract\"]\nend\n\nnode_app((\"Application\"))\nnode_serilog[\"Serilog pipeline\"]\nnode_sentryservice((\"Sentry service\"))\n\nnode_app -->|\"writes events\"| node_serilog\nnode_serilog -->|\"configures sink\"| node_sinkconfig\nnode_sinkconfig -->|\"creates sink\"| node_sink\nnode_sink -->|\"captures events\"| node_sentrysdk\nnode_sentrysdk -.->|\"sends telemetry\"| node_sentryservice\nnode_middleware -->|\"pushes context\"| node_contextadapter\nnode_middleware -->|\"logs exceptions\"| node_serilog\nnode_contextadapter -->|\"implements\"| node_contextcontract\nnode_destructure -->|\"recognizes context\"| node_contextcontract\nnode_requestfactory -->|\"reads request data\"| node_contextcontract\nnode_userfactory -->|\"reads user data\"| node_contextcontract\nnode_sink -.->|\"uses request context\"| node_requestfactory\nnode_sink -.->|\"uses user context\"| node_userfactory\n\n\nclass node_sinkconfig,node_sink toneBlue\nclass node_requestfactory,node_userfactory,node_sentrysdk toneAmber\nclass node_contextadapter,node_middleware,node_destructure,node_contextcontract toneMint\nclass node_app,node_serilog,node_sentryservice toneIndigo",
+    "linked_paths": 8
+  }
+}

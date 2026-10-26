@@ -7,14 +7,14 @@ description: "How ComfyUI-UML turns Mermaid and PlantUML source into images, fil
 translationKey: comfyui-uml-diagram-workflows
 mermaid: true
 tags: ["ComfyUI","Python","UML","Mermaid"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "antoinebou12/ComfyUI-UML" >}}
 
 ComfyUI is useful beyond image generation when an intermediate result can become a node output. **ComfyUI-UML** applies that idea to diagrams: text enters a rendering node; an image, a saved file, and a shareable URL can leave it.
 
-![A ComfyUI-UML diagram workflow, from the repository README](featured.png)
+![A ComfyUI-UML diagram workflow, from the repository README](images/featured.png)
 
 <!--more-->
 

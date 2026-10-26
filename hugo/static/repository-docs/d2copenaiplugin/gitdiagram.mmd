@@ -1,0 +1,71 @@
+flowchart TD
+
+subgraph group_api["API surface"]
+  node_api["FastAPI endpoint<br/>[app.py]"]
+  node_request["Request validation<br/>[app.py]"]
+  node_response["Diagram response<br/>[app.py]"]
+end
+
+subgraph group_formats["Diagram formats"]
+  node_plantuml["PlantUML renderer<br/>[__init__.py]"]
+  node_mermaid["Mermaid state and links<br/>[mermaid.py]"]
+  node_d2encoder["D2 encoder<br/>[d2.py]"]
+  node_d2runner["D2 binary runner<br/>[run_d2.py]"]
+  node_kroki["Kroki client<br/>[kroki.py]"]
+end
+
+subgraph group_integration["Rendering services"]
+  node_plantservice["PlantUML server"]
+  node_mermaidink["Mermaid image service"]
+  node_mermaidlive["Mermaid Live Editor"]
+  node_krokiservice["Kroki service"]
+end
+
+subgraph group_assets["Plugin assets"]
+  node_pluginassets["Plugin metadata<br/>[ai-plugin.json]"]
+  node_openapi["OpenAPI specification<br/>[openapi.yaml]"]
+  node_privacy["Privacy policy<br/>[privacy.txt]"]
+  node_logo["Plugin logo"]
+end
+
+node_client(("Plugin client"))
+
+node_client -->|"submits request"| node_api
+node_api -->|"validates"| node_request
+node_api -->|"dispatches PlantUML"| node_plantuml
+node_plantuml -->|"requests rendering"| node_plantservice
+node_api -->|"dispatches Mermaid"| node_mermaid
+node_api -->|"dispatches D2 or allow-list"| node_kroki
+node_kroki -->|"requests rendering"| node_krokiservice
+node_mermaid -->|"creates image URL"| node_mermaidink
+node_mermaid -->|"creates editor URL"| node_mermaidlive
+node_api -->|"returns result"| node_response
+node_pluginassets -->|"served by"| node_api
+node_openapi -->|"describes API"| node_api
+node_privacy -->|"served by"| node_api
+node_logo -->|"served by"| node_api
+node_d2runner -.->|"runs encoder binary"| node_d2encoder
+
+click node_api "https://github.com/antoinebou12/d2copenaiplugin/blob/main/app.py"
+click node_request "https://github.com/antoinebou12/d2copenaiplugin/blob/main/app.py"
+click node_response "https://github.com/antoinebou12/d2copenaiplugin/blob/main/app.py"
+click node_plantuml "https://github.com/antoinebou12/d2copenaiplugin/blob/main/plantuml/__init__.py"
+click node_mermaid "https://github.com/antoinebou12/d2copenaiplugin/blob/main/mermaid/mermaid.py"
+click node_d2encoder "https://github.com/antoinebou12/d2copenaiplugin/blob/main/D2/d2.py"
+click node_d2runner "https://github.com/antoinebou12/d2copenaiplugin/blob/main/D2/run_d2.py"
+click node_kroki "https://github.com/antoinebou12/d2copenaiplugin/blob/main/kroki/kroki.py"
+click node_pluginassets "https://github.com/antoinebou12/d2copenaiplugin/blob/main/.well-known/ai-plugin.json"
+click node_openapi "https://github.com/antoinebou12/d2copenaiplugin/blob/main/.well-known/openapi.yaml"
+click node_privacy "https://github.com/antoinebou12/d2copenaiplugin/blob/main/.well-known/privacy.txt"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_api,node_request,node_response,node_client toneBlue
+class node_plantuml,node_mermaid,node_d2encoder,node_d2runner,node_kroki toneAmber
+class node_plantservice,node_mermaidink,node_mermaidlive,node_krokiservice toneMint
+class node_pluginassets,node_openapi,node_privacy,node_logo toneRose

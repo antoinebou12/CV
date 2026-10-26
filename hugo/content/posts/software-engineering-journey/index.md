@@ -13,7 +13,7 @@ tags:
   - DevSecOps
   - Platform Engineering
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 I did not start in Kubernetes. I started in browser tabs, game loops, and a makerspace that smelled like hot PLA. This post is the longer version of that path—**backend**, **platform**, and **DevSecOps** are where I landed, but the steps in between matter. **[Version française]({{< ref "/posts/software-engineering-journey/index.fr.md" >}})**.

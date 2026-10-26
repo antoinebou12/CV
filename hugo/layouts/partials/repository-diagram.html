@@ -1,0 +1,71 @@
+{{- $note := .note -}}
+{{- $fr := eq .lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $id := printf "architecture-%s" $note.slug -}}
+{{- $profile := .profile | default dict -}}
+{{- $preferCompose := and .prefer_compose $profile.services -}}
+{{- $summary := index (hugo.Data.repository_system_summaries.repositories | default dict) $note.repo -}}
+{{- $analysis := index (hugo.Data.repository_analysis.repositories | default dict) $note.repo | default dict -}}
+{{- $imageSet := index (hugo.Data.repository_diagram_images.repositories | default dict) $note.repo | default dict -}}
+{{- $image := index $imageSet "system" | default (index $imageSet (cond $fr "overview_fr" "overview_en")) -}}
+{{- $source := "" -}}
+{{- if $preferCompose -}}
+  {{- $topo := slice "flowchart LR" -}}
+  {{- $topo = $topo | append "  classDef svc fill:#1b3040,stroke:#6fdbd0,color:#edf4fb" -}}
+  {{- range $profile.services -}}
+    {{- $sid := replaceRE "[^A-Za-z0-9_]" "_" .name -}}
+    {{- $ports := replace .ports "\"" "" -}}
+    {{- $label := printf "%s<br/>%s" .name $ports -}}
+    {{- $topo = $topo | append (printf "  %s[\"%s\"]:::svc" $sid $label) -}}
+  {{- end -}}
+  {{- range $profile.services -}}
+    {{- if .depends -}}
+      {{- $to := replaceRE "[^A-Za-z0-9_]" "_" .name -}}
+      {{- $deps := split .depends "," -}}
+      {{- range $deps -}}
+        {{- $raw := trim . " " -}}
+        {{- if and $raw (not (in (lower $raw) "startup")) (not (in (lower $raw) "order")) (not (in (lower $raw) "healthcheck")) -}}
+          {{- $fromName := index (split $raw " ") 0 -}}
+          {{- $from := replaceRE "[^A-Za-z0-9_]" "_" $fromName -}}
+          {{- if and $from (ne $from $to) -}}
+            {{- $topo = $topo | append (printf "  %s --> %s" $from $to) -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $source = delimit $topo "\n" -}}
+{{- else -}}
+  {{- with $analysis.gitdiagram -}}
+    {{- if and (eq .status "available") .mermaid -}}
+      {{- $source = replace .mermaid "flowchart TD" "flowchart LR" -}}
+      {{- $source = replace $source "graph TD" "flowchart LR" -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $source -}}
+    {{- $source = printf "flowchart LR\n" -}}
+    {{- range $index, $label := $note.nodes -}}{{- $source = printf "%s  n%d[\"%s\"]\n" $source $index (replace (index $label $i) "\"" "#quot;") -}}{{- end -}}
+    {{- range $note.edges -}}{{- $source = printf "%s  n%d --> n%d\n" $source (int (index . 0)) (int (index . 1)) -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+<div class="repo-diagram-block" role="group" aria-labelledby="{{ $id }}">
+  <p id="{{ $id }}" class="repo-diagram-caption">{{ if $preferCompose }}{{ if $fr }}Topologie Compose des services, ports et dépendances de démarrage documentés.{{ else }}Compose topology of documented services, ports, and startup dependencies.{{ end }}{{ else }}{{ if $fr }}Vue générale des composants et des échanges vérifiés dans le dépôt.{{ else }}System overview of the components and connections verified in the repository.{{ end }}{{ end }}</p>
+  <div class="repo-progressive-diagram" data-mermaid-fallback>
+    {{ with $image }}
+    <figure class="repo-static-diagram" data-mermaid-image-fallback>
+      <img src="{{ .path | relURL }}" loading="lazy" decoding="async" alt="{{ if $fr }}Vue statique de l’architecture de {{ $note.repo }}{{ else }}Static architecture view for {{ $note.repo }}{{ end }}">
+      <figcaption>{{ if $fr }}Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.{{ else }}Static preview. The interactive diagram replaces it after Mermaid loads.{{ end }}</figcaption>
+    </figure>
+    {{ end }}
+    <pre class="repo-mermaid-source"><code class="language-mermaid">{{ $source }}</code></pre>
+  </div>
+  {{ with $summary }}<div class="repo-system-summary"><p>{{ index .description $i }}</p><dl><div><dt>{{ if $fr }}Composants{{ else }}Components{{ end }}</dt><dd>{{ .components }}</dd></div><div><dt>{{ if $fr }}Connexions{{ else }}Connections{{ end }}</dt><dd>{{ .connections }}</dd></div><div><dt>{{ if $fr }}Liens appuyés par le code ou le README{{ else }}Links supported by code or README{{ end }}</dt><dd>{{ .evidenced }}/{{ .connections }}</dd></div></dl></div>{{ end }}
+  <details class="repo-diagram-text">
+    <summary>{{ if $fr }}Version texte du diagramme{{ else }}Text version of the diagram{{ end }}</summary>
+    {{ if $preferCompose }}
+    <ul>{{ range $profile.services }}<li><strong>{{ .name }}</strong> — {{ .runtime }} · {{ .ports }}{{ with .depends }} → {{ . }}{{ end }}</li>{{ end }}</ul>
+    {{ else }}
+    <ul>{{ range $note.edges }}<li>{{ index (index $note.nodes (int (index . 0))) $i }} → {{ index (index $note.nodes (int (index . 1))) $i }}</li>{{ end }}</ul>
+    {{ end }}
+  </details>
+</div>

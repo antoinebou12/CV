@@ -1,6 +1,6 @@
 # Antoine Boucher
 
-Ingénieur logiciel — Plateforme et infographie
+Ingénieur logiciel: Plateforme et infographie
 
 ## Coordonnées
 - Email: antoine@antoineboucher.info
@@ -8,24 +8,24 @@ Ingénieur logiciel — Plateforme et infographie
 - Web: https://antoineboucher.info/CV/index-fr.html
 - Location: Montréal, QC, CA
 - GitHub: https://github.com/antoinebou12
-- LinkedIn: https://www.linkedin.com/in/antoineboucher
+- LinkedIn: https://www.linkedin.com/in/antoineboucher12
 
 ## Profil
 
-Ingénieur plateforme et infographie : backends, exploitation cloud et outillage développeur. Infographie interactive (C++/OpenGL, Blender) ; pile actuelle : Java/Kotlin, Python, Docker/Kubernetes et infrastructure-as-code.
+Ingénieur plateforme et infographie : livraison en TypeScript, .NET, Java/Kotlin, Python et Docker/Kubernetes ; recherche de M. Sc. en infographie interactive avec C++/OpenGL et Blender (usure de surface en temps réel, frottement et textures).
 
 ## Expérience
 
 ### Stagiaire, Développeur(-euse) — Solutions numériques et analytiques @ La Caisse (Caisse de dépôt et placement du Québec)
 
-2026-09 — 2026-12 | Montréal, QC
-- Participer au cycle complet de développement de solutions applicatives optimisées pour une infrastructure infonuagique
-- Concevoir des modules et des composantes autonomes, réutilisables et testables
-- Collaborer à la création de rapports visuels ainsi qu'aux tests intégrés et d'acceptation
+2026-08 — aujourd'hui | Montréal, QC
+- Automatiser des processus d’affaires avec SharePoint, TypeScript, C# et .NET
+- Contribuer aux intégrations par API et aux travaux de migration depuis SnapLogic
+- Préciser les besoins de développement et d’intégration avec une équipe transversale, à partir des besoins d’affaires
 
 ### Plateformes cloud sécurisées @ IMC2 — Institut multidisciplinaire en cybersécurité et cyberrésilience
 
-2025-03 — 2026-02 | Montréal, QC (Télétravail)
+2025-03 — 2026-01 | Montréal, QC (Télétravail)
 - Scindé un monolithe en dépôts par service et piloté 5 pipelines GitLab CI/CD avec runners dédiés sur deux clusters GKE sur GCP ; réseau et observabilité en Terraform
 - Ajouté couverture JUnit et Playwright E2E sur 5 microservices Java ; raccordé les builds Android via GitLab vers la pile GKE gérée par Terraform
 - Livré une analyse scriptée des risques cybersécurité sur 1000+ risques et 181+ catégories de menaces avec interface Angular de triage
@@ -65,9 +65,9 @@ Ingénieur plateforme et infographie : backends, exploitation cloud et outillage
 
 ## Formation
 
-### Maîtrise, Génie des technologies de l'information — École de technologie supérieure (ÉTS)
+### M. Sc., Génie des technologies de l'information — École de technologie supérieure (ÉTS)
 
-2023-08 — 2026-08
+2023-08 — 2026-09
 - Mémoire : usure de surface en temps réel dans des simulations physiques interactives, avec frottement et textures dynamiques
 
 ### Baccalauréat, Génie des technologies de l'information — École de technologie supérieure (ÉTS)
@@ -89,6 +89,18 @@ Ingénieur plateforme et infographie : backends, exploitation cloud et outillage
 
 ## Projets sélectionnés
 
+### [Dimension](https://github.com/antoinebou12/Dimension)
+
+Workspace Rust exploratoire pour l’algèbre linéaire, les méthodes numériques et un moteur wgpu ciblant les fenêtres natives et WebAssembly.
+
+### [DasherControl](https://github.com/antoinebou12/DasherControl)
+
+Expérience de tableau de bord homelab avec applets Vue, backend Rust/Rocket, espaces de travail sauvegardés et interface Docker.
+
+### [bloc](https://github.com/antoinebou12/bloc)
+
+Fork de MrKuros/Blender-Cloud-Storage avec connexions S3 et MinIO, navigation par dossiers, recherche approximative et import de maillages dans Blender.
+
 ### [uml-mcp](https://github.com/antoinebou12/uml-mcp)
 
 Serveur MCP open source qui produit des diagrammes UML et apparentés (Mermaid, PlantUML, Kroki) depuis une interface de chat, pour Cursor et ChatGPT.
@@ -97,11 +109,11 @@ Serveur MCP open source qui produit des diagrammes UML et apparentés (Mermaid, 
 
 Fork homebrew de Moonlight-Switch pour streaming PC Apollo/Sunshine sur Nintendo Switch, avec surcouche et stats performance.
 
-### [moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)
+### [Artemis-N3DS](https://github.com/antoinebou12/Artemis-N3DS)
 
-Fork maintenu de zoeyjodon/moonlight-N3DS — expérimentations client GameStream pour homebrew New 3DS.
+Fork maintenu de zoeyjodon/moonlight-N3DS: expérimentations client GameStream pour homebrew New 3DS.
 
-### [sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)
+### [sm64coopdx-switch-N3DS](https://github.com/antoinebou12/sm64coopdx-switch-N3DS)
 
 Port homebrew Nintendo Switch de coop-deluxe/sm64coopdx (SM64 coop en ligne ; ROM fournie par l utilisateur).
 
@@ -126,6 +138,9 @@ Intégration Home Assistant HACS maintenue pour capteurs Renpho (poids, composit
 Sink Serilog .NET vers Sentry pour centraliser journaux et erreurs (plusieurs paquets NuGet).
 
 ## Certifications
+- Claude Academy: Introduction to Model Context Protocol
+- Claude Academy: Building with the Claude API
+- Claude Academy: Claude Platform 101
 - [AWS Certified Cloud Practitioner](https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564)
 - [Programme québécois d'entrepreneuriat scientifique (QcES)](https://verified.sertifier.com/fr/verify/37471918795197/)
 - [Parcours Cloud Quest (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)

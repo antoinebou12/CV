@@ -1,0 +1,614 @@
+{
+  "repo": "switch-wifi",
+  "slug": "switch-wifi",
+  "commit": "8ff883f6925c37b14b9683f8b933a9403654d08d",
+  "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/",
+  "tree_url": "https://github.com/antoinebou12/switch-wifi/tree/8ff883f6925c37b14b9683f8b933a9403654d08d",
+  "fetched_at": "2026-10-24T01:39:13.279784+00:00",
+  "languages": [
+    {
+      "name": "C++",
+      "bytes": 61640,
+      "percent": 86.58
+    },
+    {
+      "name": "CMake",
+      "bytes": 5914,
+      "percent": 8.31
+    },
+    {
+      "name": "Python",
+      "bytes": 3639,
+      "percent": 5.11
+    }
+  ],
+  "language_bytes": 71193,
+  "coverage": {
+    "tree_files": 51,
+    "eligible_files": 25,
+    "read_files": 25,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [
+      {
+        "file": "include/switch_wifi/network/speed_test.hpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "src/network/network_service.cpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "src/ui/main_tabs.cpp",
+        "error": "syntax-errors"
+      }
+    ],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 115,
+      "heading": "Recommended: official devkitPro container",
+      "commands": "git clone --recursive https://github.com/antoinebou12/switch-wifi.git\ncd switch-wifi"
+    },
+    {
+      "file": "README.md",
+      "line": 122,
+      "heading": "Recommended: official devkitPro container",
+      "commands": "docker run --rm \\\n  -v \"$PWD:/work\" -w /work \\\n  devkitpro/devkita64:latest \\\n  bash -lc 'cmake -S . -B build-switch \\\n    -DPLATFORM_SWITCH=ON \\\n    -DUSE_GLFW=ON \\\n    -DCMAKE_BUILD_TYPE=Release && \\\n    cmake --build build-switch --target switch-wifi.nro --parallel'"
+    },
+    {
+      "file": "README.md",
+      "line": 141,
+      "heading": "Recommended: official devkitPro container",
+      "commands": "python3 scripts/verify_nro.py build-switch/switch-wifi.nro"
+    },
+    {
+      "file": "README.md",
+      "line": 149,
+      "heading": "Native devkitPro installation",
+      "commands": "cmake -S . -B build-switch -DPLATFORM_SWITCH=ON -DUSE_GLFW=ON -DCMAKE_BUILD_TYPE=Release\ncmake --build build-switch --target switch-wifi.nro --parallel"
+    }
+  ],
+  "manifests": [],
+  "type_count": 27,
+  "types": [
+    {
+      "id": "tec54ffc64505",
+      "name": "BluetoothService",
+      "kind": "class",
+      "file": "include/switch_wifi/bluetooth/bluetooth_service.hpp",
+      "line": 9,
+      "language": "cpp",
+      "methods": [
+        "snapshot",
+        "passiveScan"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t17625c2744a3",
+      "name": "IpConfig",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 18,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t7988c53361f7",
+      "name": "ConnectionSnapshot",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 27,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t4a309fd00cd7",
+      "name": "SavedNetwork",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 39,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tc583422c7f0f",
+      "name": "NearbyWifiNetwork",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 46,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tff9ef4d0d29e",
+      "name": "LatencyStats",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 55,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t2488d1629c51",
+      "name": "SpeedSample",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 64,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t60189b23c9ad",
+      "name": "BluetoothDevice",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 79,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t28065228e336",
+      "name": "BluetoothSnapshot",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 84,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6f2d7c0133a5",
+      "name": "BluetoothScanResult",
+      "kind": "struct",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 92,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tcd996a2f6785",
+      "name": "RingHistory",
+      "kind": "class",
+      "file": "include/switch_wifi/core/metrics.hpp",
+      "line": 216,
+      "language": "cpp",
+      "methods": [
+        "RingHistory",
+        "push",
+        "clear",
+        "size",
+        "capacity",
+        "empty",
+        "values"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tba04fe8b8282",
+      "name": "NetworkService",
+      "kind": "class",
+      "file": "include/switch_wifi/network/network_service.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [
+        "initialize",
+        "shutdown",
+        "snapshot",
+        "savedNetworks",
+        "allowedWifiChannels",
+        "legacyRssiSupported"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t4a1e2b64403d",
+      "name": "SpeedTestConfig",
+      "kind": "struct",
+      "file": "include/switch_wifi/network/speed_test.hpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t17b0ef56d15f",
+      "name": "SpeedTestProgress",
+      "kind": "struct",
+      "file": "include/switch_wifi/network/speed_test.hpp",
+      "line": 25,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb7d120ac8ab3",
+      "name": "SpeedTestEngine",
+      "kind": "class",
+      "file": "include/switch_wifi/network/speed_test.hpp",
+      "line": 32,
+      "language": "cpp",
+      "methods": [
+        "run",
+        "cancel",
+        "isRunning"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tc14dc42206e1",
+      "name": "MainTabs",
+      "kind": "class",
+      "file": "include/switch_wifi/ui/main_tabs.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [],
+      "bases": [
+        "brls::TabFrame"
+      ]
+    },
+    {
+      "id": "t516161613369",
+      "name": "SignalShaderView",
+      "kind": "class",
+      "file": "include/switch_wifi/ui/signal_shader.hpp",
+      "line": 10,
+      "language": "cpp",
+      "methods": [
+        "setSignal",
+        "draw"
+      ],
+      "bases": [
+        "brls::View"
+      ]
+    },
+    {
+      "id": "t10d26629df77",
+      "name": "SparklineView",
+      "kind": "class",
+      "file": "include/switch_wifi/ui/sparkline.hpp",
+      "line": 9,
+      "language": "cpp",
+      "methods": [
+        "setSamples",
+        "draw"
+      ],
+      "bases": [
+        "brls::View"
+      ]
+    },
+    {
+      "id": "t8d7eb921c5dd",
+      "name": "NifmBasicProfileWire",
+      "kind": "struct",
+      "file": "src/network/network_service.cpp",
+      "line": 22,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td2da20dfb6a8",
+      "name": "TransferContext",
+      "kind": "struct",
+      "file": "src/network/speed_test.cpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t5362df8acad9",
+      "name": "RunningReset",
+      "kind": "struct",
+      "file": "src/network/speed_test.cpp",
+      "line": 37,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9b5d5e0d5f06",
+      "name": "ScrollableTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 33,
+      "language": "cpp",
+      "methods": [
+        "ScrollableTab",
+        "content"
+      ],
+      "bases": [
+        "brls::Box"
+      ]
+    },
+    {
+      "id": "te63291bab550",
+      "name": "DashboardTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 129,
+      "language": "cpp",
+      "methods": [
+        "DashboardTab",
+        "willAppear",
+        "refreshNow"
+      ],
+      "bases": [
+        "ScrollableTab"
+      ]
+    },
+    {
+      "id": "taf933e2e5c73",
+      "name": "NetworksTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 202,
+      "language": "cpp",
+      "methods": [
+        "NetworksTab",
+        "reloadSavedNetworks"
+      ],
+      "bases": [
+        "ScrollableTab"
+      ]
+    },
+    {
+      "id": "td91ba071aacb",
+      "name": "BenchmarkTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 266,
+      "language": "cpp",
+      "methods": [
+        "BenchmarkTab",
+        "updateResult",
+        "startTest"
+      ],
+      "bases": [
+        "ScrollableTab"
+      ]
+    },
+    {
+      "id": "tc624349d6d11",
+      "name": "BluetoothTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 370,
+      "language": "cpp",
+      "methods": [
+        "BluetoothTab",
+        "refreshNow",
+        "startPassiveScan"
+      ],
+      "bases": [
+        "ScrollableTab"
+      ]
+    },
+    {
+      "id": "t4f58a22b1fbd",
+      "name": "AboutTab",
+      "kind": "class",
+      "file": "src/ui/main_tabs.cpp",
+      "line": 434,
+      "language": "cpp",
+      "methods": [
+        "AboutTab",
+        "exportReport"
+      ],
+      "bases": [
+        "ScrollableTab"
+      ]
+    }
+  ],
+  "class_files": [
+    {
+      "path": "include/switch_wifi/bluetooth/bluetooth_service.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/bluetooth/bluetooth_service.hpp",
+      "download": "repository-docs/switch-wifi/classes/51190b3e8c82d404.mmd"
+    },
+    {
+      "path": "include/switch_wifi/core/metrics.hpp",
+      "types": 10,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/core/metrics.hpp",
+      "download": "repository-docs/switch-wifi/classes/5792f9d082f4a427.mmd"
+    },
+    {
+      "path": "include/switch_wifi/network/network_service.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/network/network_service.hpp",
+      "download": "repository-docs/switch-wifi/classes/2f5e40d0f88ddf96.mmd"
+    },
+    {
+      "path": "include/switch_wifi/network/speed_test.hpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/network/speed_test.hpp",
+      "download": "repository-docs/switch-wifi/classes/751e666f3da4cb98.mmd"
+    },
+    {
+      "path": "include/switch_wifi/ui/main_tabs.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/main_tabs.hpp",
+      "download": "repository-docs/switch-wifi/classes/c1af1b168065cd78.mmd"
+    },
+    {
+      "path": "include/switch_wifi/ui/signal_shader.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/signal_shader.hpp",
+      "download": "repository-docs/switch-wifi/classes/cc2e22d0a762b154.mmd"
+    },
+    {
+      "path": "include/switch_wifi/ui/sparkline.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/sparkline.hpp",
+      "download": "repository-docs/switch-wifi/classes/87ef8c02f74c7ad6.mmd"
+    },
+    {
+      "path": "src/network/network_service.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/network/network_service.cpp",
+      "download": "repository-docs/switch-wifi/classes/1815813feb0ad32e.mmd"
+    },
+    {
+      "path": "src/network/speed_test.cpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/network/speed_test.cpp",
+      "download": "repository-docs/switch-wifi/classes/5af27b1960d182bd.mmd"
+    },
+    {
+      "path": "src/ui/main_tabs.cpp",
+      "types": 6,
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/ui/main_tabs.cpp",
+      "download": "repository-docs/switch-wifi/classes/9eb97ae2dd7443b1.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "CMakeLists.txt",
+      "blob_sha": "8117f133314bef1e961cf764d868af42190674bf",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/CMakeLists.txt"
+    },
+    {
+      "path": "src/main.cpp",
+      "blob_sha": "fcb1f5c3835a8e33d30e173400543e3df62978aa",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/main.cpp"
+    },
+    {
+      "path": "src/core/metrics.cpp",
+      "blob_sha": "4586c4296b48a4dee7656d3843184dae6dba12d9",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/core/metrics.cpp"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "a2c375419534707b13dece2ae4ec992b4e87c370",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/README.md"
+    },
+    {
+      "path": "library/CMakeLists.txt",
+      "blob_sha": "00c034a79a8015b2865f16d09bd679e61a6dc010",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/library/CMakeLists.txt"
+    },
+    {
+      "path": "scripts/check_release_version.py",
+      "blob_sha": "9135bb70b603048430b55d4802fa63950acf62f4",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/scripts/check_release_version.py"
+    },
+    {
+      "path": "scripts/package_release.py",
+      "blob_sha": "b2bde7f916ee036a7b8fced80117d233087a6247",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/scripts/package_release.py"
+    },
+    {
+      "path": "scripts/verify_nro.py",
+      "blob_sha": "629ce97787763c2e282379e8eb8e1d0b5aa58270",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/scripts/verify_nro.py"
+    },
+    {
+      "path": "tests/test_benchmark.cpp",
+      "blob_sha": "5cfb4b4cf693857f98e6a46e28549cb44ab5a22a",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/tests/test_benchmark.cpp"
+    },
+    {
+      "path": "tests/test_history.cpp",
+      "blob_sha": "4b015acd839603fe360c54dacf8cbdfbe7eafc24",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/tests/test_history.cpp"
+    },
+    {
+      "path": "tests/test_metrics.cpp",
+      "blob_sha": "bae6afedba67f6471a69031e60f53f5e0ba3f307",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/tests/test_metrics.cpp"
+    },
+    {
+      "path": "include/switch_wifi/version.hpp",
+      "blob_sha": "3cf52f24ac7bdb1709b4cd7c870bd9c5ae91be37",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/version.hpp"
+    },
+    {
+      "path": "src/bluetooth/bluetooth_service.cpp",
+      "blob_sha": "7333ff56026626cdd1cc5e6cd96e5d99eb6036c3",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/bluetooth/bluetooth_service.cpp"
+    },
+    {
+      "path": "src/network/network_service.cpp",
+      "blob_sha": "6175d12a9086ebc7a98238c962740f09fd842225",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/network/network_service.cpp"
+    },
+    {
+      "path": "src/network/speed_test.cpp",
+      "blob_sha": "9e5e13569d08991e9c50ea993889be816cab06f8",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/network/speed_test.cpp"
+    },
+    {
+      "path": "src/ui/main_tabs.cpp",
+      "blob_sha": "4f4ee911a88979596f20b9eb541f7b9a9be9aa01",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/ui/main_tabs.cpp"
+    },
+    {
+      "path": "src/ui/signal_shader.cpp",
+      "blob_sha": "4d6c55d829d07f5765890cba05ea76cf3e8161be",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/ui/signal_shader.cpp"
+    },
+    {
+      "path": "src/ui/sparkline.cpp",
+      "blob_sha": "5d00b334f7bb36a1bf28c953e27bb7f09a014d94",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/src/ui/sparkline.cpp"
+    },
+    {
+      "path": "include/switch_wifi/bluetooth/bluetooth_service.hpp",
+      "blob_sha": "51e808077359c1dd4038aba405585290b3141f5a",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/bluetooth/bluetooth_service.hpp"
+    },
+    {
+      "path": "include/switch_wifi/core/metrics.hpp",
+      "blob_sha": "f60c7a5ce15d1e010ae1d2b32347d10bb2404f21",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/core/metrics.hpp"
+    },
+    {
+      "path": "include/switch_wifi/network/network_service.hpp",
+      "blob_sha": "96e4bd0d76fc84ccaa29b222b15254ab08a08f7d",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/network/network_service.hpp"
+    },
+    {
+      "path": "include/switch_wifi/network/speed_test.hpp",
+      "blob_sha": "6142b98f63f127120392e75b4f8547a066a21006",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/network/speed_test.hpp"
+    },
+    {
+      "path": "include/switch_wifi/ui/main_tabs.hpp",
+      "blob_sha": "0f6af5bc430a938a038e9ed145f58ae5a4b5faef",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/main_tabs.hpp"
+    },
+    {
+      "path": "include/switch_wifi/ui/signal_shader.hpp",
+      "blob_sha": "704b2d162f5e008bd6fb7a6c8c366fe4b3d2bc16",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/signal_shader.hpp"
+    },
+    {
+      "path": "include/switch_wifi/ui/sparkline.hpp",
+      "blob_sha": "0534d5c6a7c6fde837cc2365ead38de417d0f338",
+      "source_url": "https://github.com/antoinebou12/switch-wifi/blob/8ff883f6925c37b14b9683f8b933a9403654d08d/include/switch_wifi/ui/sparkline.hpp"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"switch-wifi\"]\n  f0[\"CMakeLists.txt\"]\n  root --> f0\n  f1[\"src/main.cpp\"]\n  root --> f1\n  f2[\"src/core/metrics.cpp\"]\n  root --> f2\n  f3[\"README.md\"]\n  root --> f3\n  f4[\"library/CMakeLists.txt\"]\n  root --> f4\n  f5[\"scripts/check_release_version.py\"]\n  root --> f5\n  f6[\"scripts/package_release.py\"]\n  root --> f6\n  f7[\"scripts/verify_nro.py\"]\n  root --> f7\n  f8[\"tests/test_benchmark.cpp\"]\n  root --> f8\n  f9[\"tests/test_history.cpp\"]\n  root --> f9\n  f10[\"tests/test_metrics.cpp\"]\n  root --> f10\n  f11[\"include/switch_wifi/version.hpp\"]\n  root --> f11\n  f12[\"src/bluetooth/bluetooth_service.cpp\"]\n  root --> f12\n  f13[\"src/network/network_service.cpp\"]\n  root --> f13\n  f14[\"src/network/speed_test.cpp\"]\n  root --> f14\n  f15[\"src/ui/main_tabs.cpp\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass tec54ffc64505[\"BluetoothService\"] {\n  snapshot()\n  passiveScan()\n}\nclass t17625c2744a3[\"IpConfig\"] {\n  <<struct>>\n}\nclass t7988c53361f7[\"ConnectionSnapshot\"] {\n  <<struct>>\n}\nclass t4a309fd00cd7[\"SavedNetwork\"] {\n  <<struct>>\n}\nclass tc583422c7f0f[\"NearbyWifiNetwork\"] {\n  <<struct>>\n}\nclass tff9ef4d0d29e[\"LatencyStats\"] {\n  <<struct>>\n}\nclass t2488d1629c51[\"SpeedSample\"] {\n  <<struct>>\n}\nclass t60189b23c9ad[\"BluetoothDevice\"] {\n  <<struct>>\n}\nclass t28065228e336[\"BluetoothSnapshot\"] {\n  <<struct>>\n}\nclass t6f2d7c0133a5[\"BluetoothScanResult\"] {\n  <<struct>>\n}\nclass tcd996a2f6785[\"RingHistory\"] {\n  RingHistory()\n  push()\n  clear()\n  size()\n}\nclass tba04fe8b8282[\"NetworkService\"] {\n  initialize()\n  shutdown()\n  snapshot()\n  savedNetworks()\n}\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/switch-wifi",
+    "status": "missing"
+  }
+}

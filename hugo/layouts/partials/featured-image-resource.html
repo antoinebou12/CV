@@ -5,11 +5,22 @@
   {{- if $n -}}
     {{- with $p.Resources.GetMatch $n -}}
       {{- $r = . -}}
+    {{- else -}}
+      {{- with $p.Resources.GetMatch (printf "images/%s" $n) -}}
+        {{- $r = . -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 {{- if not $r -}}
   {{- with ($p.Resources.Match "featured*") -}}
+    {{- if gt (len .) 0 -}}
+      {{- $r = index . 0 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $r -}}
+  {{- with ($p.Resources.Match "images/featured*") -}}
     {{- if gt (len .) 0 -}}
       {{- $r = index . 0 -}}
     {{- end -}}

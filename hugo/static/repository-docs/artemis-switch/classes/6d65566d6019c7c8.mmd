@@ -1,0 +1,36 @@
+classDiagram
+direction TB
+class t10ad25b6c7a6["KeyboardLocale"] {
+  <<struct>>
+}
+class t0973edddd97f["KeyboardState"] {
+  <<struct>>
+  KeyboardState()
+}
+class t71df4fb1192a["ButtonView"] {
+  setKey()
+  registerCallback()
+  draw()
+  onFocusGained()
+  onFocusLost()
+  applyTitle()
+  getCurrentLocale()
+}
+class te9404bda54cf["KeyboardView"] {
+  getLocales()
+  ensureLocales()
+  getKeyboardState()
+  getKeyCode()
+  draw()
+  createEnglishLayout()
+  createNumpadLayout()
+  createFullLayout()
+  changeLang()
+  createLocales()
+  applyIsoAndAltGrLabels()
+}
+class b4842452c36f0["brls::Box"] {
+  <<unresolved_base>>
+}
+b4842452c36f0 <|-- t71df4fb1192a
+b4842452c36f0 <|-- te9404bda54cf

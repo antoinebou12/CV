@@ -1,0 +1,25 @@
+classDiagram
+direction TB
+class t930b73d4d964["Integrator"] {
+  <<trait>>
+}
+class t21150722fd86["PbdIntegrator"] {
+  <<struct>>
+  new()
+  add_constraint()
+  hooks_mut()
+  step()
+}
+class tb9c3ba5a336e["XpbdIntegrator"] {
+  <<struct>>
+  new()
+  add_particle_constraint()
+  add_positional_constraint()
+  clear_contacts()
+  step()
+}
+class t6ac7b1dadd24["ExplicitEulerIntegrator"] {
+  <<struct>>
+  new()
+  step()
+}

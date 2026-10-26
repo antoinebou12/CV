@@ -12,7 +12,7 @@ tags:
   - Homebrew
   - C++
 images:
-  - artemis-performance.png
+  - images/artemis-performance.png
 ---
 
 Three repos I maintain on the side: **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** for Apollo/Sunshine streaming on Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** for GameStream on New 3DS, and **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** as a Switch build of cooperative Super Mario 64. They share the same itch — run something interesting on hardware that was not designed for it — but the stack and constraints differ. **[Version française]({{< ref "/posts/handheld-streaming-homebrew/index.fr.md" >}})**.

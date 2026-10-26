@@ -1,0 +1,698 @@
+{
+  "repo": "hass_renpho",
+  "slug": "hass-renpho",
+  "commit": "b38c9dfa5416e5c1d09619d963b7bfaac238494b",
+  "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/",
+  "tree_url": "https://github.com/antoinebou12/hass_renpho/tree/b38c9dfa5416e5c1d09619d963b7bfaac238494b",
+  "fetched_at": "2026-10-24T01:40:17.207574+00:00",
+  "languages": [
+    {
+      "name": "Python",
+      "bytes": 144406,
+      "percent": 99.51
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 711,
+      "percent": 0.49
+    }
+  ],
+  "language_bytes": 145117,
+  "coverage": {
+    "tree_files": 59,
+    "eligible_files": 17,
+    "read_files": 17,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 50,
+      "heading": "Installation",
+      "commands": "Stable\nUse the latest release\nNot stable\ngit clone https://github.com/antoinebou12/hass_renpho"
+    }
+  ],
+  "manifests": [],
+  "type_count": 33,
+  "types": [
+    {
+      "id": "t1c013f7e1614",
+      "name": "RenphoWeight",
+      "kind": "class",
+      "file": "custom_components/renpho/api_renpho.py",
+      "line": 42,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_json_session_headers",
+        "get_timestamp",
+        "prepare_data",
+        "open_session",
+        "check_proxy",
+        "_request",
+        "encrypt_password",
+        "is_valid_session",
+        "validate_credentials",
+        "auth",
+        "resolve_account_user_id",
+        "get_scale_users",
+        "get_measurements",
+        "get_weight",
+        "get_info",
+        "get_device_info",
+        "list_latest_model",
+        "list_girth",
+        "list_girth_goal",
+        "list_growth_record",
+        "message_list",
+        "request_user",
+        "reach_goal",
+        "get_specific_metric",
+        "poll_data",
+        "start_polling",
+        "polling_loop",
+        "stop_polling",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t018fc6091cac",
+      "name": "AuthenticationError",
+      "kind": "class",
+      "file": "custom_components/renpho/api_renpho.py",
+      "line": 783,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "tf6d6f400bcb6",
+      "name": "APIError",
+      "kind": "class",
+      "file": "custom_components/renpho/api_renpho.py",
+      "line": 787,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "t3f96fd588bea",
+      "name": "ClientSSLError",
+      "kind": "class",
+      "file": "custom_components/renpho/api_renpho.py",
+      "line": 791,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "teb0533bd5d5d",
+      "name": "RenphoWeightCoordinator",
+      "kind": "class",
+      "file": "custom_components/renpho/coordinator.py",
+      "line": 20,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_async_update_data",
+        "last_updated"
+      ],
+      "bases": [
+        "DataUpdateCoordinator"
+      ]
+    },
+    {
+      "id": "t16ebe0abcf92",
+      "name": "RenphoSensor",
+      "kind": "class",
+      "file": "custom_components/renpho/sensor.py",
+      "line": 84,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_apply_native_metadata",
+        "_schedule_update",
+        "_handle_coordinator_update",
+        "unique_id",
+        "extra_state_attributes",
+        "category",
+        "label",
+        "async_update"
+      ],
+      "bases": [
+        "SensorEntity"
+      ]
+    },
+    {
+      "id": "t21aebcf929af",
+      "name": "DeviceBind",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 59,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "ta3053775281d",
+      "name": "UserResponse",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 77,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t7807df8cb6f0",
+      "name": "MeasurementDetail",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 137,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "ta4f92b147e4f",
+      "name": "MeasurementResponse",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 224,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "td4123c774424",
+      "name": "Users",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 236,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t9147ce26b037",
+      "name": "GirthGoal",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 246,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t761c52495e1c",
+      "name": "GirthGoalsResponse",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 262,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t1e8a4cd38553",
+      "name": "Girth",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 270,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "teec3dc82797f",
+      "name": "GirthResponse",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 332,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t19b09ae91501",
+      "name": "RenphoWeight",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 343,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_json_session_headers",
+        "get_timestamp",
+        "prepare_data",
+        "open_session",
+        "check_proxy",
+        "_request",
+        "encrypt_password",
+        "is_valid_session",
+        "validate_credentials",
+        "auth",
+        "resolve_account_user_id",
+        "get_scale_users",
+        "get_measurements",
+        "get_measurements_history",
+        "get_all_users_measurements_history",
+        "get_weight",
+        "get_info",
+        "get_device_info",
+        "list_latest_model",
+        "list_girth",
+        "list_girth_goal",
+        "list_growth_record",
+        "message_list",
+        "request_user",
+        "reach_goal",
+        "get_specific_metric",
+        "poll_data",
+        "start_polling",
+        "polling_loop",
+        "stop_polling",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t23b0325f0e4f",
+      "name": "AuthenticationError",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 1151,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "t413ec49670bf",
+      "name": "APIError",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 1155,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "ta8c9972b7819",
+      "name": "ClientSSLError",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 1159,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Exception"
+      ]
+    },
+    {
+      "id": "t50096199ba12",
+      "name": "APIResponse",
+      "kind": "class",
+      "file": "api/app.py",
+      "line": 1207,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "ted538bc152c3",
+      "name": "ClientFingerprint",
+      "kind": "class",
+      "file": "api/http_fingerprint.py",
+      "line": 10,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6e6150b8db97",
+      "name": "DeviceBind",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 6,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "te704d49945ce",
+      "name": "UserResponse",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 24,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t7a36d4082041",
+      "name": "MeasurementDetail",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 84,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "tfe670f65aa81",
+      "name": "MeasurementResponse",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 171,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t12cf337344d5",
+      "name": "Users",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 183,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t65fd5a445e80",
+      "name": "GirthGoal",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 193,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t85000c37e917",
+      "name": "GirthGoalsResponse",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 209,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "tc439248f7ee0",
+      "name": "Girth",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 217,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "teecefd14c737",
+      "name": "GirthResponse",
+      "kind": "class",
+      "file": "custom_components/renpho/api_object.py",
+      "line": 279,
+      "language": "python",
+      "methods": [
+        "get"
+      ],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "tf157b38b9c65",
+      "name": "RenphoConfigFlow",
+      "kind": "class",
+      "file": "custom_components/renpho/config_flow.py",
+      "line": 94,
+      "language": "python",
+      "methods": [
+        "async_step_user",
+        "async_step_select_user"
+      ],
+      "bases": [
+        "config_entries.ConfigFlow"
+      ]
+    },
+    {
+      "id": "t1daedafc9709",
+      "name": "CannotConnect",
+      "kind": "class",
+      "file": "custom_components/renpho/config_flow.py",
+      "line": 151,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "__str__",
+        "get_details"
+      ],
+      "bases": [
+        "exceptions.HomeAssistantError"
+      ]
+    },
+    {
+      "id": "tfe06c78b7b59",
+      "name": "ClientFingerprint",
+      "kind": "class",
+      "file": "custom_components/renpho/http_fingerprint.py",
+      "line": 10,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "api/app.py",
+      "types": 14,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/app.py",
+      "download": "repository-docs/hass-renpho/classes/845cc75ff982ceed.mmd"
+    },
+    {
+      "path": "api/http_fingerprint.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/http_fingerprint.py",
+      "download": "repository-docs/hass-renpho/classes/e452157a5e8feec1.mmd"
+    },
+    {
+      "path": "custom_components/renpho/api_object.py",
+      "types": 9,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/api_object.py",
+      "download": "repository-docs/hass-renpho/classes/f9ac32232e1ac012.mmd"
+    },
+    {
+      "path": "custom_components/renpho/api_renpho.py",
+      "types": 4,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/api_renpho.py",
+      "download": "repository-docs/hass-renpho/classes/a545b490138acd4f.mmd"
+    },
+    {
+      "path": "custom_components/renpho/config_flow.py",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/config_flow.py",
+      "download": "repository-docs/hass-renpho/classes/eefe162abe72f091.mmd"
+    },
+    {
+      "path": "custom_components/renpho/coordinator.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/coordinator.py",
+      "download": "repository-docs/hass-renpho/classes/a0c6570f7e171c2f.mmd"
+    },
+    {
+      "path": "custom_components/renpho/http_fingerprint.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/http_fingerprint.py",
+      "download": "repository-docs/hass-renpho/classes/e5762ed7517a428a.mmd"
+    },
+    {
+      "path": "custom_components/renpho/sensor.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/sensor.py",
+      "download": "repository-docs/hass-renpho/classes/bcb225ce324add82.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "custom_components/renpho/api_renpho.py",
+      "blob_sha": "1576c0799b8b095c3d0622fc42ea5098b9615997",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/api_renpho.py"
+    },
+    {
+      "path": "custom_components/renpho/coordinator.py",
+      "blob_sha": "d61bd30d9238a467d6c577f34bfcae8512633fe0",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/coordinator.py"
+    },
+    {
+      "path": "custom_components/renpho/sensor.py",
+      "blob_sha": "0b57780e32db53ed5fd9d6aaac134185c2deef74",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/sensor.py"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "d26174d99ba4b2a628adb39b3de0a11d9f070a75",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/README.md"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "450036e9edb89df213020e2a986e8471cc1c6ada",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/requirements.txt"
+    },
+    {
+      "path": ".devcontainer/README.md",
+      "blob_sha": "38dc4fd2a28fde294016a85077ab2a7411353031",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/.devcontainer/README.md"
+    },
+    {
+      "path": "api/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/__init__.py"
+    },
+    {
+      "path": "api/app.py",
+      "blob_sha": "68fcce9e5960a8210e306d02f20aac2bdd8fd6ae",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/app.py"
+    },
+    {
+      "path": "api/docker-compose.yml",
+      "blob_sha": "97f9bfa8ba6d0f6a443d09c02816d7586864839e",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/docker-compose.yml"
+    },
+    {
+      "path": "api/http_fingerprint.py",
+      "blob_sha": "5329b8bc8a2a9c1b321c6179d0f4e3620fc8801e",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/http_fingerprint.py"
+    },
+    {
+      "path": "api/requirements.txt",
+      "blob_sha": "d7765e744e2b8ea5e178895c3a39067f3f283e9b",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/api/requirements.txt"
+    },
+    {
+      "path": "custom_components/renpho/__init__.py",
+      "blob_sha": "3f23a0c7d38ad2ec8ea008a88c9ac82e5fbac586",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/__init__.py"
+    },
+    {
+      "path": "custom_components/renpho/api_object.py",
+      "blob_sha": "efb3d9447b6e824fdfa747d9e817d9bc56b2cb78",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/api_object.py"
+    },
+    {
+      "path": "custom_components/renpho/config_flow.py",
+      "blob_sha": "6087cf9e04152f9845170db0566793bf403e6c00",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/config_flow.py"
+    },
+    {
+      "path": "custom_components/renpho/const.py",
+      "blob_sha": "0ef30e05ecdd8a75696c62ce230b73f4f669e3c4",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/const.py"
+    },
+    {
+      "path": "custom_components/renpho/http_fingerprint.py",
+      "blob_sha": "5329b8bc8a2a9c1b321c6179d0f4e3620fc8801e",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/http_fingerprint.py"
+    },
+    {
+      "path": "custom_components/renpho/sensor_configs.py",
+      "blob_sha": "6d207bfdd73abfbe74aed7252e910288da19707f",
+      "source_url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/custom_components/renpho/sensor_configs.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"hass_renpho\"]\n  f0[\"custom_components/renpho/api_renpho.py\"]\n  root --> f0\n  f1[\"custom_components/renpho/coordinator.py\"]\n  root --> f1\n  f2[\"custom_components/renpho/sensor.py\"]\n  root --> f2\n  f3[\"README.md\"]\n  root --> f3\n  f4[\"requirements.txt\"]\n  root --> f4\n  f5[\".devcontainer/README.md\"]\n  root --> f5\n  f6[\"api/__init__.py\"]\n  root --> f6\n  f7[\"api/app.py\"]\n  root --> f7\n  f8[\"api/docker-compose.yml\"]\n  root --> f8\n  f9[\"api/http_fingerprint.py\"]\n  root --> f9\n  f10[\"api/requirements.txt\"]\n  root --> f10\n  f11[\"custom_components/renpho/__init__.py\"]\n  root --> f11\n  f12[\"custom_components/renpho/api_object.py\"]\n  root --> f12\n  f13[\"custom_components/renpho/config_flow.py\"]\n  root --> f13\n  f14[\"custom_components/renpho/const.py\"]\n  root --> f14\n  f15[\"custom_components/renpho/http_fingerprint.py\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t1c013f7e1614[\"RenphoWeight\"] {\n  __init__()\n  _json_session_headers()\n  get_timestamp()\n  prepare_data()\n}\nclass t018fc6091cac[\"AuthenticationError\"] {\n}\nclass tf6d6f400bcb6[\"APIError\"] {\n}\nclass t3f96fd588bea[\"ClientSSLError\"] {\n}\nclass teb0533bd5d5d[\"RenphoWeightCoordinator\"] {\n  __init__()\n  _async_update_data()\n  last_updated()\n}\nclass t16ebe0abcf92[\"RenphoSensor\"] {\n  __init__()\n  _apply_native_metadata()\n  _schedule_update()\n  _handle_coordinator_update()\n}\nclass t21aebcf929af[\"DeviceBind\"] {\n  get()\n}\nclass ta3053775281d[\"UserResponse\"] {\n  get()\n}\nclass t7807df8cb6f0[\"MeasurementDetail\"] {\n  get()\n}\nclass ta4f92b147e4f[\"MeasurementResponse\"] {\n  get()\n}\nclass td4123c774424[\"Users\"] {\n  get()\n}\nclass t9147ce26b037[\"GirthGoal\"] {\n  get()\n}\nclass bbff3815f3008[\"Exception\"] {\n  <<unresolved_base>>\n}\nbbff3815f3008 <|-- t018fc6091cac\nbbff3815f3008 <|-- tf6d6f400bcb6\nbbff3815f3008 <|-- t3f96fd588bea\nclass b86550088d462[\"DataUpdateCoordinator\"] {\n  <<unresolved_base>>\n}\nb86550088d462 <|-- teb0533bd5d5d\nclass b861c1788888f[\"SensorEntity\"] {\n  <<unresolved_base>>\n}\nb861c1788888f <|-- t16ebe0abcf92\nclass bb33e03eb53a5[\"BaseModel\"] {\n  <<unresolved_base>>\n}\nbb33e03eb53a5 <|-- t21aebcf929af\nbb33e03eb53a5 <|-- ta3053775281d\nbb33e03eb53a5 <|-- t7807df8cb6f0\nbb33e03eb53a5 <|-- ta4f92b147e4f\nbb33e03eb53a5 <|-- td4123c774424\nbb33e03eb53a5 <|-- t9147ce26b037\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/hass_renpho",
+    "status": "missing"
+  }
+}

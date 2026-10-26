@@ -12,14 +12,14 @@ tags:
   - Addons
 canonicalURL: "https://medium.com/@antoine.boucher012/a-method-to-install-python-packages-for-add-ons-plugins-in-blender-windows-blender-4-2-98bcbe10fa81"
 images:
-  - img-001.png
+  - images/img-001.png
 ---
 
 Blender add-ons that need **NumPy**, **meshio**, or **requests** hit the same wall: Blender ships its **own Python**, so system `pip` does nothing useful. I wrote a small installer that targets Blender’s `sys.executable`, drops wheels under `scripts/modules`, and runs in a **background thread** so the UI stays responsive (Blender 4.2+, Windows). **[Version française]({{< ref "/posts/blender-python-packages/index.fr.md" >}})**.
 
 <!--more-->
 
-![Blender Scripting workspace — Text Editor and Run Script](./img-001.png)
+![Blender Scripting workspace — Text Editor and Run Script](images/img-001.png)
 
 ## The problem in one sentence
 

@@ -82,14 +82,23 @@
   </div>
 
   <div
-    class="header-util-cluster relative z-50 flex shrink-0 items-center"
+    class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"
   >
+    {{- $cvHome := cond (eq .Lang "fr") "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" -}}
+    <a
+      class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]"
+      href="{{ $cvHome }}"
+      >{{ i18n "navCvHome" }}</a
+    >
     <button
       type="button"
       class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
       aria-label="{{ i18n "navThemeToggle" }}"
       aria-pressed="false"
-    ></button>
+    >
+      <svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5 0 0 1 10.8 3.5 8.5 8.5 0 1 0 20.5 13.2Z"/></svg>
+      <svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+    </button>
     <div
       class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex"
       aria-label="{{ i18n "langCvNav" }}"
@@ -130,6 +139,9 @@
         }
         btnMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
         btnMenu.setAttribute('aria-label', open ? menuCloseLabel : menuOpenLabel);
+        if (navPanel) navPanel.inert = !open && !window.matchMedia('(min-width: 1024px)').matches;
+        document.querySelector('main')?.toggleAttribute('inert', open);
+        document.querySelector('footer')?.toggleAttribute('inert', open);
       };
 
       btnMenu.addEventListener('click', () => {
@@ -139,6 +151,15 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && htmlClass.contains('open')) {
           setMenuOpen(false);
+          btnMenu.focus();
+        }
+        if (e.key === 'Tab' && htmlClass.contains('open')) {
+          const focusable = [...document.querySelectorAll('.site-header a[href], .site-header button:not([disabled])')]
+            .filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden' && !el.closest('[inert]'));
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
         }
       });
 
@@ -146,6 +167,7 @@
         navPanel.addEventListener('click', (e) => {
           if (e.target === navPanel) {
             setMenuOpen(false);
+            btnMenu.focus();
             return;
           }
           if (e.target.closest('a')) {
@@ -156,9 +178,7 @@
 
       const lgUpMq = window.matchMedia('(min-width: 1024px)');
       const handleLgUpChange = (event) => {
-        if (event.matches) {
-          setMenuOpen(false);
-        }
+        setMenuOpen(false);
       };
 
       handleLgUpChange(lgUpMq);

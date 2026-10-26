@@ -1,0 +1,48 @@
+classDiagram
+direction TB
+class te9659791709f["RealWgxBackend"] {
+  realEgressCallback()
+  sendEgress()
+  toSockaddr()
+  fromSockaddr()
+  discoverLanAddress()
+  startDirectPath()
+  stopDirectPath()
+  sendDirect()
+  sendUdpLocked()
+  directCounterLine()
+  sendSelfTests()
+  handleSelfTest()
+  sealDiscoLocked()
+  sendDiscoViaDerp()
+  handleDisco()
+  resolveStunServer()
+  directHousekeeping()
+  handleUdpPacket()
+  udpLoop()
+  wgTypeName()
+  classifyIngress()
+  msSinceHandshakeStart()
+  nowMs()
+  resetCounters()
+  counterLine()
+  logTrafficSummary()
+  logHandshakeDiagnosis()
+  startTunnel()
+  addOrUpdatePeer()
+  ensureDerpRoute()
+  startTcpProxy()
+  startUdpRelay()
+  stopUdpRelay()
+  derpReader()
+  stopDerp()
+  stop()
+  isRunning()
+}
+class tc15f07e059c6["RelayDeleter"] {
+  <<struct>>
+}
+class b7241d4d5983c["IWgxBackend"] {
+  <<unresolved_base>>
+}
+b7241d4d5983c <|-- te9659791709f

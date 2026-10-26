@@ -43,9 +43,14 @@
   <body
     class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"
   >
+    {{- if and (eq .Section "projects") (eq .Kind "section") -}}
+    <div id="project-particles" aria-hidden="true"></div>
+    {{- end -}}
+    <a class="site-skip-link" href="#main-content">{{ if eq .Lang "fr" }}Aller au contenu{{ else }}Skip to content{{ end }}</a>
     {{- partial "header.html" . -}}
 
     <main
+      id="main-content" tabindex="-1"
       class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"
     >
       {{- block "main" . -}}{{- end -}}

@@ -30,7 +30,7 @@
   >
     <a
       class="post-list-card-hit relative flex min-h-0 flex-1 flex-col text-inherit no-underline outline-none ring-0 focus-visible:z-[2] focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
-      href="{{ $p.Permalink }}"
+      href="{{ $p.RelPermalink }}"
       aria-labelledby="{{ $titleID }}"
     >
       <span
@@ -44,6 +44,9 @@
       >
       {{- end -}}
       {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.png") -}}
+      {{- if $p.Params.cover_code -}}
+      <div class="post-code-cover" aria-hidden="true"><span>{{ $p.Params.cover_label }}</span><strong>{{ $p.Params.cover_code }}</strong><code>.blend → S3 / MinIO</code></div>
+      {{- else -}}
       <div
         class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"
       >
@@ -59,6 +62,7 @@
           />
         </div>
       </div>
+      {{- end -}}
       <div
         class="post-list-card-body flex min-h-0 flex-1 flex-col gap-2 px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6"
       >

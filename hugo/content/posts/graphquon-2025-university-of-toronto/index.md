@@ -15,7 +15,7 @@ tags:
   - ÉTS
 canonicalURL: "https://www.dgp.toronto.edu/graphquon/"
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![GraphQuon 2025 name badge — Antoine Boucher, École de technologie supérieure, Toronto skyline](./images/graphquon-name-badge.png)

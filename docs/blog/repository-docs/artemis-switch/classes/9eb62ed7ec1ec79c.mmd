@@ -1,0 +1,45 @@
+classDiagram
+direction TB
+class tfd2db7111f52["RemoteAccessProviderInfo"] {
+  <<struct>>
+}
+class t0d49ca1150b5["RemoteAccessSelectionResult"] {
+  <<struct>>
+}
+class tef256e421a18["RemoteAccessManager"] {
+  registerProvider()
+  providers()
+  availableProviders()
+  activeProviderId()
+  hasActiveRoute()
+  setActiveProviderId()
+  startProvider()
+  stopProvider()
+  selectAndStartProvider()
+  stopActiveProvider()
+  poll()
+  allPeers()
+  status()
+  activateRoute()
+  prepareRouteForStreaming()
+  deactivateRoute()
+  RemoteAccessManager()
+  providerSlot()
+  providerSlots()
+  providerShared()
+  stopActiveProviderLocked()
+  findRouteLocked()
+}
+class tba804bdfcdce["RouteKey"] {
+  <<struct>>
+}
+class tc279ed897fd5["RouteKeyHash"] {
+  <<struct>>
+}
+class ta9afeef387cb["ProviderSlot"] {
+  <<struct>>
+  ProviderSlot()
+}
+class t4065cf26da89["RouteEntry"] {
+  <<struct>>
+}

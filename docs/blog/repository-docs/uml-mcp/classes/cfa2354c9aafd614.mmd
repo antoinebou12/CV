@@ -1,0 +1,45 @@
+classDiagram
+direction TB
+class tabae3b68b905["TestGetDiagramTypes"] {
+  test_returns_dict_keyed_by_diagram_type()
+  test_each_entry_has_backend_description_formats()
+}
+class t76a35399a86c["TestGetDiagramTemplates"] {
+  test_returns_dict_keyed_by_diagram_type()
+  test_values_are_strings()
+}
+class tbb33c3c59f01["TestGetDiagramExamples"] {
+  test_returns_dict_keyed_by_diagram_type()
+  test_values_are_strings()
+  test_every_diagram_type_has_template_and_example()
+}
+class t6ee83116a3f6["TestGetCapabilities"] {
+  test_returns_matrix_with_backend_formats_description()
+}
+class t9d7c29092ff6["TestGetOutputFormats"] {
+  test_returns_dict_mapping_type_to_formats_list()
+}
+class t2755ce015b8c["TestGetServerInfo"] {
+  test_contains_expected_keys()
+  test_tools_and_prompts_are_lists()
+}
+class t38d88ad75244["TestGetRecommendedWorkflow"] {
+  test_contains_workflow_and_prompt()
+}
+class t853247454a5e["TestGetDiagramRecipes"] {
+  test_returns_dict_with_known_recipes()
+  test_each_recipe_has_required_fields()
+  test_algorithm_template_has_complexity_labels()
+  test_paper_concept_template_has_clickable_link()
+  test_recipes_point_back_to_named_prompts()
+  test_recipes_recommend_svg_output()
+  test_recipes_target_mermaid_backend()
+  test_recipes_are_valid_json()
+}
+class t98a50fa33f13["TestRegisterDiagramResources"] {
+  test_server_resource_called_for_each_uri()
+  test_returns_list_of_uris()
+}
+class t560baf0186b2["TestRegisterResourcesWithServer"] {
+  test_registers_each_decorated_resource()
+}

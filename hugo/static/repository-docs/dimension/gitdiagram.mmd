@@ -1,0 +1,89 @@
+flowchart TD
+
+subgraph group_data["Linear Algebra Data"]
+  node_matrix["Matrices<br/>[matrix.rs]"]
+  node_vector["Vectors<br/>[vector.rs]"]
+  node_storage[("Matrix Storage<br/>[dense_storage.rs]")]
+  node_operators["Operators<br/>[operators.rs]"]
+end
+
+subgraph group_compute["Compute Backends"]
+  node_cpu["CPU Dispatch<br/>[mod.rs]"]
+  node_parallel["Parallel CPU<br/>[parallel.rs]"]
+  node_sequential["Sequential CPU<br/>[sequential.rs]"]
+  node_simd["SIMD CPU<br/>[simd.rs]"]
+  node_executor["Execution<br/>[executor.rs]"]
+  node_gpu["GPU Compute<br/>[mod.rs]"]
+  node_pipelines["GPU Pipelines<br/>[pipelines.rs]"]
+  node_shaders["GPU Shaders<br/>[shaders.rs]"]
+end
+
+subgraph group_algorithms["Numerical Algorithms"]
+  node_linear["Linear Solvers<br/>[solve.rs]"]
+  node_decomposition["Decomposition<br/>[svd.rs]"]
+  node_optimization["Optimization<br/>[linesearch.rs]"]
+  node_graph["Graph Algorithms<br/>[mod.rs]"]
+end
+
+subgraph group_domains["Math Domains"]
+  node_math3d["3D Math<br/>[math3d.rs]"]
+  node_transforms["Transforms<br/>[mod.rs]"]
+  node_ml["ML and Statistics<br/>[mod.rs]"]
+  node_noise["Noise<br/>[mod.rs]"]
+end
+
+node_application(("Application"))
+node_api["Public API<br/>[lib.rs]"]
+
+node_application -->|"uses"| node_api
+node_api -->|"exports"| node_matrix
+node_api -->|"exports"| node_vector
+node_api -->|"exports"| node_storage
+node_api -->|"exposes"| node_operators
+node_api -->|"exports"| node_linear
+node_api -->|"exports"| node_decomposition
+node_api -->|"exports"| node_optimization
+node_api -->|"exports"| node_graph
+node_api -->|"exports"| node_math3d
+node_api -->|"exports"| node_transforms
+node_api -->|"exports"| node_ml
+node_api -->|"exposes"| node_noise
+node_cpu -->|"dispatches"| node_parallel
+node_cpu -->|"dispatches"| node_sequential
+node_cpu -->|"dispatches"| node_simd
+node_pipelines -->|"uses shaders"| node_shaders
+
+click node_api "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/lib.rs"
+click node_matrix "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/matrix.rs"
+click node_vector "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/vector.rs"
+click node_storage "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/structure/dense_storage.rs"
+click node_operators "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/operators.rs"
+click node_cpu "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/cpu/mod.rs"
+click node_parallel "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/cpu/parallel.rs"
+click node_sequential "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/cpu/sequential.rs"
+click node_simd "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/cpu/simd.rs"
+click node_executor "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/executor.rs"
+click node_gpu "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/gpu/mod.rs"
+click node_pipelines "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/gpu/pipelines.rs"
+click node_shaders "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/gpu/shaders.rs"
+click node_linear "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/linear/solve.rs"
+click node_decomposition "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/decomposition/svd.rs"
+click node_optimization "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/argmin/linesearch.rs"
+click node_graph "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/graph/mod.rs"
+click node_math3d "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/math/math3d.rs"
+click node_transforms "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/transforms/mod.rs"
+click node_ml "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/clustering/mod.rs"
+click node_noise "https://github.com/antoinebou12/dimension/blob/main/mathlib/src/noise/mod.rs"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_matrix,node_vector,node_storage,node_operators toneBlue
+class node_cpu,node_parallel,node_sequential,node_simd,node_executor,node_gpu,node_pipelines,node_shaders toneAmber
+class node_linear,node_decomposition,node_optimization,node_graph,node_api toneMint
+class node_math3d,node_transforms,node_ml,node_noise toneRose
+class node_application toneIndigo

@@ -1,0 +1,59 @@
+classDiagram
+direction TB
+class t69b4c4720548["ElfHeader"] {
+  __init__()
+  to_bin()
+}
+class t4eecfab5807d["Symbol"] {
+  __init__()
+  to_bin()
+}
+class t5e5b30b9f924["Relocation"] {
+  __init__()
+  to_bin()
+}
+class t6fb6b21eb46b["Section"] {
+  __init__()
+  from_parts()
+  lookup_str()
+  add_str()
+  is_rel()
+  header_to_bin()
+  late_init()
+  find_symbol()
+  find_symbol_in_section()
+  init_symbols()
+  init_relocs()
+  local_symbols()
+  global_symbols()
+}
+class t56e23192ba68["ElfFile"] {
+  __init__()
+  find_section()
+  add_section()
+  drop_irrelevant_sections()
+  write()
+}
+class t280923ae403c["Failure"] {
+  __init__()
+  __str__()
+}
+class t3aede456a044["GlobalState"] {
+  __init__()
+  next_late_rodata_hex()
+  make_name()
+}
+class t95820aeb3d8f["GlobalAsmBlock"] {
+  __init__()
+  fail()
+  count_quoted_size()
+  align2()
+  align4()
+  add_sized()
+  process_line()
+  finish()
+}
+class bc9ce8f751457["Exception"] {
+  <<unresolved_base>>
+}
+bc9ce8f751457 <|-- t280923ae403c

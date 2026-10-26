@@ -1,0 +1,385 @@
+{{- $name := .Page.Params.repository_note -}}
+{{- $matches := where hugo.Data.repository_notes.notes "repo" $name -}}
+{{- if ne (len $matches) 1 -}}{{ errorf "Expected one architecture note for %q" $name }}{{- end -}}
+{{- $note := index $matches 0 -}}
+{{- $fr := eq .Page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $analysis := index (hugo.Data.repository_analysis.repositories | default dict) $note.repo | default dict -}}
+{{- $profile := index (hugo.Data.repository_profiles.repositories | default dict) $note.repo | default dict -}}
+{{- $api := index (hugo.Data.repository_api_guides.repositories | default dict) $note.repo -}}
+{{- $guide := index hugo.Data.repository_handbooks.repositories $note.repo -}}
+{{- $editorial := index hugo.Data.repository_guides.repositories $note.repo -}}
+{{- $scratch := newScratch -}}
+{{- $scratch.Set "docker" false -}}
+{{- $scratch.Set "native" slice -}}
+{{- $scratch.Set "dockerInstall" slice -}}
+{{- range $analysis.installation -}}
+  {{- $blob := lower (printf "%s %s" .heading .commands) -}}
+  {{- if or (in $blob "docker-compose") (in $blob "docker compose") (in $blob "docker run") (in $blob "docker build") -}}
+    {{- $scratch.Set "docker" true -}}
+    {{- $scratch.Add "dockerInstall" (slice .) -}}
+  {{- else -}}
+    {{- $scratch.Add "native" (slice .) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $profile.docker_commands -}}
+  {{- $scratch.Set "docker" true -}}
+{{- end -}}
+{{- $native := $scratch.Get "native" -}}
+{{- $dockerInstall := $scratch.Get "dockerInstall" -}}
+{{- $showDeploy := or ($scratch.Get "docker") $profile.services $profile.network $profile.docker_commands -}}
+{{- $showAlgorithm := isset $profile "algorithm" -}}
+{{- $showWorkflow := isset $profile "workflow" -}}
+{{- $hasTabs := and (gt (len $native) 0) (or (gt (len $dockerInstall) 0) $profile.docker_commands) -}}
+{{- $kind := $guide.kind | default "" -}}
+{{- $catData := index (hugo.Data.repository_categories.repositories | default dict) $note.repo | default dict -}}
+{{- $category := index $catData "category" | default "" -}}
+{{- $hasComposeServices := false -}}
+{{- with $profile.services -}}{{- if gt (len .) 0 -}}{{- $hasComposeServices = true -}}{{- end -}}{{- end -}}
+{{- $showMermaid := true -}}
+{{- $relatedArticles := index (hugo.Data.repository_article_index.repositories | default dict) $note.repo | default slice -}}
+<div class="repo-note" data-repo-shell>
+  <div class="repo-shell-layout">
+    <nav class="repo-sidenav" aria-label="{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}">
+      <p class="repo-sidenav-label">{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</p>
+      <a href="#overview" class="active">{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</a>
+      <a href="#architecture">{{ if $fr }}Architecture{{ else }}Architecture{{ end }}</a>
+      <a href="#installation">{{ if $fr }}Démarrage{{ else }}Getting started{{ end }}</a>
+      <a href="#features">{{ if $fr }}Composants{{ else }}Features{{ end }}</a>
+      {{ if $showWorkflow }}<a href="#workflow">{{ if $fr }}Parcours{{ else }}Workflow{{ end }}</a>{{ end }}
+      {{ if $api }}<a href="#api-contract">API</a>{{ end }}
+      {{ if $showDeploy }}<a href="#deployment">{{ if $fr }}Déploiement{{ else }}Deployment{{ end }}</a>{{ end }}
+      {{ if $showAlgorithm }}<a href="#algorithm">{{ if $fr }}Algorithme{{ else }}Algorithm{{ end }}</a>{{ end }}
+      <a href="#reader-guide">{{ if $fr }}Référence{{ else }}Reference{{ end }}</a>
+      <a href="#project-references">{{ if $fr }}Liens{{ else }}Links{{ end }}</a>
+    </nav>
+
+    <div class="repo-shell-main">
+      <header class="repo-hero">
+        <div class="repo-hero-panel">
+          {{ partial "repo-mark.html" (dict "name" $name) }}
+          <h1 id="single-post-title" class="repo-doc-title">{{ .Page.Title }}</h1>
+          <p class="repo-hero-lede">{{ index $note.intro $i }}</p>
+          <div class="repo-status-row" aria-label="{{ if $fr }}État du dépôt{{ else }}Repository status{{ end }}">
+            {{ with $guide }}{{ with .kind_label }}<span class="repo-badge kind">{{ index . $i }}</span>{{ end }}{{ end }}
+            {{ if $note.fork }}<span class="repo-badge fork">{{ if $fr }}Fork{{ else }}Fork{{ end }}</span>{{ end }}
+            {{ if $note.archived }}<span class="repo-badge archived">{{ if $fr }}Archivé{{ else }}Archived{{ end }}</span>{{ end }}
+            {{ if $api }}<span class="repo-badge api">API</span>{{ end }}
+            {{ if or ($scratch.Get "docker") $profile.docker_commands }}<span class="repo-badge docker">Docker</span>{{ end }}
+            {{ if $showWorkflow }}<span class="repo-badge workflow">{{ if $fr }}Parcours{{ else }}Workflow{{ end }}</span>{{ end }}
+            {{ if $showAlgorithm }}<span class="repo-badge algorithm">{{ if $fr }}Algorithme{{ else }}Algorithm{{ end }}</span>{{ end }}
+          </div>
+          <ul class="repo-meta-chips" role="list">
+            <li class="repo-chip">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1Z"/></svg>
+              <span>{{ if $fr }}Mis à jour{{ else }}Updated{{ end }} <time datetime="{{ .Page.Lastmod.Format "2006-01-02" }}">{{ .Page.Lastmod.Format "2006-01-02" }}</time></span>
+            </li>
+            {{ with $guide }}{{ with .stars }}
+            <li class="repo-chip">
+              <a href="{{ $note.url }}/stargazers">
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.1l-3.8 2 0.7-4.3-3.1-3 4.3-.6L8 1.3Z"/></svg>
+                <span>{{ . }}</span>
+              </a>
+            </li>
+            {{ end }}{{ end }}
+            {{ with index $analysis.languages 0 }}
+            <li class="repo-chip">
+              <span class="repo-lang-dot" aria-hidden="true"></span>
+              <span>{{ .name }} · {{ .percent }}%</span>
+            </li>
+            {{ end }}
+            {{ with $guide }}{{ with .license }}
+            <li class="repo-chip"><span>{{ . }}</span></li>
+            {{ end }}{{ end }}
+          </ul>
+          <div class="repo-tech-badges" aria-label="{{ if $fr }}Technologies vérifiées{{ else }}Verified technologies{{ end }}">
+            {{ range $profile.badges }}<span class="tag tool" title="{{ .title }}">{{ .label }}</span>{{ end }}
+            {{ if $note.fork }}<span class="tag status">{{ if $fr }}Crédit amont{{ else }}Upstream credited{{ end }}</span>{{ end }}
+          </div>
+          <div class="repo-actions">
+            <a class="btn primary" href="{{ $note.url }}">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 0 0-2.2 13.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1 0-.1 0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 0 0 8 1Z"/></svg>
+              {{ if $fr }}Code source{{ else }}View source{{ end }}
+            </a>
+            <a class="btn ghost" href="{{ $note.url }}#readme">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v11a.5.5 0 0 1-.8.4L8 11.1l-4.2 2.8a.5.5 0 0 1-.8-.4v-11ZM4.5 2a.5.5 0 0 0-.5.5V10l3.7-2.5a.5.5 0 0 1 .6 0L12 10V2.5a.5.5 0 0 0-.5-.5h-7Z"/></svg>
+              README
+            </a>
+            {{ range first 1 ($editorial.links | default slice) }}
+            <a class="btn ghost" href="{{ .url }}">{{ index .label $i }}</a>
+            {{ end }}
+          </div>
+        </div>
+      </header>
+
+      <details class="repo-language-disclosure" id="languages-panel">
+        <summary><span>{{ if $fr }}Langages du dépôt{{ else }}Repository languages{{ end }}</span>{{ with index $analysis.languages 0 }}<span class="repo-language-primary">{{ .name }} {{ .percent }}%</span>{{ end }}{{ with $analysis.languages }}<span class="repo-count">{{ len . }}</span>{{ end }}</summary>
+        <div class="repo-language-content">
+        <p class="repo-lede-sm">{{ if $fr }}Parts calculées à partir des octets GitHub Linguist.{{ else }}Shares calculated from GitHub Linguist bytes.{{ end }}</p>
+        {{ if $analysis.languages }}
+        {{- $aria := "" -}}
+        {{- range $analysis.languages -}}{{- if ge .percent 0.5 -}}{{- $aria = printf "%s%s %s%%. " $aria .name (string .percent) -}}{{- end -}}{{- end -}}
+        <div class="repo-language-track" role="img" aria-label="{{ $aria | strings.TrimSpace }}">
+          {{ range $analysis.languages }}{{ if ge .percent 0.5 }}<span style="width: {{ .percent }}%" title="{{ .name }} {{ .percent }}%"></span>{{ end }}{{ end }}
+        </div>
+        <table class="repo-lang-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ if $fr }}Langage{{ else }}Language{{ end }}</th>
+              <th scope="col">%</th>
+              <th scope="col">{{ if $fr }}Octets{{ else }}Bytes{{ end }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ range $idx, $lang := first 6 $analysis.languages }}
+            <tr>
+              <td><span class="repo-lang-dot i{{ $idx }}" aria-hidden="true"></span>{{ $lang.name }}</td>
+              <td><span class="repo-lang-bar" style="--p: {{ $lang.percent }}%"><span>{{ $lang.percent }}%</span></span></td>
+              <td class="num">{{ $lang.bytes | lang.FormatNumber 0 }}</td>
+            </tr>
+            {{ end }}
+          </tbody>
+        </table>
+        {{ if gt (len $analysis.languages) 6 }}
+        <details class="repo-language-more">
+          <summary>{{ if $fr }}{{ sub (len $analysis.languages) 6 }} autres langages{{ else }}{{ sub (len $analysis.languages) 6 }} more languages{{ end }}</summary>
+          <table class="repo-lang-table">
+            <tbody>
+              {{ range after 6 $analysis.languages }}
+              <tr>
+                <td>{{ .name }}</td>
+                <td>{{ .percent }}%</td>
+                <td class="num">{{ .bytes | lang.FormatNumber 0 }}</td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </details>
+        {{ end }}
+        {{ else }}<p>{{ if $fr }}GitHub ne recense aucun octet de langage pour ce dépôt.{{ else }}GitHub reports no language bytes for this repository.{{ end }}</p>{{ end }}
+        <p class="repo-snapshot"><a href="{{ $note.url }}">GitHub</a> · <a href="{{ $note.url }}#readme">README</a> · <a href="https://api.github.com/repos/antoinebou12/{{ $note.repo }}/languages">{{ if $fr }}Statistiques de langages{{ else }}Language statistics{{ end }}</a></p>
+        </div>
+      </details>
+
+      <section class="doc repo-overview" aria-labelledby="overview" id="overview">
+        <h2>{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</h2>
+        <div class="repo-overview-grid">
+          <article class="repo-overview-card" aria-labelledby="overview-why">
+            <h3 id="overview-why">{{ if $fr }}Pourquoi il existe{{ else }}Why it exists{{ end }}</h3>
+            {{ with $catData }}
+              <p>{{ index .why_good $i }}</p>
+            {{ else }}
+              <p>{{ with $guide }}{{ with .kind_label }}{{ index . $i }}.{{ else }}{{ if $fr }}Projet public documenté depuis le dépôt.{{ else }}Public project documented from the repository.{{ end }}{{ end }}{{ else }}{{ if $fr }}Projet public documenté depuis le dépôt.{{ else }}Public project documented from the repository.{{ end }}{{ end }}</p>
+            {{ end }}
+          </article>
+          {{ with $catData }}
+          <article class="repo-overview-card" aria-labelledby="overview-use">
+            <h3 id="overview-use">{{ if $fr }}Cas d’usage{{ else }}Best fit{{ end }}</h3>
+            <p>{{ index .use_case $i }}</p>
+          </article>
+          {{ end }}
+        </div>
+        {{ $writing := slice }}
+        {{ range $relatedArticles }}
+          {{ if and (eq .lang $.Page.Lang) (strings.HasPrefix .path "posts/") }}
+            {{ $dir := strings.TrimSuffix "/index.fr.md" (strings.TrimSuffix "/index.md" .path) }}
+            {{ with site.GetPage $dir }}
+              {{ $writing = $writing | append (dict "url" .RelPermalink "title" .Title "desc" (.Description | default "")) }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ with $writing }}
+        <div class="repo-related-writing" aria-labelledby="overview-writing">
+          <h3 id="overview-writing">{{ if $fr }}Articles et retours d’expérience liés{{ else }}Related articles & deep dives{{ end }}</h3>
+          <div class="repo-related-cards" role="list">
+            {{ range . }}
+            <a class="repo-related-post-card" href="{{ .url }}">
+              <div class="repo-related-post-header">
+                <span class="repo-post-badge">{{ if $fr }}Article approfondi{{ else }}Deep-dive article{{ end }}</span>
+                <span class="repo-post-arrow" aria-hidden="true">→</span>
+              </div>
+              <h4>{{ .title }}</h4>
+              {{ with .desc }}<p>{{ . }}</p>{{ end }}
+            </a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </section>
+
+      <span id="first-steps" class="repo-section-anchor" aria-hidden="true"></span>
+      <section class="doc repo-auto-docs" aria-labelledby="installation" id="installation">
+        <h2>{{ if $fr }}Démarrage{{ else }}Getting started{{ end }}</h2>
+        <p class="repo-lede-sm">{{ if $fr }}Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.{{ else }}These commands come from the repository documentation. They were not run during this review.{{ end }}</p>
+        {{ if $hasTabs }}
+        <div class="tabs" role="tablist" aria-label="{{ if $fr }}Mode d’installation{{ else }}Installation mode{{ end }}" data-install-tabs>
+          <button type="button" class="tab" role="tab" data-tab="native" aria-selected="true" aria-controls="install-native" id="tab-native">{{ if $fr }}Natif{{ else }}Native{{ end }}</button>
+          <button type="button" class="tab" role="tab" data-tab="docker" aria-selected="false" aria-controls="install-docker" id="tab-docker">Docker</button>
+        </div>
+        {{ end }}
+        {{ if or (gt (len $native) 0) (not (or (gt (len $dockerInstall) 0) $profile.docker_commands)) }}
+        <div class="tabbody" id="install-native" data-tab-panel="native"{{ if $hasTabs }} role="tabpanel" aria-labelledby="tab-native"{{ end }}>
+          {{ if $native }}
+            {{ range $idx, $item := $native }}
+            {{ partial "repository-terminal.html" (dict "fr" $fr "title" (printf "%s · %s" $item.file $item.heading) "commands" $item.commands "foot_url" (printf "%s%s#L%d" $analysis.source_url $item.file (int $item.line))) }}
+            {{ end }}
+          {{ else if not $hasTabs }}
+            {{ if $analysis.installation }}
+              {{ range $analysis.installation }}
+              {{ partial "repository-terminal.html" (dict "fr" $fr "title" (printf "%s · %s" .file .heading) "commands" .commands "foot_url" (printf "%s%s#L%d" $analysis.source_url .file (int .line))) }}
+              {{ end }}
+            {{ else }}
+              <aside class="repo-admonition info">
+                <p class="repo-admonition-title">{{ if $fr }}Installation non extraite{{ else }}Installation not extracted{{ end }}</p>
+                <p>{{ if $fr }}Aucune recette d’installation réutilisable n’a été extraite de ce dépôt.{{ else }}No reusable installation recipe was extracted from this repository.{{ end }}</p>
+                <p><a class="btn ghost" href="{{ $note.url }}#readme">{{ if $fr }}Ouvrir le README{{ else }}Open the README{{ end }}</a></p>
+              </aside>
+            {{ end }}
+          {{ else }}
+            <p>{{ if $fr }}Voir l’onglet Docker pour les commandes de ce dépôt.{{ else }}See the Docker tab for this repository’s commands.{{ end }}</p>
+          {{ end }}
+          {{ with $analysis.manifests }}
+          <details class="repo-manifest-tasks"><summary>{{ if $fr }}Commandes déclarées dans les manifestes{{ else }}Tasks declared in manifests{{ end }}</summary>
+            {{ range . }}{{ if .scripts }}<h3><a href="{{ $analysis.source_url }}{{ .file }}"><code>{{ .file }}</code></a></h3>
+            <dl class="repo-deflist">{{ range .scripts }}<div><dt><code>{{ .name }}</code></dt><dd><code>{{ .command }}</code></dd></div>{{ end }}</dl>{{ end }}{{ end }}
+          </details>
+          {{ end }}
+        </div>
+        {{ end }}
+        {{ if or $hasTabs $profile.docker_commands (gt (len $dockerInstall) 0) }}
+        <div class="tabbody" id="install-docker" data-tab-panel="docker"{{ if $hasTabs }} role="tabpanel" aria-labelledby="tab-docker"{{ end }}>
+          {{ with $profile.docker_commands }}
+          {{ partial "repository-terminal.html" (dict "fr" $fr "title" (printf "%s · Docker" ($profile.docker_evidence | default $profile.evidence | default "docker")) "commands" .) }}
+          {{ else }}
+          {{ range $dockerInstall }}
+          {{ partial "repository-terminal.html" (dict "fr" $fr "title" (printf "%s · %s" .file .heading) "commands" .commands "foot_url" (printf "%s%s#L%d" $analysis.source_url .file (int .line))) }}
+          {{ end }}
+          {{ end }}
+          {{ with $profile.note }}<aside class="repo-admonition">{{ index . $i }}</aside>{{ end }}
+        </div>
+        {{ end }}
+      </section>
+
+      {{ partial "repository-handbook.html" (dict "note" $note "page" .Page "mode" "chapters") }}
+
+      <section class="doc" aria-labelledby="features" id="features">
+        <h2>{{ if $fr }}Fonctions et composants{{ else }}Features and components{{ end }} <span class="repo-count">{{ len $note.parts }}</span></h2>
+        <dl class="repo-deflist">
+        {{ range $note.parts }}
+          <div class="repo-feature">
+            <dt>{{ index . $i }}</dt>
+            <dd>{{ index . (add $i 2) }}</dd>
+          </div>
+        {{ end }}
+        </dl>
+      </section>
+
+      <section class="doc" aria-labelledby="architecture" id="architecture">
+        <h2>{{ if $fr }}Architecture{{ else }}Architecture{{ end }}</h2>
+        <p class="repo-lede-sm">{{ if $fr }}Les composants et leurs liens restent lisibles en texte. Le diagramme ajoute une vue interactive.{{ else }}The components and their connections remain available as text. The diagram adds an interactive view.{{ end }}</p>
+        <div class="fig" data-arch-shell>
+          <div class="fighead">
+            <strong data-arch-title>{{ if $fr }}Contexte système{{ else }}System context{{ end }}</strong>
+            <span class="repo-figure-label">{{ if $fr }}Contexte{{ else }}Context{{ end }}</span>
+          </div>
+          <div data-arch-panel="context" class="arch-panel" id="arch-context" role="tabpanel" aria-labelledby="tab-arch-context">
+            <ol class="repo-flow">
+              {{ range $index, $node := $note.nodes }}
+              <li><span class="repo-flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span><span class="repo-flow-label">{{ index $node $i }}</span><span class="repo-flow-step" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span></li>
+              {{ end }}
+            </ol>
+            <p class="figdesc">{{ if $fr }}Liens vérifiés dans le dépôt.{{ else }}Links verified in the repository.{{ end }}</p>
+          </div>
+        </div>
+        {{ if $showMermaid }}
+        <details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy>
+          <summary>
+            <span class="repo-badge tool">Mermaid</span>
+            <span>{{ if $fr }}Diagramme interactif (chargement à l’ouverture){{ else }}Interactive diagram (loads on open){{ end }}</span>
+          </summary>
+          {{ partial "repository-diagram.html" (dict "note" $note "lang" .Page.Lang "profile" $profile "prefer_compose" false) }}
+        </details>
+        {{ end }}
+        <details class="repo-trace">
+          <summary>{{ if $fr }}Suivre un parcours dans le code{{ else }}Follow one path through the code{{ end }}</summary>
+          <p>{{ index $note.trace $i }}</p>
+        </details>
+      </section>
+
+      {{ if $showWorkflow }}
+      <section class="doc" aria-labelledby="workflow" id="workflow" data-workflow>
+        <h2>{{ if $fr }}Parcours{{ else }}Workflow{{ end }}</h2>
+        <p class="repo-lede-sm">{{ if $fr }}Vue pas à pas du chemin inspecté dans le dépôt. Ce n’est pas une exécution en direct.{{ else }}Step-by-step view of the path inspected in the repository. This is not a live run.{{ end }}</p>
+        <div class="panel stepper">
+          <div class="stepn" data-step-number></div>
+          <h3 data-step-title></h3>
+          <p data-step-body></p>
+          <div class="dots" data-step-dots></div>
+          <div class="stepcontrols">
+            <button type="button" class="btn" data-step-prev disabled>← {{ if $fr }}Précédent{{ else }}Previous{{ end }}</button>
+            <button type="button" class="btn primary" data-step-next>{{ if $fr }}Suivant{{ else }}Next{{ end }} →</button>
+            <button type="button" class="btn" data-step-reset>{{ if $fr }}Réinitialiser{{ else }}Reset{{ end }}</button>
+          </div>
+          <script type="application/json" data-workflow-steps>{{ $profile.workflow | jsonify | safeHTML }}</script>
+        </div>
+        <noscript>
+          <ol>
+            {{ range $profile.workflow }}<li><strong>{{ index .title $i }}</strong> — {{ index .body $i }}</li>{{ end }}
+          </ol>
+        </noscript>
+      </section>
+      {{ end }}
+
+      {{ partial "repository-api-guide.html" (dict "note" $note "page" .Page) }}
+      {{ partial "repository-runtime.html" (dict "note" $note "page" .Page "profile" $profile "analysis" $analysis "show_mermaid" $showMermaid) }}
+      {{ partial "repository-documentation.html" (dict "note" $note "page" .Page "section" "reference" "show_mermaid" $showMermaid) }}
+
+      <aside class="doc repo-note-constraint" aria-labelledby="constraints" id="constraints">
+        <h2>{{ if $fr }}Limites et points à vérifier{{ else }}Constraints and checks{{ end }}</h2>
+        <aside class="repo-admonition warn">{{ index $note.limits $i }}</aside>
+      </aside>
+      <section class="doc repo-note-sources" aria-labelledby="source-files" id="source-files">
+        <h2>{{ if $fr }}Fichiers à lire{{ else }}Files to read{{ end }} <span class="repo-count">{{ len $note.sources }}</span></h2>
+        <ul class="repo-file-list">
+          {{ range $note.sources }}
+          <li>
+            <a href="{{ .url }}">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5 0 0 0 2.5 3v10A1.5 1.5 0 0 0 4 14.5h8A1.5 1.5 0 0 0 13.5 13V5.2L10.3 2H4ZM3.5 3A.5.5 0 0 1 4 2.5h5.5V5A1.5 1.5 0 0 0 11 6.5h2.5V13a.5.5 0 0 1-.5.5H4a.5.5 0 0 1-.5-.5V3Z"/></svg>
+              <code>{{ .path }}</code>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+      <section class="doc repo-project-references" aria-labelledby="project-references-heading" id="project-references">
+        <h2 id="project-references-heading">{{ if $fr }}Références{{ else }}References{{ end }}</h2>
+        <ul class="repo-reference-list">
+          <li><a href="{{ $note.url }}">GitHub</a><span>{{ if $fr }}Dépôt source{{ else }}Source repository{{ end }}</span></li>
+          <li><a href="{{ $note.url }}#readme">README</a><span>{{ if $fr }}Documentation du dépôt{{ else }}Repository documentation{{ end }}</span></li>
+          {{ range $relatedArticles }}
+            {{ if and (eq .lang $.Page.Lang) (strings.HasPrefix .path "posts/") }}
+              {{ $dir := strings.TrimSuffix "/index.fr.md" (strings.TrimSuffix "/index.md" .path) }}
+              {{ with site.GetPage $dir }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ if $fr }}Article du blog{{ else }}Blog article{{ end }}</span></li>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        </ul>
+      </section>
+    </div>
+
+    <aside class="repo-context">
+      <div class="repo-facts">
+        <p class="repo-sidenav-label">{{ if $fr }}Fiche projet{{ else }}Project facts{{ end }}</p>
+        {{ with $profile.facts }}
+          {{ range . }}<div class="kv"><span>{{ index .label $i }}</span><b>{{ index .value $i }}</b></div>{{ end }}
+        {{ else }}
+          {{ with index $analysis.languages 0 }}<div class="kv"><span>{{ if $fr }}Langage{{ else }}Language{{ end }}</span><b>{{ .name }}</b></div>{{ end }}
+          {{ with $guide }}{{ with .kind_label }}<div class="kv"><span>{{ if $fr }}Catégorie{{ else }}Kind{{ end }}</span><b>{{ index . $i }}</b></div>{{ end }}{{ end }}
+        {{ end }}
+        <div class="kv"><span>{{ if $fr }}Source{{ else }}Source{{ end }}</span><a href="{{ $note.url }}">GitHub</a></div>
+        <div class="kv"><span>{{ if $fr }}Mis à jour{{ else }}Updated{{ end }}</span><b><time datetime="{{ .Page.Lastmod.Format "2006-01-02" }}">{{ .Page.Lastmod.Format "2006-01-02" }}</time></b></div>
+      </div>
+    </aside>
+  </div>
+</div>

@@ -2,8 +2,8 @@
 post_kind: conference
 title: "Premier atelier Byzantium — Solidity et token ERC-20 sur Ethereum"
 date: 2024-03-11T18:30:00-04:00
-lastmod: 2026-05-23T00:15:00-04:00
-description: "Premier workshop Byzantium sur Ethereum — Remix et Sepolia, ERC-20 OpenZeppelin, déploiement et transferts entre participant·e·s. Animation : Khalil Anis Zabat."
+lastmod: 2026-10-24T16:00:00-04:00
+description: "Retour sur le premier workshop Byzantium sur Ethereum — Remix et Sepolia, ERC-20 OpenZeppelin, déploiement et échanges de tokens. Animation : Khalil Anis Zabat."
 translationKey: byzantium-solidity-ethereum-workshop
 tags:
   - Byzantium
@@ -14,22 +14,28 @@ tags:
   - OpenZeppelin
   - ERC-20
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-![Diapositive d’ouverture — Workshop sur Solidity (Ethereum)](./images/workshop-title-slide.png)
+![Diapositive d’ouverture — Workshop sur Solidity (Ethereum), salle ÉTS](./images/workshop-title-slide.png)
 
-Le **11 mars 2024**, **Byzantium** a organisé son **premier atelier Ethereum** à l’ÉTS : une soirée pratique où des personnes sans expérience blockchain sont reparties avec un **jeton sur réseau de test** envoyable à un·e collègue. **Khalil Anis Zabat** a animé la session. **[English version]({{< ref "/posts/byzantium-solidity-ethereum-workshop/index.md" >}})**.
+Retour sur notre tout premier workshop sur Ethereum.
+
+Lundi dernier (11 mars 2024), notre tout premier workshop sur Ethereum a eu lieu à l’ÉTS : novices comme avancés ont pu créer et déployer leur propre token sur la blockchain et s’échanger leurs tokens entre eux. Nous tenons à remercier tout le monde d’avoir assisté à cet atelier. Merci également à **Khalil Anis Zabat** d’avoir animé et organisé l’atelier !
+
+**[English version]({{< ref "/posts/byzantium-solidity-ethereum-workshop/index.md" >}})**
 
 <!--more-->
 
+Nous prévoyons d’organiser une suite à cet atelier avec d’autres types de tokens, incluant des techniques plus avancées. Dites-nous (ou écrivez-nous) si vous seriez intéressés par une reprise — et si vous avez des suggestions pour de prochains ateliers.
+
 ## Le déroulé
 
-Khalil avait structuré l’atelier en deux temps (comme dans l’enregistrement de la session) :
+Khalil avait structuré l’atelier en deux temps :
 
 1. **Remix dans le navigateur** — compiler et déployer sans installer toute la chaîne d’outils, pour pouvoir refaire les étapes chez soi.
 2. **Environnement de dev local** — l’équivalent « pro » avec éditeur et tooling, sur le même contrat ERC-20.
-3. **Sepolia** — ETH de test via faucet, **MetaMask** comme portefeuille, **Infura** comme passerelle RPC (personne n’a un accès direct à la blockchain « tout seul »).
+3. **Sepolia** — ETH de test via faucet, **MetaMask** comme portefeuille, **Infura** comme passerelle RPC.
 4. **OpenZeppelin** — ne pas réécrire `transfer` ; hériter d’un **ERC-20** éprouvé et se concentrer sur nom, symbole, décimales et premier `mint`.
 5. **Transferts entre pairs** — déployer, échanger les adresses de contrat et **s’envoyer des tokens** jusqu’à ce que la salle ressemble à une mini-économie.
 
@@ -54,19 +60,17 @@ contract MyToken is ERC20 {
 
 Tu choisis **nom** et **symbole**, les **décimales** (souvent 18), et tu **émet** une réserve initiale au déployeur (`msg.sender`). OpenZeppelin, c’est la bibliothèque partagée de la communauté pour les standards — même logique que l’**ERC-721** pour les NFT, mais ici on est resté sur un jeton fongible.
 
-![Démo — MyToken.sol dans l’éditeur](./images/demo-mytoken-vscode.png)
+![Démo live — éditeur et contrat projetés en salle](./images/demo-mytoken-vscode.png)
 
 ## Ce qui est sorti des questions (pédagogie live)
 
-**Explorateurs de blocs (Etherscan, Sepolia).** Chaque transaction est une ligne : qui a envoyé quoi, à qui, le gas, le numéro de bloc. Les indexeurs et les produits construits sur Ethereum s’appuient sur cet historique ; tu peux chercher une adresse et retrouver le graphe des appels passés.
+**Explorateurs de blocs (Etherscan, Sepolia).** Chaque transaction est une ligne : qui a envoyé quoi, à qui, le gas, le numéro de bloc.
 
-**Gas et limites.** En pratique, les contrats ne sont pas des machines de Turing illimitées — une boucle infinie consomme le gas et bloque. Les dev fixent des plafonds ; les utilisateur·rice·s paient l’exécution. On a parlé de frais mainnet « réels » (de l’ordre de dizaines de dollars en période chargée en 2024) ; **Sepolia** gardait l’atelier abordable.
+**Gas et limites.** En pratique, les contrats ne sont pas des machines de Turing illimitées — une boucle infinie consomme le gas et bloque. **Sepolia** gardait l’atelier abordable.
 
-**ABI = le squelette.** Après déploiement, l’ABI dit quelles fonctions existent pour les apps (ou les bots). Exemple donné en salle : surveiller un `mint` avec timer, filtrer le mempool, monter le gas pour passer avant les autres — de l’automatisation au-dessus d’ABI publiques, pas de la magie.
+**ABI = le squelette.** Après déploiement, l’ABI dit quelles fonctions existent pour les apps (ou les bots).
 
-**Données on-chain vs hors chaîne.** Stocker gros sur la chaîne coûte cher. On pointe souvent vers des **références** (IPFS, chaînes de stockage) ; la chaîne garde le hash ou l’URI, pas le fichier. Garder le contrat petit.
-
-**Décentralisation (débat).** Dans la salle : décentralisation maximale vs ponts pragmatiques pour les entreprises pendant que la stack mûrit. Pas de verdict — tension utile pour un club étudiant.
+**Données on-chain vs hors chaîne.** Stocker gros sur la chaîne coûte cher ; on pointe souvent vers des **références** (IPFS, chaînes de stockage).
 
 ## Ambiance
 

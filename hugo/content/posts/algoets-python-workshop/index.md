@@ -7,14 +7,14 @@ description: "Inside AlgoETS Workshop1: nine notebooks connect Python fundamenta
 translationKey: algoets-python-workshop
 mermaid: true
 tags: ["Python","Teaching","AlgoETS","Pandas"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "AlgoETS/Workshop1" >}}
 
 The most useful beginner workshop gives each new concept somewhere to go. **AlgoETS/Workshop1** moves from Python setup to an API response, a DataFrame, and a chart. The final notebook uses Apple price data and exponential moving averages to bring those steps together.
 
-![AlgoETS artwork used in the workshop repository](featured.png)
+![AlgoETS artwork used in the workshop repository](images/featured.png)
 
 <!--more-->
 

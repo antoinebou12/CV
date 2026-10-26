@@ -13,7 +13,7 @@ tags:
   - Mermaid
   - D2
 images:
-  - featured.gif
+  - images/featured.gif
 ---
 
 **D2COpenAIPlugin** est un plugin ChatGPT qui produit du **PlantUML**, **Mermaid** ou **D2** dans la conversation. Je l’ai écrit quand les plugins OpenAI étaient la voie d’extension principale — pratique pour l’architecture, les labs et les « dessine ce flux » en chat. **[English version]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})**.

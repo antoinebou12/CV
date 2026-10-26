@@ -1,0 +1,46 @@
+classDiagram
+direction TB
+class ted4e898cdae9["GizmoCacheEntry"] {
+  <<enum>>
+}
+class t061ff8e7061a["GizmoUniforms"] {
+  <<struct>>
+}
+class t740732970409["SlicePlaneUniforms"] {
+  <<struct>>
+}
+class t26cbdf5f5c65["GridCubeUniforms"] {
+  <<struct>>
+}
+class t5d429277be4e["RenderTarget"] {
+  <<enum>>
+}
+class t309f8deb5161["TargetViews"] {
+  <<enum>>
+}
+class t4f3f0bd4f055["GpuRenderer"] {
+  <<struct>>
+  device()
+  queue()
+  new()
+  last_gpu_time_ms()
+  create_framebuffer()
+  read_pixels()
+  read_pixels_async()
+  read_pixels_async_from()
+  ensure_mesh_cached()
+  resize()
+  ensure_gizmo_cached()
+  ensure_material_bind_group()
+  render()
+}
+class tb42e6bc80a57["ReadbackLayout"] {
+  <<struct>>
+}
+class t0ad5dfc3d86d["ReadbackGuard"] {
+  <<struct>>
+  layout()
+  get_mapped_range()
+  release()
+  drop()
+}

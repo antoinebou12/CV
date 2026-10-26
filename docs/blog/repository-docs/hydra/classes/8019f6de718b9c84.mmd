@@ -1,0 +1,64 @@
+classDiagram
+direction TB
+class ta33a2e2ad023["PremiumizeBaseResponse"] {
+  <<interface>>
+}
+class tfcd7b49dec6f["PremiumizeDirectDlContent"] {
+  <<interface>>
+}
+class t80da26a7ee8a["PremiumizeDirectDlResponse"] {
+  <<interface>>
+}
+class t0b5b06527bd0["PremiumizeTransferCreateResponse"] {
+  <<interface>>
+}
+class t19e2cbd8a3ca["PremiumizeTransfer"] {
+  <<interface>>
+}
+class tf2a1b4cb6a08["PremiumizeTransferListResponse"] {
+  <<interface>>
+}
+class tb825ffd4331f["PremiumizeFolderItem"] {
+  <<interface>>
+}
+class tf9f84b1a425a["PremiumizeFolderListResponse"] {
+  <<interface>>
+}
+class tf3f4c49f3f46["PremiumizeZipResponse"] {
+  <<interface>>
+}
+class t86ac708472d2["PremiumizeCacheCheckResponse"] {
+  <<interface>>
+}
+class t0254f316a05e["PremiumizeClient"] {
+  authorize()
+  getSearchParams()
+  ensureSuccess()
+  getMagnetInfoHash()
+  getUser()
+  directDownload()
+  createTransfer()
+  listTransfers()
+  clearFinishedTransfers()
+  listFolder()
+  generateZip()
+  isCached()
+  waitForTransfer()
+  extractSingleLink()
+  getDownloadUrl()
+  resolveMultiFileAsZip()
+  resolveViaTransfer()
+  ensureTransferCompleted()
+  findExistingTransfer()
+  hasRunnableTransfer()
+  startTransferInBackground()
+  resolveFromRootFolder()
+  extractDisplayName()
+  zipTransferContents()
+}
+ta33a2e2ad023 <|.. t80da26a7ee8a
+ta33a2e2ad023 <|.. t0b5b06527bd0
+ta33a2e2ad023 <|.. tf2a1b4cb6a08
+ta33a2e2ad023 <|.. tf9f84b1a425a
+ta33a2e2ad023 <|.. tf3f4c49f3f46
+ta33a2e2ad023 <|.. t86ac708472d2

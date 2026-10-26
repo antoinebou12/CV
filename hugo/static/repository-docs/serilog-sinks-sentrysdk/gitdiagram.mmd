@@ -1,0 +1,58 @@
+flowchart TD
+
+subgraph group_logging["Serilog integration"]
+  node_sinkconfig["Sink registration"]
+  node_sink["Event sink<br/>[SentrySink.cs]"]
+end
+
+subgraph group_sentry["Sentry event delivery"]
+  node_requestfactory["Request factory"]
+  node_userfactory["User factory"]
+  node_sentrysdk["Sentry SDK"]
+end
+
+subgraph group_web["ASP.NET Core context"]
+  node_contextadapter["HTTP adapter"]
+  node_middleware["Request middleware"]
+  node_destructure["Context destructuring"]
+  node_contextcontract["HTTP context contract"]
+end
+
+node_app(("Application"))
+node_serilog["Serilog pipeline"]
+node_sentryservice(("Sentry service"))
+
+node_app -->|"writes events"| node_serilog
+node_serilog -->|"configures sink"| node_sinkconfig
+node_sinkconfig -->|"creates sink"| node_sink
+node_sink -->|"captures events"| node_sentrysdk
+node_sentrysdk -.->|"sends telemetry"| node_sentryservice
+node_middleware -->|"pushes context"| node_contextadapter
+node_middleware -->|"logs exceptions"| node_serilog
+node_contextadapter -->|"implements"| node_contextcontract
+node_destructure -->|"recognizes context"| node_contextcontract
+node_requestfactory -->|"reads request data"| node_contextcontract
+node_userfactory -->|"reads user data"| node_contextcontract
+node_sink -.->|"uses request context"| node_requestfactory
+node_sink -.->|"uses user context"| node_userfactory
+
+click node_sinkconfig "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs"
+click node_sink "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK/SentrySink.cs"
+click node_contextadapter "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs"
+click node_middleware "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs"
+click node_destructure "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK.AspNetCore/HttpContextDestructingPolicy.cs"
+click node_contextcontract "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK/ISentryHttpContext.cs"
+click node_requestfactory "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs"
+click node_userfactory "https://github.com/antoinebou12/serilog.sinks.sentrysdk/blob/main/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_sinkconfig,node_sink toneBlue
+class node_requestfactory,node_userfactory,node_sentrysdk toneAmber
+class node_contextadapter,node_middleware,node_destructure,node_contextcontract toneMint
+class node_app,node_serilog,node_sentryservice toneIndigo

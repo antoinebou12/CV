@@ -7,7 +7,7 @@ draft: false
 
 ## HDR-10bpp-Display-Test
 
-The HDR-10bpp-Display-Test is a simple yet effective way to verify the HDR 4K display capabilities on Linux systems, specifically testing the color depth of 10 bits per channel. This test is essential for anyone looking to ensure the highest quality display performance on their Linux environment.
+HDR-10bpp-Display-Test checks HDR 4K display on Linux, including 10 bits per channel. Useful for validating the graphics stack, drivers, and monitor.
 
 ### Getting Started
 
@@ -91,7 +91,3 @@ startx -- -depth 24
 ### License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.
-
----
-
-With this setup, the HDR-10bpp-Display-Test project aims to streamline the process of verifying and ensuring optimal display settings on Linux systems, particularly for those requiring high-fidelity visual outputs.

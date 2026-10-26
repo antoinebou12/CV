@@ -3,13 +3,13 @@
 {{- if $cardMatch -}}
   {{- with .Resources.GetMatch $cardMatch -}}
     {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
-      {{- $thumb = .Permalink -}}
+      {{- $thumb = .RelPermalink -}}
     {{- else -}}
       {{- with .Fit "960x540 q85" -}}
-        {{- $thumb = .Permalink -}}
+        {{- $thumb = .RelPermalink -}}
       {{- else -}}
         {{- with .Fit "720x540" -}}
-          {{- $thumb = .Permalink -}}
+          {{- $thumb = .RelPermalink -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}
@@ -18,14 +18,14 @@
 {{- if eq $thumb "" -}}
 {{- with partial "featured-image-resource.html" . -}}
   {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
-    {{- $thumb = .Permalink -}}
+    {{- $thumb = .RelPermalink -}}
   {{- else -}}
     {{- $fitSpec := "960x540 q85" -}}
     {{- with .Fit $fitSpec -}}
-      {{- $thumb = .Permalink -}}
+      {{- $thumb = .RelPermalink -}}
     {{- else -}}
       {{- with .Fit "720x540" -}}
-        {{- $thumb = .Permalink -}}
+        {{- $thumb = .RelPermalink -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}

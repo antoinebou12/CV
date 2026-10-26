@@ -19,7 +19,7 @@ Démo en ligne : [openai-uml-plugin.vercel.app](https://openai-uml-plugin.vercel
 
 > **Rejoignez la [liste d’attente des extensions ChatGPT](https://openai.com/waitlist/plugins).**
 
-D2COpenAIPlugin est une extension pour ChatGPT qui permet de générer des diagrammes avec **PlantUML** ou **Mermaid**, directement depuis la conversation.
+D2COpenAIPlugin est une extension ChatGPT qui génère des diagrammes PlantUML ou Mermaid depuis la conversation.
 
 ![Diagram generator plugin demo](https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif)
 ![image](https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41)

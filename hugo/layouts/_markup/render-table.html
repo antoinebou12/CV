@@ -1,0 +1,28 @@
+{{- $heads := slice -}}
+{{- range .THead -}}
+  {{- range . -}}
+    {{- $heads = $heads | append (.Text | plainify) -}}
+  {{- end -}}
+{{- end -}}
+<div class="post-table-scroll">
+<table>
+  <thead>
+    {{- range .THead }}
+    <tr>
+      {{- range . }}
+      <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text | safeHTML }}</th>
+      {{- end }}
+    </tr>
+    {{- end }}
+  </thead>
+  <tbody>
+    {{- range .TBody }}
+    <tr>
+      {{- range $i, $cell := . }}
+      <td data-label="{{ index $heads $i }}"{{ with $cell.Alignment }} style="text-align: {{ . }}"{{ end }}>{{ $cell.Text | safeHTML }}</td>
+      {{- end }}
+    </tr>
+    {{- end }}
+  </tbody>
+</table>
+</div>

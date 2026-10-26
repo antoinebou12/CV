@@ -78,7 +78,7 @@ jobs:
         run: |
           mkdir -p _site
           # Copy HTML files
-          for file in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html; do
+          for file in index.html index-en.html index-fr.html 404.html; do
             [ -f "$file" ] && cp "$file" _site/
           done
           for file in resume.md resume-fr.md resume.json resume-fr.json; do
@@ -90,6 +90,7 @@ jobs:
           done
           # Copy directories
           [ -d "css" ] && cp -r css _site/
+          [ -d "js" ] && cp -r js _site/
           [ -d "linktree" ] && cp -r linktree _site/
           [ -d "papers" ] && cp -r papers _site/
           echo "Static files prepared."
@@ -211,7 +212,7 @@ jobs:
             echo "ERROR: Missing ${ROOT}/sitemap.xml (expected Hugo blog/sitemap.xml to be promoted)"
             exit 1
           fi
-          LASTMOD=$(date -u +%Y-%m-%d)
+          LASTMOD=$(TZ=America/Toronto date +%Y-%m-%d)
           python "${GITHUB_WORKSPACE}/scripts/deploy/merge_root_sitemap.py" \
             --input "${ROOT}/sitemap.xml" \
             --output "${ROOT}/sitemap.xml" \
@@ -240,12 +241,12 @@ jobs:
           if [ -f "${ROOT}/favicon.ico" ]; then
             ln -sfn "../favicon.ico" "${ROOT}/${REPO}/favicon.ico"
           fi
-          for d in cv-en cv-fr css linktree papers; do
+          for d in cv-en cv-fr css js linktree papers; do
             if [ -d "${ROOT}/${d}" ]; then
               ln -sfn "../${d}" "${ROOT}/${REPO}/${d}"
             fi
           done
-          for f in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html resume.md resume-fr.md resume.json resume-fr.json; do
+          for f in index.html index-en.html index-fr.html 404.html resume.md resume-fr.md resume.json resume-fr.json; do
             if [ -f "${ROOT}/${f}" ]; then
               ln -sfn "../${f}" "${ROOT}/${REPO}/${f}"
             fi

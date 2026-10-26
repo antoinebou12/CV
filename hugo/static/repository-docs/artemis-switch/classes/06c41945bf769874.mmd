@@ -1,0 +1,27 @@
+classDiagram
+direction TB
+class tec95fe05bd97["ITransport"] {
+  connect()
+  read()
+  write()
+  close()
+  interrupt()
+}
+class tbe9263b48c6c["TcpTransport"] {
+  TcpTransport()
+  connect()
+  read()
+  write()
+  close()
+  interrupt()
+}
+class tb926aff9eab9["SwitchTlsTransport"] {
+  SwitchTlsTransport()
+  connect()
+  read()
+  write()
+  close()
+  interrupt()
+}
+tec95fe05bd97 <|-- tbe9263b48c6c
+tec95fe05bd97 <|-- tb926aff9eab9

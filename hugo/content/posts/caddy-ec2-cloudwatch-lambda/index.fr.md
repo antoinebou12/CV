@@ -4,6 +4,8 @@ title: "Faire travailler ensemble Caddy, EC2, CloudWatch, Step Functions et Lamb
 date: 2024-05-14T18:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Caddy sur EC2 pas cher — logs structurés, CloudWatch Insights, cron Python, requêtes Lambda."
+images:
+  - images/featured.png
 translationKey: caddy-ec2-cloudwatch-lambda
 tags:
   - AWS
@@ -23,7 +25,7 @@ canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloud
 
 Instance nano/micro, ports 22/80/443, install yum depuis dépôt Caddy. `Caddyfile` avec snippets `log_site` et `reverse_proxy`. `sudo caddy reload`.
 
-![EC2](./img-001.png) ![SG](./img-002.png)
+![EC2](images/img-001.png) ![SG](images/img-002.png)
 
 ## Étape 2 — CloudWatch
 
@@ -39,7 +41,7 @@ fields @message
 | stats count_distinct(remote_ip) as unique_ip by remote_ip
 ```
 
-![Résultats](./img-004.png)
+![Résultats](images/img-004.png)
 
 ## Bilan
 

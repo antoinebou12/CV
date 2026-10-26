@@ -1,0 +1,86 @@
+flowchart TD
+
+subgraph group_routing["Request routing"]
+  node_web_routes["Web routes<br/>[web.php]"]
+  node_auth_routes["Auth routes<br/>[auth.php]"]
+  node_http_kernel["HTTP middleware<br/>[Kernel.php]"]
+end
+
+subgraph group_identity["Identity and access"]
+  node_login["Login handler"]
+  node_login_request["Login validation<br/>[LoginRequest.php]"]
+  node_registration["Registration handler"]
+  node_role_guard["Admin role guard"]
+  node_user["User identity model<br/>[User.php]"]
+  node_user_store[("User persistence<br/>[User.php]")]
+end
+
+subgraph group_account["Account services"]
+  node_profile["Profile management"]
+  node_email_verification["Email verification"]
+  node_verification_notice["Verification prompts"]
+  node_verification_email["Verification email"]
+  node_provider_login["Provider sign-in"]
+end
+
+subgraph group_client["Inertia client"]
+  node_inertia_middleware["Inertia request props"]
+  node_client_app["Inertia application<br/>[app.tsx]"]
+  node_auth_pages["Authentication pages<br/>[Login.tsx]"]
+  node_profile_page["Profile screen<br/>[Edit.tsx]"]
+  node_role_pages["Role dashboards and customer lists"]
+end
+
+node_visitor(("Browser user"))
+
+node_visitor -.->|"requests pages"| node_web_routes
+node_web_routes -->|"loads routes"| node_auth_routes
+node_auth_routes -->|"routes login"| node_login
+node_auth_routes -->|"routes registration"| node_registration
+node_login -->|"authenticates with"| node_login_request
+node_login_request -->|"uses identity"| node_user
+node_registration -->|"creates account"| node_user
+node_web_routes -->|"routes profile"| node_profile
+node_profile -->|"updates account"| node_user
+node_auth_routes -->|"routes verification"| node_email_verification
+node_auth_routes -->|"routes prompt"| node_verification_notice
+node_auth_routes -->|"routes notification"| node_verification_email
+node_client_app -->|"resolves pages"| node_auth_pages
+node_client_app -->|"resolves pages"| node_profile_page
+node_client_app -->|"resolves pages"| node_role_pages
+node_user -.->|"persists records"| node_user_store
+node_auth_routes -.->|"optional sign-in"| node_provider_login
+node_http_kernel -->|"registers middleware"| node_role_guard
+node_visitor -.->|"uses role pages"| node_role_pages
+
+click node_web_routes "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/routes/web.php"
+click node_auth_routes "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/routes/auth.php"
+click node_http_kernel "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Kernel.php"
+click node_login "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/AuthenticatedSessionController.php"
+click node_login_request "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Requests/Auth/LoginRequest.php"
+click node_registration "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/RegisteredUserController.php"
+click node_role_guard "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Middleware/AdminAuthenticated.php"
+click node_user "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Models/User.php"
+click node_profile "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/ProfileController.php"
+click node_email_verification "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/VerifyEmailController.php"
+click node_verification_notice "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/EmailVerificationPromptController.php"
+click node_verification_email "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/EmailVerificationNotificationController.php"
+click node_provider_login "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Controllers/Auth/ProviderController.php"
+click node_inertia_middleware "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Http/Middleware/HandleInertiaRequests.php"
+click node_client_app "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/resources/js/app.tsx"
+click node_auth_pages "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/resources/js/Pages/Auth/Login.tsx"
+click node_profile_page "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/resources/js/Pages/Profile/Edit.tsx"
+click node_role_pages "https://github.com/antoinebou12/authlaravel/tree/main/AuthLaravel/resources/js/Pages"
+click node_user_store "https://github.com/antoinebou12/authlaravel/blob/main/AuthLaravel/app/Models/User.php"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_web_routes,node_auth_routes,node_http_kernel,node_visitor toneBlue
+class node_login,node_login_request,node_registration,node_role_guard,node_user,node_user_store toneAmber
+class node_profile,node_email_verification,node_verification_notice,node_verification_email,node_provider_login toneMint
+class node_inertia_middleware,node_client_app,node_auth_pages,node_profile_page,node_role_pages toneRose

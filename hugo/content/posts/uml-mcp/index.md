@@ -4,7 +4,7 @@ title: "uml-mcp — UML diagrams from chat via MCP"
 date: 2026-09-02T14:00:00-04:00
 lastmod: 2026-10-20T10:00:00-04:00
 mermaid: true
-images: ["featured.png"]
+images: ["images/featured.png"]
 description: "Open-source MCP server for Mermaid, PlantUML, and Kroki diagrams in Cursor and ChatGPT — why I built it, how to install, and links to earlier diagram tooling."
 translationKey: uml-mcp-post
 tags:
@@ -22,7 +22,7 @@ tags:
 
 {{< repo_snapshot "antoinebou12/uml-mcp" >}}
 
-![A Mermaid client/server sequence rendered in chat, from the repository](featured.png)
+![A Mermaid client/server sequence rendered in chat, from the repository](images/featured.png)
 
 <!--more-->
 

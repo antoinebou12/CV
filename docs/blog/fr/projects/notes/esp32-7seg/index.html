@@ -1,0 +1,547 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>ESP32-7SEG: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.5eeb6b3870c7deb66a10043b10ff01f264a7b584240d7d6323a0de1febb0b0d1.css integrity="sha256-XutrOHDH3rZqEAQ7EP8B8mSntYQkDX1jI6DeH+uwsNE="><link rel=stylesheet href=/CV/blog/projects-editorial.min.de547dbb958693860bcd9fa3b30f31b7b58654ff6a74a17d219ccab790becf4a.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="ESP32-7SEG : Une horloge embarquée avec configuration réseau"><meta itemprop=description content="ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="1527"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/esp32-7seg/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="ESP32-7SEG : Une horloge embarquée avec configuration réseau"><meta property="og:description" content="ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="ESP32-7SEG : Une horloge embarquée avec configuration réseau"><meta name=twitter:description content="ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/esp32-7seg/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/esp32-7seg/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/esp32-7seg/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>ESP32-7SEG : Une horloge embarquée avec configuration réseau</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#architecture>Architecture</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>ESP32-7SEG : Une horloge embarquée avec configuration réseau</h1><p class=repo-hero-lede>ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés peuvent être réutilisés ou si le parcours de configuration est nécessaire.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Matériel et infographie</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/ESP32-7SEG/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>1</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>Kotlin · 58.26%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/ESP32-7SEG><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/ESP32-7SEG#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>Kotlin 58.26%</span><span class=repo-count>3</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="Kotlin 58.26%. C++ 39.56%. C 2.18%."><span style=width:58.26% title="Kotlin 58.26%"></span><span style=width:39.56% title="C++ 39.56%"></span><span style=width:2.18% title="C 2.18%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>Kotlin</td><td><span class=repo-lang-bar style=--p:58.26%><span>58.26%</span></span></td><td class=num>62 877</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:39.56%><span>39.56%</span></span></td><td class=num>42 693</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>C</td><td><span class=repo-lang-bar style=--p:2.18%><span>2.18%</span></span></td><td class=num>2 350</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/ESP32-7SEG>GitHub</a> · <a href=https://github.com/antoinebou12/ESP32-7SEG#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/ESP32-7SEG/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Firmware embarqué et contrôleur pour affichage 7 segments multi-chiffres sur microcontrôleur ESP32.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Affichage matériel déporté pour métriques ou domotique.</p></article></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabbody id=install-native data-tab-panel=native><aside class="repo-admonition info"><p class=repo-admonition-title>Installation non extraite</p><p>Aucune recette d’installation réutilisable n’a été extraite de ce dépôt.</p><p><a class="btn ghost" href=https://github.com/antoinebou12/ESP32-7SEG#readme>Ouvrir le README</a></p></aside></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p class=repo-evidence-label>Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prérequis et premier essai</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L15>Prerequisites</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>Hardware: ESP32 FireBeetle board (v1.0), Adafruit 7-segment display (I2C backpack), breadboard, and jumper wires.</li><li>Software: Git, PlatformIO or Arduino IDE, and necessary ESP32 libraries.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L15>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L25>Software Installation</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ol><li>Clone the Repository:</li><li>Open and Configure the Project: Load the project into PlatformIO or the Arduino IDE. Install any required libraries as specified in platformio.ini or the project documentation.</li><li>Upload to the ESP32: Compile and upload the code to your ESP32 board to start the project.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L25>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L15>Prerequisites</a></h3><p class=repo-excerpt-file><code>readme.md</code></p><div class=repo-source-markdown>Hardware: ESP32 FireBeetle board (v1.0), Adafruit 7-segment display (I2C backpack), breadboard, and jumper wires.
+Software: Git, PlatformIO or Arduino IDE, and necessary ESP32 libraries.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L15>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L25>Software Installation</a></h3><p class=repo-excerpt-file><code>readme.md</code></p><div class=repo-source-markdown><ol><li>Clone the repository to your local machine.</li><li>Open the project with your preferred IDE or editor that supports PlatformIO or the Arduino IDE.</li><li>Install the necessary libraries mentioned in the platformio.ini file or the Arduino project.</li><li>Upload the code to your ESP32 FireBeetle board.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L25>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Configuration et utilisation</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L20>Hardware Setup</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ol><li>Display Connections: Connect the Adafruit 7-segment display to the ESP32 using the I2C interface. Make sure to connect the SCL and SDA pins correctly, along with VCC and GND for power.</li><li>Power Supply: Power the ESP32 board through USB or an external power supply to ensure stable operation.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L20>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L34>Usage</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>Access the Web Server: After booting, the ESP32 launches a web server. Find its IP address in the serial monitor and navigate to it using a web browser.</li><li>Update Display via Web Interface: Use the web interface to input and submit the content you want to be displayed. The ESP32 will update the 7-segment display in real-time.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L34>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L20>Hardware Setup</a></h3><p class=repo-excerpt-file><code>readme.md</code></p><div class=repo-source-markdown><ol><li>Connect the 7-segment display to the ESP32 according to the provided wiring diagram.</li><li>Ensure a stable power supply for the ESP32 board.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L20>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L37>Usage</a></h3><p class=repo-excerpt-file><code>readme.md</code></p><div class=repo-source-markdown><p>After uploading the code to your ESP32 board:</p><ol><li>Connect the ESP32 to a power source.</li><li>The ESP32 starts a web server accessible within your local network.</li><li>Find the ESP32&rsquo;s IP address from your serial monitor and visit the provided IP using a web browser.</li><li>Use the web interface to update the 7-segment display&rsquo;s content.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L37>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Développement et contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L39>Contributing</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>We welcome contributions! If you have suggestions for improvements or find a bug, please feel free to fork the repository, make your changes, and submit a pull request.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md#L39>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L46>Contributing</a></h3><p class=repo-excerpt-file><code>readme.md</code></p><div class=repo-source-markdown>Contributions to improve the project are welcome. Please feel free to fork the repository and submit pull requests.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L46>Lire les instructions complètes ↗</a></section></details></div><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md><code>readme.md</code></a></li></ul><p class=repo-evidence-label>2 documents lus parmi 2 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Démarrage et connectivité</dt><dd>setup initialise NVS et vérifie le résultat. Il charge les paramètres enregistrés, tente une connexion et revient à setupWiFi en cas d’échec. Ce parcours sert aussi lorsqu’aucun paramètre n’est sauvegardé.</dd></div><div class=repo-feature><dt>Modules d’affichage et web</dt><dd>Après la configuration réseau, main.cpp appelle startClockDisplay et setupWebServer. display.cpp, wifi.cpp et web_server.cpp séparent l’affichage matériel, la connexion et le traitement HTTP.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Les composants et leurs liens restent lisibles en texte. Le diagramme ajoute une vue interactive.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title>Contexte système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=tabpanel aria-labelledby=tab-arch-context><ol class=repo-flow><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Démarrage ESP32</span><span class=repo-flow-step aria-hidden=true>01</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Paramètres NVS</span><span class=repo-flow-step aria-hidden=true>02</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Connexion ou configuration Wi-Fi</span><span class=repo-flow-step aria-hidden=true>03</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Affichage de l’horloge</span><span class=repo-flow-step aria-hidden=true>04</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Interface HTTP</span><span class=repo-flow-step aria-hidden=true>05</span></li></ol><p class=figdesc>Liens vérifiés dans le dépôt.</p></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-esp32-7seg><p id=architecture-esp32-7seg class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/esp32-7seg/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de ESP32-7SEG"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_firmware[&#34;ESP32 firmware&#34;]
+  node_boot[&#34;Firmware startup&lt;br/&gt;[main.cpp]&#34;]
+  node_wifi[&#34;Wi-Fi setup&lt;br/&gt;[wifi.cpp]&#34;]
+  node_credentials[(&#34;Wi-Fi credentials&lt;br/&gt;[wifi.cpp]&#34;)]
+  node_timer_display[&#34;Timer display&lt;br/&gt;[display.cpp]&#34;]
+end
+
+subgraph group_web[&#34;Web control&#34;]
+  node_http_server[&#34;HTTP and WebSocket server&lt;br/&gt;[web_server.cpp]&#34;]
+  node_web_pages[&#34;Browser interface&lt;br/&gt;[web_page.h]&#34;]
+end
+
+subgraph group_android[&#34;Android app&#34;]
+  node_android_entry[&#34;Android navigation&lt;br/&gt;[MainActivity.kt]&#34;]
+  node_timer_ui[&#34;Timer controls&#34;]
+  node_wifi_ui[&#34;Wi-Fi onboarding&#34;]
+  node_settings_ui[&#34;Settings&#34;]
+  node_browser_ui[&#34;Embedded browser view&#34;]
+  node_stop_receiver[&#34;Timer stop receiver&#34;]
+  node_settings_adapter[&#34;Settings list adapter&lt;br/&gt;[SettingsAdapter.kt]&#34;]
+end
+
+subgraph group_android_net[&#34;Android networking&#34;]
+  node_timer_api[&#34;Timer API contract&lt;br/&gt;[TimerApiService.kt]&#34;]
+  node_retrofit[&#34;HTTP client setup&#34;]
+  node_ws_client[&#34;WebSocket client&lt;br/&gt;[WebSocketClient.kt]&#34;]
+  node_preferences[(&#34;App preferences&#34;)]
+end
+
+node_operator((&#34;User&#34;))
+node_browser((&#34;Browser&#34;))
+node_display_hw{{&#34;7-segment display&#34;}}
+
+node_operator --&gt;|&#34;controls&#34;| node_browser
+node_browser --&gt;|&#34;submits controls&#34;| node_http_server
+node_boot --&gt;|&#34;loads or configures&#34;| node_wifi
+node_boot --&gt;|&#34;starts display&#34;| node_timer_display
+node_boot --&gt;|&#34;starts server&#34;| node_http_server
+node_wifi --&gt;|&#34;reads and writes&#34;| node_credentials
+node_http_server --&gt;|&#34;handles Wi-Fi routes&#34;| node_wifi
+node_http_server --&gt;|&#34;dispatches timer updates&#34;| node_timer_display
+node_http_server --&gt;|&#34;serves pages&#34;| node_web_pages
+node_timer_display --&gt;|&#34;drives display&#34;| node_display_hw
+node_operator -.-&gt;|&#34;uses app&#34;| node_android_entry
+node_timer_ui --&gt;|&#34;requests timer actions&#34;| node_retrofit
+node_timer_ui --&gt;|&#34;opens timer socket&#34;| node_ws_client
+node_wifi_ui --&gt;|&#34;sends credentials&#34;| node_retrofit
+node_settings_ui --&gt;|&#34;uses adapter&#34;| node_settings_adapter
+node_settings_ui --&gt;|&#34;loads device data&#34;| node_retrofit
+node_retrofit --&gt;|&#34;creates service&#34;| node_timer_api
+node_retrofit --&gt;|&#34;initializes preferences&#34;| node_preferences
+node_timer_ui --&gt;|&#34;registers timer events&#34;| node_stop_receiver
+node_timer_api -.-&gt;|&#34;calls matching routes&#34;| node_http_server
+node_ws_client -.-&gt;|&#34;connects to socket&#34;| node_http_server
+
+
+class node_boot,node_wifi,node_credentials,node_timer_display,node_operator,node_browser toneBlue
+class node_http_server,node_web_pages toneAmber
+class node_android_entry,node_timer_ui,node_wifi_ui,node_settings_ui,node_browser_ui,node_stop_receiver,node_settings_adapter toneMint
+class node_timer_api,node_retrofit,node_ws_client,node_preferences toneRose
+class node_display_hw toneIndigo</code></pre></div><div class=repo-system-summary><p>Un micrologiciel ESP32 pour une minuterie à afficheur sept segments contrôlée par le réseau, avec une application Android. Le démarrage charge le Wi-Fi, lance l’affichage et le serveur web, puis les interfaces envoient les commandes de minuterie et de configuration.</p><dl><div><dt>Composants</dt><dd>20</dd></div><div><dt>Connexions</dt><dd>21</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>18/21</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Démarrage ESP32 → Paramètres NVS</li><li>Paramètres NVS → Connexion ou configuration Wi-Fi</li><li>Connexion ou configuration Wi-Fi → Affichage de l’horloge</li><li>Connexion ou configuration Wi-Fi → Interface HTTP</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Suivez la branche des paramètres sauvegardés dans setup. Le réseau mémorisé est essayé d’abord, mais un échec rejoint setupWiFi. L’affichage et le serveur web démarrent après cette branche.</p></details></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>L’analyse a trouvé 21 déclarations de types. Le diagramme en montre 12 et conserve les relations de base déclarées.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types (Mermaid)</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t0f7089087495[&#34;Callbacks&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tc0b1722c8a7f[&#34;ExampleInstrumentedTest&#34;] {
+  useAppContext()
+}
+class taaaa0937cb8a[&#34;ExampleInstrumentedTest&#34;] {
+  useAppContext()
+}
+class t0fd594821bdd[&#34;MainActivity&#34;] {
+  onCreate()
+  setupNavigationUI()
+  hasPermissions()
+  onRequestPermissionsResult()
+}
+class tf36f30cd8e65[&#34;SettingsAdapter&#34;] {
+  onCreateViewHolder()
+  onBindViewHolder()
+  getItemCount()
+}
+class tb59d4cfbe0b1[&#34;SettingsViewHolder&#34;] {
+}
+class tc5d344b351ed[&#34;SettingItem&#34;] {
+}
+class tce24fcf8fc6e[&#34;TimerApiService&#34;] {
+  performTimerAction()
+  resetWifiCredentials()
+  connectToWiFi()
+  scanForNetworks()
+}
+class t64725d5d3582[&#34;WebSocketClient&#34;] {
+  connect()
+  send()
+  close()
+}
+class t181736c31b5e[&#34;WebSocketEventListener&#34;] {
+  onOpen()
+  onMessage()
+  onClosing()
+  onFailure()
+}
+class tf5e33f3603df[&#34;PreferencesHelper&#34;] {
+}
+class t1902f7090575[&#34;SettingsFragment&#34;] {
+  onCreateView()
+  onViewCreated()
+  fetchDeviceInfo()
+  checkWifiPermissionAndFetchSSID()
+}
+class b4be9ca085545[&#34;AppCompatActivity&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+t0fd594821bdd ..&gt; b4be9ca085545 : declared base
+class bc58b80af594e[&#34;RecyclerView&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+tf36f30cd8e65 ..&gt; bc58b80af594e : declared base
+tb59d4cfbe0b1 ..&gt; bc58b80af594e : declared base
+class b995bb1f4b9f4[&#34;Fragment&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+t1902f7090575 ..&gt; b995bb1f4b9f4 : declared base
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées. Les signatures complètes ne sont pas reconstruites.</p></details><details class=repo-structure-details><summary>Types, méthodes et bases déclarées</summary><ul class=repo-structure-list><li><code>Callbacks</code> (struct) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/src/display.cpp#L17><code>src/display.cpp:17</code></a></li><li><code>ExampleInstrumentedTest</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/androidTest/java/com/esptimer/ExampleInstrumentedTest.kt#L16><code>android/app/src/androidTest/java/com/esptimer/ExampleInstrumentedTest.kt:16</code></a><p>Méthodes dans l’aperçu : <code>useAppContext</code>.</p></li><li><code>ExampleInstrumentedTest</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/androidTest/java/com/example/esptimer/ExampleInstrumentedTest.kt#L16><code>android/app/src/androidTest/java/com/example/esptimer/ExampleInstrumentedTest.kt:16</code></a><p>Méthodes dans l’aperçu : <code>useAppContext</code>.</p></li><li><code>MainActivity</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/MainActivity.kt#L16><code>android/app/src/main/java/com/esptimer/MainActivity.kt:16</code></a><p>Méthodes dans l’aperçu : <code>onCreate, setupNavigationUI, hasPermissions, onRequestPermissionsResult</code>.</p><p>Bases déclarées : <code>AppCompatActivity</code>.</p></li><li><code>SettingsAdapter</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt#L10><code>android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt:10</code></a><p>Méthodes dans l’aperçu : <code>onCreateViewHolder, onBindViewHolder, getItemCount</code>.</p><p>Bases déclarées : <code>RecyclerView</code>.</p></li><li><code>SettingsViewHolder</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt#L13><code>android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt:13</code></a><p>Bases déclarées : <code>RecyclerView</code>.</p></li><li><code>SettingItem</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt#L40><code>android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt:40</code></a></li><li><code>TimerApiService</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/api/TimerApiService.kt#L6><code>android/app/src/main/java/com/esptimer/api/TimerApiService.kt:6</code></a><p>Méthodes dans l’aperçu : <code>performTimerAction, resetWifiCredentials, connectToWiFi, scanForNetworks</code>.</p></li><li><code>WebSocketClient</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/api/WebSocketClient.kt#L8><code>android/app/src/main/java/com/esptimer/api/WebSocketClient.kt:8</code></a><p>Méthodes dans l’aperçu : <code>connect, send, close</code>.</p></li><li><code>WebSocketEventListener</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/api/WebSocketClient.kt#L45><code>android/app/src/main/java/com/esptimer/api/WebSocketClient.kt:45</code></a><p>Méthodes dans l’aperçu : <code>onOpen, onMessage, onClosing, onFailure</code>.</p></li><li><code>PreferencesHelper</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/config/PreferencesHelper.kt#L5><code>android/app/src/main/java/com/esptimer/config/PreferencesHelper.kt:5</code></a></li><li><code>SettingsFragment</code> (class) · <a href=https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/android/app/src/main/java/com/esptimer/fragment/SettingsFragment.kt#L24><code>android/app/src/main/java/com/esptimer/fragment/SettingsFragment.kt:24</code></a><p>Méthodes dans l’aperçu : <code>onCreateView, onViewCreated, fetchDeviceInfo, checkWifiPermissionAndFetchSSID</code>.</p><p>Bases déclarées : <code>Fragment</code>.</p></li></ul></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><details class=repo-analysis-coverage><summary>Périmètre et limites de l’analyse</summary><p>36 fichiers lus sur 36 fichiers admissibles dans l’arbre GitHub (113 fichiers au total). Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus.</p><p>La collecte couvre les README, les manifestes reconnus et les fichiers source dont le langage est pris en charge par l’analyseur. Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p><p>0 fichiers dépassent la limite de taille, 0 lectures ont échoué et 1 fichiers ont produit un diagnostic de syntaxe.</p></details><details class=repo-diagram-details data-mermaid-lazy><summary>Carte des fichiers</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TD
+  root[&#34;ESP32-7SEG&#34;]
+  f0[&#34;platformio.ini&#34;]
+  root --&gt; f0
+  f1[&#34;src/display.cpp&#34;]
+  root --&gt; f1
+  f2[&#34;src/main.cpp&#34;]
+  root --&gt; f2
+  f3[&#34;src/web_server.cpp&#34;]
+  root --&gt; f3
+  f4[&#34;README.md&#34;]
+  root --&gt; f4
+  f5[&#34;readme.md&#34;]
+  root --&gt; f5
+  f6[&#34;android/build.gradle.kts&#34;]
+  root --&gt; f6
+  f7[&#34;include/README&#34;]
+  root --&gt; f7
+  f8[&#34;include/ble.h&#34;]
+  root --&gt; f8
+  f9[&#34;include/config.h&#34;]
+  root --&gt; f9
+  f10[&#34;include/display.h&#34;]
+  root --&gt; f10
+  f11[&#34;include/web_page.h&#34;]
+  root --&gt; f11
+  f12[&#34;include/web_server.h&#34;]
+  root --&gt; f12
+  f13[&#34;include/wifi.h&#34;]
+  root --&gt; f13
+  f14[&#34;lib/README&#34;]
+  root --&gt; f14
+  f15[&#34;src/ble.cpp&#34;]
+  root --&gt; f15
+</code></pre></div></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">Le câblage, l’affichage et le Wi-Fi doivent être vérifiés sur le matériel. Cette interface HTTP ne doit pas être supposée sûre pour une exposition Internet libre.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>4</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/main.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/main.cpp</code></a></li><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/display.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/display.cpp</code></a></li><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/web_server.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/web_server.cpp</code></a></li><li><a href=https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>platformio.ini</code></a></li></ul></section><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Références</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/ESP32-7SEG>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/ESP32-7SEG#readme>README</a><span>Documentation du dépôt</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Langage</span><b>Kotlin</b></div><div class=kv><span>Catégorie</span><b>Matériel et infographie</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/ESP32-7SEG>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.className = 'post-diagram';
+              figure.tabIndex = 0;
+              figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+              figure.innerHTML = svg;
+              const fr = document.documentElement.lang.startsWith('fr');
+              const container = document.createElement('div');
+              container.className = 'diagram-interactive';
+              const toolbar = document.createElement('div');
+              toolbar.className = 'diagram-tools';
+              toolbar.setAttribute('role', 'group');
+              toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+              const status = document.createElement('output');
+              status.setAttribute('aria-live', 'polite');
+              const svgElement = figure.querySelector('svg');
+              const natural = svgElement?.viewBox?.baseVal?.width || 800;
+              function resize(width, minimum = Math.min(160, natural)) {
+                block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+                svgElement.style.width = block.zoom + 'px';
+                svgElement.style.minWidth = '0';
+                svgElement.style.maxWidth = 'none';
+                svgElement.style.maxHeight = 'none';
+                status.textContent = Math.round(block.zoom / natural * 100) + '%';
+              }
+              function fit() {
+                const style = getComputedStyle(figure);
+                const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+                if (available <= 0) return;
+                resize(Math.min(natural, available), 1);
+                figure.scrollLeft = 0;
+                figure.scrollTop = 0;
+              }
+              function button(label, action, handler) {
+                const control = document.createElement('button');
+                control.type = 'button';
+                control.textContent = label;
+                control.dataset.diagramAction = action;
+                control.addEventListener('click', handler);
+                toolbar.append(control);
+                return control;
+              }
+              button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+              button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+              button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+              button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+              button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+                try {
+                  if (document.fullscreenElement === container) await document.exitFullscreen();
+                  else await container.requestFullscreen();
+                } catch {
+                  status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+                }
+              });
+              button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+                const copy = svgElement.cloneNode(true);
+                copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                copy.setAttribute('width', String(natural));
+                copy.removeAttribute('style');
+                const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `diagram-${index + 1}.svg`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+              });
+              toolbar.append(status);
+              container.append(toolbar, figure);
+              let drag = null;
+              let suppressClick = false;
+              figure.addEventListener('pointerdown', event => {
+                suppressClick = false;
+                if (!event.isPrimary) { stopPan(); return; }
+                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+                    !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+              });
+              figure.addEventListener('pointermove', event => {
+                if (!drag || event.pointerId !== drag.id) return;
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+                if (!drag.active) {
+                  if (Math.hypot(dx, dy) < 6) return;
+                  
+                  if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+                  if (figure.scrollWidth <= figure.clientWidth &&
+                      (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+                  drag.active = true;
+                  figure.setPointerCapture(event.pointerId);
+                  figure.classList.add('is-panning');
+                  figure.focus({ preventScroll: true });
+                }
+                event.preventDefault();
+                figure.scrollLeft = drag.left - dx;
+                if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+              });
+              function stopPan(event) {
+                if (!drag || (event && event.pointerId !== drag.id)) return;
+                const previous = drag;
+                drag = null;
+                suppressClick = previous.active && (!event || event.type === 'pointerup');
+                figure.classList.remove('is-panning');
+                if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+              }
+              figure.addEventListener('pointerup', stopPan);
+              figure.addEventListener('pointercancel', stopPan);
+              figure.addEventListener('lostpointercapture', event => {
+                
+                
+                if (event.target === figure) stopPan(event);
+              });
+              figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+              figure.addEventListener('click', event => {
+                if (!suppressClick || event.detail === 0) return;
+                suppressClick = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }, true);
+              figure.addEventListener('keydown', event => {
+                if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+                if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+                else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+                else if (event.key === '0') resize(natural);
+                else if (event.key === 'f' || event.key === 'F') fit();
+                else if (event.key.startsWith('Arrow')) {
+                  const delta = 80;
+                  if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+                  if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+                  if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+                  if (event.key === 'ArrowDown') figure.scrollTop += delta;
+                }
+                else return;
+                event.preventDefault();
+              });
+              const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+              (block.container || block.original).replaceWith(container);
+              block.container = container;
+              block.figure = figure;
+              block.painted = true;
+              if (block.imageFallback) block.imageFallback.hidden = true;
+              requestAnimationFrame(() => fit());
+              if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

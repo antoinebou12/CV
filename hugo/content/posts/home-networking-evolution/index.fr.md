@@ -13,7 +13,7 @@ tags:
   - Proxmox
   - Caddy
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi. **[English version]({{< ref "/posts/home-networking-evolution/index.md" >}})**.

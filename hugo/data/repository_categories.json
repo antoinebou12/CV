@@ -1,0 +1,572 @@
+{
+  "categories": [
+    {
+      "id": "switch-games",
+      "label": {
+        "en": "Switch & Gaming",
+        "fr": "Switch & Jeux"
+      },
+      "icon": "gamepad",
+      "color": "#e0564c"
+    },
+    {
+      "id": "web-design",
+      "label": {
+        "en": "Web & Design",
+        "fr": "Web & Design"
+      },
+      "icon": "layout",
+      "color": "#0ea5e9"
+    },
+    {
+      "id": "infra-homelab",
+      "label": {
+        "en": "Infrastructure & Homelab",
+        "fr": "Infrastructure & Homelab"
+      },
+      "icon": "server",
+      "color": "#10b981"
+    },
+    {
+      "id": "api-backend",
+      "label": {
+        "en": "API & Systems",
+        "fr": "API & Systèmes"
+      },
+      "icon": "cpu",
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "algorithms-tools",
+      "label": {
+        "en": "Algorithms & Tools",
+        "fr": "Algorithmes & Outils"
+      },
+      "icon": "code",
+      "color": "#f59e0b"
+    }
+  ],
+  "repositories": {
+    "uml-mcp": {
+      "category": "api-backend",
+      "why_good": [
+        "Flagship Model Context Protocol (MCP) server generating PlantUML, Mermaid, and Kroki directly from LLMs (Claude, Cursor, ChatGPT) with zero local dependencies.",
+        "Serveur phare Model Context Protocol (MCP) générant PlantUML, Mermaid et Kroki directement depuis des LLMs (Claude, Cursor, ChatGPT) sans dépendance locale."
+      ],
+      "use_case": [
+        "Interactive architectural diagram generation for AI pair programming and automated design docs.",
+        "Génération interactive de diagrammes d'architecture pour le pair programming avec IA et la documentation."
+      ],
+      "related_post_slug": "uml-mcp"
+    },
+    "donneesqc-mcp": {
+      "category": "api-backend",
+      "why_good": [
+        "Production MCP server connecting AI assistants to Quebec & Montreal open data APIs with strict schema validation.",
+        "Serveur MCP robuste reliant les assistants IA aux données ouvertes du Québec et de Montréal avec validation stricte."
+      ],
+      "use_case": [
+        "Natural language querying of public municipal and provincial datasets across transportation, demographics, and municipal services.",
+        "Interrogation en langage naturel des jeux de données municipaux et provinciaux ouverts."
+      ]
+    },
+    "Dimension": {
+      "category": "web-design",
+      "why_good": [
+        "High-performance wgpu graphics pipeline and linear algebra math engine built entirely in Rust from first principles.",
+        "Pipeline graphique wgpu haute performance et moteur d'algèbre linéaire implémentés en Rust à partir des fondamentaux."
+      ],
+      "use_case": [
+        "Hardware-accelerated 3D heightmap rendering, spatial transformation pipelines, and graphics education.",
+        "Rendu 3D de cartes de relief accéléré matériellement, transformations spatiales et apprentissage de l'infographie."
+      ],
+      "related_post_slug": "dimension-rust-math-rendering"
+    },
+    "DasherControl": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Decoupled homelab architecture: Rust/Rocket backend managing Docker daemon via Shiplift, paired with a reactive Vue workspace frontend.",
+        "Architecture homelab découplée : backend Rust/Rocket pilotant le démon Docker via Shiplift, associé à un frontend Vue réactif."
+      ],
+      "use_case": [
+        "Centralized command dashboard for homelab containerized services, bookmarks, and layout management.",
+        "Tableau de bord centralisé pour services conteneurisés en homelab, signets et gestion d'espaces de travail."
+      ],
+      "related_post_slug": "dashercontrol-homelab-workspaces"
+    },
+    "bloc": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Direct AWS S3 object storage integration inside Blender via Boto3, eliminating local drive storage bloat for 3D assets.",
+        "Intégration directe du stockage objet AWS S3 dans Blender via Boto3, éliminant la saturation des disques locaux pour les assets 3D."
+      ],
+      "use_case": [
+        "Cloud-native 3D asset synchronization, backup, and distributed rendering workflows.",
+        "Synchronisation cloud d'assets 3D, sauvegardes et flux de rendu distribués."
+      ],
+      "related_post_slug": "bloc-blender-cloud-storage"
+    },
+    "MediaBoxDockerCompose": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Comprehensive GitOps container stack combining WireGuard VPN tunnel networking with 15+ homelab automation services.",
+        "Stack GitOps complète combinant réseau sécurisé WireGuard VPN et plus de 15 microservices d'automatisation homelab."
+      ],
+      "use_case": [
+        "Automated, isolated private cloud media server with remote access and encrypted traffic routing.",
+        "Serveur multimédia privé conteneurisé avec accès distant chiffré et routage sécurisé."
+      ],
+      "related_post_slug": "mediabox-homelab-docker-catalog"
+    },
+    "Serilog.Sinks.SentrySDK": {
+      "category": "api-backend",
+      "why_good": [
+        "Production .NET 6+ Serilog sink bridging structured logging and Sentry error telemetry with zero allocation overhead.",
+        "Sink Serilog .NET 6+ reliant la journalisation structurée à Sentry avec zéro allocation superflue."
+      ],
+      "use_case": [
+        "Enterprise .NET microservice error observability and distributed trace correlation.",
+        "Observabilité des erreurs et traçage distribué pour microservices d'entreprise .NET."
+      ],
+      "related_post_slug": "serilog-sentrysdk-structured-errors"
+    },
+    "sm64coopdx-switch-N3DS": {
+      "category": "switch-games",
+      "why_good": [
+        "Low-level C systems port optimizing multi-threaded networking and memory layout for embedded handheld consoles.",
+        "Portage système en C bas niveau optimisant le réseau multithread et la mémoire pour consoles portables."
+      ],
+      "use_case": [
+        "Co-op multiplayer emulation and custom embedded gaming on Switch & N3DS.",
+        "Jeu multijoueur coopératif portable sur consoles Switch et New 3DS."
+      ],
+      "related_post_slug": "sm64coopdx-switch-new3ds-port"
+    },
+    "Artemis-Switch": {
+      "category": "switch-games",
+      "why_good": [
+        "Hardware-accelerated GameStream/Moonlight client in C++ with custom NVN display frame pacing for zero-stutter video.",
+        "Client GameStream C++ accéléré matériellement avec calage d'images NVN pour une fluidité sans saccade."
+      ],
+      "use_case": [
+        "Ultra-low latency PC game streaming directly to Nintendo Switch handheld mode.",
+        "Diffusion de jeux PC vers Nintendo Switch en mode portable avec latence minimale."
+      ],
+      "related_post_slug": "artemis-switch-frame-pacing"
+    },
+    "Artemis-N3DS": {
+      "category": "switch-games",
+      "why_good": [
+        "Constrained systems engineering streaming 60fps video over 802.11n Wi-Fi to a dual-screen ARM11 device.",
+        "Défi d'ingénierie sous fortes contraintes : streaming 60 FPS sur architecture ARM11 double écran."
+      ],
+      "use_case": [
+        "Remote desktop and gaming on legacy Nintendo New 3DS hardware.",
+        "Accès distant et jeu PC sur matériel New 3DS."
+      ],
+      "related_post_slug": "handheld-streaming-homebrew"
+    },
+    "NX-Activity-Log": {
+      "category": "switch-games",
+      "why_good": [
+        "High-precision telemetry parser reading raw Switch playtime event logs without system telemetry bans.",
+        "Analyseur télémétrique lisant les journaux de jeu Switch bruts sans risque de bannissement."
+      ],
+      "use_case": [
+        "Detailed gameplay analytics and playtime tracking for Switch homebrew.",
+        "Suivi précis et analytique du temps de jeu sur Nintendo Switch."
+      ]
+    },
+    "nxsand": {
+      "category": "switch-games",
+      "why_good": [
+        "Cellular automaton sand physics simulation engine running on libnx with touch and controller input.",
+        "Moteur de simulation de particules et physique cellulaire optimisé sous libnx."
+      ],
+      "use_case": [
+        "Interactive physics simulations on handheld console touchscreens.",
+        "Simulation physique interactive sur écran tactile de console."
+      ]
+    },
+    "switch-wifi": {
+      "category": "switch-games",
+      "why_good": [
+        "Native C++ network configuration tool interfacing directly with Switch horizon OS wlan services.",
+        "Utilitaire C++ natif communiquant directement avec les services wlan de l'OS Switch."
+      ],
+      "use_case": [
+        "Fast headless Wi-Fi network credential provisioning on Switch.",
+        "Configuration réseau rapide pour console Switch sans interface complexe."
+      ]
+    },
+    "FlashGames": {
+      "category": "switch-games",
+      "why_good": [
+        "Preservation archive of early 2010s ActionScript/Flash game creations with self-contained assets.",
+        "Archive de préservation de jeux ActionScript/Flash des années 2010."
+      ],
+      "use_case": [
+        "Digital preservation and retro gaming nostalgia.",
+        "Préservation numérique de créations historiques."
+      ]
+    },
+    "retroarch-web-games": {
+      "category": "switch-games",
+      "why_good": [
+        "Containerized WebAssembly RetroArch emulator bundle ready to run in any browser with zero installation.",
+        "Émulateur RetroArch conteneurisé en WebAssembly exécutable dans tout navigateur moderne."
+      ],
+      "use_case": [
+        "Zero-friction retro gaming via Docker on desktop, mobile, or smart TVs.",
+        "Émulation de jeux rétro dans le navigateur sans installation."
+      ]
+    },
+    "hydra": {
+      "category": "switch-games",
+      "why_good": [
+        "Desktop Electron and TypeScript application orchestrating gaming library metadata and downloads.",
+        "Application de bureau orchestrant métadonnées et gestion de ludothèque."
+      ],
+      "use_case": [
+        "Open-source alternative game launcher and library organizer.",
+        "Lanceur et gestionnaire de jeux open source."
+      ]
+    },
+    "ChitUI": {
+      "category": "web-design",
+      "why_good": [
+        "Full-featured web control interface for Chitubox SDCP 3.0 resin printers with LAN UDP discovery.",
+        "Interface de contrôle web pour imprimantes 3D résine SDCP 3.0 avec découverte UDP sur LAN."
+      ],
+      "use_case": [
+        "Headless remote management and real-time print monitoring for SLA 3D printers.",
+        "Contrôle à distance d'imprimantes 3D résine sans poste dédié."
+      ]
+    },
+    "CV": {
+      "category": "web-design",
+      "why_good": [
+        "High-performance, accessible, bilingual static portfolio and CV with AEO schema, automated CI/CD, and zero runtime overhead.",
+        "Portfolio et CV statique bilingue haute performance avec schémas AEO, CI/CD et zéro dépendance runtime."
+      ],
+      "use_case": [
+        "Professional software engineering presentation and technical documentation.",
+        "Présentation professionnelle et vitrine technique d'ingénierie logicielle."
+      ],
+      "related_post_slug": "portfolio-hugo-website-refonte"
+    },
+    "linkshare": {
+      "category": "web-design",
+      "why_good": [
+        "Ruby on Rails web platform featuring asynchronous OpenGraph metadata scrapers and card previews.",
+        "Plateforme Ruby on Rails avec extraction asynchrone de métadonnées OpenGraph."
+      ],
+      "use_case": [
+        "Social bookmarking and rich link curation.",
+        "Partage social et organisation de liens avec prévisualisation riche."
+      ]
+    },
+    "kroki-playground": {
+      "category": "web-design",
+      "why_good": [
+        "Serverless diagram experimentation suite in TypeScript running on Vercel with instant preview.",
+        "Suite d'expérimentation de diagrammes en TypeScript déployée sur Vercel avec rendu instantané."
+      ],
+      "use_case": [
+        "Rapid prototyping of PlantUML, Mermaid, GraphViz, and C4 architecture diagrams.",
+        "Prototypage rapide de diagrammes d'architecture variés."
+      ]
+    },
+    "jsonresume-theme-kendall": {
+      "category": "web-design",
+      "why_good": [
+        "Minimalist, print-perfect resume theme supporting schema.org semantic markup and clean layout.",
+        "Thème CV minimaliste parfait pour l'impression avec balisage sémantique schema.org."
+      ],
+      "use_case": [
+        "Automated resume compilation from structured JSON data.",
+        "Génération automatique de CV à partir de fichiers JSON structurés."
+      ],
+      "related_post_slug": "professional-resume-json-resume"
+    },
+    "GreenScreenVideotoAlphaPNGs": {
+      "category": "web-design",
+      "why_good": [
+        "OpenCV color-keying pipeline converting chroma-key green videos to RGBA alpha PNG sequences.",
+        "Pipeline de traitement OpenCV convertissant des vidéos fond vert en séquences PNG avec canal alpha."
+      ],
+      "use_case": [
+        "Asset preparation for augmented reality (Snapchat Lens Studio, Spark AR).",
+        "Préparation d'assets d'animation 2D pour la réalité augmentée."
+      ]
+    },
+    "LLM2SVG": {
+      "category": "web-design",
+      "why_good": [
+        "Structured prompt engineering framework and Python validator generating crisp, valid SVG illustrations from LLM responses.",
+        "Générateur et validateur Python d'illustrations vectorielles SVG à partir de descriptions en langage naturel."
+      ],
+      "use_case": [
+        "Automated vector icon and diagram generation for design systems.",
+        "Génération automatisée d'icônes et d'illustrations vectorielles pour systèmes de design."
+      ]
+    },
+    "architecture": {
+      "category": "web-design",
+      "why_good": [
+        "Editable home-infrastructure diagrams preserved as PlantUML and draw.io sources, with HTML and image exports.",
+        "Schémas d’infrastructure domestique conservés en sources PlantUML et draw.io, avec des exports HTML et image."
+      ],
+      "use_case": [
+        "Reading an archived infrastructure snapshot or editing its diagram sources to document a homelab.",
+        "Consulter un instantané d’infrastructure archivé ou modifier ses sources pour documenter un homelab."
+      ]
+    },
+    "novatorem": {
+      "category": "web-design",
+      "why_good": [
+        "Real-time dynamic GitHub profile README updater streaming live Spotify listening status.",
+        "Générateur dynamique mettant à jour le profil GitHub avec l'écoute Spotify en temps réel."
+      ],
+      "use_case": [
+        "Live GitHub profile personalization and webhook integration.",
+        "Personnalisation dynamique de profil GitHub via webhooks."
+      ]
+    },
+    "another-install-script": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Interactive TUI shell installer automating deployment of Docker containers and server configurations.",
+        "Installateur shell interactif (TUI) automatisant le déploiement de conteneurs Docker et de configurations serveur."
+      ],
+      "use_case": [
+        "One-command server provisioning for homelabs and development VPS.",
+        "Déploiement rapide de serveurs et d'environnements homelab en une commande."
+      ]
+    },
+    ".dotfiles": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Idempotent multi-distribution installer supporting apt, dnf, pacman with modular Zsh and Vim configurations.",
+        "Installateur idempotent multi-distribution supportant apt, dnf, pacman avec configuration modulaire Zsh et Vim."
+      ],
+      "use_case": [
+        "Reproducible shell and developer environment across macOS and Linux servers.",
+        "Reproduction instantanée d'un environnement shell optimisé sur tout système Unix."
+      ]
+    },
+    "hass_renpho": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Custom Home Assistant integration decoding Renpho Bluetooth & Cloud API biometric telemetry.",
+        "Composant Home Assistant personnalisé décodant la télémétrie biométrique des balances connectées Renpho."
+      ],
+      "use_case": [
+        "Self-hosted health metric tracking and smart home automation triggers.",
+        "Centralisation des données de santé privées dans Home Assistant."
+      ],
+      "related_post_slug": "renpho-health-api-blueprint"
+    },
+    "ESP32-7SEG": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Embedded microcontroller firmware and mobile controller for driving multi-digit 7-segment displays.",
+        "Firmware embarqué et contrôleur pour affichage 7 segments multi-chiffres sur microcontrôleur ESP32."
+      ],
+      "use_case": [
+        "Physical computing status dashboards and hardware displays.",
+        "Affichage matériel déporté pour métriques ou domotique."
+      ]
+    },
+    "Pan-Tilt-Controller": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Serial interface and motion control daemon for Directed Perception PTU-46 precision pan-tilt robotic camera units.",
+        "Contrôleur série et démon de mouvement pour unité robotique pan-tilt de précision PTU-46."
+      ],
+      "use_case": [
+        "Automated camera positioning for computer vision experiments.",
+        "Positionnement robotique de caméras pour la vision par ordinateur."
+      ]
+    },
+    "TCH099": {
+      "category": "infra-homelab",
+      "why_good": [
+        "Isolated multi-container environment with bridge networking, MariaDB persistence, and web interfaces.",
+        "Environnement multi-conteneurs isolé avec réseau bridge, persistance MariaDB et interface web."
+      ],
+      "use_case": [
+        "Full-stack containerized database application reference.",
+        "Référence d'architecture conteneurisée pour application et base de données."
+      ]
+    },
+    "uml-skill": {
+      "category": "api-backend",
+      "why_good": [
+        "Agent skill bundle providing direct tool definitions and prompt guides for diagram generation.",
+        "Bundle de compétences IA fournissant définitions d'outils et guides pour générer des diagrammes."
+      ],
+      "use_case": [
+        "Drop-in diagram generation capabilities for LLM agent frameworks.",
+        "Intégration directe de génération UML dans des agents autonomes."
+      ]
+    },
+    "D2COpenAIPlugin": {
+      "category": "api-backend",
+      "why_good": [
+        "OpenAI ChatGPT plugin manifest and OpenAPI endpoint handler for text-to-diagram conversion.",
+        "Plugin ChatGPT officiel avec spécification OpenAPI pour convertir des descriptions en diagrammes."
+      ],
+      "use_case": [
+        "ChatGPT Plus GPT Store integration for software architects.",
+        "Intégration ChatGPT pour architectes et développeurs logiciels."
+      ],
+      "related_post_slug": "d2c-openai-diagram-plugin"
+    },
+    "ComfyUI-UML": {
+      "category": "api-backend",
+      "why_good": [
+        "Custom node implementation for ComfyUI node graphs integrating automated UML synthesis into image pipelines.",
+        "Nœuds personnalisés pour ComfyUI intégrant la synthèse de diagrammes dans les pipelines d'IA générative."
+      ],
+      "use_case": [
+        "Visual AI workflows combining diagram generation with image refinement.",
+        "Pipelines IA visuels associant schémas d'architecture et post-traitement graphique."
+      ],
+      "related_post_slug": "comfyui-uml-diagram-workflows"
+    },
+    "AudioTranscript": {
+      "category": "api-backend",
+      "why_good": [
+        "Audio ingestion and transcription worker pipeline with timestamp alignment.",
+        "Pipeline de traitement et de transcription audio avec alignement temporel."
+      ],
+      "use_case": [
+        "Batch automated audio recording transcription and indexing.",
+        "Transcription automatique par lots d'enregistrements audio."
+      ]
+    },
+    "AuthLaravel": {
+      "category": "api-backend",
+      "why_good": [
+        "Clean Laravel authentication template implementing JWT, session management, and role-based policies.",
+        "Modèle d'authentification Laravel implémentant JWT, sessions et politiques de rôles."
+      ],
+      "use_case": [
+        "Secure boilerplate foundation for Laravel API and web applications.",
+        "Socle d'authentification robuste pour projets et API Laravel."
+      ]
+    },
+    "SpringBootFilesUploader": {
+      "category": "api-backend",
+      "why_good": [
+        "Spring Boot microservice written in Kotlin with streaming multipart file upload and integrity validation.",
+        "Microservice Spring Boot en Kotlin avec téléversement multipart en flux et validation d'intégrité."
+      ],
+      "use_case": [
+        "High-throughput file ingestion and storage backend.",
+        "Backend ingestion de fichiers à haut débit."
+      ]
+    },
+    "marketwatch": {
+      "category": "api-backend",
+      "why_good": [
+        "Robust Python client library scraping and wrapping the MarketWatch virtual stock market game API.",
+        "Client Python robuste pour interagir avec le jeu boursier virtuel de MarketWatch."
+      ],
+      "use_case": [
+        "Automated trading bot development and portfolio backtesting.",
+        "Développement de bots de trading automatisés et analyse de portefeuilles."
+      ],
+      "related_post_slug": "marketwatch-python-trading"
+    },
+    "nova-backtest": {
+      "category": "api-backend",
+      "why_good": [
+        "Financial backtesting framework interfacing with centralized crypto exchange APIs for quantitative strategy testing.",
+        "Moteur de backtest financier communiquant avec les API d'exchanges crypto pour stratégies quantitatives."
+      ],
+      "use_case": [
+        "Algorithmic trading strategy validation on historical tick data.",
+        "Validation de stratégies algorithmiques sur données historiques."
+      ]
+    },
+    "ipc-toolkit": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "Friction and contact physics toolkit for robust computer graphics and finite element simulation.",
+        "Boîte à outils d'ingénierie pour la gestion du contact et de la friction dans les simulations par éléments finis."
+      ],
+      "use_case": [
+        "Nonlinear continuous contact mechanics in 3D physics engines.",
+        "Mécanique du contact continu non linéaire pour moteurs physiques."
+      ]
+    },
+    "Maestro": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "Optical Music Recognition (OMR) pipeline translating sheet music scans into MIDI score sequences.",
+        "Pipeline de reconnaissance optique de partitions musicales (OMR) convertissant des images en fichiers MIDI."
+      ],
+      "use_case": [
+        "Digitization of physical sheet music for playback and editing.",
+        "Numérisation de partitions musicales physiques pour écoute et arrangement."
+      ]
+    },
+    "RawAnalyser": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "Sensor pixel analysis tool computing clipping histograms and dynamic range for RAW camera frames.",
+        "Outil d'analyse de capteur photographique calculant histogrammes d'écrêtage et plage dynamique sur fichiers RAW."
+      ],
+      "use_case": [
+        "Camera sensor benchmarking and exposure verification in computational photography.",
+        "Évaluation de capteurs et calibration d'exposition en photographie computationnelle."
+      ]
+    },
+    "WordsEnigma": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "TypeScript dictionary validation and game solver engine supporting multiple languages and word lengths.",
+        "Moteur de jeu et validateur de dictionnaires en TypeScript supportant plusieurs langues et longueurs de mots."
+      ],
+      "use_case": [
+        "Algorithmic word game logic and solver heuristics.",
+        "Logique de jeu de lettres algorithmique et heuristiques de résolution."
+      ]
+    },
+    "HDR-10bpp-Display-Test": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "10-bit HDR pipeline testing color banding and luminance curves on Linux display servers.",
+        "Pipeline de test d'affichage 10 bits HDR vérifiant le banding de couleur et la luminance sous Linux."
+      ],
+      "use_case": [
+        "Calibration and verification of 4K 10-bit HDR displays on Linux workstations.",
+        "Calibration et vérification d'écrans HDR 10 bits sur stations de travail Linux."
+      ]
+    },
+    "GithubSimpleFileDownloader": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "Browser extension injecting one-click raw file download buttons into GitHub & GitLab interfaces.",
+        "Extension de navigateur injectant un bouton de téléchargement direct de fichier unique dans GitHub et GitLab."
+      ],
+      "use_case": [
+        "Quick single-file extraction without cloning large repositories.",
+        "Téléchargement immédiat d'un fichier isolé sans cloner le dépôt entier."
+      ]
+    },
+    "antoinebou12": {
+      "category": "algorithms-tools",
+      "why_good": [
+        "Automated SVG and metrics rendering workflow maintaining dynamic profile assets.",
+        "Workflow automatisé de rendu de métriques et SVG pour profil GitHub dynamique."
+      ],
+      "use_case": [
+        "Automated profile asset generation.",
+        "Génération automatique d'assets de profil."
+      ]
+    }
+  }
+}

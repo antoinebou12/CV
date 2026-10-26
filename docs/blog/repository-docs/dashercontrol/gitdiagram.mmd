@@ -1,0 +1,104 @@
+flowchart TD
+
+subgraph group_dashboard["Dashboard UI"]
+  node_main_ui["Dashboard Shell<br/>[Main.vue]"]
+  node_grid["Workspace Grid<br/>[GridLayoutMain.vue]"]
+  node_grid_item["Grid Items<br/>[GridItemApplet.vue]"]
+  node_applet_router["Applet Selector<br/>[Applet.vue]"]
+  node_applet_authoring["Applet Creation<br/>[CreateNew.vue]"]
+  node_editor["Applet Editor<br/>[Editor.vue]"]
+  node_iframe["Embedded Sites"]
+  node_shortcut["Shortcuts<br/>[Shortcut.vue]"]
+  node_canvas["Canvas Applet<br/>[Canvas.vue]"]
+  node_login_ui["Login Screen<br/>[Login.vue]"]
+end
+
+subgraph group_identity["Tenant Identity"]
+  node_tenant_api["Tenant Endpoints<br/>[handler.rs]"]
+  node_tenant_model["Tenant Accounts<br/>[model.rs]"]
+  node_token_auth["Token Validation<br/>[token.rs]"]
+end
+
+subgraph group_workspace["Workspace Data"]
+  node_workspace_api["Workspace Endpoints<br/>[handler.rs]"]
+  node_workspace_model["Workspace Records<br/>[model.rs]"]
+  node_database[("PostgreSQL Access<br/>[db.rs]")]
+  node_schema["Database Schema<br/>[schema.rs]"]
+end
+
+subgraph group_integrations["Runtime Integrations"]
+  node_docker_ui["Docker Manager<br/>[DockerManager.vue]"]
+  node_container_api["Container Endpoints<br/>[handler.rs]"]
+  node_docker_engine["Docker Engine<br/>[docker.rs]"]
+  node_terminal_ui["Terminal Applet<br/>[Terminal.vue]"]
+  node_terminal_ws["Terminal WebSocket<br/>[websocket.rs]"]
+  node_server["Rocket Server<br/>[main.rs]"]
+end
+
+node_user(("Dashboard User"))
+
+node_user -->|"uses"| node_main_ui
+node_main_ui -->|"renders"| node_grid
+node_grid -->|"renders"| node_grid_item
+node_grid_item -->|"renders"| node_applet_router
+node_applet_router -->|"selects"| node_applet_authoring
+node_applet_router -->|"selects"| node_editor
+node_applet_router -->|"selects"| node_iframe
+node_applet_router -->|"selects"| node_shortcut
+node_applet_authoring -->|"configures"| node_applet_authoring
+node_grid -->|"requests"| node_workspace_api
+node_tenant_api -->|"authenticates"| node_tenant_model
+node_tenant_api -->|"issues tokens"| node_token_auth
+node_token_auth -->|"checks session"| node_tenant_model
+node_workspace_api -->|"queries"| node_workspace_model
+node_workspace_api -->|"validates"| node_token_auth
+node_tenant_model -->|"queries"| node_schema
+node_workspace_model -->|"queries"| node_schema
+node_tenant_api -->|"uses connection"| node_database
+node_workspace_api -->|"uses connection"| node_database
+node_docker_ui -->|"requests"| node_container_api
+node_container_api -->|"controls"| node_docker_engine
+node_applet_router -->|"selects"| node_docker_ui
+node_applet_router -->|"selects"| node_terminal_ui
+node_server -->|"mounts routes"| node_tenant_api
+node_server -->|"mounts routes"| node_workspace_api
+node_server -->|"mounts routes"| node_container_api
+node_server -->|"references"| node_terminal_ws
+node_user -.->|"may use"| node_canvas
+node_terminal_ui -.->|"SSH terminal"| node_terminal_ws
+
+click node_main_ui "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/pages/Main.vue"
+click node_grid "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/GridLayoutMain.vue"
+click node_grid_item "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/GridItemApplet.vue"
+click node_applet_router "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/Applet.vue"
+click node_applet_authoring "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/CreateNew/CreateNew.vue"
+click node_editor "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/Editor/Editor.vue"
+click node_iframe "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/IFrame/BorderlessIFrame.vue"
+click node_shortcut "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/Shortcut/Shortcut.vue"
+click node_canvas "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/Canvas/Canvas.vue"
+click node_login_ui "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/pages/Login.vue"
+click node_tenant_api "https://github.com/antoinebou12/dashercontrol/blob/main/src/tenants/handler.rs"
+click node_tenant_model "https://github.com/antoinebou12/dashercontrol/blob/main/src/tenants/model.rs"
+click node_token_auth "https://github.com/antoinebou12/dashercontrol/blob/main/src/tenants/token.rs"
+click node_workspace_api "https://github.com/antoinebou12/dashercontrol/blob/main/src/workspaces/handler.rs"
+click node_workspace_model "https://github.com/antoinebou12/dashercontrol/blob/main/src/workspaces/model.rs"
+click node_database "https://github.com/antoinebou12/dashercontrol/blob/main/src/db.rs"
+click node_schema "https://github.com/antoinebou12/dashercontrol/blob/main/src/schema.rs"
+click node_docker_ui "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/DockerManager/DockerManager.vue"
+click node_container_api "https://github.com/antoinebou12/dashercontrol/blob/main/src/containers/handler.rs"
+click node_docker_engine "https://github.com/antoinebou12/dashercontrol/blob/main/src/containers/docker.rs"
+click node_terminal_ui "https://github.com/antoinebou12/dashercontrol/blob/main/frontend/components/applets/Terminal/Terminal.vue"
+click node_terminal_ws "https://github.com/antoinebou12/dashercontrol/blob/main/src/terminal/websocket.rs"
+click node_server "https://github.com/antoinebou12/dashercontrol/blob/main/src/main.rs"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_main_ui,node_grid,node_grid_item,node_applet_router,node_applet_authoring,node_editor,node_iframe,node_shortcut,node_canvas,node_login_ui,node_user toneBlue
+class node_tenant_api,node_tenant_model,node_token_auth toneAmber
+class node_workspace_api,node_workspace_model,node_database,node_schema toneMint
+class node_docker_ui,node_container_api,node_docker_engine,node_terminal_ui,node_terminal_ws,node_server toneRose

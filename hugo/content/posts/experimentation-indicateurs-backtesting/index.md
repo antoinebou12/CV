@@ -4,6 +4,8 @@ title: Experimenting with technical indicators using Python and backtesting
 date: 2024-05-14T20:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "BatchBacktesting with EMA and MACD across equities and crypto — how the batch runner works, how to read extreme results, not trading advice."
+images:
+  - images/featured.png
 translationKey: experimentation-indicateurs-backtesting
 tags:
   - Python
@@ -54,7 +56,7 @@ From an EMA batch (illustrative):
 
 **Top and bottom lists are diagnostics**, not buy/sell lists. Always open the per-ticker chart ([example AAPL chart](https://algoets.github.io/BatchBacktesting/output/charts/EMA/AAPL-2018-04-04-2023-04-03.html)) before storytelling.
 
-![Example chart output from batch run](./img-001.png)
+![Example chart output from batch run](images/img-001.png)
 
 ## What the Medium import left out on purpose
 

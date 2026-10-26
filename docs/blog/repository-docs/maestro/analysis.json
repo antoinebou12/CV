@@ -1,0 +1,528 @@
+{
+  "repo": "Maestro",
+  "slug": "maestro",
+  "commit": "6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783",
+  "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/",
+  "tree_url": "https://github.com/antoinebou12/Maestro/tree/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783",
+  "fetched_at": "2026-10-24T01:41:13.629133+00:00",
+  "languages": [
+    {
+      "name": "Java",
+      "bytes": 33471,
+      "percent": 47.34
+    },
+    {
+      "name": "TypeScript",
+      "bytes": 22838,
+      "percent": 32.3
+    },
+    {
+      "name": "Python",
+      "bytes": 11324,
+      "percent": 16.02
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 2222,
+      "percent": 3.14
+    },
+    {
+      "name": "HTML",
+      "bytes": 710,
+      "percent": 1.0
+    },
+    {
+      "name": "Shell",
+      "bytes": 138,
+      "percent": 0.2
+    }
+  ],
+  "language_bytes": 70703,
+  "coverage": {
+    "tree_files": 128,
+    "eligible_files": 32,
+    "read_files": 32,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 30,
+      "heading": "Getting Started",
+      "commands": "  git clone https://github.com/PrimePhil/PFE008"
+    },
+    {
+      "file": "README.md",
+      "line": 38,
+      "heading": "Frontend",
+      "commands": "  cd maestro-app"
+    },
+    {
+      "file": "README.md",
+      "line": 44,
+      "heading": "Frontend",
+      "commands": "  npm install"
+    },
+    {
+      "file": "README.md",
+      "line": 50,
+      "heading": "Frontend",
+      "commands": "  npm run start"
+    },
+    {
+      "file": "README.md",
+      "line": 63,
+      "heading": "Tests",
+      "commands": "gradle test"
+    }
+  ],
+  "manifests": [
+    {
+      "file": "maestro-app/package.json",
+      "engines": {},
+      "scripts": [
+        {
+          "name": "start",
+          "command": "react-scripts start"
+        },
+        {
+          "name": "build",
+          "command": "react-scripts build"
+        },
+        {
+          "name": "test",
+          "command": "react-scripts test"
+        }
+      ]
+    }
+  ],
+  "type_count": 12,
+  "types": [
+    {
+      "id": "t0fc2da07ca26",
+      "name": "AudiverisController",
+      "kind": "class",
+      "file": "backend/src/main/java/PFE008/backend/AudiverisController.java",
+      "line": 9,
+      "language": "java",
+      "methods": [
+        "AudiverisController",
+        "convert",
+        "convertMxlToMidi"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te09535b4ea27",
+      "name": "ConvertController",
+      "kind": "class",
+      "file": "backend/src/main/java/PFE008/backend/ConvertController.java",
+      "line": 37,
+      "language": "java",
+      "methods": [
+        "convert",
+        "healthCheck"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t5b329a34a4e0",
+      "name": "BackendApplication",
+      "kind": "class",
+      "file": "backend/src/main/java/PFE008/backend/BackendApplication.java",
+      "line": 10,
+      "language": "java",
+      "methods": [
+        "main"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t5026bc97d4a6",
+      "name": "ConversionResponse",
+      "kind": "class",
+      "file": "backend/src/main/java/PFE008/backend/ConversionResponse.java",
+      "line": 12,
+      "language": "java",
+      "methods": [
+        "getFileName",
+        "setFileName",
+        "getDownloadUri",
+        "setDownloadUri",
+        "getSize",
+        "setSize"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta28a28fad99c",
+      "name": "FileUtil",
+      "kind": "class",
+      "file": "backend/src/main/java/PFE008/backend/FileUtil.java",
+      "line": 25,
+      "language": "java",
+      "methods": [
+        "saveFile",
+        "getFileAsResource",
+        "isValidFile",
+        "cleanupDirectories",
+        "deleteFilesInDirectory"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t3a8c9a5b3e47",
+      "name": "AudiverisController_tests",
+      "kind": "class",
+      "file": "backend/src/test/java/PFE008/backend/AudiverisController_tests.java",
+      "line": 32,
+      "language": "java",
+      "methods": [
+        "setup",
+        "testConvertSuccess",
+        "testConvertWrongFile",
+        "testConvertFileOutput",
+        "cleanup"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tc9ddabb9fef2",
+      "name": "ConvertControllerTest",
+      "kind": "class",
+      "file": "backend/src/test/java/PFE008/backend/ConvertControllerTest.java",
+      "line": 34,
+      "language": "java",
+      "methods": [
+        "setup",
+        "testConvertSuccess",
+        "testConvertFail",
+        "testConvertFileNotFound",
+        "testConvertWrongFormat",
+        "testConvertMaliciousFile",
+        "testHealthCheck",
+        "cleanup",
+        "deleteFiles"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf78cdd633a9f",
+      "name": "FileUtil_tests",
+      "kind": "class",
+      "file": "backend/src/test/java/PFE008/backend/FileUtil_tests.java",
+      "line": 23,
+      "language": "java",
+      "methods": [
+        "setup",
+        "testSaveFile",
+        "testGetFileAsResource",
+        "testSaveFileThrowsIOException",
+        "testSaveFileThrowsIOExceptionOnCopy",
+        "cleanup"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t306c8eab2abe",
+      "name": "TestMxlToMidi",
+      "kind": "class",
+      "file": "backend/src/test/java/PFE008/backend/MxlToMidi_tests.py",
+      "line": 16,
+      "language": "python",
+      "methods": [
+        "setUp",
+        "test_apply_dynamics_to_notes",
+        "test_print_note_details",
+        "test_print_part_details",
+        "test_apply_dynamics_to_notes_chords",
+        "test_print_note_details_chords",
+        "test_print_part_details_chords",
+        "test_mxl_to_midi",
+        "test_mxl_to_midi_chords"
+      ],
+      "bases": [
+        "unittest.TestCase"
+      ]
+    },
+    {
+      "id": "t5c7dff211126",
+      "name": "MusicSheetUploaderProps",
+      "kind": "interface",
+      "file": "maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx",
+      "line": 13,
+      "language": "tsx",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t28f92fc28615",
+      "name": "UseMaestroClientResult",
+      "kind": "interface",
+      "file": "maestro-app/src/hooks/useMaestroClient.ts",
+      "line": 3,
+      "language": "typescript",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td89584c9e8be",
+      "name": "MusicSheetUploadFormFooterProps",
+      "kind": "interface",
+      "file": "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormFooter.tsx",
+      "line": 6,
+      "language": "tsx",
+      "methods": [],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "backend/src/main/java/PFE008/backend/AudiverisController.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/AudiverisController.java",
+      "download": "repository-docs/maestro/classes/0a068f95727eb69c.mmd"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/BackendApplication.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/BackendApplication.java",
+      "download": "repository-docs/maestro/classes/d5ee15db8cee1810.mmd"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/ConversionResponse.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/ConversionResponse.java",
+      "download": "repository-docs/maestro/classes/578fa83a92d7f168.mmd"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/ConvertController.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/ConvertController.java",
+      "download": "repository-docs/maestro/classes/320ec093b75adf19.mmd"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/FileUtil.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/FileUtil.java",
+      "download": "repository-docs/maestro/classes/9d07b556bc1440af.mmd"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/AudiverisController_tests.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/AudiverisController_tests.java",
+      "download": "repository-docs/maestro/classes/a511e72455672f53.mmd"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/ConvertControllerTest.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/ConvertControllerTest.java",
+      "download": "repository-docs/maestro/classes/f3d49a5773de2d90.mmd"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/FileUtil_tests.java",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/FileUtil_tests.java",
+      "download": "repository-docs/maestro/classes/4e214992f181e666.mmd"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/MxlToMidi_tests.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/MxlToMidi_tests.py",
+      "download": "repository-docs/maestro/classes/abbbdb5dfc2a63ac.mmd"
+    },
+    {
+      "path": "maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx",
+      "download": "repository-docs/maestro/classes/c7d8871e2d937f56.mmd"
+    },
+    {
+      "path": "maestro-app/src/hooks/useMaestroClient.ts",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/hooks/useMaestroClient.ts",
+      "download": "repository-docs/maestro/classes/07dae357207d56e7.mmd"
+    },
+    {
+      "path": "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormFooter.tsx",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormFooter.tsx",
+      "download": "repository-docs/maestro/classes/cfee8a5a58bbeb56.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "maestro-app/package.json",
+      "blob_sha": "afedf78cd62b6fdb59ef1a9cb40deed5be54dd4e",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/package.json"
+    },
+    {
+      "path": "backend/src/main/MxlToMidi.py",
+      "blob_sha": "e09ab272abc79ddb670cd1936bae724105af35bb",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/MxlToMidi.py"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/AudiverisController.java",
+      "blob_sha": "374fb7d39a356e1b5978339f0adb364e2b47d868",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/AudiverisController.java"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/ConvertController.java",
+      "blob_sha": "70d0876c92570e7de7164e251c2a39102cc9e03d",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/ConvertController.java"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "d1da501f8be966b1674fc88dadd34dd73d0d7277",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/README.md"
+    },
+    {
+      "path": "docker-compose.yml",
+      "blob_sha": "89c7e8b853e6255e65183581d0fd61e682d27b8a",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/docker-compose.yml"
+    },
+    {
+      "path": "entrypoint.sh",
+      "blob_sha": "b968a3bc6fda4e8331f5220c93bc2cf9081e78d8",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/entrypoint.sh"
+    },
+    {
+      "path": "backend/README.md",
+      "blob_sha": "8d73a5abc3c7586a35d0b99cd9675066719eb411",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/README.md"
+    },
+    {
+      "path": "maestro-app/README.md",
+      "blob_sha": "1bf71bcbfcdb705d8096be97b445656e58247542",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/README.md"
+    },
+    {
+      "path": "maestro-app/src/App.test.tsx",
+      "blob_sha": "a19e7bcfd22bfd44d2d236a7b990c306ce2d6f27",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/App.test.tsx"
+    },
+    {
+      "path": "maestro-app/src/App.tsx",
+      "blob_sha": "2290f311fdc8f90014ab49554ccaebfdbd3e4d57",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/App.tsx"
+    },
+    {
+      "path": "maestro-app/src/index.tsx",
+      "blob_sha": "19ade9367d430c3c2ae661c90701081d2c097b17",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/index.tsx"
+    },
+    {
+      "path": "maestro-app/src/setupTests.ts",
+      "blob_sha": "8f2609b7b3e0e3897ab3bcaad13caf6876e48699",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/setupTests.ts"
+    },
+    {
+      "path": "maestro-app/src/hooks/useMaestroClient.ts",
+      "blob_sha": "aaca6ebe87b77bc84db4b6c32b39760f12d2c255",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/hooks/useMaestroClient.ts"
+    },
+    {
+      "path": "maestro-app/src/i18n/i18n.tsx",
+      "blob_sha": "dfb1252eeca7508d52f8ceb1960cb1058af506cd",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/i18n/i18n.tsx"
+    },
+    {
+      "path": "maestro-app/src/mocks/convertToMidiMock.tsx",
+      "blob_sha": "08e86b8a733ce67b7395faf68a58c7a33e46423a",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/mocks/convertToMidiMock.tsx"
+    },
+    {
+      "path": "maestro-app/src/types/FormInput.ts",
+      "blob_sha": "9b159782d2699fdc484f07b19aa65934d4a7b0a7",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/types/FormInput.ts"
+    },
+    {
+      "path": "maestro-app/src/components/Helper/Helper.tsx",
+      "blob_sha": "9f636e4ddf1697762be388a6d2567d3a77ee2feb",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/Helper/Helper.tsx"
+    },
+    {
+      "path": "maestro-app/src/components/languageSwitcher/LanguageSwitcher.tsx",
+      "blob_sha": "0a22dfbbd2ececb8c88e7c727c7fc3cc84de01d5",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/languageSwitcher/LanguageSwitcher.tsx"
+    },
+    {
+      "path": "maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx",
+      "blob_sha": "d508c58efaabb6a0127fa67b73866661a79ae967",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx"
+    },
+    {
+      "path": "maestro-app/src/components/musicSheetUploader/MusicSheetUploaderStyles.ts",
+      "blob_sha": "aee636f05fff30d2adcd787eedb53445103b5f70",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/musicSheetUploader/MusicSheetUploaderStyles.ts"
+    },
+    {
+      "path": "maestro-app/src/components/roundedBox/RoundedBox.tsx",
+      "blob_sha": "01534466baee898147803a0278661051f1cc354f",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/components/roundedBox/RoundedBox.tsx"
+    },
+    {
+      "path": "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx",
+      "blob_sha": "d48663b919ea0ae774877d36ba3806dc209a9d46",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx"
+    },
+    {
+      "path": "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormFooter.tsx",
+      "blob_sha": "9fc91856c5b7304538e9d8241c1979bb9a6d0d8f",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormFooter.tsx"
+    },
+    {
+      "path": "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormHeader.tsx",
+      "blob_sha": "acee708c6f405bb01ce3eb62159d18c70dbd77ab",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadFormHeader.tsx"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/BackendApplication.java",
+      "blob_sha": "3ad4862e59b760238d0d193b6145e0a6a3c1a227",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/BackendApplication.java"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/ConversionResponse.java",
+      "blob_sha": "5d736d615d9c3a7fb142e4109a9994e4cbe47abe",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/ConversionResponse.java"
+    },
+    {
+      "path": "backend/src/main/java/PFE008/backend/FileUtil.java",
+      "blob_sha": "2a7cef41939a1e391f3cac244568b1266dde77b8",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/main/java/PFE008/backend/FileUtil.java"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/AudiverisController_tests.java",
+      "blob_sha": "59b0206f1c18aa78d60d9ede45b81c5af0013c12",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/AudiverisController_tests.java"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/ConvertControllerTest.java",
+      "blob_sha": "33c59ae5605419018e7c01adb54e0382a42cf2f4",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/ConvertControllerTest.java"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/FileUtil_tests.java",
+      "blob_sha": "6aa0801797b326554e8e537b997bca5704fbb699",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/FileUtil_tests.java"
+    },
+    {
+      "path": "backend/src/test/java/PFE008/backend/MxlToMidi_tests.py",
+      "blob_sha": "c449f438f95e288e3a4e41794d04d4c982ba6432",
+      "source_url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/backend/src/test/java/PFE008/backend/MxlToMidi_tests.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"Maestro\"]\n  f0[\"maestro-app/package.json\"]\n  root --> f0\n  f1[\"backend/src/main/MxlToMidi.py\"]\n  root --> f1\n  f2[\"backend/src/main/java/PFE008/backend/AudiverisController.java\"]\n  root --> f2\n  f3[\"backend/src/main/java/PFE008/backend/ConvertController.java\"]\n  root --> f3\n  f4[\"README.md\"]\n  root --> f4\n  f5[\"docker-compose.yml\"]\n  root --> f5\n  f6[\"entrypoint.sh\"]\n  root --> f6\n  f7[\"backend/README.md\"]\n  root --> f7\n  f8[\"maestro-app/README.md\"]\n  root --> f8\n  f9[\"maestro-app/src/App.test.tsx\"]\n  root --> f9\n  f10[\"maestro-app/src/App.tsx\"]\n  root --> f10\n  f11[\"maestro-app/src/index.tsx\"]\n  root --> f11\n  f12[\"maestro-app/src/setupTests.ts\"]\n  root --> f12\n  f13[\"maestro-app/src/hooks/useMaestroClient.ts\"]\n  root --> f13\n  f14[\"maestro-app/src/i18n/i18n.tsx\"]\n  root --> f14\n  f15[\"maestro-app/src/mocks/convertToMidiMock.tsx\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t0fc2da07ca26[\"AudiverisController\"] {\n  AudiverisController()\n  convert()\n  convertMxlToMidi()\n}\nclass te09535b4ea27[\"ConvertController\"] {\n  convert()\n  healthCheck()\n}\nclass t5b329a34a4e0[\"BackendApplication\"] {\n  main()\n}\nclass t5026bc97d4a6[\"ConversionResponse\"] {\n  getFileName()\n  setFileName()\n  getDownloadUri()\n  setDownloadUri()\n}\nclass ta28a28fad99c[\"FileUtil\"] {\n  saveFile()\n  getFileAsResource()\n  isValidFile()\n  cleanupDirectories()\n}\nclass t3a8c9a5b3e47[\"AudiverisController_tests\"] {\n  setup()\n  testConvertSuccess()\n  testConvertWrongFile()\n  testConvertFileOutput()\n}\nclass tc9ddabb9fef2[\"ConvertControllerTest\"] {\n  setup()\n  testConvertSuccess()\n  testConvertFail()\n  testConvertFileNotFound()\n}\nclass tf78cdd633a9f[\"FileUtil_tests\"] {\n  setup()\n  testSaveFile()\n  testGetFileAsResource()\n  testSaveFileThrowsIOException()\n}\nclass t306c8eab2abe[\"TestMxlToMidi\"] {\n  setUp()\n  test_apply_dynamics_to_notes()\n  test_print_note_details()\n  test_print_part_details()\n}\nclass t5c7dff211126[\"MusicSheetUploaderProps\"] {\n  <<interface>>\n}\nclass t28f92fc28615[\"UseMaestroClientResult\"] {\n  <<interface>>\n}\nclass td89584c9e8be[\"MusicSheetUploadFormFooterProps\"] {\n  <<interface>>\n}\nclass b385cfa4f4c5b[\"unittest.TestCase\"] {\n  <<unresolved_base>>\n}\nb385cfa4f4c5b <|-- t306c8eab2abe\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/Maestro",
+    "status": "missing"
+  }
+}

@@ -12,7 +12,7 @@ tags:
   - Home Assistant
   - Home Automation
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 I wanted scale readings in **Home Assistant** next to the rest of my apartment automations — not another siloed health app. That turned into maintaining **[hass_renpho](https://github.com/antoinebou12/hass_renpho)** (a fork of the quiet community integration), running **APKLeaks** on the Android client, and a Lovelace board I still open when training or sleep changes. **[Version française]({{< ref "/posts/renpho-health-api-blueprint/index.fr.md" >}})**.

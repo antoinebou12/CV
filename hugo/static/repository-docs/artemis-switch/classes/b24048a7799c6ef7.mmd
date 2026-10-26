@@ -1,0 +1,63 @@
+classDiagram
+direction TB
+class tecc52e43d283["HIDDeviceBLESteamController"] {
+  HIDDeviceBLESteamController()
+  getIdentifier()
+  getGatt()
+  connectGatt()
+  getConnectionState()
+  reconnect()
+  checkConnectionForChromebookIssue()
+  isRegistered()
+  setRegistered()
+  probeService()
+  finishCurrentGattOperation()
+  executeNextGattOperation()
+  queueGattOperation()
+  enableNotification()
+  writeCharacteristic()
+  readCharacteristic()
+  onConnectionStateChange()
+  onServicesDiscovered()
+  onCharacteristicRead()
+  onCharacteristicWrite()
+  onCharacteristicChanged()
+  onDescriptorRead()
+  enableValveMode()
+  onDescriptorWrite()
+  onReliableWriteCompleted()
+  onReadRemoteRssi()
+  onMtuChanged()
+  getId()
+  getVendorId()
+  getProductId()
+  getSerialNumber()
+  getVersion()
+  getManufacturerName()
+  getProductName()
+  getDevice()
+  open()
+  writeReport()
+  readReport()
+  close()
+  setFrozen()
+  shutdown()
+}
+class t87956c621883["GattOperation"] {
+  GattOperation()
+  run()
+  finish()
+  getDelayMs()
+  getCharacteristic()
+  readCharacteristic()
+  writeCharacteristic()
+  enableNotification()
+}
+class b3ee4cad13ae5["BluetoothGattCallback"] {
+  <<unresolved_base>>
+}
+tecc52e43d283 ..> b3ee4cad13ae5 : declared base
+class b465be345e53a["HIDDevice"] {
+  <<unresolved_base>>
+}
+tecc52e43d283 ..> b465be345e53a : declared base

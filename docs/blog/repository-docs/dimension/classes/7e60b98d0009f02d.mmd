@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class t043b5e16179b["JointVariant"] {
+  <<enum>>
+  default()
+  local_transform()
+  dof_count()
+  pack()
+  unpack()
+  angle_limits()
+}
+class t66f63e8dff56["JointData"] {
+  <<struct>>
+  default()
+  new()
+  with_name()
+  with_end_effector()
+}
+class td023e9926021["Armature"] {
+  <<struct>>
+  new()
+  add_child()
+  update_kinematics()
+  end_effector_position()
+  pack()
+  unpack()
+  path_to()
+  dfs_order()
+  path_to_dfs_dof_mapping()
+  tree()
+  tree_mut()
+}

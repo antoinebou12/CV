@@ -1,0 +1,63 @@
+classDiagram
+direction TB
+class t6bcd6ea8da87["TestDiagramThemePrompt"] {
+  test_covers_background_modes_and_generate()
+  test_context_picks_bw_default_for_class()
+  test_context_picks_dark_for_mermaid()
+}
+class t93258607e0c1["TestUmlDiagramPrompt"] {
+  test_returns_non_empty_string()
+  test_with_empty_context()
+  test_with_diagram_type_in_context()
+}
+class t3c6e41d9bc06["TestClassDiagramPrompt"] {
+  test_returns_string_with_class_guidance()
+  test_includes_visibility_and_relationships()
+}
+class tc860884cb5c1["TestSequenceDiagramPrompt"] {
+  test_returns_string_with_sequence_guidance()
+}
+class ta131312e5d66["TestRegisterDiagramPrompts"] {
+  test_server_prompt_called_for_each_registered_prompt()
+  test_registry_contains_uml_and_class_prompts()
+}
+class t2599cc5b27de["TestUmlDiagramWithThinkingPrompt"] {
+  test_includes_overlap_appendix()
+}
+class te517b54fceae["TestAlgorithmExplainerPrompt"] {
+  test_returns_string_with_algorithm_guidance()
+  test_maps_intents_to_diagram_types()
+  test_includes_overlap_appendix()
+  test_context_algorithm_name_is_inlined()
+}
+class tf7fa928db469["TestPaperConceptDiagramPrompt"] {
+  test_returns_string_with_paper_guidance()
+  test_includes_clickable_link_snippets_per_backend()
+  test_recommends_svg_for_clickable_links()
+  test_warns_against_fabricating_links()
+  test_includes_overlap_appendix()
+  test_context_paper_name_is_inlined()
+}
+class t560e758937cc["TestLayoutOverlapAppendix"] {
+  test_has_a_section_heading()
+  test_covers_each_targeted_backend()
+  test_recommends_direction_per_backend()
+  test_recommends_directional_arrows_for_plantuml()
+  test_recommends_grouping_per_backend()
+  test_uml_diagram_prompt_includes_overlap_appendix()
+}
+class t3b26584b99d8["TestNewPromptsRegistered"] {
+  test_algorithm_prompt_metadata()
+  test_paper_prompt_metadata()
+  test_new_prompts_registered_with_server()
+}
+class t766e3ff223a4["TestSkillFilesMentionNewPrompts"] {
+  _repo_root()
+  test_plugin_skill_mentions_new_prompts()
+  test_skill_copy_mentions_new_prompts()
+}
+class t3b3df468b5f3["TestRecipeTemplateShapes"] {
+  test_algorithm_flowchart_template_has_required_structure()
+  test_paper_concept_template_has_required_structure()
+  test_unknown_recipe_falls_back_to_default()
+}

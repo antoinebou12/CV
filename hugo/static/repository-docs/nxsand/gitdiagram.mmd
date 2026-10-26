@@ -1,0 +1,101 @@
+flowchart TD
+
+subgraph group_runtime["Runtime"]
+  node_entry["Platform entry<br/>[main.cpp]"]
+  node_app["App frame loop<br/>[app.cpp]"]
+  node_game_settings["Game settings<br/>[game_settings.hpp]"]
+  node_engine_settings["Engine settings"]
+end
+
+subgraph group_simulation["Simulation"]
+  node_sim_state["Simulation state<br/>[sim_state.hpp]"]
+  node_materials["Materials<br/>[materials.hpp]"]
+  node_physics["Physics parameters<br/>[physics_params.hpp]"]
+  node_sim_pipeline["GPU simulation<br/>[sim_pipeline.cpp]"]
+  node_sim_backend["Simulation backend<br/>[sim_backend.hpp]"]
+end
+
+subgraph group_presentation["Presentation"]
+  node_render["World renderer"]
+  node_shader_program["Shader programs<br/>[shader_program.cpp]"]
+  node_font["Font atlas<br/>[font_atlas.cpp]"]
+  node_audio["Audio<br/>[tone_audio.cpp]"]
+end
+
+subgraph group_interaction["Interaction"]
+  node_input["Input handling<br/>[input.cpp]"]
+  node_menu["Menus<br/>[menu.cpp]"]
+  node_layout["UI layout<br/>[layout.hpp]"]
+  node_theme["UI theme<br/>[theme.hpp]"]
+end
+
+subgraph group_persistence["Persistence"]
+  node_save["World saves<br/>[save.cpp]"]
+  node_save_paths["Save storage<br/>[save_paths.cpp]"]
+  node_settings_io["Settings storage<br/>[settings_io.cpp]"]
+end
+
+node_player(("Player"))
+
+node_player -->|"launches"| node_entry
+node_entry -->|"starts"| node_app
+node_app -->|"ticks"| node_sim_pipeline
+node_app -->|"renders"| node_render
+node_app -->|"reads"| node_input
+node_app -->|"coordinates"| node_menu
+node_app -->|"requests saves"| node_save
+node_app -->|"loads settings"| node_settings_io
+node_app -->|"applies settings"| node_engine_settings
+node_app -->|"uses settings"| node_game_settings
+node_app -->|"holds state"| node_sim_state
+node_app -->|"holds parameters"| node_physics
+node_sim_pipeline -->|"updates grid"| node_sim_state
+node_sim_pipeline -->|"simulates materials"| node_materials
+node_sim_pipeline -->|"uses parameters"| node_physics
+node_sim_pipeline -->|"selects backend"| node_sim_backend
+node_render -->|"uses shaders"| node_shader_program
+node_render -->|"draws grid"| node_sim_state
+node_render -->|"colors materials"| node_materials
+node_menu -->|"edits settings"| node_engine_settings
+node_menu -->|"uses text"| node_font
+node_menu -->|"draws interface"| node_render
+node_layout -->|"uses styles"| node_theme
+node_input -->|"maps controls"| node_layout
+node_audio -->|"reads preferences"| node_game_settings
+node_save -.->|"uses storage"| node_save_paths
+node_settings_io -->|"uses storage"| node_save_paths
+node_engine_settings -->|"persists preferences"| node_settings_io
+
+click node_entry "https://github.com/antoinebou12/nxsand/blob/main/source/platform/main.cpp"
+click node_app "https://github.com/antoinebou12/nxsand/blob/main/source/game/app.cpp"
+click node_game_settings "https://github.com/antoinebou12/nxsand/blob/main/source/game/game_settings.hpp"
+click node_engine_settings "https://github.com/antoinebou12/nxsand/blob/main/source/game/engine_settings.cpp"
+click node_sim_state "https://github.com/antoinebou12/nxsand/blob/main/source/sim/sim_state.hpp"
+click node_materials "https://github.com/antoinebou12/nxsand/blob/main/source/sim/materials.hpp"
+click node_physics "https://github.com/antoinebou12/nxsand/blob/main/source/sim/physics_params.hpp"
+click node_sim_pipeline "https://github.com/antoinebou12/nxsand/blob/main/source/gpu/sim_pipeline.cpp"
+click node_sim_backend "https://github.com/antoinebou12/nxsand/blob/main/source/gpu/sim_backend.hpp"
+click node_input "https://github.com/antoinebou12/nxsand/blob/main/source/platform/input/input.cpp"
+click node_menu "https://github.com/antoinebou12/nxsand/blob/main/source/ui/menu.cpp"
+click node_layout "https://github.com/antoinebou12/nxsand/blob/main/source/ui/layout.hpp"
+click node_theme "https://github.com/antoinebou12/nxsand/blob/main/source/ui/theme.hpp"
+click node_render "https://github.com/antoinebou12/nxsand/blob/main/source/gpu/render_pipeline.cpp"
+click node_shader_program "https://github.com/antoinebou12/nxsand/blob/main/source/gpu/shader_program.cpp"
+click node_font "https://github.com/antoinebou12/nxsand/blob/main/source/gpu/font_atlas.cpp"
+click node_audio "https://github.com/antoinebou12/nxsand/blob/main/source/platform/audio/tone_audio.cpp"
+click node_save "https://github.com/antoinebou12/nxsand/blob/main/source/save/save.cpp"
+click node_save_paths "https://github.com/antoinebou12/nxsand/blob/main/source/save/save_paths.cpp"
+click node_settings_io "https://github.com/antoinebou12/nxsand/blob/main/source/save/settings_io.cpp"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_entry,node_app,node_game_settings,node_engine_settings toneBlue
+class node_sim_state,node_materials,node_physics,node_sim_pipeline,node_sim_backend toneAmber
+class node_render,node_shader_program,node_font,node_audio toneMint
+class node_input,node_menu,node_layout,node_theme toneRose
+class node_save,node_save_paths,node_settings_io,node_player toneIndigo

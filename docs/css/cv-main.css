@@ -337,6 +337,12 @@
       padding: 3px 8px;
     }
 
+    .project-tag--domain {
+      background: transparent;
+      color: #32475c;
+      border: 1px dashed #32475c;
+    }
+
     .project-card--uml {
       padding: 11px 13px;
       background: #f4faf9;
@@ -391,7 +397,20 @@
 
     .github-profile-stats .github-stat-stars,
     .github-profile-stats .github-stat-forks {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       color: #32475c;
+    }
+
+    .github-profile-stats .github-stat .fas,
+    .project-github-stars .fas {
+      font-size: 0.92em;
+      line-height: 1;
+    }
+
+    .github-profile-stats .github-stat-stars .fas {
+      color: #7a5c10;
     }
 
     .project-card-body {
@@ -962,11 +981,11 @@
       content: '\f054';
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
-      float: right;
+      float: left;
       font-size: 0.55em;
       color: #227c74;
       opacity: 0.5;
-      margin: 0.6em 8px 0 0;
+      margin: 0.6em 10px 0 0;
       transition: transform 0.2s ease;
     }
 
@@ -1010,7 +1029,7 @@
       margin-top: 20px;
       margin-bottom: 0;
       position: relative;
-      padding: 1em 0;
+      padding: 0.35em 0 0.35em 1.35rem;
       list-style: none;
       container-type: inline-size;
       container-name: cv-timeline;
@@ -1018,21 +1037,15 @@
 
     #awards:before,
     #education:before {
-      width: 5px;
+      display: block;
+      width: 2px;
       height: 100%;
       position: absolute;
-      left: 35px;
+      left: 0.35rem;
       top: 0;
       content: ' ';
-      display: block;
       background: #32475c;
-      background: -moz-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(7%, #32475c), color-stop(89%, #32475c), color-stop(100%, #ffffff));
-      background: -webkit-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
-      background: -o-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
-      background: -ms-linear-gradient(top, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
       background: linear-gradient(to bottom, #ffffff 0%, #32475c 7%, #32475c 89%, #ffffff 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
     }
 
     #awards li,
@@ -1041,23 +1054,86 @@
       z-index: 2;
       position: relative;
       display: grid;
-      grid-template-columns: minmax(6.5rem, 8.75rem) minmax(0, 1fr);
-      gap: 0.5rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
       align-items: start;
+      margin-bottom: 14px;
+    }
+
+    #awards li::before,
+    #education li::before {
+      content: '';
+      position: absolute;
+      left: -1.12rem;
+      top: 0.4rem;
+      z-index: 3;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #1a635c;
+      box-shadow: 0 0 0 3px #fff;
     }
 
     #awards .year,
     #education .year {
-      width: auto;
+      width: fit-content;
       max-width: 100%;
-      background: #fff;
-      padding: 10px;
-      font-weight: 700;
-      line-height: 1.35;
-      white-space: normal;
-      overflow-wrap: break-word;
-      word-break: normal;
       float: none !important;
+      display: inline-flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.3em;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 2px 7px;
+      color: #1f2a2e;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      border: 0;
+      border-radius: 999px;
+      background: #e8eef0;
+      box-shadow: inset 0 0 0 1px #d4dde0;
+    }
+
+    .year-range,
+    .year-duration {
+      display: inline;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      line-height: inherit;
+      white-space: nowrap;
+    }
+
+    .year-range {
+      color: #1f2a2e;
+      font-size: inherit;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .year-duration {
+      color: #5a6b6e;
+      font-size: 0.92em;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .year-duration::before {
+      content: "·";
+      margin-inline-end: 0.35em;
+      color: #8a9a9d;
+      font-weight: 500;
     }
 
     #awards .description,
@@ -1067,11 +1143,11 @@
       display: block;
       float: none !important;
       background: #eee;
-      margin-bottom: 10px;
+      margin-bottom: 0;
       position: relative;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      border-right: 1px solid #ccc;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       overflow-wrap: break-word;
       word-break: normal;
     }
@@ -1079,10 +1155,11 @@
     #awards .description:after,
     #education .description:after {
       content: '';
+      display: block;
       position: absolute;
-      top: 15px;
-      right: 0;
+      top: 12px;
       left: -16px;
+      right: auto;
       height: 0;
       width: 0;
       border: solid transparent;
@@ -1119,24 +1196,7 @@
     @container cv-timeline (max-width: 16rem) {
       #awards li,
       #education li {
-        grid-template-columns: 1fr;
-        padding-left: 2rem;
         margin-bottom: 0.75rem;
-      }
-
-      #awards:before,
-      #education:before {
-        left: 0.35rem;
-      }
-
-      #awards .year,
-      #education .year {
-        padding: 0.25rem 0.5rem;
-      }
-
-      #awards .description:after,
-      #education .description:after {
-        display: none;
       }
     }
 
@@ -1157,6 +1217,26 @@
     .job .where {
       font-size: 1.2em;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .job .where .job-org-logo {
+      width: 1.75rem;
+      height: 1.75rem;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 4px;
+      background: #fff;
+      border: 1px solid #dde7e5;
+    }
+
+    .job .where .job-org-logo--wide {
+      width: auto;
+      height: 1.75rem;
+      max-width: 6.5rem;
     }
 
     .job .where a {
@@ -1166,9 +1246,72 @@
       line-height: 1.5;
     }
 
+    /* Compact single-line date capsule: range · duration */
     .job .year {
-      color: #4d5a59;
+      float: right;
+      display: inline-flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.35em;
+      box-sizing: border-box;
+      min-width: 0;
+      max-width: none;
+      width: max-content;
+      margin: 0 0 0 10px;
+      padding: 3px 9px;
+      color: #1f2a2e;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
       opacity: 1;
+      border: 0;
+      border-radius: 999px;
+      background: #e8eef0;
+      box-shadow: inset 0 0 0 1px #d4dde0;
+      white-space: nowrap;
+    }
+
+    details.cv-job.cv-job--current .year {
+      background: #e4f3f0;
+      box-shadow: inset 0 0 0 1px #b7ddd5;
+    }
+
+    details.cv-job.cv-job--current .year-range {
+      color: #1a5f56;
+    }
+
+    details.cv-job.cv-job--current .year-duration {
+      color: #3d7a72;
+    }
+
+    @media (max-width: 767px) {
+      .job .year {
+        float: none;
+        display: inline-flex;
+        margin: 6px 0 0;
+        max-width: none;
+        width: fit-content;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .job .year,
+      #awards .year,
+      #education .year {
+        border: 1px solid ButtonText;
+        background: Canvas;
+        box-shadow: none;
+      }
+
+      .year-range,
+      .year-duration {
+        color: CanvasText;
+      }
     }
 
     .job .profession {
@@ -1181,8 +1324,11 @@
     }
 
     .job .highlights {
+      margin: 0;
       padding: 5px 0;
+      font-size: 1em;
       font-weight: bold;
+      line-height: 1.35;
     }
 
     .job .job-details {
@@ -1637,6 +1783,9 @@
     }
 
     .skill-level {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background-color: #227c74;
       border-radius: 4px;
       color: #fff;
@@ -1644,6 +1793,10 @@
       font-size: .75em;
       position: absolute;
       margin: 1px 10px;
+    }
+
+    .cert-provider-icon {
+      flex: 0 0 auto;
     }
 
     details.skill-group {
@@ -1775,6 +1928,78 @@
       border-radius: 8px;
       overflow: hidden;
       background: linear-gradient(180deg, #f8fcfb 0%, #fff 52%);
+    }
+
+    .cv-live-widgets-section {
+      margin-bottom: 12px;
+    }
+
+    .cv-live-widgets-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cv-live-widget-label {
+      margin: 0 0 8px;
+      font-size: 0.92em;
+      font-weight: 600;
+      color: #4d5a59;
+    }
+
+    .cv-live-widget img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+      border-radius: 6px;
+    }
+
+    .cv-live-widget--github {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .cv-live-widget--github img {
+      flex: 1 1 240px;
+      min-width: 0;
+    }
+
+    .cv-live-widget > summary {
+      cursor: pointer;
+      font-size: 0.95em;
+      color: #227c74;
+      list-style: none;
+    }
+
+    .cv-live-widget > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .cv-live-widget > summary::before {
+      content: '▸';
+      display: inline-block;
+      margin-right: 0.35em;
+      transition: transform 0.15s ease;
+    }
+
+    .cv-live-widget[open] > summary::before {
+      transform: rotate(90deg);
+    }
+
+    .cv-live-widget-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 0 2px;
+      align-items: center;
+    }
+
+    .cv-live-widget[hidden],
+    .cv-live-widget img[hidden],
+    .cv-live-widget a[hidden] {
+      display: none !important;
     }
 
     .clustrmaps-toggle {

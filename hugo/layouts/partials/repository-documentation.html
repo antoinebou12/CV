@@ -1,0 +1,95 @@
+{{- $note := .note -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $section := .section | default "all" -}}
+{{- $analysis := index (hugo.Data.repository_analysis.repositories | default dict) $note.repo -}}
+{{- $profile := index (hugo.Data.repository_profiles.repositories | default dict) $note.repo | default dict -}}
+{{- $showMermaid := .show_mermaid | default false -}}
+{{- with $analysis -}}
+<div class="repo-auto-docs">
+  {{ if or (eq $section "all") (eq $section "start") }}
+  <section aria-labelledby="installation">
+    <h2 id="installation">{{ if $fr }}Démarrage{{ else }}Getting started{{ end }}</h2>
+    <p>{{ if $fr }}Commandes copiées des instructions du dépôt, sans essai d’installation. Vérifiez les prérequis, le dossier de travail et les avertissements du README. Les mots de passe présents dans ces extraits sont des exemples de développement local, pas une configuration de production.{{ else }}Commands copied from the repository instructions, without an installation trial. Check prerequisites, the working directory and the README warnings. Passwords in these excerpts are local-development examples, not production configuration.{{ end }}</p>
+    {{ if .installation }}
+      {{ $seenInstall := slice }}
+      {{ $shown := 0 }}
+      {{ range .installation }}
+      {{ $installKey := printf "%s|%s" .file .heading }}
+      {{ if not (in $seenInstall $installKey) }}
+      <details class="repo-install-block"{{ if eq $shown 0 }} open{{ end }}>
+        <summary>{{ .heading }} <span>{{ .file }}</span></summary>
+        <pre><code>{{ .commands }}</code></pre>
+        <p><a href="{{ $analysis.source_url }}{{ .file }}#L{{ .line }}">{{ if $fr }}Instructions complètes et contexte{{ else }}Full instructions and context{{ end }}</a></p>
+      </details>
+      {{ $seenInstall = $seenInstall | append $installKey }}
+      {{ $shown = add $shown 1 }}
+      {{ end }}
+      {{ end }}
+    {{ else }}
+      <p>{{ if $fr }}Aucune recette d’installation réutilisable n’a été extraite. Consultez le README; les dépôts de configuration et les archives n’ont pas toujours une application à installer.{{ else }}No reusable installation recipe was extracted. Consult the README; configuration repositories and archives do not always contain an installable application.{{ end }}</p>
+      <p><a href="{{ $note.url }}#readme">README</a></p>
+    {{ end }}
+    {{ with $profile.docker_commands }}
+    <details class="repo-install-block" id="docker-run" open>
+      <summary>Docker <span>{{ $profile.docker_evidence | default $profile.evidence }}</span></summary>
+      <pre><code>{{ . }}</code></pre>
+      {{ with $profile.note }}<p class="repo-evidence-label">{{ index . $i }}</p>{{ end }}
+    </details>
+    {{ end }}
+    {{ with .manifests }}
+    <details class="repo-manifest-tasks"><summary>{{ if $fr }}Commandes déclarées dans les manifestes{{ else }}Tasks declared in manifests{{ end }}</summary>
+      {{ range . }}{{ if .scripts }}<h3><a href="{{ $analysis.source_url }}{{ .file }}"><code>{{ .file }}</code></a></h3>
+      <dl>{{ range .scripts }}<dt><code>{{ .name }}</code></dt><dd><code>{{ .command }}</code></dd>{{ end }}</dl>{{ end }}{{ end }}
+    </details>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or (eq $section "all") (eq $section "reference") }}
+  {{- $hasTypes := or .class_overview .types .class_files -}}
+  {{- $hasCodeMap := or $hasTypes .file_overview -}}
+  {{ if $hasCodeMap }}
+  <section class="repo-code-structure" aria-labelledby="code-structure">
+    <h2 id="code-structure">{{ if $hasTypes }}{{ if $fr }}Types et structure des fichiers{{ else }}Types and file structure{{ end }}{{ else }}{{ if $fr }}Structure des fichiers{{ else }}File structure{{ end }}{{ end }}</h2>
+    {{ if $hasTypes }}<p class="repo-section-intro">{{ if $fr }}L’analyse a trouvé {{ .type_count }} déclarations de types. Le diagramme en montre {{ .overview_types }} et conserve les relations de base déclarées.{{ else }}The scan found {{ .type_count }} type declarations. The diagram shows {{ .overview_types }} and preserves their declared base relationships.{{ end }}</p>{{ else }}<p class="repo-section-intro">{{ if $fr }}La carte montre les fichiers inspectés et leur organisation.{{ else }}The map shows the inspected files and their organization.{{ end }}</p>{{ end }}
+    {{ if and $showMermaid .class_overview }}
+    <details class="repo-diagram-details" data-mermaid-lazy>
+      <summary>{{ if $fr }}Diagramme des types (Mermaid){{ else }}Type diagram (Mermaid){{ end }}</summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ .class_overview }}</code></pre>
+      </div>
+      <p class="repo-evidence-label">{{ if $fr }}Les bases non résolues restent identifiées. Les signatures complètes ne sont pas reconstruites.{{ else }}Unresolved bases remain labelled. Full signatures are not reconstructed.{{ end }}</p>
+    </details>
+    {{ else if and $hasTypes (not .class_overview) }}
+    <p>{{ if $fr }}Aucun type pris en charge n’a été extrait de ces fichiers. Le schéma d’architecture et les liens source décrivent le dépôt; un projet shell ou documentaire n’a pas nécessairement de classes.{{ else }}No supported types were extracted from these files. The architecture diagram and source links describe the repository; shell and documentation projects do not necessarily have classes.{{ end }}</p>
+    {{ end }}
+    {{ with .types }}
+    <details class="repo-structure-details"><summary>{{ if $fr }}Types, méthodes et bases déclarées{{ else }}Types, methods and declared bases{{ end }}</summary><ul class="repo-structure-list">
+      {{ range first 12 . }}<li><code>{{ .name }}</code> ({{ .kind }}) · <a href="{{ $analysis.source_url }}{{ .file }}#L{{ .line }}"><code>{{ .file }}:{{ .line }}</code></a>{{ with .methods }}<p>{{ if $fr }}Méthodes dans l’aperçu :{{ else }}Methods in the overview:{{ end }} <code>{{ delimit (first 4 .) ", " }}</code>.</p>{{ end }}{{ with .bases }}<p>{{ if $fr }}Bases déclarées :{{ else }}Declared bases:{{ end }} <code>{{ delimit . ", " }}</code>.</p>{{ end }}</li>{{ end }}
+    </ul></details>
+    {{ end }}
+  </section>
+  {{ end }}
+  <section class="repo-reference" aria-labelledby="reader-guide">
+    <h2 id="reader-guide">{{ if $fr }}Référence{{ else }}Reference{{ end }}</h2>
+    <details class="repo-analysis-coverage"><summary>{{ if $fr }}Périmètre et limites de l’analyse{{ else }}Analysis coverage and limitations{{ end }}</summary>
+      <p>{{ if $fr }}{{ .coverage.read_files }} fichiers lus sur {{ .coverage.eligible_files }} fichiers admissibles dans l’arbre GitHub ({{ .coverage.tree_files }} fichiers au total). Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus.{{ else }}Read {{ .coverage.read_files }} of {{ .coverage.eligible_files }} eligible files in the GitHub tree ({{ .coverage.tree_files }} total files). Known dependency/build folders, credential files and binaries are excluded.{{ end }}</p>
+      <p>{{ if $fr }}La collecte couvre les README, les manifestes reconnus et les fichiers source dont le langage est pris en charge par l’analyseur. Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.{{ else }}The scan covers READMEs, recognized manifests and source files in parser-supported languages. Linguist statistics cover the whole repository and may include other languages.{{ end }}</p>
+      <p>{{ if $fr }}{{ .coverage.oversized_files }} fichiers dépassent la limite de taille, {{ len .coverage.failures }} lectures ont échoué et {{ len .coverage.parse_errors }} fichiers ont produit un diagnostic de syntaxe.{{ else }}{{ .coverage.oversized_files }} files exceed the size limit, {{ len .coverage.failures }} reads failed and {{ len .coverage.parse_errors }} files produced a syntax diagnostic.{{ end }}</p>
+      {{ if .coverage.limited }}<p>{{ if $fr }}Cette collecte utilise une limite explicite de fichiers.{{ else }}This scan uses an explicit file-count cap.{{ end }}</p>{{ end }}
+      {{ if .coverage.truncated_tree }}<p>{{ if $fr }}GitHub a retourné un arbre incomplet; la couverture est partielle.{{ else }}GitHub returned a truncated tree; coverage is partial.{{ end }}</p>{{ end }}
+    </details>
+    {{ if and $showMermaid .file_overview }}
+    <details class="repo-diagram-details" data-mermaid-lazy>
+      <summary>{{ if $fr }}Carte des fichiers{{ else }}File map{{ end }}</summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ .file_overview }}</code></pre>
+      </div>
+    </details>
+    {{ end }}
+  </section>
+  {{ end }}
+</div>
+{{- end -}}

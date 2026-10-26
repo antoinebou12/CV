@@ -4,6 +4,8 @@ title: Predicting Stock Prices with Monte Carlo Simulations
 date: 2024-05-14T09:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Forward Monte Carlo bands for AAPL from historical log returns — hold-out coverage, percentiles, and how that differs from MCMC."
+images:
+  - images/featured.png
 translationKey: predicting-stock-prices-monte-carlo
 tags:
   - Python
@@ -37,7 +39,7 @@ Pull full history for `AAPL`, split at **2023-01-01**:
 - **Train** — estimate mean/variance of log returns.
 - **Hold-out** — compare simulated bands to realized closes.
 
-![Train vs hold-out price series](./img-001.png)
+![Train vs hold-out price series](images/img-001.png)
 
 ## The simulation core
 
@@ -61,7 +63,7 @@ Full implementation and plotting loops: [Medium original](https://medium.com/@an
 - **5th–95th band** — risk-style interval for “where might price land.”
 - **Hold-out dot** — did reality sit inside the band at the aligned horizon?
 
-![Percentile band and simulated paths](./img-005.png)
+![Percentile band and simulated paths](images/img-005.png)
 
 Terminal distribution gives **quantile prices** and simple return percentiles vs last train close — useful for “how wrong is the model?” not “buy signal.”
 

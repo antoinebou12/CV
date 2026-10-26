@@ -1,0 +1,55 @@
+classDiagram
+direction TB
+class t866410da99a3["JsHttpDownloaderStatus"] {
+  <<interface>>
+}
+class tee9f75393575["JsHttpDownloaderOptions"] {
+  <<interface>>
+}
+class t7f8d964042ab["HttpDownloadStatusError"] {
+  constructor()
+}
+class t13d293c9d27d["JsHttpDownloader"] {
+  setMaxDownloadSpeedBytesPerSecond()
+  startDownload()
+  startDownloadWithRetry()
+  startStallDetection()
+  stopStallDetection()
+  triggerRetry()
+  handleDownloadErrorWithRetry()
+  maybeResetRetryBudget()
+  handleTransientStatusError()
+  sleep()
+  resetThrottleWindow()
+  applyThrottle()
+  prepareDownloadPath()
+  buildRequestHeaders()
+  resetSpeedTracking()
+  parseFileSize()
+  parseTotalSizeFrom416()
+  parseContentRangeStart()
+  executeDownload()
+  parseContentDisposition()
+  decodeFilenameValue()
+  resetRecoveryState()
+  beginRecovery()
+  trackRecoveredBytes()
+  finishRecovery()
+  createReadableStream()
+  handleDownloadError()
+  resumeDownload()
+  setReconnecting()
+  reconnect()
+  stopForNoNetwork()
+  pauseDownload()
+  cancelDownload()
+  getDownloadStatus()
+  updateSpeed()
+  extractFilename()
+  cleanupResources()
+  reset()
+}
+class be895c6e2ee96["Error"] {
+  <<unresolved_base>>
+}
+t7f8d964042ab ..> be895c6e2ee96 : declared base

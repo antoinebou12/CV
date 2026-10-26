@@ -1,0 +1,19 @@
+flowchart TB
+  subgraph content [Content in git]
+    Posts["posts/ EN+FR pairs"]
+    Projects["projects/ + notes"]
+    Kinds["post_kind: article / conference / tutorial"]
+  end
+  subgraph site [Hugo site]
+    Paper["Paper theme + overrides"]
+    I18n["i18n + language switcher"]
+    Short["shortcodes: iframe, modelviewer, …"]
+  end
+  subgraph agents [Editorial assists]
+    MCP["uml-mcp diagrams → page bundles"]
+    Cursor["Cursor agents edit Markdown in-repo"]
+  end
+  content --> site
+  MCP --> Posts
+  Cursor --> content
+  site --> Deploy["Static deploy"]

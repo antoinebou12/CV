@@ -12,14 +12,14 @@ tags:
   - Addons
 canonicalURL: "https://medium.com/@antoine.boucher012/a-method-to-install-python-packages-for-add-ons-plugins-in-blender-windows-blender-4-2-98bcbe10fa81"
 images:
-  - img-001.png
+  - images/img-001.png
 ---
 
 Les add-ons qui demandent **NumPy**, **meshio** ou **requests** butent sur le **Python de Blender**. Petit installateur ciblant `sys.executable`, dossier `scripts/modules`, thread d’arrière-plan (Blender 4.2+, Windows). **[English version]({{< ref "/posts/blender-python-packages/index.md" >}})**.
 
 <!--more-->
 
-![Espace Scripting Blender](./img-001.png)
+![Espace Scripting Blender](images/img-001.png)
 
 ## Stratégie
 

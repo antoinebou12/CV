@@ -1,0 +1,226 @@
+{
+  "repositories": {
+    "uml-mcp": {
+      "title": [
+        "MCP tool contract",
+        "Contrat des outils MCP"
+      ],
+      "intro": [
+        "The hosted service accepts MCP JSON-RPC at /mcp. tools/list returns input and output schemas. A client sends tools/call with a tool name and structured arguments.",
+        "Le service hébergé accepte les messages MCP JSON-RPC sur /mcp. tools/list retourne les schémas d’entrée et de sortie. Le client envoie tools/call avec le nom d’un outil et des arguments structurés."
+      ],
+      "boundary": [
+        "This public endpoint answered the documentation build without an Authorization header. That observation does not define authentication for every deployment. No fixed quota was advertised by tools/list. Rendering is a single-result operation; catalog discovery should follow MCP pagination if the server returns a cursor.",
+        "Ce point d’accès public a répondu à la génération documentaire sans en-tête Authorization. Cette observation ne définit pas l’authentification de tous les déploiements. tools/list n’annonçait aucun quota fixe. Le rendu retourne un résultat; la découverte du catalogue doit suivre la pagination MCP si le serveur retourne un curseur."
+      ],
+      "request": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"generate_uml\",\n    \"arguments\": {\n      \"diagram_type\": \"mermaid\",\n      \"code\": \"flowchart LR\\n  Client --> Server\",\n      \"output_format\": \"svg\"\n    }\n  }\n}",
+      "response": [
+        "Read result.structuredContent: success, url, playground and output_format describe the render. On failure, inspect error and error_detail; MCP protocol errors and tool-level isError must be handled separately. A URL response does not mean that image bytes are embedded in the reply.",
+        "Lisez result.structuredContent : success, url, playground et output_format décrivent le rendu. En cas d’échec, inspectez error et error_detail; traitez séparément les erreurs de protocole MCP et isError au niveau de l’outil. Une réponse URL ne contient pas nécessairement les octets de l’image."
+      ],
+      "operations": [
+        "Use validate_uml for syntax checks without a render. generate_uml_batch renders several items with per-item results. Send only public diagram text to the hosted service; renderer URLs can encode that text.",
+        "Utilisez validate_uml pour vérifier la syntaxe sans générer d’image. generate_uml_batch traite plusieurs éléments et retourne leurs résultats individuels. Envoyez uniquement du texte public au service hébergé; les URL de rendu peuvent encoder ce texte."
+      ],
+      "files": [
+        "README.md",
+        "mcp_core/core/server.py"
+      ],
+      "live_source": "https://uml-mcp.vercel.app/mcp",
+      "live_checked": "2026-10-24"
+    },
+    "kroki-playground": {
+      "title": [
+        "Diagram HTTP API",
+        "API HTTP de diagrammes"
+      ],
+      "intro": [
+        "The route file defines GET and POST /api/generate-diagram. POST reads JSON; GET reads the same fields from query parameters. The handler validates the diagram type and format, compresses UTF-8 source with DEFLATE, encodes it for a URL and fetches the selected Kroki renderer.",
+        "Le fichier de route définit GET et POST /api/generate-diagram. POST lit du JSON; GET lit les mêmes champs dans les paramètres de requête. Le gestionnaire valide le type et le format, compresse la source UTF-8 avec DEFLATE, l’encode pour une URL et appelle le moteur Kroki choisi."
+      ],
+      "boundary": [
+        "The inspected route has no authentication, pagination or rate limiter. A deployment proxy may impose its own rules. The source limit is 512,000 characters. KROKI_BASE_URL configures server requests; NEXT_PUBLIC_KROKI_BASE_URL configures browser previews. The README mentions /api/generateDiagram, while this source file defines the hyphenated route.",
+        "La route inspectée ne contient ni authentification, ni pagination, ni limiteur de débit. Un proxy de déploiement peut imposer ses propres règles. La source est limitée à 512 000 caractères. KROKI_BASE_URL configure les requêtes serveur; NEXT_PUBLIC_KROKI_BASE_URL configure les aperçus du navigateur. Le README mentionne /api/generateDiagram, tandis que ce fichier définit la route avec trait d’union."
+      ],
+      "request": "POST /api/generate-diagram\nContent-Type: application/json\n\n{\n  \"selectedDiagram\": \"mermaid\",\n  \"diagramSource\": \"flowchart LR\\n  Client --> Server\",\n  \"outputFormat\": \"svg\"\n}",
+      "response": [
+        "A successful JSON response contains diagramUrl, diagramData (base64 bytes) and mimeType. Decode diagramData using mimeType when displaying the result. This is not a raw SVG response.",
+        "Une réponse JSON réussie contient diagramUrl, diagramData (octets en base64) et mimeType. Décodez diagramData avec mimeType pour afficher le résultat. La réponse n’est pas un SVG brut."
+      ],
+      "operations": [
+        "HTTP 400 covers MISSING_DIAGRAM_TYPE, INVALID_DIAGRAM_TYPE, SOURCE_TOO_LARGE and INVALID_OUTPUT_FORMAT. A Kroki HTTP failure becomes 502 KROKI_UPSTREAM_ERROR with upstreamStatus; a thrown request or decoding error becomes 500 INTERNAL_ERROR. For a 502, inspect the selected format and Kroki response before retrying. Test with a small graph against a local deployment.",
+        "HTTP 400 couvre MISSING_DIAGRAM_TYPE, INVALID_DIAGRAM_TYPE, SOURCE_TOO_LARGE et INVALID_OUTPUT_FORMAT. Une erreur HTTP de Kroki devient 502 KROKI_UPSTREAM_ERROR avec upstreamStatus; une exception devient 500 INTERNAL_ERROR. Pour une 502, inspectez le format choisi et la réponse Kroki avant de réessayer. Testez un petit graphe sur un déploiement local."
+      ],
+      "files": [
+        "app/api/generate-diagram/route.ts",
+        "lib/kroki/validate.ts",
+        "lib/kroki/encode.ts"
+      ]
+    },
+    "ChitUI": {
+      "title": [
+        "Printer upload API",
+        "API de transfert vers l’imprimante"
+      ],
+      "intro": [
+        "POST /upload accepts multipart fields file and printer. The printer identifier selects an entry in the discovered-printers dictionary. Supported extensions are ctb, goo and prz. The server stores a temporary file and transfers chunks to the printer’s port 3030 upload endpoint.",
+        "POST /upload accepte les champs multipart file et printer. L’identifiant sélectionne une entrée du dictionnaire des imprimantes découvertes. Les extensions acceptées sont ctb, goo et prz. Le serveur crée un fichier temporaire et transfère des blocs au point d’accès de l’imprimante sur le port 3030."
+      ],
+      "boundary": [
+        "The inspected handlers have no authentication or rate limiter. Keep this interface on a trusted network. Progress is shared globally across uploads, so it cannot identify concurrent jobs. Pagination does not apply to this upload operation.",
+        "Les gestionnaires inspectés n’ont ni authentification ni limiteur de débit. Gardez cette interface sur un réseau de confiance. La progression est globale et ne distingue pas les transferts simultanés. La pagination ne s’applique pas à cette opération."
+      ],
+      "request": "POST /upload\nContent-Type: multipart/form-data\n\nfile: [supported print file]\nprinter: [identifier returned by discovery]",
+      "response": [
+        "The success body is {\"upload\":\"success\",\"msg\":\"File uploaded\"}. Missing file or printer fields and unsupported extensions return 400. GET /upload returns 405. GET /progress streams text/event-stream updates.",
+        "Le corps de succès est {\"upload\":\"success\",\"msg\":\"File uploaded\"}. Un fichier ou une imprimante manquants et une extension non prise en charge retournent 400. GET /upload retourne 405. GET /progress diffuse des mises à jour text/event-stream."
+      ],
+      "operations": [
+        "Verify the file on the printer after a transfer. The helper sets progress to 100 and returns true even after a failed part causes the loop to break. A success response alone therefore does not prove delivery. The calculation also divides by the number of whole 1 MiB chunks, which is zero for files smaller than 1 MiB.",
+        "Vérifiez le fichier sur l’imprimante après le transfert. Le helper met la progression à 100 et retourne true même lorsqu’un bloc échoue et interrompt la boucle. La réponse de succès ne prouve donc pas la livraison. Le calcul divise aussi par le nombre de blocs complets de 1 Mio, qui vaut zéro pour un fichier plus petit."
+      ],
+      "files": [
+        "main.py"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/upload",
+          "file": "main.py",
+          "access": [
+            "No authentication check in the inspected handler. Multipart fields file and printer are required.",
+            "Aucun contrôle d’authentification dans le gestionnaire inspecté. Les champs multipart file et printer sont requis."
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/upload",
+          "file": "main.py",
+          "access": [
+            "No authentication check. The inspected handler returns 405.",
+            "Aucun contrôle d’authentification. Le gestionnaire inspecté retourne 405."
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/progress",
+          "file": "main.py",
+          "access": [
+            "No authentication check in the inspected handler. The response is a text/event-stream shared across uploads.",
+            "Aucun contrôle d’authentification dans le gestionnaire inspecté. La réponse est un text/event-stream partagé entre les transferts."
+          ]
+        }
+      ]
+    },
+    "TCH099": {
+      "title": [
+        "HTTP API and permissions",
+        "API HTTP et permissions"
+      ],
+      "intro": [
+        "routes.php maps the paths below. The README shows paths such as /api/login.php and French status text. The handlers use the paths in this table and English messages. The access column records a check found in the handler.",
+        "routes.php associe les chemins ci-dessous. Le README montre des chemins comme /api/login.php et des messages en français. Les gestionnaires utilisent les chemins de ce tableau et des messages en anglais. La colonne d’accès indique un contrôle trouvé dans le gestionnaire."
+      ],
+      "boundary": [
+        "POST /api/signup accepts role admin or client from the JSON body. Nothing in signup.php requires an existing admin session before that role is stored. router.php sends Access-Control-Allow-Origin: *. These handlers do not set a rate limit. GET /admin is a page: routes.php calls isAdmin() and otherwise includes 403.html. Login does not set an HTTP error status; failures stay in the JSON body.",
+        "POST /api/signup accepte le rôle admin ou client dans le JSON. signup.php n’exige pas une session administrateur avant d’enregistrer ce rôle. router.php envoie Access-Control-Allow-Origin: *. Ces gestionnaires ne fixent pas de limite de débit. GET /admin est une page: routes.php appelle isAdmin() et inclut sinon 403.html. La connexion ne définit pas de statut HTTP d’erreur; l’échec reste dans le JSON."
+      ],
+      "request": "POST /api/login\nContent-Type: application/json\n\n{\n  \"username\": \"example\",\n  \"password\": \"local-dev-password\"\n}",
+      "response": [
+        "- **Success:** `api/login.php` returns `status: success`, `message: Login successful`, and `redirect: /home`.\n- **Failed credentials:** the JSON body contains `status: error` and `Invalid username or password`.\n- **Other HTTP methods:** the JSON body contains `Invalid request method`.\n- **Message language:** the handler uses English, while the README examples use French.",
+        "- **Succès :** `api/login.php` retourne `status: success`, `message: Login successful` et `redirect: /home`.\n- **Identifiants invalides :** le corps JSON contient `status: error` et `Invalid username or password`.\n- **Autres méthodes HTTP :** le corps JSON contient `Invalid request method`.\n- **Langue des messages :** le gestionnaire utilise l’anglais, tandis que les exemples du README sont en français."
+      ],
+      "operations": [
+        "- **Session details:** `GET /api/user_details` requires `user_loggedin` and returns `user_details` from the session.\n- **Client list:** `GET /api/clients` also requires the `admin` role. Its `SELECT * FROM Clients` query includes the password column in a successful response.\n- **Public demos:** `GET` and `POST` requests to `/api/hello-world/$langue` and `/api/random-image` have no session check. Hello World uses the session username for `prenom` when available.\n- **Random image:** `imageType: human` returns the thispersondoesnotexist.com URL. Every other value calls The Cat API.",
+        "- **Détails de session :** `GET /api/user_details` exige `user_loggedin` et retourne `user_details` depuis la session.\n- **Liste des clients :** `GET /api/clients` exige aussi le rôle `admin`. Sa requête `SELECT * FROM Clients` inclut la colonne du mot de passe dans une réponse réussie.\n- **Démonstrations publiques :** les requêtes `GET` et `POST` vers `/api/hello-world/$langue` et `/api/random-image` n’ont pas de contrôle de session. Hello World utilise le nom de session pour `prenom` lorsqu’il existe.\n- **Image aléatoire :** `imageType: human` retourne l’URL thispersondoesnotexist.com. Toute autre valeur appelle The Cat API."
+      ],
+      "sequence": "sequenceDiagram\n  participant Browser\n  participant Login as api/login.php\n  participant Users as Clients table\n  Browser->>Login: POST /api/login JSON\n  Login->>Users: SELECT by username\n  Users-->>Login: row\n  Login-->>Browser: status, message, redirect",
+      "files": [
+        "routes.php",
+        "router.php",
+        "api/login.php",
+        "api/signup.php",
+        "api/logout.php",
+        "api/user_details.php",
+        "api/clients.php",
+        "api/hello-world.php",
+        "api/random-image.php",
+        "api/utils/utils.php"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "file": "api/login.php",
+          "access": [
+            "No session check. loginUser verifies the password hash.",
+            "Aucun contrôle de session. loginUser vérifie l’empreinte du mot de passe."
+          ]
+        },
+        {
+          "method": "POST",
+          "path": "/api/signup",
+          "file": "api/signup.php",
+          "access": [
+            "No session check. The body role must be admin or client, including admin for a new account.",
+            "Aucun contrôle de session. Le rôle du corps doit être admin ou client, y compris admin pour un nouveau compte."
+          ]
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "file": "api/logout.php",
+          "access": [
+            "No session check. The handler destroys the session.",
+            "Aucun contrôle de session. Le gestionnaire détruit la session."
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/api/user_details",
+          "file": "api/user_details.php",
+          "access": [
+            "Requires the user_loggedin session key. Role is not checked.",
+            "Exige la clé de session user_loggedin. Le rôle n’est pas vérifié."
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/api/clients",
+          "file": "api/clients.php",
+          "access": [
+            "Requires user_loggedin and session role admin. Otherwise the JSON says Access denied.",
+            "Exige user_loggedin et le rôle de session admin. Sinon le JSON dit Access denied."
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/admin",
+          "file": "routes.php",
+          "access": [
+            "Page, not JSON. isAdmin() includes admin.html, otherwise 403.html.",
+            "Page, pas du JSON. isAdmin() inclut admin.html, sinon 403.html."
+          ]
+        },
+        {
+          "method": "GET, POST",
+          "path": "/api/hello-world/$langue",
+          "file": "api/hello-world.php",
+          "access": [
+            "No session check. A logged-in session replaces prenom with the username.",
+            "Aucun contrôle de session. Une session connectée remplace prenom par le nom d’utilisateur."
+          ]
+        },
+        {
+          "method": "GET, POST",
+          "path": "/api/random-image",
+          "file": "api/random-image.php",
+          "access": [
+            "No session check in the handler.",
+            "Aucun contrôle de session dans le gestionnaire."
+          ]
+        }
+      ]
+    }
+  }
+}

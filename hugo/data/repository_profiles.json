@@ -1,0 +1,212 @@
+{
+  "repositories": {
+    "TCH099": {
+      "evidence": "docker-compose.yml",
+      "badges": [
+        {"label": "Docker Compose", "title": "docker-compose.yml"},
+        {"label": "MariaDB", "title": "Service image mariadb:latest in docker-compose.yml"},
+        {"label": "Azure", "title": "README and .github/workflows/README.md describe Azure deployment"},
+        {"label": "REST API", "title": "routes.php API routes"}
+      ],
+      "facts": [
+        {"label": ["Runtime", "Exécution"], "value": ["PHP", "PHP"]},
+        {"label": ["Interface", "Interface"], "value": ["Web + mobile", "Web + mobile"]},
+        {"label": ["Database", "Base de données"], "value": ["MariaDB (Compose)", "MariaDB (Compose)"]},
+        {"label": ["Deployment", "Déploiement"], "value": ["Docker / Azure", "Docker / Azure"]},
+        {"label": ["App port", "Port app"], "value": ["8001", "8001"]}
+      ],
+      "note": [
+        "The README calls the database MySQL. docker-compose.yml runs mariadb:latest. The application is published on port 8001 and phpMyAdmin on port 8060.",
+        "Le README parle de MySQL. docker-compose.yml lance mariadb:latest. L’application est publiée sur le port 8001 et phpMyAdmin sur le port 8060."
+      ],
+      "network": "Bridge network tch099-network. The Compose file does not set host networking.",
+      "config": ["DB_HOST", "DB_PORT", "MYSQL_ROOT_PASSWORD", "MYSQL_DATABASE", "MYSQL_USER", "MYSQL_PASSWORD", "PMA_HOST"],
+      "services": [
+        {"name": "web", "runtime": "Build from Dockerfile", "ports": "8001:80", "depends": "db, startup order only", "storage": "Bind mount of the repository at /var/www/html"},
+        {"name": "db", "runtime": "mariadb:latest", "ports": "3306:3306", "depends": "", "storage": "Named volume dbdata"},
+        {"name": "phpmyadmin", "runtime": "phpmyadmin/phpmyadmin", "ports": "8060:80", "depends": "db, startup order only", "storage": ""}
+      ]
+    },
+    "ChitUI": {
+      "evidence": "README.md",
+      "docker_evidence": "README.md",
+      "docker_commands": "docker build -t chitui:latest .\ndocker run --rm --name chitui --net=host chitui:latest",
+      "badges": [
+        {"label": "SDCP 3.0", "title": "README title"},
+        {"label": "Docker", "title": "README Docker section"},
+        {"label": "Browser UI", "title": "README Usage, default port 54780"},
+        {"label": "Local network", "title": "README Docker host networking for UDP discovery"}
+      ],
+      "facts": [
+        {"label": ["Runtime", "Exécution"], "value": ["Python", "Python"]},
+        {"label": ["Interface", "Interface"], "value": ["Web UI", "Interface web"]},
+        {"label": ["Protocol", "Protocole"], "value": ["SDCP", "SDCP"]},
+        {"label": ["Deployment", "Déploiement"], "value": ["Native / Docker", "Natif / Docker"]},
+        {"label": ["Port", "Port"], "value": ["54780 default", "54780 par défaut"]}
+      ],
+      "note": [
+        "The README asks for host networking because printer discovery broadcasts UDP. The browser UI defaults to port 54780. PORT and DEBUG are optional environment variables.",
+        "Le README demande le réseau de l’hôte parce que la découverte des imprimantes diffuse en UDP. L’interface navigateur utilise le port 54780 par défaut. PORT et DEBUG sont des variables facultatives."
+      ],
+      "network": "Host network (--net=host), requested in the README so UDP broadcast can reach the LAN.",
+      "workflow": [
+        {
+          "title": ["Choose a file", "Choisir un fichier"],
+          "body": [
+            "Select a supported print file for a discovered printer. The upload handler accepts multipart fields named file and printer.",
+            "Sélectionnez un fichier d’impression pris en charge pour une imprimante découverte. Le gestionnaire d’envoi accepte les champs multipart file et printer."
+          ]
+        },
+        {
+          "title": ["Validate the request", "Valider la requête"],
+          "body": [
+            "The handler checks missing file or printer fields and the allowed extensions ctb, goo and prz before continuing.",
+            "Le gestionnaire vérifie les champs file ou printer manquants et les extensions ctb, goo et prz avant de continuer."
+          ]
+        },
+        {
+          "title": ["Store temporarily", "Stockage temporaire"],
+          "body": [
+            "The server receives the file into temporary storage before starting transfer to the printer.",
+            "Le serveur reçoit le fichier dans un stockage temporaire avant le transfert vers l’imprimante."
+          ]
+        },
+        {
+          "title": ["Transfer to printer", "Transférer vers l’imprimante"],
+          "body": [
+            "The helper sends chunks to the selected printer on the local network. Progress events are available on GET /progress as text/event-stream.",
+            "L’assistant envoie des blocs à l’imprimante sélectionnée sur le réseau local. La progression est disponible sur GET /progress en text/event-stream."
+          ]
+        },
+        {
+          "title": ["Confirm the outcome", "Confirmer le résultat"],
+          "body": [
+            "Check the response and verify the file on the printer. The helper may report success after a failed part; treat the success body alone as incomplete proof of delivery.",
+            "Vérifiez la réponse et le fichier sur l’imprimante. L’assistant peut signaler un succès après un bloc en échec; le corps de succès seul ne prouve pas la livraison."
+          ]
+        }
+      ]
+    },
+    "DasherControl": {
+      "evidence": "docker-compose.yml",
+      "docker_evidence": "docker-compose.yml",
+      "docker_commands": "DOCKER_BUILDKIT=1 docker build -t antoinebou13/dashercontrol .\nDOCKER_BUILDKIT=1 docker-compose up -d --build && docker-compose logs -f",
+      "badges": [
+        {"label": "Rust (Rocket)", "title": "Rocket web framework in Cargo.toml"},
+        {"label": "Vue 3", "title": "Frontend SPA in package.json"},
+        {"label": "PostgreSQL", "title": "Diesel ORM migrations with PostgreSQL"},
+        {"label": "Docker Compose", "title": "Multi-stage Dockerfile and docker-compose.yml"}
+      ],
+      "facts": [
+        {"label": ["Runtime", "Exécution"], "value": ["Rust + Vue 3", "Rust + Vue 3"]},
+        {"label": ["Interface", "Interface"], "value": ["Web Dashboard SPA", "Tableau de bord Web SPA"]},
+        {"label": ["Database", "Base de données"], "value": ["PostgreSQL (Diesel)", "PostgreSQL (Diesel)"]},
+        {"label": ["Deployment", "Déploiement"], "value": ["Docker / Ubuntu", "Docker / Ubuntu"]},
+        {"label": ["App port", "Port app"], "value": ["8000 (Rocket)", "8000 (Rocket)"]}
+      ],
+      "note": [
+        "Homelab management dashboard uniting container metrics, service shortcuts, and administrative workflows behind a high-performance Rust backend and Vue 3 reactive UI.",
+        "Tableau de bord homelab unifiant métriques de conteneurs, raccourcis de services et flux administratifs derrière un backend Rust performant et une interface réactive Vue 3."
+      ],
+      "network": "Bridge network dasher-net linking the DasherControl web app with PostgreSQL.",
+      "services": [
+        {"name": "dashercontrol", "runtime": "Build from multi-stage Dockerfile", "ports": "8000:8000", "depends": "postgres, startup healthcheck", "storage": "Named volume dasher-data"},
+        {"name": "postgres", "runtime": "postgres:14-alpine", "ports": "5432:5432", "depends": "", "storage": "Named volume pgdata"}
+      ]
+    },
+    "MediaBoxDockerCompose": {
+      "evidence": "docker-compose.yml",
+      "docker_evidence": "docker-compose.yml",
+      "docker_commands": "docker-compose up -d",
+      "badges": [
+        {"label": "Docker Compose", "title": "docker-compose.yml multi-service stack"},
+        {"label": "WireGuard VPN", "title": "Secure VPN tunnel integration"},
+        {"label": "Whisper AI", "title": "Automated audio transcription worker"},
+        {"label": "Portainer", "title": "Container management interface"}
+      ],
+      "facts": [
+        {"label": ["Runtime", "Exécution"], "value": ["Docker Compose", "Docker Compose"]},
+        {"label": ["Network", "Réseau"], "value": ["Bridge + WireGuard", "Bridge + WireGuard"]},
+        {"label": ["Storage", "Stockage"], "value": ["Persistent bind mounts", "Montages persistants"]},
+        {"label": ["Deployment", "Déploiement"], "value": ["Linux Homelab", "Homelab Linux"]},
+        {"label": ["Media port", "Port média"], "value": ["32400 (Plex)", "32400 (Plex)"]}
+      ],
+      "note": [
+        "Multi-service Docker Compose topology integrating automated torrent/media ingestion with WireGuard VPN isolation, Whisper transcription worker, and Portainer administration.",
+        "Topologie multi-services Docker Compose intégrant ingestion média automatisée avec isolation VPN WireGuard, worker de transcription Whisper et administration Portainer."
+      ],
+      "network": "Isolated Docker bridge network routed through WireGuard VPN gateway.",
+      "services": [
+        {"name": "plex", "runtime": "plexinc/pms-docker", "ports": "32400:32400", "depends": "", "storage": "/media -> /data/movies"},
+        {"name": "wireguard", "runtime": "linuxserver/wireguard", "ports": "51820:51820/udp", "depends": "", "storage": "/config bind mount"},
+        {"name": "whisper", "runtime": "local build / compose", "ports": "9000:9000", "depends": "", "storage": "Audio buffer volume"},
+        {"name": "portainer", "runtime": "portainer/portainer-ce", "ports": "9443:9443", "depends": "", "storage": "/var/run/docker.sock"},
+        {"name": "samba", "runtime": "dperson/samba", "ports": "139:139, 445:445", "depends": "", "storage": "Shared ZFS pool"}
+      ]
+    },
+    "ipc-toolkit": {
+      "evidence": "src/ipc/ipc.hpp",
+      "badges": [
+        {"label": "C++", "title": "Library language from repository sources"},
+        {"label": "CCD", "title": "Continuous collision detection in ipc.hpp / ipc.cpp"},
+        {"label": "CMake", "title": "CMakeLists.txt build system"}
+      ],
+      "facts": [
+        {"label": ["Runtime", "Exécution"], "value": ["C++ library", "Bibliothèque C++"]},
+        {"label": ["Interface", "Interface"], "value": ["Header API", "API en-tête"]},
+        {"label": ["Focus", "Focus"], "value": ["Collision queries", "Requêtes de collision"]},
+        {"label": ["Deployment", "Déploiement"], "value": ["Link into simulator", "Lier dans un simulateur"]}
+      ],
+      "algorithm": {
+        "problem": [
+          "Decide whether a CollisionMesh at given vertex positions intersects, or whether a proposed vertex displacement stays collision-free, so a contact-aware simulator can query geometry without owning the full time-step loop.",
+          "Décider si un CollisionMesh aux positions de sommets données s’intersecte, ou si un déplacement proposé reste sans collision, pour qu’un simulateur avec contacts interroge la géométrie sans posséder toute la boucle temporelle."
+        ],
+        "inputs": [
+          "A CollisionMesh plus current (and optionally proposed) vertex positions; broad-phase and narrow-phase CCD strategies are explicit parameters with defaults.",
+          "Un CollisionMesh plus les positions de sommets courantes (et éventuellement proposées) ; les stratégies CCD large et étroite sont des paramètres explicites avec valeurs par défaut."
+        ],
+        "outputs": [
+          "Intersection or collision-free-step answers, plus contact-related quantities (distances, barriers, friction helpers) consumed by the caller’s objective — not a full scene solve.",
+          "Réponses d’intersection ou de pas sans collision, plus des quantités de contact (distances, barrières, aides de friction) consommées par l’objectif de l’appelant — pas une résolution de scène complète."
+        ],
+        "pseudocode": "given mesh M, positions x, optional next positions x'\nif has_intersections(M, x): report contact candidates\nif not is_step_collision_free(M, x, x'): reject or shorten step\nelse: assemble contact energies/derivatives for the caller’s solver",
+        "steps": [
+          {
+            "title": ["Build or accept a collision mesh", "Construire ou accepter un maillage de collision"],
+            "body": [
+              "The library expects a CollisionMesh that separates geometry from the caller’s simulation state.",
+              "La bibliothèque attend un CollisionMesh qui sépare la géométrie de l’état de simulation de l’appelant."
+            ]
+          },
+          {
+            "title": ["Broad-phase candidates", "Candidats en phase large"],
+            "body": [
+              "Candidate pairs are discovered with an explicit broad-phase strategy before expensive narrow tests.",
+              "Les paires candidates sont découvertes avec une stratégie de phase large explicite avant les tests étroits coûteux."
+            ]
+          },
+          {
+            "title": ["Narrow-phase CCD / intersection", "CCD / intersection en phase étroite"],
+            "body": [
+              "ipc.hpp entry points test intersections at a configuration or whether a displacement remains collision-free.",
+              "Les points d’entrée de ipc.hpp testent les intersections à une configuration ou si un déplacement reste sans collision."
+            ]
+          },
+          {
+            "title": ["Contact quantities for the solver", "Quantités de contact pour le solveur"],
+            "body": [
+              "Distance, barrier, friction and related modules supply values and derivatives; the external simulation still owns time stepping.",
+              "Les modules distance, barrière, friction et associés fournissent valeurs et dérivées ; la simulation externe conserve la gestion du temps."
+            ]
+          }
+        ],
+        "complexity": [
+          "No asymptotic complexity claim is published in this fork’s inspected headers; cost depends on mesh size, broad-phase choice and CCD settings used by the caller.",
+          "Aucune complexité asymptotique n’est publiée dans les en-têtes inspectés de ce fork ; le coût dépend de la taille du maillage, de la phase large et des réglages CCD choisis par l’appelant."
+        ],
+        "source": "https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.hpp"
+      }
+    }
+  }
+}

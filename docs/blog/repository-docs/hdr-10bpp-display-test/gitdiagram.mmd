@@ -1,0 +1,57 @@
+flowchart TD
+
+subgraph group_setup["Display setup"]
+  node_xserver["X server"]
+end
+
+subgraph group_viewers["Viewer applications"]
+  node_viewer1["Image viewer<br/>[Viewer.py]"]
+  node_viewer3["Image/video viewer<br/>[Viewer3.py]"]
+end
+
+subgraph group_render["Image rendering"]
+  node_gtk1["GTK window<br/>[Viewer.py]"]
+  node_gtk3["GTK window<br/>[Viewer3.py]"]
+  node_imageio1["Image input<br/>[Viewer.py]"]
+  node_imageio3["Image/video input<br/>[Viewer3.py]"]
+  node_cairo1["Cairo drawing<br/>[Viewer.py]"]
+  node_cairo3["Cairo drawing<br/>[Viewer3.py]"]
+end
+
+node_user(("Test operator"))
+node_imagej["ImageJ"]
+
+node_user -->|"starts at depth"| node_xserver
+node_user -->|"launches"| node_viewer1
+node_user -->|"launches"| node_viewer3
+node_viewer1 -->|"creates window"| node_gtk1
+node_viewer1 -->|"reads image"| node_imageio1
+node_viewer1 -->|"draws image"| node_cairo1
+node_gtk1 -->|"dispatches draw"| node_cairo1
+node_viewer3 -->|"creates window"| node_gtk3
+node_viewer3 -->|"reads image/video"| node_imageio3
+node_viewer3 -->|"draws frames"| node_cairo3
+node_gtk3 -->|"dispatches draw"| node_cairo3
+node_user -->|"opens image"| node_imagej
+node_imagej -->|"displays for checking"| node_viewer1
+
+click node_viewer1 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer.py"
+click node_viewer3 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer3.py"
+click node_gtk1 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer.py"
+click node_gtk3 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer3.py"
+click node_imageio1 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer.py"
+click node_imageio3 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer3.py"
+click node_cairo1 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer.py"
+click node_cairo3 "https://github.com/antoinebou12/hdr-10bpp-display-test/blob/master/Viewer3.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_xserver toneBlue
+class node_viewer1,node_viewer3 toneAmber
+class node_gtk1,node_gtk3,node_imageio1,node_imageio3,node_cairo1,node_cairo3 toneMint
+class node_user,node_imagej toneIndigo

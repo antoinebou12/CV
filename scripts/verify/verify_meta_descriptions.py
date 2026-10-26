@@ -20,8 +20,6 @@ STATIC_FILES = [
     ROOT / "index-fr.html",
     ROOT / "404.html",
     ROOT / "linktree" / "index.html",
-    ROOT / "about-en.html",
-    ROOT / "about-fr.html",
 ]
 
 def _first_group(html: str, patterns: tuple[re.Pattern[str], ...]) -> str:

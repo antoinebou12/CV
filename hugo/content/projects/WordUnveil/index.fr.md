@@ -14,7 +14,7 @@ draft: false
 ![Prisma](https://img.shields.io/badge/-Prisma-2D3748?logo=prisma)
 ![MySQL](https://img.shields.io/badge/-MySQL-4479A1?logo=mysql)
 
-Variante multilingue du jeu Wordle pour découvrir du vocabulaire tout en jouant. Stack : RedwoodJS, GraphQL, Prisma et MySQL.
+Variante multilingue du jeu Wordle. Stack : RedwoodJS, GraphQL, Prisma et MySQL.
 
 ## Démarrage
 

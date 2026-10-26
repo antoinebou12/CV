@@ -4,6 +4,8 @@ title: "Parcours vers la certification AWS Certified Cloud Practitioner"
 date: 2024-05-14T16:00:00-04:00
 lastmod: 2026-05-23T00:30:00-04:00
 description: Plan d’étude sur deux semaines — Udemy, AWS Skill Builder, Cloud Quest, Escape Room et astuces Pearson VUE (temps supplémentaire, badge Credly).
+images:
+  - images/featured.png
 translationKey: aws-certified-cloud-practitioner
 tags:
     - AWS
@@ -25,92 +27,92 @@ Ressources utilisées :
 
 1. **Ultimate AWS Certified Cloud Practitioner CLF-C02** (Udemy — payant)
 
-![](./img-001.png)
+![](images/img-001.png)
 
 2. **AWS Cloud Quest: Cloud Practitioner** (AWS Skill Builder — gratuit)
 
-![](./img-002.png)
+![](images/img-002.png)
 
 3. **AWS Escape Room: Exam Prep for AWS Certified Cloud Practitioner** (CLF-C02) (AWS Skill Builder — essai gratuit payant)
 
-![](./img-003.png)
+![](images/img-003.png)
 
 4. **Examen blanc gratuit** ([https://www.w3schools.com/aws/aws_cloudessentials_awscert.php](https://www.w3schools.com/aws/aws_cloudessentials_awscert.php))
 
-![](./img-004.png)
+![](images/img-004.png)
 
 5. **Exam Prep Enhanced Course: AWS Certified Cloud Practitioner** (CLF-C02 — anglais) (AWS Skill Builder — essai gratuit payant)
 
-![](./img-005.png)
+![](images/img-005.png)
 
 ### AWS Skill Builder
 
-AWS Skill Builder est un centre d’apprentissage en ligne pour approfondir les services AWS à tous niveaux, du débutant à l’avancé.
+AWS Skill Builder est le hub d’apprentissage AWS : cours du débutant à l’avancé, plus des labs liés aux services de l’examen.
 
-**Fonctionnalités :**
+**Ce que j’y ai utilisé :**
 
-- **Parcours structurés :** pour Cloud Practitioner, un chemin couvre les objectifs d’examen.  
-- **Labs pratiques :** mise en situation sur de vrais scénarios.  
-- **Contenu varié :** vidéos, quiz, lectures, pour différents styles d’apprentissage.
+- **Parcours structurés :** Cloud Practitioner a un chemin dédié qui suit les objectifs d’examen.  
+- **Labs pratiques :** parcours console pour cliquer les workflows, pas seulement regarder des vidéos.  
+- **Contenu varié :** vidéos, quiz, lectures — je changeais de format quand l’un devenait ennuyeux.
 
-**AWS Cloud Quest : gamifier le cloud**
+**AWS Cloud Quest**
 
-AWS Cloud Quest: Cloud Practitioner transforme l’apprentissage en aventure (quêtes, énigmes).
+AWS Cloud Quest: Cloud Practitioner, c’est un cours en forme de jeu : quêtes et énigmes qui enseignent quand même les mêmes services AWS.
 
-- **Apprentissage interactif**  
-- **Scénarios réalistes**  
-- **Engagement**
+- **Interactif** — des tâches à jouer plutôt que Next sur des slides  
+- **Scénarios** — les quêtes collent à des décisions cloud courantes, pas seulement à du quiz  
+- **Rythme** — plus facile de finir une « quête » un soir fatigué qu’un autre chapitre de cours
 
 **AWS Escape Room**
 
-L’Escape Room AWS simule des situations où il faut résoudre des défis pour « s’échapper » de salles virtuelles.
+L’Escape Room emballe des problèmes style examen dans des défis chronométrés pour « s’échapper » — plus léger qu’un autre quiz blanc, utile pour le format et la pression.
 
-- **Simulation d’examen** : format et contrainte de temps.  
-- **Esprit critique** : utile pour l’examen et le terrain.  
-- **Interactif** : garde la motivation pendant la préparation.
+- **Simulation d’examen** : format et contrainte de temps proches du vrai test.  
+- **Résolution de problèmes** : raisonner sur des scénarios, pas seulement réciter des définitions.  
+- **Rythme** : m’a gardé en train d’étudier les jours où un autre chapitre vidéo aurait calé.
 
-**Synthèse de mon parcours**
+**Enchaînement sur deux semaines**
 
-- **Semaine 1 :** cours Udemy Ultimate AWS Cloud Practitioner, vidéos et labs.  
+- **Semaine 1 :** cours Udemy Ultimate AWS Cloud Practitioner — vidéos et labs.  
 - **Semaine 2 :** Cloud Quest, Escape Room, examens blancs et cours Exam Prep Enhanced sur Skill Builder.
 
 ## Pearson VUE et temps d’examen supplémentaire
 
-J’ai passé l’examen via **Pearson VUE** (présentiel ou en ligne). De la réservation au jour J, l’expérience a été fluide.
+J’ai réservé via **Pearson VUE** — présentiel ou proctoring en ligne. Réservation et jour J sans histoire.
 
-Si l’**anglais n’est pas votre langue première**, AWS permet de demander une **prolongation de 50 %** de la durée :
+Astuce utile : si l’**anglais n’est pas votre langue première**, AWS permet une **prolongation de 50 %** de la durée. Étapes :
 
 1. **Certifications AWS :** avant de planifier, rubrique **exam accommodations**
 
-![](./img-006.png)
+![](images/img-006.png)
 
-![](./img-007.png)
+![](images/img-007.png)
 
-2. **Pièce d’identité** valide pour la vérification (présentiel ou en ligne).
+2. **Pièce d’identité** valide — requise en présentiel comme en ligne.
 
-3. **Planifier avec l’extension** une fois approuvée — plus de temps pour lire chaque question sereinement.
+3. **Planifier avec l’extension** une fois approuvée — le buffer aide quand on lit des énoncés longs dans une seconde langue.
 
-![](./img-008.png)
+![](images/img-008.png)
 
 ## Examen surveillé en ligne
 
-1. **Délais d’attente** : se connecter au moins **30 minutes** avant pour les contrôles.  
-2. **Pièce** : propre, sans nourriture ni second écran ; la procuration demande une vue **360°** de la pièce.  
-3. **Logiciel Pearson VUE** : installer et tester à l’avance.  
-4. **Calme** : prévenir l’entourage pour limiter les interruptions.
+1. **Délais d’attente** : se connecter au moins **30 minutes** avant — le check-in peut traîner avant le chronomètre.  
+2. **Pièce** : propre, sans nourriture ni second écran ; le proctor demande une vue **360°** pour les documents non autorisés.  
+3. **Logiciel Pearson VUE** : installer et tester avant le jour J.  
+4. **Calme** : prévenir colocs ou famille pour que personne ne frappe au milieu d’une question.
 
 ## Badge numérique
 
 Après réussite, AWS délivre un badge via **Credly** :
 
-![](./img-009.png)
+![](images/img-009.png)
 
 1. Attendre **2–3 jours** l’e-mail Credly.  
 2. Créer un compte Credly avec la **même adresse** que la certification AWS.  
 3. **Accepter** le badge.  
-4. **Partager** sur LinkedIn, CV, etc.
+4. **Partager** sur LinkedIn, CV, ou ailleurs où vous listez vos credentials.
 
-![](./img-010.png)
+![](images/img-010.png)
 
 ### Bilan
 

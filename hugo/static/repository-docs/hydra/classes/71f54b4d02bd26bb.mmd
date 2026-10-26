@@ -1,0 +1,36 @@
+classDiagram
+direction TB
+class t40f3fd77db78["RealtimeEnvelopeBase"] {
+  <<interface>>
+}
+class t68b4be32a7b3["RealtimeToken"] {
+  <<interface>>
+}
+class tcd3620397599["RealtimeSocket"] {
+  <<interface>>
+  on()
+  ping()
+  close()
+  terminate()
+}
+class tb39d243d24f6["RealtimeClientOptions"] {
+  <<interface>>
+}
+class t7daf9a33b195["AttemptResult"] {
+  <<interface>>
+}
+class tbe02eea47bf0["RealtimeWebSocketClient"] {
+  constructor()
+  connect()
+  close()
+  reconnectNow()
+  stop()
+  runLoop()
+  nextReconnectDelay()
+  getToken()
+  readJwtExpiration()
+  abortable()
+  connectOnce()
+  sleep()
+  wait()
+}

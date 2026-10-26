@@ -12,7 +12,7 @@ tags:
   - Arctiq
   - AI
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 **Cédille** (club conseil à l’ÉTS) a accueilli **GitHub** et **Arctiq** pour une session **Copilot** et les outils IA autour du dev moderne — automne 2022, quand « pair programmer IA » faisait encore sourire en amphithéâtre. **[English version]({{< ref "/posts/github-copilot-cedille-session/index.md" >}})**.

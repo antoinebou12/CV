@@ -10,7 +10,7 @@ tags:
   - Snowflake
   - Data Analytics
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
 **Snowflake Data-for-Breakfast** : matinée sur l’entrepôt cloud, le partage, la gouvernance et des histoires clients qui rendent l’architecture concrète. J’y suis allé pour l’exploitation réelle, pas les goodies. Keynote **Infostrux**. **[English version]({{< ref "/posts/snowflake-data-for-breakfast/index.md" >}})**.

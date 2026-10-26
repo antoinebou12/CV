@@ -7,14 +7,14 @@ description: "Dans Artemis Switch : transport Moonlight, NVDEC, deko3d, cadence 
 translationKey: artemis-switch-frame-pacing
 mermaid: true
 tags: ["Nintendo Switch","C++","Graphics","Homebrew"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "antoinebou12/Artemis-Switch" >}}
 
 Un stream peut afficher un bon débit tout en donnant une impression de retard. **Artemis Switch** est mon fork de Moonlight-Switch pour Nintendo Switch. Je m’intéresse surtout au trajet entre la réception d’une image et son affichage : où cette image a-t-elle attendu ?
 
-![Bibliothèque d’applications Artemis Switch, tirée du README du dépôt](featured.png)
+![Bibliothèque d’applications Artemis Switch, tirée du README du dépôt](images/featured.png)
 
 <!--more-->
 

@@ -14,7 +14,7 @@ tags:
   - NVIDIA
 canonicalURL: "https://graphquon.github.io/"
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![Auditorium GraphQuon 2024 à l’ÉTS — tapis rouge, chaises blanches, écran et podium ÉTS](./images/ets-auditorium-stage.png)

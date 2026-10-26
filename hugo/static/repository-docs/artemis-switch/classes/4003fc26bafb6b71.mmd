@@ -1,0 +1,58 @@
+classDiagram
+direction TB
+class t5278f39daa39["QrSegment"] {
+  makeBytes()
+  makeNumeric()
+  makeAlphanumeric()
+  makeSegments()
+  makeEci()
+  isNumeric()
+  isAlphanumeric()
+  getNumChars()
+  getTotalBits()
+}
+class t0f22918677de["Mode"] {
+  getModeBits()
+  numCharCountBits()
+}
+class t9af3157b17ee["QrCode"] {
+  getFormatBits()
+  encodeText()
+  encodeBinary()
+  encodeSegments()
+  getVersion()
+  getSize()
+  getErrorCorrectionLevel()
+  getMask()
+  getModule()
+  drawFunctionPatterns()
+  drawFormatBits()
+  drawVersion()
+  drawFinderPattern()
+  drawAlignmentPattern()
+  setFunctionModule()
+  module()
+  addEccAndInterleave()
+  drawCodewords()
+  applyMask()
+  getPenaltyScore()
+  getAlignmentPatternPositions()
+  getNumRawDataModules()
+  getNumDataCodewords()
+  reedSolomonComputeDivisor()
+  reedSolomonComputeRemainder()
+  reedSolomonMultiply()
+  finderPenaltyCountPatterns()
+  finderPenaltyTerminateAndCount()
+  finderPenaltyAddHistory()
+  getBit()
+}
+class t18ab25a01355["data_too_long"] {
+}
+class t23ad1989d05a["BitBuffer"] {
+  appendBits()
+}
+class b67d69d15d3bc["std::length_error"] {
+  <<unresolved_base>>
+}
+b67d69d15d3bc <|-- t18ab25a01355

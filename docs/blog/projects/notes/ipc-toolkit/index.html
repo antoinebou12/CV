@@ -1,0 +1,525 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>ipc-toolkit: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/main.min.f60cd88e247d0454fa20b549dc44e29a523de7ac3d370e884237d955b7994fa8.css integrity="sha256-9gzYjiR9BFT6ILVJ3ETimlI956w9Nw6IQjfZVbeZT6g="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.5eeb6b3870c7deb66a10043b10ff01f264a7b584240d7d6323a0de1febb0b0d1.css integrity="sha256-XutrOHDH3rZqEAQ7EP8B8mSntYQkDX1jI6DeH+uwsNE="><link rel=stylesheet href=/CV/blog/projects-editorial.min.de547dbb958693860bcd9fa3b30f31b7b58654ff6a74a17d219ccab790becf4a.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="ipc-toolkit: Collision queries as a library boundary"><meta itemprop=description content="ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="1407"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="ipc-toolkit: Collision queries as a library boundary"><meta property="og:description" content="ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="ipc-toolkit: Collision queries as a library boundary"><meta name=twitter:description content="ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/ipc-toolkit/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/ipc-toolkit/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>ipc-toolkit: Collision queries as a library boundary</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
+<a href=#architecture>Architecture</a>
+<a href=#installation>Getting started</a>
+<a href=#features>Features</a>
+<a href=#algorithm>Algorithm</a>
+<a href=#reader-guide>Reference</a>
+<a href=#project-references>Links</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>ipc-toolkit: Collision queries as a library boundary</h1><p class=repo-hero-lede>ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous collision detection and contact-related energies. An external simulation still owns its time stepping and solve loop.</p><div class=repo-status-row aria-label="Repository status"><span class="repo-badge kind">Library</span>
+<span class="repo-badge fork">Fork</span>
+<span class="repo-badge algorithm">Algorithm</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>C++ · 94.46%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"><span class="tag tool" title="Library language from repository sources">C++</span><span class="tag tool" title="Continuous collision detection in ipc.hpp / ipc.cpp">CCD</span><span class="tag tool" title="CMakeLists.txt build system">CMake</span>
+<span class="tag status">Upstream credited</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/ipc-toolkit><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+View source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/ipc-toolkit#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>C++ 94.46%</span><span class=repo-count>5</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="C++ 94.46%. CMake 2.98%. Python 2.1%."><span style=width:94.46% title="C++ 94.46%"></span><span style=width:2.98% title="CMake 2.98%"></span><span style=width:2.1% title="Python 2.1%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:94.46%><span>94.46%</span></span></td><td class=num>2,400,346</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>CMake</td><td><span class=repo-lang-bar style=--p:2.98%><span>2.98%</span></span></td><td class=num>75,800</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:2.1%><span>2.1%</span></span></td><td class=num>53,463</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Cuda</td><td><span class=repo-lang-bar style=--p:0.38%><span>0.38%</span></span></td><td class=num>9,561</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Dockerfile</td><td><span class=repo-lang-bar style=--p:0.08%><span>0.08%</span></span></td><td class=num>2,051</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/ipc-toolkit>GitHub</a> · <a href=https://github.com/antoinebou12/ipc-toolkit#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/ipc-toolkit/languages>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>Friction and contact physics toolkit for robust computer graphics and finite element simulation.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Nonlinear continuous contact mechanics in 3D physics engines.</p></article></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Getting started</h2><p class=repo-lede-sm>These commands come from the repository documentation. They were not run during this review.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>python/README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install ipctk</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>python/README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install git&#43;https://github.com/ipc-sim/ipc-toolkit</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>python/README.md · Build</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install .</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>python/README.md · Build</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>python -c &#34;import ipctk&#34;</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>python/README.md · CMake Build</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DIPC_TOOLKIT_BUILD_PYTHON=ON ..
+make -j$(nproc)</code></pre></div></div></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Repository references</h2><p class=repo-evidence-label>Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prerequisites and first run</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/README.md#L47>Quick Start</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>C++ (include via CMake; see build instructions):
+Python (install via pip install ipctk):
+For more details, see the tutorials and API documentation.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/README.md#L47>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/README.md#L12>Installation</a></h3><p class=repo-excerpt-file><code>python/README.md</code></p><div class=repo-source-markdown>To install the latest release, you can use pip:
+If you wish to install the current development code, you can compile the library from scratch. Either clone the repo manually or use git+ with pip:</div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/README.md#L12>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L25>Installation</a></h3><p class=repo-excerpt-file><code>docs/PYPI_README.md</code></p><div class=repo-source-markdown>To install the latest release, you can use pip:
+If you wish to install the current development code, you can compile the library from scratch. Either clone the repo manually or use git+ with pip:</div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L25>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>Development and contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/README.md#L132>Contributing</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><p>This project is open to contributors! Contributions can come in the form of feature requests, bug fixes, documentation, tutorials, and the like. We highly recommend filing an Issue first before submitting a Pull Request.
+Simply fork this repository and make a Pull Request! We would appreciate:</p><ul><li>Implementation of new features</li><li>Bug Reports</li><li>Documentation</li><li>Testing</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/README.md#L132>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L44>Contributing</a></h3><p class=repo-excerpt-file><code>docs/PYPI_README.md</code></p><div class=repo-source-markdown><p>This project is open to contributors! Contributions can come in the form of feature requests, bug fixes, documentation, tutorials, and the like. We highly recommend filing an Issue first before submitting a Pull Request.
+Simply fork this repository and make a Pull Request! We would appreciate:</p><ul><li>Implementation of new features</li><li>Bug Reports</li><li>Documentation</li><li>Testing</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L44>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/CONTRIBUTING.md#L1>Contributing</a></h3><p class=repo-excerpt-file><code>docs/CONTRIBUTING.md</code></p><div class=repo-source-markdown>Contributions are welcome, and they are greatly appreciated! Every
+little bit helps, and credit will always be given.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/CONTRIBUTING.md#L1>Read the full instructions ↗</a></section></details></div><details class=repo-guide-chapter><summary>Source documentation</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/README.md><code>python/README.md</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md><code>docs/PYPI_README.md</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/CONTRIBUTING.md><code>docs/CONTRIBUTING.md</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/source/developers/contributing.rst><code>docs/source/developers/contributing.rst</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/source/tutorials/getting_started.rst><code>docs/source/tutorials/getting_started.rst</code></a></li></ul><p class=repo-evidence-label>6 documents read from 6 candidates.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Features and components <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Geometry and collision queries</dt><dd>ipc.hpp accepts a CollisionMesh and vertex positions for intersection and collision-free-step queries. Broad-phase and narrow-phase CCD implementations are explicit parameters with defaults, separating candidate discovery from detailed tests.</dd></div><div class=repo-feature><dt>Contact calculations</dt><dd>The source tree separates distance, barrier, friction, tangent and potential modules. These components support a caller’s objective and derivatives; they do not automatically integrate an entire physical scene.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>The components and their connections remain available as text. The diagram adds an interactive view.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title>System context</strong>
+<span class=repo-figure-label>Context</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=tabpanel aria-labelledby=tab-arch-context><ol class=repo-flow><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>External simulation</span><span class=repo-flow-step aria-hidden=true>01</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Collision mesh and vertex motion</span><span class=repo-flow-step aria-hidden=true>02</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Broad-phase candidates</span><span class=repo-flow-step aria-hidden=true>03</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Narrow-phase CCD</span><span class=repo-flow-step aria-hidden=true>04</span></li><li><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8m-4-3v3"/></svg></span><span class=repo-flow-label>Collision query result</span><span class=repo-flow-step aria-hidden=true>05</span></li></ol><p class=figdesc>Links verified in the repository.</p></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Interactive diagram (loads on open)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-ipc-toolkit><p id=architecture-ipc-toolkit class=repo-diagram-caption>System overview of the components and connections verified in the repository.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/ipc-toolkit/overview-en.png loading=lazy decoding=async alt="Static architecture view for ipc-toolkit"><figcaption>Static preview. The interactive diagram replaces it after Mermaid loads.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  n0[&#34;External simulation&#34;]
+  n1[&#34;Collision mesh and vertex motion&#34;]
+  n2[&#34;Broad-phase candidates&#34;]
+  n3[&#34;Narrow-phase CCD&#34;]
+  n4[&#34;Collision query result&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n0
+</code></pre></div><details class=repo-diagram-text><summary>Text version of the diagram</summary><ul><li>External simulation → Collision mesh and vertex motion</li><li>Collision mesh and vertex motion → Broad-phase candidates</li><li>Broad-phase candidates → Narrow-phase CCD</li><li>Narrow-phase CCD → Collision query result</li><li>Collision query result → External simulation</li></ul></details></div></details><details class=repo-trace><summary>Follow one path through the code</summary><p>Follow is_step_collision_free from the public declaration into its implementation. Its result answers a geometric query for a proposed motion. The caller must decide how that result changes a step, line search or contact solve.</p></details></section><section class="repo-runtime repo-algorithm" aria-labelledby=algorithm><h2 id=algorithm>Algorithm</h2><div class=repo-algorithm-grid><article><h3>Problem</h3><p>Decide whether a CollisionMesh at given vertex positions intersects, or whether a proposed vertex displacement stays collision-free, so a contact-aware simulator can query geometry without owning the full time-step loop.</p></article><article><h3>Inputs</h3><p>A CollisionMesh plus current (and optionally proposed) vertex positions; broad-phase and narrow-phase CCD strategies are explicit parameters with defaults.</p></article><article><h3>Outputs</h3><p>Intersection or collision-free-step answers, plus contact-related quantities (distances, barriers, friction helpers) consumed by the caller’s objective — not a full scene solve.</p></article></div><h3>Pseudocode (source-backed)</h3><pre class=repo-pseudocode><code>given mesh M, positions x, optional next positions x&#39;
+if has_intersections(M, x): report contact candidates
+if not is_step_collision_free(M, x, x&#39;): reject or shorten step
+else: assemble contact energies/derivatives for the caller’s solver</code></pre><ol class=repo-algorithm-steps data-algorithm-stepper><li><strong>1. Build or accept a collision mesh</strong><p>The library expects a CollisionMesh that separates geometry from the caller’s simulation state.</p></li><li><strong>2. Broad-phase candidates</strong><p>Candidate pairs are discovered with an explicit broad-phase strategy before expensive narrow tests.</p></li><li><strong>3. Narrow-phase CCD / intersection</strong><p>ipc.hpp entry points test intersections at a configuration or whether a displacement remains collision-free.</p></li><li><strong>4. Contact quantities for the solver</strong><p>Distance, barrier, friction and related modules supply values and derivatives; the external simulation still owns time stepping.</p></li></ol><p class=repo-evidence-label>No asymptotic complexity claim is published in this fork’s inspected headers; cost depends on mesh size, broad-phase choice and CCD settings used by the caller.</p><p><a href=https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.hpp>Inspected implementation</a></p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>The scan found 140 type declarations. The diagram shows 12 and preserves their declared base relationships.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram (Mermaid)</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class ta4ad2d054a1a[&#34;CXXFunctionGenerator&#34;] {
+  __init__()
+  signature()
+  __call__()
+}
+class t0935cb7a441b[&#34;CXXGradientGenerator&#34;] {
+  __init__()
+}
+class t1aec9e647746[&#34;CXXJacobianGenerator&#34;] {
+  __init__()
+}
+class t6c43b7865a81[&#34;CXXHessianGenerator&#34;] {
+  __init__()
+}
+class t05fe515aed0d[&#34;Inertia&#34;] {
+  __init__()
+  __call__()
+  gradient()
+  hessian()
+}
+class tcb5b8ab75455[&#34;PyBarrier&#34;] {
+  first_derivative()
+  second_derivative()
+  units()
+}
+class te947d03a9485[&#34;PyBroadPhase&#34;] {
+  name()
+  build()
+  clear()
+  detect_vertex_vertex_candidates()
+}
+class ta8c42662e683[&#34;PyNarrowPhaseCCD&#34;] {
+  point_point_ccd()
+  point_edge_ccd()
+  point_triangle_ccd()
+  edge_edge_ccd()
+}
+class tb0adabdf7fe2[&#34;PyNonlinearTrajectory&#34;] {
+  max_distance_from_linear()
+}
+class tc83b025ce434[&#34;PyIntervalNonlinearTrajectory&#34;] {
+  max_distance_from_linear()
+}
+class t9ee9c14a4b05[&#34;PairHash&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t5a3d1613cb4b[&#34;SparseCanCollide&#34;] {
+  SparseCanCollide()
+}
+ta4ad2d054a1a &lt;|-- t0935cb7a441b
+ta4ad2d054a1a &lt;|-- t1aec9e647746
+t1aec9e647746 &lt;|-- t6c43b7865a81
+class b7bd3eedf5849[&#34;Barrier&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b7bd3eedf5849 &lt;|-- tcb5b8ab75455
+class b80b43ba1bca8[&#34;BroadPhase&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b80b43ba1bca8 &lt;|-- te947d03a9485
+class b1ced31ba20e0[&#34;NarrowPhaseCCD&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b1ced31ba20e0 &lt;|-- ta8c42662e683
+class b9fe354f68d01[&#34;NonlinearTrajectory&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b9fe354f68d01 &lt;|-- tb0adabdf7fe2
+class b28bdf016fc91[&#34;IntervalNonlinearTrajectory&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b28bdf016fc91 &lt;|-- tc83b025ce434
+</code></pre></div><p class=repo-evidence-label>Unresolved bases remain labelled. Full signatures are not reconstructed.</p></details><details class=repo-structure-details><summary>Types, methods and declared bases</summary><ul class=repo-structure-list><li><code>CXXFunctionGenerator</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/notebooks/generate_cpp_code.py#L56><code>notebooks/generate_cpp_code.py:56</code></a><p>Methods in the overview: <code>__init__, signature, __call__</code>.</p></li><li><code>CXXGradientGenerator</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/notebooks/generate_cpp_code.py#L81><code>notebooks/generate_cpp_code.py:81</code></a><p>Methods in the overview: <code>__init__</code>.</p><p>Declared bases: <code>CXXFunctionGenerator</code>.</p></li><li><code>CXXJacobianGenerator</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/notebooks/generate_cpp_code.py#L88><code>notebooks/generate_cpp_code.py:88</code></a><p>Methods in the overview: <code>__init__</code>.</p><p>Declared bases: <code>CXXFunctionGenerator</code>.</p></li><li><code>CXXHessianGenerator</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/notebooks/generate_cpp_code.py#L98><code>notebooks/generate_cpp_code.py:98</code></a><p>Methods in the overview: <code>__init__</code>.</p><p>Declared bases: <code>CXXJacobianGenerator</code>.</p></li><li><code>Inertia</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/examples/solver.py#L15><code>python/examples/solver.py:15</code></a><p>Methods in the overview: <code>__init__, __call__, gradient, hessian</code>.</p></li><li><code>PyBarrier</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/barrier/barrier.cpp#L7><code>python/src/barrier/barrier.cpp:7</code></a><p>Methods in the overview: <code>first_derivative, second_derivative, units</code>.</p><p>Declared bases: <code>Barrier</code>.</p></li><li><code>PyBroadPhase</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/broad_phase/broad_phase.cpp#L8><code>python/src/broad_phase/broad_phase.cpp:8</code></a><p>Methods in the overview: <code>name, build, clear, detect_vertex_vertex_candidates</code>.</p><p>Declared bases: <code>BroadPhase</code>.</p></li><li><code>PyNarrowPhaseCCD</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/ccd/narrow_phase_ccd.cpp#L7><code>python/src/ccd/narrow_phase_ccd.cpp:7</code></a><p>Methods in the overview: <code>point_point_ccd, point_edge_ccd, point_triangle_ccd, edge_edge_ccd</code>.</p><p>Declared bases: <code>NarrowPhaseCCD</code>.</p></li><li><code>PyNonlinearTrajectory</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/ccd/nonlinear_ccd.cpp#L7><code>python/src/ccd/nonlinear_ccd.cpp:7</code></a><p>Methods in the overview: <code>max_distance_from_linear</code>.</p><p>Declared bases: <code>NonlinearTrajectory</code>.</p></li><li><code>PyIntervalNonlinearTrajectory</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/ccd/nonlinear_ccd.cpp#L17><code>python/src/ccd/nonlinear_ccd.cpp:17</code></a><p>Methods in the overview: <code>max_distance_from_linear</code>.</p><p>Declared bases: <code>IntervalNonlinearTrajectory</code>.</p></li><li><code>PairHash</code> (struct) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/collision_mesh.cpp#L10><code>python/src/collision_mesh.cpp:10</code></a></li><li><code>SparseCanCollide</code> (class) · <a href=https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/src/collision_mesh.cpp#L26><code>python/src/collision_mesh.cpp:26</code></a><p>Methods in the overview: <code>SparseCanCollide</code>.</p></li></ul></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Reference</h2><details class=repo-analysis-coverage><summary>Analysis coverage and limitations</summary><p>Read 463 of 463 eligible files in the GitHub tree (646 total files). Known dependency/build folders, credential files and binaries are excluded.</p><p>The scan covers READMEs, recognized manifests and source files in parser-supported languages. Linguist statistics cover the whole repository and may include other languages.</p><p>0 files exceed the size limit, 0 reads failed and 74 files produced a syntax diagnostic.</p></details><details class=repo-diagram-details data-mermaid-lazy><summary>File map</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TD
+  root[&#34;ipc-toolkit&#34;]
+  f0[&#34;CMakeLists.txt&#34;]
+  root --&gt; f0
+  f1[&#34;src/ipc/ipc.cpp&#34;]
+  root --&gt; f1
+  f2[&#34;src/ipc/ipc.hpp&#34;]
+  root --&gt; f2
+  f3[&#34;README.md&#34;]
+  root --&gt; f3
+  f4[&#34;pyproject.toml&#34;]
+  root --&gt; f4
+  f5[&#34;setup.py&#34;]
+  root --&gt; f5
+  f6[&#34;notebooks/find_ipctk.py&#34;]
+  root --&gt; f6
+  f7[&#34;notebooks/generate_cpp_code.py&#34;]
+  root --&gt; f7
+  f8[&#34;notebooks/parula.py&#34;]
+  root --&gt; f8
+  f9[&#34;notebooks/utils.py&#34;]
+  root --&gt; f9
+  f10[&#34;python/CMakeLists.txt&#34;]
+  root --&gt; f10
+  f11[&#34;python/README.md&#34;]
+  root --&gt; f11
+  f12[&#34;python/_find_ipctk.py&#34;]
+  root --&gt; f12
+  f13[&#34;tests/CMakeLists.txt&#34;]
+  root --&gt; f13
+  f14[&#34;python/examples/find_ipctk.py&#34;]
+  root --&gt; f14
+  f15[&#34;python/examples/lbvh.py&#34;]
+  root --&gt; f15
+</code></pre></div></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Constraints and checks</h2><aside class="repo-admonition warn">Fork inclusion is not proof of upstream acceptance. Numerical behavior depends on caller inputs, tolerances and solver integration.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Files to read <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.hpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/ipc/ipc.hpp</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/ipc/ipc.cpp</code></a></li><li><a href=https://github.com/antoinebou12/ipc-toolkit/blob/main/CMakeLists.txt><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>CMakeLists.txt</code></a></li></ul></section><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>References</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/ipc-toolkit>GitHub</a><span>Source repository</span></li><li><a href=https://github.com/antoinebou12/ipc-toolkit#readme>README</a><span>Repository documentation</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Project facts</p><div class=kv><span>Runtime</span><b>C++ library</b></div><div class=kv><span>Interface</span><b>Header API</b></div><div class=kv><span>Focus</span><b>Collision queries</b></div><div class=kv><span>Deployment</span><b>Link into simulator</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/ipc-toolkit>GitHub</a></div><div class=kv><span>Updated</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div><p>Related article: <a href=https://antoineboucher.info/CV/blog/posts/ipc-toolkit-contact-library/>IPC Toolkit: the contact library behind a simulation</a>.</p></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.className = 'post-diagram';
+              figure.tabIndex = 0;
+              figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+              figure.innerHTML = svg;
+              const fr = document.documentElement.lang.startsWith('fr');
+              const container = document.createElement('div');
+              container.className = 'diagram-interactive';
+              const toolbar = document.createElement('div');
+              toolbar.className = 'diagram-tools';
+              toolbar.setAttribute('role', 'group');
+              toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+              const status = document.createElement('output');
+              status.setAttribute('aria-live', 'polite');
+              const svgElement = figure.querySelector('svg');
+              const natural = svgElement?.viewBox?.baseVal?.width || 800;
+              function resize(width, minimum = Math.min(160, natural)) {
+                block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+                svgElement.style.width = block.zoom + 'px';
+                svgElement.style.minWidth = '0';
+                svgElement.style.maxWidth = 'none';
+                svgElement.style.maxHeight = 'none';
+                status.textContent = Math.round(block.zoom / natural * 100) + '%';
+              }
+              function fit() {
+                const style = getComputedStyle(figure);
+                const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+                if (available <= 0) return;
+                resize(Math.min(natural, available), 1);
+                figure.scrollLeft = 0;
+                figure.scrollTop = 0;
+              }
+              function button(label, action, handler) {
+                const control = document.createElement('button');
+                control.type = 'button';
+                control.textContent = label;
+                control.dataset.diagramAction = action;
+                control.addEventListener('click', handler);
+                toolbar.append(control);
+                return control;
+              }
+              button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+              button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+              button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+              button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+              button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+                try {
+                  if (document.fullscreenElement === container) await document.exitFullscreen();
+                  else await container.requestFullscreen();
+                } catch {
+                  status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+                }
+              });
+              button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+                const copy = svgElement.cloneNode(true);
+                copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                copy.setAttribute('width', String(natural));
+                copy.removeAttribute('style');
+                const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `diagram-${index + 1}.svg`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+              });
+              toolbar.append(status);
+              container.append(toolbar, figure);
+              let drag = null;
+              let suppressClick = false;
+              figure.addEventListener('pointerdown', event => {
+                suppressClick = false;
+                if (!event.isPrimary) { stopPan(); return; }
+                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+                    !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+                drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+              });
+              figure.addEventListener('pointermove', event => {
+                if (!drag || event.pointerId !== drag.id) return;
+                const dx = event.clientX - drag.x;
+                const dy = event.clientY - drag.y;
+                if (!drag.active) {
+                  if (Math.hypot(dx, dy) < 6) return;
+                  
+                  if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+                  if (figure.scrollWidth <= figure.clientWidth &&
+                      (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+                  drag.active = true;
+                  figure.setPointerCapture(event.pointerId);
+                  figure.classList.add('is-panning');
+                  figure.focus({ preventScroll: true });
+                }
+                event.preventDefault();
+                figure.scrollLeft = drag.left - dx;
+                if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+              });
+              function stopPan(event) {
+                if (!drag || (event && event.pointerId !== drag.id)) return;
+                const previous = drag;
+                drag = null;
+                suppressClick = previous.active && (!event || event.type === 'pointerup');
+                figure.classList.remove('is-panning');
+                if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+              }
+              figure.addEventListener('pointerup', stopPan);
+              figure.addEventListener('pointercancel', stopPan);
+              figure.addEventListener('lostpointercapture', event => {
+                
+                
+                if (event.target === figure) stopPan(event);
+              });
+              figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+              figure.addEventListener('click', event => {
+                if (!suppressClick || event.detail === 0) return;
+                suppressClick = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }, true);
+              figure.addEventListener('keydown', event => {
+                if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+                if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+                else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+                else if (event.key === '0') resize(natural);
+                else if (event.key === 'f' || event.key === 'F') fit();
+                else if (event.key.startsWith('Arrow')) {
+                  const delta = 80;
+                  if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+                  if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+                  if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+                  if (event.key === 'ArrowDown') figure.scrollTop += delta;
+                }
+                else return;
+                event.preventDefault();
+              });
+              const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+              (block.container || block.original).replaceWith(container);
+              block.container = container;
+              block.figure = figure;
+              block.painted = true;
+              if (block.imageFallback) block.imageFallback.hidden = true;
+              requestAnimationFrame(() => fit());
+              if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

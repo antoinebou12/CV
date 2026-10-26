@@ -1,0 +1,109 @@
+{
+  "repo": "ChitUI",
+  "slug": "chitui",
+  "commit": "a4236172836c65116a88dcd39a934441691be34c",
+  "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/",
+  "tree_url": "https://github.com/antoinebou12/ChitUI/tree/a4236172836c65116a88dcd39a934441691be34c",
+  "fetched_at": "2026-10-24T01:36:39.079421+00:00",
+  "languages": [
+    {
+      "name": "JavaScript",
+      "bytes": 21743,
+      "percent": 48.61
+    },
+    {
+      "name": "HTML",
+      "bytes": 10991,
+      "percent": 24.57
+    },
+    {
+      "name": "Python",
+      "bytes": 10226,
+      "percent": 22.86
+    },
+    {
+      "name": "CSS",
+      "bytes": 1572,
+      "percent": 3.51
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 200,
+      "percent": 0.45
+    }
+  ],
+  "language_bytes": 44732,
+  "coverage": {
+    "tree_files": 31,
+    "eligible_files": 6,
+    "read_files": 6,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 6,
+      "heading": "Setup",
+      "commands": "python -mvenv .venv\nsource .venv/bin/activate\npip install -r requirements.txt"
+    },
+    {
+      "file": "README.md",
+      "line": 14,
+      "heading": "Usage",
+      "commands": "python main.py"
+    }
+  ],
+  "manifests": [],
+  "type_count": 0,
+  "types": [],
+  "class_files": [],
+  "source_manifest": [
+    {
+      "path": "main.py",
+      "blob_sha": "a4cfa9a11f06e99eb906d141fdc34a27d7776b9f",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/main.py"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "c0c13ee692986737d05dd639e17bafca56e61f07",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/requirements.txt"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "187e7c5e789cb42d8b4e7bb829194326e5433498",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/README.md"
+    },
+    {
+      "path": "web/js/chitui.js",
+      "blob_sha": "eb51434a1ef5bbb0f21d407af2babaa2454135e5",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/web/js/chitui.js"
+    },
+    {
+      "path": "web/js/color-modes.js",
+      "blob_sha": "8a0dabf18164fd55277a3bddd50c3303d9877026",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/web/js/color-modes.js"
+    },
+    {
+      "path": "web/js/sdcp.js",
+      "blob_sha": "e07d675563064e8cd7b29339dd2d10d06bf342bb",
+      "source_url": "https://github.com/antoinebou12/ChitUI/blob/a4236172836c65116a88dcd39a934441691be34c/web/js/sdcp.js"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"ChitUI\"]\n  f0[\"main.py\"]\n  root --> f0\n  f1[\"requirements.txt\"]\n  root --> f1\n  f2[\"README.md\"]\n  root --> f2\n  f3[\"web/js/chitui.js\"]\n  root --> f3\n  f4[\"web/js/color-modes.js\"]\n  root --> f4\n  f5[\"web/js/sdcp.js\"]\n  root --> f5\n",
+  "file_overview_count": 6,
+  "class_overview": null,
+  "overview_types": 0,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/ChitUI",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/chitui/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_server[\"Server and discovery\"]\n  node_app[\"HTTP and Socket.IO server<br/>[main.py]\"]\n  node_discovery[\"Printer discovery<br/>[main.py]\"]\n  node_upload[\"File upload handling<br/>[main.py]\"]\n  node_transfer[\"Printer file transfer<br/>[main.py]\"]\nend\n\nsubgraph group_printer[\"Printer communication\"]\n  node_commands[\"SDCP commands<br/>[main.py]\"]\n  node_connection[\"Printer WebSocket connection<br/>[main.py]\"]\nend\n\nsubgraph group_webui[\"Browser interface\"]\n  node_index[\"Web page entry<br/>[index.html]\"]\n  node_ui[\"Printer dashboard and actions<br/>[chitui.js]\"]\n  node_protocol[\"SDCP constants<br/>[sdcp.js]\"]\n  node_theme[\"Theme preferences<br/>[color-modes.js]\"]\nend\n\nnode_user((\"Operator\"))\nnode_browser((\"Web browser\"))\nnode_printer[\"SDCP printer\"]\n\nnode_user -->|\"uses\"| node_browser\nnode_browser -->|\"opens interface\"| node_app\nnode_app -->|\"serves\"| node_index\nnode_user -->|\"operates\"| node_ui\nnode_ui -->|\"sends events\"| node_app\nnode_app -->|\"emits updates\"| node_ui\nnode_app -->|\"runs discovery\"| node_discovery\nnode_discovery -->|\"broadcasts discovery\"| node_printer\nnode_app -->|\"connects printers\"| node_connection\nnode_connection -->|\"opens WebSocket\"| node_printer\nnode_app -->|\"dispatches requests\"| node_commands\nnode_commands -->|\"sends SDCP\"| node_printer\nnode_printer -->|\"sends messages\"| node_connection\nnode_connection -->|\"routes printer events\"| node_app\nnode_browser -->|\"posts print file\"| node_upload\nnode_app -->|\"handles upload\"| node_upload\nnode_upload -->|\"starts transfer\"| node_transfer\nnode_transfer -->|\"uploads file\"| node_printer\nnode_ui -->|\"uses constants\"| node_protocol\nnode_index -.->|\"loads interface code\"| node_ui\nnode_index -.->|\"loads theme control\"| node_theme\n\n\nclass node_app,node_discovery,node_upload,node_transfer,node_browser toneBlue\nclass node_commands,node_connection toneAmber\nclass node_index,node_ui,node_protocol,node_theme toneMint\nclass node_user,node_printer toneIndigo",
+    "linked_paths": 10
+  }
+}
