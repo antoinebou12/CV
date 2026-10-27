@@ -1,0 +1,31 @@
+{{- if not .Params.repository_note -}}
+{{- $page := . -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $matches := slice -}}
+{{- range $name, $articles := hugo.Data.repository_article_index.repositories -}}
+  {{- $found := false -}}
+  {{- range $articles -}}
+    {{- if and (eq .lang $page.Lang) (eq .path $page.File.Path) -}}{{- $found = true -}}{{- end -}}
+  {{- end -}}
+  {{- if $found -}}
+    {{- $note := index (where hugo.Data.repository_notes.notes "repo" $name) 0 -}}
+    {{- with site.GetPage (printf "/projects/notes/%s" $note.slug) -}}
+      {{- $matches = $matches | append (dict "name" $name "url" .RelPermalink "note" $note) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- with .Params.project_docs -}}
+  {{- $slug := . -}}
+  {{- with site.GetPage (printf "/projects/notes/%s" .) -}}
+    {{- $matches = slice (dict "name" (.Params.repository_note | default .LinkTitle) "url" .RelPermalink) -}}
+  {{- else -}}
+    {{- errorf "Unknown project_docs slug %q in %s" $slug $page.File.Path -}}
+  {{- end -}}
+{{- end -}}
+{{- with $matches -}}
+<aside class="repo-article-guides" aria-labelledby="repository-guides-heading">
+  <p id="repository-guides-heading">{{ if $fr }}Documentation du projet{{ else }}Project documentation{{ end }}</p>
+  <ul class="repo-guide-files" role="list">{{ range . }}<li><a href="{{ .url }}">{{ if $fr }}Documentation de {{ else }}{{ end }}{{ .name }}{{ if not $fr }} documentation{{ end }} <span aria-hidden="true">→</span></a></li>{{ end }}</ul>
+</aside>
+{{- end -}}
+{{- end -}}

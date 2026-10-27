@@ -4,6 +4,8 @@ title: Economics of LEGO Sets with Data Science
 date: 2024-05-30T12:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Rebrickable trends, BrickEconomy prices, Playwright scraping, and a humble regression on classic set 001-1 — narrative with charts, code in LegosTracker."
+images:
+  - images/featured.png
 translationKey: economics-lego-data-science
 tags:
   - LEGO
@@ -14,7 +16,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb"
 ---
 
-I collect LEGO and write Python — so I merged **Rebrickable** exports with a **BrickEconomy** scraper to see how sets, colors, and themes evolved, and whether a simple model could explain prices on classics like **001-1**. This page is the story with charts; full notebooks live in **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**. **[Version française]({{< ref "/posts/economics-lego-data-science/index.fr.md" >}})**.
+I collect LEGO and write Python — so I merged **Rebrickable** exports with a **BrickEconomy** scraper to see how sets, colors, and themes evolved, and whether a simple model could explain prices on classics like **001-1**. This page is the story with charts; full notebooks live in **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**.
 
 <!--more-->
 
@@ -27,7 +29,7 @@ I collect LEGO and write Python — so I merged **Rebrickable** exports with a *
 
 Rebrickable files include `sets.csv`, `themes.csv`, `parts.csv`, `colors.csv`, and inventory tables — standard star schema for “how big is LEGO over time?”
 
-![Overview of Rebrickable tables and joins](./img-001.png)
+![Overview of Rebrickable tables and joins](images/img-001.png)
 
 ## Sets over the decades
 
@@ -36,9 +38,9 @@ Two trends jump out when you group by `year`:
 1. **Count of named sets** rises — LEGO product line expansion is real in the data.
 2. **Average part count per set** climbs — models got denser, not just more numerous.
 
-![Number of sets released per year](./img-002.png)
+![Number of sets released per year](images/img-002.png)
 
-![Average parts per set by year](./img-003.png)
+![Average parts per set by year](images/img-003.png)
 
 Narrative check: adult-targeted lines and licensed themes show up as tail mass in part counts, not only kid-scale sets.
 
@@ -46,7 +48,7 @@ Narrative check: adult-targeted lines and licensed themes show up as tail mass i
 
 Join `sets.theme_id` → `themes`, filter to top-level themes (no `parent_id`), bar-chart the top ten by set count.
 
-![Top 10 themes by number of sets](./img-004.png)
+![Top 10 themes by number of sets](images/img-004.png)
 
 Star Wars, City, Technic, and friends crowd the head — good sanity check that merges worked before you trust price scrapes.
 
@@ -54,7 +56,7 @@ Star Wars, City, Technic, and friends crowd the head — good sanity check that 
 
 Rebrickable answers **what exists**; it does not answer **what people pay on the secondary market**. I used **Playwright + asyncio** to collect BrickEconomy pages — pydantic models for validation, aiohttp where fetch-only sufficed.
 
-![BrickEconomy scraper workflow](./img-005.png)
+![BrickEconomy scraper workflow](images/img-005.png)
 
 Scraper code, rate limits, and HTML drift handling: see `LegosTracker` repo — too long to paste here and keep maintainable.
 
@@ -77,7 +79,7 @@ Pipeline:
 2. Clean dates and outliers (bad rows from HTML changes).
 3. Plot price vs time — look for step changes around reissues and collector spikes.
 
-![Historical price series for 001-1](./img-006.png)
+![Historical price series for 001-1](images/img-006.png)
 
 ## Linear regression — humble forecast
 
@@ -89,9 +91,9 @@ It is not alpha — it is **explainability practice**:
 - Do residuals cluster by era?
 - Would a tree model buy you much on N=small?
 
-![Regression fit and residuals](./img-010.png)
+![Regression fit and residuals](images/img-010.png)
 
-![Prediction vs actual scatter](./img-011.png)
+![Prediction vs actual scatter](images/img-011.png)
 
 Full coefficient tables and train/test split notes: Medium [original article](https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb) and repo notebooks.
 
@@ -104,7 +106,7 @@ The Medium import contained pages of one-line pandas plots. Prefer the GitHub pr
 - Price cleaning
 - `sklearn` regression pipeline
 
-![Additional exploratory charts](./img-012.png)
+![Additional exploratory charts](images/img-012.png)
 
 ## When not to trust this analysis
 

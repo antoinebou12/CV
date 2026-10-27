@@ -1,4 +1,5 @@
 ---
+image_alt: "MarketWatch Python client — package branding"
 post_kind: article
 title: "Python library for MarketWatch virtual trading"
 date: 2026-04-13T10:00:00-04:00
@@ -12,10 +13,10 @@ tags:
   - Finance
   - Open Source
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-I wanted to automate chores in MarketWatch’s **virtual stock game** (paper trading, not a real broker). **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI is the small client I shipped — watchlists, game state, portfolio, orders, leaderboard. **[Version française]({{< ref "/posts/marketwatch-python-trading/index.fr.md" >}})**.
+I wanted to automate chores in MarketWatch’s **virtual stock game** (paper trading, not a real broker). **[marketwatch](https://pypi.org/project/marketwatch/)** on PyPI is the small client I shipped — watchlists, game state, portfolio, orders, leaderboard.
 
 <!--more-->
 
@@ -68,7 +69,7 @@ mw.get_price("AAPL")
 
 Login edge cases (2FA absent, session expiry) are documented on the site — read before cron-scheduling anything.
 
-![MarketWatch Python client — package branding](./featured.png)
+
 
 ## Limits and responsibility
 

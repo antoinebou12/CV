@@ -1,4 +1,5 @@
 ---
+image_alt: "Visuel AlgoETS utilisé dans le dépôt de l’atelier"
 post_kind: article
 title: "Enseigner Python avec un atelier de données de bout en bout"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +8,14 @@ description: "L’atelier Workshop1 d’AlgoETS relie Python, API, pandas et vis
 translationKey: algoets-python-workshop
 mermaid: true
 tags: ["Python","Teaching","AlgoETS","Pandas"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "AlgoETS/Workshop1" >}}
 
 Un atelier débutant devient plus utile lorsque chaque notion sert à construire la suivante. **AlgoETS/Workshop1** passe de l’environnement Python à une réponse API, puis à un DataFrame et à un graphique. Le dernier notebook rassemble ces étapes avec le cours d’Apple et des moyennes mobiles exponentielles.
 
-![Visuel AlgoETS utilisé dans le dépôt de l’atelier](featured.png)
+
 
 <!--more-->
 

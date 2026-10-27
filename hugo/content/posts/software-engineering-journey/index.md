@@ -13,16 +13,16 @@ tags:
   - DevSecOps
   - Platform Engineering
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-I did not start in Kubernetes. I started in browser tabs, game loops, and a makerspace that smelled like hot PLA. This post is the longer version of that path—**backend**, **platform**, and **DevSecOps** are where I landed, but the steps in between matter. **[Version française]({{< ref "/posts/software-engineering-journey/index.fr.md" >}})**.
+I did not start in Kubernetes. I started in browser tabs, game loops, and a makerspace that smelled like hot PLA. This post is the longer version of that path—**backend**, **platform**, and **DevSecOps** are where I landed, but the steps in between matter.
 
 <!--more-->
 
 ## The arc (one glance)
 
-Career flow ([`career-journey-flow.mmd`](./images/career-journey-flow.mmd), rendered with [uml-mcp](https://github.com/antoinebou12/uml-mcp)):
+Career flow ([Mermaid source](./images/career-journey-flow.mmd)):
 
 ![Career journey from Flash games and college makerspace to backend platform work today](./images/career-journey-flow.svg)
 
@@ -87,7 +87,7 @@ After graduation the problems moved up a layer:
 - **GitLab CI/CD**, **GCP**, Java microservices, **Playwright** tests (IMC2 research).
 - **DevSecOps labs** at Polytechnique Montréal—GitLab templates for ~20 teams, Docker/Kubernetes, OWASP-minded reviews.
 - **Teaching** at ÉTS: distributed databases, mobile UX labs, integrator projects—courseware is also software delivery.
-- {{< ref "/posts/graphquon-2024-ets" >}} conference web ([graphquon.github.io](https://graphquon.github.io/)) and **[uml-mcp](https://github.com/antoinebou12/uml-mcp)** for diagrams from chat—because explaining systems still beats guessing them.
+- The [GraphQuon conference website](https://graphquon.github.io/).
 
 ## What stayed constant (the “human” part)
 

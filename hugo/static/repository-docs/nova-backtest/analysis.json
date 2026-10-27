@@ -1,0 +1,600 @@
+{
+  "repo": "nova-backtest",
+  "slug": "nova-backtest",
+  "commit": "dda19e6e09bdd59dd483a964f2e47085d2a1bdef",
+  "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/",
+  "tree_url": "https://github.com/antoinebou12/nova-backtest/tree/dda19e6e09bdd59dd483a964f2e47085d2a1bdef",
+  "fetched_at": "2026-10-24T01:40:04.417378+00:00",
+  "languages": [
+    {
+      "name": "Python",
+      "bytes": 219181,
+      "percent": 99.74
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 572,
+      "percent": 0.26
+    }
+  ],
+  "language_bytes": 219753,
+  "coverage": {
+    "tree_files": 60,
+    "eligible_files": 36,
+    "read_files": 36,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [],
+  "manifests": [],
+  "type_count": 12,
+  "types": [
+    {
+      "id": "tb3e6c9c2ecdf",
+      "name": "BackTest",
+      "kind": "class",
+      "file": "novalabs-backtest/utils/backtest.py",
+      "line": 21,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "build_indicators",
+        "entry_strategy",
+        "exit_strategy",
+        "get_list_pairs",
+        "_verify_all_pairs",
+        "update_all_data",
+        "get_historical_data",
+        "_create_entry_prices_times",
+        "_create_all_exit_point",
+        "_create_closest_exit",
+        "_create_position_df",
+        "_compute_profit",
+        "_create_timeseries",
+        "plot_profit_graph",
+        "_plot_wallet_exposure_graph",
+        "_get_pair_stats",
+        "_all_pairs_real_positions",
+        "_compute_daily_return",
+        "_compute_drawdown",
+        "_create_full_statistics",
+        "_max_stop_loss",
+        "not_any_future_info",
+        "_verify_tp_sl",
+        "run_backtest"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t49d28ff7fba3",
+      "name": "Binance",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/binance.py",
+      "line": 12,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "_format_long_short_ratio",
+        "_get_long_short_ratio_global",
+        "_get_long_short_ratio_top_traders",
+        "_get_long_short_ratio_pos_top_traders",
+        "_get_taker_buy_sell_ratio",
+        "_get_open_interest",
+        "_get_market_data",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical",
+        "get_pairs_info"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "t43ce1fc5ef4d",
+      "name": "BTCEX",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/btcex.py",
+      "line": 11,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "connect",
+        "logout",
+        "refresh_connection",
+        "get_server_time",
+        "get_pairs_info",
+        "_convert_interval",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "t8174f5fcb687",
+      "name": "Bybit",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/bybit.py",
+      "line": 13,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "_get_candles",
+        "get_pairs_info",
+        "_get_earliest_timestamp",
+        "_convert_interval",
+        "_format_data",
+        "get_historical_data",
+        "update_historical"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "t023ef983e730",
+      "name": "BackTestClientInterface",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/client_interface.py",
+      "line": 5,
+      "language": "python",
+      "methods": [
+        "_send_request",
+        "get_server_time",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical",
+        "get_pairs_info"
+      ],
+      "bases": [
+        "abc.ABC"
+      ]
+    },
+    {
+      "id": "ta838910fd595",
+      "name": "Huobi",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/huobi.py",
+      "line": 15,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "generate_signature",
+        "_send_request",
+        "get_server_time",
+        "get_pairs_info",
+        "_convert_interval",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "t6d6671499620",
+      "name": "Kucoin",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/kucoin.py",
+      "line": 15,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "get_pairs_info",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "tee704ca1b99b",
+      "name": "MEXC",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/mexc.py",
+      "line": 12,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "get_pairs_info",
+        "get_account_info",
+        "_get_candles"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te95be47be1da",
+      "name": "Oanda",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/oanda.py",
+      "line": 12,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "get_pairs_info",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical",
+        "setup_account",
+        "get_prod_candles",
+        "get_prod_data",
+        "get_actual_positions",
+        "get_token_balance",
+        "get_order_book",
+        "get_last_price",
+        "enter_market_order",
+        "exit_market_order",
+        "place_limit_tp",
+        "place_market_sl",
+        "cancel_order"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t263161a52c7a",
+      "name": "OKX",
+      "kind": "class",
+      "file": "novalabs-backtest/clients/okx.py",
+      "line": 15,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_send_request",
+        "get_server_time",
+        "get_pairs_info",
+        "_get_candles",
+        "_get_earliest_timestamp",
+        "_format_data",
+        "get_historical_data",
+        "update_historical"
+      ],
+      "bases": [
+        "BackTestClientInterface"
+      ]
+    },
+    {
+      "id": "tf549b99afce0",
+      "name": "SaveOrderBook",
+      "kind": "class",
+      "file": "novalabs-backtest/data/orderbook.py",
+      "line": 18,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "initiate_client",
+        "get_list_pair_binance",
+        "get_list_pair_ftx",
+        "get_url_params_binance",
+        "get_url_params_ftx",
+        "get_orderbook",
+        "get_all_orderbooks",
+        "createAskBidColumns",
+        "create_empty_csv",
+        "save_to_csv",
+        "run"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t3e20d5d192c0",
+      "name": "TechnicalIndicatorsCreation",
+      "kind": "class",
+      "file": "novalabs-backtest/utils/indicators.py",
+      "line": 130,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "format_time_for_df",
+        "_get_buffer_length",
+        "get_selected_indicators",
+        "_create_price_columns",
+        "buffer_cleaning",
+        "add_last_high",
+        "add_last_low",
+        "add_last_volume",
+        "add_last_close",
+        "compute_all_indicators",
+        "create_high_df",
+        "create_low_df"
+      ],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "novalabs-backtest/clients/binance.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/binance.py",
+      "download": "repository-docs/nova-backtest/classes/ea9eeb94dc6bbf77.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/btcex.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/btcex.py",
+      "download": "repository-docs/nova-backtest/classes/d8f5d5274d84e512.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/bybit.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/bybit.py",
+      "download": "repository-docs/nova-backtest/classes/1e1069869987437b.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/client_interface.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/client_interface.py",
+      "download": "repository-docs/nova-backtest/classes/74399c021e07fb10.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/huobi.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/huobi.py",
+      "download": "repository-docs/nova-backtest/classes/005bc1d0ae1ef36c.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/kucoin.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/kucoin.py",
+      "download": "repository-docs/nova-backtest/classes/84094b65bda00eb0.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/mexc.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/mexc.py",
+      "download": "repository-docs/nova-backtest/classes/d223345bc824a55f.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/oanda.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/oanda.py",
+      "download": "repository-docs/nova-backtest/classes/7e7c5c056ce331b8.mmd"
+    },
+    {
+      "path": "novalabs-backtest/clients/okx.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/okx.py",
+      "download": "repository-docs/nova-backtest/classes/c2f39389df73de3a.mmd"
+    },
+    {
+      "path": "novalabs-backtest/data/orderbook.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/orderbook.py",
+      "download": "repository-docs/nova-backtest/classes/0e3c54be367dca7c.mmd"
+    },
+    {
+      "path": "novalabs-backtest/utils/backtest.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/backtest.py",
+      "download": "repository-docs/nova-backtest/classes/c23ffeb704ae84e9.mmd"
+    },
+    {
+      "path": "novalabs-backtest/utils/indicators.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/indicators.py",
+      "download": "repository-docs/nova-backtest/classes/1bd3b000371cc6bf.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "README.md",
+      "blob_sha": "f070b679ef304bcd27b12810bcde53a72a857a5d",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/README.md"
+    },
+    {
+      "path": "novalabs-backtest/utils/backtest.py",
+      "blob_sha": "52c5a17cc480df5a30e414ad2ef4c4be80376c87",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/backtest.py"
+    },
+    {
+      "path": "novalabs-backtest/utils/constant.py",
+      "blob_sha": "a9b28b90781ce9d69a24acc8330fcfa71efa3714",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/constant.py"
+    },
+    {
+      "path": "pyproject.toml",
+      "blob_sha": "4d90c5484c3833d0966286d6b057a679b8635dcb",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/pyproject.toml"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "46f1d6c430608a3f08da5cd01565f9039a611968",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/requirements.txt"
+    },
+    {
+      "path": "setup.py",
+      "blob_sha": "bd7fd64831e7ab1c0eb6af5fb0bdeccc67066f12",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/setup.py"
+    },
+    {
+      "path": "novalabs-backtest/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/__init__.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/__init__.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/binance.py",
+      "blob_sha": "1a1a4b8be0fd65a978ef3fe7c7d501d68ab34daa",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/binance.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/btcex.py",
+      "blob_sha": "9cc1c5b16318850c36b1da16519b0927be41a202",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/btcex.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/bybit.py",
+      "blob_sha": "13d151c2af44d3bf5317248a92e13461e0c6f335",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/bybit.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/client_interface.py",
+      "blob_sha": "bb6a8554f53ce30ab5a2fe66eb65d22fcbcfdf61",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/client_interface.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/clients.py",
+      "blob_sha": "8aa6813cf1d19d2680170fe333093503ae26ec39",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/clients.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/huobi.py",
+      "blob_sha": "aef610f0d245b4fa198eec900f4e1f6139e50773",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/huobi.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/kucoin.py",
+      "blob_sha": "78155acabe944191f83bc85add4cafb04b13db29",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/kucoin.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/mexc.py",
+      "blob_sha": "a06c2c0636a61856e550935353a2701bd672b680",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/mexc.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/oanda.py",
+      "blob_sha": "ed72f2fbd2db4625a0d29d4bbcc5d2d49b59a972",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/oanda.py"
+    },
+    {
+      "path": "novalabs-backtest/clients/okx.py",
+      "blob_sha": "5d8493757768a5a74bdcb909cccee3044e8b965e",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/clients/okx.py"
+    },
+    {
+      "path": "novalabs-backtest/data/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/__init__.py"
+    },
+    {
+      "path": "novalabs-backtest/data/discord.py",
+      "blob_sha": "cf730c9c66046f08d780b479423d8805533257ed",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/discord.py"
+    },
+    {
+      "path": "novalabs-backtest/data/orderbook.py",
+      "blob_sha": "e338c5de86e4eb2029c2424644f622e3b2debd56",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/orderbook.py"
+    },
+    {
+      "path": "novalabs-backtest/data/reddit.py",
+      "blob_sha": "1132fd0a18d08013a111757b1c13d0d359eb4a1b",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/reddit.py"
+    },
+    {
+      "path": "novalabs-backtest/data/telegram.py",
+      "blob_sha": "05ad11447d1ae1bc4168601d53ecc76ffcca412c",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/data/telegram.py"
+    },
+    {
+      "path": "novalabs-backtest/utils/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/__init__.py"
+    },
+    {
+      "path": "novalabs-backtest/utils/helpers.py",
+      "blob_sha": "3986004d85bd905c3dd73fad5ae83982595e5070",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/helpers.py"
+    },
+    {
+      "path": "novalabs-backtest/utils/indicators.py",
+      "blob_sha": "1859683d12fe4c05ddad5994161cc165661dee13",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/novalabs-backtest/utils/indicators.py"
+    },
+    {
+      "path": "tests/backtest/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/backtest/__init__.py"
+    },
+    {
+      "path": "tests/clients/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/__init__.py"
+    },
+    {
+      "path": "tests/clients/test_format_data.py",
+      "blob_sha": "ce5cfe03d6575851b241b8c4ba7bf50649621f4f",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_format_data.py"
+    },
+    {
+      "path": "tests/clients/test_get_earliest_timestamp.py",
+      "blob_sha": "06c4509517cc105a5b41a9d4d6bf81b529d20fc7",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_get_earliest_timestamp.py"
+    },
+    {
+      "path": "tests/clients/test_get_historical_data.py",
+      "blob_sha": "225f617296182c95165631dd446d6a7d6368899d",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_get_historical_data.py"
+    },
+    {
+      "path": "tests/clients/test_get_pairs_info.py",
+      "blob_sha": "e8464f85d75861e364ecbf585035f6e89f8b04b6",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_get_pairs_info.py"
+    },
+    {
+      "path": "tests/clients/test_get_server_time.py",
+      "blob_sha": "1f109cf1bf93ac08a29e3cc47e21ea33c151fb3f",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_get_server_time.py"
+    },
+    {
+      "path": "tests/clients/test_update_historical.py",
+      "blob_sha": "be764d10b6c6d030c54db8944b84ad4b64b1d004",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/clients/test_update_historical.py"
+    },
+    {
+      "path": "tests/indicators/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/indicators/__init__.py"
+    },
+    {
+      "path": "tests/indicators/test_indicators.py",
+      "blob_sha": "01172cd525e7e42819aa84e8c685f3257896fbe1",
+      "source_url": "https://github.com/antoinebou12/nova-backtest/blob/dda19e6e09bdd59dd483a964f2e47085d2a1bdef/tests/indicators/test_indicators.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"nova-backtest\"]\n  f0[\"README.md\"]\n  root --> f0\n  f1[\"novalabs-backtest/utils/backtest.py\"]\n  root --> f1\n  f2[\"novalabs-backtest/utils/constant.py\"]\n  root --> f2\n  f3[\"pyproject.toml\"]\n  root --> f3\n  f4[\"requirements.txt\"]\n  root --> f4\n  f5[\"setup.py\"]\n  root --> f5\n  f6[\"novalabs-backtest/__init__.py\"]\n  root --> f6\n  f7[\"novalabs-backtest/clients/__init__.py\"]\n  root --> f7\n  f8[\"novalabs-backtest/clients/binance.py\"]\n  root --> f8\n  f9[\"novalabs-backtest/clients/btcex.py\"]\n  root --> f9\n  f10[\"novalabs-backtest/clients/bybit.py\"]\n  root --> f10\n  f11[\"novalabs-backtest/clients/client_interface.py\"]\n  root --> f11\n  f12[\"novalabs-backtest/clients/clients.py\"]\n  root --> f12\n  f13[\"novalabs-backtest/clients/huobi.py\"]\n  root --> f13\n  f14[\"novalabs-backtest/clients/kucoin.py\"]\n  root --> f14\n  f15[\"novalabs-backtest/clients/mexc.py\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass tb3e6c9c2ecdf[\"BackTest\"] {\n  __init__()\n  build_indicators()\n  entry_strategy()\n  exit_strategy()\n}\nclass t49d28ff7fba3[\"Binance\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  _format_long_short_ratio()\n}\nclass t43ce1fc5ef4d[\"BTCEX\"] {\n  __init__()\n  _send_request()\n  connect()\n  logout()\n}\nclass t8174f5fcb687[\"Bybit\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  _get_candles()\n}\nclass t023ef983e730[\"BackTestClientInterface\"] {\n  _send_request()\n  get_server_time()\n  _get_candles()\n  _get_earliest_timestamp()\n}\nclass ta838910fd595[\"Huobi\"] {\n  __init__()\n  generate_signature()\n  _send_request()\n  get_server_time()\n}\nclass t6d6671499620[\"Kucoin\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  get_pairs_info()\n}\nclass tee704ca1b99b[\"MEXC\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  get_pairs_info()\n}\nclass te95be47be1da[\"Oanda\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  get_pairs_info()\n}\nclass t263161a52c7a[\"OKX\"] {\n  __init__()\n  _send_request()\n  get_server_time()\n  get_pairs_info()\n}\nclass tf549b99afce0[\"SaveOrderBook\"] {\n  __init__()\n  initiate_client()\n  get_list_pair_binance()\n  get_list_pair_ftx()\n}\nclass t3e20d5d192c0[\"TechnicalIndicatorsCreation\"] {\n  __init__()\n  format_time_for_df()\n  _get_buffer_length()\n  get_selected_indicators()\n}\nclass be18d1eb0e880[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nbe18d1eb0e880 <|-- t49d28ff7fba3\nclass b67f7ade18a4f[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nb67f7ade18a4f <|-- t43ce1fc5ef4d\nclass bfb52a00bc764[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nbfb52a00bc764 <|-- t8174f5fcb687\nclass bebd830f94387[\"abc.ABC\"] {\n  <<unresolved_base>>\n}\nbebd830f94387 <|-- t023ef983e730\nclass b989f1678d5c0[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nb989f1678d5c0 <|-- ta838910fd595\nclass b6644718ebc43[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nb6644718ebc43 <|-- t6d6671499620\nclass b09cf4bf8f343[\"BackTestClientInterface\"] {\n  <<unresolved_base>>\n}\nb09cf4bf8f343 <|-- t263161a52c7a\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/nova-backtest",
+    "status": "missing"
+  }
+}

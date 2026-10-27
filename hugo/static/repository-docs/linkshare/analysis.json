@@ -1,0 +1,900 @@
+{
+  "repo": "linkshare",
+  "slug": "linkshare",
+  "commit": "2e223f99a50c07f3e60377f6c3252051b815c468",
+  "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/",
+  "tree_url": "https://github.com/antoinebou12/linkshare/tree/2e223f99a50c07f3e60377f6c3252051b815c468",
+  "fetched_at": "2026-10-24T01:39:56.424123+00:00",
+  "languages": [
+    {
+      "name": "Ruby",
+      "bytes": 74011,
+      "percent": 55.29
+    },
+    {
+      "name": "HTML",
+      "bytes": 26174,
+      "percent": 19.55
+    },
+    {
+      "name": "CSS",
+      "bytes": 17773,
+      "percent": 13.28
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 15470,
+      "percent": 11.56
+    },
+    {
+      "name": "CoffeeScript",
+      "bytes": 422,
+      "percent": 0.32
+    }
+  ],
+  "language_bytes": 133850,
+  "coverage": {
+    "tree_files": 171,
+    "eligible_files": 58,
+    "read_files": 58,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [],
+  "manifests": [],
+  "type_count": 26,
+  "types": [
+    {
+      "id": "te6c01275de47",
+      "name": "ApplicationController",
+      "kind": "class",
+      "file": "app/controllers/application_controller.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "configure_permitted_parameters"
+      ],
+      "bases": [
+        "ActionController",
+        "Base"
+      ]
+    },
+    {
+      "id": "t8678c70aa713",
+      "name": "CommentsController",
+      "kind": "class",
+      "file": "app/controllers/comments_controller.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "create",
+        "destroy",
+        "set_comment",
+        "comment_params"
+      ],
+      "bases": [
+        "ApplicationController"
+      ]
+    },
+    {
+      "id": "tb0660d882e74",
+      "name": "LinksController",
+      "kind": "class",
+      "file": "app/controllers/links_controller.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "index",
+        "authorized_user",
+        "show",
+        "new",
+        "newfile",
+        "edit",
+        "create",
+        "update",
+        "destroy",
+        "upvote",
+        "downvote",
+        "set_link",
+        "link_params"
+      ],
+      "bases": [
+        "ApplicationController"
+      ]
+    },
+    {
+      "id": "te74c95b27ab9",
+      "name": "UsersController",
+      "kind": "class",
+      "file": "app/controllers/users_controller.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "index",
+        "show",
+        "set_user",
+        "user_params"
+      ],
+      "bases": [
+        "ApplicationController"
+      ]
+    },
+    {
+      "id": "t507ea3b434b7",
+      "name": "Comment",
+      "kind": "class",
+      "file": "app/models/comment.rb",
+      "line": 18,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActiveRecord",
+        "Base"
+      ]
+    },
+    {
+      "id": "teaffcf98c1af",
+      "name": "Link",
+      "kind": "class",
+      "file": "app/models/link.rb",
+      "line": 19,
+      "language": "ruby",
+      "methods": [
+        "search"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Base"
+      ]
+    },
+    {
+      "id": "t3d8e51a5861b",
+      "name": "User",
+      "kind": "class",
+      "file": "app/models/user.rb",
+      "line": 28,
+      "language": "ruby",
+      "methods": [
+        "search"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Base"
+      ]
+    },
+    {
+      "id": "t365c5f73a845",
+      "name": "AvatarUploader",
+      "kind": "class",
+      "file": "app/uploaders/avatar_uploader.rb",
+      "line": 3,
+      "language": "ruby",
+      "methods": [
+        "store_dir",
+        "extension_white_list"
+      ],
+      "bases": [
+        "CarrierWave",
+        "Uploader",
+        "Base"
+      ]
+    },
+    {
+      "id": "t02b326265c03",
+      "name": "FileUploader",
+      "kind": "class",
+      "file": "app/uploaders/file_uploader.rb",
+      "line": 3,
+      "language": "ruby",
+      "methods": [
+        "store_dir",
+        "to_jq_upload"
+      ],
+      "bases": [
+        "CarrierWave",
+        "Uploader",
+        "Base"
+      ]
+    },
+    {
+      "id": "t1b987a5d8a58",
+      "name": "Application",
+      "kind": "class",
+      "file": "config/application.rb",
+      "line": 10,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "Rails",
+        "Application"
+      ]
+    },
+    {
+      "id": "t8a2d1d5f3397",
+      "name": "CreateLinks",
+      "kind": "class",
+      "file": "db/migrate/20150716224041_create_links.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t413ee87dca90",
+      "name": "DeviseCreateUsers",
+      "kind": "class",
+      "file": "db/migrate/20150716224938_devise_create_users.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t866e4ca3a78b",
+      "name": "AddUserIdToLinks",
+      "kind": "class",
+      "file": "db/migrate/20150718032733_add_user_id_to_links.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t7f30e48dd4a1",
+      "name": "ActsAsVotableMigration",
+      "kind": "class",
+      "file": "db/migrate/20150718143004_acts_as_votable_migration.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "up",
+        "down"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t6e3f484f31f2",
+      "name": "CreateComments",
+      "kind": "class",
+      "file": "db/migrate/20150718150341_create_comments.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t9e78f4672ced",
+      "name": "AddNameToUsers",
+      "kind": "class",
+      "file": "db/migrate/20150718192749_add_name_to_users.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t2e9b3283fb40",
+      "name": "CreateImpressionsTable",
+      "kind": "class",
+      "file": "db/migrate/20150719021012_create_impressions_table.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "up",
+        "down"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t4f05a9687ffb",
+      "name": "AddUserAvatar",
+      "kind": "class",
+      "file": "db/migrate/20150723022221_add_user_avatar.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t654a4d0a8a47",
+      "name": "FileAddToLink",
+      "kind": "class",
+      "file": "db/migrate/20150725173259_file_add_to_link.rb",
+      "line": 1,
+      "language": "ruby",
+      "methods": [
+        "change"
+      ],
+      "bases": [
+        "ActiveRecord",
+        "Migration"
+      ]
+    },
+    {
+      "id": "t33aa5d507f01",
+      "name": "CommentsControllerTest",
+      "kind": "class",
+      "file": "test/controllers/comments_controller_test.rb",
+      "line": 3,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActionController",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "t201192bb11f2",
+      "name": "LinksControllerTest",
+      "kind": "class",
+      "file": "test/controllers/links_controller_test.rb",
+      "line": 3,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActionController",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "t09e93dac6e52",
+      "name": "CommentsHelperTest",
+      "kind": "class",
+      "file": "test/helpers/comments_helper_test.rb",
+      "line": 3,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActionView",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "tf5abfd7df46e",
+      "name": "CommentTest",
+      "kind": "class",
+      "file": "test/models/comment_test.rb",
+      "line": 20,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActiveSupport",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "t20ab1d1624e3",
+      "name": "LinkTest",
+      "kind": "class",
+      "file": "test/models/link_test.rb",
+      "line": 21,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActiveSupport",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "ta16493c06e76",
+      "name": "UserTest",
+      "kind": "class",
+      "file": "test/models/user_test.rb",
+      "line": 30,
+      "language": "ruby",
+      "methods": [],
+      "bases": [
+        "ActiveSupport",
+        "TestCase"
+      ]
+    },
+    {
+      "id": "te69295ed0a8b",
+      "name": "TestCase",
+      "kind": "class",
+      "file": "test/test_helper.rb",
+      "line": 5,
+      "language": "ruby",
+      "methods": [],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "app/controllers/application_controller.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/application_controller.rb",
+      "download": "repository-docs/linkshare/classes/766c34fd6533171e.mmd"
+    },
+    {
+      "path": "app/controllers/comments_controller.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/comments_controller.rb",
+      "download": "repository-docs/linkshare/classes/34e52388abd1ae06.mmd"
+    },
+    {
+      "path": "app/controllers/links_controller.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/links_controller.rb",
+      "download": "repository-docs/linkshare/classes/1c8ec4c0182d961c.mmd"
+    },
+    {
+      "path": "app/controllers/users_controller.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/users_controller.rb",
+      "download": "repository-docs/linkshare/classes/cfdccd0a9d5df5a4.mmd"
+    },
+    {
+      "path": "app/models/comment.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/comment.rb",
+      "download": "repository-docs/linkshare/classes/3baef9453c5d8b6c.mmd"
+    },
+    {
+      "path": "app/models/link.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/link.rb",
+      "download": "repository-docs/linkshare/classes/197d7344a217271a.mmd"
+    },
+    {
+      "path": "app/models/user.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/user.rb",
+      "download": "repository-docs/linkshare/classes/9802ca3c9c4cf899.mmd"
+    },
+    {
+      "path": "app/uploaders/avatar_uploader.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/uploaders/avatar_uploader.rb",
+      "download": "repository-docs/linkshare/classes/92531a32b05e45f0.mmd"
+    },
+    {
+      "path": "app/uploaders/file_uploader.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/uploaders/file_uploader.rb",
+      "download": "repository-docs/linkshare/classes/33c3f95991f4a584.mmd"
+    },
+    {
+      "path": "config/application.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/application.rb",
+      "download": "repository-docs/linkshare/classes/c1fd91cb1911a051.mmd"
+    },
+    {
+      "path": "db/migrate/20150716224041_create_links.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150716224041_create_links.rb",
+      "download": "repository-docs/linkshare/classes/74796bdb407efe41.mmd"
+    },
+    {
+      "path": "db/migrate/20150716224938_devise_create_users.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150716224938_devise_create_users.rb",
+      "download": "repository-docs/linkshare/classes/f5ed0caaf7643059.mmd"
+    },
+    {
+      "path": "db/migrate/20150718032733_add_user_id_to_links.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718032733_add_user_id_to_links.rb",
+      "download": "repository-docs/linkshare/classes/038a43b6aa1a62f9.mmd"
+    },
+    {
+      "path": "db/migrate/20150718143004_acts_as_votable_migration.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718143004_acts_as_votable_migration.rb",
+      "download": "repository-docs/linkshare/classes/331d4dbe9a208905.mmd"
+    },
+    {
+      "path": "db/migrate/20150718150341_create_comments.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718150341_create_comments.rb",
+      "download": "repository-docs/linkshare/classes/3717d8d5e8a3f40b.mmd"
+    },
+    {
+      "path": "db/migrate/20150718192749_add_name_to_users.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718192749_add_name_to_users.rb",
+      "download": "repository-docs/linkshare/classes/a134abdd8c4ac104.mmd"
+    },
+    {
+      "path": "db/migrate/20150719021012_create_impressions_table.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150719021012_create_impressions_table.rb",
+      "download": "repository-docs/linkshare/classes/75d1388c989a9beb.mmd"
+    },
+    {
+      "path": "db/migrate/20150723022221_add_user_avatar.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150723022221_add_user_avatar.rb",
+      "download": "repository-docs/linkshare/classes/8adb02a048dec36a.mmd"
+    },
+    {
+      "path": "db/migrate/20150725173259_file_add_to_link.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150725173259_file_add_to_link.rb",
+      "download": "repository-docs/linkshare/classes/6d8f3da1db8ab067.mmd"
+    },
+    {
+      "path": "test/controllers/comments_controller_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/controllers/comments_controller_test.rb",
+      "download": "repository-docs/linkshare/classes/0976044cce5f08fd.mmd"
+    },
+    {
+      "path": "test/controllers/links_controller_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/controllers/links_controller_test.rb",
+      "download": "repository-docs/linkshare/classes/5237ccd0e920fa30.mmd"
+    },
+    {
+      "path": "test/helpers/comments_helper_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/helpers/comments_helper_test.rb",
+      "download": "repository-docs/linkshare/classes/eddbe5463ba83e1f.mmd"
+    },
+    {
+      "path": "test/models/comment_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/comment_test.rb",
+      "download": "repository-docs/linkshare/classes/acdb84e6eeda8713.mmd"
+    },
+    {
+      "path": "test/models/link_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/link_test.rb",
+      "download": "repository-docs/linkshare/classes/0282c44de52325a8.mmd"
+    },
+    {
+      "path": "test/models/user_test.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/user_test.rb",
+      "download": "repository-docs/linkshare/classes/91bef9fda3c55514.mmd"
+    },
+    {
+      "path": "test/test_helper.rb",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/test_helper.rb",
+      "download": "repository-docs/linkshare/classes/ba37813ca277c227.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "Gemfile",
+      "blob_sha": "c7d321582d23c6ff15d7ff65f7ca300c3a05351c",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/Gemfile"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "f90f5566201f3aa31dbf9fdefd8132832ccc47b5",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/README.md"
+    },
+    {
+      "path": "config/routes.rb",
+      "blob_sha": "1c2db3a604bae865f95c195ae13a4a973f42d2ee",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/routes.rb"
+    },
+    {
+      "path": "config/application.rb",
+      "blob_sha": "a6b5b9cd86a99ccb52373107faba0e3b9b00414a",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/application.rb"
+    },
+    {
+      "path": "config/boot.rb",
+      "blob_sha": "6b750f00b1dff4d94937b97ae0dbf76784b02164",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/boot.rb"
+    },
+    {
+      "path": "config/environment.rb",
+      "blob_sha": "ee8d90dc651948269f1b869953ff04774e737307",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/environment.rb"
+    },
+    {
+      "path": "db/schema.rb",
+      "blob_sha": "b3774a1592fe10052977f28f4c1ae3eec6f7f7fb",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/schema.rb"
+    },
+    {
+      "path": "db/seeds.rb",
+      "blob_sha": "4edb1e857ee6c203463c7fa0387aae32496ec93d",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/seeds.rb"
+    },
+    {
+      "path": "test/test_helper.rb",
+      "blob_sha": "92e39b2d78ca9daa446290d9b364f3e7b5baeef9",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/test_helper.rb"
+    },
+    {
+      "path": "app/controllers/application_controller.rb",
+      "blob_sha": "073cacd9e9d575000b5106bcd7d50afb035e88c5",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/application_controller.rb"
+    },
+    {
+      "path": "app/controllers/comments_controller.rb",
+      "blob_sha": "988c4cd032c6e2004a35e47fe0ad017d4af9bfea",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/comments_controller.rb"
+    },
+    {
+      "path": "app/controllers/links_controller.rb",
+      "blob_sha": "cf5419c4f1eadc3c4a8bc29c64161c8e7c5358d7",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/links_controller.rb"
+    },
+    {
+      "path": "app/controllers/users_controller.rb",
+      "blob_sha": "49a55a6e57da4a43eced7caa7ea3e2f0fad549ee",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/controllers/users_controller.rb"
+    },
+    {
+      "path": "app/helpers/application_helper.rb",
+      "blob_sha": "a2f487023f2d9297d35419672a278617485c5b16",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/helpers/application_helper.rb"
+    },
+    {
+      "path": "app/helpers/comments_helper.rb",
+      "blob_sha": "0ec9ca5f2dc766c09e48fb187a9c1b0252e8e7c1",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/helpers/comments_helper.rb"
+    },
+    {
+      "path": "app/helpers/links_helper.rb",
+      "blob_sha": "f6bc988132bf2a2d17198be9818e0ef2f4032ff2",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/helpers/links_helper.rb"
+    },
+    {
+      "path": "app/models/comment.rb",
+      "blob_sha": "e14993d3827dc4860fa3bd42dc2f5fb1dc3d9e56",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/comment.rb"
+    },
+    {
+      "path": "app/models/link.rb",
+      "blob_sha": "d6177dbad16e83f9fef1f71eea6a57d66e0efc83",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/link.rb"
+    },
+    {
+      "path": "app/models/user.rb",
+      "blob_sha": "546bb417407adb5abe722786392b026ecffedc8b",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/models/user.rb"
+    },
+    {
+      "path": "app/uploaders/avatar_uploader.rb",
+      "blob_sha": "0531244bfb207d22901a133938792dd91d477e2b",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/uploaders/avatar_uploader.rb"
+    },
+    {
+      "path": "app/uploaders/file_uploader.rb",
+      "blob_sha": "ded379033123556386b949bdc0a6077b4cb0125a",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/uploaders/file_uploader.rb"
+    },
+    {
+      "path": "config/environments/development.rb",
+      "blob_sha": "948e873dea61ffd7038b043808c410377ee7ebb2",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/environments/development.rb"
+    },
+    {
+      "path": "config/environments/production.rb",
+      "blob_sha": "5c1b32e4863ffe9aed61e6b63f70ef0b7b70dd93",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/environments/production.rb"
+    },
+    {
+      "path": "config/environments/test.rb",
+      "blob_sha": "1c19f08b28341c59bd4cfe1834e29f877e5fc22e",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/environments/test.rb"
+    },
+    {
+      "path": "config/initializers/assets.rb",
+      "blob_sha": "dc5b6c71795a85e2cfae52ec79eafcbc855bd32d",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/assets.rb"
+    },
+    {
+      "path": "config/initializers/backtrace_silencers.rb",
+      "blob_sha": "59385cdf379bd06a8d2326dcd4de6d5cd5d3f5b0",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/backtrace_silencers.rb"
+    },
+    {
+      "path": "config/initializers/cookies_serializer.rb",
+      "blob_sha": "7f70458dee62b4a0f5233e4be7b8838b8400cbe8",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/cookies_serializer.rb"
+    },
+    {
+      "path": "config/initializers/devise.rb",
+      "blob_sha": "e01f85222e675e34ed10aba199ec93cca46af756",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/devise.rb"
+    },
+    {
+      "path": "config/initializers/dragonfly.rb",
+      "blob_sha": "840564fa496f5fa63748cf13a22065acc0541b40",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/dragonfly.rb"
+    },
+    {
+      "path": "config/initializers/filter_parameter_logging.rb",
+      "blob_sha": "4a994e1e7bb7ce28dcec98bad48b9a891d7dec51",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/filter_parameter_logging.rb"
+    },
+    {
+      "path": "config/initializers/impression.rb",
+      "blob_sha": "2c8d5d24d6ea51b83ac5dd6c48b96d36ac00725c",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/impression.rb"
+    },
+    {
+      "path": "config/initializers/inflections.rb",
+      "blob_sha": "ac033bf9dc846101320c96a5ce8aceb8c96ec098",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/inflections.rb"
+    },
+    {
+      "path": "config/initializers/kaminari.rb",
+      "blob_sha": "25279cf5fe6769be29a02b4fc24da741790cc4cf",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/kaminari.rb"
+    },
+    {
+      "path": "config/initializers/mime_types.rb",
+      "blob_sha": "dc1899682b01c3a6d9673faf746e235fb64fc4d2",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/mime_types.rb"
+    },
+    {
+      "path": "config/initializers/onliner.rb",
+      "blob_sha": "305d8ecd49f3518a85a359fd60fb4d5b3117bab0",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/onliner.rb"
+    },
+    {
+      "path": "config/initializers/rails_admin.rb",
+      "blob_sha": "1ce919c311978c0fdb5bb2edad85d846d5f3e4c1",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/rails_admin.rb"
+    },
+    {
+      "path": "config/initializers/session_store.rb",
+      "blob_sha": "bdcfe0c7b4f0964a1c3dcdf8e9b6e685ca449c37",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/session_store.rb"
+    },
+    {
+      "path": "config/initializers/simple_form.rb",
+      "blob_sha": "d5492e529a44a09e7d857dd3503098138735cafe",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/simple_form.rb"
+    },
+    {
+      "path": "config/initializers/wrap_parameters.rb",
+      "blob_sha": "33725e95fd22b9053f75ef6626aa1af781ebe947",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/config/initializers/wrap_parameters.rb"
+    },
+    {
+      "path": "db/migrate/20150716224041_create_links.rb",
+      "blob_sha": "1b74620626e160558894ae32384d760d2d6b54ce",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150716224041_create_links.rb"
+    },
+    {
+      "path": "db/migrate/20150716224938_devise_create_users.rb",
+      "blob_sha": "69e371c97e03affb72e343972a710f30c0644df8",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150716224938_devise_create_users.rb"
+    },
+    {
+      "path": "db/migrate/20150718032733_add_user_id_to_links.rb",
+      "blob_sha": "6cc375d9d646994463d92fc7eec23880a5572caa",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718032733_add_user_id_to_links.rb"
+    },
+    {
+      "path": "db/migrate/20150718143004_acts_as_votable_migration.rb",
+      "blob_sha": "5f381af8d306ded887ded723f536703f3b79e6c7",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718143004_acts_as_votable_migration.rb"
+    },
+    {
+      "path": "db/migrate/20150718150341_create_comments.rb",
+      "blob_sha": "3064970de0968e91e83f9d1d05929483220d7691",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718150341_create_comments.rb"
+    },
+    {
+      "path": "db/migrate/20150718192749_add_name_to_users.rb",
+      "blob_sha": "7b01bddd46fff9d44a5e336a2617077fa9bf3829",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150718192749_add_name_to_users.rb"
+    },
+    {
+      "path": "db/migrate/20150719021012_create_impressions_table.rb",
+      "blob_sha": "c874863ea924235d08ceb7b1c7567600059fa392",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150719021012_create_impressions_table.rb"
+    },
+    {
+      "path": "db/migrate/20150723022221_add_user_avatar.rb",
+      "blob_sha": "04b3bc957fc72e44386f27e5d8fd2670713afe58",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150723022221_add_user_avatar.rb"
+    },
+    {
+      "path": "db/migrate/20150725173259_file_add_to_link.rb",
+      "blob_sha": "beffa0b9147fa89dea363ba9f1e48d2f44aaf518",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/db/migrate/20150725173259_file_add_to_link.rb"
+    },
+    {
+      "path": "test/controllers/comments_controller_test.rb",
+      "blob_sha": "e870cb75a4d96551b09be58b19b8baabab2e65ff",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/controllers/comments_controller_test.rb"
+    },
+    {
+      "path": "test/controllers/links_controller_test.rb",
+      "blob_sha": "50f7d2eaa538e7383f55d73c452942843d0d2fac",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/controllers/links_controller_test.rb"
+    },
+    {
+      "path": "test/helpers/comments_helper_test.rb",
+      "blob_sha": "2518c16bd589ead0721e8d375153f0f9dd298530",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/helpers/comments_helper_test.rb"
+    },
+    {
+      "path": "test/models/comment_test.rb",
+      "blob_sha": "068fe836189e53f1197c8fbaf5f582e9cc46b740",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/comment_test.rb"
+    },
+    {
+      "path": "test/models/link_test.rb",
+      "blob_sha": "7820d2e83aff34a5ba3c668482feaafb45b53e30",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/link_test.rb"
+    },
+    {
+      "path": "test/models/user_test.rb",
+      "blob_sha": "735c46eaa30b6bcbea257250062ff0e861ac753d",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/test/models/user_test.rb"
+    },
+    {
+      "path": "app/assets/javascripts/application.js",
+      "blob_sha": "544cf9702cc7af29250d5cd3651f1eb6e95832d1",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/assets/javascripts/application.js"
+    },
+    {
+      "path": "app/assets/javascripts/embedly-platform.js",
+      "blob_sha": "9cb08ef468313b0b7bbc627831a63860bc5015eb",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/assets/javascripts/embedly-platform.js"
+    },
+    {
+      "path": "app/assets/javascripts/jquery.materialripple.js",
+      "blob_sha": "013f335f8933c4643a10a8b610e55cba968e75d3",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/assets/javascripts/jquery.materialripple.js"
+    },
+    {
+      "path": "app/assets/javascripts/nprogress.js",
+      "blob_sha": "b23b30060e4ad71081e36e6a9b0f63ba562c48eb",
+      "source_url": "https://github.com/antoinebou12/linkshare/blob/2e223f99a50c07f3e60377f6c3252051b815c468/app/assets/javascripts/nprogress.js"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"linkshare\"]\n  f0[\"Gemfile\"]\n  root --> f0\n  f1[\"README.md\"]\n  root --> f1\n  f2[\"config/routes.rb\"]\n  root --> f2\n  f3[\"config/application.rb\"]\n  root --> f3\n  f4[\"config/boot.rb\"]\n  root --> f4\n  f5[\"config/environment.rb\"]\n  root --> f5\n  f6[\"db/schema.rb\"]\n  root --> f6\n  f7[\"db/seeds.rb\"]\n  root --> f7\n  f8[\"test/test_helper.rb\"]\n  root --> f8\n  f9[\"app/controllers/application_controller.rb\"]\n  root --> f9\n  f10[\"app/controllers/comments_controller.rb\"]\n  root --> f10\n  f11[\"app/controllers/links_controller.rb\"]\n  root --> f11\n  f12[\"app/controllers/users_controller.rb\"]\n  root --> f12\n  f13[\"app/helpers/application_helper.rb\"]\n  root --> f13\n  f14[\"app/helpers/comments_helper.rb\"]\n  root --> f14\n  f15[\"app/helpers/links_helper.rb\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass te6c01275de47[\"ApplicationController\"] {\n  configure_permitted_parameters()\n}\nclass t8678c70aa713[\"CommentsController\"] {\n  create()\n  destroy()\n  set_comment()\n  comment_params()\n}\nclass tb0660d882e74[\"LinksController\"] {\n  index()\n  authorized_user()\n  show()\n  new()\n}\nclass te74c95b27ab9[\"UsersController\"] {\n  index()\n  show()\n  set_user()\n  user_params()\n}\nclass t507ea3b434b7[\"Comment\"] {\n}\nclass teaffcf98c1af[\"Link\"] {\n  search()\n}\nclass t3d8e51a5861b[\"User\"] {\n  search()\n}\nclass t365c5f73a845[\"AvatarUploader\"] {\n  store_dir()\n  extension_white_list()\n}\nclass t02b326265c03[\"FileUploader\"] {\n  store_dir()\n  to_jq_upload()\n}\nclass t1b987a5d8a58[\"Application\"] {\n}\nclass t8a2d1d5f3397[\"CreateLinks\"] {\n  change()\n}\nclass t413ee87dca90[\"DeviseCreateUsers\"] {\n  change()\n}\nclass b597d79078b7c[\"ActionController\"] {\n  <<unresolved_base>>\n}\nte6c01275de47 ..> b597d79078b7c : declared base\nclass bf963db62dcd9[\"Base\"] {\n  <<unresolved_base>>\n}\nte6c01275de47 ..> bf963db62dcd9 : declared base\nclass b5537154b21ce[\"ApplicationController\"] {\n  <<unresolved_base>>\n}\nt8678c70aa713 ..> b5537154b21ce : declared base\nclass b06d39a03faa5[\"ApplicationController\"] {\n  <<unresolved_base>>\n}\ntb0660d882e74 ..> b06d39a03faa5 : declared base\nclass bf0d517ccfe97[\"ApplicationController\"] {\n  <<unresolved_base>>\n}\nte74c95b27ab9 ..> bf0d517ccfe97 : declared base\nclass b4387f5fdab61[\"ActiveRecord\"] {\n  <<unresolved_base>>\n}\nt507ea3b434b7 ..> b4387f5fdab61 : declared base\nclass bf1ccf4a6fae5[\"Base\"] {\n  <<unresolved_base>>\n}\nt507ea3b434b7 ..> bf1ccf4a6fae5 : declared base\nclass b7aff22b225bf[\"ActiveRecord\"] {\n  <<unresolved_base>>\n}\nteaffcf98c1af ..> b7aff22b225bf : declared base\nclass baa51e6c4d3ac[\"Base\"] {\n  <<unresolved_base>>\n}\nteaffcf98c1af ..> baa51e6c4d3ac : declared base\nclass b8ebb2ba28373[\"ActiveRecord\"] {\n  <<unresolved_base>>\n}\nt3d8e51a5861b ..> b8ebb2ba28373 : declared base\nclass bd2eb40535edb[\"Base\"] {\n  <<unresolved_base>>\n}\nt3d8e51a5861b ..> bd2eb40535edb : declared base\nclass bdfe6f931ddc7[\"CarrierWave\"] {\n  <<unresolved_base>>\n}\nt365c5f73a845 ..> bdfe6f931ddc7 : declared base\nclass b58373087e72b[\"Uploader\"] {\n  <<unresolved_base>>\n}\nt365c5f73a845 ..> b58373087e72b : declared base\nclass bdcc7e7756ad6[\"Base\"] {\n  <<unresolved_base>>\n}\nt365c5f73a845 ..> bdcc7e7756ad6 : declared base\nclass b14b22903d121[\"CarrierWave\"] {\n  <<unresolved_base>>\n}\nt02b326265c03 ..> b14b22903d121 : declared base\nclass b2e18ae1a52e7[\"Uploader\"] {\n  <<unresolved_base>>\n}\nt02b326265c03 ..> b2e18ae1a52e7 : declared base\nclass bf7a34fbf068a[\"Base\"] {\n  <<unresolved_base>>\n}\nt02b326265c03 ..> bf7a34fbf068a : declared base\nclass b656be7aa4ef3[\"Rails\"] {\n  <<unresolved_base>>\n}\nt1b987a5d8a58 ..> b656be7aa4ef3 : declared base\nt1b987a5d8a58 <|-- t1b987a5d8a58\nclass bbdad3cd73cb5[\"ActiveRecord\"] {\n  <<unresolved_base>>\n}\nt8a2d1d5f3397 ..> bbdad3cd73cb5 : declared base\nclass b3cbff79e4244[\"Migration\"] {\n  <<unresolved_base>>\n}\nt8a2d1d5f3397 ..> b3cbff79e4244 : declared base\nclass bf941026e7405[\"ActiveRecord\"] {\n  <<unresolved_base>>\n}\nt413ee87dca90 ..> bf941026e7405 : declared base\nclass b35ea4c6d3585[\"Migration\"] {\n  <<unresolved_base>>\n}\nt413ee87dca90 ..> b35ea4c6d3585 : declared base\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/linkshare",
+    "status": "missing"
+  }
+}

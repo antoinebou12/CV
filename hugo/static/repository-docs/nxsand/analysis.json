@@ -1,0 +1,1753 @@
+{
+  "repo": "nxsand",
+  "slug": "nxsand",
+  "commit": "af70da331e9e74ce0d5bd0365e1447f42cfc97d0",
+  "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/",
+  "tree_url": "https://github.com/antoinebou12/nxsand/tree/af70da331e9e74ce0d5bd0365e1447f42cfc97d0",
+  "fetched_at": "2026-10-24T01:39:07.175514+00:00",
+  "languages": [
+    {
+      "name": "C++",
+      "bytes": 526697,
+      "percent": 80.07
+    },
+    {
+      "name": "GLSL",
+      "bytes": 65789,
+      "percent": 10.0
+    },
+    {
+      "name": "Python",
+      "bytes": 29193,
+      "percent": 4.44
+    },
+    {
+      "name": "PowerShell",
+      "bytes": 21830,
+      "percent": 3.32
+    },
+    {
+      "name": "Makefile",
+      "bytes": 10750,
+      "percent": 1.63
+    },
+    {
+      "name": "Shell",
+      "bytes": 2016,
+      "percent": 0.31
+    },
+    {
+      "name": "Just",
+      "bytes": 1491,
+      "percent": 0.23
+    }
+  ],
+  "language_bytes": 657766,
+  "coverage": {
+    "tree_files": 240,
+    "eligible_files": 135,
+    "read_files": 135,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [
+      {
+        "file": "source/game/app.cpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "source/game/engine_settings.cpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "source/game/game_settings.cpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "source/platform/input/input.cpp",
+        "error": "syntax-errors"
+      },
+      {
+        "file": "source/platform/main.cpp",
+        "error": "syntax-errors"
+      }
+    ],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 79,
+      "heading": "Reference versions (June 2026)",
+      "commands": "dkp-pacman -Q libnx switch-sdl2\ndkp-pacman -Syu    # pull newer libnx / switch-sdl2 when available"
+    },
+    {
+      "file": "README.md",
+      "line": 99,
+      "heading": "2. Install Switch libraries",
+      "commands": "dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz"
+    },
+    {
+      "file": "README.md",
+      "line": 107,
+      "heading": "3. Build the NRO",
+      "commands": "make"
+    },
+    {
+      "file": "README.md",
+      "line": 121,
+      "heading": "Desktop (optional)",
+      "commands": "make desktop\n./build/NXSand\nmake test         # CPU reference tests, no GPU"
+    },
+    {
+      "file": "README.md",
+      "line": 134,
+      "heading": "Desktop (optional)",
+      "commands": "pacman -S --needed mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-SDL2 mingw-w64-x86_64-freetype mingw-w64-x86_64-angleproject"
+    }
+  ],
+  "manifests": [],
+  "type_count": 53,
+  "types": [
+    {
+      "id": "t7ba1fb6b5b9e",
+      "name": "SimPassRect",
+      "kind": "struct",
+      "file": "source/gpu/sim_pipeline.hpp",
+      "line": 16,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t658fbe1e623e",
+      "name": "SimPipeline",
+      "kind": "class",
+      "file": "source/gpu/sim_pipeline.hpp",
+      "line": 23,
+      "language": "cpp",
+      "methods": [
+        "SimPipeline",
+        "init",
+        "shutdown",
+        "clearAll",
+        "paintDisk",
+        "sampleMaterial",
+        "step",
+        "lastPasses",
+        "lastActiveTileFallback",
+        "lastActiveTileCount",
+        "lastActiveTileMode",
+        "backend",
+        "ready",
+        "readTexture",
+        "readGridTo",
+        "readRegionTopDown",
+        "uploadGridTopDown",
+        "runMovementSelfTest",
+        "syncSimForSampling",
+        "uploadPhysics",
+        "runPass",
+        "runPassRegions",
+        "runComputePass",
+        "stepFragment",
+        "stepCompute",
+        "collectActivePassRects",
+        "unbindComputeImages",
+        "detachSimFboAttachments",
+        "attachSimFboAttachments"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tb8626ee066b2",
+      "name": "SimState",
+      "kind": "struct",
+      "file": "source/sim/sim_state.hpp",
+      "line": 34,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tfdb610a7db47",
+      "name": "SimCompileAudioGuard",
+      "kind": "struct",
+      "file": "source/game/app.cpp",
+      "line": 478,
+      "language": "cpp",
+      "methods": [
+        "SimCompileAudioGuard"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta050db13a10c",
+      "name": "App",
+      "kind": "class",
+      "file": "source/game/app.hpp",
+      "line": 33,
+      "language": "cpp",
+      "methods": [
+        "init",
+        "shutdown",
+        "frame",
+        "setSimGridSize",
+        "applyRuntimeSettings",
+        "applyRuntimeSettingsLight",
+        "applyRuntimeSettingsHeavy",
+        "flushPendingHeavySettings",
+        "schedulePendingHeavySettingsFlush",
+        "markSettingsHeavyApplyPending",
+        "computeSimSupported",
+        "forceComputeBackend",
+        "onEnterPlayFromMenu",
+        "ensureSimPipelineReady",
+        "requestSlotSave",
+        "requestFlushGameSettings",
+        "requestFlushPhysicsSettings",
+        "presentBootProgress",
+        "presentCompileOverlay",
+        "syncScreenMetrics",
+        "ensureUiFontReady",
+        "resetMenuRepeat",
+        "releaseMemoryBeforeSimCompile",
+        "reloadAudioAfterSimCompile",
+        "ensureAudioReady",
+        "resolveSimBackend",
+        "initSimPipeline",
+        "resetGlContextForSimCompile",
+        "restoreUiPipelinesAfterSimCompile",
+        "tickMenu",
+        "tickPlay",
+        "renderFrame",
+        "resolveShaderDir",
+        "tickPendingSave",
+        "tickPendingHeavySettings",
+        "executePendingSave",
+        "enqueuePendingSave",
+        "beginSaveOverlayFor"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf962c5d4ce57",
+      "name": "PerformanceSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 45,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tbdcb989e9dca",
+      "name": "VisualSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 56,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tbb5d68fb65da",
+      "name": "ControlSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 69,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t480673c07c2c",
+      "name": "AudioSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 77,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t28451b24c3ad",
+      "name": "AccessibilitySettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 86,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t45aedf66edc0",
+      "name": "DebugSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 92,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t4b3cad79f762",
+      "name": "DisplaySettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 99,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t1aa7ad2dbc7f",
+      "name": "GameSettings",
+      "kind": "struct",
+      "file": "source/game/game_settings.hpp",
+      "line": 108,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "teaf1a61b9cbd",
+      "name": "ActiveTileRun",
+      "kind": "struct",
+      "file": "source/gpu/active_tiles.hpp",
+      "line": 11,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tbd63fe7b5941",
+      "name": "ActiveTileMap",
+      "kind": "class",
+      "file": "source/gpu/active_tiles.hpp",
+      "line": 18,
+      "language": "cpp",
+      "methods": [
+        "reset",
+        "wakeAll",
+        "sleepAll",
+        "wakeFromGridTopDown",
+        "wakeBoundsPx",
+        "rememberBounds",
+        "hasRememberedBounds",
+        "rewakeRememberedBounds",
+        "markDisk",
+        "wakeTile",
+        "tickOptimizer",
+        "tickConservative",
+        "activeBounds",
+        "activeRuns",
+        "tileW",
+        "tileH",
+        "gridW",
+        "gridH",
+        "isActive",
+        "activeCount",
+        "wakeBottomBandFallback",
+        "wakeAggressiveVerticalHalo",
+        "isExpandedActive"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t9aa0c56344fb",
+      "name": "FtLibrary",
+      "kind": "struct",
+      "file": "source/gpu/font_atlas.cpp",
+      "line": 20,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t8e57099f6a86",
+      "name": "FontAtlas",
+      "kind": "class",
+      "file": "source/gpu/font_atlas.hpp",
+      "line": 11,
+      "language": "cpp",
+      "methods": [
+        "init",
+        "isReady",
+        "shutdown",
+        "invalidateGlTexture",
+        "resetGlResources",
+        "textWidth",
+        "drawText",
+        "drawTextCentered",
+        "prewarmCommonGlyphs",
+        "growAtlas",
+        "uploadAtlas",
+        "uploadGlyphRegion"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t1d6a989b9487",
+      "name": "GlyphInfo",
+      "kind": "struct",
+      "file": "source/gpu/font_atlas.hpp",
+      "line": 13,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "teb7daec80e71",
+      "name": "FrameGraph",
+      "kind": "struct",
+      "file": "source/gpu/frame_graph.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [
+        "runPlayFrame"
+      ],
+      "bases": []
+    },
+    {
+      "id": "taa03590d5221",
+      "name": "PerfStats",
+      "kind": "struct",
+      "file": "source/gpu/perf_stats.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [
+        "beginFrame",
+        "beginSim",
+        "endSim",
+        "beginPaint",
+        "endPaint",
+        "beginWorldRender",
+        "endWorldRender",
+        "beginUi",
+        "endUi",
+        "beginPresent",
+        "endPresent",
+        "endFrame"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tbd170615f960",
+      "name": "RenderPipeline",
+      "kind": "class",
+      "file": "source/gpu/render_pipeline.hpp",
+      "line": 13,
+      "language": "cpp",
+      "methods": [
+        "RenderPipeline",
+        "init",
+        "shutdown",
+        "buildPaletteTexture",
+        "drawSimulation",
+        "setPaletteMode",
+        "paletteMode",
+        "setUpscaleFilter",
+        "upscaleFilter",
+        "setBlobEnabled",
+        "setBloomLevel",
+        "bloomEnabled",
+        "setFlickerEnabled",
+        "setGrainEnabled",
+        "setAoStrength",
+        "releaseBloomTargets",
+        "drawSolidRect",
+        "drawTexturedRect",
+        "drawAlphaMaskRect",
+        "beginUiFrame",
+        "endUiFrame",
+        "prepareUiDraw",
+        "warmupWorldShaders",
+        "layoutToFramebuffer",
+        "layoutRectToGlViewport",
+        "initWorldShaders",
+        "initBloomShaders",
+        "ensureQuadVbo",
+        "ensureUiQuadVbo",
+        "drawUiQuad",
+        "flushUiBatch",
+        "ensureBloomTargets",
+        "ensureLookTargets",
+        "releaseLookTargets",
+        "drawPalettePass",
+        "runBloomPipeline",
+        "blitPostToPlayRegion"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t0fffd2dc3f84",
+      "name": "UiVertex",
+      "kind": "struct",
+      "file": "source/gpu/render_pipeline.hpp",
+      "line": 127,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t2ec58806b0b1",
+      "name": "ShaderCacheHeader",
+      "kind": "struct",
+      "file": "source/gpu/shader_cache.cpp",
+      "line": 21,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t480a49380357",
+      "name": "GpuFingerprint",
+      "kind": "struct",
+      "file": "source/gpu/shader_cache.cpp",
+      "line": 88,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t8fbfe94dcb68",
+      "name": "RulesBodyFingerprint",
+      "kind": "struct",
+      "file": "source/gpu/shader_cache.cpp",
+      "line": 163,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t3f87e6313887",
+      "name": "ShaderCacheKey",
+      "kind": "struct",
+      "file": "source/gpu/shader_cache.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t40ef0af23ff3",
+      "name": "SwitchLinkHeartbeat",
+      "kind": "struct",
+      "file": "source/gpu/shader_program.cpp",
+      "line": 34,
+      "language": "cpp",
+      "methods": [
+        "start",
+        "finish"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t82fcf87465ec",
+      "name": "ShaderProgram",
+      "kind": "class",
+      "file": "source/gpu/shader_program.hpp",
+      "line": 20,
+      "language": "cpp",
+      "methods": [
+        "ShaderProgram",
+        "loadFromFiles",
+        "loadComputeFromFile",
+        "use",
+        "uniformLocation",
+        "readFile",
+        "compile",
+        "link",
+        "linkCompute"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tde488bfe58ea",
+      "name": "ToneWav",
+      "kind": "struct",
+      "file": "source/platform/audio/tone_audio.cpp",
+      "line": 24,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t5e451d57acd3",
+      "name": "PendingOneShot",
+      "kind": "struct",
+      "file": "source/platform/audio/tone_audio_switch.cpp",
+      "line": 37,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9b8c2b9d2552",
+      "name": "WavPcm",
+      "kind": "struct",
+      "file": "source/platform/audio/wav_loader.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t2669b66e5ff5",
+      "name": "InputState",
+      "kind": "struct",
+      "file": "source/platform/input/input.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9534e6ce28d6",
+      "name": "MenuRepeatPulses",
+      "kind": "struct",
+      "file": "source/platform/input/menu_repeat.hpp",
+      "line": 5,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t3892d7d5a49f",
+      "name": "MenuRepeatState",
+      "kind": "struct",
+      "file": "source/platform/input/menu_repeat.hpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [
+        "reset",
+        "tick",
+        "tickAxis"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t4c60b555e75a",
+      "name": "Axis",
+      "kind": "struct",
+      "file": "source/platform/input/menu_repeat.hpp",
+      "line": 18,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tfc67a7552030",
+      "name": "SlotMeta",
+      "kind": "struct",
+      "file": "source/save/save.hpp",
+      "line": 9,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tda2d1934e18f",
+      "name": "BrushCommand",
+      "kind": "struct",
+      "file": "source/sim/brush_command.hpp",
+      "line": 12,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t79d0b019f486",
+      "name": "BrushDab",
+      "kind": "struct",
+      "file": "source/sim/brush_stroke.hpp",
+      "line": 10,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "teb58ee3b9a6f",
+      "name": "BrushStrokePlan",
+      "kind": "struct",
+      "file": "source/sim/brush_stroke.hpp",
+      "line": 17,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tfce97842374d",
+      "name": "PhysicsParamsGPU",
+      "kind": "struct",
+      "file": "source/sim/physics_gpu.hpp",
+      "line": 10,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tc3d1ddeef3b3",
+      "name": "PhysicsParams",
+      "kind": "struct",
+      "file": "source/sim/physics_params.hpp",
+      "line": 11,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t881643b8a2e6",
+      "name": "ParamSpec",
+      "kind": "struct",
+      "file": "source/sim/physics_settings.hpp",
+      "line": 11,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tca1bce005c7b",
+      "name": "PlayRegion",
+      "kind": "struct",
+      "file": "source/ui/layout.hpp",
+      "line": 10,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9ff0a5a96c88",
+      "name": "MenuListWindow",
+      "kind": "struct",
+      "file": "source/ui/layout.hpp",
+      "line": 17,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t5dfbb8a48d19",
+      "name": "MaterialWheelLayout",
+      "kind": "struct",
+      "file": "source/ui/material_wheel.hpp",
+      "line": 32,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t84f02910be37",
+      "name": "MenuLayout",
+      "kind": "struct",
+      "file": "source/ui/menu.hpp",
+      "line": 21,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6d730920ddf4",
+      "name": "MenuState",
+      "kind": "struct",
+      "file": "source/ui/menu.hpp",
+      "line": 36,
+      "language": "cpp",
+      "methods": [
+        "resetMain",
+        "goBack",
+        "moveVertical",
+        "handleConfirm",
+        "adjustHorizontal",
+        "handlePointer"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tf04a6489aadd",
+      "name": "MenuSim",
+      "kind": "class",
+      "file": "source/ui/menu_sim.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [
+        "init",
+        "shutdown",
+        "tick",
+        "draw",
+        "seed",
+        "step",
+        "uploadTexture"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t501dfaf12777",
+      "name": "SaveOverlay",
+      "kind": "class",
+      "file": "source/ui/save_overlay.hpp",
+      "line": 9,
+      "language": "cpp",
+      "methods": [
+        "begin",
+        "end",
+        "tick",
+        "draw",
+        "active",
+        "readyForIo"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t202e22b69a6f",
+      "name": "Color",
+      "kind": "struct",
+      "file": "source/ui/theme.hpp",
+      "line": 7,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "te11430e5b72f",
+      "name": "Toast",
+      "kind": "struct",
+      "file": "source/ui/toast.hpp",
+      "line": 6,
+      "language": "cpp",
+      "methods": [
+        "show",
+        "tick",
+        "active"
+      ],
+      "bases": []
+    },
+    {
+      "id": "td042275a90b8",
+      "name": "GpuTestGl",
+      "kind": "struct",
+      "file": "tests/gpu_test_gl.hpp",
+      "line": 8,
+      "language": "cpp",
+      "methods": [
+        "init",
+        "shutdown",
+        "findShaderDir"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tee602c119320",
+      "name": "TestContext",
+      "kind": "struct",
+      "file": "tests/test_harness.hpp",
+      "line": 4,
+      "language": "cpp",
+      "methods": [],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "source/game/app.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/app.cpp",
+      "download": "repository-docs/nxsand/classes/235705045232af10.mmd"
+    },
+    {
+      "path": "source/game/app.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/app.hpp",
+      "download": "repository-docs/nxsand/classes/e06aca224351cc76.mmd"
+    },
+    {
+      "path": "source/game/game_settings.hpp",
+      "types": 8,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/game_settings.hpp",
+      "download": "repository-docs/nxsand/classes/b4f3a613ae894de6.mmd"
+    },
+    {
+      "path": "source/gpu/active_tiles.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/active_tiles.hpp",
+      "download": "repository-docs/nxsand/classes/cf67622fd6bb4e7c.mmd"
+    },
+    {
+      "path": "source/gpu/font_atlas.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/font_atlas.cpp",
+      "download": "repository-docs/nxsand/classes/54d332e25da5bd36.mmd"
+    },
+    {
+      "path": "source/gpu/font_atlas.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/font_atlas.hpp",
+      "download": "repository-docs/nxsand/classes/433220a7615f9daf.mmd"
+    },
+    {
+      "path": "source/gpu/frame_graph.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/frame_graph.hpp",
+      "download": "repository-docs/nxsand/classes/a820a8a85859289d.mmd"
+    },
+    {
+      "path": "source/gpu/perf_stats.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/perf_stats.hpp",
+      "download": "repository-docs/nxsand/classes/cbcf4ba996259c96.mmd"
+    },
+    {
+      "path": "source/gpu/render_pipeline.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/render_pipeline.hpp",
+      "download": "repository-docs/nxsand/classes/33920e71979747f6.mmd"
+    },
+    {
+      "path": "source/gpu/shader_cache.cpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_cache.cpp",
+      "download": "repository-docs/nxsand/classes/0f13eac8139a0b8d.mmd"
+    },
+    {
+      "path": "source/gpu/shader_cache.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_cache.hpp",
+      "download": "repository-docs/nxsand/classes/3ebfef52da9a9c2b.mmd"
+    },
+    {
+      "path": "source/gpu/shader_program.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_program.cpp",
+      "download": "repository-docs/nxsand/classes/618d8d27589576a6.mmd"
+    },
+    {
+      "path": "source/gpu/shader_program.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_program.hpp",
+      "download": "repository-docs/nxsand/classes/b371b3f528f0efa9.mmd"
+    },
+    {
+      "path": "source/gpu/sim_pipeline.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/sim_pipeline.hpp",
+      "download": "repository-docs/nxsand/classes/d4b23690f9e50584.mmd"
+    },
+    {
+      "path": "source/platform/audio/tone_audio.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio.cpp",
+      "download": "repository-docs/nxsand/classes/0fbc6fee52d8a800.mmd"
+    },
+    {
+      "path": "source/platform/audio/tone_audio_switch.cpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio_switch.cpp",
+      "download": "repository-docs/nxsand/classes/456fc295d13a4834.mmd"
+    },
+    {
+      "path": "source/platform/audio/wav_loader.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/wav_loader.hpp",
+      "download": "repository-docs/nxsand/classes/3e338af1c3c25e5d.mmd"
+    },
+    {
+      "path": "source/platform/input/input.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/input.hpp",
+      "download": "repository-docs/nxsand/classes/c186efa6650dd237.mmd"
+    },
+    {
+      "path": "source/platform/input/menu_repeat.hpp",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/menu_repeat.hpp",
+      "download": "repository-docs/nxsand/classes/fec24987ad71795d.mmd"
+    },
+    {
+      "path": "source/save/save.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/save.hpp",
+      "download": "repository-docs/nxsand/classes/5e65031c02326707.mmd"
+    },
+    {
+      "path": "source/sim/brush_command.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_command.hpp",
+      "download": "repository-docs/nxsand/classes/7290abf1032ee966.mmd"
+    },
+    {
+      "path": "source/sim/brush_stroke.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_stroke.hpp",
+      "download": "repository-docs/nxsand/classes/a2a47fc41b77c136.mmd"
+    },
+    {
+      "path": "source/sim/physics_gpu.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_gpu.hpp",
+      "download": "repository-docs/nxsand/classes/1e4d965f44c6fdbd.mmd"
+    },
+    {
+      "path": "source/sim/physics_params.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_params.hpp",
+      "download": "repository-docs/nxsand/classes/dffac9d70ba17c20.mmd"
+    },
+    {
+      "path": "source/sim/physics_settings.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_settings.hpp",
+      "download": "repository-docs/nxsand/classes/3cb2b689f3205add.mmd"
+    },
+    {
+      "path": "source/sim/sim_state.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/sim_state.hpp",
+      "download": "repository-docs/nxsand/classes/a251e98ca2c121ef.mmd"
+    },
+    {
+      "path": "source/ui/layout.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/layout.hpp",
+      "download": "repository-docs/nxsand/classes/c83dedabde2ac4ee.mmd"
+    },
+    {
+      "path": "source/ui/material_wheel.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/material_wheel.hpp",
+      "download": "repository-docs/nxsand/classes/4ae91ed6ccf49ccb.mmd"
+    },
+    {
+      "path": "source/ui/menu.hpp",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu.hpp",
+      "download": "repository-docs/nxsand/classes/32eea5e648117fb7.mmd"
+    },
+    {
+      "path": "source/ui/menu_sim.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_sim.hpp",
+      "download": "repository-docs/nxsand/classes/238530c7f9dfee8f.mmd"
+    },
+    {
+      "path": "source/ui/save_overlay.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/save_overlay.hpp",
+      "download": "repository-docs/nxsand/classes/a4927362448a9ebe.mmd"
+    },
+    {
+      "path": "source/ui/theme.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/theme.hpp",
+      "download": "repository-docs/nxsand/classes/5363cbad69e5afc7.mmd"
+    },
+    {
+      "path": "source/ui/toast.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/toast.hpp",
+      "download": "repository-docs/nxsand/classes/b036d88c029d5980.mmd"
+    },
+    {
+      "path": "tests/gpu_test_gl.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/gpu_test_gl.hpp",
+      "download": "repository-docs/nxsand/classes/1660a49f86693076.mmd"
+    },
+    {
+      "path": "tests/test_harness.hpp",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/test_harness.hpp",
+      "download": "repository-docs/nxsand/classes/d3e61f20f6a4c904.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "Makefile",
+      "blob_sha": "89da20e54643ec85c26c6fc858183c439085e3b4",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/Makefile"
+    },
+    {
+      "path": "source/gpu/sim_pipeline.hpp",
+      "blob_sha": "208c1071ed9c0eb69dae2782c13106d41dfd22cb",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/sim_pipeline.hpp"
+    },
+    {
+      "path": "source/sim/sim_state.hpp",
+      "blob_sha": "42c81ce5f3845e5a580680503b104452bf3aded7",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/sim_state.hpp"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "c9b366c774870f4f6e453c8fea2d6ad6c01cc8a6",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/README.md"
+    },
+    {
+      "path": "scripts/build-desktop-msys.sh",
+      "blob_sha": "06574b85b2ba53db9cc497d1032154cad000f430",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/build-desktop-msys.sh"
+    },
+    {
+      "path": "scripts/build-desktop-wsl.sh",
+      "blob_sha": "d5306d731d347a17ca9f679d3a9a4aee13bba98b",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/build-desktop-wsl.sh"
+    },
+    {
+      "path": "scripts/crop_icon.py",
+      "blob_sha": "ec00f110db76df82fdf3aa5253404806c4597c6a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/crop_icon.py"
+    },
+    {
+      "path": "scripts/export-nsp.py",
+      "blob_sha": "ce68b92ad962df65c885408311616ee9f3353092",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/export-nsp.py"
+    },
+    {
+      "path": "scripts/generate-audio.py",
+      "blob_sha": "77c81dd7794572d39fb537f622e249fe1d93c8d7",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/generate-audio.py"
+    },
+    {
+      "path": "scripts/package-release.py",
+      "blob_sha": "c415ad94260cd5d96b8316945a1fed32b8a27975",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/package-release.py"
+    },
+    {
+      "path": "scripts/regenerate-diagrams.py",
+      "blob_sha": "b02b80403723fab1adced6d09dcfcb30830eba0f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/regenerate-diagrams.py"
+    },
+    {
+      "path": "scripts/sync-sim-rules-body.py",
+      "blob_sha": "d4634e03e27adad72f5624e07ce9a6671f95f4f0",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/scripts/sync-sim-rules-body.py"
+    },
+    {
+      "path": "tests/gpu_test_gl.cpp",
+      "blob_sha": "f71f35c48985659d9b0678ffeb4f31c7d669f7e4",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/gpu_test_gl.cpp"
+    },
+    {
+      "path": "tests/gpu_test_gl.hpp",
+      "blob_sha": "46e285d50e82edcc42150261f287ad8f673a6d2b",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/gpu_test_gl.hpp"
+    },
+    {
+      "path": "tests/gpu_unit_main.cpp",
+      "blob_sha": "de9b69d2d9093184ef391ef3cedb386087df79da",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/gpu_unit_main.cpp"
+    },
+    {
+      "path": "tests/test_harness.hpp",
+      "blob_sha": "fd01692ba2bcf75fffa5eb461a80cffa761b3143",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/test_harness.hpp"
+    },
+    {
+      "path": "tests/unit_active_tiles.cpp",
+      "blob_sha": "79ee7dd0f43f0aafff77d1f6c0d7575ece59f454",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_active_tiles.cpp"
+    },
+    {
+      "path": "tests/unit_base64.cpp",
+      "blob_sha": "9f4cf69621ae0efb9a15943491b2ddc1e5ab0c25",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_base64.cpp"
+    },
+    {
+      "path": "tests/unit_brush_stroke.cpp",
+      "blob_sha": "e6680fbe8288a5218adb6df7080125032185a6df",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_brush_stroke.cpp"
+    },
+    {
+      "path": "tests/unit_gpu_sim.cpp",
+      "blob_sha": "b391e6fdf7ee2c10a260fbec0481d7cfb1725d62",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_gpu_sim.cpp"
+    },
+    {
+      "path": "tests/unit_layout.cpp",
+      "blob_sha": "6906d6c609c2279886a07a674a548939151e8cbb",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_layout.cpp"
+    },
+    {
+      "path": "tests/unit_main.cpp",
+      "blob_sha": "1812bcccd0b796d39f1557430d6ad11f518263fb",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_main.cpp"
+    },
+    {
+      "path": "tests/unit_material_wheel.cpp",
+      "blob_sha": "31bbea373c56d290983fcd197fd01fd1e556e9dc",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_material_wheel.cpp"
+    },
+    {
+      "path": "tests/unit_materials.cpp",
+      "blob_sha": "c7e7258c9d7d856f8866557473fae6a6b688faa8",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_materials.cpp"
+    },
+    {
+      "path": "tests/unit_menu_repeat.cpp",
+      "blob_sha": "6b99471615209fa9071fff7e53ffdc83bc4538a6",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_menu_repeat.cpp"
+    },
+    {
+      "path": "tests/unit_perf_preset_physics.cpp",
+      "blob_sha": "2a5c98ea4d48bfc6208b8cc1c695552dd6cd2303",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_perf_preset_physics.cpp"
+    },
+    {
+      "path": "tests/unit_physics.cpp",
+      "blob_sha": "7dc1bc6e8ac6130cf1de4f5071c53271b0c414f5",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_physics.cpp"
+    },
+    {
+      "path": "tests/unit_physics_gpu.cpp",
+      "blob_sha": "a75d2ee52ed2b8e023bd8e8a1cb45260cfc3e7f2",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_physics_gpu.cpp"
+    },
+    {
+      "path": "tests/unit_physics_settings.cpp",
+      "blob_sha": "8b01be668ec7d25680cc817489726a9edf6ca64c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_physics_settings.cpp"
+    },
+    {
+      "path": "tests/unit_settings.cpp",
+      "blob_sha": "9177f7e1c33ed9b3a42ec82cf105cf8f4bebfd9c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_settings.cpp"
+    },
+    {
+      "path": "tests/unit_sim_cpu.cpp",
+      "blob_sha": "211d9f4008cafdafe09523878d90832a97c9da83",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_sim_cpu.cpp"
+    },
+    {
+      "path": "tests/unit_sim_grid.cpp",
+      "blob_sha": "3c9d3d663b8ec9cf82f70eee642fd4e8f2360c13",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_sim_grid.cpp"
+    },
+    {
+      "path": "tests/unit_tpt_import.cpp",
+      "blob_sha": "6f71d1c8368ec3b0f646c6d634ba52944b17a92c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/tests/unit_tpt_import.cpp"
+    },
+    {
+      "path": "source/game/app.cpp",
+      "blob_sha": "0f4f8ab81adec82532ae796f91d2d3a6f50ab56e",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/app.cpp"
+    },
+    {
+      "path": "source/game/app.hpp",
+      "blob_sha": "e13c5058b5a85f18f21af893b901699196e328f2",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/app.hpp"
+    },
+    {
+      "path": "source/game/benchmark_scene.cpp",
+      "blob_sha": "4e7852ccabb5695f6475c71873cfcc4594baa9d9",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/benchmark_scene.cpp"
+    },
+    {
+      "path": "source/game/benchmark_scene.hpp",
+      "blob_sha": "a173ae86b85475dbf5ce43a8aa76e86926602be1",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/benchmark_scene.hpp"
+    },
+    {
+      "path": "source/game/engine_settings.cpp",
+      "blob_sha": "0b5d0e221215eb9c1dc8f6a552140a1885de0d7c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/engine_settings.cpp"
+    },
+    {
+      "path": "source/game/engine_settings.hpp",
+      "blob_sha": "b3c927ee6a818494fe9c4650feafa4328dff5038",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/engine_settings.hpp"
+    },
+    {
+      "path": "source/game/game_settings.cpp",
+      "blob_sha": "e1b02a8f89cab221b5de165891cb766e3e5c6574",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/game_settings.cpp"
+    },
+    {
+      "path": "source/game/game_settings.hpp",
+      "blob_sha": "61e9fffe73314510ace05bbb98dc7e69966046d9",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/game/game_settings.hpp"
+    },
+    {
+      "path": "source/gpu/active_tiles.hpp",
+      "blob_sha": "0b149ee919cb24deab151b56e20a8bf52b51e625",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/active_tiles.hpp"
+    },
+    {
+      "path": "source/gpu/font_atlas.cpp",
+      "blob_sha": "3339d1bf02774a099ad2bb3e57db8c17c21d7afd",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/font_atlas.cpp"
+    },
+    {
+      "path": "source/gpu/font_atlas.hpp",
+      "blob_sha": "0d6aa04fe359e665bc34b6d14df658e7ac14a59b",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/font_atlas.hpp"
+    },
+    {
+      "path": "source/gpu/frame_graph.cpp",
+      "blob_sha": "241adc6493ab71ffd63c9883c69bf45f80e53e36",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/frame_graph.cpp"
+    },
+    {
+      "path": "source/gpu/frame_graph.hpp",
+      "blob_sha": "20045108587a8ea6925640cc37aaa21b216eefa8",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/frame_graph.hpp"
+    },
+    {
+      "path": "source/gpu/gl_loader.cpp",
+      "blob_sha": "c77ebe73b627079a30187a9fad561bb0eb6a139d",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/gl_loader.cpp"
+    },
+    {
+      "path": "source/gpu/gl_loader.hpp",
+      "blob_sha": "f52e2c16ac95fb8539a65c105ec3d45c3f5dbaf7",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/gl_loader.hpp"
+    },
+    {
+      "path": "source/gpu/perf_stats.hpp",
+      "blob_sha": "8e5801772f4d8974709dbd03dc7bb7a1b3b0014d",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/perf_stats.hpp"
+    },
+    {
+      "path": "source/gpu/render_pipeline.cpp",
+      "blob_sha": "97ea58b6ade26fbefe0f086c3a1cd879986ef613",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/render_pipeline.cpp"
+    },
+    {
+      "path": "source/gpu/render_pipeline.hpp",
+      "blob_sha": "97fdb96339213d2f02ada68f179b4ce23a654924",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/render_pipeline.hpp"
+    },
+    {
+      "path": "source/gpu/shader_cache.cpp",
+      "blob_sha": "4b904787e49b42cf421e56d0ca33cc002b8b6316",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_cache.cpp"
+    },
+    {
+      "path": "source/gpu/shader_cache.hpp",
+      "blob_sha": "c74b455bbbbc1f1e01c8e29616edc33e21fff549",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_cache.hpp"
+    },
+    {
+      "path": "source/gpu/shader_program.cpp",
+      "blob_sha": "25f48e89fd535e30de6266c9ae914add44f6104c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_program.cpp"
+    },
+    {
+      "path": "source/gpu/shader_program.hpp",
+      "blob_sha": "e458b6e787c47fc2fe6fbe74214d766e2361567a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/shader_program.hpp"
+    },
+    {
+      "path": "source/gpu/sim_backend.cpp",
+      "blob_sha": "9f19055fd43b5716a9c1dc30fcc3c2f195852a26",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/sim_backend.cpp"
+    },
+    {
+      "path": "source/gpu/sim_backend.hpp",
+      "blob_sha": "486251d592c1bd548d9e620de91d38b0a9c7736b",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/sim_backend.hpp"
+    },
+    {
+      "path": "source/gpu/sim_pipeline.cpp",
+      "blob_sha": "2810620a58b3c4cc6c49729f98a25582cd86b9a3",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/sim_pipeline.cpp"
+    },
+    {
+      "path": "source/gpu/upscale_filters.hpp",
+      "blob_sha": "2b2e2cc7cad123913c3e2e2cf15cb5de9365b9dc",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/gpu/upscale_filters.hpp"
+    },
+    {
+      "path": "source/platform/launch_log.cpp",
+      "blob_sha": "ff3a6132d43d10b559f812c91c3306aa376c543c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/launch_log.cpp"
+    },
+    {
+      "path": "source/platform/launch_log.hpp",
+      "blob_sha": "7edee94b5d3a07034a4dcd20bc03e33b84099059",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/launch_log.hpp"
+    },
+    {
+      "path": "source/platform/main.cpp",
+      "blob_sha": "6b2a694e47be574235283ab4c0e6e253de1f0c7f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/main.cpp"
+    },
+    {
+      "path": "source/platform/screen_size.hpp",
+      "blob_sha": "08abe1a49294182cb43e6ec33fe7a1b06613ad63",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/screen_size.hpp"
+    },
+    {
+      "path": "source/save/base64.cpp",
+      "blob_sha": "7d27e4494eb81ecdba1c492d1965c197226360df",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/base64.cpp"
+    },
+    {
+      "path": "source/save/base64.hpp",
+      "blob_sha": "8f784b5f1b3082f5f3fe0f6ab87fd431cd89caa8",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/base64.hpp"
+    },
+    {
+      "path": "source/save/physics_params_io.cpp",
+      "blob_sha": "3c5b8a0803ddef28f6116c488cc502b2b9060ef0",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/physics_params_io.cpp"
+    },
+    {
+      "path": "source/save/physics_params_io.hpp",
+      "blob_sha": "f4be5bf96d69285d53082eeebe0fe50a5402d88f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/physics_params_io.hpp"
+    },
+    {
+      "path": "source/save/save.cpp",
+      "blob_sha": "cde68373ba86b7c8842bca928615e0740d60332f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/save.cpp"
+    },
+    {
+      "path": "source/save/save.hpp",
+      "blob_sha": "2d09795be1af3dadacb2f3d5bacb5df54015ac5f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/save.hpp"
+    },
+    {
+      "path": "source/save/save_paths.cpp",
+      "blob_sha": "e3e48c471b7dfc3aaa38635fd06b31734e30cdad",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/save_paths.cpp"
+    },
+    {
+      "path": "source/save/save_paths.hpp",
+      "blob_sha": "336926df6a5301679d7940cc76a2dd8406a05025",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/save_paths.hpp"
+    },
+    {
+      "path": "source/save/settings_io.cpp",
+      "blob_sha": "1a060ad6d8d3156a445a552c1dec3fa0a9a56793",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/settings_io.cpp"
+    },
+    {
+      "path": "source/save/settings_io.hpp",
+      "blob_sha": "2ede423947967360b97cd6d8a1eccc246ab59b34",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/settings_io.hpp"
+    },
+    {
+      "path": "source/save/tpt_material_map.hpp",
+      "blob_sha": "340ed0e386b230d85e57735a037f81397abe61cf",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/tpt_material_map.hpp"
+    },
+    {
+      "path": "source/save/tpt_stamp_import.cpp",
+      "blob_sha": "630b3248e9ff4ba6e6c9b317aab1474aae2a6dc6",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/tpt_stamp_import.cpp"
+    },
+    {
+      "path": "source/save/tpt_stamp_import.hpp",
+      "blob_sha": "cf9772738224a340e6942cae814b9e102d99a552",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/save/tpt_stamp_import.hpp"
+    },
+    {
+      "path": "source/sim/brush_command.hpp",
+      "blob_sha": "496aa07765b30c149243e1d9b3ddeabf8246a681",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_command.hpp"
+    },
+    {
+      "path": "source/sim/brush_stroke.cpp",
+      "blob_sha": "9415b1aeb034e755f8ff285eb6964b652c5a3ffb",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_stroke.cpp"
+    },
+    {
+      "path": "source/sim/brush_stroke.hpp",
+      "blob_sha": "a211e2d51bb5fc791b16712ae89368c3920113e9",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_stroke.hpp"
+    },
+    {
+      "path": "source/sim/brush_stroke_dispatch.cpp",
+      "blob_sha": "0dc8d3150aa418facaa6fdf3be57c8c72ade8a1d",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/brush_stroke_dispatch.cpp"
+    },
+    {
+      "path": "source/sim/cpu_reference.cpp",
+      "blob_sha": "2871c2fc35b5c0eb973913992623bd608996f496",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/cpu_reference.cpp"
+    },
+    {
+      "path": "source/sim/cpu_reference.hpp",
+      "blob_sha": "205ce08dcbbd5ecb186b19de6de26e49b126e51e",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/cpu_reference.hpp"
+    },
+    {
+      "path": "source/sim/materials.hpp",
+      "blob_sha": "2f44bd4457bac12bc499613fa6528684d8018ee4",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/materials.hpp"
+    },
+    {
+      "path": "source/sim/physics_gpu.hpp",
+      "blob_sha": "e1ed188add2ad5218a3b4f72402b4a3704d62b36",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_gpu.hpp"
+    },
+    {
+      "path": "source/sim/physics_params.hpp",
+      "blob_sha": "ba3b964f1b4c283a8678e7bface4c8d05fc76f22",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_params.hpp"
+    },
+    {
+      "path": "source/sim/physics_settings.cpp",
+      "blob_sha": "6e552bd4507e2d39c9d37b0ae7dda8b577799f82",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_settings.cpp"
+    },
+    {
+      "path": "source/sim/physics_settings.hpp",
+      "blob_sha": "97a5a6a3c7607cda8ed3a8f1cfc1ac9cd7876f64",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/physics_settings.hpp"
+    },
+    {
+      "path": "source/sim/sim_grid_policy.hpp",
+      "blob_sha": "159dcfcbaf3aa054d950a029d4bfc3c5827f2447",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/sim/sim_grid_policy.hpp"
+    },
+    {
+      "path": "source/ui/active_tiles_overlay.cpp",
+      "blob_sha": "bc569de49f81d69f25575ba03de0c75db27199f6",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/active_tiles_overlay.cpp"
+    },
+    {
+      "path": "source/ui/active_tiles_overlay.hpp",
+      "blob_sha": "93bc97875f2766713ca67b661e23aa18fd50892b",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/active_tiles_overlay.hpp"
+    },
+    {
+      "path": "source/ui/boot_screen.cpp",
+      "blob_sha": "df45c9ab420c5a741347452ec20b82ae1f3bb323",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/boot_screen.cpp"
+    },
+    {
+      "path": "source/ui/boot_screen.hpp",
+      "blob_sha": "8a0792b08c9861c1b2562d6c635ef6d39c990841",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/boot_screen.hpp"
+    },
+    {
+      "path": "source/ui/brush_cursor.cpp",
+      "blob_sha": "d791e763c70ffd422c668532ae36326198198c69",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/brush_cursor.cpp"
+    },
+    {
+      "path": "source/ui/brush_cursor.hpp",
+      "blob_sha": "a13be1fca0ff73314f2939b5fdc001a1d029db7e",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/brush_cursor.hpp"
+    },
+    {
+      "path": "source/ui/hud.cpp",
+      "blob_sha": "7c445efaf495dfc3b125e8e63144496c3502f294",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/hud.cpp"
+    },
+    {
+      "path": "source/ui/hud.hpp",
+      "blob_sha": "5fcb3fd41ae55cdfcf9e16de979648b96ce0d243",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/hud.hpp"
+    },
+    {
+      "path": "source/ui/layout.hpp",
+      "blob_sha": "2a03ab396c264ff24ebd1d5083d80bbc77fc250e",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/layout.hpp"
+    },
+    {
+      "path": "source/ui/material_wheel.cpp",
+      "blob_sha": "c0f5c38628150f0fc966f6424407276c8c43de0d",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/material_wheel.cpp"
+    },
+    {
+      "path": "source/ui/material_wheel.hpp",
+      "blob_sha": "6aeec92c6425eb5b6158daafd579a18cac9591fa",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/material_wheel.hpp"
+    },
+    {
+      "path": "source/ui/menu.cpp",
+      "blob_sha": "9ba5b2fff061bb0b14582c458e6b79fed4380f40",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu.cpp"
+    },
+    {
+      "path": "source/ui/menu.hpp",
+      "blob_sha": "fabc076476a9c7de34ac3e3e2ff185c7409ee079",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu.hpp"
+    },
+    {
+      "path": "source/ui/menu_chrome.cpp",
+      "blob_sha": "2fbfca6aedc90c551b374386c99adf1ed7abf7ad",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_chrome.cpp"
+    },
+    {
+      "path": "source/ui/menu_chrome.hpp",
+      "blob_sha": "841eabf193c15bf717cfe48345d3be70cf247537",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_chrome.hpp"
+    },
+    {
+      "path": "source/ui/menu_fx.cpp",
+      "blob_sha": "e6a00d51008a0d49dd0932b594efc87d6929a577",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_fx.cpp"
+    },
+    {
+      "path": "source/ui/menu_fx.hpp",
+      "blob_sha": "9718e0a5dfe4128ad0ce80e436b0e3b06a10888a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_fx.hpp"
+    },
+    {
+      "path": "source/ui/menu_sim.cpp",
+      "blob_sha": "322359bf09adc515a8c8b0ceb6f6877390f3ca68",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_sim.cpp"
+    },
+    {
+      "path": "source/ui/menu_sim.hpp",
+      "blob_sha": "1050281f030d7a0bc367668551868b01de5d5fb5",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/menu_sim.hpp"
+    },
+    {
+      "path": "source/ui/perf_overlay.cpp",
+      "blob_sha": "b2505151e82151b4065422226555f27bcb0b1f10",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/perf_overlay.cpp"
+    },
+    {
+      "path": "source/ui/perf_overlay.hpp",
+      "blob_sha": "6577c345e92a065f0f67cc5ce828352ed061ad51",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/perf_overlay.hpp"
+    },
+    {
+      "path": "source/ui/save_overlay.cpp",
+      "blob_sha": "5c9367bad3bcd8fc1161f3f23d8726b566f396aa",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/save_overlay.cpp"
+    },
+    {
+      "path": "source/ui/save_overlay.hpp",
+      "blob_sha": "be41c6f0c36a327cd0447a79148afc549ca5e44a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/save_overlay.hpp"
+    },
+    {
+      "path": "source/ui/sim_fx.cpp",
+      "blob_sha": "2ab60b1ae440da76c155d32f18f630917dae0517",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/sim_fx.cpp"
+    },
+    {
+      "path": "source/ui/sim_fx.hpp",
+      "blob_sha": "4eac5f9daada60d8f56ee04e5bb063986f305440",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/sim_fx.hpp"
+    },
+    {
+      "path": "source/ui/theme.hpp",
+      "blob_sha": "1db7f7bb62fc227e1582849613001b1e8bb535ac",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/theme.hpp"
+    },
+    {
+      "path": "source/ui/toast.cpp",
+      "blob_sha": "9b8c44b466d776610383fd8e69e41694419cc3e2",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/toast.cpp"
+    },
+    {
+      "path": "source/ui/toast.hpp",
+      "blob_sha": "f5a7a48a37bb121be185479f86036e0ca0a1b0da",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/toast.hpp"
+    },
+    {
+      "path": "source/ui/ui_copy.cpp",
+      "blob_sha": "a3dd70b56b852f1c0bae4dc2c8422dc02ce8bd47",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/ui_copy.cpp"
+    },
+    {
+      "path": "source/ui/ui_copy.hpp",
+      "blob_sha": "3468e72c3b0e6f117f6260c0f70601bf9f901d49",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/ui/ui_copy.hpp"
+    },
+    {
+      "path": "source/platform/audio/menu_music.cpp",
+      "blob_sha": "1f95f3f33d3255478a48185721745ade6efacb28",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/menu_music.cpp"
+    },
+    {
+      "path": "source/platform/audio/menu_music.hpp",
+      "blob_sha": "4a4134d94f9fa256871ef856dd6bf49a5f850961",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/menu_music.hpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio.cpp",
+      "blob_sha": "7f06e9e37113d8a12b026aa9e6add659e01b9c5f",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio.cpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio.hpp",
+      "blob_sha": "0108a9c50102d81c22a800f90bc939b96eca7e3c",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio.hpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio_desktop.cpp",
+      "blob_sha": "b7e92e38a674ef306c244d8263bef30bd8a696a0",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio_desktop.cpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio_platform.hpp",
+      "blob_sha": "1f3b20b6125bad9361767b7a3a600bcdfbc3334a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio_platform.hpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio_stub.cpp",
+      "blob_sha": "cdeb36531a43fcd46de665bf106b660bef4d245a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio_stub.cpp"
+    },
+    {
+      "path": "source/platform/audio/tone_audio_switch.cpp",
+      "blob_sha": "e24d5402783d7729aa1d4b28d170ce283ec5abfd",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/tone_audio_switch.cpp"
+    },
+    {
+      "path": "source/platform/audio/wav_loader.cpp",
+      "blob_sha": "aefd5386520427b8ab793d7d2f1439901fcf820a",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/wav_loader.cpp"
+    },
+    {
+      "path": "source/platform/audio/wav_loader.hpp",
+      "blob_sha": "554bd86adf3e635ff08c3c794425c28c01e25665",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/audio/wav_loader.hpp"
+    },
+    {
+      "path": "source/platform/input/haptics.cpp",
+      "blob_sha": "08ceb7e36605bd3f4d9c01b9f09ebc7c35d0c618",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/haptics.cpp"
+    },
+    {
+      "path": "source/platform/input/haptics.hpp",
+      "blob_sha": "e206478a822264044ab24760a73ab8c25a4d9d26",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/haptics.hpp"
+    },
+    {
+      "path": "source/platform/input/input.cpp",
+      "blob_sha": "42adfd3971e6f346831b66f794cd5adb0e271ddb",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/input.cpp"
+    },
+    {
+      "path": "source/platform/input/input.hpp",
+      "blob_sha": "0f5c7857699969fbb4afad71a3cbc76ce7056597",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/input.hpp"
+    },
+    {
+      "path": "source/platform/input/menu_repeat.cpp",
+      "blob_sha": "cb03a2592282f2590afa8a1c23ab80a6975e247d",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/menu_repeat.cpp"
+    },
+    {
+      "path": "source/platform/input/menu_repeat.hpp",
+      "blob_sha": "3badcb77612bddaeabe04a70a9d42e885f9d73b3",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/menu_repeat.hpp"
+    },
+    {
+      "path": "source/platform/input/switch_face.hpp",
+      "blob_sha": "5820173c4f05b08f3e1743405d36aaba14ae22be",
+      "source_url": "https://github.com/antoinebou12/nxsand/blob/af70da331e9e74ce0d5bd0365e1447f42cfc97d0/source/platform/input/switch_face.hpp"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"nxsand\"]\n  f0[\"Makefile\"]\n  root --> f0\n  f1[\"source/gpu/sim_pipeline.hpp\"]\n  root --> f1\n  f2[\"source/sim/sim_state.hpp\"]\n  root --> f2\n  f3[\"README.md\"]\n  root --> f3\n  f4[\"scripts/build-desktop-msys.sh\"]\n  root --> f4\n  f5[\"scripts/build-desktop-wsl.sh\"]\n  root --> f5\n  f6[\"scripts/crop_icon.py\"]\n  root --> f6\n  f7[\"scripts/export-nsp.py\"]\n  root --> f7\n  f8[\"scripts/generate-audio.py\"]\n  root --> f8\n  f9[\"scripts/package-release.py\"]\n  root --> f9\n  f10[\"scripts/regenerate-diagrams.py\"]\n  root --> f10\n  f11[\"scripts/sync-sim-rules-body.py\"]\n  root --> f11\n  f12[\"tests/gpu_test_gl.cpp\"]\n  root --> f12\n  f13[\"tests/gpu_test_gl.hpp\"]\n  root --> f13\n  f14[\"tests/gpu_unit_main.cpp\"]\n  root --> f14\n  f15[\"tests/test_harness.hpp\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t7ba1fb6b5b9e[\"SimPassRect\"] {\n  <<struct>>\n}\nclass t658fbe1e623e[\"SimPipeline\"] {\n  SimPipeline()\n  init()\n  shutdown()\n  clearAll()\n}\nclass tb8626ee066b2[\"SimState\"] {\n  <<struct>>\n}\nclass tfdb610a7db47[\"SimCompileAudioGuard\"] {\n  <<struct>>\n  SimCompileAudioGuard()\n}\nclass ta050db13a10c[\"App\"] {\n  init()\n  shutdown()\n  frame()\n  setSimGridSize()\n}\nclass tf962c5d4ce57[\"PerformanceSettings\"] {\n  <<struct>>\n}\nclass tbdcb989e9dca[\"VisualSettings\"] {\n  <<struct>>\n}\nclass tbb5d68fb65da[\"ControlSettings\"] {\n  <<struct>>\n}\nclass t480673c07c2c[\"AudioSettings\"] {\n  <<struct>>\n}\nclass t28451b24c3ad[\"AccessibilitySettings\"] {\n  <<struct>>\n}\nclass t45aedf66edc0[\"DebugSettings\"] {\n  <<struct>>\n}\nclass t4b3cad79f762[\"DisplaySettings\"] {\n  <<struct>>\n}\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/nxsand",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/nxsand/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_runtime[\"Runtime\"]\n  node_entry[\"Platform entry<br/>[main.cpp]\"]\n  node_app[\"App frame loop<br/>[app.cpp]\"]\n  node_game_settings[\"Game settings<br/>[game_settings.hpp]\"]\n  node_engine_settings[\"Engine settings\"]\nend\n\nsubgraph group_simulation[\"Simulation\"]\n  node_sim_state[\"Simulation state<br/>[sim_state.hpp]\"]\n  node_materials[\"Materials<br/>[materials.hpp]\"]\n  node_physics[\"Physics parameters<br/>[physics_params.hpp]\"]\n  node_sim_pipeline[\"GPU simulation<br/>[sim_pipeline.cpp]\"]\n  node_sim_backend[\"Simulation backend<br/>[sim_backend.hpp]\"]\nend\n\nsubgraph group_presentation[\"Presentation\"]\n  node_render[\"World renderer\"]\n  node_shader_program[\"Shader programs<br/>[shader_program.cpp]\"]\n  node_font[\"Font atlas<br/>[font_atlas.cpp]\"]\n  node_audio[\"Audio<br/>[tone_audio.cpp]\"]\nend\n\nsubgraph group_interaction[\"Interaction\"]\n  node_input[\"Input handling<br/>[input.cpp]\"]\n  node_menu[\"Menus<br/>[menu.cpp]\"]\n  node_layout[\"UI layout<br/>[layout.hpp]\"]\n  node_theme[\"UI theme<br/>[theme.hpp]\"]\nend\n\nsubgraph group_persistence[\"Persistence\"]\n  node_save[\"World saves<br/>[save.cpp]\"]\n  node_save_paths[\"Save storage<br/>[save_paths.cpp]\"]\n  node_settings_io[\"Settings storage<br/>[settings_io.cpp]\"]\nend\n\nnode_player((\"Player\"))\n\nnode_player -->|\"launches\"| node_entry\nnode_entry -->|\"starts\"| node_app\nnode_app -->|\"ticks\"| node_sim_pipeline\nnode_app -->|\"renders\"| node_render\nnode_app -->|\"reads\"| node_input\nnode_app -->|\"coordinates\"| node_menu\nnode_app -->|\"requests saves\"| node_save\nnode_app -->|\"loads settings\"| node_settings_io\nnode_app -->|\"applies settings\"| node_engine_settings\nnode_app -->|\"uses settings\"| node_game_settings\nnode_app -->|\"holds state\"| node_sim_state\nnode_app -->|\"holds parameters\"| node_physics\nnode_sim_pipeline -->|\"updates grid\"| node_sim_state\nnode_sim_pipeline -->|\"simulates materials\"| node_materials\nnode_sim_pipeline -->|\"uses parameters\"| node_physics\nnode_sim_pipeline -->|\"selects backend\"| node_sim_backend\nnode_render -->|\"uses shaders\"| node_shader_program\nnode_render -->|\"draws grid\"| node_sim_state\nnode_render -->|\"colors materials\"| node_materials\nnode_menu -->|\"edits settings\"| node_engine_settings\nnode_menu -->|\"uses text\"| node_font\nnode_menu -->|\"draws interface\"| node_render\nnode_layout -->|\"uses styles\"| node_theme\nnode_input -->|\"maps controls\"| node_layout\nnode_audio -->|\"reads preferences\"| node_game_settings\nnode_save -.->|\"uses storage\"| node_save_paths\nnode_settings_io -->|\"uses storage\"| node_save_paths\nnode_engine_settings -->|\"persists preferences\"| node_settings_io\n\n\nclass node_entry,node_app,node_game_settings,node_engine_settings toneBlue\nclass node_sim_state,node_materials,node_physics,node_sim_pipeline,node_sim_backend toneAmber\nclass node_render,node_shader_program,node_font,node_audio toneMint\nclass node_input,node_menu,node_layout,node_theme toneRose\nclass node_save,node_save_paths,node_settings_io,node_player toneIndigo",
+    "linked_paths": 20
+  }
+}

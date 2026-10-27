@@ -1,4 +1,5 @@
 ---
+image_alt: "Wear pipeline — contact, velocity, traction, texture integration, atlas and GelSight validation"
 post_kind: article
 title: "Master's thesis — contact–appearance coupling for wear in texture space"
 date: 2026-08-14T14:00:00-04:00
@@ -17,7 +18,7 @@ images:
   - images/wear-pipeline-flow.svg
 ---
 
-**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — my ÉTS master's thesis (English abstract title: *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Directed by **Sheldon Andrews**, defended **14 August 2026**. The core idea: give material maps a **persistent local memory** of contact. Body travel alone cannot predict where wear shows up. **[Version française]({{< ref "/posts/thesis-wear-texture-space/index.fr.md" >}})**.
+**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — my ÉTS master's thesis (English abstract title: *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Directed by **Sheldon Andrews**, defended **14 August 2026**. The core idea: give material maps a **persistent local memory** of contact. Body travel alone cannot predict where wear shows up.
 
 <!--more-->
 
@@ -31,7 +32,7 @@ The thesis closes that loop: mechanical contact resolution feeds **texture-space
 
 Sparse contacts are grouped into local patches, projected into material atlases, and reconstructed as tangential velocity, effective traction, and frictional dissipation on a GPU patch grid. Those fields drive accumulation of sliding distance, dominant direction, and wear — then progressive map updates **without global remeshing**.
 
-![Wear pipeline — contact, velocity, traction, texture integration, atlas and GelSight validation](./images/wear-pipeline-flow.svg)
+
 
 Source: [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (same chain as [GraphQuon 2025]({{< ref "/posts/graphquon-2025-university-of-toronto/index.md" >}})). The interactive implementation in **TextureFriction** adds a stricter runtime order: pre-solve FBO passes → PGS or AVBD solve → post-solve velocity/traction → sliding/wear/direction deposit → rendering.
 

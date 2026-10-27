@@ -1,0 +1,44 @@
+classDiagram
+direction TB
+class td9dd9f1be134["ISentrySdkWrapper"] {
+  <<interface>>
+  CaptureMessage()
+  CaptureException()
+  StartTransaction()
+}
+class t436d77520181["SentrySdkWrapper"] {
+  SentrySdkWrapper()
+  CaptureMessage()
+  CaptureException()
+  StartTransaction()
+}
+class t9aa877270a99["ITransactionService"] {
+  <<interface>>
+  StartChild()
+}
+class t7f1535817357["TransactionService"] {
+  StartChild()
+}
+class t53092b4cd27d["SentrySink"] {
+  SentrySink()
+  Emit()
+  EmitWithoutTracing()
+  GetBreadcrumbLevel()
+  GetSentryLevel()
+  ExceptionDataToScopeExtrasDictionary()
+  RenderPropertyValuesToStringDictionary()
+  ExceptionDataToStringDictionary()
+  SpanTagsToStringDictionary()
+  Render()
+  Dispose()
+}
+td9dd9f1be134 <|.. t436d77520181
+t9aa877270a99 <|.. t7f1535817357
+class bc2d528bdb08a["ILogEventSink"] {
+  <<unresolved_base>>
+}
+t53092b4cd27d ..> bc2d528bdb08a : declared base
+class b06fa01e7e2b1["IDisposable"] {
+  <<unresolved_base>>
+}
+t53092b4cd27d ..> b06fa01e7e2b1 : declared base

@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class t3bad567b3e31["FakeControl"] {
+  connect()
+  poll()
+  close()
+}
+class t6d95f7644f2a["FlakyControl"] {
+  FlakyControl()
+  connect()
+  setInitialPreferredDerp()
+  poll()
+  close()
+}
+class tfd29cee5f54c["Shared"] {
+  <<struct>>
+}
+class t1f72734e30b2["FakeOverlay"] {
+  start()
+  prepareForStreaming()
+  stop()
+  wasStarted()
+}
+class bf66ae316db6d["artemis::tailscale::IControlSession"] {
+  <<unresolved_base>>
+}
+bf66ae316db6d <|-- t3bad567b3e31
+bf66ae316db6d <|-- t6d95f7644f2a
+class b18257188e2e8["artemis::tailscale::IOverlayRoute"] {
+  <<unresolved_base>>
+}
+b18257188e2e8 <|-- t1f72734e30b2

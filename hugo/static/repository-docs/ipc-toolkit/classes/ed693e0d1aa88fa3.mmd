@@ -1,0 +1,42 @@
+classDiagram
+direction TB
+class tdba24d4c3e8d["DumbNarrowPhaseCCD"] {
+  __init__()
+  point_point_ccd()
+  point_edge_ccd()
+  point_triangle_ccd()
+  edge_edge_ccd()
+}
+class t990ec3148d16["DumbBroadPhase"] {
+  __init__()
+  name()
+  detect_vertex_vertex_candidates()
+  detect_edge_vertex_candidates()
+  detect_edge_edge_candidates()
+  detect_face_vertex_candidates()
+  detect_edge_face_candidates()
+  detect_face_face_candidates()
+}
+class tfaac37513dc7["LinearTrajectory"] {
+  __init__()
+  __call__()
+  max_distance_from_linear()
+}
+class t35f6dfeaf202["Rigid2DTrajectory"] {
+  __init__()
+  __call__()
+  max_distance_from_linear()
+}
+class bae5861c2fa3c["ipctk.NarrowPhaseCCD"] {
+  <<unresolved_base>>
+}
+bae5861c2fa3c <|-- tdba24d4c3e8d
+class b19559cf10689["ipctk.BroadPhase"] {
+  <<unresolved_base>>
+}
+b19559cf10689 <|-- t990ec3148d16
+class b66e079a51d0c["ipctk.NonlinearTrajectory"] {
+  <<unresolved_base>>
+}
+b66e079a51d0c <|-- tfaac37513dc7
+b66e079a51d0c <|-- t35f6dfeaf202

@@ -12,7 +12,7 @@ tags:
 
 # Serilog.Sinks.SentrySDK
 
-**Sink Serilog** pour **Sentry** : centraliser logs et erreurs dans Sentry avec le SDK officiel.
+Sink Serilog qui envoie les événements vers Sentry via le SDK officiel.
 
 S’inspire de [serilog-contrib/serilog-sinks-sentry](https://github.com/serilog-contrib/serilog-sinks-sentry).
 

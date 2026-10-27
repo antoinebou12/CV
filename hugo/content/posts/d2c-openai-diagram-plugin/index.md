@@ -1,5 +1,7 @@
 ---
 post_kind: article
+project_docs: d2copenaiplugin
+story_kind: introduction
 title: "D2C OpenAI plugin — diagrams with PlantUML, Mermaid, and D2"
 date: 2022-09-06T10:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
@@ -13,10 +15,10 @@ tags:
   - Mermaid
   - D2
 images:
-  - featured.gif
+  - images/featured.gif
 ---
 
-**D2COpenAIPlugin** is a ChatGPT plugin that turns conversation into **PlantUML**, **Mermaid**, or **D2** without leaving the thread. I built it when OpenAI plugins were the main extension story — useful for architecture sketches, lab docs, and “draw this flow” moments in chat. **[Version française]({{< ref "/posts/d2c-openai-diagram-plugin/index.fr.md" >}})**.
+**D2COpenAIPlugin** is a ChatGPT plugin that turns conversation into **PlantUML**, **Mermaid**, or **D2** without leaving the thread. I built it when OpenAI plugins were the main extension story — useful for architecture sketches, lab docs, and “draw this flow” moments in chat.
 
 <!--more-->
 
@@ -28,11 +30,9 @@ A teammate describes a flow in chat; I need a **sequence diagram in the repo** t
 
 Whiteboards do not paste into Markdown repos. I wanted **text-native diagrams** I could drop into Hugo posts, GitHub READMEs, and design reviews — the same motivation as later **[Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})**, but wired as a **plugin action** instead of a pasted template.
 
-## Install and first run
+## Original workflow
 
-1. Clone or follow README on **[github.com/antoinebou12/D2COpenAIPlugin](https://github.com/antoinebou12/D2COpenAIPlugin).
-2. Enable the plugin in ChatGPT (plugin era listing: [short link](https://lnkd.in/exVNZMnT)).
-3. Ask for a diagram type explicitly — “sequence diagram, PlantUML, React → API → Redis → DB”.
+In the original plugin workflow, the request named the diagram type explicitly, for example a PlantUML sequence for React, an API, Redis, and a database. The [project documentation]({{< ref "/projects/notes/d2copenaiplugin/index.md" >}}) covers the service and its setup.
 
 The model still hallucinates syntax sometimes; the plugin’s job is to **route** to the right renderer, not to guarantee perfect UML.
 

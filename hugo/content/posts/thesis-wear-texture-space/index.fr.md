@@ -1,4 +1,5 @@
 ---
+image_alt: "Pipeline usure — contact, vitesse, traction, intégration texture, atlas et validation GelSight"
 post_kind: article
 title: "Mémoire — couplage contact-apparence pour l'usure en espace texture"
 date: 2026-08-14T14:00:00-04:00
@@ -17,7 +18,7 @@ images:
   - images/wear-pipeline-flow.svg
 ---
 
-**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — mon mémoire de maîtrise à l'ÉTS (titre anglais du résumé : *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Direction : **Sheldon Andrews**. Soutenance le **14 août 2026**. L'idée centrale : donner aux cartes de matériau une **mémoire locale persistante** du contact. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît. **[English version]({{< ref "/posts/thesis-wear-texture-space/index.md" >}})**.
+**Couplage contact-apparence pour l'usure de surfaces microstructurées en simulation interactive** — mon mémoire de maîtrise à l'ÉTS (titre anglais du résumé : *Visual Appearance Evolution from Wear on Microstructured Surfaces in Texture Space*). Direction : **Sheldon Andrews**. Soutenance le **14 août 2026**. L'idée centrale : donner aux cartes de matériau une **mémoire locale persistante** du contact. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît.
 
 <!--more-->
 
@@ -31,7 +32,7 @@ Le mémoire boucle ce circuit : la résolution mécanique du contact alimente l'
 
 Les contacts épars sont regroupés en patchs locaux, projetés vers des atlas matériau, et reconstruits en vitesse tangentielle, traction effective et dissipation frictionnelle sur une grille GPU. Ces champs pilotent l'accumulation du glissement, de la direction dominante et de l'usure — puis la mise à jour progressive des cartes **sans remaillage global**.
 
-![Pipeline usure — contact, vitesse, traction, intégration texture, atlas et validation GelSight](./images/wear-pipeline-flow.svg)
+
 
 Source : [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (même chaîne que [GraphQuon 2025]({{< ref "/posts/graphquon-2025-university-of-toronto/index.fr.md" >}})). L'implémentation interactive **TextureFriction** impose un ordre d'exécution plus strict : passes FBO pré-résolution → solveur PGS ou AVBD → vitesse/traction post-résolution → dépôt glissement/usure/direction → rendu.
 

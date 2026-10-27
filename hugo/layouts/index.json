@@ -13,10 +13,7 @@
       {{- $summary = $fromSummary -}}
     {{- end -}}
     {{- $plain := .Plain | plainify | chomp -}}
-    {{- $content := $plain -}}
-    {{- if gt (len $plain) 12000 -}}
-      {{- $content = slicestr $plain 0 12000 -}}
-    {{- end -}}
+    {{- $content := strings.Truncate 12000 "" $plain -}}
     {{- $tagRefs := slice -}}
     {{- range .GetTerms "tags" -}}
       {{- $tagRefs = $tagRefs | append (dict "name" .Title "permalink" .Permalink) -}}

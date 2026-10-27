@@ -4,13 +4,13 @@ description: Tarte salée aux épinards, fromage de chèvre, noix toastées et f
 date: 2024-01-05
 translationKey: spinach-goat-cheese-walnut-tart
 images:
-  - featured.jpg
+  - images/featured.jpg
 tags:
   - Végétarien
   - Pâtisserie salée
 ---
 
-![Tarte salée épinards et chèvre](./featured.jpg)
+![Tarte salée épinards et chèvre](images/featured.jpg)
 
 *Photo : [Unsplash](https://unsplash.com/photos/1546833999-b9f581a1996d)*
 

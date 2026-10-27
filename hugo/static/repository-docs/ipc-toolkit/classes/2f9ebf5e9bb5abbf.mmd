@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class ta1f8c27f1170["RotationalTrajectory"] {
+  RotationalTrajectory()
+  max_distance_from_linear()
+}
+class tb436c60a5150["IntervalRotationalTrajectory"] {
+  IntervalRotationalTrajectory()
+  max_distance_from_linear()
+}
+class t75c3d5c9b34e["StaticTrajectory"] {
+  StaticTrajectory()
+  max_distance_from_linear()
+}
+class tc2e1642ff64e["Rigid2DTrajectory"] {
+  Rigid2DTrajectory()
+  max_distance_from_linear()
+}
+class b8683afd6900c["NonlinearTrajectory"] {
+  <<unresolved_base>>
+}
+b8683afd6900c <|-- ta1f8c27f1170
+ta1f8c27f1170 <|-- tb436c60a5150
+class b1e2b692617e1["IntervalNonlinearTrajectory"] {
+  <<unresolved_base>>
+}
+b1e2b692617e1 <|-- tb436c60a5150
+b8683afd6900c <|-- t75c3d5c9b34e
+class b02e5a1643c5a["ipc::NonlinearTrajectory"] {
+  <<unresolved_base>>
+}
+b02e5a1643c5a <|-- tc2e1642ff64e

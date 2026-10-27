@@ -1,0 +1,35 @@
+{{- $note := .note -}}
+{{- $fr := eq .page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $analysis := index hugo.Data.repository_analysis.repositories $note.repo -}}
+{{- with index hugo.Data.repository_api_guides.repositories $note.repo -}}
+{{- $checked := .live_checked -}}
+<section class="repo-api-guide" aria-labelledby="api-contract">
+  <h2 id="api-contract">{{ index .title $i }}</h2>
+  <p class="repo-api-intro">{{ index .intro $i }}</p>
+  {{ with .endpoints }}
+  <table class="repo-permission-table">
+    <caption class="repo-evidence-label">{{ if $fr }}Contrôles d’accès lus dans les gestionnaires. Une mention « admin » dans le README ne figure ici que si le code la vérifie.{{ else }}Access checks read from the handlers. A README label of admin appears here only when the code checks it.{{ end }}</caption>
+    <thead><tr><th>{{ if $fr }}Méthode{{ else }}Method{{ end }}</th><th>{{ if $fr }}Chemin{{ else }}Path{{ end }}</th><th>{{ if $fr }}Contrôle vérifié{{ else }}Verified access check{{ end }}</th><th>{{ if $fr }}Fichier{{ else }}File{{ end }}</th></tr></thead>
+    <tbody>
+      {{ range . }}<tr><td><code>{{ .method }}</code></td><td><code>{{ .path }}</code></td><td>{{ index .access $i }}</td><td><a href="{{ $analysis.source_url }}{{ .file }}"><code>{{ .file }}</code></a></td></tr>{{ end }}
+    </tbody>
+  </table>
+  {{ end }}
+  {{ with .sequence }}
+  <div class="repo-progressive-diagram" data-mermaid-fallback data-natural-diagram>
+    <p class="repo-diagram-caption">{{ if $fr }}Séquence limitée au chemin cité.{{ else }}Sequence limited to the cited path.{{ end }}</p>
+    <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
+  </div>
+  {{ end }}
+  <div class="repo-code-sample">
+    <div class="repo-code-sample-head"><svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M7.1 4.3 2.4 9l4.7 4.7.9-.9L4.2 9 8 5.2l-.9-.9Zm5.8 0-.9.9L15.8 9 12 12.8l.9.9L17.6 9l-4.7-4.7Z"/></svg><span>{{ if $fr }}Exemple de requête{{ else }}Request example{{ end }}</span></div>
+    <pre><code>{{ .request }}</code></pre>
+  </div>
+  <h3>{{ if $fr }}Réponse et erreurs{{ else }}Response and errors{{ end }}</h3>
+  <div class="repo-api-notes"><article>{{ index .response $i | markdownify }}</article><article>{{ index .operations $i | markdownify }}</article></div>
+  <details class="repo-guide-chapter"><summary>{{ if $fr }}Authentification, limites et pagination{{ else }}Authentication, limits and pagination{{ end }}</summary><p>{{ index .boundary $i }}</p></details>
+  <ul class="repo-guide-files" role="list">{{ range .files }}<li><a href="{{ $analysis.source_url }}{{ . }}"><code>{{ . }}</code></a></li>{{ end }}</ul>
+  {{ with .live_source }}<p class="repo-evidence-label">{{ if $fr }}Schéma du service consulté le{{ else }}Service schema checked{{ end }} {{ $checked }} · <a href="{{ . }}">MCP</a></p>{{ end }}
+</section>
+{{- end -}}

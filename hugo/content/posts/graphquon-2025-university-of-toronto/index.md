@@ -15,12 +15,12 @@ tags:
   - ÉTS
 canonicalURL: "https://www.dgp.toronto.edu/graphquon/"
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![GraphQuon 2025 name badge — Antoine Boucher, École de technologie supérieure, Toronto skyline](./images/graphquon-name-badge.png)
 
-**GraphQuon** is the annual Quebec–Ontario pre-SIGGRAPH workshop. The **2025** edition ran **15–16 November 2025** at the **University of Toronto** ([series page](https://www.dgp.toronto.edu/graphquon/)). I **presented** there with **Sheldon Andrews** (ÉTS): **Where to Wear?** — how frictional contact leaves a readable history on surfaces, and how we can turn that into graphics and engineering feedback. **[Version française]({{< ref "/posts/graphquon-2025-university-of-toronto/index.fr.md" >}})**.
+**GraphQuon** is the annual Quebec–Ontario pre-SIGGRAPH workshop. The **2025** edition ran **15–16 November 2025** at the **University of Toronto** ([series page](https://www.dgp.toronto.edu/graphquon/)). I **presented** there with **Sheldon Andrews** (ÉTS): **Where to Wear?** — how frictional contact leaves a readable history on surfaces, and how we can turn that into graphics and engineering feedback.
 
 <!--more-->
 
@@ -34,7 +34,7 @@ The story is simple to state and hard to simulate: **time**, **contact**, and **
 
 ### Pipeline (one glance)
 
-Rendered with [uml-mcp](https://github.com/antoinebou12/uml-mcp) from [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd):
+Wear pipeline ([Mermaid source](./images/wear-pipeline-flow.mmd)):
 
 ![Wear simulation pipeline — contact, velocity, traction, texture integration, atlas](./images/wear-pipeline-flow.svg)
 

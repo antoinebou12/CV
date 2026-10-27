@@ -1,0 +1,53 @@
+{{- $note := .note -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $guide := index hugo.Data.repository_handbooks.repositories $note.repo -}}
+{{- $editorial := index hugo.Data.repository_guides.repositories $note.repo -}}
+{{- if eq .mode "overview" -}}
+<section class="repo-guide-start" aria-labelledby="first-steps">
+  <div class="repo-doc-badges" aria-label="{{ if $fr }}Repères du dépôt{{ else }}Repository facts{{ end }}">
+    <span>{{ index $guide.kind_label $i }}</span>
+    {{ with $guide.license }}<span>{{ . }}</span>{{ end }}
+    <a href="{{ $note.url }}/stargazers">★ {{ $guide.stars }} <span class="repo-badge-date">{{ $guide.recorded }}</span></a>
+    {{ if $note.fork }}<span>Fork</span>{{ end }}
+    {{ if $note.archived }}<span>{{ if $fr }}Archivé{{ else }}Archived{{ end }}</span>{{ end }}
+  </div>
+  <span id="first-steps" class="repo-section-anchor" aria-hidden="true"></span>
+  <div class="repo-resource-links">
+    <a class="repo-guide-primary" href="#installation">{{ if $fr }}Installation et commandes{{ else }}Setup and commands{{ end }}</a>
+    {{ $seen := slice }}
+    {{ range $editorial.links }}<a href="{{ .url }}">{{ index .label $i }} <span aria-hidden="true">↗</span></a>{{ $seen = $seen | append .url }}{{ end }}
+    {{ range $guide.links }}{{ if not (in $seen .url) }}<a href="{{ .url }}">{{ index .label $i }} <span aria-hidden="true">↗</span></a>{{ end }}{{ end }}
+  </div>
+</section>
+{{- else -}}
+<section class="repo-reader-guide" aria-labelledby="repository-references">
+  <h2 id="repository-references">{{ if $fr }}Références du dépôt{{ else }}Repository references{{ end }}</h2>
+  {{ if $guide.chapters }}
+  <p class="repo-evidence-label">{{ if $fr }}Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.{{ else }}Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.{{ end }}</p>
+  <div class="repo-guide-chapters">
+    {{ range $guide.chapters }}
+    <details class="repo-guide-chapter">
+      <summary><span>{{ index .title $i }}</span></summary>
+      {{ range .entries }}
+      <section class="repo-source-excerpt">
+        <h3><a href="{{ .url }}">{{ .title }}</a></h3>
+        <p class="repo-excerpt-file"><code>{{ .file }}</code></p>
+        <div class="repo-source-markdown">{{ .text | markdownify | replaceRE "<h[1-6]([^>]*)>" "<h4$1>" | replaceRE "</h[1-6]>" "</h4>" | safeHTML }}</div>
+        <a class="repo-guide-context" href="{{ .url }}">{{ if $fr }}Lire les instructions complètes{{ else }}Read the full instructions{{ end }} ↗</a>
+      </section>
+      {{ end }}
+    </details>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p>{{ if $fr }}Le dépôt ne fournit pas de guide détaillé pour ces étapes. Commencez par le README et les fichiers commentés ci-dessus.{{ else }}The repository does not provide a detailed guide for these steps. Start with its README and the source walkthrough above.{{ end }}</p>
+  {{ end }}
+  <details class="repo-guide-chapter">
+    <summary>{{ if $fr }}Documentation source{{ else }}Source documentation{{ end }}</summary>
+    <ul class="repo-guide-files" role="list">{{ range $guide.documents }}<li><a href="{{ .url }}"><code>{{ .path }}</code></a></li>{{ end }}</ul>
+    <p class="repo-evidence-label">{{ if $fr }}{{ len $guide.documents }} documents lus parmi {{ $guide.coverage.available }} candidats.{{ else }}{{ len $guide.documents }} documents read from {{ $guide.coverage.available }} candidates.{{ end }}{{ if $guide.coverage.failures }} {{ if $fr }}Certaines lectures ont échoué.{{ else }}Some reads failed.{{ end }}{{ end }}</p>
+  </details>
+</section>
+{{- end -}}

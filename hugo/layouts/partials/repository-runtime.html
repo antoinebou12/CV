@@ -1,0 +1,80 @@
+{{- $note := .note -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $profile := .profile | default dict -}}
+{{- $analysis := .analysis | default dict -}}
+{{- $rows := slice -}}
+{{- range $analysis.installation -}}
+  {{- $blob := lower (printf "%s %s" .heading .commands) -}}
+  {{- if or (in $blob "docker-compose") (in $blob "docker compose") (in $blob "docker run") (in $blob "docker build") -}}
+    {{- $rows = $rows | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $showDeploy := or $rows $profile.services $profile.network $profile.docker_commands -}}
+{{- if $showDeploy -}}
+<section class="repo-runtime" aria-labelledby="deployment">
+  <div class="repo-section-title"><span class="repo-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7.5h16v9H4z"/><path d="M7 11h.01M10 11h.01M7 14h.01M10 14h.01M16 10v4M18 10v4"/></svg></span><h2 id="deployment">{{ if $fr }}Déploiement et exploitation{{ else }}Deployment and operations{{ end }}</h2></div>
+  <p>{{ if $fr }}Les ports, le stockage et les relations de démarrage ci-dessous viennent de la configuration du dépôt. <code>depends_on</code> indique l’ordre de démarrage, pas la disponibilité du service.{{ else }}The ports, storage, and startup relationships below come from the repository configuration. <code>depends_on</code> records startup order, not service readiness.{{ end }}</p>
+  {{ with $profile.network }}<p><strong>{{ if $fr }}Réseau{{ else }}Network{{ end }}.</strong> {{ . }}</p>{{ end }}
+  {{ if and .show_mermaid $profile.services }}
+  <details class="repo-diagram-details repo-deployment-diagram" data-mermaid-lazy open>
+    <summary>{{ if $fr }}Carte du déploiement{{ else }}Deployment map{{ end }}</summary>
+    {{ partial "repository-diagram.html" (dict "note" $note "lang" $page.Lang "profile" $profile "prefer_compose" true) }}
+  </details>
+  {{ end }}
+  {{ with $profile.services }}
+  <table class="repo-permission-table">
+    <thead><tr><th>{{ if $fr }}Service{{ else }}Service{{ end }}</th><th>{{ if $fr }}Image ou build{{ else }}Image or build{{ end }}</th><th>{{ if $fr }}Ports publiés{{ else }}Published ports{{ end }}</th><th>{{ if $fr }}Démarrage{{ else }}Startup{{ end }}</th><th>{{ if $fr }}Stockage{{ else }}Storage{{ end }}</th></tr></thead>
+    <tbody>
+      {{ range . }}<tr><th scope="row">{{ .name }}</th><td>{{ .runtime }}</td><td>{{ .ports }}</td><td>{{ .depends }}</td><td>{{ .storage }}</td></tr>{{ end }}
+    </tbody>
+  </table>
+  {{ end }}
+  {{ with $profile.config }}
+  <p class="repo-evidence-label">{{ if $fr }}Noms de variables documentés. Les valeurs ne sont pas recopiées.{{ else }}Documented variable names. Values are not copied here.{{ end }}</p>
+  <ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>
+  {{ end }}
+</section>
+{{- end -}}
+{{- with $profile.algorithm -}}
+<section class="repo-runtime repo-algorithm" aria-labelledby="algorithm">
+  <h2 id="algorithm">{{ if $fr }}Algorithme{{ else }}Algorithm{{ end }}</h2>
+  <div class="repo-algorithm-grid">
+    <article>
+      <h3>{{ if $fr }}Problème{{ else }}Problem{{ end }}</h3>
+      <p>{{ index .problem $i }}</p>
+    </article>
+    {{ with .inputs }}
+    <article>
+      <h3>{{ if $fr }}Entrées{{ else }}Inputs{{ end }}</h3>
+      <p>{{ index . $i }}</p>
+    </article>
+    {{ end }}
+    {{ with .outputs }}
+    <article>
+      <h3>{{ if $fr }}Sorties{{ else }}Outputs{{ end }}</h3>
+      <p>{{ index . $i }}</p>
+    </article>
+    {{ end }}
+  </div>
+  {{ with .pseudocode }}
+  <h3>{{ if $fr }}Pseudocode (source){{ else }}Pseudocode (source-backed){{ end }}</h3>
+  <pre class="repo-pseudocode"><code>{{ . }}</code></pre>
+  {{ end }}
+  {{ with .steps }}
+  <ol class="repo-algorithm-steps" data-algorithm-stepper>
+    {{ range $idx, $step := . }}
+    <li>
+      <strong>{{ add $idx 1 }}. {{ index $step.title $i }}</strong>
+      <p>{{ index $step.body $i }}</p>
+    </li>
+    {{ end }}
+  </ol>
+  {{ end }}
+  {{ with .complexity }}
+  <p class="repo-evidence-label">{{ index . $i }}</p>
+  {{ end }}
+  {{ with .source }}<p><a href="{{ . }}">{{ if $fr }}Implémentation consultée{{ else }}Inspected implementation{{ end }}</a></p>{{ end }}
+</section>
+{{- end -}}

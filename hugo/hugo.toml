@@ -1,6 +1,7 @@
 # Base URL is overridden in CI for GitHub Pages (…/repo/blog/).
 baseURL = "http://localhost:1313/blog/"
 languageCode = "en-us"
+timeZone = "America/Toronto"
 title = "Antoine Boucher"
 theme = "paper"
 # Custom `hugo/static/robots.txt` is the source of truth (RFC 9309 + Content Signals).
@@ -20,6 +21,11 @@ weight = 1
 name = "Posts"
 pageRef = "/posts"
 weight = 10
+
+[[languages.en.menus.main]]
+name = "Projects"
+pageRef = "/projects"
+weight = 11
 
 [[languages.en.menus.main]]
 name = "Conference"
@@ -50,6 +56,11 @@ pageRef = "/posts"
 weight = 10
 
 [[languages.fr.menus.main]]
+name = "Projets"
+pageRef = "/projects"
+weight = 11
+
+[[languages.fr.menus.main]]
 name = "Conférences"
 pageRef = "/tags/conference"
 weight = 12
@@ -71,7 +82,7 @@ tag = "tags"
 [params]
 color = "linen"
 github = "antoinebou12"
-linkedin = "antoineboucher"
+linkedin = "antoineboucher12"
 # Home / list meta description (50–160 chars) for SEO and AI summaries.
 description = "Software engineering blog and portfolio: platform, graphics, Rust, systems, and performance, projects and notes by Antoine Boucher in Montréal."
 # Default Open Graph image (under hugo/static/); pages with front matter `images` override.

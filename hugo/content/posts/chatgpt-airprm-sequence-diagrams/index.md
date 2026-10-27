@@ -13,10 +13,10 @@ tags:
     - UML
     - Diagram Tools
 images:
-    - featured.jpeg
+    - images/featured.jpeg
 ---
 
-I got tired of one-off ChatGPT threads that “draw a sequence diagram” and return half-random syntax. **[AIPRM](https://www.aiprm.com/)** helps because the template lives in the browser; I lock four fields — **diagram type**, **elements**, **purpose**, **tool** — and the model stops guessing whether I want **PlantUML**, **Mermaid**, or notes for Draw.io. Related: the **[D2C OpenAI diagram plugin]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})** post. **[Version française]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})**.
+I got tired of one-off ChatGPT threads that “draw a sequence diagram” and return half-random syntax. **[AIPRM](https://www.aiprm.com/)** helps because the template lives in the browser; I lock four fields — **diagram type**, **elements**, **purpose**, **tool** — and the model stops guessing whether I want **PlantUML**, **Mermaid**, or notes for Draw.io. Related: the **[D2C OpenAI diagram plugin]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})** post.
 
 <!--more-->
 
@@ -146,7 +146,6 @@ That avoids blank-canvas syndrome while keeping the diagram editable for styling
 ## Related posts
 
 - [D2C OpenAI diagram plugin]({{< ref "/posts/d2c-openai-diagram-plugin/index.md" >}})
-- [AI figurines / uml-mcp]({{< ref "/posts/ai-figurines-3d-printing/index.md" >}})
 
 ## Takeaway
 

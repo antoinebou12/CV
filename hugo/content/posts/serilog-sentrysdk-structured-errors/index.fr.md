@@ -1,4 +1,7 @@
 ---
+image_alt: "Visuel du package Serilog Sentry SDK provenant du dossier src/assets"
+project_docs: serilog-sinks-sentrysdk
+story_kind: introduction
 post_kind: article
 title: "Serilog.Sinks.SentrySDK : relier les logs structurés au suivi d’erreurs"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +10,14 @@ description: "Le sink Serilog pour Sentry : initialisation du SDK, événements,
 translationKey: serilog-sentrysdk-structured-errors
 mermaid: true
 tags: ["C#",".NET","Serilog","Sentry","Observability"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "antoinebou12/Serilog.Sinks.SentrySDK" >}}
 
 Un log indique qu’un événement a eu lieu. Pour enquêter sur une erreur, il faut aussi l’exception, la version, l’environnement et parfois le contexte de la requête. **Serilog.Sinks.SentrySDK** relie ces deux vues.
 
-![Visuel du package Serilog Sentry SDK provenant du dossier src/assets](featured.png)
+
 
 Le projet est basé sur **serilog-contrib/serilog-sinks-sentry**. Ses étoiles GitHub concernent ce dépôt, pas l’adoption totale de Serilog ou de Sentry.
 

@@ -1,4 +1,5 @@
-﻿---
+---
+image_alt: "Artemis performance overlay — bitrate, Wi-Fi signal, receive/decode/render latency"
 post_kind: article
 title: "Handheld streaming and homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch"
 date: 2026-09-02T12:00:00-04:00
@@ -12,10 +13,10 @@ tags:
   - Homebrew
   - C++
 images:
-  - artemis-performance.png
+  - images/artemis-performance.png
 ---
 
-Three repos I maintain on the side: **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** for Apollo/Sunshine streaming on Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** for GameStream on New 3DS, and **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** as a Switch build of cooperative Super Mario 64. They share the same itch — run something interesting on hardware that was not designed for it — but the stack and constraints differ. **[Version française]({{< ref "/posts/handheld-streaming-homebrew/index.fr.md" >}})**.
+Three repos I maintain on the side: **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** for Apollo/Sunshine streaming on Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** for GameStream on New 3DS, and **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** as a Switch build of cooperative Super Mario 64. They share the same itch — run something interesting on hardware that was not designed for it — but the stack and constraints differ.
 
 <!--more-->
 
@@ -27,7 +28,7 @@ Three repos I maintain on the side: **[Artemis-Switch](https://github.com/antoin
 
 The **Quick** tab exposes window-management shortcuts (`Win+Shift+Left` / `Right`), keyboard presets, and Apollo host scripts without leaving the stream. Handy when the host is a Windows box and the Switch is just the display.
 
-![Artemis performance overlay — bitrate, Wi-Fi signal, receive/decode/render latency](./images/artemis-performance.png)
+
 
 **Performance** shows bitrate (~12 Mbps in this capture), Switch Wi-Fi bars, and receive / decode / render timings. Render is usually the bottleneck on Switch; sub-millisecond receive and decode means the network and decoder are healthy and the frame budget is mostly compositing.
 
@@ -60,5 +61,3 @@ Repo: **[github.com/antoinebou12/sm64coopdx-switch](https://github.com/antoinebo
 Project pages: [Artemis-Switch]({{< ref "/projects/Artemis-Switch" >}}), [moonlight-N3DS]({{< ref "/projects/moonlight-N3DS" >}}), [sm64coopdx-switch]({{< ref "/projects/sm64coopdx-switch" >}}).
 
 ## Related
-
-- Diagram tooling for write-ups: **[uml-mcp]({{< ref "/posts/uml-mcp/index.md" >}})** and the [uml-mcp project page]({{< ref "/projects/uml-mcp" >}}).

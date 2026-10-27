@@ -2,21 +2,20 @@
 post_kind: article
 title: "Figurines IA pour impression 3D"
 date: 2026-05-22T10:00:00-04:00
-lastmod: 2026-05-23T02:00:00-04:00
-description: Figurines chibi, ComfyUI avec OmniGen2 et Hunyuan3D v2, diagrammes de séquence via uml-mcp, et notes d’impression résine.
+lastmod: 2026-10-27T12:00:00-04:00
+description: Figurines chibi, ComfyUI avec OmniGen2 et Hunyuan3D v2, et notes d’impression résine.
 translationKey: ai-figurines-3d-printing
 tags:
   - Impression 3D
   - IA
   - Hunyuan3D
   - ComfyUI
-  - MCP
   - Chibi
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-Une bonne **image jouet en 2D** compte plus qu’un modèle image→3D sophistiqué. Étapes dans l’ordre, [**diapositives**](./make-figurines-using-ai-for-3d-printing.pptx), [**workflow ComfyUI**](./workflows/image_omnigen2_image_edit.json), et schémas avec [**uml-mcp**](https://github.com/antoinebou12/uml-mcp).
+Une image de jouet en 2D bien définie donne au modèle image→3D un point de départ utile. Suivez les étapes avec les [diapositives](./make-figurines-using-ai-for-3d-printing.pptx) et le [workflow ComfyUI](./workflows/image_omnigen2_image_edit.json).
 
 <!--more-->
 
@@ -29,9 +28,7 @@ Une bonne **image jouet en 2D** compte plus qu’un modèle image→3D sophistiq
 
 ![Photo vers objet — photo, image IA jouet, modèle 3D, impression résine](./images/photo-to-object-pipeline.png)
 
-Diagramme de séquence ([`figurine-pipeline-sequence.mmd`](./images/figurine-pipeline-sequence.mmd), rendu via [uml-mcp](https://github.com/antoinebou12/uml-mcp)) :
-
-![Pipeline figurine — photo à impression résine](./images/figurine-pipeline-sequence.svg)
+Diagramme de séquence ([source Mermaid](./images/figurine-pipeline-sequence.mmd)) :
 
 ```mermaid
 sequenceDiagram
@@ -61,11 +58,7 @@ sequenceDiagram
 
 {{< deck src="make-figurines-using-ai-for-3d-printing.pptx" title="Make figurines using AI for 3D printing" label="Télécharger les diapositives (.pptx)" size="~17 Mo" >}}
 
-![Diapositive titre](./images/slide01-title.png)
-
 ## Étape 1 — Jouet / chibi en 2D
-
-![ChatGPT ou Midjourney](./images/slide02-chatgpt-midjourney.png)
 
 > Convert this image into a toy-style plastic figure. Keep features but simplify and smoothen as if molded in plastic.
 
@@ -74,14 +67,6 @@ sequenceDiagram
 **Prompt chibi :** figurine vinyle chibi, plastique lisse, fond blanc, un personnage, pose stable sur socle.
 
 ![Bernois](./images/gallery/chibi-bernese-puppy-snow.png) ![Golden](./images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](./images/gallery/chibi-cowboy-no-name.png) ![Piscine](./images/gallery/chibi-pool-tube-cigar.png) ![Araignée](./images/gallery/chibi-spider-toy.png)
-
-## Documenter le flux — [uml-mcp](https://github.com/antoinebou12/uml-mcp)
-
-Le diagramme ci-dessus vient de **uml-mcp** (`generate_uml`, type `mermaid`) : [`figurine-pipeline-sequence.mmd`](./images/figurine-pipeline-sequence.mmd) et SVG dans ce bundle.
-
-![Chat → uml-mcp → diagramme](./images/uml-mcp-figurine-flow.svg)
-
-Dans Cursor : activer **uml-mcp**, appeler `generate_uml` avec le `.mmd` ou décrire les étapes ComfyUI → impression. Voir aussi [diagrammes de séquence ChatGPT](../chatgpt-airprm-sequence-diagrams/).
 
 ## Étape 2 — ComfyUI (un graphe)
 

@@ -12,10 +12,10 @@ tags:
   - 3D Scanning
   - Architecture
 images:
-  - featured.jpg
+  - images/featured.jpg
 ---
 
-We used **Rhino on iPhone** with **LiDAR** to scan our apartment in **January 2024** — not for permit drawings, but to answer layout questions before buying furniture or arguing about wall space. **[Version française]({{< ref "/posts/rhino-lidar-apartment-scan/index.fr.md" >}})**.
+We used **Rhino on iPhone** with **LiDAR** to scan our apartment in **January 2024** — not for permit drawings, but to answer layout questions before buying furniture or arguing about wall space.
 
 <!--more-->
 

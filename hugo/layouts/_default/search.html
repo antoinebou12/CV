@@ -159,7 +159,7 @@
 
 {{- $jsonURL := "" -}}
 {{- with site.Home.OutputFormats.Get "json" -}}
-  {{- $jsonURL = .Permalink -}}
+  {{- $jsonURL = .RelPermalink -}}
 {{- end -}}
 <div
   id="site-search-config"
@@ -213,6 +213,7 @@
     if (!indexURL || !input || !list) return;
 
     let miniSearch = null;
+    let documents = [];
     const docById = new Map();
     let ready = false;
     let lastHits = [];
@@ -545,8 +546,25 @@
       }
     }
 
+    function fallbackSearch(term) {
+      const words = term.toLocaleLowerCase().split(/\s+/).filter(Boolean);
+      return documents
+        .map(function (item) {
+          const title = String(item.title || "").toLocaleLowerCase();
+          const body = [item.tags_text, item.summary, item.content, item.section].join(" ").toLocaleLowerCase();
+          let score = 0;
+          for (const word of words) {
+            if (!body.includes(word)) return null;
+            score += title.includes(word) ? 4 : 1;
+          }
+          return Object.assign({}, item, { score: score });
+        })
+        .filter(Boolean)
+        .sort(function (a, b) { return b.score - a.score; });
+    }
+
     function runQuery(q) {
-      if (!ready || !miniSearch) return;
+      if (!ready) return;
       const term = q.trim();
       if (term.length < 2) {
         list.innerHTML = "";
@@ -555,15 +573,14 @@
         statusEl.textContent = term.length ? typeMoreMsg : "";
         return;
       }
-      const raw = miniSearch.search(term);
-      lastHits = raw
-        .slice(0, 25)
-        .map(function (r) {
-          const doc = docById.get(r.id);
-          if (!doc) return null;
-          return Object.assign({}, doc, { score: r.score });
-        })
-        .filter(Boolean);
+      const raw = miniSearch ? miniSearch.search(term) : fallbackSearch(term);
+      lastHits = miniSearch
+        ? raw.slice(0, 25).map(function (r) {
+            const doc = docById.get(r.id);
+            if (!doc) return null;
+            return Object.assign({}, doc, { score: r.score });
+          }).filter(Boolean)
+        : raw.slice(0, 25);
       renderHits(lastHits);
     }
 
@@ -591,32 +608,22 @@
         return r.json();
       })
       .then(function (data) {
-        data.forEach(function (d) {
+        documents = Array.isArray(data) ? data : [];
+        documents.forEach(function (d) {
           docById.set(d.id, d);
         });
-        miniSearch = new MiniSearch({
-          idField: "id",
-          fields: ["title", "tags_text", "summary", "content", "section"],
-          storeFields: [
-            "title",
-            "summary",
-            "content",
-            "tags",
-            "tags_text",
-            "tag_refs",
-            "permalink",
-            "date",
-            "date_unix",
-            "thumb",
-            "post_kind",
-            "section",
-          ],
-          searchOptions: {
-            fuzzy: 0.2,
-            prefix: true,
-          },
-        });
-        miniSearch.addAll(data);
+        if (typeof window.MiniSearch === "function") {
+          miniSearch = new window.MiniSearch({
+            idField: "id",
+            fields: ["title", "tags_text", "summary", "content", "section"],
+            storeFields: [
+              "title", "summary", "content", "tags", "tags_text", "tag_refs",
+              "permalink", "date", "date_unix", "thumb", "post_kind", "section",
+            ],
+            searchOptions: { fuzzy: 0.2, prefix: true },
+          });
+          miniSearch.addAll(documents);
+        }
         ready = true;
         statusEl.textContent = "";
         setResultsLoading(false);

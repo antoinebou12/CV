@@ -20,12 +20,12 @@ tags:
   - Career
   - HTML
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-![JSON Resume — sample themes (Elegant, Paper, Kendall, Flat, and others)](./json-resume-themes.png)
+![JSON Resume — sample themes (Elegant, Paper, Kendall, Flat, and others)](images/json-resume-themes.png)
 
-Most hiring flows start online. **JSON Resume** lets you keep one structured `resume.json` and render it as HTML, PDF, or data inside your own site. **[Version française]({{< ref "/posts/professional-resume-json-resume/index.fr.md" >}})** covers the same walkthrough.
+Most hiring flows start online. **JSON Resume** lets you keep one structured `resume.json` and render it as HTML, PDF, or data inside your own site. covers the same walkthrough.
 
 <!--more-->
 

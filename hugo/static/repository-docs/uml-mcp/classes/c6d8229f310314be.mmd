@@ -1,0 +1,20 @@
+classDiagram
+direction TB
+class t88f78ede6dd6["TestUrlOnlyMode"] {
+  test_url_only_skips_generate_diagram_and_omits_base64()
+  test_url_only_plantuml_fallback_no_httpx_get()
+  test_url_only_default_true_when_vercel_unless_disabled()
+  test_force_fetch_fetches_bytes_when_url_only()
+  test_generate_uml_image_force_fetch_under_url_only()
+}
+class t11b070e269b7["TestUrlOnlyMermaidLinkVerification"] {
+  _run()
+  test_healthy_kroki_link_is_returned_after_one_check()
+  test_http_500_falls_back_to_a_working_mermaid_ink_link()
+  test_timeout_falls_back_to_mermaid_ink()
+  test_connection_error_falls_back_to_mermaid_ink()
+  test_png_links_fall_back_to_the_png_endpoint()
+  test_no_check_when_fallback_is_disabled()
+  test_other_backends_are_not_checked()
+  test_force_fetch_path_is_unchanged()
+}

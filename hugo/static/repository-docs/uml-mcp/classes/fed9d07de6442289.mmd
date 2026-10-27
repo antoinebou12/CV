@@ -1,0 +1,41 @@
+classDiagram
+direction TB
+class t8f5767201a66["Sink"] {
+  write()
+  close()
+}
+class t678c20dcfb6b["_PrivateRotatingFileHandler"] {
+  _open()
+}
+class t1e1670ff59d7["_PrivateTimedRotatingFileHandler"] {
+  _open()
+}
+class tfb8a1628d883["JsonlFileSink"] {
+  __init__()
+  write()
+  close()
+}
+class t04334ec638bf["StreamSink"] {
+  __init__()
+  stream()
+  write()
+  close()
+}
+class t68752e58b22a["MemorySink"] {
+  __init__()
+  write()
+  close()
+  query()
+}
+class b9264daf01ca4["Protocol"] {
+  <<unresolved_base>>
+}
+b9264daf01ca4 <|-- t8f5767201a66
+class be395e3b32ec2["logging.handlers.RotatingFileHandler"] {
+  <<unresolved_base>>
+}
+be395e3b32ec2 <|-- t678c20dcfb6b
+class bbc30ea234c12["logging.handlers.TimedRotatingFileHandler"] {
+  <<unresolved_base>>
+}
+bbc30ea234c12 <|-- t1e1670ff59d7

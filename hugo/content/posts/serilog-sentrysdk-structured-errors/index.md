@@ -1,4 +1,7 @@
 ---
+image_alt: "Serilog Sentry SDK package artwork from src/assets in the repository"
+project_docs: serilog-sinks-sentrysdk
+story_kind: introduction
 post_kind: article
 title: "Serilog.Sinks.SentrySDK: connecting structured logs to error reporting"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +10,14 @@ description: "A tour of the Serilog Sentry sink: SDK initialization, event handl
 translationKey: serilog-sentrysdk-structured-errors
 mermaid: true
 tags: ["C#",".NET","Serilog","Sentry","Observability"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "antoinebou12/Serilog.Sinks.SentrySDK" >}}
 
 A log line tells you that something happened. An error event becomes useful when it also carries the exception, release, environment, and request context needed to investigate it. **Serilog.Sinks.SentrySDK** connects those two views.
 
-![Serilog Sentry SDK package artwork from src/assets in the repository](featured.png)
+
 
 This project is based on **serilog-contrib/serilog-sinks-sentry**. Its own GitHub stars measure interest in this repository, not total Serilog or Sentry adoption.
 

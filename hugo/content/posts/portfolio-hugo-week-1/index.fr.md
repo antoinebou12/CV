@@ -1,4 +1,5 @@
 ---
+image_alt: "Aperçu du site après premier déploiement"
 post_kind: article
 title: "Créer un portfolio avec Hugo (semaine 1)"
 date: 2024-01-06T10:00:00-04:00
@@ -11,14 +12,14 @@ tags:
   - Static Site
   - Substack
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-Semaine 1 de migration vers **Hugo** (janvier 2024) : thème, déploiement rapide, prouver que le dépôt peut porter plus qu’un PDF de CV. **HBTheme**, embed data, **Substack** à côté, shortcode **iframe**. **[English version]({{< ref "/posts/portfolio-hugo-week-1/index.md" >}})**.
+Semaine 1 de migration vers **Hugo** (janvier 2024) : thème, déploiement rapide, prouver que le dépôt peut porter plus qu’un PDF de CV. **HBTheme**, embed data, **Substack** à côté, shortcode **iframe**.
 
 <!--more-->
 
-![Aperçu du site après premier déploiement](./featured.png)
+
 
 ## Pourquoi Hugo sans CMS
 
@@ -66,9 +67,10 @@ Exemple **FlashGames** :
 
 ## Depuis la semaine 1
 
-Site actuel : bilingue, notes de conférence, posts MCP. Voir **[CV JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.fr.md" >}})**.
+Site actuel : bilingue, notes de conférence, posts MCP. Journal complet : **[Refonte du site avec Hugo (partie 2)]({{< ref "/posts/portfolio-hugo-website-refonte/index.fr.md" >}})**. Aussi **[CV JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.fr.md" >}})**.
 
 ## Articles liés
 
+- [Refonte du site avec Hugo (partie 2)]({{< ref "/posts/portfolio-hugo-website-refonte/index.fr.md" >}}) — Paper, modèle bilingue, boucle MCP
 - [Parcours en génie logiciel]({{< ref "/posts/software-engineering-journey/index.fr.md" >}})
 - [Prompts diagrammes ChatGPT et AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.fr.md" >}})

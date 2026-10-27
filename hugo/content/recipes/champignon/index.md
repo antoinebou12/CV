@@ -5,8 +5,6 @@ date: 2024-01-05
 translationKey: champignon
 ---
 
-# Egg-Stuffed Bella Mushrooms with Goat Cheese and Spinach
-
 ## Category
 - **Type:** Vegetarian
 - **Main Ingredient:** Mushrooms
@@ -23,7 +21,7 @@ translationKey: champignon
 - Salt (price: 0.01$)
 - Avocado oil (price: 0.01$)
 
-# Prices
+## Prices
 - Total price: 5.00$
 
 ## Instructions

@@ -1,9 +1,10 @@
 ---
 post_kind: article
+cover_none: true
 title: "Snapchat Lens Creator"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-05-22T16:00:00-04:00
-description: "Snapchat lenses with millions of plays (2017–2020), Fiverr clients, a GIF-to-PNG tool, Lens Studio feedback, and what I would do on Meta Spark next."
+lastmod: 2026-10-24T14:00:00-04:00
+description: "Snapchat lenses with millions of plays (2017-2020), Fiverr clients, a GIF-to-PNG tool, Lens Studio feedback, and 2026 Lens Insights totals."
 translationKey: snapchat-lens-creator
 tags:
   - Snapchat
@@ -12,13 +13,15 @@ tags:
   - Side Project
 ---
 
-*Updated May 2026 with current Lens Insights figures.* I started making **Snapchat lenses** for fun in **2017** and ended up with a small **Fiverr** side business, a utility other creators still use, and a phone call with Snapchat about **Lens Studio**. **[Version française]({{< ref "/posts/snapchat-lens-creator/index.fr.md" >}})**.
+*Updated October 2026 with current Lens Insights figures from my LinkedIn featured post.* I started making **Snapchat lenses** for fun in **2017** and ended up with a small **Fiverr** side business, a utility other creators still use, and a phone call with Snapchat about **Lens Studio**.
 
 <!--more-->
 
 ## By the numbers (Lens Insights)
 
-To date, my lenses have accumulated **13.97M plays**, **20.38M views**, **711.8k shares**, **10,092 favorites**, **753 posts**, and **428 unique posters** (all-time, Lens Insights). Plays and views are not the same metric — a lens can be opened once but watched multiple times — so I look at both when a client asks “did it work?”
+To date, my lenses have accumulated **14.07M plays**, **20.48M views**, **712.9k shares**, **10,250 favorites**, **804 posts**, and **470 unique posters** (all-time, Lens Insights). Plays and views are not the same metric: a lens can be opened once but watched multiple times, so I look at both when a client asks whether it worked.
+
+Source for the 2026 totals: [LinkedIn featured update](https://www.linkedin.com/feed/update/urn:li:activity:7032088581389094912/).
 
 Between **2017 and 2020** I shipped **42 lenses** for myself and for clients. Standouts by usage:
 

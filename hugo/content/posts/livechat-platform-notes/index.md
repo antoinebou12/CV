@@ -13,12 +13,12 @@ tags:
   - 3CX
   - Chatwoot
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![Chatwoot agent inbox — unified conversations view (screenshot from the open-source project, 2024 UI refresh)](./images/chatwoot-inbox.png)
 
-I wrote these notes while helping a bilingual storefront team choose **live chat**, a **bot**, and something agents could actually work from. The four products below are **not** interchangeable: one is a phone system with chat bolted on, one is marketing automation, one is managed bot-to-human handoff, and one is an open-source helpdesk you can host yourself. **Pricing and channels change often**—use this as a map, then confirm on each vendor’s site. **[Version française]({{< ref "/posts/livechat-platform-notes/index.fr.md" >}})**.
+I wrote these notes while helping a bilingual storefront team choose **live chat**, a **bot**, and something agents could actually work from. The four products below are **not** interchangeable: one is a phone system with chat bolted on, one is marketing automation, one is managed bot-to-human handoff, and one is an open-source helpdesk you can host yourself. **Pricing and channels change often**—use this as a map, then confirm on each vendor’s site.
 
 <!--more-->
 
@@ -35,7 +35,7 @@ Before you compare feature matrices, ask what you are really buying:
 - **Bot opens, human finishes** → managed CX SaaS.
 - **Shared inbox you can run on your own metal** → open-source desk.
 
-Decision flow ([`platform-picker-flow.mmd`](./images/platform-picker-flow.mmd), rendered with [uml-mcp](https://github.com/antoinebou12/uml-mcp)):
+Decision flow ([Mermaid source](./images/platform-picker-flow.mmd)):
 
 ![Which live-chat platform fits your goal — decision flowchart for 3CX, ManyChat, Kommunicate, and Chatwoot](./images/platform-picker-flow.svg)
 

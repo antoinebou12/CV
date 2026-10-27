@@ -1,0 +1,73 @@
+flowchart TD
+
+subgraph group_resume["CV and Resume"]
+  node_buildcv["CV Compiler<br/>[build_cv.py]"]
+  node_latex_en["English LaTeX CV<br/>[resume.tex]"]
+  node_latex_fr["French LaTeX CV<br/>[resume.tex]"]
+  node_sections_en["English CV Sections"]
+  node_sections_fr["French CV Sections"]
+  node_pdf_en["English PDF Resume<br/>[resume.pdf]"]
+  node_pdf_fr["French PDF Resume<br/>[resume.pdf]"]
+  node_html_resume["HTML Resumes"]
+  node_cv_data["CV Data<br/>[cv.yaml]"]
+end
+
+subgraph group_content["Portfolio Content"]
+  node_hugo_content["Posts Projects Recipes"]
+  node_hugo_layouts["Blog Templates"]
+  node_papers["Papers and Publications"]
+end
+
+subgraph group_web["Website Experiences"]
+  node_hugo_site["Hugo Blog"]
+  node_linktree["Social Links Page"]
+end
+
+subgraph group_integration["External Integration"]
+  node_agent_worker["Agent-ready Home Worker<br/>[worker.mjs]"]
+  node_map_service["MapMyVisitors"]
+end
+
+node_visitor(("Site Visitor"))
+
+node_visitor -->|"views resumes"| node_html_resume
+node_visitor -->|"browses blog"| node_hugo_site
+node_visitor -->|"opens links"| node_linktree
+node_latex_en -->|"includes sections"| node_sections_en
+node_latex_fr -->|"includes sections"| node_sections_fr
+node_buildcv -->|"compiles source"| node_latex_en
+node_buildcv -->|"compiles source"| node_latex_fr
+node_buildcv -->|"produces PDF"| node_pdf_en
+node_buildcv -->|"produces PDF"| node_pdf_fr
+node_hugo_site -->|"renders content"| node_hugo_content
+node_hugo_site -->|"uses templates"| node_hugo_layouts
+node_visitor -.->|"reads publications"| node_papers
+node_html_resume -->|"loads visitor map"| node_map_service
+
+click node_buildcv "https://github.com/antoinebou12/cv/blob/main/build_cv.py"
+click node_latex_en "https://github.com/antoinebou12/cv/blob/main/cv-en/resume.tex"
+click node_latex_fr "https://github.com/antoinebou12/cv/blob/main/cv-fr/resume.tex"
+click node_sections_en "https://github.com/antoinebou12/cv/tree/main/cv-en/latex"
+click node_sections_fr "https://github.com/antoinebou12/cv/tree/main/cv-fr/latex"
+click node_pdf_en "https://github.com/antoinebou12/cv/blob/main/cv-en/resume.pdf"
+click node_pdf_fr "https://github.com/antoinebou12/cv/blob/main/cv-fr/resume.pdf"
+click node_cv_data "https://github.com/antoinebou12/cv/blob/main/data/cv.yaml"
+click node_hugo_content "https://github.com/antoinebou12/cv/tree/main/hugo/content"
+click node_hugo_layouts "https://github.com/antoinebou12/cv/tree/main/hugo/layouts"
+click node_papers "https://github.com/antoinebou12/cv/tree/main/papers"
+click node_hugo_site "https://github.com/antoinebou12/cv/tree/main/hugo"
+click node_linktree "https://github.com/antoinebou12/cv/tree/main/linktree"
+click node_agent_worker "https://github.com/antoinebou12/cv/blob/main/cloudflare/workers/agent-ready-home/worker.mjs"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_buildcv,node_latex_en,node_latex_fr,node_sections_en,node_sections_fr,node_pdf_en,node_pdf_fr,node_html_resume,node_cv_data toneBlue
+class node_hugo_content,node_hugo_layouts,node_papers toneAmber
+class node_hugo_site,node_linktree toneMint
+class node_agent_worker,node_map_service toneRose
+class node_visitor toneIndigo

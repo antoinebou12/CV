@@ -12,14 +12,9 @@ tags:
     - Mermaid
 ---
 
-# D2COpenAIPlugin
+Cette page présente une ancienne extension ChatGPT. La [documentation du projet]({{< ref "/projects/notes/d2copenaiplugin/index.fr.md" >}}) détaille son implémentation et ses routes API. Le [dépôt source](https://github.com/antoinebou12/D2COpenAIPlugin) conserve le code d’origine.
 
-Consultez le projet [sur GitHub](https://github.com/antoinebou12/D2COpenAIPlugin/tree/main).  
-Démo en ligne : [openai-uml-plugin.vercel.app](https://openai-uml-plugin.vercel.app)
-
-> **Rejoignez la [liste d’attente des extensions ChatGPT](https://openai.com/waitlist/plugins).**
-
-D2COpenAIPlugin est une extension pour ChatGPT qui permet de générer des diagrammes avec **PlantUML** ou **Mermaid**, directement depuis la conversation.
+D2COpenAIPlugin est une extension ChatGPT qui génère des diagrammes PlantUML ou Mermaid depuis la conversation.
 
 ![Diagram generator plugin demo](https://raw.githubusercontent.com/antoinebou12/UMLOpenAIPlugin/main/docs/DiagramGeneratorPlugin.gif)
 ![image](https://github.com/antoinebou12/D2COpenAIPlugin/assets/13888068/638e6ef6-b006-4f63-a7b8-b765fc0d8a41)
@@ -30,7 +25,7 @@ D2COpenAIPlugin est une extension pour ChatGPT qui permet de générer des diagr
 - Intégration avec ChatGPT
 - Interface orientée création de schémas
 
-## Installation (aperçu)
+## Installation d’origine (aperçu)
 
 Prérequis typiques : Python 3.10+, FastAPI, uvicorn. Cloner le dépôt, installer les dépendances (poetry ou `requirements-dev.txt`), configurer les variables d’environnement et un jeton bearer, puis lancer l’API (par ex. `uvicorn app:app --host 127.0.0.1 --port 5003`).
 

@@ -1,4 +1,5 @@
 ---
+image_alt: "Vue d’ensemble homelab"
 post_kind: article
 title: "Évolution réseau — monter un lab à la maison"
 date: 2021-09-06T10:00:00-04:00
@@ -13,10 +14,10 @@ tags:
   - Proxmox
   - Caddy
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi. **[English version]({{< ref "/posts/home-networking-evolution/index.md" >}})**.
+Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi.
 
 <!--more-->
 
@@ -32,7 +33,7 @@ J’ai aligné des **stacks conteneur gratuites** sur des jobs payés dans le cl
 
 Matériel : un **Dell** pas cher et une machine de 2004. Scripts **bash** pour **Ubuntu**, **CentOS** et **Proxmox** — assez reproductibles pour que les réinstallations après expériences fassent moins mal.
 
-![Vue d’ensemble homelab](./images/featured.png)
+
 
 ### Rack physique (octobre 2022)
 

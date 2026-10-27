@@ -1,5 +1,7 @@
 ---
 post_kind: article
+project_docs: hass-renpho
+story_kind: introduction
 title: "Balance Renpho, Home Assistant et rétro-ingénierie de l’API"
 date: 2021-10-10T10:00:00-04:00
 lastmod: 2026-05-22T23:00:00-04:00
@@ -12,10 +14,10 @@ tags:
   - Home Assistant
   - Home Automation
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-Je voulais les pesées dans **Home Assistant** avec le reste des automations — pas une app santé de plus. Ça a mené à **[hass_renpho](https://github.com/antoinebou12/hass_renpho)** (fork d’une intégration communautaire devenue silencieuse), **APKLeaks** sur le client Android, et un tableau Lovelace que j’ouvre encore quand l’entraînement ou le sommeil bougent. **[English version]({{< ref "/posts/renpho-health-api-blueprint/index.md" >}})**.
+Je voulais les pesées dans **Home Assistant** avec le reste des automations — pas une app santé de plus. Ça a mené à **[hass_renpho](https://github.com/antoinebou12/hass_renpho)** (fork d’une intégration communautaire devenue silencieuse), **APKLeaks** sur le client Android, et un tableau Lovelace que j’ouvre encore quand l’entraînement ou le sommeil bougent.
 
 <!--more-->
 

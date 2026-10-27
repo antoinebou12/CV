@@ -1,0 +1,70 @@
+name: Repository documentation
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: Public inventory repository name (empty refreshes all)
+        required: false
+        type: string
+  pull_request:
+    paths:
+      - scripts/build/repository_docs.py
+      - scripts/build/repository_dossier.py
+      - scripts/build/repository_uml.py
+      - scripts/build/repository_handbooks.py
+      - scripts/tests/test_repository_docs.py
+      - scripts/tests/test_repository_dossier.py
+      - scripts/tests/test_repository_uml.py
+      - scripts/tests/test_repository_handbooks.py
+      - hugo/data/repository_guides.json
+      - hugo/data/repository_handbooks.json
+      - hugo/layouts/partials/repository-handbook.html
+      - hugo/layouts/partials/repository-documentation.html
+      - hugo/layouts/partials/repository-dossier.html
+      - hugo/layouts/partials/repository-uml-figure.html
+      - .github/workflows/repository-documentation.yml
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v10.3.2
+      - name: Test source extraction and safety filters
+        run: >-
+          uv run --python 3.13 --with pytest
+          --with tree-sitter-language-pack==0.13.0 --with tree-sitter==0.25.2
+          pytest scripts/tests/test_repository_docs.py scripts/tests/test_repository_dossier.py scripts/tests/test_repository_uml.py scripts/tests/test_repository_handbooks.py -q
+      - name: Refresh public source documentation
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DOC_REPOSITORY: ${{ inputs.repository }}
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "$DOC_REPOSITORY" ]]; then
+            args+=(--repo "$DOC_REPOSITORY")
+          fi
+          uv run --python 3.13 scripts/build/repository_docs.py "${args[@]}"
+          uv run --python 3.13 scripts/build/repository_handbooks.py "${args[@]}"
+          uv run --python 3.13 scripts/build/repository_dossier.py "${args[@]}"
+          uv run --python 3.13 scripts/build/repository_uml.py "${args[@]}"
+      - name: Upload generated documentation (no automatic commit or purchase)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
+        with:
+          name: repository-documentation
+          path: |
+            hugo/data/repository_analysis.json
+            hugo/data/repository_article_index.json
+            hugo/data/repository_dossiers.json
+            hugo/data/repository_uml.json
+            hugo/data/repository_handbooks.json
+            hugo/static/repository-docs/
+          retention-days: 14

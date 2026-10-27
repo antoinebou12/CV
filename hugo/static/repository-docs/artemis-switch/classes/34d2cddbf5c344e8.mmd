@@ -1,0 +1,48 @@
+classDiagram
+direction TB
+class t202a368e22be["DirectPathConfig"] {
+  <<struct>>
+}
+class t60056e42b8e9["IWgxBackend"] {
+  startTunnel()
+  addOrUpdatePeer()
+  startTcpProxy()
+  startUdpRelay()
+  ensureDerpRoute()
+  stopUdpRelay()
+  stop()
+  isRunning()
+  startDirectPath()
+}
+class t74d3caa7729b["SimulatedWgxBackend"] {
+  startTunnel()
+  addOrUpdatePeer()
+  startTcpProxy()
+  startDirectPath()
+  startUdpRelay()
+  ensureDerpRoute()
+  stopUdpRelay()
+  stop()
+  isRunning()
+  isTcpActive()
+  isUdpActive()
+  isDerpReady()
+}
+class tb2baad58cfea["TailscaleWgxRoute"] {
+  setPeerResolver()
+  setLocalInfoProvider()
+  setDerpMapProvider()
+  setBackend()
+  setDirectPathHooks()
+  start()
+  prepareForStreaming()
+  stop()
+  isActive()
+  isStreamingPrepared()
+  activePeerId()
+}
+t60056e42b8e9 <|-- t74d3caa7729b
+class b99d76dd64967["IOverlayRoute"] {
+  <<unresolved_base>>
+}
+b99d76dd64967 <|-- tb2baad58cfea

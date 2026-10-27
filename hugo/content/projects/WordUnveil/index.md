@@ -14,12 +14,7 @@ draft: false
 ![Prisma](https://img.shields.io/badge/-Prisma-2D3748?logo=prisma)
 ![MySQL](https://img.shields.io/badge/-MySQL-4479A1?logo=mysql)
 
-WordsEnigma is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.
-
-## Getting Started
-
-**Development Setup**
-WordsUnveil is a multilingual twist on the popular game Wordle, providing a fun and educational way to learn new languages. Built with advanced technologies for efficiency and a seamless gaming experience.
+WordUnveil is a multilingual Wordle-style game. Stack: RedwoodJS, GraphQL, Prisma, and MySQL.
 
 ## Getting Started
 

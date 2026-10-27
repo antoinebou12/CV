@@ -1,0 +1,86 @@
+flowchart TD
+
+subgraph group_server["MCP Server"]
+  node_entry["MCP Entry<br/>[main.py]"]
+  node_registry["Tool Registry<br/>[__init__.py]"]
+end
+
+subgraph group_catalog["Catalog &amp; Data"]
+  node_dqtools["DQ Catalog Tools"]
+  node_mtltools["Montréal Tools"]
+  node_intelligence["Data Intelligence"]
+  node_downloads["Resource Access"]
+end
+
+subgraph group_geo["Geospatial"]
+  node_geo_tools["OGC Tools"]
+  node_geocoding["Geocoding Tools"]
+  node_coordinates["Coordinate Tools"]
+end
+
+subgraph group_shared["Shared Services"]
+  node_ckan["CKAN API<br/>[ckan_api.py]"]
+  node_geoapi["OGC API<br/>[geo_api.py]"]
+  node_coords["Coordinate Conversion<br/>[coords.py]"]
+  node_http["HTTP Client<br/>[http_client.py]"]
+  node_config["Configuration<br/>[config.py]"]
+end
+
+node_agent(("AI Agent"))
+node_dqportal["Données Québec"]
+node_mtlportal["Montréal CKAN"]
+node_geoservice["IGO Services"]
+node_geocoder["Address Geocoder"]
+
+node_agent -->|"connects MCP"| node_entry
+node_entry -->|"registers tools"| node_registry
+node_registry -->|"registers"| node_dqtools
+node_registry -->|"registers"| node_mtltools
+node_registry -->|"registers"| node_intelligence
+node_registry -->|"registers"| node_downloads
+node_registry -->|"registers"| node_geo_tools
+node_registry -->|"registers"| node_geocoding
+node_registry -->|"registers"| node_coordinates
+node_dqtools -->|"calls"| node_ckan
+node_mtltools -->|"calls"| node_ckan
+node_intelligence -->|"searches and queries"| node_ckan
+node_downloads -->|"gets resource metadata"| node_ckan
+node_ckan -->|"fetches JSON"| node_http
+node_dqtools -->|"queries catalogue"| node_dqportal
+node_mtltools -->|"queries catalogue"| node_mtlportal
+node_geo_tools -->|"calls"| node_geoapi
+node_geoapi -->|"fetches OGC data"| node_http
+node_geoapi -->|"requests WFS/WMS"| node_geoservice
+node_geocoding -.->|"geocodes addresses"| node_geocoder
+node_coordinates -->|"converts coordinates"| node_coords
+node_http -->|"uses settings"| node_config
+node_geoapi -->|"uses endpoints"| node_config
+node_entry -->|"loads server settings"| node_config
+
+click node_entry "https://github.com/antoinebou12/donneesqc-mcp/blob/main/main.py"
+click node_registry "https://github.com/antoinebou12/donneesqc-mcp/blob/main/tools/__init__.py"
+click node_dqtools "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_mtltools "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_intelligence "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_downloads "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_ckan "https://github.com/antoinebou12/donneesqc-mcp/blob/main/helpers/ckan_api.py"
+click node_geo_tools "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_geocoding "https://github.com/antoinebou12/donneesqc-mcp/tree/main/tools"
+click node_coordinates "https://github.com/antoinebou12/donneesqc-mcp/blob/main/tools/convert_coordinates.py"
+click node_geoapi "https://github.com/antoinebou12/donneesqc-mcp/blob/main/helpers/geo_api.py"
+click node_coords "https://github.com/antoinebou12/donneesqc-mcp/blob/main/helpers/coords.py"
+click node_http "https://github.com/antoinebou12/donneesqc-mcp/blob/main/helpers/http_client.py"
+click node_config "https://github.com/antoinebou12/donneesqc-mcp/blob/main/helpers/config.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_entry,node_registry toneBlue
+class node_dqtools,node_mtltools,node_intelligence,node_downloads toneAmber
+class node_geo_tools,node_geocoding,node_coordinates toneMint
+class node_ckan,node_geoapi,node_coords,node_http,node_config toneRose
+class node_agent,node_dqportal,node_mtlportal,node_geoservice,node_geocoder toneIndigo

@@ -1,0 +1,51 @@
+classDiagram
+direction TB
+class tc61ec1f42b26["ExecutorThresholds"] {
+  <<struct>>
+  default()
+}
+class t99f018ddfbce["Executor"] {
+  <<trait>>
+}
+class tc0edf6fb465b["CpuExecutor"] {
+  <<struct>>
+  new()
+  matmul()
+  matvec()
+  dot()
+  add_matrix()
+  add_vector()
+  scale_matrix()
+  scale_vector()
+  axpy()
+}
+class t25593b512375["GpuExecutor"] {
+  <<struct>>
+  new()
+  matmul()
+  matvec()
+  dot()
+  add_matrix()
+  add_vector()
+  scale_matrix()
+  scale_vector()
+  axpy()
+}
+class t913ef8b1d82b["AutoExecutor"] {
+  <<struct>>
+  default()
+  new()
+  with_thresholds()
+  use_gpu_matmul()
+  use_gpu_dot()
+  use_gpu_matvec()
+  use_gpu_elementwise()
+  matmul()
+  matvec()
+  dot()
+  add_matrix()
+  add_vector()
+  scale_matrix()
+  scale_vector()
+  axpy()
+}

@@ -13,10 +13,10 @@ tags:
   - Pitch
   - Education
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-![Logo du programme QcES](./qces-logo.png)
+![Logo du programme QcES](images/qces-logo.png)
 
 J’ai suivi **QcES** (cohorte printemps 2024) en parallèle d’un parcours de découverte lean : canevas d’affaires, entrevues, pitch court, et le reste. Ce texte est ma synthèse personnelle—pas un document officiel du programme. **[Version anglaise]({{< ref "/posts/qces-lean-discovery-pitch/index.md" >}})** sur le même sujet.
 

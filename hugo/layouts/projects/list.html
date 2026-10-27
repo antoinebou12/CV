@@ -1,0 +1,249 @@
+{{ define "main" }}
+{{ $fr := eq .Lang "fr" }}
+{{ $i := cond $fr 1 0 }}
+{{ $snapshot := hugo.Data.github_inventory }}
+{{ $stylesData := hugo.Data.repository_styles }}
+{{ $domainsData := hugo.Data.competence_domains }}
+<article class="repo-directory not-prose">
+  <header class="repo-directory-header journal-intro">
+    <p class="journal-eyebrow">{{ if $fr }}Carnet de projets{{ else }}Project notebook{{ end }}</p>
+    <h1>{{ .Title }}</h1>
+    <p class="repo-directory-lead">{{ if $fr }}Code et documentation de mes projets en infographie, développement et infrastructure personnelle.{{ else }}Code and documentation for my graphics, developer-tool, and homelab projects.{{ end }}</p>
+    <p class="repo-directory-count">{{ len $snapshot.repositories }} {{ if $fr }}dépôts publics · Page modifiée le{{ else }}public repositories · Page updated{{ end }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time></p>
+  </header>
+  {{ $other := cond $fr "Autre" "Other" }}
+  <section class="repo-explorer" data-repo-explorer aria-labelledby="repo-explorer-heading">
+    <h2 id="repo-explorer-heading">{{ if $fr }}Explorer les projets{{ else }}Explore projects{{ end }}</h2>
+    <p class="repo-explorer-hint">{{ if $fr }}Recherchez un projet ou combinez les filtres ci-dessous.{{ else }}Search for a project or combine the filters below.{{ end }}</p>
+    <div class="repo-explorer-toolbar" role="search">
+      <label class="repo-sr" for="repo-search">{{ if $fr }}Rechercher{{ else }}Search{{ end }}</label>
+      <input id="repo-search" class="repo-explorer-search" type="search" data-repo-search placeholder="{{ if $fr }}Nom, langage, style, description…{{ else }}Name, language, style, description…{{ end }}" autocomplete="off" enterkeyhint="search">
+      <p class="repo-explorer-live" data-repo-live aria-live="polite"><span data-repo-count>{{ len $snapshot.repositories }}</span> {{ if $fr }}projets affichés{{ else }}projects shown{{ end }}</p>
+    </div>
+    <div class="repo-filter-block repo-filter-block--origin">
+      <p class="repo-filter-label" id="repo-origin-label">{{ if $fr }}Type de dépôt{{ else }}Repository type{{ end }}</p>
+      <div class="repo-origin-filters" role="group" aria-labelledby="repo-origin-label">
+        <button type="button" data-repo-origin="" aria-pressed="true">{{ if $fr }}Tous{{ else }}All{{ end }}</button>
+        <button type="button" data-repo-origin="original" aria-pressed="false">{{ if $fr }}Mes dépôts{{ else }}My repositories{{ end }}</button>
+        <button type="button" data-repo-origin="fork" aria-pressed="false">Forks</button>
+      </div>
+    </div>
+    <div class="repo-filter-block repo-filter-block--style">
+      <p class="repo-filter-label" id="repo-style-label">{{ if $fr }}Type de projet{{ else }}Project type{{ end }}</p>
+      <div class="repo-style-filters" role="group" aria-labelledby="repo-style-label">
+        <button type="button" data-repo-style="" aria-pressed="true">{{ if $fr }}Tous{{ else }}All{{ end }}</button>
+        {{ range $stylesData.styles }}
+        <button type="button" data-repo-style="{{ .id }}" aria-pressed="false">{{ index .label $i }}</button>
+        {{ end }}
+      </div>
+    </div>
+    <div class="repo-filter-block repo-filter-block--domain">
+      <p class="repo-filter-label" id="repo-domain-label">{{ if $fr }}Domaine de compétence{{ else }}Competence domain{{ end }}</p>
+      <div class="repo-domain-filters" role="group" aria-labelledby="repo-domain-label">
+        <button type="button" data-repo-domain="" aria-pressed="true">{{ if $fr }}Tous{{ else }}All{{ end }}</button>
+        {{ range $domainsData.majors }}
+        <button type="button" data-repo-domain="{{ .id }}" aria-pressed="false">{{ index .label $i }}</button>
+        {{ end }}
+      </div>
+    </div>
+    <div class="repo-explorer-tools">
+      <label>{{ if $fr }}Trier{{ else }}Sort{{ end }}
+        <select data-repo-sort>
+          <option value="stars">{{ if $fr }}Étoiles{{ else }}Stars{{ end }}</option>
+          <option value="activity">{{ if $fr }}Activité{{ else }}Activity{{ end }}</option>
+          <option value="name">{{ if $fr }}Nom{{ else }}Name{{ end }}</option>
+        </select>
+      </label>
+      <button type="button" class="repo-explorer-reset" data-repo-reset>{{ if $fr }}Réinitialiser{{ else }}Reset{{ end }}</button>
+    </div>
+    <p class="repo-explorer-empty" data-repo-empty hidden>{{ if $fr }}Aucun projet ne correspond à cette recherche. Essayez un autre terme ou réinitialisez les filtres.{{ else }}No project matches this search. Try another term or reset the filters.{{ end }}</p>
+  </section>
+  <div data-repo-groups>
+  {{ range $group := $stylesData.styles }}
+    {{ $repos := slice }}
+    {{ range $snapshot.repositories }}
+      {{ $types := index $stylesData.repositories .name | default (slice "scripts") }}
+      {{ if eq (index $types 0) $group.id }}{{ $repos = $repos | append . }}{{ end }}
+    {{ end }}
+    {{ if $repos }}
+    <details class="repo-directory-group" data-project-type="{{ $group.id }}" open>
+      <summary><h2>{{ index $group.label $i }}</h2><svg class="repo-group-chevron" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
+      <ul class="repo-directory-grid" role="list">
+        {{ range sort $repos "stars" "desc" }}
+        {{ $lang := .language | default $other }}
+        {{ $note := index (where hugo.Data.repository_notes.notes "repo" .name) 0 }}
+        {{ $article := site.GetPage (printf "/projects/notes/%s" $note.slug) }}
+        {{ if not $article }}{{ errorf "Missing project article for %s (%s)" .name $.Lang }}{{ end }}
+        {{ $analysis := index (hugo.Data.repository_analysis.repositories | default dict) .name }}
+        {{ $repoStyles := index ($stylesData.repositories | default dict) .name | default (slice "scripts") }}
+        {{ $repoDomains := index ($domainsData.repositories | default dict) .name | default (slice "application") }}
+        {{ $bits := newScratch }}
+        {{ $bits.Set "q" (slice .name $lang (.description | default "") (index $note.intro 0) (index $note.intro 1)) }}
+        {{ range (index $stylesData.technology_badges .name | default slice) }}{{ $bits.Add "q" . }}{{ end }}
+        {{ range $repoStyles }}{{ $bits.Add "q" . }}{{ end }}
+        {{ range $stylesData.styles }}{{ if in $repoStyles .id }}{{ $bits.Add "q" (index .label 0) }}{{ $bits.Add "q" (index .label 1) }}{{ end }}{{ end }}
+        {{ range $repoDomains }}{{ $bits.Add "q" . }}{{ end }}
+        {{ range $domainsData.majors }}{{ if in $repoDomains .id }}{{ $bits.Add "q" (index .label 0) }}{{ $bits.Add "q" (index .label 1) }}{{ end }}{{ end }}
+        {{ with $analysis }}{{ range .languages }}{{ $bits.Add "q" .name }}{{ end }}{{ range first 6 .installation }}{{ $bits.Add "q" .heading }}{{ end }}{{ end }}
+        {{ $search := replace (delimit ($bits.Get "q") " ") "\"" "" }}
+        {{ $docker := newScratch }}
+        {{ $docker.Set "yes" false }}
+        {{ with $analysis }}{{ range .installation }}{{ $blob := lower (printf "%s %s" .heading .commands) }}{{ if or (in $blob "docker") (in $blob "compose") }}{{ $docker.Set "yes" true }}{{ end }}{{ end }}{{ end }}
+        {{ if index (hugo.Data.repository_profiles.repositories | default dict) .name }}{{ $docker.Set "yes" true }}{{ end }}
+        {{ $posts := slice }}
+        {{ range (index (hugo.Data.repository_article_index.repositories | default dict) .name | default slice) }}
+          {{ if and (eq .lang $.Lang) (strings.HasPrefix .path "posts/") }}
+            {{ $dir := strings.TrimSuffix "/index.fr.md" (strings.TrimSuffix "/index.md" .path) }}
+            {{ with site.GetPage $dir }}{{ $posts = $posts | append . }}{{ end }}
+          {{ end }}
+        {{ end }}
+        <li class="repo-directory-card" data-origin="{{ if .fork }}fork{{ else }}original{{ end }}" data-language="{{ $lang }}" data-styles="{{ delimit $repoStyles " " }}" data-domains="{{ delimit $repoDomains " " }}" data-name="{{ .name }}" data-stars="{{ .stars }}" data-pushed="{{ .pushed }}" data-search="{{ $search | lower }}">
+          <div class="repo-card-heading">
+            {{ partial "repo-mark.html" (dict "name" .name "language" $lang) }}
+            <h3><a href="{{ $article.RelPermalink }}">{{ .name }}</a></h3>
+            <a class="repo-stars" href="{{ .url }}/stargazers" aria-label="{{ .stars }} {{ if $fr }}étoiles sur GitHub{{ else }}GitHub stars{{ end }}">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="m10 2 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8Z"/></svg>
+              <span>{{ .stars }}</span>
+            </a>
+          </div>
+          <div class="repo-card-tags">
+            <span class="repo-language-badge">{{ $lang }}</span>
+            {{ range (index $stylesData.technology_badges .name | default slice) }}<span class="repo-technology-badge">{{ . }}</span>{{ end }}
+            {{ range first 1 $repoStyles }}
+              {{ $sid := . }}
+              {{ range $stylesData.styles }}{{ if eq .id $sid }}<span class="repo-style-tag" data-style="{{ .id }}">{{ index .label $i }}</span>{{ end }}{{ end }}
+            {{ end }}
+            {{ range first 1 $repoDomains }}
+              {{ $did := . }}
+              {{ range $domainsData.majors }}{{ if eq .id $did }}<span class="repo-domain-tag" data-domain="{{ .id }}">{{ index .label $i }}</span>{{ end }}{{ end }}
+            {{ end }}
+          </div>
+          {{ $description := index $note.intro (cond $fr 1 0) }}
+          {{ with $description }}<p>{{ . }}</p>{{ end }}
+          <div class="repo-card-actions"><a class="repo-read-note" href="{{ $article.RelPermalink }}" aria-label="{{ if $fr }}Documentation de{{ else }}Documentation for{{ end }} {{ .name }}">Documentation <span aria-hidden="true">→</span></a><a class="repo-source" href="{{ .url }}" aria-label="{{ .name }} {{ if $fr }}sur{{ else }}on{{ end }} GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1 1.75 2.01 3.29 1.11.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.64 0c2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.69.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.04.76 2.1v3.11c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg><span>GitHub</span></a></div>
+          {{ with $posts }}
+          <div class="repo-card-posts">
+            <p class="repo-card-posts-label">{{ if $fr }}Sur le blog{{ else }}On the blog{{ end }}</p>
+            <ul class="repo-card-post-list" role="list" aria-label="{{ if $fr }}Articles liés{{ else }}Related posts{{ end }}">
+              {{ range first 2 . }}
+              <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span aria-hidden="true">→</span></a></li>
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+          <div class="repo-directory-meta"><time datetime="{{ $article.Lastmod.Format "2006-01-02" }}">{{ if $fr }}Modifié le{{ else }}Updated{{ end }} {{ $article.Lastmod.Format "2006-01-02" }}</time>{{ if .fork }}<span class="repo-kind repo-kind--fork"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="5" cy="4" r="2"/><circle cx="15" cy="4" r="2"/><circle cx="5" cy="16" r="2"/><path d="M5 6v8m10-8v2a3 3 0 0 1-3 3H5"/></svg>Fork</span>{{ end }}{{ if .archived }}<span class="repo-kind repo-kind--archived"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 5.5h14v11H3zM2.5 2.5h15v3h-15zM8 9h4"/></svg>{{ if $fr }}Archivé{{ else }}Archived{{ end }}</span>{{ end }}</div>
+        </li>
+        {{ end }}
+      </ul>
+    </details>
+    {{ end }}
+  {{ end }}
+  </div>
+  <p class="repo-directory-footnote">{{ if $fr }}Chaque dépôt apparaît sous son type de projet principal. Les filtres incluent aussi ses types secondaires. Les forks conservent le crédit du projet d’origine.{{ else }}Each repository appears under its primary project type. Filters also include secondary types. Forks retain credit to their upstream projects.{{ end }}</p>
+</article>
+<script>
+  const explorer = document.querySelector('[data-repo-explorer]');
+  if (explorer) {
+    const cards = [...document.querySelectorAll('.repo-directory-card')];
+    const groups = [...document.querySelectorAll('[data-repo-groups] .repo-directory-group')];
+    const search = explorer.querySelector('[data-repo-search]');
+    const sort = explorer.querySelector('[data-repo-sort]');
+    const empty = explorer.querySelector('[data-repo-empty]');
+    const count = explorer.querySelector('[data-repo-count]');
+    let style = '';
+    let domain = '';
+    let origin = '';
+    function apply() {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      for (const card of cards) {
+        const hay = card.dataset.search || '';
+        const styles = (card.dataset.styles || '').split(/\s+/).filter(Boolean);
+        const domains = (card.dataset.domains || '').split(/\s+/).filter(Boolean);
+        const styleOk = !style || styles.includes(style);
+        const domainOk = !domain || domains.includes(domain);
+        const originOk = !origin || card.dataset.origin === origin;
+        const show = styleOk && domainOk && originOk && (!query || hay.includes(query));
+        card.hidden = !show;
+        if (show) visible += 1;
+      }
+      for (const group of groups) {
+        const shown = [...group.querySelectorAll('.repo-directory-card')].filter(card => !card.hidden).length;
+        group.hidden = shown === 0;
+        const groupCount = group.querySelector('.repo-group-count');
+        if (groupCount) groupCount.textContent = String(shown);
+      }
+      empty.hidden = visible !== 0;
+      count.textContent = String(visible);
+    }
+    function sortCards() {
+      for (const list of document.querySelectorAll('.repo-directory-grid')) {
+        const items = [...list.children];
+        items.sort((a, b) => {
+          if (sort.value === 'name') return a.dataset.name.localeCompare(b.dataset.name);
+          if (sort.value === 'activity') return (b.dataset.pushed || '').localeCompare(a.dataset.pushed || '');
+          return Number(b.dataset.stars || 0) - Number(a.dataset.stars || 0);
+        });
+        for (const item of items) list.append(item);
+      }
+    }
+    function pressGroup(selector, active) {
+      for (const button of explorer.querySelectorAll(selector)) {
+        button.setAttribute('aria-pressed', button === active ? 'true' : 'false');
+      }
+    }
+    search.addEventListener('input', apply);
+    sort.addEventListener('change', () => { sortCards(); apply(); });
+    explorer.querySelector('[data-repo-reset]').addEventListener('click', () => {
+      search.value = '';
+      style = '';
+      domain = '';
+      origin = '';
+      sort.value = 'stars';
+      pressGroup('[data-repo-style]', explorer.querySelector('[data-repo-style=""]'));
+      pressGroup('[data-repo-domain]', explorer.querySelector('[data-repo-domain=""]'));
+      pressGroup('[data-repo-origin]', explorer.querySelector('[data-repo-origin=""]'));
+      sortCards();
+      apply();
+      search.focus();
+    });
+    function bindFilterGroup(selector, onPick) {
+      const buttons = [...explorer.querySelectorAll(selector)];
+      for (const button of buttons) {
+        button.addEventListener('click', () => onPick(button));
+        button.addEventListener('keydown', (event) => {
+          const idx = buttons.indexOf(button);
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+            event.preventDefault();
+            buttons[Math.min(buttons.length - 1, idx + 1)].focus();
+          } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            buttons[Math.max(0, idx - 1)].focus();
+          } else if (event.key === 'Home') {
+            event.preventDefault();
+            buttons[0].focus();
+          } else if (event.key === 'End') {
+            event.preventDefault();
+            buttons[buttons.length - 1].focus();
+          }
+        });
+      }
+    }
+    bindFilterGroup('[data-repo-origin]', (button) => {
+      origin = button.dataset.repoOrigin;
+      pressGroup('[data-repo-origin]', button);
+      apply();
+    });
+    bindFilterGroup('[data-repo-style]', (button) => {
+      style = button.dataset.repoStyle;
+      pressGroup('[data-repo-style]', button);
+      apply();
+    });
+    bindFilterGroup('[data-repo-domain]', (button) => {
+      domain = button.dataset.repoDomain;
+      pressGroup('[data-repo-domain]', button);
+      apply();
+    });
+  }
+</script>
+{{ end }}

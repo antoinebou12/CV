@@ -12,7 +12,7 @@ tags:
 
 # Serilog.Sinks.SentrySDK
 
-A Serilog sink for Sentry that simplifies error and log management in your applications.
+A Serilog sink that sends events to Sentry through the official Sentry SDK.
 
 Based on [serilog-contrib/serilog-sinks-sentry](https://github.com/serilog-contrib/serilog-sinks-sentry)
 

@@ -1,9 +1,10 @@
 ---
 post_kind: article
+cover_none: true
 title: "Créateur de Lenses Snapchat"
 date: 2022-09-06T10:00:00-04:00
-lastmod: 2026-05-22T16:00:00-04:00
-description: "Lenses Snapchat avec des millions de lectures (2017–2020), clients Fiverr, outil GIF→PNG, retours Lens Studio et suite Meta Spark."
+lastmod: 2026-10-24T14:00:00-04:00
+description: "Lenses Snapchat avec des millions de lectures (2017-2020), clients Fiverr, outil GIF vers PNG, retours Lens Studio et totaux Lens Insights 2026."
 translationKey: snapchat-lens-creator
 tags:
   - Snapchat
@@ -12,13 +13,15 @@ tags:
   - Side Project
 ---
 
-*Mise à jour mai 2026 avec les chiffres Lens Insights actuels.* J’ai commencé les **lenses Snapchat** pour le fun en **2017** et je me suis retrouvé avec un petit **Fiverr**, un utilitaire encore utilisé par d’autres créateurs, et un appel Snapchat sur **Lens Studio**. **[English version]({{< ref "/posts/snapchat-lens-creator/index.md" >}})**.
+*Mise à jour octobre 2026 avec les chiffres Lens Insights de ma publication LinkedIn mise en avant.* J’ai commencé les **lenses Snapchat** pour le fun en **2017** et je me suis retrouvé avec un petit **Fiverr**, un utilitaire encore utilisé par d’autres créateurs, et un appel Snapchat sur **Lens Studio**.
 
 <!--more-->
 
 ## Chiffres (Lens Insights)
 
-À ce jour : **13,97 M lectures**, **20,38 M vues**, **711,8 k partages**, **10 092 favoris**, **753 publications**, **428 auteurs uniques** (cumul). Lectures et vues ne mesurent pas la même chose — utile quand un client demande « est-ce que ça a marché ? »
+À ce jour : **14,07 M lectures**, **20,48 M vues**, **712,9 k partages**, **10 250 favoris**, **804 publications**, **470 auteurs uniques** (cumul). Lectures et vues ne mesurent pas la même chose : une lens peut s’ouvrir une fois et se regarder plusieurs fois, donc je regarde les deux quand un client demande si ça a marché.
+
+Source des totaux 2026 : [mise à jour LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7032088581389094912/).
 
 Entre **2017 et 2020**, **42 lenses** pour moi et pour des clients. Exemples par usage :
 

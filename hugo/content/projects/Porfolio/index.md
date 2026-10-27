@@ -7,4 +7,4 @@ draft: false
 
 ## Portfolio Project
 
-This project is about creating a personal portfolio website using Hugo. You can view the project [here](https://github.com/antoinebou12/portfolio).
+Personal static site built with Hugo. Repository: [github.com/antoinebou12/portfolio](https://github.com/antoinebou12/portfolio).

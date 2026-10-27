@@ -13,10 +13,10 @@ tags:
   - Kubernetes
   - Conference
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-J’ai suivi un **webinaire Run:ai** (Amériques) sur l’**inférence ML** et son **autoscaling sur AWS**. À l’époque j’étais plongé dans des projets GPU/containers, mais l’inférence en prod ressemblait encore à « quelqu’un a SSH sur une machine ». La session a été utile parce qu’elle cadrait l’inférence comme un problème de **capacité et d’ordonnancement** — pas seulement d’export de modèle. **[English version]({{< ref "/posts/runai-aws-inference-webinar/index.md" >}})**.
+J’ai suivi un **webinaire Run:ai** (Amériques) sur l’**inférence ML** et son **autoscaling sur AWS**. À l’époque j’étais plongé dans des projets GPU/containers, mais l’inférence en prod ressemblait encore à « quelqu’un a SSH sur une machine ». La session a été utile parce qu’elle cadrait l’inférence comme un problème de **capacité et d’ordonnancement** — pas seulement d’export de modèle.
 
 <!--more-->
 

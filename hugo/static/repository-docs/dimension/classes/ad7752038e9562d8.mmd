@@ -1,0 +1,48 @@
+classDiagram
+direction TB
+class tda9e54453326["WasmGraph"] {
+  <<struct>>
+  new()
+  from_edges()
+  from_grid_2d()
+  from_grid_2d_edge_weights()
+  add_edge()
+  add_edge_undirected()
+  run_dijkstra()
+  run_astar()
+  astar_grid()
+  run_astar_with_coords()
+  num_nodes()
+  num_edges()
+  dstar_lite()
+  greedy_vertex_coloring()
+  dsatur_coloring()
+  is_bipartite()
+  run_bfs()
+  dfs_preorder()
+  dfs_postorder()
+}
+class t6e46ce877ae5["WasmDijkstraResult"] {
+  <<struct>>
+  get_distances()
+  get_predecessors()
+  path_to()
+  distance_to()
+}
+class t41416eebf97a["WasmAstarResult"] {
+  <<struct>>
+  get_path()
+  get_dist()
+  get_predecessors()
+  path_to()
+}
+class t569e594f3208["WasmBfsResult"] {
+  <<struct>>
+  get_order()
+  get_depth()
+}
+class t73447bbe40e0["WasmDStarLiteResult"] {
+  <<struct>>
+  get_path()
+  get_dist()
+}

@@ -1,0 +1,66 @@
+classDiagram
+direction TB
+class t1bd2f38d1df9["CloudConnection"] {
+}
+class tc6162ba17c1d["CLOUD_OT_ConnectionAdd"] {
+  execute()
+}
+class tba1a8c923798["CLOUD_OT_ConnectionRemove"] {
+  execute()
+}
+class t413b380bcb71["CloudIntegrationPreferences"] {
+  draw()
+}
+class ta7f72565c22e["CloudIntegrationPanel"] {
+  draw()
+}
+class t2469e84e3752["CloudToggleFolderOperator"] {
+  execute()
+}
+class t85310a14a3c5["CloudFilePropertyGroup"] {
+}
+class t27a5a06619a9["CloudUpdateFileListOperator"] {
+  execute()
+}
+class t7846b33f88df["CloudUploadFileOperator"] {
+  execute()
+}
+class t9c44c9d5eca5["CloudLoadFileOperator"] {
+  execute()
+}
+class t7fe9626f4380["CloudDownloadFileOperator"] {
+  execute()
+}
+class t13452e91ae41["CloudDeleteFileOperator"] {
+  execute()
+}
+class t4b82cd6dc975["CloudSearchManager"] {
+  __init__()
+  fuzzy_match()
+  filter_by_type()
+  search()
+}
+class b7fc08f11cd57["bpy.types.PropertyGroup"] {
+  <<unresolved_base>>
+}
+b7fc08f11cd57 <|-- t1bd2f38d1df9
+class bb1aa8a371273["bpy.types.Operator"] {
+  <<unresolved_base>>
+}
+bb1aa8a371273 <|-- tc6162ba17c1d
+bb1aa8a371273 <|-- tba1a8c923798
+class b4788926edee8["bpy.types.AddonPreferences"] {
+  <<unresolved_base>>
+}
+b4788926edee8 <|-- t413b380bcb71
+class bf0eb7a162f8e["bpy.types.Panel"] {
+  <<unresolved_base>>
+}
+bf0eb7a162f8e <|-- ta7f72565c22e
+bb1aa8a371273 <|-- t2469e84e3752
+b7fc08f11cd57 <|-- t85310a14a3c5
+bb1aa8a371273 <|-- t27a5a06619a9
+bb1aa8a371273 <|-- t7846b33f88df
+bb1aa8a371273 <|-- t9c44c9d5eca5
+bb1aa8a371273 <|-- t7fe9626f4380
+bb1aa8a371273 <|-- t13452e91ae41

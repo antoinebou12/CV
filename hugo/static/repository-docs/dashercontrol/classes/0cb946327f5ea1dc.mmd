@@ -1,0 +1,47 @@
+classDiagram
+direction TB
+class taf9da2178149["Applet"] {
+  <<struct>>
+  create()
+  all()
+  all_applets_by_workspace()
+  delete_all_from_workspace()
+  update()
+}
+class t6b9bc69512fc["NewApplet"] {
+  <<struct>>
+}
+class tc2008bed5239["NewAppletNoWorkspace"] {
+  <<struct>>
+}
+class tbdbcf29a89c8["Workspace"] {
+  <<struct>>
+  create()
+  get()
+  update()
+  delete_with_applets()
+  all()
+  all_for_tenant()
+  create_with_applets()
+  update_with_applets()
+}
+class t0616e1c45553["NewWorkspace"] {
+  <<struct>>
+}
+class t23dd024658cf["WorkspaceWithApplets"] {
+  <<struct>>
+}
+class tfc24931154db["NewWorkspaceWithApplets"] {
+  <<struct>>
+}
+class tb420c49d9e9c["WorkspaceNoIDWithApplets"] {
+  <<struct>>
+}
+class t40cee3f31223["WorkspaceNoTenantWithApplets"] {
+  <<struct>>
+}
+class t7cb06d0f6e3a["DBJsonType"] {
+  <<struct>>
+  from_sql()
+  to_sql()
+}

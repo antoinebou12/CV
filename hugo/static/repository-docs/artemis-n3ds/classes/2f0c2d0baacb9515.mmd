@@ -1,0 +1,55 @@
+classDiagram
+direction TB
+class tebbaa609bb53["IN3dsRenderer"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+}
+class t2fc2c390941e["N3dsRendererBase"] {
+  draw_perf_counters()
+  write_px_to_framebuffer_gpu()
+  ensure_3d_enabled()
+  ensure_3d_disabled()
+  write24()
+}
+class tab947c2845a3["N3dsRendererTop"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+}
+class t746bd7df75e3["N3dsRendererBottom"] {
+  write_px_to_framebuffer()
+  write_px_to_framebuffer_raw()
+}
+class tf26065d20f98["N3dsRendererMock"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+}
+class t6fdc2ae403c8["N3dsRendererNormal"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+  set_bottom_screen()
+}
+class tb4820c423198["N3dsRendererDualScreenStretch"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+}
+class t3905aff9b48e["N3dsRendererDualScreenMirror"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+}
+class t4d46a2b1cc67["N3dsRendererDualScreenMagnify"] {
+  write_px_to_framebuffer()
+  set_perf_decode_ticks()
+  set_crop_region()
+  accept()
+}
+t2fc2c390941e <|-- tab947c2845a3
+t2fc2c390941e <|-- t746bd7df75e3
+tebbaa609bb53 <|-- tf26065d20f98
+tebbaa609bb53 <|-- t6fdc2ae403c8
+tebbaa609bb53 <|-- tb4820c423198
+tebbaa609bb53 <|-- t3905aff9b48e
+tebbaa609bb53 <|-- t4d46a2b1cc67
+class bb00111a17b33["ISubscriber"] {
+  <<unresolved_base>>
+}
+bb00111a17b33 <|-- t4d46a2b1cc67

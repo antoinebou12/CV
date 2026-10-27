@@ -4,19 +4,25 @@
 {{- $rawPk := $page.Params.post_kind | default "article" -}}
 {{- $pk := cond (eq $rawPk "conference-recap") "conference" $rawPk -}}
 {{- $isConference := and (eq $page.Section "posts") (eq $pk "conference") -}}
+{{- $isRepoNote := .Params.repository_note -}}
 
-<article{{- if $isConference }} class="conference-post"{{- end -}}>
-  <header class="article-heading mb-14">
-    <a class="article-back" href="{{ site.Home.RelPermalink }}">← {{ if eq .Lang "fr" }}Tous les articles{{ else }}All articles{{ end }}</a>
-    <h1 id="single-post-title" class="my-0! pb-2.5">{{- .Title -}}</h1>
-    {{- if $isConference -}}
-    <p class="mb-0 mt-2 text-xs font-semibold uppercase tracking-wider text-orange-700 dark:text-orange-300/95">{{- i18n "searchPillConference" -}}</p>
+<article class="{{ if $isRepoNote }}repo-doc{{ else }}journal-article{{ if $isConference }} conference-post{{ else if eq .Section "recipes" }} recipe-post{{ end }}{{ end }}">
+  <header class="{{ if $isRepoNote }}repo-doc-heading{{ else }}article-heading mb-14{{ end }}">
+    {{ if $isRepoNote }}
+    {{ with site.GetPage "/projects" }}<nav class="repo-breadcrumbs" aria-label="{{ if eq .Lang "fr" }}Fil d’Ariane{{ else }}Breadcrumb{{ end }}"><a class="article-back repo-doc-back" href="{{ .RelPermalink }}"><span aria-hidden="true">←</span> {{ if eq .Lang "fr" }}Projets{{ else }}Projects{{ end }}</a><span aria-hidden="true">/</span><span aria-current="page">{{ $.Title }}</span></nav>{{ end }}
+    {{ else }}
+    {{- if eq .Section "recipes" -}}
+    {{ with site.GetPage "/recipes" }}<a class="article-back" href="{{ .RelPermalink }}">← {{ if eq $.Lang "fr" }}Toutes les recettes{{ else }}All recipes{{ end }}</a>{{ end }}
+    {{- else -}}
+    {{ with site.GetPage "/posts" }}<a class="article-back" href="{{ .RelPermalink }}">← {{ if eq $.Lang "fr" }}Tous les articles{{ else }}All articles{{ end }}</a>{{ end }}
     {{- end -}}
-
+    <div class="article-kicker"><span class="article-kind-badge">{{ if eq .Section "recipes" }}{{ i18n "searchPillRecipe" }}{{ else if $isConference }}{{ i18n "searchPillConference" }}{{ else if eq .Params.story_kind "introduction" }}{{ if eq .Lang "fr" }}Présentation du projet{{ else }}Project introduction{{ end }}{{ else if eq .Params.story_kind "progress" }}{{ if eq .Lang "fr" }}Avancement du projet{{ else }}Project update{{ end }}{{ else if eq $pk "tutorial" }}{{ if eq .Lang "fr" }}Tutoriel{{ else }}Tutorial{{ end }}{{ else }}Article{{ end }}</span>{{ with .Params.series }}<span>{{ . }}</span>{{ end }}</div>
+    <h1 id="single-post-title" class="my-0! pb-2.5">{{- .Title -}}</h1>
     {{- if ne .Type "page" -}}
-    <div class="text-xs antialiased opacity-60">
+    <div class="article-meta">
       {{- if .Date -}}
-      <time>{{- .Date | time.Format ":date_medium" -}}</time>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{- .Date | time.Format ":date_medium" -}}</time>
+      <span class="article-reading-time">{{ .ReadingTime }} min {{ if eq .Lang "fr" }}de lecture{{ else }}read{{ end }}</span>
       {{- end -}}<!---->
       {{- $single_author := or .Params.author site.Params.author -}}
       <!---->
@@ -26,17 +32,20 @@
       {{- end -}}
     </div>
     {{- end -}}
+    {{ with .GetTerms "tags" }}<nav class="article-topic-badges" aria-label="{{ if eq $.Lang "fr" }}Sujets{{ else }}Topics{{ end }}">{{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</nav>{{ end }}
+    {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
+  {{ if not $isRepoNote }}{{ partial "repository-article-guides.html" $page }}{{ end }}
 
-  {{- if $isConference -}}
+  {{- if and (not $isRepoNote) (ne .Params.show_hero false) -}}
   {{- with partial "featured-image-resource.html" $page -}}
-  <figure class="conference-single-hero mb-10 overflow-hidden rounded-xl border border-orange-500/25 bg-black/[0.03] dark:border-orange-400/30 dark:bg-white/[0.04]">
+  <figure class="{{ if $isConference }}conference-single-hero border-orange-500/25 dark:border-orange-400/30{{ else }}article-single-hero border-black/10 dark:border-white/12{{ end }} mb-10 overflow-hidden rounded-xl border bg-black/[0.03] dark:bg-white/[0.04]">
     {{- $hero := . -}}
     {{- if or (eq .MediaType.SubType "gif") (eq .MediaType.SubType "svg") -}}
     <img
       src="{{ .RelPermalink }}"
-      alt="{{ $page.Title | plainify }}"
+      alt="{{ $page.Params.image_alt | default $page.Title | plainify }}"
       class="max-h-[min(26rem,50vh)] w-full object-cover"
       loading="eager"
       decoding="async"
@@ -45,7 +54,7 @@
     {{- with .Resize "1200x" -}}
     <img
       src="{{ .RelPermalink }}"
-      alt="{{ $page.Title | plainify }}"
+      alt="{{ $page.Params.image_alt | default $page.Title | plainify }}"
       width="{{ .Width }}"
       height="{{ .Height }}"
       class="max-h-[min(26rem,50vh)] w-full object-cover"
@@ -55,25 +64,27 @@
     {{- else -}}
     <img
       src="{{ $hero.RelPermalink }}"
-      alt="{{ $page.Title | plainify }}"
+      alt="{{ $page.Params.image_alt | default $page.Title | plainify }}"
       class="max-h-[min(26rem,50vh)] w-full object-cover"
       loading="eager"
       decoding="async"
     />
     {{- end -}}
     {{- end -}}
+    {{ with $page.Params.image_caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
   </figure>
   {{- end -}}
   {{- end -}}
 
-  <div class="single-post-surface single-post-body not-prose mb-10 min-w-0">
-    <div class="single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert">
-      <section class="single-post-content" aria-labelledby="single-post-title">{{- $page.Content -}}</section>
+  <div class="{{ if $isRepoNote }}repo-doc-surface{{ else }}single-post-surface single-post-body not-prose mb-10{{ end }} min-w-0">
+    <div class="{{ if $isRepoNote }}repo-doc-prose{{ else }}single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert{{ end }}">
+      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 3) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Dans cet article{{ else }}In this article{{ end }}</summary>{{ .TableOfContents }}</details>{{ end }}
+      <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- $page.Content -}}{{ if and (eq .Section "projects") (not (in .RawContent "{{< repository-note")) }}{{ partial "documentation-glossary.html" (dict "page" . "context" .RawContent) }}{{ end }}</section>
     </div>
   </div>
 
   <!-- Post Tags -->
-  {{- if .Params.tags -}}
+  {{- if and $isRepoNote .Params.tags -}}
   <footer class="article-tags mt-12 flex flex-wrap gap-2">
     {{- range .GetTerms "tags" -}}
     <a
@@ -108,75 +119,87 @@
   {{- end -}}<!---->
   {{- end -}}
 
-  <!-- Disqus -->
-  {{- if and site.Config.Services.Disqus.Shortname (not (eq .Params.comments
-  false)) -}}
-  <div class="mt-24! text-black dark:text-white" id="disqus_thread"></div>
-  <script>
-    const disqusShortname = '{{- site.Config.Services.Disqus.Shortname -}}';
-    const script = document.createElement('script');
-    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
-    script.setAttribute('data-timestamp', +new Date());
-    document.head.appendChild(script);
-  </script>
-  {{- end -}}
+  <!-- Comments Terminal Session -->
+  {{- $hasComments := and (not (eq .Params.comments false)) (or site.Config.Services.Disqus.Shortname site.Params.graphCommentId site.Params.giscus.repo) -}}
+  {{- if $hasComments -}}
+  <section class="terminal terminal-comments mt-20!" data-terminal role="region" aria-label="{{ if eq .Lang "fr" }}Zone de commentaires et discussions{{ else }}Comments and discussion terminal{{ end }}">
+    <div class="terminal-head">
+      <div class="terminal-dots" role="group" aria-label="{{ if eq .Lang "fr" }}Contrôles de fenêtre{{ else }}Window controls{{ end }}">
+        <button type="button" class="terminal-dot close" data-terminal-close aria-label="{{ if eq .Lang "fr" }}Fermer les commentaires{{ else }}Close comments{{ end }}" title="{{ if eq .Lang "fr" }}Fermer les commentaires{{ else }}Close comments{{ end }}"></button>
+        <button type="button" class="terminal-dot minimize" data-terminal-toggle aria-label="{{ if eq .Lang "fr" }}Réduire les commentaires{{ else }}Collapse comments{{ end }}" title="{{ if eq .Lang "fr" }}Réduire les commentaires{{ else }}Collapse comments{{ end }}" aria-expanded="true"></button>
+        <button type="button" class="terminal-dot expand" data-terminal-expand aria-label="{{ if eq .Lang "fr" }}Agrandir{{ else }}Expand{{ end }}" title="{{ if eq .Lang "fr" }}Agrandir{{ else }}Expand{{ end }}"></button>
+      </div>
+      <span class="terminal-title"><span class="terminal-prompt" aria-hidden="true">~/</span>discussions · {{ if eq .Lang "fr" }}Commentaires & retours{{ else }}Comments & feedback{{ end }}</span>
+      <button type="button" class="term-comments-close-btn" data-terminal-close>{{ if eq .Lang "fr" }}Fermer{{ else }}Close{{ end }}</button>
+    </div>
+    <div class="terminal-panel" data-terminal-panel style="padding: 1.5rem 1.25rem;">
+      {{- if site.Config.Services.Disqus.Shortname -}}
+      <div class="text-black dark:text-white" id="disqus_thread"></div>
+      <script>
+        const disqusShortname = '{{- site.Config.Services.Disqus.Shortname -}}';
+        const script = document.createElement('script');
+        script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+        script.setAttribute('data-timestamp', +new Date());
+        document.head.appendChild(script);
+      </script>
+      {{- end -}}
 
-  <!-- GraphComment -->
-  {{- if and site.Params.graphCommentId (not (eq .Params.comments false)) -}}
-  <div class="mt-24! text-black dark:text-white" id="graphcomment"></div>
-  <script type="text/javascript">
-    var __semio__params = {
-      graphcommentId: '{{- site.Params.graphCommentId  -}}',
-      behaviour: {
-        //  uid: "...",
-      },
-      // configure your variables here
-    };
+      {{- if site.Params.graphCommentId -}}
+      <div class="text-black dark:text-white" id="graphcomment"></div>
+      <script type="text/javascript">
+        var __semio__params = {
+          graphcommentId: '{{- site.Params.graphCommentId  -}}',
+          behaviour: {},
+        };
+        function __semio__onload() {
+          __semio__gc_graphlogin(__semio__params);
+        }
+        (function () {
+          var gc = document.createElement('script');
+          gc.type = 'text/javascript';
+          gc.async = true;
+          gc.onload = __semio__onload;
+          gc.defer = true;
+          gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+        })();
+      </script>
+      {{- end -}}
 
-    function __semio__onload() {
-      __semio__gc_graphlogin(__semio__params);
-    }
-
-    (function () {
-      var gc = document.createElement('script');
-      gc.type = 'text/javascript';
-      gc.async = true;
-      gc.onload = __semio__onload;
-      gc.defer = true;
-      gc.src =
-        'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
-      (
-        document.getElementsByTagName('head')[0] ||
-        document.getElementsByTagName('body')[0]
-      ).appendChild(gc);
-    })();
-  </script>
+      {{- if site.Params.giscus.repo -}}
+      <div class="giscus text-black dark:text-white"></div>
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="{{- site.Params.giscus.repo -}}"
+        data-repo-id="{{- site.Params.giscus.repoId -}}"
+        data-category="{{- site.Params.giscus.category -}}"
+        data-category-id="{{- site.Params.giscus.categoryId -}}"
+        data-mapping="{{- site.Params.giscus.mapping | default (print `pathname`) -}}"
+        data-strict="{{- site.Params.giscus.strict | default (print `1`) -}}"
+        data-reactions-enabled="{{- site.Params.giscus.reactionsEnabled | default (print `0`) -}}"
+        data-emit-metadata="{{- site.Params.giscus.emitMetadata | default (print `0`) -}}"
+        data-input-position="{{- site.Params.giscus.inputPosition | default (print `top`) -}}"
+        data-theme="{{- site.Params.giscus.theme | default (print `light`) -}}"
+        data-lang="{{- site.Params.giscus.lang | default (print `en`) -}}"
+        data-loading="{{- site.Params.giscus.loading | default (print `lazy`) -}}"
+        crossorigin="anonymous"
+        async
+      ></script>
+      {{- end -}}
+    </div>
+    <p class="terminal-closed-msg" data-terminal-closed hidden>
+      {{ if eq .Lang "fr" }}Commentaires masqués.{{ else }}Comments closed.{{ end }}
+      <button type="button" class="terminal-restore" data-terminal-restore>{{ if eq .Lang "fr" }}Afficher les commentaires{{ else }}Show comments{{ end }}</button>
+    </p>
+  </section>
   {{- end -}}
 
   <!-- mermaid -->
   {{- partial "mermaid.html" . -}}
-
-  <!-- giscus comment -->
-  {{- if and site.Params.giscus.repo (not (eq .Params.comments false)) -}}
-  <div class="giscus mt-24! text-black dark:text-white"></div>
-  <script
-    src="https://giscus.app/client.js"
-    data-repo="{{- site.Params.giscus.repo -}}"
-    data-repo-id="{{- site.Params.giscus.repoId -}}"
-    data-category="{{- site.Params.giscus.category -}}"
-    data-category-id="{{- site.Params.giscus.categoryId -}}"
-    data-mapping="{{- site.Params.giscus.mapping | default (print `pathname`) -}}"
-    data-strict="{{- site.Params.giscus.strict | default (print `1`) -}}"
-    data-reactions-enabled="{{- site.Params.giscus.reactionsEnabled | default (print `0`) -}}"
-    data-emit-metadata="{{- site.Params.giscus.emitMetadata | default (print `0`) -}}"
-    data-input-position="{{- site.Params.giscus.inputPosition | default (print `top`) -}}"
-    data-theme="{{- site.Params.giscus.theme | default (print `light`) -}}"
-    data-lang="{{- site.Params.giscus.lang | default (print `en`) -}}"
-    data-loading="{{- site.Params.giscus.loading | default (print `lazy`) -}}"
-    crossorigin="anonymous"
-    async
-  ></script>
-  {{- end -}}
+  {{ if and (eq .Section "posts") (not $isRepoNote) }}
+    {{ $media := resources.Get "article-media.js" | minify | fingerprint }}
+    <script src="{{ $media.RelPermalink }}" integrity="{{ $media.Data.Integrity }}" defer></script>
+  {{ end }}
 </article>
 
 {{- end -}}

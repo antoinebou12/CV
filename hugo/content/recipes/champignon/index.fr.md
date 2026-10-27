@@ -5,8 +5,6 @@ date: 2024-01-05
 translationKey: champignon
 ---
 
-# Champignons Bella Farcis aux Œufs avec Fromage de Chèvre et Épinards
-
 ## Catégorie
 - **Type :** Végétarien
 - **Ingrédient Principal :** Champignons
@@ -23,7 +21,7 @@ translationKey: champignon
 - Sel (prix : 0,01 $)
 - Huile d'avocat (prix : 0,01 $)
 
-# Prix
+## Prix
 - Prix total : 5,00 $
 
 ## Instructions

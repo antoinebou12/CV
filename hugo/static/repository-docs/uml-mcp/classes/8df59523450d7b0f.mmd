@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class t0faa5811f02d["KeyUnavailableError"] {
+}
+class t2b1a42c6558c["UnknownKeyError"] {
+}
+class t0c88d230d190["KeyProvider"] {
+  get_key()
+  health()
+}
+class t000a422d1c54["StaticKeySet"] {
+  __init__()
+  get_key()
+  health()
+}
+class td9f923726e06["JwksCache"] {
+  __init__()
+  _fetch()
+  refresh()
+  get_key()
+  key_issuer()
+  health()
+}
+class bb8b49a8722c4["Exception"] {
+  <<unresolved_base>>
+}
+bb8b49a8722c4 <|-- t0faa5811f02d
+bb8b49a8722c4 <|-- t2b1a42c6558c
+class ba26287690c47["Protocol"] {
+  <<unresolved_base>>
+}
+ba26287690c47 <|-- t0c88d230d190

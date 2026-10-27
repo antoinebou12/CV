@@ -7,13 +7,13 @@ aliases:
   - /recipes/saumon/
   - /fr/recipes/saumon/
 images:
-  - featured.jpg
+  - images/featured.jpg
 tags:
   - Vegetarian
   - Baking
 ---
 
-![Spinach and goat cheese savory tart](./featured.jpg)
+![Spinach and goat cheese savory tart](images/featured.jpg)
 
 *Photo: [Unsplash](https://unsplash.com/photos/1546833999-b9f581a1996d)*
 

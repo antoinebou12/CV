@@ -1,4 +1,5 @@
 ---
+image_alt: "Espace Scripting Blender"
 post_kind: tutorial
 title: "Installer des paquets Python pour les add-ons Blender (Windows, Blender 4.2+)"
 date: 2025-02-08T12:00:00-04:00
@@ -12,14 +13,14 @@ tags:
   - Addons
 canonicalURL: "https://medium.com/@antoine.boucher012/a-method-to-install-python-packages-for-add-ons-plugins-in-blender-windows-blender-4-2-98bcbe10fa81"
 images:
-  - img-001.png
+  - images/img-001.png
 ---
 
-Les add-ons qui demandent **NumPy**, **meshio** ou **requests** butent sur le **Python de Blender**. Petit installateur ciblant `sys.executable`, dossier `scripts/modules`, thread d’arrière-plan (Blender 4.2+, Windows). **[English version]({{< ref "/posts/blender-python-packages/index.md" >}})**.
+Les add-ons qui demandent **NumPy**, **meshio** ou **requests** butent sur le **Python de Blender**. Petit installateur ciblant `sys.executable`, dossier `scripts/modules`, thread d’arrière-plan (Blender 4.2+, Windows).
 
 <!--more-->
 
-![Espace Scripting Blender](./img-001.png)
+
 
 ## Stratégie
 

@@ -1,0 +1,20 @@
+classDiagram
+direction TB
+class t3b66128c4ebd["TestStripComments"] {
+  test_line_comment_is_removed()
+  test_code_after_a_line_comment_survives()
+  test_code_before_a_line_comment_survives()
+  test_block_comment_is_removed()
+  test_block_comment_spanning_lines_is_removed()
+  test_consecutive_block_comments_do_not_swallow_code()
+  test_real_call_still_survives()
+  test_double_slash_inside_a_string_literal_is_also_stripped()
+}
+class t68a3f92309b2["TestCheckerIsImportable"] {
+  test_importing_does_not_run_the_checks()
+}
+class b2e950eebcf56["unittest.TestCase"] {
+  <<unresolved_base>>
+}
+b2e950eebcf56 <|-- t3b66128c4ebd
+b2e950eebcf56 <|-- t68a3f92309b2

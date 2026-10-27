@@ -1,4 +1,7 @@
 ---
+image_alt: "Artemis Switch application library, from the repository README"
+project_docs: artemis-switch
+story_kind: introduction
 post_kind: article
 title: "Artemis Switch: following a frame from the network to the screen"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +10,14 @@ description: "Inside Artemis Switch: Moonlight transport, NVDEC, deko3d, frame p
 translationKey: artemis-switch-frame-pacing
 mermaid: true
 tags: ["Nintendo Switch","C++","Graphics","Homebrew"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "antoinebou12/Artemis-Switch" >}}
 
 A stream can report a healthy bitrate and still feel late. **Artemis Switch** is my Moonlight-Switch fork for Nintendo Switch, focused on the path between receiving a frame and presenting it. The useful question is not just “how fast is the decoder?” but “where did this frame wait?”
 
-![Artemis Switch application library, from the repository README](featured.png)
+
 
 <!--more-->
 

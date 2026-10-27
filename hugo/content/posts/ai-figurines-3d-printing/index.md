@@ -2,21 +2,20 @@
 post_kind: article
 title: "Make figurines with AI for 3D printing"
 date: 2026-05-22T10:00:00-04:00
-lastmod: 2026-05-23T02:00:00-04:00
-description: Chibi vinyl figures, ComfyUI with OmniGen2 and Hunyuan3D v2, sequence diagrams via uml-mcp, and resin printing notes with GLB examples.
+lastmod: 2026-10-27T12:00:00-04:00
+description: Chibi vinyl figures, ComfyUI with OmniGen2 and Hunyuan3D v2, and resin printing notes with GLB examples.
 translationKey: ai-figurines-3d-printing
 tags:
   - 3D Printing
   - AI
   - Hunyuan3D
   - ComfyUI
-  - MCP
   - Chibi
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-Good **2D toy art** beats a fancy image-to-3D model. This post walks the steps in order, links a [**slide deck**](./make-figurines-using-ai-for-3d-printing.pptx), a [**ComfyUI workflow**](./workflows/image_omnigen2_image_edit.json), and how I sketch the flow with [**uml-mcp**](https://github.com/antoinebou12/uml-mcp).
+A clear 2D toy image gives the image-to-3D model a useful starting point. Follow the steps with the [slide deck](./make-figurines-using-ai-for-3d-printing.pptx) and [ComfyUI workflow](./workflows/image_omnigen2_image_edit.json).
 
 <!--more-->
 
@@ -29,9 +28,7 @@ Good **2D toy art** beats a fancy image-to-3D model. This post walks the steps i
 
 ![Photo to Object — photo, AI toy image, 3D model, resin print](./images/photo-to-object-pipeline.png)
 
-Pipeline sequence (source: [`figurine-pipeline-sequence.mmd`](./images/figurine-pipeline-sequence.mmd), rendered with [uml-mcp](https://github.com/antoinebou12/uml-mcp)):
-
-![Figurine pipeline — reference photo to resin print](./images/figurine-pipeline-sequence.svg)
+Pipeline sequence ([Mermaid source](./images/figurine-pipeline-sequence.mmd)):
 
 ```mermaid
 sequenceDiagram
@@ -61,11 +58,7 @@ sequenceDiagram
 
 {{< deck src="make-figurines-using-ai-for-3d-printing.pptx" title="Make figurines using AI for 3D printing" label="Download slide deck (.pptx)" size="~17 MB" >}}
 
-![Title slide — Make figurines using AI for 3D printing](./images/slide01-title.png)
-
 ## Step 1 — 2D toy / chibi
-
-![ChatGPT or Midjourney for a toy plastic figure](./images/slide02-chatgpt-midjourney.png)
 
 **Deck prompt:**
 
@@ -80,14 +73,6 @@ sequenceDiagram
 Gallery (ChatGPT):
 
 ![Bernese puppy](./images/gallery/chibi-bernese-puppy-snow.png) ![Golden retriever](./images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](./images/gallery/chibi-cowboy-no-name.png) ![Pool](./images/gallery/chibi-pool-tube-cigar.png) ![Spider](./images/gallery/chibi-spider-toy.png)
-
-## Document the flow — [uml-mcp](https://github.com/antoinebou12/uml-mcp)
-
-The sequence diagram above was generated with **uml-mcp** (`generate_uml`, type `mermaid`) and saved as [`figurine-pipeline-sequence.mmd`](./images/figurine-pipeline-sequence.mmd) + SVG in this page bundle.
-
-![Chat → uml-mcp MCP → diagram](./images/uml-mcp-figurine-flow.svg)
-
-In Cursor: enable the **uml-mcp** server (repo README), then call `generate_uml` with the `.mmd` source or ask for a sequence diagram of the ComfyUI → print steps. Same idea as [ChatGPT sequence diagrams](../chatgpt-airprm-sequence-diagrams/).
 
 ## Step 2 — ComfyUI (one graph)
 
@@ -168,7 +153,7 @@ Check floating islands with the slicer or **[UVtools](https://github.com/sn4k3/U
 |------|------------|
 | Gift figurine from a pet photo | ChatGPT/Midjourney chibi → hosted mesh |
 | Repeatable local batch | ComfyUI JSON in this bundle |
-| Teaching a class | Deck + uml-mcp sequence diagram |
+| Teaching a class | Slide deck and pipeline diagram |
 | Production CAD interchange | Expect cleanup in Blender after GLB |
 
 ## Pitfalls
@@ -181,7 +166,6 @@ Check floating islands with the slicer or **[UVtools](https://github.com/sn4k3/U
 
 - [Skate rack — CAD to object]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}})
 - [Rhino LiDAR apartment scan]({{< ref "/posts/rhino-lidar-apartment-scan/index.md" >}})
-- [Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}})
 
 ## References
 

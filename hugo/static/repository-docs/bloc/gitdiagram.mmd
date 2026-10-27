@@ -1,0 +1,66 @@
+flowchart TD
+
+subgraph group_ui["Blender interface"]
+  node_preferences["Connection preferences<br/>[addon.py]"]
+  node_panel["Integration panel<br/>[addon.py]"]
+  node_browse["Browse and search<br/>[addon.py]"]
+end
+
+subgraph group_workflow["File workflows"]
+  node_list["Bucket listing<br/>[addon.py]"]
+  node_upload["Upload files<br/>[addon.py]"]
+  node_dependencies["Dependency transfer<br/>[addon.py]"]
+  node_download["Download files<br/>[addon.py]"]
+  node_manage["Update and delete<br/>[addon.py]"]
+  node_scene["Load into scene<br/>[addon.py]"]
+end
+
+subgraph group_storage["Cloud storage"]
+  node_client["Cloud client setup<br/>[addon.py]"]
+  node_providers["S3 and MinIO"]
+end
+
+node_artist(("3D artist"))
+
+node_artist -->|"configures"| node_preferences
+node_artist -->|"uses"| node_panel
+node_panel -->|"shows"| node_browse
+node_panel -->|"offers"| node_upload
+node_panel -->|"offers refresh"| node_list
+node_browse -->|"filters"| node_list
+node_upload -->|"refreshes"| node_list
+node_upload -.->|"uses connection"| node_client
+node_download -.->|"uses connection"| node_client
+node_manage -->|"uses connection"| node_client
+node_scene -.->|"downloads asset"| node_client
+node_client -->|"selects provider"| node_providers
+node_list -->|"lists objects"| node_providers
+node_upload -->|"uploads objects"| node_providers
+node_download -->|"downloads objects"| node_providers
+node_manage -->|"updates or deletes"| node_providers
+node_upload -->|"includes"| node_dependencies
+node_download -->|"includes"| node_dependencies
+node_download -.->|"loads supported assets"| node_scene
+
+click node_preferences "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_panel "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_browse "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_list "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_upload "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_dependencies "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_download "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_manage "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_scene "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+click node_client "https://github.com/antoinebou12/bloc/blob/main/addon.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_preferences,node_panel,node_browse toneBlue
+class node_list,node_upload,node_dependencies,node_download,node_manage,node_scene toneAmber
+class node_client,node_providers toneMint
+class node_artist toneIndigo

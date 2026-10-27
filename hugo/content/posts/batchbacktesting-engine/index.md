@@ -1,4 +1,5 @@
 ---
+image_alt: "A previously published batch-output chart from the related indicator article"
 post_kind: article
 title: "Inside BatchBacktesting: parallel runs, explicit assumptions and useful outputs"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +8,14 @@ description: "Reading BatchBacktesting’s Python engine: worker pools, 0.2% com
 translationKey: batchbacktesting-engine
 mermaid: true
 tags: ["Python","AlgoETS","Backtesting","Data engineering"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "AlgoETS/BatchBacktesting" >}}
 
 A batch backtest is a small data pipeline: choose instruments, obtain prices, clean the observations, run a strategy, and save comparable results. **AlgoETS/BatchBacktesting** makes those steps visible in Python rather than hiding them behind a dashboard.
 
-![A previously published batch-output chart from the related indicator article](featured.png)
+
 
 This image is an existing article illustration, not a new benchmark run.
 

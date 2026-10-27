@@ -4,6 +4,8 @@ title: Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Togeth
 date: 2024-05-14T18:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Homelab Caddy habits on a cheap EC2 edge — structured logs, CloudWatch Insights, cron shippers, Lambda queries, Step Functions glue."
+images:
+  - images/featured.png
 translationKey: caddy-ec2-cloudwatch-lambda
 tags:
   - AWS
@@ -15,7 +17,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d"
 ---
 
-I already ran **Caddy** at home for Home Assistant. This article is the **AWS edge** version: **EC2** (often `t4g.nano`), automatic HTTPS, JSON access logs in **CloudWatch**, a nightly Python shipper, and **Lambda + Step Functions** for cheap observability — not a SaaS dashboard bill. **[Version française]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.fr.md" >}})**.
+I already ran **Caddy** at home for Home Assistant. This article is the **AWS edge** version: **EC2** (often `t4g.nano`), automatic HTTPS, JSON access logs in **CloudWatch**, a nightly Python shipper, and **Lambda + Step Functions** for cheap observability — not a SaaS dashboard bill.
 
 <!--more-->
 
@@ -39,9 +41,9 @@ Homelab taught me to like Caddy’s **Caddyfile** ergonomics. AWS taught me to l
 - Instance: `t2.micro` free tier or **`t4g.nano`** when you want ARM cheap always-on (~$0.10/day in the original notes).
 - Security group: **22, 80, 443**.
 
-![EC2 launch settings](./img-001.png)
+![EC2 launch settings](images/img-001.png)
 
-![Security group rules](./img-002.png)
+![Security group rules](images/img-002.png)
 
 Install:
 
@@ -120,9 +122,9 @@ fields @timestamp, @message
 | sort count desc
 ```
 
-![Insights results](./img-004.png)
+![Insights results](images/img-004.png)
 
-![Query output detail](./img-005.png)
+![Query output detail](images/img-005.png)
 
 ## Cost and ops notes
 

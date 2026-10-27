@@ -1,0 +1,499 @@
+classDiagram
+direction TB
+class t4777402148ee["_AUpvitem"] {
+  <<struct>>
+}
+class tcc2d0a796c7e["_AUpvlist"] {
+  <<struct>>
+}
+class t786a7995f092["InstParamInfo"] {
+  <<struct>>
+}
+class tc25e04e8fee5["Loop"] {
+  <<struct>>
+}
+class t9a1cf8ed6486["LoopSetup"] {
+  <<struct>>
+}
+class t99a5a3e2dca6["Miscellaneous"] {
+  <<struct>>
+}
+class t7f16b5649b8d["MiscellaneousSetup"] {
+  <<struct>>
+}
+class tff80dcfc2b5d["PCMInfo"] {
+  <<struct>>
+}
+class tc26ce04c8837["AudioFormat"] {
+  <<struct>>
+  bytesPerSample()
+  bytesPerFrame()
+  isInteger()
+  isSigned()
+  isUnsigned()
+  isFloat()
+  isCompressed()
+  isUncompressed()
+  isPacked()
+  isByteOrderSignificant()
+  computeBytesPerPacketPCM()
+  description()
+}
+class t9f267e147e55["Unit"] {
+  <<struct>>
+}
+class t6e1a33e34aff["CompressionUnit"] {
+  <<struct>>
+}
+class t32102ec343c7["UUID"] {
+  <<struct>>
+  name()
+}
+class t984c2bed352f["Shared"] {
+  Shared()
+  retain()
+  release()
+}
+class t79d8cf286fc7["SharedPtr"] {
+  SharedPtr()
+  get()
+}
+class t3043a7c137cf["Buffer"] {
+  data()
+  size()
+}
+class t8fc6e63df3a5["File"] {
+  close()
+  read()
+  write()
+  length()
+  seek()
+  tell()
+  canSeek()
+  accessMode()
+  File()
+}
+class t2f8ac2bffb86["_AFfilehandle"] {
+  <<struct>>
+  copyTracksFromSetup()
+  copyInstrumentsFromSetup()
+  copyMiscellaneousFromSetup()
+  getVersion()
+  readInit()
+  writeInit()
+  update()
+  isInstrumentParameterValid()
+  checkCanRead()
+  checkCanWrite()
+  initFromSetup()
+  setFormatByteOrder()
+  readU8()
+  readS8()
+  readU16()
+  readS16()
+  readU32()
+  readS32()
+  readU64()
+  readS64()
+  readFloat()
+  readDouble()
+  writeU8()
+  writeS8()
+  writeU16()
+  writeS16()
+  writeU32()
+  writeS32()
+  writeU64()
+  writeS64()
+  writeFloat()
+  writeDouble()
+  readTag()
+  writeTag()
+}
+class t9e9c9d26c3ec["InstrumentSetup"] {
+  <<struct>>
+  allocateLoops()
+  freeLoops()
+}
+class t45a97ecf8b78["Instrument"] {
+  <<struct>>
+}
+class t7057d25a9043["TrackSetup"] {
+  <<struct>>
+}
+class t9d7c86f59680["Track"] {
+  <<struct>>
+  print()
+  copyMarkers()
+  computeTotalFileFrames()
+}
+class tb76427777ae2["MarkerSetup"] {
+  <<struct>>
+}
+class tbd5c192b9a82["Marker"] {
+  <<struct>>
+}
+class t04a2e9f1d3ef["_AFfilesetup"] {
+  <<struct>>
+}
+class t92d2ed8dabf1["Tag"] {
+  Tag()
+  value()
+  name()
+}
+class te372fc7ba4bd["PacketTable"] {
+  numPackets()
+  numValidFrames()
+  setNumValidFrames()
+  primingFrames()
+  setPrimingFrames()
+  remainderFrames()
+  setRemainderFrames()
+  append()
+  bytesPerPacket()
+  startOfPacket()
+}
+class ted53a75a96b1["_AFvirtualfile"] {
+  <<struct>>
+}
+class t34414bde37c4["RawFile"] {
+  recognize()
+  completeSetup()
+  readInit()
+  writeInit()
+  update()
+}
+class tdd1a944ad0e5["WAVEFile"] {
+  recognize()
+  completeSetup()
+  readInit()
+  writeInit()
+  update()
+  isInstrumentParameterValid()
+  parseFrameCount()
+  parseFormat()
+  parseData()
+  parsePlayList()
+  parseCues()
+  parseADTLSubChunk()
+  parseINFOSubChunk()
+  parseList()
+  parseInstrument()
+  writeFormat()
+  writeFrameCount()
+  writeMiscellaneous()
+  writeCues()
+  writeData()
+  readUUID()
+  writeUUID()
+  writeZString()
+  zStringLength()
+  initCompressionParams()
+  initIMACompressionParams()
+  initMSADPCMCompressionParams()
+}
+class t63add489f419["SampleVisionFile"] {
+  recognize()
+  completeSetup()
+  readInit()
+  writeInit()
+  update()
+  parseLoops()
+  parseMarkers()
+  writeTrailer()
+  writeLoops()
+  writeMarkers()
+  addMiscellaneous()
+}
+class t8789ee644d2c["Chunk"] {
+  Chunk()
+  allocate()
+  deallocate()
+}
+class t8e3bafbe78ab["Module"] {
+  setSink()
+  setSource()
+  inChunk()
+  setInChunk()
+  outChunk()
+  setOutChunk()
+  describe()
+  maxPull()
+  maxPush()
+  runPull()
+  reset1()
+  reset2()
+  runPush()
+  sync1()
+  sync2()
+  pull()
+  push()
+}
+class t54c3bd6b16e0["ModuleState"] {
+  isDirty()
+  setDirty()
+  init()
+  setup()
+  reset()
+  sync()
+  numModules()
+  mustUseAtomicNVFrames()
+  print()
+  fileModuleHandlesSeeking()
+  initFileModule()
+  arrange()
+  addModule()
+  addConvertIntToInt()
+  addConvertIntToFloat()
+  addConvertFloatToInt()
+  addConvertFloatToFloat()
+}
+class tabd2a78e7cf9["SimpleModule"] {
+  runPull()
+  runPush()
+  run()
+}
+class t300ff33448e5["SwapModule"] {
+  <<struct>>
+  name()
+  describe()
+  run()
+}
+class ta3dfab68be02["IntTypes"] {
+  <<struct>>
+}
+class t9d1d2d128880["IntTypes"] {
+  <<struct>>
+}
+class t3d03e6f17edd["IntTypes"] {
+  <<struct>>
+}
+class t8d6e25f6bf85["IntTypes"] {
+  <<struct>>
+}
+class t7d199a1132aa["signConverter"] {
+  <<struct>>
+}
+class tb2ff56d5951b["signedToUnsigned"] {
+  <<struct>>
+}
+class tb2b1e02de073["unsignedToSigned"] {
+  <<struct>>
+}
+class t59f7dcfc98c0["ConvertSign"] {
+  ConvertSign()
+  name()
+  describe()
+  run()
+  convertSignedToUnsigned()
+  convertUnsignedToSigned()
+}
+class tdbdb6dcb9e81["Expand3To4Module"] {
+  <<struct>>
+  Expand3To4Module()
+  name()
+  describe()
+  run()
+}
+class t1184cc159c76["Compress4To3Module"] {
+  <<struct>>
+  Compress4To3Module()
+  name()
+  describe()
+  run()
+}
+class t12e96ea3e21e["intToFloat"] {
+  <<struct>>
+}
+class tb8e18c391ebe["ConvertIntToFloat"] {
+  <<struct>>
+  ConvertIntToFloat()
+  name()
+  describe()
+  run()
+}
+class t622269076b1e["lshift"] {
+  <<struct>>
+}
+class te2fcec684d32["rshift"] {
+  <<struct>>
+}
+class t287b7df0b7bd["ConvertInt"] {
+  <<struct>>
+  ConvertInt()
+  name()
+  describe()
+  run()
+  getDefaultPCMMapping()
+  isInteger()
+}
+class td2af54bce0c5["shift"] {
+  <<struct>>
+}
+class tb846f5e5eccd["shift"] {
+  <<struct>>
+}
+class te731abe1a16e["floatToFloat"] {
+  <<struct>>
+}
+class t645cb63972a7["ConvertFloat"] {
+  <<struct>>
+  ConvertFloat()
+  name()
+  describe()
+  run()
+}
+class ta5a109040d00["Clip"] {
+  <<struct>>
+  Clip()
+  name()
+  describe()
+  run()
+}
+class t5b991a8ed59c["ConvertFloatToIntClip"] {
+  <<struct>>
+  ConvertFloatToIntClip()
+  name()
+  describe()
+  run()
+}
+class t9fc113de3bbc["ApplyChannelMatrix"] {
+  <<struct>>
+  describe()
+  run()
+  initDefaultMatrix()
+}
+class td6c91491d14c["Transform"] {
+  <<struct>>
+  Transform()
+  name()
+  describe()
+  run()
+}
+class t9ecbc45d821c["FileModule"] {
+  handlesSeeking()
+  bufferSize()
+  mode()
+  canSeek()
+  read()
+  write()
+  seek()
+  tell()
+  length()
+  reportReadError()
+  reportWriteError()
+}
+class t4be22d71b492["RebufferModule"] {
+  name()
+  maxPull()
+  maxPush()
+  runPull()
+  reset1()
+  reset2()
+  runPush()
+  initFixedToVariable()
+  initVariableToFixed()
+}
+class t9c3156b2ec05["BlockCodec"] {
+  runPull()
+  reset1()
+  reset2()
+  runPush()
+  decodeBlock()
+  encodeBlock()
+}
+class tb94347ebf6b0["G711"] {
+  name()
+  describe()
+  runPull()
+  reset2()
+  runPush()
+}
+class t05edac746526["ms_adpcm_state"] {
+  <<struct>>
+  ms_adpcm_state()
+}
+class t38e30d63dcd8["MSADPCM"] {
+  initializeCoefficients()
+  name()
+  describe()
+  decodeBlock()
+  encodeBlock()
+  choosePredictorForBlock()
+}
+class t6aefe95dce52["PCM"] {
+  name()
+  runPull()
+  reset2()
+  runPush()
+}
+class tad7bb7815402["AIFFFile"] {
+  recognizeAIFF()
+  recognizeAIFFC()
+  completeSetup()
+  getVersion()
+  readInit()
+  writeInit()
+  update()
+  isInstrumentParameterValid()
+  parseFVER()
+  parseAESD()
+  parseMiscellaneous()
+  parseINST()
+  parseMARK()
+  parseCOMM()
+  parseSSND()
+  writeCOMM()
+  writeSSND()
+  writeMARK()
+  writeINST()
+  writeFVER()
+  writeAESD()
+  writeMiscellaneous()
+  initCompressionParams()
+  initIMACompressionParams()
+  isAIFFC()
+  readPString()
+  writePString()
+}
+class t042349440d11["_INST"] {
+  <<struct>>
+}
+class t11b522c62714["FilePOSIX"] {
+  FilePOSIX()
+  read()
+  write()
+  length()
+  seek()
+}
+class tc9fb5aff3d13["FileVF"] {
+  FileVF()
+  read()
+  write()
+  length()
+  seek()
+}
+t2f8ac2bffb86 <|-- t34414bde37c4
+t2f8ac2bffb86 <|-- tdd1a944ad0e5
+t2f8ac2bffb86 <|-- t63add489f419
+t8e3bafbe78ab <|-- tabd2a78e7cf9
+tabd2a78e7cf9 <|-- t300ff33448e5
+tabd2a78e7cf9 <|-- t59f7dcfc98c0
+tabd2a78e7cf9 <|-- tdbdb6dcb9e81
+tabd2a78e7cf9 <|-- t1184cc159c76
+tabd2a78e7cf9 <|-- tb8e18c391ebe
+tabd2a78e7cf9 <|-- t287b7df0b7bd
+tabd2a78e7cf9 <|-- t645cb63972a7
+tabd2a78e7cf9 <|-- ta5a109040d00
+tabd2a78e7cf9 <|-- t5b991a8ed59c
+tabd2a78e7cf9 <|-- t9fc113de3bbc
+tabd2a78e7cf9 <|-- td6c91491d14c
+t8e3bafbe78ab <|-- t9ecbc45d821c
+t8e3bafbe78ab <|-- t4be22d71b492
+t9ecbc45d821c <|-- t9c3156b2ec05
+t9ecbc45d821c <|-- tb94347ebf6b0
+t9c3156b2ec05 <|-- t38e30d63dcd8
+t9ecbc45d821c <|-- t6aefe95dce52
+t2f8ac2bffb86 <|-- tad7bb7815402
+t8fc6e63df3a5 <|-- t11b522c62714
+t8fc6e63df3a5 <|-- tc9fb5aff3d13

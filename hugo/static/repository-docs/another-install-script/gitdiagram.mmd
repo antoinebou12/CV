@@ -1,0 +1,74 @@
+flowchart TD
+
+subgraph group_cli["CLI management"]
+  node_menu["CLI menu<br/>[menu.sh]"]
+  node_router["Command router<br/>[router.sh]"]
+  node_utilities["Shell utilities<br/>[utils.sh]"]
+end
+
+subgraph group_services["Service deployment"]
+  node_service_catalog["Service catalog"]
+  node_service_scripts["Service installers"]
+  node_compose_definitions["Compose definitions"]
+  node_container_manager["Container manager<br/>[containers.sh]"]
+  node_docker_manager["Docker operations<br/>[docker.sh]"]
+end
+
+subgraph group_system["Server management"]
+  node_program_installer["Program installer<br/>[install.sh]"]
+  node_other_tools["Other programs<br/>[other.sh]"]
+  node_firewall["Firewall management<br/>[firewall.sh]"]
+  node_backup["Backup management<br/>[backup.sh]"]
+end
+
+subgraph group_config["Configuration utilities"]
+  node_config_loader["Config management<br/>[config.sh]"]
+  node_list_generator["Service list generator<br/>[containers_list.py]"]
+  node_proxy_generator["Proxy config generator"]
+  node_settings["System settings<br/>[config.yml]"]
+end
+
+node_user(("Server administrator"))
+node_docker["Docker"]
+
+node_user -->|"chooses services"| node_menu
+node_menu -.->|"routes commands"| node_router
+node_router -.->|"manages containers"| node_container_manager
+node_container_manager -.->|"uses Docker operations"| node_docker_manager
+node_docker_manager -.->|"operates"| node_docker
+node_service_scripts -.->|"uses definitions"| node_compose_definitions
+node_container_manager -.->|"installs services"| node_service_catalog
+node_user -->|"requests programs"| node_program_installer
+node_program_installer -.->|"offers programs"| node_other_tools
+node_list_generator -->|"reads settings"| node_settings
+node_proxy_generator -->|"reads settings"| node_settings
+
+click node_menu "https://github.com/antoinebou12/another-install-script/blob/master/src/menu.sh"
+click node_router "https://github.com/antoinebou12/another-install-script/blob/master/src/router.sh"
+click node_config_loader "https://github.com/antoinebou12/another-install-script/blob/master/src/config.sh"
+click node_service_catalog "https://github.com/antoinebou12/another-install-script/tree/master/containers"
+click node_service_scripts "https://github.com/antoinebou12/another-install-script/tree/master/containers"
+click node_compose_definitions "https://github.com/antoinebou12/another-install-script/tree/master/containers"
+click node_container_manager "https://github.com/antoinebou12/another-install-script/blob/master/src/containers.sh"
+click node_docker_manager "https://github.com/antoinebou12/another-install-script/blob/master/src/docker.sh"
+click node_program_installer "https://github.com/antoinebou12/another-install-script/blob/master/src/install.sh"
+click node_other_tools "https://github.com/antoinebou12/another-install-script/blob/master/src/other.sh"
+click node_firewall "https://github.com/antoinebou12/another-install-script/blob/master/src/firewall.sh"
+click node_backup "https://github.com/antoinebou12/another-install-script/blob/master/src/backup.sh"
+click node_utilities "https://github.com/antoinebou12/another-install-script/blob/master/src/utils.sh"
+click node_list_generator "https://github.com/antoinebou12/another-install-script/blob/master/src/containers_list.py"
+click node_proxy_generator "https://github.com/antoinebou12/another-install-script/blob/master/src/nginx_reverse_proxy.py"
+click node_settings "https://github.com/antoinebou12/another-install-script/blob/master/config.yml"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_menu,node_router,node_utilities toneBlue
+class node_service_catalog,node_service_scripts,node_compose_definitions,node_container_manager,node_docker_manager toneAmber
+class node_program_installer,node_other_tools,node_firewall,node_backup,node_user toneMint
+class node_config_loader,node_list_generator,node_proxy_generator,node_settings toneRose
+class node_docker toneIndigo

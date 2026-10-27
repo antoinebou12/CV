@@ -1,4 +1,5 @@
 ---
+image_alt: "Site preview after first deploy — HBTheme defaults with minimal overrides"
 post_kind: article
 title: "Create a portfolio with Hugo (week 1)"
 date: 2024-01-06T10:00:00-04:00
@@ -11,14 +12,14 @@ tags:
   - Static Site
   - Substack
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-Week one of moving my site to **Hugo** (January 2024): pick a theme, ship something fast, and prove the repo could carry more than a PDF résumé. This post is the log — **HBTheme**, a data story embed, **Substack** in parallel, and a reusable **iframe** shortcode. **[Version française]({{< ref "/posts/portfolio-hugo-week-1/index.fr.md" >}})**.
+Week one of moving my site to **Hugo** (January 2024): pick a theme, ship something fast, and prove the repo could carry more than a PDF résumé. This post is the log — **HBTheme**, a data story embed, **Substack** in parallel, and a reusable **iframe** shortcode.
 
 <!--more-->
 
-![Site preview after first deploy — HBTheme defaults with minimal overrides](./featured.png)
+
 
 ## Why Hugo and not a CMS
 
@@ -74,9 +75,10 @@ Use iframes sparingly — accessibility, mobile height, and third-party cookie r
 
 ## What changed since week one
 
-The current site grew modules, bilingual posts, conference notes, and MCP-era tooling posts. See **[professional résumé + JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.md" >}})** and the blog index for how far the same Hugo root went.
+The current site grew modules, bilingual posts, conference notes, and MCP-era tooling posts. Full log: **[Website refonte with Hugo (part 2)]({{< ref "/posts/portfolio-hugo-website-refonte/index.md" >}})**. Also **[professional résumé + JSON Resume]({{< ref "/posts/professional-resume-json-resume/index.md" >}})** and the blog index.
 
 ## Related posts
 
+- [Website refonte with Hugo (part 2)]({{< ref "/posts/portfolio-hugo-website-refonte/index.md" >}}) — Paper, bilingual model, MCP editorial loop
 - [Software engineering journey]({{< ref "/posts/software-engineering-journey/index.md" >}}) — career context the portfolio supports
 - [Diagram prompts with ChatGPT and AIPRM]({{< ref "/posts/chatgpt-airprm-sequence-diagrams/index.md" >}}) — documentation habits that feed the blog

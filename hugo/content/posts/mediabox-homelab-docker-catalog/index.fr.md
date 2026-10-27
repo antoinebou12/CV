@@ -1,4 +1,7 @@
 ---
+image_alt: "Pile réseau maison — switch, modem, routeur, serveur, onduleur"
+project_docs: mediaboxdockercompose
+story_kind: introduction
 post_kind: article
 title: "MediaBox homelab — ce que je fais tourner en Docker (et le reste en signet)"
 date: 2024-03-15T10:00:00-04:00
@@ -13,14 +16,14 @@ tags:
   - Self-Hosted
   - MediaBoxDockerCompose
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-Je gardais une liste perso d’apps auto-hébergées à essayer — surtout pour arrêter d’assigner des ports au hasard et d’oublier ce qui vivait sur `:8096`. Cette liste est devenue **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur GitHub. Ce billet est la version courte : ce que j’ai câblé, comment j’installe sur Proxmox quand le compose n’est pas le bon format, et où vit la carte complète des ports pour ne pas transformer la page en tableur avec du SEO. **[English version]({{< ref "/posts/mediabox-homelab-docker-catalog/index.md" >}})**.
+Je gardais une liste perso d’apps auto-hébergées à essayer — surtout pour arrêter d’assigner des ports au hasard et d’oublier ce qui vivait sur `:8096`. Cette liste est devenue **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur GitHub. Ce billet est la version courte : ce que j’ai câblé, comment j’installe sur Proxmox quand le compose n’est pas le bon format, et où vit la carte complète des ports pour ne pas transformer la page en tableur avec du SEO.
 
 <!--more-->
 
-![Pile réseau maison — switch, modem, routeur, serveur, onduleur](./images/featured.jpeg)
+
 
 Même chapitre que **[l’évolution réseau]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})** — câbles au mur, services dans git. La photo date de l’époque où je labelais encore les ports au ruban adhésif ; le fichier compose, lui, a survécu.
 

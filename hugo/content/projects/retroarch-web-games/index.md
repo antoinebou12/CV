@@ -9,13 +9,13 @@ draft: false
 
 [retroarch-web-games](https://github.com/antoinebou12/retroarch-web-games): Docker Retroarch Web with pre-downloaded games.
 
-This repository offers a self-hosted RetroArch web player, allowing you to enjoy classic NES, SNES, Genesis, and Gameboy games right in your browser. Set up is a breeze with our Docker container.
+Self-hosted RetroArch in the browser with NES, SNES, Genesis, and Game Boy games packaged in a Docker image.
 
 ### Features
 
-- **Pre-loaded Games**: Enjoy a variety of games for NES, SNES, Genesis, and Gameboy.
-- **Self-hosted Web Player**: Easily host the RetroArch player on your own server.
-- **Easy Deployment**: Utilize Docker for straightforward setup and deployment.
+- Pre-loaded games for NES, SNES, Genesis, and Game Boy
+- Self-hosted web player
+- Docker / Docker Compose deploy
 
 ### Related project
 
@@ -43,16 +43,16 @@ _Note: The Docker image is approximately 10GB due to the inclusion of various ga
 ```markdown
 ### Behind the Scenes: Scripting for Game Downloads
 
-The RetroArch Web Games setup includes sophisticated scripting to streamline the download and organization of game files. Here's a breakdown of how these scripts function:
+Scripts in the image download and organize game archives:
 
-1. **Batch Downloading of Game Archives:**
-   The `download_7z_files` bash function and Python script work together to efficiently download game archives from various sources.
+1. **Batch downloading of game archives:**
+   The `download_7z_files` bash function and a Python script fetch archives from several sources.
 
-2. **Simplifying and Sorting Games:**
-   Using both bash and Python, the scripts simplify game filenames and sort them into appropriate directories. This ensures easy navigation and selection within the RetroArch interface.
+2. **Renaming and sorting games:**
+   Bash and Python rename files and sort them into directories so RetroArch can list them cleanly.
 
-3. **Efficiency and Error Handling:**
-   The use of parallel processing in bash and Python's ThreadPoolExecutor maximizes efficiency. Additionally, error handling ensures stability and provides feedback in case of issues during the download process.
+3. **Parallel downloads and errors:**
+   Bash jobs and Python's ThreadPoolExecutor run downloads in parallel; failures are reported instead of failing silently.
 
 ## Acknowledgements
 
@@ -63,9 +63,7 @@ This Docker image is based on:
 
 ### License
 
-Licensed under the MIT License, ensuring open and unrestricted use to the community.
-
-I have put a lot of work into making this project both powerful and accessible. Whether you're a seasoned gamer or just nostalgic for the classics.
+MIT License.
 
 ### Source
 

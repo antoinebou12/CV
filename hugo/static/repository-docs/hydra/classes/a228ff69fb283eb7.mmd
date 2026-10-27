@@ -1,0 +1,47 @@
+classDiagram
+direction TB
+class td9b3649cb3e7["AchievementNotificationHost"] {
+  <<interface>>
+  load()
+  send()
+  setPosition()
+  showInactive()
+  hide()
+  destroy()
+  isDestroyed()
+  onFailure()
+}
+class t91ea8536753c["FallbackReference"] {
+  <<interface>>
+}
+class t92a5809dfe2a["QueueItem"] {
+  <<interface>>
+}
+class ta79099aebdc6["AchievementNotificationPresenterDependencies"] {
+  <<interface>>
+  createHost()
+  setTimeout()
+  clearTimeout()
+  log()
+  logError()
+}
+class tb0ff5b8f750a["AchievementNotificationPresenter"] {
+  constructor()
+  enqueueAchievements()
+  enqueueCombined()
+  notifyThemeUpdated()
+  handleRendererEvent()
+  handleHostReadyEvent()
+  handleFailedEvent()
+  handleContentReadyEvent()
+  handleFinishedEvent()
+  dispose()
+  nextRequestId()
+  ensureHost()
+  processNext()
+  startWatchdog()
+  clearWatchdog()
+  failHost()
+  destroyHost()
+  destroyCurrentHost()
+}

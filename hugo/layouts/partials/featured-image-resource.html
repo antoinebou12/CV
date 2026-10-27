@@ -1,10 +1,15 @@
 {{- $p := . -}}
 {{- $r := "" -}}
+{{- if not $p.Params.cover_none -}}
 {{- with $p.Params.images -}}
   {{- $n := index . 0 -}}
   {{- if $n -}}
     {{- with $p.Resources.GetMatch $n -}}
       {{- $r = . -}}
+    {{- else -}}
+      {{- with $p.Resources.GetMatch (printf "images/%s" $n) -}}
+        {{- $r = . -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -16,9 +21,17 @@
   {{- end -}}
 {{- end -}}
 {{- if not $r -}}
+  {{- with ($p.Resources.Match "images/featured*") -}}
+    {{- if gt (len .) 0 -}}
+      {{- $r = index . 0 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $r -}}
   {{- $imgs := sort ($p.Resources.ByType "image") "Name" "asc" -}}
   {{- if gt (len $imgs) 0 -}}
     {{- $r = index $imgs 0 -}}
   {{- end -}}
+{{- end -}}
 {{- end -}}
 {{- return $r -}}

@@ -1,0 +1,374 @@
+{{- $note := .note -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $d := index (hugo.Data.repository_dossiers.repositories | default dict) $note.repo -}}
+{{- $profile := index (hugo.Data.repository_profiles.repositories | default dict) $note.repo | default dict -}}
+{{- $api := index (hugo.Data.repository_api_guides.repositories | default dict) $note.repo -}}
+{{- with $d -}}
+{{- $pub := .public -}}
+{{- $priv := .private -}}
+{{- $svc := .services -}}
+{{- $db := .database -}}
+{{- $int := .integrations -}}
+{{- $sec := .security -}}
+{{- $tst := .tests -}}
+{{- /* Compose services already have their own table in the Deployment section. */ -}}
+{{- $containers := cond (gt (len ($profile.services | default slice)) 0) slice ($svc.containers | default slice) -}}
+{{- $sections := slice
+  (dict "id" "layers" "label" (slice "Layers and modules" "Couches et modules") "on" (gt (len .layers) 0))
+  (dict "id" "flow" "label" (slice "Data flow" "Flux de données") "on" (and .flow .flow.sequence) "optional" true)
+  (dict "id" "public" "label" (slice "Public interface" "Interface publique") "on" (or $pub.routes $pub.mcp $pub.cli $pub.entry_points $pub.exports $pub.headers))
+  (dict "id" "private" "label" (slice "Private interface" "Interface privée") "on" (or $priv.counts $priv.internal_dirs $priv.private_modules))
+  (dict "id" "services" "label" (slice "Services and hosting" "Services et hébergement") "on" (or $svc.roles $svc.hosting $containers $svc.base_images))
+  (dict "id" "entities" "label" (slice "Entities" "Entités") "on" (gt (len .entities.items) 0))
+  (dict "id" "logic" "label" (slice "Business logic" "Logique métier") "on" (or .logic.types .logic.files))
+  (dict "id" "database" "label" (slice "Database" "Base de données") "on" (or $db.engines $db.tables $db.containers (gt $db.migrations 0)))
+  (dict "id" "integrations" "label" (slice "External integrations" "Intégrations externes") "on" (or $int.services $int.http_clients $int.hosts))
+  (dict "id" "stack" "label" (slice "Stack and dependencies" "Stack et dépendances") "on" (gt (len .stack.manifests) 0))
+  (dict "id" "security" "label" (slice "Security" "Sécurité") "on" (or $sec.controls $sec.env_vars $sec.supply_chain $sec.review))
+  (dict "id" "tests" "label" (slice "Tests" "Tests") "on" (or (gt $tst.files 0) $tst.frameworks $tst.workflows))
+-}}
+{{- $entityKinds := dict "orm" (slice "ORM model" "Modèle ORM") "schema" (slice "Validated schema" "Schéma validé") "dataclass" (slice "Dataclass" "Dataclass") "record" (slice "Record or interface" "Enregistrement ou interface") "enum" (slice "Enumeration" "Énumération") "struct" (slice "Data struct" "Structure de données") -}}
+{{- $kinds := dict "ai" "IA" "rendering" "rendu" "platform" "plateforme" "cloud" "nuage" "observability" "observabilité" "payments" "paiements" "messaging" "messagerie" "data" "données" "transport" "transport" "sql" "SQL" "orm" "ORM" "document" "document" "key-value" "clé-valeur" "local" "local" "files" "fichiers" "auth" "authentification" "validation" "validation" "web" "web" "secrets" "secrets" "tool" "outil" "resource" "ressource" "prompt" "prompt" "entry file" "fichier d’entrée" "console script" "script console" "bin" "bin" "package export" "export du paquet" -}}
+{{- $kind := cond $fr $kinds dict -}}
+{{- $layerNames := dict "presentation" (slice "Presentation" "Présentation") "interface" (slice "Entry points and API" "Points d’entrée et API") "application" (slice "Application services" "Services applicatifs") "domain" (slice "Domain and business rules" "Domaine et règles métier") "infrastructure" (slice "Data and infrastructure" "Données et infrastructure") "core" (slice "Core source" "Source principale") "tests" (slice "Tests" "Tests") "hosting" (slice "Build, CI and hosting" "Build, CI et hébergement") -}}
+{{- $files := cond $fr (slice "fichier" "fichiers") (slice "file" "files") -}}
+{{- $uml := dict -}}
+{{- range index (hugo.Data.repository_uml.repositories | default dict) $note.repo -}}{{- $uml = merge $uml (dict .key .) -}}{{- end -}}
+<section class="doc repo-dossier" aria-labelledby="dossier" id="dossier-section">
+  <h2 id="dossier">{{ if $fr }}Dossier technique{{ else }}Technical dossier{{ end }}</h2>
+  <p class="repo-lede-sm">{{ if $fr }}Établi à partir du code au commit{{ else }}Built from the source at commit{{ end }} <a href="{{ .tree_url }}"><code>{{ substr .commit 0 7 }}</code></a> ({{ .files_scanned }} {{ index $files 1 }}). {{ if $fr }}Chaque élément vient d’une correspondance de motif dans le code: ouvrez le fichier lié avant de vous y fier.{{ else }}Each item comes from a pattern match in the code, so open the linked file before relying on it.{{ end }}</p>
+  <nav class="repo-dossier-toc" aria-label="{{ if $fr }}Sections du dossier{{ else }}Dossier sections{{ end }}">
+    {{ range $sections }}{{ if .on }}<a href="#dossier-{{ .id }}">{{ index .label $i }}</a>{{ end }}{{ end }}
+  </nav>
+
+  {{ if gt (len .layers) 0 }}
+  <section class="repo-dossier-part" id="dossier-layers" aria-labelledby="dossier-layers-h">
+    <h3 id="dossier-layers-h">{{ if $fr }}Couches et modules{{ else }}Layers and modules{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Les dossiers sont classés par couche selon leur nom, de l’interface utilisateur jusqu’à l’accès aux données. Comme le classement repose sur les noms seulement, le diagramme ne dit rien des appels entre couches.{{ else }}Folders are sorted into layers by name, from the user interface down to data access. Because the sorting uses names only, the diagram says nothing about calls between layers.{{ end }}</p>
+    {{ with .layers_mermaid }}
+    <details class="repo-diagram-details" data-mermaid-lazy open>
+      <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Vue en couches{{ else }}Layered view{{ end }}</span></summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ index . $i }}</code></pre>
+      </div>
+    </details>
+    {{ end }}
+    {{ with $d.modules.items }}
+    <div class="tablewrap">
+      <table class="repo-permission-table">
+        <caption class="sr-only">{{ if $fr }}Modules et couche principale{{ else }}Modules and their main layer{{ end }}</caption>
+        <thead><tr><th scope="col">Module</th><th scope="col">{{ if $fr }}Couche{{ else }}Layer{{ end }}</th><th scope="col">{{ if $fr }}Fichiers{{ else }}Files{{ end }}</th><th scope="col">Types</th><th scope="col">Extensions</th></tr></thead>
+        <tbody>
+          {{ range . }}<tr><th scope="row"><a href="{{ .url }}"><code>{{ .name }}</code></a></th><td>{{ index .layer $i }}</td><td class="num">{{ .files }}</td><td class="num">{{ .types }}</td><td>{{ delimit .extensions " " }}</td></tr>{{ end }}
+        </tbody>
+      </table>
+    </div>
+    {{ if gt $d.modules.total (len .) }}<p class="repo-evidence-label">{{ if $fr }}{{ sub $d.modules.total (len .) }} modules plus petits ne sont pas affichés.{{ else }}{{ sub $d.modules.total (len .) }} smaller modules are not shown.{{ end }}</p>{{ end }}
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ with .flow }}{{ with .sequence }}
+  <section class="repo-dossier-part" id="dossier-flow" aria-labelledby="dossier-flow-h">
+    <h3 id="dossier-flow-h">{{ if $fr }}Flux de données{{ else }}Data flow{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Les appels du diagramme <a href="{{ $d.flow.url }}">GitDiagram</a>, dans l’ordre où on les rencontre depuis les points d’entrée. GitDiagram produit ce graphe par IA; les chemins de fichiers cités ont été comparés à l’arbre du dépôt{{ else }}The calls from the <a href="{{ $d.flow.url }}">GitDiagram</a> graph, in the order you meet them from the entry points. GitDiagram generates the graph with AI; the file paths it cites were checked against the repository tree{{ end }}{{ if eq $d.flow.status "needs_review" }}{{ if $fr }}, et quelques-uns n’y sont plus{{ else }}, and a few are no longer there{{ end }}{{ end }}.</p>
+    <details class="repo-diagram-details" data-mermaid-lazy open>
+      <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Diagramme de séquence{{ else }}Sequence diagram{{ end }}</span></summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
+      </div>
+    </details>
+    <details class="repo-structure-details">
+      <summary>{{ if $fr }}Étapes en texte{{ else }}Steps as text{{ end }}{{ with $d.flow.more_steps }} <span class="repo-evidence-label">(+{{ . }})</span>{{ end }}</summary>
+      <ol class="repo-flow-steps">
+        {{ range $d.flow.steps }}<li><span class="from">{{ .from }}</span> <span class="arrow{{ if .async }} async{{ end }}" aria-hidden="true">{{ if .async }}⇢{{ else }}→{{ end }}</span><span class="sr-only">{{ if $fr }}vers{{ else }}to{{ end }}</span> <span class="to">{{ .to }}</span>{{ with .label }} <em>{{ . }}</em>{{ end }}</li>{{ end }}
+      </ol>
+    </details>
+  </section>
+  {{ end }}{{ end }}
+
+  {{ if or $pub.routes $pub.mcp $pub.cli $pub.entry_points $pub.exports $pub.headers }}
+  <section class="repo-dossier-part" id="dossier-public" aria-labelledby="dossier-public-h">
+    <h3 id="dossier-public-h">{{ if $fr }}Interface publique{{ else }}Public interface{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Du code extérieur peut utiliser tout ce qui est listé ici. Le projet déclare aussi {{ $pub.public_types }} types publics.{{ else }}Outside code can use everything listed here. The project also declares {{ $pub.public_types }} public types.{{ end }}</p>
+    {{ with $uml.usecase }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" true) }}{{ end }}
+    {{ with $pub.routes }}
+    <h4>{{ if $fr }}Routes HTTP{{ else }}HTTP routes{{ end }} <span class="repo-count">{{ $pub.route_total }}</span></h4>
+    {{ with $pub.route_map }}
+    <details class="repo-diagram-details" data-mermaid-lazy>
+      <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Carte des routes par préfixe{{ else }}Route map by prefix{{ end }}</span></summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
+      </div>
+    </details>
+    {{ end }}
+    <div class="tablewrap">
+      <table class="repo-permission-table repo-route-table">
+        <thead><tr><th scope="col">{{ if $fr }}Méthode{{ else }}Method{{ end }}</th><th scope="col">{{ if $fr }}Chemin{{ else }}Path{{ end }}</th><th scope="col">Source</th></tr></thead>
+        <tbody>{{ range first 8 . }}{{ template "dossier-route-row" (dict "r" . "fr" $fr) }}{{ end }}</tbody>
+      </table>
+    </div>
+    {{ with after 8 . }}
+    <details class="repo-structure-details">
+      <summary>{{ if $fr }}Afficher {{ len . }} routes de plus{{ else }}Show {{ len . }} more routes{{ end }}</summary>
+      <div class="tablewrap"><table class="repo-permission-table repo-route-table"><tbody>{{ range . }}{{ template "dossier-route-row" (dict "r" . "fr" $fr) }}{{ end }}</tbody></table></div>
+    </details>
+    {{ end }}
+    {{ $ops := where . "ops" true }}
+    {{ if or (gt $pub.route_total (len .)) $ops }}
+    <p class="repo-evidence-label">{{ if gt $pub.route_total (len .) }}{{ if $fr }}{{ sub $pub.route_total (len .) }} autres routes sont dans le code.{{ else }}{{ sub $pub.route_total (len .) }} more routes are in the code.{{ end }} {{ end }}{{ if $ops }}{{ if $fr }}Les routes marquées exploitation exposent la santé, l’état ou l’administration; restreignez-les en production.{{ else }}Routes marked ops expose health, status or admin endpoints; restrict them in production.{{ end }}{{ end }}</p>
+    {{ end }}
+    {{ end }}
+    {{ with $pub.mcp }}
+    <h4>{{ if $fr }}Outils, ressources et prompts MCP{{ else }}MCP tools, resources and prompts{{ end }} <span class="repo-count">{{ $pub.mcp_total }}</span></h4>
+    {{ if $api }}
+    <p>{{ if $fr }}Leurs schémas sont décrits dans le <a href="#api-contract">contrat des outils MCP</a>.{{ else }}Their schemas are in the <a href="#api-contract">MCP tool contract</a>.{{ end }}</p>
+    {{ else }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}:{{ .line }}"><span class="kind">{{ index $kind .kind | default .kind }}</span> <code>{{ .name }}</code></a></li>{{ end }}</ul>
+    {{ end }}
+    {{ end }}
+    {{ with $pub.cli }}
+    <h4>{{ if $fr }}Ligne de commande{{ else }}Command line{{ end }} <span class="repo-count">{{ $pub.cli_total }}</span></h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}:{{ .line }}"><code>{{ .name }}</code></a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $pub.entry_points }}
+    <h4>{{ if $fr }}Points d’entrée{{ else }}Entry points{{ end }}</h4>
+    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .name }}</code> <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ if ne .name .target }} <code>{{ .target }}</code>{{ end }} · {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
+    {{ end }}
+    {{ with $pub.exports }}
+    <h4>{{ if $fr }}Exports du paquet{{ else }}Package exports{{ end }} (<code>__all__</code>)</h4>
+    <p class="repo-inline-code">{{ range . }}<code>{{ . }}</code> {{ end }}</p>
+    {{ end }}
+    {{ with $pub.headers }}
+    <h4>{{ if $fr }}En-têtes publics{{ else }}Public headers{{ end }} <span class="repo-count">{{ $pub.header_total }}</span></h4>
+    <p class="repo-inline-code">{{ range . }}{{ partial "repository-evidence.html" . }} {{ end }}</p>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $priv.counts $priv.internal_dirs $priv.private_modules }}
+  <section class="repo-dossier-part" id="dossier-private" aria-labelledby="dossier-private-h">
+    <h3 id="dossier-private-h">{{ if $fr }}Interface privée{{ else }}Private interface{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Ces noms sont internes selon les conventions du langage: tiret bas initial, private, static ou pub(crate).{{ else }}These names are internal by the language’s conventions: a leading underscore, private, static or pub(crate).{{ end }}</p>
+    {{ with $priv.counts }}
+    <dl class="repo-dossier-stats">{{ range . }}<div><dt>{{ index .label $i }}</dt><dd>{{ .count }}</dd></div>{{ end }}</dl>
+    {{ end }}
+    {{ with $priv.examples }}
+    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .name }}</code> · {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
+    {{ end }}
+    {{ with $priv.internal_dirs }}
+    <h4>{{ if $fr }}Dossiers internes{{ else }}Internal folders{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .path }}</code></a> {{ end }}</p>
+    {{ end }}
+    {{ with $priv.private_modules }}
+    <h4>{{ if $fr }}Modules privés{{ else }}Private modules{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}{{ partial "repository-evidence.html" . }} {{ end }}</p>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $svc.roles $svc.hosting $containers $svc.base_images }}
+  <section class="repo-dossier-part" id="dossier-services" aria-labelledby="dossier-services-h">
+    <h3 id="dossier-services-h">{{ if $fr }}Services et hébergement{{ else }}Services and hosting{{ end }}</h3>
+    {{ with $uml.deployment }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
+    {{ with $svc.roles }}
+    <div class="repo-dossier-grid">
+      {{ range . }}
+      <article class="repo-dossier-card">
+        <h4>{{ index .label $i }} <span class="repo-count">{{ .total }}</span></h4>
+        <ul role="list">{{ range .items }}{{ $s := . }}<li><a href="{{ .url }}"><code>{{ .name }}</code></a>{{ with .methods }} <span class="repo-evidence-label">{{ delimit (first 3 .) ", " }}{{ if gt $s.method_count 3 }}…{{ end }}</span>{{ end }}</li>{{ end }}</ul>
+      </article>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ with $svc.hosting }}
+    <h4>{{ if $fr }}Où il s’exécute{{ else }}Where it runs{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}{{ if gt .count 1 }} ×{{ .count }}{{ end }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $containers }}
+    <h4>{{ if $fr }}Services Compose{{ else }}Compose services{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<code>{{ . }}</code> {{ end }}</p>
+    {{ end }}
+    {{ with $svc.base_images }}
+    <h4>{{ if $fr }}Images Docker de base{{ else }}Docker base images{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .image }}</code></a> {{ end }}</p>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ with .entities.items }}
+  <section class="repo-dossier-part" id="dossier-entities" aria-labelledby="dossier-entities-h">
+    <h3 id="dossier-entities-h">{{ if $fr }}Entités et modèle de données{{ else }}Entities and data model{{ end }} <span class="repo-count">{{ $d.entities.total }}</span></h3>
+    {{ with $d.entities.diagram }}
+    <details class="repo-diagram-details" data-mermaid-lazy>
+      <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Diagramme de classes des entités{{ else }}Entity class diagram{{ end }}</span></summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
+      </div>
+      <p class="repo-evidence-label">{{ if $fr }}Une flèche relie un champ à l’entité que son type nomme.{{ else }}An arrow links a field to the entity its type names.{{ end }}</p>
+    </details>
+    {{ end }}
+    <div class="tablewrap">
+      <table class="repo-permission-table">
+        <thead><tr><th scope="col">{{ if $fr }}Entité{{ else }}Entity{{ end }}</th><th scope="col">{{ if $fr }}Nature{{ else }}Kind{{ end }}</th><th scope="col">{{ if $fr }}Premiers champs{{ else }}First fields{{ end }}</th></tr></thead>
+        <tbody>{{ range first 8 . }}{{ template "dossier-entity-row" (dict "e" . "kind" (index (index $entityKinds .kind) $i)) }}{{ end }}</tbody>
+      </table>
+    </div>
+    {{ with after 8 . }}
+    <details class="repo-structure-details">
+      <summary>{{ if $fr }}Afficher {{ len . }} entités de plus{{ else }}Show {{ len . }} more entities{{ end }}</summary>
+      <div class="tablewrap"><table class="repo-permission-table"><tbody>{{ range . }}{{ template "dossier-entity-row" (dict "e" . "kind" (index (index $entityKinds .kind) $i)) }}{{ end }}</tbody></table></div>
+    </details>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or .logic.types .logic.files }}
+  <section class="repo-dossier-part" id="dossier-logic" aria-labelledby="dossier-logic-h">
+    <h3 id="dossier-logic-h">{{ if $fr }}Logique métier{{ else }}Business logic{{ end }}</h3>
+    {{ with .logic.types }}
+    <p class="repo-evidence-label">{{ if $fr }}Une fois écartés le code d’interface et les services et entités ci-dessus, ces classes ont le plus de méthodes.{{ else }}Once UI code and the services and entities above are set aside, these classes have the most methods.{{ end }}</p>
+    <dl class="repo-deflist compact">
+      {{ range . }}<div><dt><a href="{{ .url }}"><code>{{ .name }}</code></a> <span class="repo-evidence-label">{{ index (index $layerNames .layer) $i }}, {{ .method_count }} {{ if $fr }}méthodes{{ else }}methods{{ end }}</span></dt><dd><code>{{ delimit .methods ", " }}</code></dd></div>{{ end }}
+    </dl>
+    {{ end }}
+    {{ with .logic.files }}
+    <p class="repo-evidence-label">{{ if $fr }}Aucune classe n’a été extraite. Voici les plus gros fichiers source et leurs fonctions.{{ else }}No classes were extracted, so these are the largest source files and their functions.{{ end }}</p>
+    <dl class="repo-deflist compact">
+      {{ range . }}<div><dt>{{ partial "repository-evidence.html" . }}</dt><dd>{{ with .functions }}<code>{{ delimit . ", " }}</code>{{ else }}{{ if $fr }}Aucune fonction nommée.{{ else }}No named functions.{{ end }}{{ end }}</dd></div>{{ end }}
+    </dl>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $db.engines $db.tables $db.containers (gt $db.migrations 0) }}
+  <section class="repo-dossier-part" id="dossier-database" aria-labelledby="dossier-database-h">
+    <h3 id="dossier-database-h">{{ if $fr }}Base de données et persistance{{ else }}Database and persistence{{ end }}</h3>
+    {{ with $db.engines }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} <span class="kind">{{ .files }} {{ index $files (cond (eq .files 1) 0 1) }}</span></a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $db.tables }}
+    <h4>{{ if $fr }}Tables et collections{{ else }}Tables and collections{{ end }} <span class="repo-count">{{ $db.table_count }}</span></h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .name }}</code></a> {{ end }}</p>
+    {{ end }}
+    {{ if gt $db.migrations 0 }}<p><a href="{{ $db.migration_dir }}">{{ $db.migrations }} migrations</a></p>{{ end }}
+    {{ with $db.containers }}
+    <h4>{{ if $fr }}Conteneurs de données{{ else }}Data containers{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .evidence.url }}"><code>{{ .image }}{{ with .tag }}:{{ . }}{{ end }}</code></a> {{ end }}</p>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $int.services $int.http_clients $int.hosts }}
+  <section class="repo-dossier-part" id="dossier-integrations" aria-labelledby="dossier-integrations-h">
+    <h3 id="dossier-integrations-h">{{ if $fr }}Intégrations externes{{ else }}External integrations{{ end }}</h3>
+    {{ with $uml.component }}
+    {{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" true) }}
+    {{ else }}{{ with index ($d.context_mermaid | default (slice "" "")) $i }}
+    <details class="repo-diagram-details" data-mermaid-lazy open>
+      <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Contexte du système{{ else }}System context{{ end }}</span></summary>
+      <div class="repo-progressive-diagram" data-mermaid-fallback>
+        <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
+      </div>
+      <p class="repo-evidence-label">{{ if $fr }}Les appelants sont à gauche, et les services et stockages de données utilisés par le code à droite.{{ else }}Callers are on the left, and the services and data stores the code uses are on the right.{{ end }}</p>
+    </details>
+    {{ end }}{{ end }}
+    {{ with $int.services }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} <span class="kind">{{ index $kind .kind | default .kind }}</span></a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $int.http_clients }}
+    <h4>{{ if $fr }}Clients HTTP{{ else }}HTTP clients{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .evidence.url }}"><code>{{ .name }}</code></a> {{ end }}</p>
+    {{ end }}
+    {{ with $int.hosts }}
+    <h4>{{ if $fr }}Hôtes nommés dans le code{{ else }}Hosts named in the code{{ end }}</h4>
+    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .host }}</code> <span class="repo-evidence-label">{{ .files }} {{ index $files (cond (eq .files 1) 0 1) }}</span> · {{ partial "repository-evidence.html" .evidence }}</li>{{ end }}</ul>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ with .stack.manifests }}
+  <section class="repo-dossier-part" id="dossier-stack" aria-labelledby="dossier-stack-h">
+    <h3 id="dossier-stack-h">{{ if $fr }}Stack et dépendances{{ else }}Stack and dependencies{{ end }}</h3>
+    {{ range . }}
+    {{ $m := . }}
+    <details class="repo-structure-details">
+      <summary><strong>{{ .ecosystem }}</strong> <code>{{ .file }}</code> <span class="repo-evidence-label">{{ with .runtime_total }}{{ . }} {{ if $fr }}à l’exécution{{ else }}runtime{{ end }}{{ end }}{{ if and .runtime_total .dev_total }}, {{ end }}{{ with .dev_total }}{{ . }} dev{{ end }}</span></summary>
+      {{ with .toolchain }}<p>{{ range . }}<span class="tag status">{{ . }}</span> {{ end }}</p>{{ end }}
+      {{ with .runtime }}<h4>{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</h4><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
+      {{ with .dev }}<h4>{{ if $fr }}Développement{{ else }}Development{{ end }}</h4><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}</p>{{ end }}
+      <p><a href="{{ .url }}">{{ if $fr }}Ouvrir le manifeste{{ else }}Open the manifest{{ end }}</a></p>
+    </details>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $sec.controls $sec.env_vars $sec.supply_chain $sec.review }}
+  <section class="repo-dossier-part" id="dossier-security" aria-labelledby="dossier-security-h">
+    <h3 id="dossier-security-h">{{ if $fr }}Sécurité{{ else }}Security{{ end }}</h3>
+    {{ with $sec.controls }}
+    <h4>{{ if $fr }}Contrôles{{ else }}Controls{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} <span class="kind">{{ index $kind .kind | default .kind }}</span></a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $sec.supply_chain }}
+    <h4>{{ if $fr }}Chaîne d’approvisionnement{{ else }}Supply chain{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $sec.env_vars }}
+    <h4>{{ if $fr }}Variables d’environnement{{ else }}Environment variables{{ end }} <span class="repo-count">{{ $sec.env_total }}</span></h4>
+    <p class="repo-evidence-label">{{ if $fr }}La page reprend les noms sans leurs valeurs et souligne ceux qui ressemblent à des secrets.{{ else }}The page lists names without their values and underlines the ones that look like secrets.{{ end }}</p>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"{{ if .secret }} class="is-secret"{{ end }}><code>{{ .name }}</code></a> {{ end }}</p>
+    {{ end }}
+    {{ with $sec.review }}
+    <aside class="repo-admonition warn">
+      <p class="repo-admonition-title">{{ if $fr }}À vérifier à la main{{ else }}Worth a manual check{{ end }}</p>
+      <ul>{{ range . }}<li>{{ index .label $i }}, {{ .files }} {{ index $files (cond (eq .files 1) 0 1) }} · {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
+    </aside>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or (gt $tst.files 0) $tst.frameworks $tst.workflows }}
+  <section class="repo-dossier-part" id="dossier-tests" aria-labelledby="dossier-tests-h">
+    <h3 id="dossier-tests-h">Tests</h3>
+    <dl class="repo-dossier-stats">
+      <div><dt>{{ if $fr }}Fichiers de test{{ else }}Test files{{ end }}</dt><dd>{{ $tst.files }}</dd></div>
+      <div><dt>{{ if $fr }}Fichiers source{{ else }}Source files{{ end }}</dt><dd>{{ $tst.source_files }}</dd></div>
+      <div><dt>{{ if $fr }}Cas de test, environ{{ else }}Test cases, about{{ end }}</dt><dd>{{ $tst.cases }}</dd></div>
+    </dl>
+    {{ with $tst.frameworks }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ .name }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $tst.directories }}
+    <h4>{{ if $fr }}Où sont les tests{{ else }}Where the tests are{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .path }}</code></a> <span class="repo-evidence-label">{{ .files }}</span> {{ end }}</p>
+    {{ end }}
+    {{ with $tst.workflows }}
+    <h4>{{ if $fr }}Intégration continue{{ else }}Continuous integration{{ end }}</h4>
+    <dl class="repo-deflist compact">{{ range . }}<div><dt><a href="{{ .url }}">{{ .name }}</a></dt><dd><code>{{ delimit .runs ", " }}</code></dd></div>{{ end }}</dl>
+    {{ end }}
+    {{ with $uml.activity }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
+  </section>
+  {{ end }}
+
+  {{ $missing := slice }}
+  {{ range $sections }}{{ if and (not .on) (not .optional) }}{{ $missing = $missing | append (index .label $i) }}{{ end }}{{ end }}
+  {{ with $missing }}
+  {{ if gt (len .) 6 }}
+  <p class="repo-dossier-missing">{{ if $fr }}Le dépôt est petit: l’analyse n’a rien trouvé pour les autres sections.{{ else }}This is a small repository, and the scan found nothing for the other sections.{{ end }}</p>
+  {{ else }}
+  <p class="repo-dossier-missing">{{ if $fr }}Rien trouvé pour: {{ else }}Nothing found for: {{ end }}{{ delimit . ", " }}.</p>
+  {{ end }}
+  {{ end }}
+</section>
+{{- end -}}
+
+{{- define "dossier-route-row" -}}
+<tr><td><span class="repo-method m-{{ lower .r.method }}">{{ .r.method }}</span></td><td><code>{{ .r.path }}</code>{{ if .r.ops }} <span class="repo-ops-badge">{{ if .fr }}exploitation{{ else }}ops{{ end }}</span>{{ end }}</td><td>{{ partial "repository-evidence.html" .r }}</td></tr>
+{{- end -}}
+
+{{- define "dossier-entity-row" -}}
+<tr><th scope="row"><a href="{{ .e.url }}"><code>{{ .e.name }}</code></a></th><td>{{ .kind }}</td><td>{{ with .e.fields }}<code>{{ delimit . ", " }}</code>{{ end }}</td></tr>
+{{- end -}}

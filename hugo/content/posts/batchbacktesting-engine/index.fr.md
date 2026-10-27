@@ -1,4 +1,5 @@
 ---
+image_alt: "Graphique de traitement par lots déjà publié dans l’article sur les indicateurs"
 post_kind: article
 title: "Dans BatchBacktesting : parallélisme, hypothèses et résultats exploitables"
 date: 2026-10-20T10:00:00-04:00
@@ -7,14 +8,14 @@ description: "Lecture du moteur Python BatchBacktesting : workers, commission de
 translationKey: batchbacktesting-engine
 mermaid: true
 tags: ["Python","AlgoETS","Backtesting","Data engineering"]
-images: ["featured.png"]
+images: ["images/featured.png"]
 ---
 
 {{< repo_snapshot "AlgoETS/BatchBacktesting" >}}
 
 Un backtest par lots est un petit pipeline de données : choisir les instruments, obtenir les prix, nettoyer les observations, exécuter une stratégie et conserver des résultats comparables. **AlgoETS/BatchBacktesting** rend ces étapes visibles dans le code Python.
 
-![Graphique de traitement par lots déjà publié dans l’article sur les indicateurs](featured.png)
+
 
 Cette illustration provient d’un article existant. Ce n’est pas un nouveau résultat de simulation.
 

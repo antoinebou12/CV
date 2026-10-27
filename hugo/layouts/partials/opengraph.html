@@ -36,10 +36,12 @@
   <meta property="og:type" content="website">
 {{- end }}
 
+{{- if not .Params.cover_none }}
 {{- with partial "_funcs/get-page-images" . }}
   {{- range . | first 6 }}
     <meta property="og:image" content="{{ .Permalink }}">
   {{- end }}
+{{- end }}
 {{- end }}
 
 {{- with .Params.audio }}

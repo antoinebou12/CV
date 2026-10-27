@@ -13,16 +13,16 @@ tags:
   - DevSecOps
   - Platform Engineering
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-Je n’ai pas commencé dans Kubernetes. J’ai commencé dans des onglets de navigateur, des boucles de jeu et un makerspace qui sentait le PLA chaud. Cet article raconte ce chemin — **backend**, **plateforme** et **DevSecOps** sont où j’atterris, mais les étapes comptent. **[English version]({{< ref "/posts/software-engineering-journey/index.md" >}})**.
+Je n’ai pas commencé dans Kubernetes. J’ai commencé dans des onglets de navigateur, des boucles de jeu et un makerspace qui sentait le PLA chaud. Cet article raconte ce chemin — **backend**, **plateforme** et **DevSecOps** sont où j’atterris, mais les étapes comptent.
 
 <!--more-->
 
 ## L’arc (en un coup d’œil)
 
-Schéma du parcours ([`career-journey-flow.mmd`](./images/career-journey-flow.mmd), rendu avec [uml-mcp](https://github.com/antoinebou12/uml-mcp)) :
+Schéma du parcours ([source Mermaid](./images/career-journey-flow.mmd)) :
 
 ![Parcours — des jeux Flash et du makerspace au collège jusqu’au backend et à la plateforme aujourd’hui](./images/career-journey-flow.svg)
 
@@ -81,7 +81,7 @@ Après le diplôme, les problèmes ont monté d’un cran :
 - **GitLab CI/CD**, **GCP**, microservices Java, tests **Playwright** (recherche IMC2).
 - Laboratoires **DevSecOps** à Polytechnique Montréal — gabarits GitLab pour ~20 équipes, Docker/Kubernetes, revues dans l’esprit OWASP.
 - **Enseignement** à l’ÉTS : bases distribuées, mobile/UX, projets intégrateurs — le matériel de cours, c’est aussi de la livraison logicielle.
-- Site {{< ref "/posts/graphquon-2024-ets" >}} ([graphquon.github.io](https://graphquon.github.io/)) et **[uml-mcp](https://github.com/antoinebou12/uml-mcp)** pour les diagrammes depuis le chat — parce qu’expliquer un système bat encore le deviner.
+- Le [site de la conférence GraphQuon](https://graphquon.github.io/).
 
 ## Ce qui n’a pas changé
 

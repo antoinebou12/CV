@@ -1,0 +1,16 @@
+{{- /* One uml-mcp diagram: {item, fr, open}. The script inlines the SVG into the shared viewer. */ -}}
+{{- $i := cond .fr 1 0 -}}
+{{- with .item -}}
+{{- $title := index .title $i -}}
+<details class="repo-diagram-details repo-uml-details"{{ if $.open }} open{{ end }}>
+  <summary><span class="repo-badge tool">UML</span> <span>{{ $title }}</span></summary>
+  <div class="repo-uml" data-uml-svg="{{ relURL (index .svg $i) }}" data-uml-name="{{ .key }}.svg">
+    <img src="{{ relURL (index .svg $i) }}" alt="{{ $title }}" loading="lazy" decoding="async">
+  </div>
+  <p class="repo-evidence-label">{{ index .note $i }} {{ if $.fr }}Rendu avec <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a>.{{ else }}Rendered with <a href="https://github.com/antoinebou12/uml-mcp">uml-mcp</a>.{{ end }}</p>
+  <details class="repo-uml-source">
+    <summary>{{ if $.fr }}Source PlantUML{{ else }}PlantUML source{{ end }}</summary>
+    <pre><code>{{ index .source $i }}</code></pre>
+  </details>
+</details>
+{{- end -}}

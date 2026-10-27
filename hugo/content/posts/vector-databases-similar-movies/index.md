@@ -7,7 +7,7 @@ mermaid: true
 description: "A teaching narrative: pgvector kNN in SQL, Qdrant dense and sparse vectors on MovieLens, then LangChain + Ollama RAG on the same catalog."
 translationKey: vector-databases-similar-movies
 images:
-  - featured.png
+  - images/featured.png
 tags:
   - PostgreSQL
   - pgvector
@@ -22,7 +22,7 @@ aliases:
   - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-I taught a thread on “find movies like this” that kept growing: **embeddings in PostgreSQL**, the same idea in **Qdrant** with two different vector meanings, then **retrieval + a local LLM** grounded on the same rows. This page is the story; notebooks and animations live in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding). **[Version française]({{< ref "/posts/vector-databases-similar-movies/index.fr.md" >}})**.
+I taught a thread on “find movies like this” that kept growing: **embeddings in PostgreSQL**, the same idea in **Qdrant** with two different vector meanings, then **retrieval + a local LLM** grounded on the same rows. This page is the story; notebooks and animations live in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding).
 
 <!--more-->
 
@@ -32,11 +32,17 @@ I taught a thread on “find movies like this” that kept growing: **embeddings
 
 These three animations come from the project README. They show recorded interfaces and processing steps, not current latency measurements.
 
-{{< figure src="demo-gradio.gif" alt="Animated demonstration of the Gradio movie-search interface" caption="Gradio interface: exploring similar movies." loading="lazy" >}}
+{{< figure src="images/demo-gradio.gif" alt="Animated demonstration of the Gradio movie-search interface" caption="Gradio interface: exploring similar movies." loading="lazy" >}}
 
-{{< figure src="demo-embeddings.gif" alt="Animated demonstration of embedding generation" caption="Generating vector representations with Sentence Transformers." loading="lazy" >}}
+{{< figure src="images/gradio-movie-search.png" alt="Gradio Movie Similarity Search with Matrix as the query" caption="Still from the Gradio UI — single-title search." loading="lazy" >}}
 
-{{< figure src="demo-qdrant.gif" alt="Animated movie-similarity search with Qdrant" caption="The Qdrant search and recommendation workflow." loading="lazy" >}}
+{{< figure src="images/demo-embeddings.gif" alt="Animated demonstration of embedding generation" caption="Generating vector representations with Sentence Transformers." loading="lazy" >}}
+
+{{< figure src="images/tsne-embeddings.png" alt="Movie embeddings visualized with t-SNE, color-coded by cluster" caption="t-SNE of movie embeddings — cluster structure in 2D." loading="lazy" >}}
+
+{{< figure src="images/demo-qdrant.gif" alt="Animated movie-similarity search with Qdrant" caption="The Qdrant search and recommendation workflow." loading="lazy" >}}
+
+{{< figure src="images/superman-graph.jpg" alt="Network graph of Superman and similar movies with genre and cast nodes" caption="Graph view: Superman neighborhood, genres, and cast centrality." loading="lazy" >}}
 
 ## What the notebooks actually build
 

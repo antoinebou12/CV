@@ -1,4 +1,5 @@
 ---
+image_alt: "Surcouche performance Artemis — débit, Wi-Fi, latences receive/decode/render"
 post_kind: article
 title: "Streaming portable et homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch"
 date: 2026-09-02T12:00:00-04:00
@@ -12,10 +13,10 @@ tags:
   - Homebrew
   - C++
 images:
-  - artemis-performance.png
+  - images/artemis-performance.png
 ---
 
-Trois dépôts que je maintiens à côté : **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** pour le streaming Apollo/Sunshine sur Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** pour GameStream sur New 3DS, et **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** comme build Switch du Mario 64 coopératif. Même motivation — faire tourner quelque chose d'intéressant sur du matériel qui n'était pas prévu pour — mais piles et contraintes différentes. **[English version]({{< ref "/posts/handheld-streaming-homebrew/index.md" >}})**.
+Trois dépôts que je maintiens à côté : **[Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch)** pour le streaming Apollo/Sunshine sur Switch, **[moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)** pour GameStream sur New 3DS, et **[sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)** comme build Switch du Mario 64 coopératif. Même motivation — faire tourner quelque chose d'intéressant sur du matériel qui n'était pas prévu pour — mais piles et contraintes différentes.
 
 <!--more-->
 
@@ -27,7 +28,7 @@ Trois dépôts que je maintiens à côté : **[Artemis-Switch](https://github.co
 
 L'onglet **Quick** expose les raccourcis fenêtre (`Win+Shift+Left` / `Right`), les presets clavier et les scripts Apollo sans quitter le stream — pratique quand l'hôte est Windows et la Switch ne sert que d'écran.
 
-![Surcouche performance Artemis — débit, Wi-Fi, latences receive/decode/render](./images/artemis-performance.png)
+
 
 **Performance** affiche le débit (~12 Mbps sur cette capture), les barres Wi-Fi Switch, et les temps receive / decode / render. Le render est souvent le goulot sur Switch ; receive et decode sous la milliseconde indiquent un réseau et un décodeur sains, le budget frame étant surtout la composition.
 
@@ -60,5 +61,3 @@ Dépôt : **[github.com/antoinebou12/sm64coopdx-switch](https://github.com/antoi
 Pages projet : [Artemis-Switch]({{< ref "/projects/Artemis-Switch" >}}), [moonlight-N3DS]({{< ref "/projects/moonlight-N3DS" >}}), [sm64coopdx-switch]({{< ref "/projects/sm64coopdx-switch" >}}).
 
 ## Voir aussi
-
-- Diagrammes pour la doc : **[uml-mcp]({{< ref "/posts/uml-mcp/index.md" >}})** et la [page projet uml-mcp]({{< ref "/projects/uml-mcp" >}}).

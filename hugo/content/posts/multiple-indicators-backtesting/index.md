@@ -4,6 +4,8 @@ title: Multiple Technical Indicators Backtesting on Multiple Tickers using Pytho
 date: 2024-05-30T15:00:00-04:00
 lastmod: 2026-05-22T16:00:00-04:00
 description: "Scaled BatchBacktesting across stocks and crypto — reading aggregate leaderboards without mistaking screening for a strategy."
+images:
+  - images/featured.png
 translationKey: multiple-indicators-backtesting
 tags:
   - Python
@@ -13,7 +15,7 @@ tags:
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
 ---
 
-Same **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** engine as the [earlier indicator experiment]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}}), but emphasized at **portfolio scale**: many tickers, two strategies, equities plus crypto, aggregate winners and losers. **[Version française]({{< ref "/posts/multiple-indicators-backtesting/index.fr.md" >}})**.
+Same **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** engine as the [earlier indicator experiment]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}}), but emphasized at **portfolio scale**: many tickers, two strategies, equities plus crypto, aggregate winners and losers.
 
 <!--more-->
 
@@ -61,7 +63,7 @@ Tune `num_threads` to your machine and API rate limits.
 - Trend rules in collapsing sectors.
 - Stablecoins or broken pairs treated like normal tickers.
 
-![Summary chart from batch output](./img-001.png)
+![Summary chart from batch output](images/img-001.png)
 
 Before narrating “MACD beats EMA,” compare **median return**, not only top decile.
 

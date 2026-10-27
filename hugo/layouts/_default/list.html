@@ -51,8 +51,17 @@
 <div class="blog-list-page">
 <header class="journal-intro">
   <p class="journal-eyebrow">{{ if eq .Lang "fr" }}Le carnet technique{{ else }}Engineering notebook{{ end }}</p>
-  <h1>{{ if eq .Lang "fr" }}Du code aux idées.{{ else }}From code to ideas.{{ end }}</h1>
+  {{- if $.IsHome -}}
+  <h1>{{ if eq .Lang "fr" }}Projets et notes.{{ else }}Projects and notes.{{ end }}</h1>
   <p>{{ if eq .Lang "fr" }}Plateforme, infographie et projets ouverts. Des notes de terrain, du code et les décisions derrière chaque projet.{{ else }}Platform, graphics, and open-source projects. Field notes, working code, and the decisions behind each project.{{ end }}</p>
+  {{- else -}}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description -}}
+  <p>{{ . }}</p>
+  {{- else -}}
+  <p>{{ if eq .Lang "fr" }}Articles, tutoriels et comptes rendus — le carnet technique.{{ else }}Articles, tutorials, and field notes from the engineering notebook.{{ end }}</p>
+  {{- end -}}
+  {{- end -}}
 </header>
 {{- if not $.IsHome -}}
 {{- with .Content -}}
@@ -259,7 +268,29 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
-<div class="section-list-page{{ if and .IsSection (eq .Section "posts") }} blog-posts-index{{ end }}">
+<div class="section-list-page{{ if and .IsSection (eq .Section "posts") }} blog-posts-index{{ end }}{{ if and .IsSection (eq .Section "recipes") }} recipes-index{{ end }}">
+{{- if and .IsSection (or (eq .Section "recipes") (eq .Section "posts")) -}}
+<header class="journal-intro">
+  {{- if eq .Section "recipes" -}}
+  <p class="journal-eyebrow">{{ if eq .Lang "fr" }}Notes de cuisine{{ else }}Kitchen notes{{ end }}</p>
+  {{- else -}}
+  <p class="journal-eyebrow">{{ if eq .Lang "fr" }}Le carnet technique{{ else }}Engineering notebook{{ end }}</p>
+  {{- end -}}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description -}}
+  <p>{{ . }}</p>
+  {{- else -}}
+  {{- with .Content -}}
+  <p>{{ . | plainify | truncate 180 }}</p>
+  {{- end -}}
+  {{- end -}}
+</header>
+{{- else if and .Title (ne .Type "tags") -}}
+<header class="journal-intro journal-intro--compact">
+  <h1>{{ .Title }}</h1>
+  {{- with .Description -}}<p>{{ . }}</p>{{- end -}}
+</header>
+{{- end -}}
 <div class="post-card-grid">
 {{- range $paginator.Pages -}}
 {{- partial "post-list-item.html" . -}}

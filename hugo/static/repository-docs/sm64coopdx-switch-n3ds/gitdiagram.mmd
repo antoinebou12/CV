@@ -1,0 +1,93 @@
+flowchart TD
+
+subgraph group_runtime["Game Runtime"]
+  node_game["Game Runtime<br/>[main.c]"]
+  node_game_init["Game Initialization<br/>[main.c]"]
+  node_gameplay["Gameplay World<br/>[types.h]"]
+  node_render["Rendering<br/>[pc_main.h]"]
+  node_lighting["Lighting Engine"]
+  node_audio["Audio Runtime"]
+end
+
+subgraph group_multiplayer["Shared Play"]
+  node_network["Multiplayer Sync"]
+  node_coopnet["CoopNet"]
+  node_local_wireless["Local Wireless"]
+end
+
+subgraph group_mods["Mods and UI"]
+  node_lua["Lua Mod API"]
+  node_mod_storage[("Mod Storage<br/>[mod_storage.cpp]")]
+  node_djui["DJUI"]
+end
+
+subgraph group_platform["Platform I/O"]
+  node_config["Game Configuration<br/>[configfile.h]"]
+  node_controller["Controller Input<br/>[controller_sdl.c]"]
+  node_window["Window Manager"]
+  node_switch_window["Switch Backend"]
+  node_new3ds_window["New 3DS Backend"]
+end
+
+subgraph group_assets["Game Content"]
+  node_rom_assets["ROM Asset Loading<br/>[rom_assets.h]"]
+  node_actor_models["Character Assets<br/>[model.inc.c]"]
+  node_level_content["Level Content<br/>[scripts.c]"]
+end
+
+node_player(("Player"))
+
+node_player -->|"provides input"| node_controller
+node_controller -->|"feeds controls"| node_game
+node_game -->|"initializes"| node_game_init
+node_game -.->|"updates"| node_gameplay
+node_gameplay -.->|"synchronizes world"| node_network
+node_network -->|"supports online play"| node_coopnet
+node_network -->|"supports local play"| node_local_wireless
+node_gameplay -.->|"presents"| node_render
+node_render -.->|"uses lighting"| node_lighting
+node_game -->|"coordinates audio"| node_audio
+node_game -.->|"loads assets"| node_rom_assets
+node_actor_models -->|"queues assets"| node_rom_assets
+node_level_content -.->|"defines levels"| node_gameplay
+node_lua -->|"reads and writes"| node_mod_storage
+node_mod_storage -->|"returns values"| node_lua
+node_mod_storage -.->|"uses filesystem settings"| node_config
+node_controller -->|"reads bindings"| node_config
+node_controller -->|"notifies interactables"| node_djui
+node_window -->|"dispatches keyboard events"| node_controller
+node_switch_window -->|"opens text entry"| node_djui
+node_new3ds_window -->|"handles text entry"| node_djui
+node_switch_window -->|"selects backend"| node_render
+node_new3ds_window -->|"owns frame lifecycle"| node_render
+
+click node_game "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/game/main.c"
+click node_game_init "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/game/main.c"
+click node_gameplay "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/include/types.h"
+click node_lua "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/tree/main/src/pc/lua"
+click node_mod_storage "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/mods/mod_storage.cpp"
+click node_djui "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/tree/main/src/pc/djui"
+click node_config "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/configfile.h"
+click node_controller "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/controller/controller_sdl.c"
+click node_window "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/gfx/gfx_window_manager.c"
+click node_switch_window "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/platform/switch/switch_window_manager.c"
+click node_new3ds_window "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/platform/new3ds/new3ds_window_manager.c"
+click node_render "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/pc_main.h"
+click node_lighting "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/engine/lighting_engine.cpp"
+click node_audio "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/audio/audio_session_presets_sh.c"
+click node_rom_assets "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/src/pc/rom_assets.h"
+click node_actor_models "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/actors/mario/model.inc.c"
+click node_level_content "https://github.com/antoinebou12/sm64coopdx-switch-n3ds/blob/main/levels/scripts.c"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_game,node_game_init,node_gameplay,node_render,node_lighting,node_audio toneBlue
+class node_network,node_coopnet,node_local_wireless toneAmber
+class node_lua,node_mod_storage,node_djui toneMint
+class node_config,node_controller,node_window,node_switch_window,node_new3ds_window toneRose
+class node_rom_assets,node_actor_models,node_level_content,node_player toneIndigo

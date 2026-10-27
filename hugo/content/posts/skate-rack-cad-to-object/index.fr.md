@@ -11,10 +11,10 @@ tags:
   - DIY
   - Maker
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-Planches dans tous les coins — **rack vertical** en CAO, **entailles inclinées** en contreplaqué, support pour **skates et snowboard** sans percer les murs du logement. Décembre 2021. **[English version]({{< ref "/posts/skate-rack-cad-to-object/index.md" >}})**.
+Planches dans tous les coins — **rack vertical** en CAO, **entailles inclinées** en contreplaqué, support pour **skates et snowboard** sans percer les murs du logement. Décembre 2021.
 
 <!--more-->
 

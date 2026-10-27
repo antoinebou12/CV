@@ -1,0 +1,25 @@
+{{- $fr := eq .page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $context := .context | lower -}}
+{{- $terms := slice -}}
+{{- range hugo.Data.documentation_glossary.terms -}}
+  {{- if or .common (gt (len (findRE .pattern $context 1)) 0) -}}{{- $terms = $terms | append . -}}{{- end -}}
+{{- end -}}
+<section class="doc documentation-glossary" id="glossary" aria-labelledby="glossary-heading" data-glossary>
+  <h2 id="glossary-heading">{{ if $fr }}Glossaire{{ else }}Glossary{{ end }}</h2>
+  <div class="glossary-search" hidden data-glossary-search>
+    <label for="glossary-query">{{ if $fr }}Chercher un terme{{ else }}Find a term{{ end }}</label>
+    <input type="search" id="glossary-query" autocomplete="off" data-glossary-query>
+    <p role="status" aria-live="polite" data-glossary-status data-empty="{{ if $fr }}Aucun terme trouvé. Essayez un autre mot.{{ else }}No matching terms. Try another word.{{ end }}" data-count="{{ if $fr }}termes{{ else }}terms{{ end }}"></p>
+  </div>
+  <div class="glossary-entries">
+    {{ range $terms }}
+    <details id="term-{{ .id }}" data-glossary-entry>
+      <summary>{{ index .label $i }}</summary>
+      <p>{{ index .definition $i }}</p>
+    </details>
+    {{ end }}
+  </div>
+</section>
+{{ $reader := resources.Get "documentation-reader.js" | minify | fingerprint }}
+<script src="{{ $reader.RelPermalink }}" integrity="{{ $reader.Data.Integrity }}" defer></script>

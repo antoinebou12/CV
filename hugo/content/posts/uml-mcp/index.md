@@ -1,10 +1,13 @@
 ---
+image_alt: "A Mermaid client/server sequence rendered in chat, from the repository"
+project_docs: uml-mcp
+story_kind: introduction
 post_kind: article
 title: "uml-mcp — UML diagrams from chat via MCP"
 date: 2026-09-02T14:00:00-04:00
 lastmod: 2026-10-20T10:00:00-04:00
 mermaid: true
-images: ["featured.png"]
+images: ["images/featured.png"]
 description: "Open-source MCP server for Mermaid, PlantUML, and Kroki diagrams in Cursor and ChatGPT — why I built it, how to install, and links to earlier diagram tooling."
 translationKey: uml-mcp-post
 tags:
@@ -18,11 +21,11 @@ tags:
 
 [![GitHub stars](https://img.shields.io/github/stars/antoinebou12/uml-mcp?style=social)](https://github.com/antoinebou12/uml-mcp)
 
-**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** gives an MCP client real diagram tools: an assistant supplies Mermaid, PlantUML, or another supported diagram source, and the server returns rendered output and useful links. The current repository documents five tools and a catalog of roughly 37 Kroki-backed types. Those counts describe the documented interface, not a rendering benchmark. **[Version française]({{< ref "/posts/uml-mcp/index.fr.md" >}})**.
+**[uml-mcp](https://github.com/antoinebou12/uml-mcp)** gives an MCP client real diagram tools: an assistant supplies Mermaid, PlantUML, or another supported diagram source, and the server returns rendered output and useful links. The current repository documents five tools and a catalog of roughly 37 Kroki-backed types. Those counts describe the documented interface, not a rendering benchmark.
 
 {{< repo_snapshot "antoinebou12/uml-mcp" >}}
 
-![A Mermaid client/server sequence rendered in chat, from the repository](featured.png)
+
 
 <!--more-->
 

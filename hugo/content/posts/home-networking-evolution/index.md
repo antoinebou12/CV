@@ -1,4 +1,5 @@
 ---
+image_alt: "Homelab overview"
 post_kind: article
 title: "Networking evolution — building a home network lab"
 date: 2021-09-06T10:00:00-04:00
@@ -13,10 +14,10 @@ tags:
   - Proxmox
   - Caddy
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally. **[Version française]({{< ref "/posts/home-networking-evolution/index.fr.md" >}})**.
+Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally.
 
 <!--more-->
 
@@ -34,7 +35,7 @@ Lesson that stuck: **one compose file per concern**. When Plex misbehaved, I did
 
 Core hardware: a cheap **Dell** box plus an older 2004-era machine. **Bash** scripts for **Ubuntu**, **CentOS**, and **Proxmox** installs — repeatable enough that reinstalling after experiments hurt less.
 
-![Homelab overview](./images/featured.png)
+
 
 ### Physical rack (October 2022)
 

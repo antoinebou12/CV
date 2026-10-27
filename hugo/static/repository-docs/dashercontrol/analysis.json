@@ -1,0 +1,854 @@
+{
+  "repo": "DasherControl",
+  "slug": "dashercontrol",
+  "commit": "d5e4b5af44ce8a19025fd41569978f9a3b1b910d",
+  "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/",
+  "tree_url": "https://github.com/antoinebou12/DasherControl/tree/d5e4b5af44ce8a19025fd41569978f9a3b1b910d",
+  "fetched_at": "2026-10-24T01:36:53.763573+00:00",
+  "languages": [
+    {
+      "name": "Rust",
+      "bytes": 60028,
+      "percent": 46.84
+    },
+    {
+      "name": "Vue",
+      "bytes": 55958,
+      "percent": 43.67
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 5121,
+      "percent": 4.0
+    },
+    {
+      "name": "Shell",
+      "bytes": 3267,
+      "percent": 2.55
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 2628,
+      "percent": 2.05
+    },
+    {
+      "name": "PLpgSQL",
+      "bytes": 1145,
+      "percent": 0.89
+    }
+  ],
+  "language_bytes": 128147,
+  "coverage": {
+    "tree_files": 139,
+    "eligible_files": 49,
+    "read_files": 49,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 62,
+      "heading": "Install (Tested only on Ubuntu 20.04)",
+      "commands": "// bash scripts/rust-setup-dev.sh\n// bash scripts/js-dev-setup.sh\ncd frontend && npm install && npm run build && cd ..\ncargo install diesel_cli --no-default-features --features postgres\n// go in Rocket.toml and .env and change DATABASE_URL to your postgresql server\ndiesel migration run\n// create admin user\ncargo run --bin create_admin\n// run web app\ncargo run"
+    },
+    {
+      "file": "README.md",
+      "line": 80,
+      "heading": "Docker",
+      "commands": "DOCKER_BUILDKIT=1 docker build -t antoinebou13/dashercontrol ."
+    },
+    {
+      "file": "README.md",
+      "line": 85,
+      "heading": "Docker-compose",
+      "commands": "DOCKER_BUILDKIT=1 docker-compose up -d --build && docker-compose logs"
+    }
+  ],
+  "manifests": [
+    {
+      "file": "frontend/package.json",
+      "engines": {},
+      "scripts": [
+        {
+          "name": "lint",
+          "command": "eslint --ext .js,.vue frontend tests/unit"
+        },
+        {
+          "name": "build",
+          "command": "npm run clean && webpack --mode production"
+        },
+        {
+          "name": "test",
+          "command": "echo \"Error: no test specified\" && exit 1"
+        }
+      ]
+    }
+  ],
+  "type_count": 36,
+  "types": [
+    {
+      "id": "t883aa4939d84",
+      "name": "DockerInterface",
+      "kind": "struct",
+      "file": "src/containers/docker.rs",
+      "line": 27,
+      "language": "rust",
+      "methods": [
+        "new",
+        "init",
+        "get_containers",
+        "get_images",
+        "docker_info",
+        "log_container",
+        "pull_image",
+        "check_image_exist",
+        "create_docker_container",
+        "delete_container",
+        "restart_container",
+        "stop_container"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6c6e876f9471",
+      "name": "NewTenant",
+      "kind": "struct",
+      "file": "src/bin/create_admin.rs",
+      "line": 48,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td007a4775b01",
+      "name": "NewTenantConfiguration",
+      "kind": "struct",
+      "file": "src/bin/create_admin.rs",
+      "line": 60,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t9d91c22b8e18",
+      "name": "DBJsonType",
+      "kind": "struct",
+      "file": "src/bin/create_admin.rs",
+      "line": 137,
+      "language": "rust",
+      "methods": [
+        "from_sql",
+        "to_sql"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t11bf41e6278b",
+      "name": "Container",
+      "kind": "struct",
+      "file": "src/containers/model.rs",
+      "line": 9,
+      "language": "rust",
+      "methods": [
+        "create",
+        "all"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta9679a334153",
+      "name": "NewContainer",
+      "kind": "struct",
+      "file": "src/containers/model.rs",
+      "line": 18,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tdc82d141f21c",
+      "name": "DbConn",
+      "kind": "struct",
+      "file": "src/db.rs",
+      "line": 26,
+      "language": "rust",
+      "methods": [
+        "from_request",
+        "deref"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t981fd8c93b75",
+      "name": "CORS",
+      "kind": "struct",
+      "file": "src/fairing.rs",
+      "line": 7,
+      "language": "rust",
+      "methods": [
+        "info",
+        "on_response"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te127dc44374a",
+      "name": "HitCount",
+      "kind": "struct",
+      "file": "src/router.rs",
+      "line": 18,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6437f975dc23",
+      "name": "TemplateContext",
+      "kind": "struct",
+      "file": "src/router.rs",
+      "line": 21,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb361ddc722e9",
+      "name": "JsonMessage",
+      "kind": "struct",
+      "file": "src/router.rs",
+      "line": 27,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t8722c44b4eb9",
+      "name": "MyError",
+      "kind": "enum",
+      "file": "src/tenants/error.rs",
+      "line": 6,
+      "language": "rust",
+      "methods": [
+        "from",
+        "fmt"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t17bb4e3e5dbf",
+      "name": "Tenant",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 24,
+      "language": "rust",
+      "methods": [
+        "create",
+        "hash_password",
+        "all",
+        "is_valid_login_session",
+        "find_tenant_by_username",
+        "find_tenant_by_email",
+        "generate_login_session",
+        "update_login_session_to_db"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t2c76d89f07e3",
+      "name": "NewTenant",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 116,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t4966692561fb",
+      "name": "RegisterTenantNoRole",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 126,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t279f4d888b54",
+      "name": "RegisterTenant",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 136,
+      "language": "rust",
+      "methods": [
+        "validates"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t1bc8df55914d",
+      "name": "AuthTenant",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 179,
+      "language": "rust",
+      "methods": [
+        "login"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t071f0a54af7e",
+      "name": "TenantInfo",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 186,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t389b29073fa5",
+      "name": "LoginHistory",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 227,
+      "language": "rust",
+      "methods": [
+        "create",
+        "save_login_history"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tc35a582a4f4a",
+      "name": "LoginHistoryInsertable",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 235,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t812b32cc2ea9",
+      "name": "TenantConfiguration",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 262,
+      "language": "rust",
+      "methods": [
+        "create",
+        "all",
+        "get"
+      ],
+      "bases": []
+    },
+    {
+      "id": "td269945792db",
+      "name": "NewTenantConfiguration",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 272,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td5b22eb3e435",
+      "name": "DBJsonType",
+      "kind": "struct",
+      "file": "src/tenants/model.rs",
+      "line": 317,
+      "language": "rust",
+      "methods": [
+        "from_sql",
+        "to_sql"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t4d5d0f55bf96",
+      "name": "Claims",
+      "kind": "struct",
+      "file": "src/tenants/token.rs",
+      "line": 22,
+      "language": "rust",
+      "methods": [
+        "create",
+        "is_expired",
+        "is_claimed_user",
+        "has_role",
+        "get_tenant_id",
+        "from_request"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tdb537b8b82fc",
+      "name": "TinyTenant",
+      "kind": "struct",
+      "file": "src/tenants/token.rs",
+      "line": 39,
+      "language": "rust",
+      "methods": [
+        "from"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t366ef2900f70",
+      "name": "CustomResponse",
+      "kind": "struct",
+      "file": "src/tenants/token.rs",
+      "line": 117,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "taf9da2178149",
+      "name": "Applet",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 19,
+      "language": "rust",
+      "methods": [
+        "create",
+        "all",
+        "all_applets_by_workspace",
+        "delete_all_from_workspace",
+        "update"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t6b9bc69512fc",
+      "name": "NewApplet",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 33,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tc2008bed5239",
+      "name": "NewAppletNoWorkspace",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 45,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tbdbcf29a89c8",
+      "name": "Workspace",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 102,
+      "language": "rust",
+      "methods": [
+        "create",
+        "get",
+        "update",
+        "delete_with_applets",
+        "all",
+        "all_for_tenant",
+        "create_with_applets",
+        "update_with_applets"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t0616e1c45553",
+      "name": "NewWorkspace",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 111,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t23dd024658cf",
+      "name": "WorkspaceWithApplets",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 118,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tfc24931154db",
+      "name": "NewWorkspaceWithApplets",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 127,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tb420c49d9e9c",
+      "name": "WorkspaceNoIDWithApplets",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 135,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t40cee3f31223",
+      "name": "WorkspaceNoTenantWithApplets",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 142,
+      "language": "rust",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t7cb06d0f6e3a",
+      "name": "DBJsonType",
+      "kind": "struct",
+      "file": "src/workspaces/model.rs",
+      "line": 287,
+      "language": "rust",
+      "methods": [
+        "from_sql",
+        "to_sql"
+      ],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "src/bin/create_admin.rs",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/create_admin.rs",
+      "download": "repository-docs/dashercontrol/classes/27a2b23bbd37d48e.mmd"
+    },
+    {
+      "path": "src/containers/docker.rs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/docker.rs",
+      "download": "repository-docs/dashercontrol/classes/ddb7bba7f42db950.mmd"
+    },
+    {
+      "path": "src/containers/model.rs",
+      "types": 2,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/model.rs",
+      "download": "repository-docs/dashercontrol/classes/31381567d6f040b3.mmd"
+    },
+    {
+      "path": "src/db.rs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/db.rs",
+      "download": "repository-docs/dashercontrol/classes/7d7d3a6ce5c2a3e8.mmd"
+    },
+    {
+      "path": "src/fairing.rs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/fairing.rs",
+      "download": "repository-docs/dashercontrol/classes/5123f34e46e91dd8.mmd"
+    },
+    {
+      "path": "src/router.rs",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/router.rs",
+      "download": "repository-docs/dashercontrol/classes/08d36d8c77bb7690.mmd"
+    },
+    {
+      "path": "src/tenants/error.rs",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/error.rs",
+      "download": "repository-docs/dashercontrol/classes/dd32a8b99cb96d94.mmd"
+    },
+    {
+      "path": "src/tenants/model.rs",
+      "types": 11,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/model.rs",
+      "download": "repository-docs/dashercontrol/classes/e4fe3190b96e6f4a.mmd"
+    },
+    {
+      "path": "src/tenants/token.rs",
+      "types": 3,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/token.rs",
+      "download": "repository-docs/dashercontrol/classes/89cd4754e1e2a139.mmd"
+    },
+    {
+      "path": "src/workspaces/model.rs",
+      "types": 10,
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/model.rs",
+      "download": "repository-docs/dashercontrol/classes/0cb946327f5ea1dc.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "Cargo.toml",
+      "blob_sha": "8b695826fce87e73e5447fe15774efa99d388cab",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/Cargo.toml"
+    },
+    {
+      "path": "src/containers/docker.rs",
+      "blob_sha": "fc0ecca1ddeb4cc3424f8054b98babd27538e148",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/docker.rs"
+    },
+    {
+      "path": "src/workspaces/handler.rs",
+      "blob_sha": "6866c099446e3ba7502031f91b499a549be3b69f",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/handler.rs"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "10915d708f273ccc56b960979926189eea1640d2",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/README.md"
+    },
+    {
+      "path": "docker-compose.yml",
+      "blob_sha": "bfc841a143f3b6b6e0362abf415bde8ad6430391",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/docker-compose.yml"
+    },
+    {
+      "path": "start-server.sh",
+      "blob_sha": "e4df99ad34f265c188fd692d946407654557dcf7",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/start-server.sh"
+    },
+    {
+      "path": "certs/create_aes128key.sh",
+      "blob_sha": "45b570042c8b76e86c08ddc3694fe70020d31bb9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/certs/create_aes128key.sh"
+    },
+    {
+      "path": "certs/create_jwt_key.sh",
+      "blob_sha": "4e68d111290cc2f5ee1626b0a791f40e122bbddb",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/certs/create_jwt_key.sh"
+    },
+    {
+      "path": "certs/create_tls.sh",
+      "blob_sha": "85a96f4933ecae129f1dd3627b43f04a8febe80f",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/certs/create_tls.sh"
+    },
+    {
+      "path": "frontend/main.js",
+      "blob_sha": "9d875d3d8ab97183c74bb0742acd0bfeaf9ae90f",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/main.js"
+    },
+    {
+      "path": "frontend/package.json",
+      "blob_sha": "a2fabc74d76260607df44b8b78729420e0884ea8",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/package.json"
+    },
+    {
+      "path": "frontend/utils.js",
+      "blob_sha": "839d66eff15737bce6089b7a4b8a1b14209b62a8",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/utils.js"
+    },
+    {
+      "path": "frontend/webpack.config.js",
+      "blob_sha": "0f277f72eec68dfa1ceb5539caa2e9df0bdfc849",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/webpack.config.js"
+    },
+    {
+      "path": "scripts/create_db.sh",
+      "blob_sha": "5f433603dbf848305371c38272d560bfbf43977a",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/scripts/create_db.sh"
+    },
+    {
+      "path": "scripts/install-docker-compose.sh",
+      "blob_sha": "96369555c172d3a39ed35635326bfbd6c5aba05e",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/scripts/install-docker-compose.sh"
+    },
+    {
+      "path": "scripts/js-dev-setup.sh",
+      "blob_sha": "b52062f1a2322a487cfb8cf7268e350ef9f0cba9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/scripts/js-dev-setup.sh"
+    },
+    {
+      "path": "scripts/rust-setup-dev.sh",
+      "blob_sha": "cda3595961efd1205a3a3f12eb65916927b2085d",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/scripts/rust-setup-dev.sh"
+    },
+    {
+      "path": "scripts/wait-for-db.sh",
+      "blob_sha": "f8d437a6e8455654cbdb00a673f498b36d94893c",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/scripts/wait-for-db.sh"
+    },
+    {
+      "path": "src/db.rs",
+      "blob_sha": "1099e3812c9ba1a38cf4d6ce27fa9b5fe7dbcc39",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/db.rs"
+    },
+    {
+      "path": "src/fairing.rs",
+      "blob_sha": "3064ed4413a5895ef230e21e05f09ec0e83d8b83",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/fairing.rs"
+    },
+    {
+      "path": "src/main.rs",
+      "blob_sha": "c1fd7b48b754d599acff7f48c19ca7e1f2259fa9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/main.rs"
+    },
+    {
+      "path": "src/router.rs",
+      "blob_sha": "0b3693fa493815d45d98b43a2d3e73e42a83dbb2",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/router.rs"
+    },
+    {
+      "path": "src/schema.rs",
+      "blob_sha": "5fc5f1fcc17768aa26f09ed6ba669c2077ebb3c6",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/schema.rs"
+    },
+    {
+      "path": "src/bin/create_admin.rs",
+      "blob_sha": "557374fa9abb72daa9d3d4e77abd8d108b5b3202",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/create_admin.rs"
+    },
+    {
+      "path": "src/bin/start_websocket.rs",
+      "blob_sha": "9df1820436ca868b7e822debeef44097945b46fc",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/bin/start_websocket.rs"
+    },
+    {
+      "path": "src/containers/handler.rs",
+      "blob_sha": "c489d6a8195d8a1d27f9ad7830bb1a72c16fbd8b",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/handler.rs"
+    },
+    {
+      "path": "src/containers/mod.rs",
+      "blob_sha": "8976be58c319dc75a71cc91ee1ae7de78c14687e",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/mod.rs"
+    },
+    {
+      "path": "src/containers/model.rs",
+      "blob_sha": "86a34def6455f3af75bc2bdcaf39549237986b98",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/model.rs"
+    },
+    {
+      "path": "src/containers/router.rs",
+      "blob_sha": "c8d06040bccb4423b09e5db73e70455a4d21a6ab",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/containers/router.rs"
+    },
+    {
+      "path": "src/tenants/error.rs",
+      "blob_sha": "a539323f873c070516d3bd522b6d7f7f35e76fc9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/error.rs"
+    },
+    {
+      "path": "src/tenants/handler.rs",
+      "blob_sha": "01d0cbfa75cbb38154e7cb8e619e25955387b2a8",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/handler.rs"
+    },
+    {
+      "path": "src/tenants/mod.rs",
+      "blob_sha": "f10b5acc31ad53733024d8d8c8b6b371074f50b4",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/mod.rs"
+    },
+    {
+      "path": "src/tenants/model.rs",
+      "blob_sha": "3c23ebe3edb836eb4dba2f8e290612ef97eaaaf8",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/model.rs"
+    },
+    {
+      "path": "src/tenants/router.rs",
+      "blob_sha": "07c18259df8d79850a1cf1e3c01089ecfd203c91",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/router.rs"
+    },
+    {
+      "path": "src/tenants/token.rs",
+      "blob_sha": "577922c43d3ee3729768e37d3bccf7682da18aa9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tenants/token.rs"
+    },
+    {
+      "path": "src/terminal/mod.rs",
+      "blob_sha": "d1d9b2b92ffe6a8f50d9636c1797b5b9dc0b1c00",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/terminal/mod.rs"
+    },
+    {
+      "path": "src/terminal/ssh.rs",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/terminal/ssh.rs"
+    },
+    {
+      "path": "src/terminal/websocket.rs",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/terminal/websocket.rs"
+    },
+    {
+      "path": "src/tests/mod.rs",
+      "blob_sha": "5855c6fb486c7dc59dd3c04dd6da9e96b6f54c8a",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/mod.rs"
+    },
+    {
+      "path": "src/tests/test_containers.rs",
+      "blob_sha": "86ed83460d5a895cbdc1b1786b8510fbf13a27ff",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/test_containers.rs"
+    },
+    {
+      "path": "src/tests/test_main.rs",
+      "blob_sha": "fa2d62fa766d5f7069ce6b236824506f8c1bbde9",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/test_main.rs"
+    },
+    {
+      "path": "src/tests/test_tenants.rs",
+      "blob_sha": "74a81cd96794b45cedcfb0a12fcc58255a815ec7",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/test_tenants.rs"
+    },
+    {
+      "path": "src/tests/test_terminal.rs",
+      "blob_sha": "b2f928b228e1aadb022674be6d8047bb02478183",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/test_terminal.rs"
+    },
+    {
+      "path": "src/tests/test_workspaces.rs",
+      "blob_sha": "2670bef0d897f6147ad45a68b976bf3739e843a1",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/tests/test_workspaces.rs"
+    },
+    {
+      "path": "src/workspaces/error.rs",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/error.rs"
+    },
+    {
+      "path": "src/workspaces/mod.rs",
+      "blob_sha": "abca78f84a85232105e7e18d5d0f4db1cd907966",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/mod.rs"
+    },
+    {
+      "path": "src/workspaces/model.rs",
+      "blob_sha": "be54c5f4dda9a86c6bcaa2e3d2726b22c2894c12",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/model.rs"
+    },
+    {
+      "path": "src/workspaces/router.rs",
+      "blob_sha": "3a1d7eb6840fb9016ddf13580a78ab643d1a0b77",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/workspaces/router.rs"
+    },
+    {
+      "path": "frontend/tests/unit/Main.specs.js",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/frontend/tests/unit/Main.specs.js"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"DasherControl\"]\n  f0[\"Cargo.toml\"]\n  root --> f0\n  f1[\"src/containers/docker.rs\"]\n  root --> f1\n  f2[\"src/workspaces/handler.rs\"]\n  root --> f2\n  f3[\"README.md\"]\n  root --> f3\n  f4[\"docker-compose.yml\"]\n  root --> f4\n  f5[\"start-server.sh\"]\n  root --> f5\n  f6[\"certs/create_aes128key.sh\"]\n  root --> f6\n  f7[\"certs/create_jwt_key.sh\"]\n  root --> f7\n  f8[\"certs/create_tls.sh\"]\n  root --> f8\n  f9[\"frontend/main.js\"]\n  root --> f9\n  f10[\"frontend/package.json\"]\n  root --> f10\n  f11[\"frontend/utils.js\"]\n  root --> f11\n  f12[\"frontend/webpack.config.js\"]\n  root --> f12\n  f13[\"scripts/create_db.sh\"]\n  root --> f13\n  f14[\"scripts/install-docker-compose.sh\"]\n  root --> f14\n  f15[\"scripts/js-dev-setup.sh\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t883aa4939d84[\"DockerInterface\"] {\n  <<struct>>\n  new()\n  init()\n  get_containers()\n  get_images()\n}\nclass t6c6e876f9471[\"NewTenant\"] {\n  <<struct>>\n}\nclass td007a4775b01[\"NewTenantConfiguration\"] {\n  <<struct>>\n}\nclass t9d91c22b8e18[\"DBJsonType\"] {\n  <<struct>>\n  from_sql()\n  to_sql()\n}\nclass t11bf41e6278b[\"Container\"] {\n  <<struct>>\n  create()\n  all()\n}\nclass ta9679a334153[\"NewContainer\"] {\n  <<struct>>\n}\nclass tdc82d141f21c[\"DbConn\"] {\n  <<struct>>\n  from_request()\n  deref()\n}\nclass t981fd8c93b75[\"CORS\"] {\n  <<struct>>\n  info()\n  on_response()\n}\nclass te127dc44374a[\"HitCount\"] {\n  <<struct>>\n}\nclass t6437f975dc23[\"TemplateContext\"] {\n  <<struct>>\n}\nclass tb361ddc722e9[\"JsonMessage\"] {\n  <<struct>>\n}\nclass t8722c44b4eb9[\"MyError\"] {\n  <<enum>>\n  from()\n  fmt()\n}\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/DasherControl",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/dashercontrol/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_dashboard[\"Dashboard UI\"]\n  node_main_ui[\"Dashboard Shell<br/>[Main.vue]\"]\n  node_grid[\"Workspace Grid<br/>[GridLayoutMain.vue]\"]\n  node_grid_item[\"Grid Items<br/>[GridItemApplet.vue]\"]\n  node_applet_router[\"Applet Selector<br/>[Applet.vue]\"]\n  node_applet_authoring[\"Applet Creation<br/>[CreateNew.vue]\"]\n  node_editor[\"Applet Editor<br/>[Editor.vue]\"]\n  node_iframe[\"Embedded Sites\"]\n  node_shortcut[\"Shortcuts<br/>[Shortcut.vue]\"]\n  node_canvas[\"Canvas Applet<br/>[Canvas.vue]\"]\n  node_login_ui[\"Login Screen<br/>[Login.vue]\"]\nend\n\nsubgraph group_identity[\"Tenant Identity\"]\n  node_tenant_api[\"Tenant Endpoints<br/>[handler.rs]\"]\n  node_tenant_model[\"Tenant Accounts<br/>[model.rs]\"]\n  node_token_auth[\"Token Validation<br/>[token.rs]\"]\nend\n\nsubgraph group_workspace[\"Workspace Data\"]\n  node_workspace_api[\"Workspace Endpoints<br/>[handler.rs]\"]\n  node_workspace_model[\"Workspace Records<br/>[model.rs]\"]\n  node_database[(\"PostgreSQL Access<br/>[db.rs]\")]\n  node_schema[\"Database Schema<br/>[schema.rs]\"]\nend\n\nsubgraph group_integrations[\"Runtime Integrations\"]\n  node_docker_ui[\"Docker Manager<br/>[DockerManager.vue]\"]\n  node_container_api[\"Container Endpoints<br/>[handler.rs]\"]\n  node_docker_engine[\"Docker Engine<br/>[docker.rs]\"]\n  node_terminal_ui[\"Terminal Applet<br/>[Terminal.vue]\"]\n  node_terminal_ws[\"Terminal WebSocket<br/>[websocket.rs]\"]\n  node_server[\"Rocket Server<br/>[main.rs]\"]\nend\n\nnode_user((\"Dashboard User\"))\n\nnode_user -->|\"uses\"| node_main_ui\nnode_main_ui -->|\"renders\"| node_grid\nnode_grid -->|\"renders\"| node_grid_item\nnode_grid_item -->|\"renders\"| node_applet_router\nnode_applet_router -->|\"selects\"| node_applet_authoring\nnode_applet_router -->|\"selects\"| node_editor\nnode_applet_router -->|\"selects\"| node_iframe\nnode_applet_router -->|\"selects\"| node_shortcut\nnode_applet_authoring -->|\"configures\"| node_applet_authoring\nnode_grid -->|\"requests\"| node_workspace_api\nnode_tenant_api -->|\"authenticates\"| node_tenant_model\nnode_tenant_api -->|\"issues tokens\"| node_token_auth\nnode_token_auth -->|\"checks session\"| node_tenant_model\nnode_workspace_api -->|\"queries\"| node_workspace_model\nnode_workspace_api -->|\"validates\"| node_token_auth\nnode_tenant_model -->|\"queries\"| node_schema\nnode_workspace_model -->|\"queries\"| node_schema\nnode_tenant_api -->|\"uses connection\"| node_database\nnode_workspace_api -->|\"uses connection\"| node_database\nnode_docker_ui -->|\"requests\"| node_container_api\nnode_container_api -->|\"controls\"| node_docker_engine\nnode_applet_router -->|\"selects\"| node_docker_ui\nnode_applet_router -->|\"selects\"| node_terminal_ui\nnode_server -->|\"mounts routes\"| node_tenant_api\nnode_server -->|\"mounts routes\"| node_workspace_api\nnode_server -->|\"mounts routes\"| node_container_api\nnode_server -->|\"references\"| node_terminal_ws\nnode_user -.->|\"may use\"| node_canvas\nnode_terminal_ui -.->|\"SSH terminal\"| node_terminal_ws\n\n\nclass node_main_ui,node_grid,node_grid_item,node_applet_router,node_applet_authoring,node_editor,node_iframe,node_shortcut,node_canvas,node_login_ui,node_user toneBlue\nclass node_tenant_api,node_tenant_model,node_token_auth toneAmber\nclass node_workspace_api,node_workspace_model,node_database,node_schema toneMint\nclass node_docker_ui,node_container_api,node_docker_engine,node_terminal_ui,node_terminal_ws,node_server toneRose",
+    "linked_paths": 23
+  }
+}

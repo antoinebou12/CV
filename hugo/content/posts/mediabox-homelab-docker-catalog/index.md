@@ -1,4 +1,7 @@
 ---
+image_alt: "Homelab wall stack — switch, modem, router, server, UPS"
+project_docs: mediaboxdockercompose
+story_kind: introduction
 post_kind: article
 title: "MediaBox homelab — what I run in Docker (and what stayed a bookmark)"
 date: 2024-03-15T10:00:00-04:00
@@ -13,14 +16,14 @@ tags:
   - Self-Hosted
   - MediaBoxDockerCompose
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-I kept a private list of self-hosted apps I wanted to try — mostly so I would stop assigning random ports and forgetting what lived on `:8096`. That list turned into **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** on GitHub. This post is the short version: what I wired up, how I install on Proxmox when compose is not the right shape, and where the full port map lives so this page does not become a spreadsheet with SEO. **[Version française]({{< ref "/posts/mediabox-homelab-docker-catalog/index.fr.md" >}})**.
+I kept a private list of self-hosted apps I wanted to try — mostly so I would stop assigning random ports and forgetting what lived on `:8096`. That list turned into **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** on GitHub. This post is the short version: what I wired up, how I install on Proxmox when compose is not the right shape, and where the full port map lives so this page does not become a spreadsheet with SEO.
 
 <!--more-->
 
-![Homelab wall stack — switch, modem, router, server, UPS](./images/featured.jpeg)
+
 
 Same chapter as **[networking evolution]({{< ref "/posts/home-networking-evolution/index.md" >}})** — cables on the wall, then services in git. The photo is from when I was still labeling ports with tape; the compose file is what survived.
 

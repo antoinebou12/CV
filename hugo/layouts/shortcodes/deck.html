@@ -10,19 +10,33 @@
 {{- $viewer := and (ne $viewerParam "false") (ne $viewerParam "0") -}}
 {{- $sizeNote := .Get "size" -}}
 {{- $href := urls.JoinPath .Page.RelPermalink $src -}}
+{{- with .Page.Resources.GetMatch $src -}}{{- $href = .RelPermalink -}}{{- end -}}
 {{- $abs := $href | absURL -}}
-<div class="not-prose deck-wrap" style="max-width:100%;margin:1.25rem 0;border:1px solid rgba(0,0,0,.1);border-radius:8px;overflow:hidden;">
-  <div class="deck-toolbar" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(0,0,0,.04);font-size:0.95rem;">
-    <a href="{{ $href }}" download style="font-weight:600;text-decoration:underline;">{{ $label }}</a>
-    {{- with $sizeNote -}}<span style="opacity:.7;">({{ $sizeNote }})</span>{{- end -}}
+{{- $fr := eq .Page.Lang "fr" -}}
+{{- $slides := .Page.Resources.Match "slides/Slide*.PNG" -}}
+<div class="not-prose deck-wrap" data-deck-viewer aria-label="{{ $title }}">
+  <div class="deck-toolbar">
+    <a href="{{ $href }}" download>{{ $label }}</a>
+    {{ with .Page.Resources.GetMatch "slides.pdf" }}<a href="{{ .RelPermalink }}" target="_blank" rel="noopener">{{ if $fr }}Ouvrir le PDF{{ else }}Open PDF{{ end }}</a>{{ end }}
+    {{ with $sizeNote }}<span class="deck-size">{{ . }}</span>{{ end }}
   </div>
-  {{- if $viewer -}}
-  <iframe
-    title="{{ $title | htmlEscape }}"
-    src="https://view.officeapps.live.com/op/embed.aspx?src={{ $abs | urlquery }}"
-    style="width:100%;height:{{ $height }}px;border:0;display:block;"
-    loading="lazy"
-  ></iframe>
-  <p style="margin:0;padding:0.5rem 1rem;font-size:0.8rem;opacity:.75;">In-browser preview via Microsoft Office Online. If it fails to load, use the download link above (large decks may not preview).</p>
-  {{- end -}}
+  {{ if and $viewer $slides }}
+  <div class="deck-slides" tabindex="0" aria-label="{{ if $fr }}Diapositives{{ else }}Slides{{ end }}">
+    {{ range seq (len $slides) }}{{ $number := . }}{{ with $.Page.Resources.GetMatch (printf "slides/Slide%d.PNG" .) }}
+    <figure data-deck-slide><img src="{{ .RelPermalink }}" width="1280" height="720" alt="{{ $title }} · {{ if $fr }}diapositive{{ else }}slide{{ end }} {{ $number }}" loading="{{ if eq $number 1 }}eager{{ else }}lazy{{ end }}" decoding="async" /></figure>
+    {{ end }}{{ end }}
+  </div>
+  <div class="deck-controls" hidden>
+    <button type="button" data-deck-prev aria-label="{{ if $fr }}Diapositive précédente{{ else }}Previous slide{{ end }}">← <span>{{ if $fr }}Précédente{{ else }}Previous{{ end }}</span></button>
+    <label><span class="sr-only">{{ if $fr }}Choisir une diapositive{{ else }}Choose a slide{{ end }}</span><select data-deck-select>{{ range seq (len $slides) }}<option value="{{ sub . 1 }}">{{ if $fr }}Diapositive{{ else }}Slide{{ end }} {{ . }} / {{ len $slides }}</option>{{ end }}</select></label>
+    <button type="button" data-deck-next aria-label="{{ if $fr }}Diapositive suivante{{ else }}Next slide{{ end }}"><span>{{ if $fr }}Suivante{{ else }}Next{{ end }}</span> →</button>
+    <output class="sr-only" data-deck-status aria-live="polite"></output>
+  </div>
+  {{ else if $viewer }}
+  <p class="deck-preview-note">{{ if $fr }}Téléchargez les diapositives pour les consulter.{{ else }}Download the slides to view the presentation.{{ end }}</p>
+  {{ end }}
 </div>
+{{ if and $slides (not (.Page.Store.Get "deck-viewer-loaded")) }}
+{{ with resources.Get "deck-viewer.js" | minify | fingerprint }}<script src="{{ .RelPermalink }}" defer></script>{{ end }}
+{{ .Page.Store.Set "deck-viewer-loaded" true }}
+{{ end }}

@@ -1,4 +1,5 @@
 ---
+image_alt: "CodePen demos collection — editor panes and a Three.js-style wave grid (featured art for this post)"
 post_kind: article
 title: "CodePen demos (collection)"
 date: 2017-01-10T10:00:00-04:00
@@ -32,14 +33,14 @@ tags:
   - HTML
   - WebRTC
 images:
-  - featured.jpeg
+  - images/featured.jpeg
 ---
 
-CodePen was my **public lab notebook** before this Hugo blog existed — instant preview, comments, and forks without deploying. These are **live CodePen embeds** I kept from the jQuery-and-vanilla-JS years (~2016–2017): small UI labs, then two bigger demos (Canvas and Three.js). Each card uses the **pen title from CodePen** so you know what you are opening—not just the slug in the URL. Fork anything directly on CodePen if you want to adapt it. **[Version française]({{< ref "/posts/codepen-demos-antoinebou13/index.fr.md" >}})**.
+CodePen was my **public lab notebook** before this Hugo blog existed — instant preview, comments, and forks without deploying. These are **live CodePen embeds** I kept from the jQuery-and-vanilla-JS years (~2016–2017): small UI labs, then two bigger demos (Canvas and Three.js). Each card uses the **pen title from CodePen** so you know what you are opening—not just the slug in the URL. Fork anything directly on CodePen if you want to adapt it.
 
 <!--more-->
 
-![CodePen demos collection — editor panes and a Three.js-style wave grid (featured art for this post)](./featured.jpeg)
+
 
 ## UI and form experiments
 

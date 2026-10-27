@@ -13,12 +13,12 @@ tags:
   - 3CX
   - Chatwoot
 images:
-  - featured.png
+  - images/featured.png
 ---
 
 ![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](./images/chatwoot-inbox.png)
 
-J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur. **[English version]({{< ref "/posts/livechat-platform-notes/index.md" >}})**.
+J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur.
 
 <!--more-->
 
@@ -31,7 +31,7 @@ Avant la matrice de fonctionnalités, clarifiez ce que vous achetez vraiment :
 - **Le bot ouvre, l’humain finit** → SaaS CX géré.
 - **Boîte partagée sur votre propre infra** → desk open source.
 
-Schéma de décision ([`platform-picker-flow.mmd`](./images/platform-picker-flow.mmd), rendu avec [uml-mcp](https://github.com/antoinebou12/uml-mcp)) :
+Schéma de décision ([source Mermaid](./images/platform-picker-flow.mmd)) :
 
 ![Quelle plateforme de chat selon votre objectif — arbre de décision 3CX, ManyChat, Kommunicate, Chatwoot](./images/platform-picker-flow.svg)
 

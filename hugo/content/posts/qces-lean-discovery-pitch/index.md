@@ -13,10 +13,10 @@ tags:
   - Pitch
   - Education
 images:
-  - featured.png
+  - images/featured.png
 ---
 
-![QcES program logo](./qces-logo.png)
+![QcES program logo](images/qces-logo.png)
 
 I took part in **QcES** (Spring 2024 cohort) while working through lean discovery: business model canvas, customer interviews, short pitches, and everything in between. This post is my own recap—not an official program document. **[Full article in French]({{< ref "/posts/qces-lean-discovery-pitch/index.fr.md" >}})** if you prefer.
 

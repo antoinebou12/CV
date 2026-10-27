@@ -1,0 +1,83 @@
+classDiagram
+direction TB
+class t249fef45a13f["JsDownloadOptions"] {
+  <<interface>>
+}
+class ta1d163a9d923["PreparedJsDownload"] {
+  <<interface>>
+}
+class t387633a33e11["AllDebridBatchEntry"] {
+  <<interface>>
+}
+class t0523f220d64d["AllDebridBatchState"] {
+  <<interface>>
+}
+class t153358105722["DownloadManager"] {
+  hasActiveDownload()
+  isJsDownloadActive()
+  getActiveDownloadId()
+  notifyReconnecting()
+  reconnectActiveDownload()
+  isActiveDownloadReconnecting()
+  extractFilename()
+  sanitizeFilename()
+  sanitizeRelativePath()
+  resolveFilename()
+  buildDownloadOptions()
+  parseGofileUri()
+  logResolvedUrl()
+  createDownloadPayload()
+  isHttpDownloader()
+  normalizeDownloadSpeedLimit()
+  getPersistedDownloadSpeedLimit()
+  applyDownloadSpeedLimit()
+  getPersistedNetworkInterface()
+  resolveNetworkInterfaceBinding()
+  applyNetworkInterface()
+  startRPC()
+  getDownloadStatusFromJs()
+  getDownloadStatusFromRpc()
+  getDownloadStatus()
+  cancelOrphanedDownload()
+  watchDownloads()
+  retryQueueHeldForDiskSpace()
+  haltDownloadIfStorageIsFull()
+  sendProgressUpdate()
+  handleDownloadCompletion()
+  updateDownloadStatus()
+  handleExtraction()
+  processNextQueuedDownload()
+  getErrorMessage()
+  handleRuntimeDownloadError()
+  getSeedStatus()
+  pauseDownload()
+  resumeDownload()
+  cancelDownload()
+  resumeSeeding()
+  pauseSeeding()
+  getJsDownloadOptions()
+  calculateAllDebridBatchProgress()
+  runAllDebridBatch()
+  cleanupBatch()
+  getGofileDownloadOptions()
+  resolveGofileDownload()
+  getPixelDrainDownloadOptions()
+  getDatanodesDownloadOptions()
+  getFuckingFastDownloadOptions()
+  getMediafireDownloadOptions()
+  getRealDebridDownloadOptions()
+  getPremiumizeDownloadOptions()
+  getAllDebridDownloadOptions()
+  getTorBoxDownloadOptions()
+  getVikingFileDownloadOptions()
+  getArchiveOrgDownloadOptions()
+  getRootzDownloadOptions()
+  getDownloadPayload()
+  validateDownloadUrl()
+  prunePreparedJsDownloads()
+  takePreparedJsDownload()
+  buildPreflightHeaders()
+  runPreflightAttempt()
+  validateJsDownloadResponse()
+  startDownload()
+}

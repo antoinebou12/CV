@@ -1,0 +1,104 @@
+terms:
+  - id: repository
+    label: [Repository, Dépôt]
+    definition: ["The versioned source files, configuration, and history of a project.", "Les fichiers source, la configuration et l’historique versionné d’un projet."]
+    pattern: "repository|dépôt"
+    common: true
+  - id: readme
+    label: [README, README]
+    definition: ["The repository’s entry document, usually covering its purpose and initial setup.", "Le document d’entrée du dépôt, qui présente généralement son rôle et son installation."]
+    pattern: "readme"
+    common: true
+  - id: dependency
+    label: [Dependency, Dépendance]
+    definition: ["A library, tool, or service that another component needs to build or run.", "Une bibliothèque, un outil ou un service nécessaire à la compilation ou à l’exécution d’un composant."]
+    pattern: "dependenc|dépendanc"
+    common: true
+  - id: api
+    label: [API, API]
+    definition: ["An interface through which software components exchange requests and results. An API does not have to use HTTP.", "Une interface par laquelle des composants logiciels échangent des requêtes et des résultats. Une API n’utilise pas nécessairement HTTP."]
+    pattern: "\\bapi\\b|endpoint"
+  - id: http
+    label: [HTTP, HTTP]
+    definition: ["A request-and-response protocol used by browsers and web services. A method, path, headers, and optional body describe a request.", "Un protocole de requête et réponse utilisé par les navigateurs et services web. Une requête comprend une méthode, un chemin, des en-têtes et parfois un corps."]
+    pattern: "http|route|fastapi|laravel|spring|php"
+  - id: session
+    label: [Session, Session]
+    definition: ["State kept across related requests, often to track a signed-in user. Authentication and permission checks remain separate concerns.", "Un état conservé entre plusieurs requêtes, souvent pour suivre un utilisateur connecté. L’authentification et les permissions restent des vérifications distinctes."]
+    pattern: "session|login|auth"
+  - id: docker
+    label: [Container, Conteneur]
+    definition: ["An isolated process environment created from an image. Persistent data needs storage outside the container’s disposable filesystem.", "Un environnement de processus isolé créé à partir d’une image. Les données persistantes nécessitent un stockage hors de son système de fichiers temporaire."]
+    pattern: "docker|container|conteneur|compose"
+  - id: compose
+    label: [Docker Compose, Docker Compose]
+    definition: ["A configuration format and tool for starting related containers, networks, and volumes. Startup order alone does not guarantee service readiness.", "Un format de configuration et un outil pour lancer des conteneurs, réseaux et volumes associés. L’ordre de démarrage ne garantit pas qu’un service est prêt."]
+    pattern: "compose"
+  - id: volume
+    label: [Volume and bind mount, Volume et montage de dossier]
+    definition: ["A volume is storage managed by the container platform; a bind mount exposes a chosen host path inside a container.", "Un volume est un stockage géré par la plateforme de conteneurs ; un montage de dossier expose un chemin de l’hôte dans un conteneur."]
+    pattern: "volume|mount|storage|stockage|persistent|persistan"
+  - id: port
+    label: [Published port, Port publié]
+    definition: ["A host port mapped to a service’s container port. Publishing a port can expose that service beyond its container network.", "Un port de l’hôte associé au port d’un service dans un conteneur. Sa publication peut rendre le service accessible hors du réseau des conteneurs."]
+    pattern: "docker|compose|ports|network|réseau"
+  - id: cli
+    label: [CLI, Interface en ligne de commande]
+    definition: ["A text interface in which commands and arguments select operations. Exit codes let scripts detect success or failure.", "Une interface textuelle où les commandes et arguments choisissent les opérations. Les codes de retour permettent aux scripts de détecter un succès ou un échec."]
+    pattern: "\\bcli\\b|command|script|shell"
+  - id: build
+    label: [Build, Compilation]
+    definition: ["The steps that turn source files and dependencies into a runnable program or distributable artifact.", "Les étapes qui transforment les sources et dépendances en programme exécutable ou en livrable distribuable."]
+    pattern: "build|compil|cmake|cpp|c\\+\\+|rust|java"
+  - id: ci
+    label: [Continuous integration, Intégration continue]
+    definition: ["Automated checks that run when source changes, such as building, testing, and linting. Passing checks cover only what those checks exercise.", "Des vérifications automatiques lors des changements de source, comme la compilation, les tests et l’analyse statique. Elles ne couvrent que ce qu’elles vérifient."]
+    pattern: "\\bci\\b|continuous|workflow|pipeline"
+  - id: mcp
+    label: [MCP, MCP]
+    definition: ["Model Context Protocol: a protocol through which an AI client discovers and calls tools and reads resources from a server.", "Model Context Protocol : un protocole permettant à un client IA de découvrir et appeler des outils, et de lire les ressources d’un serveur."]
+    pattern: "\\bmcp\\b|uml-mcp"
+  - id: mermaid
+    label: [Mermaid, Mermaid]
+    definition: ["A text-based diagram language. Nodes and connections describe a model; the diagram itself does not execute the project.", "Un langage de diagrammes textuel. Les nœuds et liens décrivent un modèle ; le diagramme n’exécute pas le projet."]
+    pattern: "mermaid|diagram"
+  - id: gpu
+    label: [GPU, GPU]
+    definition: ["A processor designed for parallel workloads, including graphics rendering and many numerical operations.", "Un processeur conçu pour les calculs parallèles, dont le rendu graphique et de nombreuses opérations numériques."]
+    pattern: "gpu|render|renderer|graphics|shader|opengl|cuda|rendu|deko3d"
+  - id: shader
+    label: [Shader, Shader]
+    definition: ["A program executed at a stage of a graphics or compute pipeline, for example to transform vertices or calculate pixel colors.", "Un programme exécuté à une étape d’un pipeline graphique ou de calcul, par exemple pour transformer des sommets ou calculer la couleur des pixels."]
+    pattern: "shader|opengl|glsl|deko3d|graphics backend"
+  - id: mesh
+    label: [Mesh, Maillage]
+    definition: ["A surface represented by vertices and connected elements, often triangles. Its geometry is distinct from its material or texture.", "Une surface représentée par des sommets et des éléments reliés, souvent des triangles. Sa géométrie est distincte de son matériau ou de sa texture."]
+    pattern: "mesh|maillage|geometry|géométr|collision|\\b3d\\b"
+  - id: ccd
+    label: [Continuous collision detection, Détection continue des collisions]
+    definition: ["A test for contact during the motion between two states, rather than only at the sampled endpoints.", "Une recherche de contact pendant le mouvement entre deux états, au lieu de tester seulement ses extrémités."]
+    pattern: "collision|\\bccd\\b|ipc-toolkit"
+  - id: decoder
+    label: [Video decoder, Décodeur vidéo]
+    definition: ["A component that reconstructs video frames from a compressed stream. Decoding and displaying a frame are separate stages.", "Un composant qui reconstruit des images à partir d’un flux vidéo compressé. Le décodage et l’affichage sont des étapes distinctes."]
+    pattern: "ffmpeg|decoder|décodeur|streaming|moonlight"
+  - id: backend
+    label: [Backend, Backend]
+    definition: ["An implementation behind a shared interface. Depending on context, it can mean a server-side service or a graphics, input, or storage implementation.", "Une implémentation derrière une interface commune. Selon le contexte, il peut s’agir d’un service côté serveur ou d’une implémentation graphique, d’entrée ou de stockage."]
+    pattern: "backend|back-end|spring|fastapi"
+  - id: database
+    label: [Database, Base de données]
+    definition: ["A system for storing and querying structured records. Its schema, access rules, and persistence determine how the application can use that data.", "Un système de stockage et d’interrogation de données structurées. Son schéma, ses règles d’accès et sa persistance déterminent comment l’application utilise ces données."]
+    pattern: "database|mariadb|mysql|mongo|sql|base de données"
+  - id: webhook
+    label: [Webhook, Webhook]
+    definition: ["An HTTP request sent to another system when an event occurs. The receiver needs to validate the request before acting on it.", "Une requête HTTP envoyée à un autre système lors d’un événement. Le destinataire doit valider la requête avant de la traiter."]
+    pattern: "webhook|callback"
+  - id: firmware
+    label: [Firmware, Micrologiciel]
+    definition: ["Software running on a device or microcontroller to control its hardware and communication.", "Un logiciel exécuté sur un appareil ou microcontrôleur pour contrôler son matériel et ses communications."]
+    pattern: "esp32|arduino|firmware|microcontroller|servo|controller|7seg"
+  - id: fork
+    label: [Fork, Fork]
+    definition: ["A separate repository derived from another project. A change in a fork is not automatically a change in the upstream project.", "Un dépôt distinct dérivé d’un autre projet. Une modification du fork ne devient pas automatiquement une modification du projet amont."]
+    pattern: "fork|upstream|amont"

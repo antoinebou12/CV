@@ -1,0 +1,52 @@
+classDiagram
+direction TB
+class t17bb4e3e5dbf["Tenant"] {
+  <<struct>>
+  create()
+  hash_password()
+  all()
+  is_valid_login_session()
+  find_tenant_by_username()
+  find_tenant_by_email()
+  generate_login_session()
+  update_login_session_to_db()
+}
+class t2c76d89f07e3["NewTenant"] {
+  <<struct>>
+}
+class t4966692561fb["RegisterTenantNoRole"] {
+  <<struct>>
+}
+class t279f4d888b54["RegisterTenant"] {
+  <<struct>>
+  validates()
+}
+class t1bc8df55914d["AuthTenant"] {
+  <<struct>>
+  login()
+}
+class t071f0a54af7e["TenantInfo"] {
+  <<struct>>
+}
+class t389b29073fa5["LoginHistory"] {
+  <<struct>>
+  create()
+  save_login_history()
+}
+class tc35a582a4f4a["LoginHistoryInsertable"] {
+  <<struct>>
+}
+class t812b32cc2ea9["TenantConfiguration"] {
+  <<struct>>
+  create()
+  all()
+  get()
+}
+class td269945792db["NewTenantConfiguration"] {
+  <<struct>>
+}
+class td5b22eb3e435["DBJsonType"] {
+  <<struct>>
+  from_sql()
+  to_sql()
+}
