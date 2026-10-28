@@ -20,7 +20,7 @@
 {{- $badgeLabel = i18n "searchPillTutorial" -}}
 {{- end -}}
 <article
-  class="post-list-card group h-full not-prose{{ if $p.Params.cover_none }} post-list-card--text-only{{ end }}{{ if eq $kind "tutorial" }} post-list-card--tutorial{{ end }}{{ if $isProject }} post-list-card--project{{ end }}"
+  class="post-list-card group h-full not-prose{{ if $p.Params.cover_none }} post-list-card--text-only{{ end }}{{ if eq $kind "tutorial" }} post-list-card--tutorial{{ end }}{{ if eq $p.Section "recipes" }} post-list-card--recipe{{ end }}{{ if $isProject }} post-list-card--project{{ end }}"
   data-sort-date="{{ $p.Date.Unix }}"
   data-sort-year="{{ $p.Date.Format "2006" }}"
   data-sort-title="{{ $p.Title | plainify | htmlUnescape }}"

@@ -268,9 +268,15 @@ html.dark .repo-directory .repo-kind--archived {
   letter-spacing:.08em;
 }
 .repo-doc .repo-overview-grid { gap:clamp(1.25rem,3vw,3rem)!important; }
-.repo-doc .repo-overview-card { border-bottom:1px solid var(--line)!important; }
+.repo-doc .repo-overview-card { border:0!important; border-bottom:1px solid var(--line)!important; }
 .repo-doc .repo-language-disclosure { margin-bottom:clamp(2rem,4vw,3.5rem)!important; }
 .repo-doc .repo-language-disclosure > summary { border-radius:0!important; border-inline:0!important; }
+/* Keep the +/− marker on the title row on phones: the primary-language text wraps instead. */
+.repo-doc .repo-language-disclosure > summary { flex-wrap:nowrap; }
+.repo-doc .repo-language-disclosure > summary > .repo-language-primary { flex:1 1 auto; min-width:0; }
+.repo-doc .repo-language-disclosure > summary > .repo-count,
+.repo-doc .repo-language-disclosure > summary::after { flex:0 0 auto; }
+.repo-doc .repo-language-disclosure > .repo-language-content { padding:12px 16px 16px!important; }
 .repo-doc .repo-project-references { margin-top:clamp(2rem,5vw,4rem)!important; }
 .repo-doc .repo-reference-list { display:grid!important; grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))!important; gap:.75rem!important; margin:1.25rem 0 0!important; padding:0!important; list-style:none!important; }
 .repo-doc .repo-reference-list li { display:grid!important; gap:.25rem!important; padding:1rem!important; border:1px solid var(--line)!important; border-radius:6px!important; background:var(--panel2)!important; }
@@ -280,7 +286,9 @@ html.dark .repo-directory .repo-kind--archived {
   .repo-doc .repo-shell-layout { grid-template-columns:minmax(0,1fr)!important; }
   .repo-doc .repo-sidenav { position:static!important; display:flex!important; overflow-x:auto!important; margin:0 0 1.5rem!important; padding:.6rem 0!important; }
   .repo-doc .repo-sidenav-label { display:none!important; }
-  .repo-doc .repo-sidenav a { flex:0 0 auto!important; padding:.4rem .75rem!important; border:0!important; border-right:1px solid var(--line)!important; }
+  .repo-doc .repo-sidenav { flex-wrap:wrap!important; gap:.45rem!important; overflow:visible!important; }
+  .repo-doc .repo-sidenav a { flex:0 0 auto!important; min-height:2.25rem!important; padding:.35rem .8rem!important; border:1px solid var(--line)!important; border-radius:999px!important; }
+  .repo-doc .repo-sidenav a.active { border-color:var(--accent)!important; background:color-mix(in srgb, var(--accent) 10%, transparent)!important; }
   .repo-doc .repo-sidenav a::after { display:none!important; }
   .repo-doc .repo-doc-title { max-width:17ch!important; }
 }

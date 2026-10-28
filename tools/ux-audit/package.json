@@ -1,0 +1,18 @@
+{
+  "name": "cv-ux-audit",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Playwright UX audit for CV hero + Hugo project pages",
+  "scripts": {
+    "preflight": "node scripts/preflight.mjs",
+    "capture": "node scripts/capture.mjs",
+    "test:smoke": "playwright test tests/smoke.spec.ts",
+    "test:a11y": "playwright test tests/a11y.spec.ts",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.51.0"
+  }
+}

@@ -27,11 +27,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
   {{- $tokens := resources.Get "design-tokens.css" -}}
   {{- $main := resources.Get "main.css" -}}
+  {{- if .Params.repository_note -}}
+    {{- /* The theme boosts Tailwind's reset to two-ID specificity, so it zeroes the padding, margin and
+           borders that repository-notes.css sets with plain classes. Project notes get the reset at
+           normal specificity; other pages keep the theme bundle unchanged. */ -}}
+    {{- $boosted := `*:not(#\#):not(#\#), :not(#\#):not(#\#)::after, :not(#\#):not(#\#)::before, :not(#\#):not(#\#)::backdrop, :not(#\#):not(#\#)::file-selector-button {` -}}
+    {{- if not (strings.Contains $main.Content $boosted) -}}{{- errorf "head.html: theme reset selector changed; update the project-note override" -}}{{- end -}}
+    {{- $main = replace $main.Content $boosted "*, ::after, ::before, ::backdrop, ::file-selector-button {" | resources.FromString "main-notes.css" -}}
+  {{- end -}}
   <!---->
   {{- $custom := resources.Get "custom.css" -}}
   <!---->
   {{- $editorial := resources.Get "editorial.css" -}}
-  {{- $css := slice $tokens $main $custom $editorial | resources.Concat "main.css" | minify | fingerprint -}}
+  {{- $css := slice $tokens $main $custom $editorial | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
   <link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   {{- if eq .Section "projects" -}}

@@ -196,3 +196,20 @@ def test_context_diagram_puts_callers_left_and_dependencies_right():
     assert 'c0(["HTTP client"])' in en and "c0 --> sys" in en
     assert 'd1[("SQLite")]' in en
     assert "Image Docker" in fr
+
+
+def test_gitdiagram_shapes_lose_their_brackets():
+    analysis = dict(
+        ANALYSIS,
+        gitdiagram={
+            "status": "available",
+            "url": "https://gitdiagram.com/o/r",
+            "mermaid": (
+                "flowchart TD\n"
+                'node_model["User model"]\nnode_db[("User persistence")]\nnode_ui(["Login page"])\n'
+                'node_ui -->|"submits"| node_model\nnode_model -->|"persists"| node_db\n'
+            ),
+        },
+    )
+    flow = dossier.parse_gitdiagram(analysis, [])
+    assert [(s["from"], s["to"]) for s in flow["steps"]] == [("Login page", "User model"), ("User model", "User persistence")]

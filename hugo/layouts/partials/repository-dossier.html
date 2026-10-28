@@ -57,7 +57,7 @@
     {{ end }}
     {{ with $d.modules.items }}
     <div class="tablewrap">
-      <table class="repo-permission-table">
+      <table class="repo-permission-table repo-modules-table">
         <caption class="sr-only">{{ if $fr }}Modules et couche principale{{ else }}Modules and their main layer{{ end }}</caption>
         <thead><tr><th scope="col">Module</th><th scope="col">{{ if $fr }}Couche{{ else }}Layer{{ end }}</th><th scope="col">{{ if $fr }}Fichiers{{ else }}Files{{ end }}</th><th scope="col">Types</th><th scope="col">Extensions</th></tr></thead>
         <tbody>
@@ -135,7 +135,7 @@
     {{ end }}
     {{ with $pub.entry_points }}
     <h4>{{ if $fr }}Points d’entrée{{ else }}Entry points{{ end }}</h4>
-    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .name }}</code> <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ if ne .name .target }} <code>{{ .target }}</code>{{ end }} · {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
+    <ul class="repo-file-list compact">{{ range . }}<li>{{ if eq .kind "entry file" }}{{ partial "repository-evidence.html" . }} <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ else }}<code>{{ .name }}</code> <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ if ne .name .target }} <code>{{ .target }}</code>{{ end }} · {{ partial "repository-evidence.html" . }}{{ end }}</li>{{ end }}</ul>
     {{ end }}
     {{ with $pub.exports }}
     <h4>{{ if $fr }}Exports du paquet{{ else }}Package exports{{ end }} (<code>__all__</code>)</h4>

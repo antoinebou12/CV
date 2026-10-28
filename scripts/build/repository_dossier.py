@@ -537,7 +537,8 @@ def parse_gitdiagram(analysis, paths):
     for path in paths:
         by_name.setdefault(PurePosixPath(path).name, []).append(path)
     nodes, groups, edges, group = {}, [], [], None
-    node_re = re.compile(r'^\s*(\w+)\s*(?:\[\[?|\(\(?|\{\{?|\[/|>)"?(.*?)"?(?:\]\]?|\)\)?|\}\}?|/\])\s*$')
+    # Mermaid shapes: [rect] [[subroutine]] [(cylinder)] ([stadium]) ((circle)) {decision} {{hexagon}} [/slant/] >flag]
+    node_re = re.compile(r'^\s*(\w+)\s*(?:\[\(|\(\[|\[\[?|\(\(?|\{\{?|\[/|>)"?(.*?)"?(?:\)\]|\]\)|\]\]?|\)\)?|\}\}?|/\])\s*$')
     edge_re = re.compile(r'^\s*(\w+)\s*(-\.->|-->|==>|---|-.-)\s*(?:\|"?(.*?)"?\|\s*)?(\w+)\s*$')
     for raw in source.splitlines():
         sub = re.match(r'^\s*subgraph\s+(\w+)\s*\["?(.*?)"?\]', raw)

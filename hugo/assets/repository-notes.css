@@ -1985,7 +1985,8 @@ html:not(.dark) .diagram-interactive .post-diagram svg text {
   .repo-api-guide,
   .repo-runtime { padding: 1rem !important; border-radius: 12px; }
   .repo-source-markdown { padding: .85rem; }
-  .repo-breadcrumbs [aria-current="page"] { display: none; }
+  .repo-breadcrumbs [aria-current="page"],
+  .repo-breadcrumbs > span[aria-hidden="true"] { display: none; }
 }
 
 /* Technical dossier: per-project sections derived by scripts/build/repository_dossier.py */
@@ -2050,3 +2051,79 @@ html:not(.dark) .diagram-interactive .post-diagram svg text {
 .post-diagram.uml-diagram svg { background: transparent; }
 .dark .post-diagram.uml-diagram svg,
 .dark .repo-uml img { filter: invert(1) hue-rotate(180deg); }
+
+/* Tailwind Typography wraps inline code in literal backticks; notes already style code as chips. */
+.repo-note code::before,
+.repo-note code::after { content: none; }
+
+/* The Typography plugin's rules carry four-ID boosts (:not(#\#) x4); these overrides need five to win. */
+.repo-note code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::before,
+.repo-note code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::after { content: none; }
+.repo-note :is(.repo-permission-table, .tablewrap table) :is(th, td):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+  padding: .6rem .75rem;
+}
+.repo-note .tablewrap table:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { width: 100%; margin: 0; }
+
+/* Framed disclosures keep their summaries padded; give their bodies the same inset. */
+.repo-note :is(.repo-structure-details, .repo-analysis-coverage, .repo-uml-details, .repo-dossier .repo-diagram-details) > :not(summary) {
+  margin-inline: 1rem;
+}
+.repo-note :is(.repo-structure-details, .repo-analysis-coverage, .repo-uml-details, .repo-dossier .repo-diagram-details) > :not(summary):last-child {
+  margin-bottom: 1rem;
+}
+.repo-note .repo-structure-details > summary,
+.repo-note .repo-analysis-coverage > summary { padding: .75rem 1rem; }
+.repo-note details.repo-guide-chapter > :not(summary) { margin-inline: 1rem; }
+
+/* Link badges: repository links, source references and file:line evidence. */
+.repo-note .repo-link-badges { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.repo-note :is(.repo-link-badge, .repo-reference-list a, .repo-evidence-link):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  max-width: 100%;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.repo-note :is(.repo-link-badge, .repo-reference-list a):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+  min-height: 2.25rem;
+  padding: .3rem .8rem;
+  font-size: .85rem;
+}
+.repo-note .repo-evidence-link:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { padding: .05rem .5rem; font-size: .8rem; }
+.repo-note .repo-evidence-link code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { background: none; padding: 0; color: inherit; font-size: inherit; }
+.repo-note :is(.repo-link-badge, .repo-reference-list a, .repo-evidence-link):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):is(:hover, :focus-visible) {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+}
+
+/* Captions and task lists inside any framed disclosure share the summary's inset. */
+.repo-note .repo-diagram-details > :is(p, .repo-evidence-label),
+.repo-note .repo-manifest-tasks > :not(summary):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin-inline: 1rem; }
+.repo-note .repo-manifest-tasks > summary { padding: .75rem 1rem; }
+.repo-note .repo-manifest-tasks > :not(summary):last-child { margin-bottom: 1rem; }
+@media (max-width: 760px) {
+  /* Deployment and API tables scroll inside their section instead of spilling past it. */
+  .repo-note :is(.repo-runtime, .repo-api-guide) table { display: block; max-width: 100%; overflow-x: auto; }
+}
+@media (max-width: 600px) {
+  .repo-note .repo-modules-table :is(th, td):nth-child(5) { display: none; }
+}
+/* The copy script adds an absolutely positioned button to every note <pre>. */
+.repo-note pre { position: relative; }
+/* Typography adds top margin to <dt> and indents <dd>; definition cards set their own rhythm. */
+.repo-note .repo-deflist dt:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin-top: 0; }
+.repo-note .repo-deflist dd:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { padding-inline-start: 0; }
+/* Inside .tablewrap (which scrolls) the table stays a real table so rows span the frame. */
+.repo-note .tablewrap .repo-permission-table:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { display: table; overflow: visible; }
+/* UML SVGs keep PlantUML's dark ink; the Mermaid label colour would be inverted twice in dark mode. */
+.diagram-interactive .post-diagram.uml-diagram svg text,
+html.dark .diagram-interactive .post-diagram.uml-diagram svg text { fill: #192a3c !important; }
+/* Note headings carry an !important margin, so the manifest heading is inset with padding. */
+.repo-note .repo-manifest-tasks > h3 { padding-inline: 1rem; }

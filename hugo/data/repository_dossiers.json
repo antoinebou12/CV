@@ -1885,7 +1885,10 @@
               },
               {
                 "id": "node_pairing",
-                "label": "(\"Pair records"
+                "label": "Pair records",
+                "file": "pair_record.cpp",
+                "url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/system/pair_record.cpp",
+                "path": "src/system/pair_record.cpp"
               },
               {
                 "id": "node_gamestream",
@@ -2004,11 +2007,17 @@
             "nodes": [
               {
                 "id": "node_config",
-                "label": "(\"Configuration"
+                "label": "Configuration",
+                "file": "config.cpp",
+                "url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/config.cpp",
+                "path": "src/config.cpp"
               },
               {
                 "id": "node_appcache",
-                "label": "(\"App list cache"
+                "label": "App list cache",
+                "file": "app_list_cache.cpp",
+                "url": "https://github.com/antoinebou12/Artemis-N3DS/blob/c5eb0205ba4eb00f4fff96097d987b3267a7be08/src/app_list_cache.cpp",
+                "path": "src/app_list_cache.cpp"
               },
               {
                 "id": "node_profiles",
@@ -2019,7 +2028,7 @@
               },
               {
                 "id": "node_telemetry",
-                "label": "(\"Stream telemetry\")"
+                "label": "Stream telemetry"
               },
               {
                 "id": "node_benchmark",
@@ -2049,7 +2058,7 @@
           },
           {
             "from": "3DS user",
-            "to": "(\"Stream telemetry\")",
+            "to": "Stream telemetry",
             "label": "views or saves metrics",
             "async": false
           },
@@ -2067,7 +2076,7 @@
           },
           {
             "from": "Application flow",
-            "to": "(\"Pair records",
+            "to": "Pair records",
             "label": "pairs host",
             "async": false
           },
@@ -2085,7 +2094,7 @@
           },
           {
             "from": "Application flow",
-            "to": "(\"App list cache",
+            "to": "App list cache",
             "label": "lists apps",
             "async": false
           },
@@ -2097,7 +2106,7 @@
           },
           {
             "from": "Application flow",
-            "to": "(\"Configuration",
+            "to": "Configuration",
             "label": "loads settings",
             "async": false
           },
@@ -2121,7 +2130,7 @@
           },
           {
             "from": "Application flow",
-            "to": "(\"Stream telemetry\")",
+            "to": "Stream telemetry",
             "label": "uses telemetry store",
             "async": false
           },
@@ -2151,7 +2160,7 @@
           },
           {
             "from": "Host discovery",
-            "to": "(\"Pair records",
+            "to": "Pair records",
             "label": "uses records",
             "async": false
           },
@@ -2178,7 +2187,7 @@
         "entry_points": [
           "3DS user"
         ],
-        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as 3DS user\n  participant P1 as Application flow\n  participant P2 as In-stream helper hub\n  participant P3 as Stream connection\n  participant P4 as ('Stream telemetry')\n  participant P5 as Performance metrics\n  participant P6 as Host discovery\n  participant P7 as ('Pair records\n  participant P8 as GameStream client\n  participant P9 as Console menus\n  participant P10 as ('App list cache\n  participant P11 as ('Configuration\n  participant P12 as Stream profiles\n  participant P13 as Console input\n  participant P14 as Message dispatcher\n  P0->>P1: uses\n  P0->>P2: opens helpers\n  P0->>P3: chooses stream\n  P0->>P4: views or saves metrics\n  P0->>P5: views performance\n  P1->>P6: finds hosts\n  P1->>P7: pairs host\n  P1--)P8: manages host\n  P1->>P9: shows menus\n  P1->>P10: lists apps\n  P1->>P3: starts session\n  P1->>P11: loads settings\n  P1->>P12: selects profile\n  P1->>P13: handles controls\n  P1->>P14: dispatches events\n  P1->>P4: uses telemetry store\n"
+        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as 3DS user\n  participant P1 as Application flow\n  participant P2 as In-stream helper hub\n  participant P3 as Stream connection\n  participant P4 as Stream telemetry\n  participant P5 as Performance metrics\n  participant P6 as Host discovery\n  participant P7 as Pair records\n  participant P8 as GameStream client\n  participant P9 as Console menus\n  participant P10 as App list cache\n  participant P11 as Configuration\n  participant P12 as Stream profiles\n  participant P13 as Console input\n  participant P14 as Message dispatcher\n  P0->>P1: uses\n  P0->>P2: opens helpers\n  P0->>P3: chooses stream\n  P0->>P4: views or saves metrics\n  P0->>P5: views performance\n  P1->>P6: finds hosts\n  P1->>P7: pairs host\n  P1--)P8: manages host\n  P1->>P9: shows menus\n  P1->>P10: lists apps\n  P1->>P3: starts session\n  P1->>P11: loads settings\n  P1->>P12: selects profile\n  P1->>P13: handles controls\n  P1->>P14: dispatches events\n  P1->>P4: uses telemetry store\n"
       },
       "public": {
         "routes": [],
@@ -6050,7 +6059,10 @@
               },
               {
                 "id": "node_user_store",
-                "label": "(\"User persistence"
+                "label": "User persistence",
+                "file": "User.php",
+                "url": "https://github.com/antoinebou12/AuthLaravel/blob/2ec4e5d4367341fa789c0027d17ecd43ba80cf01/AuthLaravel/app/Models/User.php",
+                "path": "AuthLaravel/app/Models/User.php"
               }
             ]
           },
@@ -6219,7 +6231,7 @@
           },
           {
             "from": "User identity model",
-            "to": "(\"User persistence",
+            "to": "User persistence",
             "label": "persists records",
             "async": true
           },
@@ -12833,7 +12845,10 @@
               },
               {
                 "id": "node_database",
-                "label": "(\"PostgreSQL Access"
+                "label": "PostgreSQL Access",
+                "file": "db.rs",
+                "url": "https://github.com/antoinebou12/DasherControl/blob/d5e4b5af44ce8a19025fd41569978f9a3b1b910d/src/db.rs",
+                "path": "src/db.rs"
               },
               {
                 "id": "node_schema",
@@ -12941,7 +12956,7 @@
           },
           {
             "from": "Tenant Endpoints",
-            "to": "(\"PostgreSQL Access",
+            "to": "PostgreSQL Access",
             "label": "uses connection",
             "async": false
           },
@@ -12959,7 +12974,7 @@
           },
           {
             "from": "Workspace Endpoints",
-            "to": "(\"PostgreSQL Access",
+            "to": "PostgreSQL Access",
             "label": "uses connection",
             "async": false
           },
@@ -13041,7 +13056,7 @@
           "Rocket Server",
           "Dashboard User"
         ],
-        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as Rocket Server\n  participant P1 as Tenant Endpoints\n  participant P2 as Workspace Endpoints\n  participant P3 as Container Endpoints\n  participant P4 as Terminal WebSocket\n  participant P5 as Dashboard User\n  participant P6 as Dashboard Shell\n  participant P7 as Canvas Applet\n  participant P8 as Tenant Accounts\n  participant P9 as Token Validation\n  participant P10 as ('PostgreSQL Access\n  participant P11 as Workspace Records\n  participant P12 as Docker Engine\n  participant P13 as Workspace Grid\n  participant P14 as Database Schema\n  P0->>P1: mounts routes\n  P0->>P2: mounts routes\n  P0->>P3: mounts routes\n  P0->>P4: references\n  P5->>P6: uses\n  P5--)P7: may use\n  P1->>P8: authenticates\n  P1->>P9: issues tokens\n  P1->>P10: uses connection\n  P2->>P11: queries\n  P2->>P9: validates\n  P2->>P10: uses connection\n  P3->>P12: controls\n  P6->>P13: renders\n  P8->>P14: queries\n  P9->>P8: checks session\n"
+        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as Rocket Server\n  participant P1 as Tenant Endpoints\n  participant P2 as Workspace Endpoints\n  participant P3 as Container Endpoints\n  participant P4 as Terminal WebSocket\n  participant P5 as Dashboard User\n  participant P6 as Dashboard Shell\n  participant P7 as Canvas Applet\n  participant P8 as Tenant Accounts\n  participant P9 as Token Validation\n  participant P10 as PostgreSQL Access\n  participant P11 as Workspace Records\n  participant P12 as Docker Engine\n  participant P13 as Workspace Grid\n  participant P14 as Database Schema\n  P0->>P1: mounts routes\n  P0->>P2: mounts routes\n  P0->>P3: mounts routes\n  P0->>P4: references\n  P5->>P6: uses\n  P5--)P7: may use\n  P1->>P8: authenticates\n  P1->>P9: issues tokens\n  P1->>P10: uses connection\n  P2->>P11: queries\n  P2->>P9: validates\n  P2->>P10: uses connection\n  P3->>P12: controls\n  P6->>P13: renders\n  P8->>P14: queries\n  P9->>P8: checks session\n"
       },
       "public": {
         "routes": [
@@ -14969,7 +14984,8 @@
               },
               {
                 "id": "node_storage",
-                "label": "(\"Matrix Storage"
+                "label": "Matrix Storage",
+                "file": "dense_storage.rs"
               },
               {
                 "id": "node_operators",
@@ -15129,7 +15145,7 @@
           },
           {
             "from": "Public API",
-            "to": "(\"Matrix Storage",
+            "to": "Matrix Storage",
             "label": "exports",
             "async": false
           },
@@ -15194,7 +15210,7 @@
           "GPU Pipelines",
           "Application"
         ],
-        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as CPU Dispatch\n  participant P1 as Parallel CPU\n  participant P2 as Sequential CPU\n  participant P3 as SIMD CPU\n  participant P4 as GPU Pipelines\n  participant P5 as GPU Shaders\n  participant P6 as Application\n  participant P7 as Public API\n  participant P8 as Matrices\n  participant P9 as Vectors\n  participant P10 as ('Matrix Storage\n  participant P11 as Operators\n  participant P12 as Linear Solvers\n  participant P13 as Decomposition\n  participant P14 as Optimization\n  participant P15 as Graph Algorithms\n  participant P16 as 3D Math\n  participant P17 as Transforms\n  participant P18 as ML and Statistics\n  P0->>P1: dispatches\n  P0->>P2: dispatches\n  P0->>P3: dispatches\n  P4->>P5: uses shaders\n  P6->>P7: uses\n  P7->>P8: exports\n  P7->>P9: exports\n  P7->>P10: exports\n  P7->>P11: exposes\n  P7->>P12: exports\n  P7->>P13: exports\n  P7->>P14: exports\n  P7->>P15: exports\n  P7->>P16: exports\n  P7->>P17: exports\n  P7->>P18: exports\n"
+        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as CPU Dispatch\n  participant P1 as Parallel CPU\n  participant P2 as Sequential CPU\n  participant P3 as SIMD CPU\n  participant P4 as GPU Pipelines\n  participant P5 as GPU Shaders\n  participant P6 as Application\n  participant P7 as Public API\n  participant P8 as Matrices\n  participant P9 as Vectors\n  participant P10 as Matrix Storage\n  participant P11 as Operators\n  participant P12 as Linear Solvers\n  participant P13 as Decomposition\n  participant P14 as Optimization\n  participant P15 as Graph Algorithms\n  participant P16 as 3D Math\n  participant P17 as Transforms\n  participant P18 as ML and Statistics\n  P0->>P1: dispatches\n  P0->>P2: dispatches\n  P0->>P3: dispatches\n  P4->>P5: uses shaders\n  P6->>P7: uses\n  P7->>P8: exports\n  P7->>P9: exports\n  P7->>P10: exports\n  P7->>P11: exposes\n  P7->>P12: exports\n  P7->>P13: exports\n  P7->>P14: exports\n  P7->>P15: exports\n  P7->>P16: exports\n  P7->>P17: exports\n  P7->>P18: exports\n"
       },
       "public": {
         "routes": [
@@ -18220,7 +18236,10 @@
               },
               {
                 "id": "node_credentials",
-                "label": "(\"Wi-Fi credentials"
+                "label": "Wi-Fi credentials",
+                "file": "wifi.cpp",
+                "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/src/wifi.cpp",
+                "path": "src/wifi.cpp"
               },
               {
                 "id": "node_timer_display",
@@ -18310,7 +18329,7 @@
               },
               {
                 "id": "node_preferences",
-                "label": "(\"App preferences\")"
+                "label": "App preferences"
               }
             ]
           }
@@ -18384,7 +18403,7 @@
           },
           {
             "from": "Wi-Fi setup",
-            "to": "(\"Wi-Fi credentials",
+            "to": "Wi-Fi credentials",
             "label": "reads and writes",
             "async": false
           },
@@ -18420,7 +18439,7 @@
           },
           {
             "from": "HTTP client setup",
-            "to": "(\"App preferences\")",
+            "to": "App preferences",
             "label": "initializes preferences",
             "async": false
           },
@@ -18450,7 +18469,7 @@
           "Wi-Fi onboarding",
           "Settings"
         ],
-        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as Firmware startup\n  participant P1 as Wi-Fi setup\n  participant P2 as Timer display\n  participant P3 as HTTP and WebSocket server\n  participant P4 as Timer controls\n  participant P5 as HTTP client setup\n  participant P6 as WebSocket client\n  participant P7 as Timer stop receiver\n  participant P8 as Wi-Fi onboarding\n  participant P9 as Settings\n  participant P10 as Settings list adapter\n  participant P11 as User\n  participant P12 as Browser\n  participant P13 as Android navigation\n  participant P14 as ('Wi-Fi credentials\n  participant P15 as 7-segment display\n  participant P16 as Browser interface\n  P0->>P1: loads or configures\n  P0->>P2: starts display\n  P0->>P3: starts server\n  P4->>P5: requests timer actions\n  P4->>P6: opens timer socket\n  P4->>P7: registers timer events\n  P8->>P5: sends credentials\n  P9->>P10: uses adapter\n  P9->>P5: loads device data\n  P11->>P12: controls\n  P11--)P13: uses app\n  P1->>P14: reads and writes\n  P2->>P15: drives display\n  P3->>P1: handles Wi-Fi routes\n  P3->>P2: dispatches timer updates\n  P3->>P16: serves pages\n"
+        "sequence": "sequenceDiagram\n  autonumber\n  participant P0 as Firmware startup\n  participant P1 as Wi-Fi setup\n  participant P2 as Timer display\n  participant P3 as HTTP and WebSocket server\n  participant P4 as Timer controls\n  participant P5 as HTTP client setup\n  participant P6 as WebSocket client\n  participant P7 as Timer stop receiver\n  participant P8 as Wi-Fi onboarding\n  participant P9 as Settings\n  participant P10 as Settings list adapter\n  participant P11 as User\n  participant P12 as Browser\n  participant P13 as Android navigation\n  participant P14 as Wi-Fi credentials\n  participant P15 as 7-segment display\n  participant P16 as Browser interface\n  P0->>P1: loads or configures\n  P0->>P2: starts display\n  P0->>P3: starts server\n  P4->>P5: requests timer actions\n  P4->>P6: opens timer socket\n  P4->>P7: registers timer events\n  P8->>P5: sends credentials\n  P9->>P10: uses adapter\n  P9->>P5: loads device data\n  P11->>P12: controls\n  P11--)P13: uses app\n  P1->>P14: reads and writes\n  P2->>P15: drives display\n  P3->>P1: handles Wi-Fi routes\n  P3->>P2: dispatches timer updates\n  P3->>P16: serves pages\n"
       },
       "public": {
         "routes": [],
@@ -37008,7 +37027,10 @@
               },
               {
                 "id": "node_mod_storage",
-                "label": "(\"Mod Storage"
+                "label": "Mod Storage",
+                "file": "mod_storage.cpp",
+                "url": "https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/mods/mod_storage.cpp",
+                "path": "src/pc/mods/mod_storage.cpp"
               },
               {
                 "id": "node_djui",
@@ -37195,18 +37217,18 @@
           },
           {
             "from": "Lua Mod API",
-            "to": "(\"Mod Storage",
+            "to": "Mod Storage",
             "label": "reads and writes",
             "async": false
           },
           {
-            "from": "(\"Mod Storage",
+            "from": "Mod Storage",
             "to": "Lua Mod API",
             "label": "returns values",
             "async": false
           },
           {
-            "from": "(\"Mod Storage",
+            "from": "Mod Storage",
             "to": "Game Configuration",
             "label": "uses filesystem settings",
             "async": true
