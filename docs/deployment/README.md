@@ -14,18 +14,12 @@ Deploy using Docker Compose for local or server deployment. See [Docker Deployme
 
 **Best for**: Local testing, self-hosting, containerized environments
 
-### 3. Kubernetes
-Deploy to a Kubernetes cluster for production environments. See [Kubernetes Deployment](./kubernetes.md).
-
-**Best for**: Production deployments, scalability, cloud infrastructure
-
 ## Quick Comparison
 
 | Method | Setup Complexity | Cost | Automation | Best For |
 |--------|-----------------|------|------------|----------|
 | GitHub Pages | Low | Free | Full | Public websites |
 | Docker | Medium | Low | Manual | Self-hosting |
-| Kubernetes | High | Medium-High | Full | Production |
 
 ## Prerequisites
 
@@ -33,7 +27,6 @@ Before deploying, ensure:
 - ✅ All files are committed to Git
 - ✅ GitHub Pages is enabled (for GitHub Pages deployment)
 - ✅ Docker is installed (for Docker deployment)
-- ✅ Kubernetes cluster is available (for K8s deployment)
 
 ## Deployment Workflow
 
@@ -64,13 +57,7 @@ After deployment:
 - Verify ports are not in use
 - Check Docker daemon is running
 
-### Kubernetes Deployment Issues
-- Check pod status: `kubectl get pods -n cv-stack`
-- View logs: `kubectl logs <pod-name> -n cv-stack`
-- Verify ingress is configured correctly
-
 ## Next Steps
 
 - [GitHub Pages](./github-pages.md) - Automated GitHub Pages deployment
 - [Docker](./docker.md) - Docker-based deployment
-- [Kubernetes](./kubernetes.md) - Kubernetes deployment

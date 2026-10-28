@@ -858,11 +858,17 @@ html:not(.dark) .terminal {
 }
 
 .diagram-interactive { min-width: 0; max-width: 100%; margin: 1rem 0 !important; }
-.diagram-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-bottom: .55rem !important; }
+.diagram-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: .75rem !important; margin-bottom: .55rem !important; }
 .diagram-tools button {
   min-height: 2.25rem; padding: .4rem .65rem !important; border: 1px solid var(--line) !important;
-  background: var(--panel2); color: var(--text) !important; border-radius: .3rem;
-  font: 600 .75rem/1.4 system-ui, sans-serif; cursor: pointer;
+  background: var(--panel2) !important; color: var(--text) !important; border-radius: .3rem !important;
+  font: 600 .75rem/1.4 system-ui, sans-serif !important; cursor: pointer;
+}
+.diagram-tools button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 600px) {
+  .diagram-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .diagram-tools button { min-width: 0; }
+  .diagram-tools output { grid-column: 1 / -1; text-align: end; }
 }
 .diagram-tools button:hover { border-color: var(--accent) !important; }
 .diagram-tools output { font: 400 .75rem/1.4 system-ui, sans-serif; color: var(--muted) !important; padding: .4rem !important; }
@@ -2048,6 +2054,8 @@ html:not(.dark) .diagram-interactive .post-diagram svg text {
 .repo-uml-source { margin-top: .4rem; }
 .repo-uml-source > summary { font-size: .8rem; color: var(--muted); cursor: pointer; }
 .repo-uml-source pre { max-height: 22rem; overflow: auto; font-size: .78rem; }
+/* Clear the floating Copy control even under the theme's boosted prose rules. */
+.repo-uml-source pre:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { padding-top: 3.75rem !important; }
 .post-diagram.uml-diagram svg { background: transparent; }
 .dark .post-diagram.uml-diagram svg,
 .dark .repo-uml img { filter: invert(1) hue-rotate(180deg); }

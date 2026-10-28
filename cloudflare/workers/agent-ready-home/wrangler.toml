@@ -1,0 +1,13 @@
+# Optional local deploy: npx wrangler deploy
+# Rename routes as needed; dashboard routes also work.
+name = "agent-ready-home"
+main = "worker.mjs"
+compatibility_date = "2026-04-30"
+
+[vars]
+SITE_REPO = "CV"
+
+# Uncomment after confirming zone / account in `npx wrangler whoami`:
+# [[routes]]
+# pattern = "antoineboucher.info/*"
+# zone_name = "antoineboucher.info"

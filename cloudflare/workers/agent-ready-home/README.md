@@ -7,6 +7,7 @@ This Worker sits **in front of** your static origin (GitHub Pages, R2, or anothe
 1. If `GET` or `HEAD` `/sitemap.xml` or `/robots.txt`, proxy to `/<SITE_REPO>/sitemap.xml` or `/<SITE_REPO>/robots.txt` so crawlers that request apex `/sitemap.xml` still see the GitHub Pages project-site files.
 2. If `GET /` and `Accept` includes `text/markdown`, fetch `/<SITE_REPO>/blog/agent/home.md` from the origin (same host) and respond with `Content-Type: text/markdown; charset=utf-8`.
 3. Otherwise pass the request through to the origin unchanged.
+4. On responses it returns, **force** `Content-Security-Policy` (production currently lacks CSP) and fill other security headers only when missing (`X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`). Keep values aligned with [`hugo/static/_headers`](../../../hugo/static/_headers).
 
 `SITE_REPO` must match your GitHub Pages project segment (for this repo, typically `CV`).
 

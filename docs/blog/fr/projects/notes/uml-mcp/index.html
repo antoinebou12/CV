@@ -1,0 +1,827 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>uml-mcp: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="uml-mcp : D’un appel MCP à un diagramme"><meta itemprop=description content="uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="4572"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/uml-mcp/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="uml-mcp : D’un appel MCP à un diagramme"><meta property="og:description" content="uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="uml-mcp : D’un appel MCP à un diagramme"><meta name=twitter:description content="uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/uml-mcp/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>uml-mcp : D’un appel MCP à un diagramme</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#glossary>Glossaire</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Dossier technique</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#api-contract>API</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>uml-mcp : D’un appel MCP à un diagramme</h1><p class=repo-hero-lede>uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les services de rendu et retourne les résultats avec des liens d’édition.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Application et services</span>
+<span class="repo-badge api">API</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/uml-mcp/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>108</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>Python · 90.9%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/uml-mcp><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/uml-mcp#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README
+</a><a class="btn ghost" href=https://uml-mcp.vercel.app/mcp>Point d’accès MCP hébergé</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>Python 90.9%</span><span class=repo-count>9</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="Python 90.9%. TypeScript 7.99%."><span style=width:90.9% title="Python 90.9%"></span><span style=width:7.99% title="TypeScript 7.99%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:90.9%><span>90.9%</span></span></td><td class=num>1 642 190</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>TypeScript</td><td><span class=repo-lang-bar style=--p:7.99%><span>7.99%</span></span></td><td class=num>144 367</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>Shell</td><td><span class=repo-lang-bar style=--p:0.31%><span>0.31%</span></span></td><td class=num>5 667</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>CSS</td><td><span class=repo-lang-bar style=--p:0.26%><span>0.26%</span></span></td><td class=num>4 713</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Go Template</td><td><span class=repo-lang-bar style=--p:0.23%><span>0.23%</span></span></td><td class=num>4 227</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>Makefile</td><td><span class=repo-lang-bar style=--p:0.14%><span>0.14%</span></span></td><td class=num>2 522</td></tr></tbody></table><details class=repo-language-more><summary>3 autres langages</summary><table class=repo-lang-table><tbody><tr><td>Dockerfile</td><td>0.11%</td><td class=num>1 964</td></tr><tr><td>JavaScript</td><td>0.03%</td><td class=num>587</td></tr><tr><td>HTML</td><td>0.02%</td><td class=num>422</td></tr></tbody></table></details><p class=repo-snapshot><a href=https://github.com/antoinebou12/uml-mcp>GitHub</a> · <a href=https://github.com/antoinebou12/uml-mcp#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/uml-mcp/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Serveur phare Model Context Protocol (MCP) générant PlantUML, Mermaid et Kroki directement depuis des LLMs (Claude, Cursor, ChatGPT) sans dépendance locale.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Génération interactive de diagrammes d'architecture pour le pair programming avec IA et la documentation.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Articles et retours d’expérience liés</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/fr/posts/uml-mcp/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>uml-mcp — diagrammes UML depuis le chat via MCP</h4><p>Serveur MCP open source pour diagrammes Mermaid, PlantUML et Kroki dans Cursor et ChatGPT — genèse, installation, liens vers les outils diagrammes antérieurs.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>git clone https://github.com/antoinebou12/uml-mcp.git
+cd uml-mcp
+uv sync
+uv run python server.py</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>git remote add origin https://github.com/antoinebou12/uml-mcp.git</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>tests/mcp-rig/README.md · Running</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>make mcp-rig</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>tests/mcp-rig/README.md · Running</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>uvx mcp-rig@0.1.0 run tests/mcp-rig/
+uvx mcp-rig@0.1.0 run tests/mcp-rig/ --tag smoke
+uvx mcp-rig@0.1.0 run tests/mcp-rig/generate.yaml --case &#34;batch*&#34;
+uvx mcp-rig@0.1.0 run tests/mcp-rig/ --server-logs   # show server stderr when debugging</code></pre></div></div><details class=repo-manifest-tasks><summary>Commandes déclarées dans les manifestes</summary><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/package.json><code>frontend/package.json</code></a></h3><dl class=repo-deflist><div><dt><code>dev</code></dt><dd><code>vite</code></dd></div><div><dt><code>build</code></dt><dd><code>npm run typecheck && vite build</code></dd></div><div><dt><code>typecheck</code></dt><dd><code>node node_modules/typescript-7/bin/tsc --noEmit</code></dd></div><div><dt><code>lint</code></dt><dd><code>eslint .</code></dd></div><div><dt><code>test</code></dt><dd><code>vitest run</code></dd></div></dl></details></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p class=repo-evidence-label>Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prérequis et premier essai</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/README.md#L40>Quick start</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><p>Remote (recommended) — add to your MCP client:
+Use /mcp, not the site root. Then ask: <em>“Draw a sequence diagram of a user logging in through an API gateway.”</em> or paste PlantUML / Mermaid / Kroki source.
+Repo defaults: .cursor/mcp.json · .vscode/mcp.json · .codex/config.toml.</p><div class=post-table-scroll><table><thead><tr><th>Client</th><th>Config</th><th>Guide</th></tr></thead><tbody><tr><td data-label=Client>Cursor</td><td data-label=Config>.cursor/mcp.json</td><td data-label=Guide>docs/integrations/cursor.md</td></tr><tr><td data-label=Client>VS Code / Copilot</td><td data-label=Config>.vscode/mcp.json</td><td data-label=Guide>docs/integrations/vscode_copilot.md</td></tr><tr><td data-label=Client>OpenAI Codex</td><td data-label=Config>.codex/config.toml</td><td data-label=Guide>docs/integrations/openai_codex.md</td></tr><tr><td data-label=Client>Ollama / Open WebUI</td><td data-label=Config>config/openwebui_mcp.json</td><td data-label=Guide>docs/integrations/ollama.md</td></tr><tr><td data-label=Client>Claude Desktop</td><td data-label=Config>config/claude_desktop_*.json</td><td data-label=Guide>docs/integrations/claude_desktop.md</td></tr><tr><td data-label=Client>All snippets: config/README.md</td><td data-label=Config></td><td data-label=Guide></td></tr><tr><td data-label=Client>Install locally (guided):</td><td data-label=Config></td><td data-label=Guide></td></tr><tr><td data-label=Client>Path</td><td data-label=Config>Command</td><td data-label=Guide></td></tr><tr><td data-label=Client>&mdash;</td><td data-label=Config>&mdash;</td><td data-label=Guide></td></tr><tr><td data-label=Client>Installer (needs only Python + typer + tqdm)</td><td data-label=Config>python scripts/install.py</td><td data-label=Guide></td></tr><tr><td data-label=Client>Setup wizard</td><td data-label=Config>uv tool…</td><td data-label=Guide></td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/README.md#L40>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L11>Prerequisites</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown><ul><li>Python 3.12+ (supported range is >=3.12,&lt;3.16 in pyproject.toml; CI exercises 3.12 and 3.15; Docker uses 3.15)</li><li>uv, Poetry, or pip</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L11>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L115>Lockfile and `requirements.txt`</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown>uv.lock is the runtime source of truth for CI, Vercel, and release validation. Deploy/install paths export from the lockfile at runtime.
+Keep requirements.txt updated for users that still install with pip:
+Run this after changing runtime dependencies in pyproject.toml / uv.lock, then commit the updated requirements.txt.
+Transitive pins: Some packages are pinned only in [tool.uv] override-dependencies in pyproject.toml (they are not direct Poetry deps). Dependabot is configured for the uv ecosystem so PRs target uv.lock consistently. After merging a dependency PR, re-export requirements.txt if the lockfile changed so CI’s “export matches requirements.txt” step stays green.</div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L115>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L6>Installation</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Path</th><th>Best for</th><th>Command</th></tr></thead><tbody><tr><td data-label=Path>Installer</td><td data-label="Best for">Anyone; needs only Python 3.12+, typer and tqdm</td><td data-label=Command>python scripts/install.py</td></tr><tr><td data-label=Path>Setup wizard</td><td data-label="Best for">Terminal users</td><td data-label=Command>uv tool install uml-mcp && uml-mcp setup</td></tr><tr><td data-label=Path>Web setup</td><td data-label="Best for">A guided form in the browser</td><td data-label=Command>uml-mcp setup &ndash;web</td></tr><tr><td data-label=Path>Server / Kubernetes</td><td data-label="Best for">Teams</td><td data-label=Command>Docker · Helm + SSO</td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L6>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L16>1. Quick install</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown><p>The installer picks uv (uv tool install), then pipx, then pip &ndash;user,
+shows progress and then starts the setup wizard.</p><div class=post-table-scroll><table><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td data-label=Option>&ndash;method uv|pipx|pip</td><td data-label=Meaning>Force an installer</td></tr><tr><td data-label=Option>&ndash;version 1.4.0</td><td data-label=Meaning>Pin a version</td></tr><tr><td data-label=Option>&ndash;extras otel</td><td data-label=Meaning>Optional extras (otel = OpenTelemetry)</td></tr><tr><td data-label=Option>&ndash;web</td><td data-label=Meaning>Run the browser setup form instead of the terminal wizard</td></tr><tr><td data-label=Option>&ndash;no-setup</td><td data-label=Meaning>Install only</td></tr><tr><td data-label=Option>&ndash;dry-run</td><td data-label=Meaning>Print the commands, change nothing</td></tr><tr><td data-label=Option>Prefer doing it yourself? uv tool install uml-mcp (or pipx install uml-mcp).</td><td data-label=Meaning></td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L16>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Configuration et utilisation</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L16>Development setup</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown><ol><li>Fork and clone the repo:</li><li>Create a virtual environment and install dependencies (including dev):
+With uv (recommended):
+With Poetry:
+With pip:</li><li>(Optional) Install pre-commit hooks so lint/format run before each commit:</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L16>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L1>MCP Client Configuration Examples</a></h3><p class=repo-excerpt-file><code>config/README.md</code></p><div class=repo-source-markdown><h4></h4></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L1>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L22>Client matrix</a></h3><p class=repo-excerpt-file><code>config/README.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Client</th><th>Hosted HTTP</th><th>Local stdio</th><th>Guide</th></tr></thead><tbody><tr><td data-label=Client>Cursor</td><td data-label="Hosted HTTP">cursor_http.json · .cursor/mcp.json</td><td data-label="Local stdio">cursor_config.json</td><td data-label=Guide>docs/integrations/cursor.md</td></tr><tr><td data-label=Client>Claude Desktop</td><td data-label="Hosted HTTP">claude_desktop_http.json</td><td data-label="Local stdio">claude_desktop_config.json</td><td data-label=Guide>docs/integrations/claude_desktop.md</td></tr><tr><td data-label=Client>VS Code / GitHub Copilot</td><td data-label="Hosted HTTP">vscode_mcp.json · .vscode/mcp.json</td><td data-label="Local stdio">vscode_mcp_stdio.json</td><td data-label=Guide>docs/integrations/vscode_copilot.md</td></tr><tr><td data-label=Client>OpenAI Codex</td><td data-label="Hosted HTTP">codex_config.toml · .codex/config.toml</td><td data-label="Local stdio">codex_stdio.toml</td><td data-label=Guide>docs/integrations/openai_codex.md</td></tr><tr><td data-label=Client>Open WebUI + Ollama</td><td data-label="Hosted HTTP">openwebui_mcp.json</td><td data-label="Local stdio">Optional via mcpo</td><td data-label=Guide>docs/integrations/ollama.md</td></tr><tr><td data-label=Client>Continue + Ollama</td><td data-label="Hosted HTTP">continue_config.yaml</td><td data-label="Local stdio">See comments in that file</td><td data-label=Guide>docs/integrations/ollama.md</td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L22>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L52>OpenAI Codex (CLI + IDE)</a></h3><p class=repo-excerpt-file><code>config/README.md</code></p><div class=repo-source-markdown><ul><li>User: ~/.codex/config.toml</li><li>Project: .codex/config.toml (loads only when the project is trusted)</li><li>Verify: codex mcp list or /mcp in a session</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L52>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L36>2. Setup wizard (`uml-mcp setup`)</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown><p>The wizard asks for:</p><ul><li>a profile (local, docker or enterprise)</li><li>which features to turn on (each one is explained, with whether it applies live or needs a restart)</li><li>a Kroki server</li><li>which MCP clients to register
+It then runs, with a progress bar:</li></ul><ol><li>validate the configuration</li><li>write ~/.config/uml-mcp/config.yaml (mode 0600, with a backup of any previous file)</li><li>register the clients</li><li>run a health check<div class=post-table-scroll><table><thead><tr><th>Feature key</th><th>What it does</th><th>Applies</th></tr></thead><tbody><tr><td data-label="Feature key">memory_only</td><td data-label="What it does">Keep diagrams in memory; return URLs/bytes, no files</td><td data-label=Applies>restart</td></tr><tr><td data-label="Feature key">diagram_fallback</td><td data-label="What it does">Retry with PlantUML server or mermaid.ink when Kroki fails</td><td data-label=Applies>restart</td></tr><tr><td data-label="Feature key">audit</td><td data-label="What it does">MXCP-style audit trail of every call (redacted)</td><td data-label=Applies>live</td></tr><tr><td data-label="Feature key">json_logs</td><td data-label="What it does">One JSON object per log line</td><td data-label=Applies>live</td></tr><tr><td data-label="Feature key">metrics_endpoint</td><td data-label="What it does">Prometheus /metrics</td><td data-label=Applies>restart</td></tr><tr><td data-label="Feature key">otel</td><td data-label="What it does">OpenTelemetry traces (needs uml-mcp[otel])</td><td data-label=Applies>live</td></tr><tr><td data-label="Feature key">rate_limit</td><td data-label="What it does">…</td><td data-label=Applies></td></tr></tbody></table></div></li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L36>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Exploitation et dépannage</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L145>Uninstall</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown>Then remove the uml-mcp entry from your client&rsquo;s MCP config. A backup of the
+previous config is kept next to it.</div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L145>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L155>Troubleshooting</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Symptom</th><th>Fix</th></tr></thead><tbody><tr><td data-label=Symptom>uml-mcp: command not found</td><td data-label=Fix>Open a new terminal, or run uv tool update-shell or pipx ensurepath</td></tr><tr><td data-label=Symptom>Setup page says &ldquo;Enter the setup token&rdquo;</td><td data-label=Fix>Use the token printed by uml-mcp admin, or set UML_MCP_ADMIN_TOKEN</td></tr><tr><td data-label=Symptom>Diagrams fail to render</td><td data-label=Fix>Check rendering.kroki_server reachability; enable diagram_fallback</td></tr><tr><td data-label=Symptom>Settings are read-only</td><td data-label=Fix>The file is mounted read-only (e.g. Kubernetes); use Download YAML and apply it through your deployment</td></tr><tr><td data-label=Symptom>uml-mcp lint reports CFG010</td><td data-label=Fix>pip install &ldquo;uml-mcp[otel]&rdquo; or turn OpenTelemetry off</td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L155>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/configuration.md#L57>Health check (HTTP deployment)</a></h3><p class=repo-excerpt-file><code>docs/configuration.md</code></p><div class=repo-source-markdown><p>When running the FastAPI app (app.py) for HTTP deployment (e.g. Vercel, Docker, uvicorn), a health endpoint is available:</p><ul><li>Endpoint: GET /health (no authentication required)</li><li>Response: {&ldquo;status&rdquo;: &ldquo;healthy&rdquo;, &ldquo;modules_available&rdquo;: true|false}</li><li>status: Always &ldquo;healthy&rdquo; when the server is up.</li><li>modules_available: Whether diagram backends (Kroki, PlantUML, etc.) could be loaded.
+Use /health for load balancers, Kubernetes or Docker liveness/readiness probes, Vercel checks, and similar monitoring whenever you run the FastAPI app (app.py).
+When running the MCP server via fastmcp run with HTTP transport only (no FastAPI app), the standalone server does not expose /health unless you add a custom route; use the FastAPI app if you need the health endpoint.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/configuration.md#L57>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/admin/install.md#L125>Troubleshooting</a></h3><p class=repo-excerpt-file><code>docs/admin/install.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Symptom</th><th>Cause and fix</th></tr></thead><tbody><tr><td data-label=Symptom>404 on /admin of a server</td><td data-label="Cause and fix">Auth is off and admin.allow_local_without_auth is not true, or the request didn&rsquo;t come from loopback</td></tr><tr><td data-label=Symptom>Buttons are disabled, &ldquo;Enter the setup token&rdquo;</td><td data-label="Cause and fix">Use the link printed by uml-mcp admin, or paste the token into the key icon in the top bar</td></tr><tr><td data-label=Symptom>docker is not installed / the Docker daemon is not running</td><td data-label="Cause and fix">Install Docker Desktop or Engine, start it, then run uml-mcp kroki up again</td></tr><tr><td data-label=Symptom>port is already allocated</td><td data-label="Cause and fix">Another service uses 8001: uml-mcp kroki up &ndash;port 8002 &ndash;use</td></tr><tr><td data-label=Symptom>A companion shows HTTP 500 right after start</td><td data-label="Cause and fix">It is still starting. Run uml-mcp kroki status again after a few seconds; up already waits up to 5 minutes</td></tr><tr><td data-label=Symptom>KROKI_SERVER is set by the environment (409)</td><td data-label="Cause and fix">An environment variable wins over uml-mcp.yaml. Change or unset it where the server is started</td></tr><tr><td data-label=Symptom>Rendering works in the playground but…</td><td data-label="Cause and fix"></td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/admin/install.md#L125>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Développement et contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L1>Contributing to UML-MCP</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown>Thank you for considering contributing. This document explains how to set up your environment, run tests, and submit changes.</div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L1>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L62>Running tests</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown>With coverage:
+Black-box tests of the stdio server (real transport, YAML suites, no network) run with
+MCP Rig:
+See tests/mcp-rig/README.md for the suites, tags and how to
+update snapshots.</div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L62>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L120>Development install (from a clone)</a></h3><p class=repo-excerpt-file><code>docs/installation.md</code></p><div class=repo-source-markdown>To work on the console, see Frontend. Poetry
+(poetry install &ndash;with dev) and pip (pip install -e .) also work.</div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L120>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/developers/contributing.md#L6>Contributing</a></h3><p class=repo-excerpt-file><code>docs/developers/contributing.md</code></p><div class=repo-source-markdown><p>Thanks for your interest in improving UML-MCP. The full guidelines live in the repo root; this page summarises the most useful entry points.</p><div class=post-table-scroll><table><thead><tr><th>Document</th><th>Why</th></tr></thead><tbody><tr><td data-label=Document>CONTRIBUTING.md</td><td data-label=Why>Local setup, branching model, commit and PR conventions.</td></tr><tr><td data-label=Document>CODE_OF_CONDUCT.md</td><td data-label=Why>Community expectations.</td></tr><tr><td data-label=Document>SECURITY.md</td><td data-label=Why>How to responsibly report a security issue.</td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/developers/contributing.md#L6>Lire les instructions complètes ↗</a></section></details></div><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md><code>CONTRIBUTING.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.plan/README.md><code>.plan/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md><code>config/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/README.md><code>examples/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md><code>docs/installation.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/configuration.md><code>docs/configuration.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation-local.md><code>docs/installation-local.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/admin/install.md><code>docs/admin/install.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tests/mcp-rig/README.md><code>tests/mcp-rig/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/enterprise/README.md><code>docs/enterprise/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/developers/contributing.md><code>docs/developers/contributing.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/enterprise/configuration.md><code>docs/enterprise/configuration.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/tutorials/getting-started.md><code>docs/tutorials/getting-started.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/enterprise/troubleshooting.md><code>docs/enterprise/troubleshooting.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/README.md><code>examples/plugins/uml-mcp-plugin-d3/README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-hello/README.md><code>examples/plugins/uml-mcp-plugin-hello/README.md</code></a></li></ul><p class=repo-evidence-label>17 documents lus parmi 17 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Un point d’entrée sans sortie parasite</dt><dd>server.py délègue le démarrage à mcp_core.core.server. L’objet mcp est résolu à la demande par __getattr__, ce qui évite de construire le serveur ou d’écrire sur stdout lors d’un simple import. C’est important quand stdout transporte le protocole stdio.</dd></div><div class=repo-feature><dt>Transport et rendu</dt><dd>Le serveur propose des parcours stdio et HTTP. Le cœur regroupe l’enregistrement des outils, la configuration et l’intégration Kroki. Le rendu reste une opération en aval: la couche MCP décrit les outils et transporte leurs entrées et résultats.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Ouvrez un composant pour suivre ses connexions, ou explorez le diagramme complet.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>Composants du système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Client MCP</span></summary><ul class=repo-component-connections><li>Vers <a href=#component-1>Transport stdio ou HTTP</a></li><li>Depuis <a href=#component-4>Résultat et liens</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Transport stdio ou HTTP</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-0>Client MCP</a></li><li>Vers <a href=#component-2>Outils FastMCP et validation</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Outils FastMCP et validation</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-1>Transport stdio ou HTTP</a></li><li>Vers <a href=#component-3>Moteur Kroki</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Moteur Kroki</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-2>Outils FastMCP et validation</a></li><li>Vers <a href=#component-4>Résultat et liens</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Résultat et liens</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-3>Moteur Kroki</a></li><li>Vers <a href=#component-0>Client MCP</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-uml-mcp><p id=architecture-uml-mcp class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/uml-mcp/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de uml-mcp"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_runtime[&#34;MCP Runtime&#34;]
+  node_mcp_server[&#34;MCP Server&lt;br/&gt;[server.py]&#34;]
+  node_diagram_tools[&#34;Diagram Tools&lt;br/&gt;[diagram_tools.py]&#34;]
+  node_plugin_loader[&#34;Plugin Loader&lt;br/&gt;[loader.py]&#34;]
+end
+
+subgraph group_diagrams[&#34;Diagram Workflow&#34;]
+  node_validation[&#34;Input Validation&#34;]
+  node_diagram_service[&#34;Diagram Service&lt;br/&gt;[diagram_service.py]&#34;]
+  node_rendering[&#34;Diagram Rendering&#34;]
+  node_kroki[&#34;Kroki Renderers&lt;br/&gt;[kroki.py]&#34;]
+  node_render_cache[&#34;Render Cache&lt;br/&gt;[render_cache.py]&#34;]
+  node_delivery[&#34;Chat and Image Output&lt;br/&gt;[chat_packet.py]&#34;]
+  node_catalog[&#34;Diagram Catalog&lt;br/&gt;[diagram_catalog.py]&#34;]
+end
+
+subgraph group_agent[&#34;Agent Interfaces&#34;]
+  node_prompts[&#34;Diagram Prompts&lt;br/&gt;[diagram_prompts.py]&#34;]
+  node_resources[&#34;Diagram Resources&#34;]
+  node_agui[&#34;AG-UI Events&lt;br/&gt;[agui.py]&#34;]
+end
+
+subgraph group_admin[&#34;Admin Console&#34;]
+  node_admin_api[&#34;Admin API&lt;br/&gt;[routes.py]&#34;]
+  node_admin_settings[&#34;Settings Service&#34;]
+  node_kroki_admin[&#34;Kroki Playground&lt;br/&gt;[kroki_routes.py]&#34;]
+  node_console_ui[&#34;Admin Web Console&lt;br/&gt;[App.tsx]&#34;]
+end
+
+subgraph group_operations[&#34;Security and Operations&#34;]
+  node_enterprise_auth[&#34;Bearer Authentication&lt;br/&gt;[mcp_auth.py]&#34;]
+  node_audit[&#34;Audit and Metrics&lt;br/&gt;[audit.py]&#34;]
+end
+
+node_client((&#34;AI Client&#34;))
+node_kroki_service[&#34;Kroki Service&#34;]
+
+node_client --&gt;|&#34;requests tools&#34;| node_mcp_server
+node_mcp_server --&gt;|&#34;registers tools&#34;| node_diagram_tools
+node_diagram_tools --&gt;|&#34;validates input&#34;| node_validation
+node_diagram_tools --&gt;|&#34;requests generation&#34;| node_diagram_service
+node_diagram_service --&gt;|&#34;generates diagram&#34;| node_rendering
+node_diagram_service --&gt;|&#34;reads and writes&#34;| node_render_cache
+node_rendering --&gt;|&#34;renders source&#34;| node_kroki
+node_kroki -.-&gt;|&#34;sends render request&#34;| node_kroki_service
+node_diagram_service --&gt;|&#34;builds display output&#34;| node_delivery
+node_diagram_tools --&gt;|&#34;lists diagram types&#34;| node_catalog
+node_mcp_server --&gt;|&#34;registers prompts&#34;| node_prompts
+node_mcp_server --&gt;|&#34;registers resources&#34;| node_resources
+node_mcp_server -.-&gt;|&#34;serves event interface&#34;| node_agui
+node_console_ui -.-&gt;|&#34;uses console API&#34;| node_admin_api
+node_admin_api --&gt;|&#34;reads and saves&#34;| node_admin_settings
+node_admin_api --&gt;|&#34;adds Kroki routes&#34;| node_kroki_admin
+node_kroki_admin --&gt;|&#34;renders playground&#34;| node_diagram_service
+node_enterprise_auth -.-&gt;|&#34;protects requests&#34;| node_mcp_server
+node_admin_api --&gt;|&#34;records operations&#34;| node_audit
+node_mcp_server --&gt;|&#34;loads plugins&#34;| node_plugin_loader
+node_plugin_loader -.-&gt;|&#34;routes plugin types&#34;| node_kroki
+
+
+class node_mcp_server,node_diagram_tools,node_plugin_loader,node_client toneBlue
+class node_validation,node_diagram_service,node_rendering,node_kroki,node_render_cache,node_delivery,node_catalog toneAmber
+class node_prompts,node_resources,node_agui toneMint
+class node_admin_api,node_admin_settings,node_kroki_admin,node_console_ui toneRose
+class node_enterprise_auth,node_audit,node_kroki_service toneIndigo</code></pre></div><div class=repo-system-summary><p>Un serveur MCP pour découvrir, valider, rendre et livrer des diagrammes. Le runtime enregistre les outils, invites et ressources, puis dirige la source vers les moteurs, le cache et une sortie adaptée au chat; l’administration et l’observabilité suivent un parcours distinct.</p><dl><div><dt>Composants</dt><dd>21</dd></div><div><dt>Connexions</dt><dd>21</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>16/21</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Client MCP → Transport stdio ou HTTP</li><li>Transport stdio ou HTTP → Outils FastMCP et validation</li><li>Outils FastMCP et validation → Moteur Kroki</li><li>Moteur Kroki → Résultat et liens</li><li>Résultat et liens → Client MCP</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Partez de server.py, suivez main dans mcp_core, puis examinez l’outil de diagramme avant son moteur. Un appel fournit des arguments structurés, sans rendre automatiquement un texte quelconque valide en Mermaid ou PlantUML.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Dossier technique</h2><p class=repo-lede-sm>Établi à partir du code au commit <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d><code>ebaeac6</code></a> (314 fichiers). Chaque élément vient d’une correspondance de motif dans le code: ouvrez le fichier lié avant de vous y fier.</p><nav class=repo-dossier-toc aria-label="Sections du dossier"><a href=#dossier-layers>Couches et modules</a><a href=#dossier-flow>Flux de données</a><a href=#dossier-public>Interface publique</a><a href=#dossier-private>Interface privée</a><a href=#dossier-services>Services et hébergement</a><a href=#dossier-entities>Entités</a><a href=#dossier-logic>Logique métier</a><a href=#dossier-database>Base de données</a><a href=#dossier-integrations>Intégrations externes</a><a href=#dossier-stack>Stack et dépendances</a><a href=#dossier-security>Sécurité</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Couches et modules</h3><p class=repo-evidence-label>Les dossiers sont classés par couche selon leur nom, de l’interface utilisateur jusqu’à l’accès aux données. Le diagramme montre où se trouve le code; il ne trace pas les appels entre couches.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Vue en couches</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Présentation&#34;]
+    direction LR
+    presentation_0[&#34;mcp_core/admin_ui&lt;br/&gt;28 fichiers&#34;]
+    presentation_1[&#34;frontend/components&lt;br/&gt;13 fichiers&#34;]
+    presentation_2[&#34;frontend/pages&lt;br/&gt;12 fichiers&#34;]
+    presentation_3[&#34;examples/plugins&lt;br/&gt;5 fichiers&#34;]
+    presentation_more[&#34;&#43;3&#34;]
+  end
+  subgraph L_interface[&#34;Points d’entrée et API&#34;]
+    direction LR
+    interface_0[&#34;tools/kroki&lt;br/&gt;8 fichiers&#34;]
+    interface_1[&#34;mcp_core/tools&lt;br/&gt;7 fichiers&#34;]
+    interface_2[&#34;mcp_core/admin&lt;br/&gt;3 fichiers&#34;]
+    interface_3[&#34;(root)&lt;br/&gt;2 fichiers&#34;]
+    interface_more[&#34;&#43;5&#34;]
+  end
+  subgraph L_application[&#34;Services applicatifs&#34;]
+    direction LR
+    application_0[&#34;scripts&lt;br/&gt;13 fichiers&#34;]
+    application_1[&#34;examples/plugins&lt;br/&gt;11 fichiers&#34;]
+    application_2[&#34;frontend/components&lt;br/&gt;6 fichiers&#34;]
+    application_3[&#34;mcp_core/plugins&lt;br/&gt;3 fichiers&#34;]
+    application_more[&#34;&#43;1&#34;]
+  end
+  subgraph L_domain[&#34;Domaine et règles métier&#34;]
+    direction LR
+    domain_0[&#34;mcp_core/core&lt;br/&gt;25 fichiers&#34;]
+  end
+  subgraph L_infrastructure[&#34;Données et infrastructure&#34;]
+    direction LR
+    infrastructure_0[&#34;frontend/lib&lt;br/&gt;6 fichiers&#34;]
+  end
+  subgraph L_core[&#34;Source principale&#34;]
+    direction LR
+    core_0[&#34;mcp_core/auth&lt;br/&gt;18 fichiers&#34;]
+    core_1[&#34;mcp_core/observability&lt;br/&gt;9 fichiers&#34;]
+    core_2[&#34;mcp_core/quality&lt;br/&gt;5 fichiers&#34;]
+    core_3[&#34;mcp_core/admin&lt;br/&gt;4 fichiers&#34;]
+    core_more[&#34;&#43;7&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;tests&lt;br/&gt;97 fichiers&#34;]
+    tests_1[&#34;frontend&lt;br/&gt;6 fichiers&#34;]
+    tests_2[&#34;examples&lt;br/&gt;1 fichiers&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI et hébergement&#34;]
+    direction LR
+    hosting_0[&#34;deploy&lt;br/&gt;26 fichiers&#34;]
+    hosting_1[&#34;.github&lt;br/&gt;17 fichiers&#34;]
+    hosting_2[&#34;(root)&lt;br/&gt;4 fichiers&#34;]
+    hosting_3[&#34;docs&lt;br/&gt;2 fichiers&#34;]
+    hosting_more[&#34;&#43;1&#34;]
+  end
+  L_presentation ~~~ L_interface
+  L_interface ~~~ L_application
+  L_application ~~~ L_domain
+  L_domain ~~~ L_infrastructure
+  L_infrastructure ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules et couche principale</caption><thead><tr><th scope=col>Module</th><th scope=col>Couche</th><th scope=col>Fichiers</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin_ui><code>mcp_core/admin_ui</code></a></th><td>Présentation</td><td class=num>29</td><td class=num>0</td><td>.js .py .css</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core><code>mcp_core/core</code></a></th><td>Domaine et règles métier</td><td class=num>25</td><td class=num>28</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/components><code>frontend/components</code></a></th><td>Présentation</td><td class=num>19</td><td class=num>4</td><td>.tsx .ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth><code>mcp_core/auth</code></a></th><td>Source principale</td><td class=num>19</td><td class=num>25</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins><code>examples/plugins</code></a></th><td>Services applicatifs</td><td class=num>16</td><td class=num>19</td><td>.py .js</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts><code>scripts</code></a></th><td>Services applicatifs</td><td class=num>13</td><td class=num>4</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/pages><code>frontend/pages</code></a></th><td>Présentation</td><td class=num>12</td><td class=num>2</td><td>.tsx</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/observability><code>mcp_core/observability</code></a></th><td>Source principale</td><td class=num>9</td><td class=num>16</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin><code>mcp_core/admin</code></a></th><td>Source principale</td><td class=num>8</td><td class=num>5</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tools/kroki><code>tools/kroki</code></a></th><td>Points d’entrée et API</td><td class=num>8</td><td class=num>23</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/tools><code>mcp_core/tools</code></a></th><td>Points d’entrée et API</td><td class=num>7</td><td class=num>9</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/lib><code>frontend/lib</code></a></th><td>Données et infrastructure</td><td class=num>6</td><td class=num>25</td><td>.ts .tsx</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/quality><code>mcp_core/quality</code></a></th><td>Source principale</td><td class=num>5</td><td class=num>7</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/resources><code>mcp_core/resources</code></a></th><td>Source principale</td><td class=num>4</td><td class=num>4</td><td>.py</td></tr></tbody></table></div><p class=repo-evidence-label>14 modules plus petits ne sont pas affichés.</p></section><section class=repo-dossier-part id=dossier-flow aria-labelledby=dossier-flow-h><h3 id=dossier-flow-h>Flux de données</h3><p class=repo-evidence-label>Les appels du diagramme <a href=https://gitdiagram.com/antoinebou12/uml-mcp>GitDiagram</a>, dans l’ordre où on les rencontre depuis les points d’entrée. GitDiagram produit ce graphe par IA; les chemins de fichiers cités ont été comparés à l’arbre du dépôt.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Diagramme de séquence</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>sequenceDiagram
+  autonumber
+  participant P0 as Admin Web Console
+  participant P1 as Admin API
+  participant P2 as Bearer Authentication
+  participant P3 as MCP Server
+  participant P4 as AI Client
+  participant P5 as Settings Service
+  participant P6 as Kroki Playground
+  participant P7 as Audit and Metrics
+  participant P8 as Diagram Tools
+  participant P9 as Diagram Prompts
+  participant P10 as Diagram Resources
+  participant P11 as AG-UI Events
+  participant P12 as Plugin Loader
+  participant P13 as Diagram Service
+  participant P14 as Input Validation
+  participant P15 as Diagram Catalog
+  participant P16 as Kroki Renderers
+  P0--)P1: uses console API
+  P2--)P3: protects requests
+  P4-&gt;&gt;P3: requests tools
+  P1-&gt;&gt;P5: reads and saves
+  P1-&gt;&gt;P6: adds Kroki routes
+  P1-&gt;&gt;P7: records operations
+  P3-&gt;&gt;P8: registers tools
+  P3-&gt;&gt;P9: registers prompts
+  P3-&gt;&gt;P10: registers resources
+  P3--)P11: serves event interface
+  P3-&gt;&gt;P12: loads plugins
+  P6-&gt;&gt;P13: renders playground
+  P8-&gt;&gt;P14: validates input
+  P8-&gt;&gt;P13: requests generation
+  P8-&gt;&gt;P15: lists diagram types
+  P12--)P16: routes plugin types
+</code></pre></div></details><details class=repo-structure-details><summary>Étapes en texte</summary><ol class=repo-flow-steps><li><span class=from>Admin Web Console</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>Admin API</span> <em>uses console API</em></li><li><span class=from>Bearer Authentication</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>MCP Server</span> <em>protects requests</em></li><li><span class=from>AI Client</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>MCP Server</span> <em>requests tools</em></li><li><span class=from>Admin API</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Settings Service</span> <em>reads and saves</em></li><li><span class=from>Admin API</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Kroki Playground</span> <em>adds Kroki routes</em></li><li><span class=from>Admin API</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Audit and Metrics</span> <em>records operations</em></li><li><span class=from>MCP Server</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Tools</span> <em>registers tools</em></li><li><span class=from>MCP Server</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Prompts</span> <em>registers prompts</em></li><li><span class=from>MCP Server</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Resources</span> <em>registers resources</em></li><li><span class=from>MCP Server</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>AG-UI Events</span> <em>serves event interface</em></li><li><span class=from>MCP Server</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Plugin Loader</span> <em>loads plugins</em></li><li><span class=from>Kroki Playground</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Service</span> <em>renders playground</em></li><li><span class=from>Diagram Tools</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Input Validation</span> <em>validates input</em></li><li><span class=from>Diagram Tools</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Service</span> <em>requests generation</em></li><li><span class=from>Diagram Tools</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Catalog</span> <em>lists diagram types</em></li><li><span class=from>Plugin Loader</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>Kroki Renderers</span> <em>routes plugin types</em></li><li><span class=from>Diagram Service</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram Rendering</span> <em>generates diagram</em></li><li><span class=from>Diagram Service</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Render Cache</span> <em>reads and writes</em></li><li><span class=from>Diagram Service</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Chat and Image Output</span> <em>builds display output</em></li><li><span class=from>Kroki Renderers</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>Kroki Service</span> <em>sends render request</em></li><li><span class=from>Diagram Rendering</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Kroki Renderers</span> <em>renders source</em></li></ol></details></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Interface publique</h3><p class=repo-evidence-label>Ce que du code extérieur au projet peut appeler. Le projet déclare 177 types publics.</p><h4>Routes HTTP <span class=repo-count>69</span></h4><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Carte des routes par préfixe</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  api([&#34;HTTP API&#34;])
+  g0[&#34;/admin&#34;]
+  api --&gt; g0
+  g0r0[&#34;GET /admin/api/audit&#34;]
+  g0 --&gt; g0r0
+  g0r1[&#34;GET /admin/api/audit/export&#34;]
+  g0 --&gt; g0r1
+  g0r2[&#34;GET /admin/api/metrics&#34;]
+  g0 --&gt; g0r2
+  g0r3[&#34;GET /admin/api/rate-limits&#34;]
+  g0 --&gt; g0r3
+  g0r4[&#34;GET /admin/api/config&#34;]
+  g0 --&gt; g0r4
+  g0m[&#34;&#43;34&#34;]
+  g0 --&gt; g0m
+  g1[&#34;/.well-known&#34;]
+  api --&gt; g1
+  g1r0[&#34;GET /.well-known/ai-plugin.json&#34;]
+  g1 --&gt; g1r0
+  g1r1[&#34;GET /.well-known/mcp/server-card.json&#34;]
+  g1 --&gt; g1r1
+  g1r2[&#34;GET /.well-known/privacy.txt&#34;]
+  g1 --&gt; g1r2
+  g1r3[&#34;API_ANY /.well-known/oauth-protected-resour…&#34;]
+  g1 --&gt; g1r3
+  g1r4[&#34;API_ANY /.well-known/oauth-authorization-se…&#34;]
+  g1 --&gt; g1r4
+  g2[&#34;/oauth&#34;]
+  api --&gt; g2
+  g2r0[&#34;POST /oauth/register&#34;]
+  g2 --&gt; g2r0
+  g2r1[&#34;GET /oauth/authorize&#34;]
+  g2 --&gt; g2r1
+  g2r2[&#34;POST /oauth/authorize&#34;]
+  g2 --&gt; g2r2
+  g2r3[&#34;GET /oauth/callback&#34;]
+  g2 --&gt; g2r3
+  g2r4[&#34;POST /oauth/token&#34;]
+  g2 --&gt; g2r4
+  g3[&#34;/ag-ui&#34;]
+  api --&gt; g3
+  g3r0[&#34;POST /ag-ui&#34;]
+  g3 --&gt; g3r0
+  g3r1[&#34;POST /ag-ui/start&#34;]
+  g3 --&gt; g3r1
+  g3r2[&#34;GET /ag-ui/events/&#39;run_id&#39;&#34;]
+  g3 --&gt; g3r2
+  g3r3[&#34;POST /ag-ui/generate&#34;]
+  g3 --&gt; g3r3
+  g4[&#34;/mcp&#34;]
+  api --&gt; g4
+  g4r0[&#34;GET /mcp&#34;]
+  g4 --&gt; g4r0
+  g4r1[&#34;POST /mcp&#34;]
+  g4 --&gt; g4r1
+  g5[&#34;/&#34;]
+  api --&gt; g5
+  g5r0[&#34;GET /&#34;]
+  g5 --&gt; g5r0
+  g6[&#34;/docs&#34;]
+  api --&gt; g6
+  g6r0[&#34;GET /docs&#34;]
+  g6 --&gt; g6r0
+  g7[&#34;/favicon.svg&#34;]
+  api --&gt; g7
+  g7r0[&#34;GET /favicon.svg&#34;]
+  g7 --&gt; g7r0
+  g8[&#34;/generate_diagram&#34;]
+  api --&gt; g8
+  g8r0[&#34;POST /generate_diagram&#34;]
+  g8 --&gt; g8r0
+  g9[&#34;/health&#34;]
+  api --&gt; g9
+  g9r0[&#34;GET /health&#34;]
+  g9 --&gt; g9r0
+  more[&#34;&#43;9 groups&#34;]
+  api --&gt; more
+</code></pre></div></details><div class=tablewrap><table class="repo-permission-table repo-route-table"><thead><tr><th scope=col>Méthode</th><th scope=col>Chemin</th><th scope=col>Source</th></tr></thead><tbody><tr><td><span class="repo-method m-get">GET</span></td><td><code>/favicon.svg</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L145><code>app.py:145</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/docs</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L153><code>app.py:153</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/redoc</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L167><code>app.py:167</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L377><code>app.py:377</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/robots.txt</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L413><code>app.py:413</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/sitemap.xml</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L420><code>app.py:420</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/health</code> <span class=repo-ops-badge>exploitation</span></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/console.py#L41><code>mcp_core/admin/console.py:41</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/status</code> <span class=repo-ops-badge>exploitation</span></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L445><code>app.py:445</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/generate_diagram</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L451><code>app.py:451</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/kroki_encode</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L557><code>app.py:557</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/ag-ui</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L814><code>app.py:814</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/ag-ui/start</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L850><code>app.py:850</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/ag-ui/events/{run_id}</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L879><code>app.py:879</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/ag-ui/generate</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L898><code>app.py:898</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/logo.png</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L927><code>app.py:927</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/.well-known/ai-plugin.json</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L947><code>app.py:947</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/.well-known/mcp/server-card.json</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L980><code>app.py:980</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/.well-known/privacy.txt</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L986><code>app.py:986</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/supported_formats</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L1002><code>app.py:1002</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/openapi.yaml</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L1011><code>app.py:1011</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/metrics</code> <span class=repo-ops-badge>exploitation</span></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L1060><code>app.py:1060</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/mcp</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L1092><code>app.py:1092</code></a></td></tr><tr><td><span class="repo-method m-post">POST</span></td><td><code>/mcp</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L1097><code>app.py:1097</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/admin/api/audit</code> <span class=repo-ops-badge>exploitation</span></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/api.py#L69><code>mcp_core/admin/api.py:69</code></a></td></tr></tbody></table></div><p class=repo-evidence-label>45 autres routes sont dans le code. Les routes marquées exploitation exposent la santé, l’état ou l’administration; restreignez-les en production.</p><h4>Ligne de commande <span class=repo-count>69</span></h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L15 title=mcp_core/auth/__main__.py:15><code>generate</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L23 title=mcp_core/auth/__main__.py:23><code>keygen</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L17 title=mcp_core/auth/__main__.py:17><code>--resource-url</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L18 title=mcp_core/auth/__main__.py:18><code>--tenant-id</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L19 title=mcp_core/auth/__main__.py:19><code>--client-id</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L20 title=mcp_core/auth/__main__.py:20><code>--mode</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L21 title=mcp_core/auth/__main__.py:21><code>--app-name</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L22 title=mcp_core/auth/__main__.py:22><code>--preauthorize-azure-cli</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py#L26 title=mcp_core/auth/__main__.py:26><code>--kid</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L95 title=mcp_core/cli/app.py:95><code>setup</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L235 title=mcp_core/cli/app.py:235><code>admin</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L258 title=mcp_core/cli/app.py:258><code>list</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L289 title=mcp_core/cli/app.py:289><code>enable</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L295 title=mcp_core/cli/app.py:295><code>disable</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L332 title=mcp_core/cli/app.py:332><code>up</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L359 title=mcp_core/cli/app.py:359><code>down</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L372 title=mcp_core/cli/app.py:372><code>status</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py#L390 title=mcp_core/cli/app.py:390><code>logs</code></a></li></ul><h4>Points d’entrée</h4><ul class="repo-file-list compact"><li><code>app.py</code> <span class=repo-evidence-label>fichier d’entrée</span> <code>api/app.py</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/api/app.py><code>api/app.py</code></a></li><li><code>app.py</code> <span class=repo-evidence-label>fichier d’entrée</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py><code>app.py</code></a></li><li><code>__main__.py</code> <span class=repo-evidence-label>fichier d’entrée</span> <code>mcp_core/auth/__main__.py</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__main__.py><code>mcp_core/auth/__main__.py</code></a></li><li><code>app.py</code> <span class=repo-evidence-label>fichier d’entrée</span> <code>mcp_core/cli/app.py</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/cli/app.py><code>mcp_core/cli/app.py</code></a></li><li><code>server.py</code> <span class=repo-evidence-label>fichier d’entrée</span> <code>mcp_core/core/server.py</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/server.py><code>mcp_core/core/server.py</code></a></li><li><code>uml-mcp</code> <span class=repo-evidence-label>script console</span> <code>mcp_core.core.server:main</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/pyproject.toml><code>pyproject.toml</code></a></li><li><code>mcp-server</code> <span class=repo-evidence-label>script console</span> <code>mcp_core.core.server:main</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/pyproject.toml><code>pyproject.toml</code></a></li><li><code>server.py</code> <span class=repo-evidence-label>fichier d’entrée</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/server.py><code>server.py</code></a></li></ul><h4>Exports du paquet (<code>__all__</code>)</h4><p class=repo-inline-code><code>D3Renderer</code> <code>register</code> <code>MCP_SETTINGS</code> <code>CSP</code> <code>DIST</code> <code>add_spa_routes</code> <code>available</code> <code>DIAGRAM_VIEWER_URI</code> <code>diagram_viewer_app_config</code> <code>register_diagram_viewer</code> <code>AUTH_MODES</code> <code>AuthConfigError</code> <code>AuthMode</code> <code>auth_mode_from_env</code> <code>auth_requested</code> <code>CLIENT_MATRIX</code> <code>build_admin_router</code> <code>ADMIN_CLIENT_ID</code> <code>build_proxy_router</code> <code>create_mcp_server</code> <code>generate_diagram</code> <code>get_mcp_server</code> <code>start_server</code> <code>COMPANIONS</code></p></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Interface privée</h3><p class=repo-evidence-label>Code réservé à l’usage interne selon les conventions du langage.</p><dl class=repo-dossier-stats><div><dt>Assistant préfixé _</dt><dd>315</dd></div></dl><ul class="repo-file-list compact"><li><code>_health_payload</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L425><code>app.py:425</code></a></li><li><code>_principal_key</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L605><code>app.py:605</code></a></li><li><code>_normalize_format</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L631><code>app.py:631</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services et hébergement</h3><div class=repo-dossier-grid><article class=repo-dossier-card><h4>Service <span class=repo-count>4</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/run_mcp_smoke.py#L104><code>Runner</code></a> <span class=repo-evidence-label>__init__, record, url_ok…</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/src/uml_mcp_plugin_d3/__init__.py#L44><code>D3Renderer</code></a> <span class=repo-evidence-label>__init__, configure, validate…</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-hello/src/uml_mcp_plugin_hello/__init__.py#L43><code>AsciiRenderer</code></a> <span class=repo-evidence-label>__init__, render</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/plugins/api.py#L53><code>Renderer</code></a> <span class=repo-evidence-label>render</span></li></ul></article><article class=repo-dossier-card><h4>Gestionnaire <span class=repo-count>3</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/observability/logging_setup.py#L45><code>RingBufferHandler</code></a> <span class=repo-evidence-label>__init__, emit, query</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/observability/sinks.py#L45><code>_PrivateRotatingFileHandler</code></a> <span class=repo-evidence-label>_open</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/observability/sinks.py#L52><code>_PrivateTimedRotatingFileHandler</code></a> <span class=repo-evidence-label>_open</span></li></ul></article><article class=repo-dossier-card><h4>Fournisseur <span class=repo-count>2</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/jwks.py#L44><code>KeyProvider</code></a> <span class=repo-evidence-label>get_key, health</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/src/uml_mcp_plugin_d3/icons.py#L20><code>Provider</code></a></li></ul></article><article class=repo-dossier-card><h4>Client <span class=repo-count>2</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/proxy/upstream.py#L33><code>UpstreamClient</code></a> <span class=repo-evidence-label>__init__, authority_origin, upstream_scopes…</span></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/run_vercel_kroki_stress.py#L342><code>McpClient</code></a> <span class=repo-evidence-label>__init__, close, _next_id…</span></li></ul></article></div><h4>Où il s’exécute</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/Dockerfile title=Dockerfile>Image Docker</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docker-compose.enterprise.yml title=docker-compose.enterprise.yml>Pile Docker Compose ×2</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/vercel.json title=vercel.json>Vercel</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/deploy/helm/uml-mcp/.helmignore title=deploy/helm/uml-mcp/.helmignore>Manifestes Kubernetes ×24</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/Makefile title=Makefile>Build natif (Make)</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mkdocs.yml title=mkdocs.yml>Site MkDocs</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.codex/config.toml title=.codex/config.toml>Générateur de site statique</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/cd.yml title=.github/workflows/cd.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/ci.yml title=.github/workflows/ci.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/deploy.yml title=.github/workflows/deploy.yml>Workflow de déploiement CI</a></li></ul><h4>Services Compose</h4><p class=repo-inline-code><code>uml-mcp</code> <code>kroki</code> <code>mermaid</code> <code>blockdiag</code> <code>bpmn</code> <code>excalidraw</code> <code>plantuml-server</code> <code>mermaid-ink</code></p><h4>Images Docker de base</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/Dockerfile#L6><code>python:3.15-slim</code></a></p></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entités et modèle de données <span class=repo-count>93</span></h3><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Diagramme de classes des entités</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+  direction LR
+  class E0[&#34;MCPSettings&#34;] {
+    &#43;str server_name
+    &#43;str display_name
+    &#43;str version
+    &#43;bool read_only
+    &#43;bool memory_only
+    &#43;bool url_only
+  }
+  class E1[&#34;AguiProtocolRunInput&#34;] {
+    &#43;str thread_id
+    &#43;str run_id
+    &#43;str parent_run_id
+    &#43;Any state
+    &#43;list messages
+    &#43;list tools
+  }
+  class E2[&#34;AuthSettings&#34;] {
+    &#43;Literal mode
+    &#43;str resource_url
+    &#43;bool protect_rest
+    &#43;bool filter_tools_list
+    &#43;Literal preflight
+    &#43;list~str~ algorithms
+  }
+  class E3[&#34;DiagramResult&#34;] {
+    &#43;str code
+    &#43;bool success
+    &#43;str diagram_type
+    &#43;str output_format
+    &#43;str url
+    &#43;str playground
+  }
+  class E4[&#34;ProxySettings&#34;] {
+    &#43;SecretStr client_secret
+    &#43;str client_certificate_pem
+    &#43;SecretStr client_private_key_pem
+    &#43;str federated_token_file
+    &#43;SecretStr encryption_keys
+    &#43;list~str~ allowed_redirect_uris
+  }
+  class E5[&#34;ValidationResult&#34;] {
+    &#43;bool valid
+    &#43;str diagram_type
+    &#43;str backend
+    &#43;list~str~ errors
+    &#43;list~str~ warnings
+    &#43;list~str~ suggestions
+  }
+  class E6[&#34;AguiRunRequest&#34;] {
+    &#43;str diagram_type
+    &#43;str code
+    &#43;str output_format
+    &#43;str theme
+    &#43;float scale
+    &#43;str run_id
+  }
+  class E7[&#34;EntraSettings&#34;] {
+    &#43;str tenant_id
+    &#43;str client_id
+    &#43;str app_id_uri
+    &#43;Literal cloud
+    &#43;list~str~ token_versions
+    &#43;bool jwks_appid
+  }
+  class E8[&#34;DiagramRequest&#34;] {
+    &#43;str lang
+    &#43;str type
+    &#43;str code
+    &#43;str theme
+    &#43;str output_format
+  }
+  class E9[&#34;GenerateUMLInput&#34;] {
+    &#43;str diagram_type
+    &#43;str code
+    &#43;str output_dir
+    &#43;str output_format
+    &#43;str theme
+  }
+</code></pre></div><p class=repo-evidence-label>Une flèche relie un champ à l’entité que son type nomme.</p></details><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entité</th><th scope=col>Nature</th><th scope=col>Premiers champs</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/config.py#L108><code>MCPSettings</code></a></th><td>Schéma validé</td><td><code>server_name, display_name, version, read_only, memory_only, url_only, diagram_fallback_enabled, description</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L644><code>AguiProtocolRunInput</code></a></th><td>Schéma validé</td><td><code>thread_id, run_id, parent_run_id, state, messages, tools, context, forwarded_props</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/settings.py#L102><code>AuthSettings</code></a></th><td>Schéma validé</td><td><code>mode, resource_url, protect_rest, filter_tools_list, preflight, algorithms, issuers, audiences</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/tools/schemas.py#L280><code>DiagramResult</code></a></th><td>Schéma validé</td><td><code>code, success, diagram_type, output_format, url, playground, local_path, content_base64</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/settings.py#L75><code>ProxySettings</code></a></th><td>Schéma validé</td><td><code>client_secret, client_certificate_pem, client_private_key_pem, federated_token_file, encryption_keys, allowed_redirect_uris, refresh_tokens, refresh_token_max_age_days</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/tools/schemas.py#L303><code>ValidationResult</code></a></th><td>Schéma validé</td><td><code>valid, diagram_type, backend, errors, warnings, suggestions, diagnostics, corrected_code</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L612><code>AguiRunRequest</code></a></th><td>Schéma validé</td><td><code>diagram_type, code, output_format, theme, scale, run_id</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/settings.py#L58><code>EntraSettings</code></a></th><td>Schéma validé</td><td><code>tenant_id, client_id, app_id_uri, cloud, token_versions, jwks_appid</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L324><code>DiagramRequest</code></a></th><td>Schéma validé</td><td><code>lang, type, code, theme, output_format</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/tools/schemas.py#L30><code>GenerateUMLInput</code></a></th><td>Schéma validé</td><td><code>diagram_type, code, output_dir, output_format, theme</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L635><code>AguiRunResponse</code></a></th><td>Schéma validé</td><td><code>run_id, endpoint, events_url, status</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L364><code>DiagramResponse</code></a></th><td>Schéma validé</td><td><code>url, message, playground, local_path</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L521><code>KrokiEncodeRequest</code></a></th><td>Schéma validé</td><td><code>type, code, output_format, theme</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/config.py#L100><code>DiagramType</code></a></th><td>Schéma validé</td><td><code>backend, description, formats</code></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Logique métier</h3><p class=repo-evidence-label>Les classes qui portent le plus de comportement, hors interface utilisateur et hors services et entités déjà listés.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/render_cache.py#L50><code>InMemoryRenderCache</code></a> <span class=repo-evidence-label>Domaine et règles métier, 12 méthodes</span></dt><dd><code>__init__, enabled, ttl_seconds, max_entries, max_bytes, _value_size</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/engine_health.py#L37><code>EngineHealth</code></a> <span class=repo-evidence-label>Domaine et règles métier, 7 méthodes</span></dt><dd><code>__init__, _enabled, is_open, retry_in, success, failure</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/validator.py#L86><code>TokenValidator</code></a> <span class=repo-evidence-label>Source principale, 7 méthodes</span></dt><dd><code>__init__, validate, explain, _precheck, _decode, _post_checks</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/policy.py#L77><code>Policy</code></a> <span class=repo-evidence-label>Source principale, 11 méthodes</span></dt><dd><code>__init__, required_for_rest, tool_permission, required_for_message, required_for_jsonrpc, has</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tools/kroki/kroki.py#L133><code>Kroki</code></a> <span class=repo-evidence-label>Points d’entrée et API, 10 méthodes</span></dt><dd><code>__init__, get_url, get_playground_url, _fetch_diagram_bytes, render_diagram, generate_diagram</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/server/fastmcp_wrapper.py#L95><code>_MockFastMCP</code></a> <span class=repo-evidence-label>Points d’entrée et API, 10 méthodes</span></dt><dd><code>__init__, tool, prompt, resource, completion, run</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/src/uml_mcp_plugin_d3/router.py#L36><code>Grid</code></a> <span class=repo-evidence-label>Services applicatifs, 4 méthodes</span></dt><dd><code>__init__, index, point, mark</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/observability/metrics.py#L55><code>Metrics</code></a> <span class=repo-evidence-label>Source principale, 8 méthodes</span></dt><dd><code>__init__, reset, observe, _observe_minute, timeseries, rate_limit_hit</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tools/kroki/plantuml.py#L55><code>PlantUML</code></a> <span class=repo-evidence-label>Points d’entrée et API, 8 méthodes</span></dt><dd><code>__init__, get_url, process, deflate_and_encode, encode, _encode3bytes</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/resources/diagram_skills.py#L37><code>DiagramSkillsExtension</code></a> <span class=repo-evidence-label>Source principale, 7 méthodes</span></dt><dd><code>__init__, settings, methods, _result, list_skills, get_skill</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-database aria-labelledby=dossier-database-h><h3 id=dossier-database-h>Base de données et persistance</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/lib/api.ts#L19 title=frontend/src/lib/api.ts>localStorage du navigateur <span class=kind>4 fichiers</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/build_static_server_card.py#L34 title=mcp_core/build_static_server_card.py>Fichiers JSON <span class=kind>1 fichiers</span></a></li></ul></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>Intégrations externes</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Contexte du système</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;uml-mcp&#34;]
+  c0([&#34;Client HTTP&#34;])
+  c0 --&gt; sys
+  c1([&#34;Utilisateur en ligne de commande&#34;])
+  c1 --&gt; sys
+  d0[&#34;Kroki&#34;]
+  sys --&gt; d0
+  d1[&#34;PlantUML server&#34;]
+  sys --&gt; d1
+  d2[&#34;Azure / Microsoft Entra&#34;]
+  sys --&gt; d2
+  d3[&#34;Anthropic API&#34;]
+  sys --&gt; d3
+  d4[&#34;GitHub API&#34;]
+  sys --&gt; d4
+  d5[&#34;WebSocket&#34;]
+  sys --&gt; d5
+  d6[(&#34;localStorage du navigateur&#34;)]
+  sys --&gt; d6
+  d7[(&#34;Fichiers JSON&#34;)]
+  sys --&gt; d7
+  h{{&#34;Image Docker&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Les appelants à gauche; à droite, les services et magasins de données que le code utilise.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L299 title=app.py>Kroki <span class=kind>rendu</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/settings_service.py#L196 title=mcp_core/admin/settings_service.py>PlantUML server <span class=kind>rendu</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/entra.py#L14 title=mcp_core/auth/entra.py>Azure / Microsoft Entra <span class=kind>nuage</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/build_mcpb.py#L28 title=scripts/build_mcpb.py>Anthropic API <span class=kind>IA</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/generate_star_history.py#L68 title=scripts/generate_star_history.py>GitHub API <span class=kind>plateforme</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L40 title=app.py>WebSocket <span class=kind>transport</span></a></li></ul><h4>Clients HTTP</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/__init__.py#L5><code>httpx</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/generate_star_history.py#L18><code>urllib</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/lib/api.ts#L71><code>fetch</code></a></p><h4>Hôtes nommés dans le code</h4><ul class="repo-file-list compact"><li><code>kroki.io</code> <span class=repo-evidence-label>9 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L587><code>app.py:587</code></a></li><li><code>vega.github.io</code> <span class=repo-evidence-label>3 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/run_vercel_kroki_stress.py#L255><code>scripts/run_vercel_kroki_stress.py:255</code></a></li><li><code>www.plantuml.com</code> <span class=repo-evidence-label>3 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/diagram_rendering.py#L289><code>mcp_core/core/diagram_rendering.py:289</code></a></li><li><code>antoinebou12.github.io</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/components/app/Sidebar.tsx#L69><code>frontend/src/components/app/Sidebar.tsx:69</code></a></li><li><code>arxiv.org</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/prompts/diagram_prompts.py#L623><code>mcp_core/prompts/diagram_prompts.py:623</code></a></li><li><code>bpmn.io</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/run_vercel_kroki_stress.py#L98><code>scripts/run_vercel_kroki_stress.py:98</code></a></li><li><code>graph.microsoft.com</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/deploy/entra/register-app.sh#L10><code>deploy/entra/register-app.sh:10</code></a></li><li><code>mermaid.ink</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/config.py#L158><code>mcp_core/core/config.py:158</code></a></li><li><code>mermaid.live</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tools/kroki/kroki.py#L148><code>tools/kroki/kroki.py:148</code></a></li><li><code>play.d2lang.com</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tools/kroki/d2.py#L123><code>tools/kroki/d2.py:123</code></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack et dépendances</h3><details class=repo-structure-details><summary><strong>Python</strong> <code>pyproject.toml</code> <span class=repo-evidence-label>25 à l’exécution, 21 dev</span></summary><p><span class="tag status">Python >=3.12,&lt;3.16</span></p><h4>Exécution</h4><p class=repo-inline-code><code>fastapi >=0.141.1,&lt;0.200.0</code> <code>uvicorn >=0.54,&lt;0.55</code> <code>pydantic >=2.14.0,&lt;3</code> <code>pydantic-core >=2.50.0,&lt;3</code> <code>rich ==15.0.0</code> <code>httpx >=0.28.0,&lt;0.29</code> <code>typer ==0.27.3</code> <code>tqdm >=4.66.0,&lt;5</code> <code>python-multipart ==0.0.32</code> <code>python-dotenv ==1.2.4</code> <code>starlette >=1.6.0,&lt;2.0.0</code> <code>jinja2 >=3.1.2,&lt;4</code> <code>aiofiles >=25,&lt;26</code> <code>requests >=2.34.2,&lt;3</code> <code>click ==8.5.0</code> <code>charset-normalizer ==3.5.2</code> <code>python-dateutil >=3,&lt;4</code> <code>graphviz >=0.21,&lt;0.22</code> <code>pillow >=13,&lt;14</code> <code>fastmcp-slim ==4.1.3</code> <code>mcp >=2.0.0,&lt;3.0.0</code> <code>pyjwt >=2.10.0,&lt;3</code> <code>cryptography >=44.0.0,&lt;51</code> <code>pyyaml >=6.0.2,&lt;7</code> …</p><h4>Développement</h4><p class=repo-inline-code><code>opentelemetry-sdk >=1.30.0,&lt;2</code> <code>opentelemetry-exporter-otlp-proto-http >=1.30.0,&lt;2</code> <code>tomli >=2.4.1,&lt;3</code> <code>pre-commit >=4.6.0</code> <code>pytest >=9.1.1,&lt;10</code> <code>pytest-cov >=7.1.0,&lt;8</code> <code>ruff >=0.15.15</code> <code>ty >=0.0.69</code> <code>pytest-asyncio >=1.4.0,&lt;2</code> <code>mypy >=2.0.0,&lt;3</code> <code>mkdocs >=1.6.0</code> <code>mkdocs-material >=9.7.6</code> <code>pymdown-extensions >=11.0</code> <code>mkdocs-git-revision-date-localized-plugin >=1.5.3</code> <code>mkdocs-minify-plugin >=0.8.0</code> <code>mkdocs-glightbox >=0.4.0</code></p><p><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/pyproject.toml>Ouvrir le manifeste</a></p></details><details class=repo-structure-details><summary><strong>Node.js</strong> <code>frontend/package.json</code> <span class=repo-evidence-label>18 à l’exécution, 20 dev</span></summary><h4>Exécution</h4><p class=repo-inline-code><code>@radix-ui/react-dialog ^1.1.23</code> <code>@radix-ui/react-dropdown-menu ^2.1.24</code> <code>@radix-ui/react-label ^2.1.15</code> <code>@radix-ui/react-select ^2.3.7</code> <code>@radix-ui/react-separator ^1.1.15</code> <code>@radix-ui/react-slot ^1.3.3</code> <code>@radix-ui/react-switch ^1.3.7</code> <code>@radix-ui/react-tabs ^1.1.21</code> <code>@radix-ui/react-tooltip ^1.2.16</code> <code>class-variance-authority ^0.7.1</code> <code>clsx ^2.1.1</code> <code>lucide-react ^1.48.0</code> <code>react ^19.3.0</code> <code>react-dom ^19.3.0</code> <code>react-router-dom ^7.18.4</code> <code>recharts ^3.10.1</code> <code>sonner ^2.0.8</code> <code>tailwind-merge ^3.7.0</code></p><h4>Développement</h4><p class=repo-inline-code><code>@eslint/js ^10.0.1</code> <code>@tailwindcss/vite ^4.3.3</code> <code>@testing-library/jest-dom ^7.0.1</code> <code>@testing-library/react ^16.3.3</code> <code>@testing-library/user-event ^14.6.7</code> <code>@types/node ^26.6.2</code> <code>@types/react ^19.3.0</code> <code>@types/react-dom ^19.3.0</code> <code>@vitejs/plugin-react ^6.1.1</code> <code>eslint ^10.11.0</code> <code>eslint-plugin-react-hooks ^7.1.1</code> <code>globals ^17.12.0</code> <code>jsdom ^30.1.1</code> <code>tailwindcss ^4.3.3</code> <code>tw-animate-css ^1.4.0</code> <code>typescript ^6.0.3</code></p><p><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/package.json>Ouvrir le manifeste</a></p></details><details class=repo-structure-details><summary><strong>Python</strong> <code>examples/plugins/uml-mcp-plugin-d3/pyproject.toml</code> <span class=repo-evidence-label>1 à l’exécution</span></summary><p><span class="tag status">Python >=3.12</span></p><h4>Exécution</h4><p class=repo-inline-code><code>uml-mcp >=1.4.0</code></p><p><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/pyproject.toml>Ouvrir le manifeste</a></p></details><details class=repo-structure-details><summary><strong>Python</strong> <code>examples/plugins/uml-mcp-plugin-hello/pyproject.toml</code> <span class=repo-evidence-label>1 à l’exécution</span></summary><p><span class="tag status">Python >=3.12</span></p><h4>Exécution</h4><p class=repo-inline-code><code>uml-mcp >=1.4.0</code></p><p><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-hello/pyproject.toml>Ouvrir le manifeste</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Sécurité</h3><h4>Contrôles</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/lib/types.ts#L29 title=frontend/src/lib/types.ts>Limitation de débit <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L26 title=app.py>Validation Pydantic <span class=kind>validation</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/deploy/entra/register-app.sh#L159 title=deploy/entra/register-app.sh>OAuth <span class=kind>authentification</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L72 title=app.py>Jetons JWT <span class=kind>authentification</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples/plugins/uml-mcp-plugin-d3/src/uml_mcp_plugin_d3/assets/common.js#L57 title=examples/plugins/uml-mcp-plugin-d3/src/uml_mcp_plugin_d3/assets/common.js>En-têtes de sécurité <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/guards.py#L50 title=mcp_core/admin/guards.py>Gestion des secrets / aléa sûr <span class=kind>secrets</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/auth/errors.py#L126 title=mcp_core/auth/errors.py>Authentification Bearer <span class=kind>authentification</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/guards.py#L15 title=mcp_core/admin/guards.py>HMAC / comparaison à temps constant <span class=kind>authentification</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L17 title=app.py>Politique CORS <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/guards.py#L6 title=mcp_core/admin/guards.py>Protection CSRF <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/password_auth.py#L11 title=mcp_core/admin/password_auth.py>Hachage des mots de passe <span class=kind>authentification</span></a></li></ul><h4>Chaîne d’approvisionnement</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/dependabot.yml title=.github/dependabot.yml>Mises à jour Dependabot</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/renovate.json title=renovate.json>Mises à jour Renovate</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/SECURITY.md title=SECURITY.md>Politique de sécurité</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/package-lock.json title=frontend/package-lock.json>Fichier de verrouillage (dépendances figées)</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.pre-commit-config.yaml title=.pre-commit-config.yaml>Hooks pre-commit</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.env.example title=.env.example>Exemple de fichier d’environnement (sans valeurs)</a></li></ul><h4>Variables d’environnement <span class=repo-count>46</span></h4><p class=repo-evidence-label>Seuls les noms sont repris. Les noms qui ressemblent à des secrets sont soulignés.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/smoke_admin_login.py#L140 class=is-secret><code>ADMIN_PASSWORD</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/server.py#L70 class=is-secret><code>MCP_AUTH_RESOURCE_URL</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/commands.py#L117 class=is-secret><code>MCP_LINT_TOKEN</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/scripts/run_mcp_smoke.py#L339 class=is-secret><code>MCP_SMOKE_TOKEN</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/password_auth.py#L376><code>VERCEL</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L587><code>KROKI_SERVER</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L212><code>MCP_ALLOWED_ORIGINS</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L355><code>MCP_MAX_CODE_LENGTH</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/client_install.py#L51><code>APPDATA</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/server.py#L90><code>FASTMCP_HTTP_HOST_ORIGIN_PROTECTION</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/app.py#L218><code>MCP_ALLOWED_HOSTS</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/admin/settings_service.py#L192><code>MCP_BATCH_CONCURRENCY</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/utils.py#L135><code>MCP_OUTPUT_ROOT</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/config.py#L158><code>MERMAID_INK_SERVER</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/build_static_server_card.py#L20><code>MOCK_FASTMCP</code></a> <a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/config.py#L152><code>PLANTUML_SERVER</code></a></p></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Fichiers de test</dt><dd>104</dd></div><div><dt>Fichiers source</dt><dd>211</dd></div><div><dt>Cas de test, environ</dt><dd>1051</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tests/conftest.py title=tests/conftest.py>pytest</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/components/app/SchemaForm.test.tsx title=frontend/src/components/app/SchemaForm.test.tsx>Vitest</a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/components/app/SchemaForm.test.tsx title=frontend/src/components/app/SchemaForm.test.tsx>Jest / Testing Library</a></li></ul><h4>Où sont les tests</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/tests><code>tests</code></a> <span class=repo-evidence-label>97</span> <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/components/app><code>frontend/src/components/app</code></a> <span class=repo-evidence-label>2</span> <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/lib><code>frontend/src/lib</code></a> <span class=repo-evidence-label>2</span> <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/examples><code>examples</code></a> <span class=repo-evidence-label>1</span> <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/pages><code>frontend/src/pages</code></a> <span class=repo-evidence-label>1</span> <a href=https://github.com/antoinebou12/uml-mcp/tree/ebaeac6eb6737639cd1fd5e92967408309a9a64d/frontend/src/test><code>frontend/src/test</code></a> <span class=repo-evidence-label>1</span></p><h4>Intégration continue</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/ci.yml>UML-MCP CI Pipeline</a></dt><dd><code>ruff, pytest, npm test</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/publish.yml>UML-MCP CI/CD Pipeline</a></dt><dd><code>ruff, pytest</code></dd></div><div><dt><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/.github/workflows/test.yml>Run Tests</a></dt><dd><code>pytest</code></dd></div></dl></section></section><section class=repo-api-guide aria-labelledby=api-contract><h2 id=api-contract>Contrat des outils MCP</h2><p class=repo-api-intro>Le service hébergé accepte les messages MCP JSON-RPC sur /mcp. tools/list retourne les schémas d’entrée et de sortie. Le client envoie tools/call avec le nom d’un outil et des arguments structurés.</p><div class=repo-code-sample><div class=repo-code-sample-head><svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M7.1 4.3 2.4 9l4.7 4.7.9-.9L4.2 9 8 5.2l-.9-.9zm5.8.0-.9.9L15.8 9 12 12.8l.9.9L17.6 9l-4.7-4.7z"/></svg><span>Exemple de requête</span></div><pre><code>{
+  &#34;jsonrpc&#34;: &#34;2.0&#34;,
+  &#34;id&#34;: 1,
+  &#34;method&#34;: &#34;tools/call&#34;,
+  &#34;params&#34;: {
+    &#34;name&#34;: &#34;generate_uml&#34;,
+    &#34;arguments&#34;: {
+      &#34;diagram_type&#34;: &#34;mermaid&#34;,
+      &#34;code&#34;: &#34;flowchart LR\n  Client --&gt; Server&#34;,
+      &#34;output_format&#34;: &#34;svg&#34;
+    }
+  }
+}</code></pre></div><h3>Réponse et erreurs</h3><div class=repo-api-notes><article>Lisez result.structuredContent : success, url, playground et output_format décrivent le rendu. En cas d’échec, inspectez error et error_detail; traitez séparément les erreurs de protocole MCP et isError au niveau de l’outil. Une réponse URL ne contient pas nécessairement les octets de l’image.</article><article>Utilisez validate_uml pour vérifier la syntaxe sans générer d’image. generate_uml_batch traite plusieurs éléments et retourne leurs résultats individuels. Envoyez uniquement du texte public au service hébergé; les URL de rendu peuvent encoder ce texte.</article></div><details class=repo-guide-chapter><summary>Authentification, limites et pagination</summary><p>Ce point d’accès public a répondu à la génération documentaire sans en-tête Authorization. Cette observation ne définit pas l’authentification de tous les déploiements. tools/list n’annonçait aucun quota fixe. Le rendu retourne un résultat; la découverte du catalogue doit suivre la pagination MCP si le serveur retourne un curseur.</p></details><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/mcp_core/core/server.py><code>mcp_core/core/server.py</code></a></li></ul><p class=repo-evidence-label>Schéma du service consulté le 2026-10-24 · <a href=https://uml-mcp.vercel.app/mcp>MCP</a></p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>264 types déclarés, dont 12 dans l’aperçu des relations de base.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t8c933d751656[&#34;_MCPAcceptHeaderMiddleware&#34;] {
+  __init__()
+  __call__()
+}
+class tbbd7d80c6537[&#34;_MCPOriginValidationMiddleware&#34;] {
+  __init__()
+  __call__()
+}
+class t633b66ae0a60[&#34;DiagramRequest&#34;] {
+  validate_code_length()
+}
+class tb2bc4a0b3d1b[&#34;DiagramResponse&#34;] {
+}
+class t57c712c6e160[&#34;KrokiEncodeRequest&#34;] {
+}
+class t3cbf0983a349[&#34;KrokiEncodeResponse&#34;] {
+}
+class teae27f6a16b7[&#34;AguiRunRequest&#34;] {
+  _normalize_format()
+}
+class t32b0b600cbbf[&#34;AguiRunResponse&#34;] {
+}
+class t3cbf9378a674[&#34;AguiProtocolRunInput&#34;] {
+}
+class tb9167f0f3b08[&#34;D3Renderer&#34;] {
+  __init__()
+  configure()
+  validate()
+  render()
+}
+class t69997369a348[&#34;ForceModel&#34;] {
+}
+class t69a1ba4997d9[&#34;Provider&#34;] {
+}
+class bda110f9bf6d7[&#34;BaseModel&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bda110f9bf6d7 &lt;|-- t633b66ae0a60
+bda110f9bf6d7 &lt;|-- tb2bc4a0b3d1b
+bda110f9bf6d7 &lt;|-- t57c712c6e160
+bda110f9bf6d7 &lt;|-- t3cbf0983a349
+bda110f9bf6d7 &lt;|-- teae27f6a16b7
+bda110f9bf6d7 &lt;|-- t32b0b600cbbf
+bda110f9bf6d7 &lt;|-- t3cbf9378a674
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées; les signatures complètes ne sont pas reconstruites.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><p class=repo-reference-summary>297 / 297 fichiers admissibles lus (706 dans l’arbre); 0 trop volumineux, 0 échec de lecture et 0 diagnostic de syntaxe.</p><details class=repo-analysis-coverage><summary>Ce que couvre l’analyse</summary><p>Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus. La collecte couvre les README, les manifestes reconnus et les fichiers source pris en charge.</p><p>Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">Le rendu distant transmet la source du diagramme. Vérifiez le service utilisé et sa politique de données avant d’envoyer une architecture interne ou d’autres informations confidentielles.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/uml-mcp/blob/main/server.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>server.py</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/server.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>mcp_core/core/server.py</code></a></li><li><a href=https://github.com/antoinebou12/uml-mcp/blob/main/README.md><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>README.md</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossaire</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Chercher un terme</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="Aucun terme trouvé. Essayez un autre mot." data-count=termes></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Dépôt</summary><p>Les fichiers source, la configuration et l’historique versionné d’un projet.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>Le document d’entrée du dépôt, qui présente généralement son rôle et son installation.</p></details><details id=term-dependency data-glossary-entry><summary>Dépendance</summary><p>Une bibliothèque, un outil ou un service nécessaire à la compilation ou à l’exécution d’un composant.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>Un protocole de requête et réponse utilisé par les navigateurs et services web. Une requête comprend une méthode, un chemin, des en-têtes et parfois un corps.</p></details><details id=term-docker data-glossary-entry><summary>Conteneur</summary><p>Un environnement de processus isolé créé à partir d’une image. Les données persistantes nécessitent un stockage hors de son système de fichiers temporaire.</p></details><details id=term-port data-glossary-entry><summary>Port publié</summary><p>Un port de l’hôte associé au port d’un service dans un conteneur. Sa publication peut rendre le service accessible hors du réseau des conteneurs.</p></details><details id=term-cli data-glossary-entry><summary>Interface en ligne de commande</summary><p>Une interface textuelle où les commandes et arguments choisissent les opérations. Les codes de retour permettent aux scripts de détecter un succès ou un échec.</p></details><details id=term-build data-glossary-entry><summary>Compilation</summary><p>Les étapes qui transforment les sources et dépendances en programme exécutable ou en livrable distribuable.</p></details><details id=term-mcp data-glossary-entry><summary>MCP</summary><p>Model Context Protocol : un protocole permettant à un client IA de découvrir et appeler des outils, et de lire les ressources d’un serveur.</p></details><details id=term-mermaid data-glossary-entry><summary>Mermaid</summary><p>Un langage de diagrammes textuel. Les nœuds et liens décrivent un modèle ; le diagramme n’exécute pas le projet.</p></details><details id=term-gpu data-glossary-entry><summary>GPU</summary><p>Un processeur conçu pour les calculs parallèles, dont le rendu graphique et de nombreuses opérations numériques.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources et actualités du projet</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/uml-mcp>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/uml-mcp#readme>README</a><span>Documentation du dépôt</span></li><li><a href=/CV/blog/fr/posts/uml-mcp/>uml-mcp — diagrammes UML depuis le chat via MCP</a><span>2 sept. 2026 · Récit du projet</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Langage</span><b>Python</b></div><div class=kv><span>Catégorie</span><b>Application et services</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/uml-mcp>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

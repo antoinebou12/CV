@@ -58,8 +58,6 @@ jobs:
           html-validate --config .htmlvalidate.json \
             index-en.html \
             index-fr.html \
-            about-en.html \
-            about-fr.html \
             index.html \
             404.html \
             linktree/index.html
@@ -86,8 +84,34 @@ jobs:
       - name: Generated LaTeX matches data/cv.yaml
         run: python scripts/build/generate_cv.py --check
 
+      - name: Design tokens in sync
+        run: python scripts/build/sync_design_tokens.py --check
+
       - name: Regenerate AEO pages (check committed output)
         run: |
           python scripts/build/generate_aeo_content.py --all
           python scripts/html/sync_index_html.py
-          git diff --exit-code about-en.html about-fr.html index-en.html index-fr.html index.html
+          git diff --exit-code index-en.html index-fr.html index.html
+
+  project-docs-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.160.1"
+          extended: true
+
+      - name: Build Hugo blog
+        working-directory: hugo
+        run: hugo --minify -d public
+
+      - name: Repository notes structure tests
+        run: CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs

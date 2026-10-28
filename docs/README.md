@@ -15,7 +15,6 @@ Deploy the CV website to various platforms and environments.
 
 - [GitHub Pages](./deployment/github-pages.md) - Deploy to GitHub Pages
 - [Docker](./deployment/docker.md) - Docker-based deployment
-- [Kubernetes](./deployment/kubernetes.md) - Kubernetes deployment
 
 ### [Development](./development/README.md)
 Development workflows, processes, and best practices.
@@ -25,10 +24,9 @@ Development workflows, processes, and best practices.
 - [Hugo blog (Paper theme)](./development/hugo-navigation.md) - Header, menus, i18n, `baseURL`, mobile menu, dark mode
 
 ### [Infrastructure](./infrastructure/README.md)
-Infrastructure documentation for Docker, Kubernetes, and Nginx.
+Infrastructure documentation for Docker and Nginx.
 
 - [Docker](./infrastructure/docker.md) - Docker setup and configuration
-- [Kubernetes](./infrastructure/kubernetes.md) - Kubernetes configuration
 - [Nginx](./infrastructure/nginx.md) - Nginx configuration and setup
 
 ## 🚀 Quick Start
@@ -56,8 +54,7 @@ CV/
 ├── linktree/          # Linktree website
 ├── papers/            # Publications and research papers
 ├── configs/           # Configuration files (nginx, traefik, etc.)
-├── k8s/               # Kubernetes manifests
-├── helm/              # Helm charts
+├── hugo/              # Hugo blog source
 ├── .github/           # GitHub Actions workflows
 └── docs/              # This documentation
 ```
@@ -98,9 +95,6 @@ git push
 
 # Docker
 docker-compose up -d
-
-# Kubernetes
-kubectl apply -f k8s/
 ```
 
 ## 🐛 Troubleshooting
@@ -155,16 +149,10 @@ kubectl apply -f k8s/
 - **Solution**: Verify ports are not in use
 - **Solution**: Check Docker daemon is running
 
-**Problem**: Kubernetes pods not running
-- **Solution**: Check pod status: `kubectl get pods -n cv-stack`
-- **Solution**: View logs: `kubectl logs <pod-name> -n cv-stack`
-- **Solution**: Verify ingress is configured correctly
-
 ## 📖 Additional Resources
 
 - [LaTeX Documentation](https://www.latex-project.org/help/documentation/)
 - [Docker Documentation](https://docs.docker.com/)
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 
 ## 🔗 External Resources

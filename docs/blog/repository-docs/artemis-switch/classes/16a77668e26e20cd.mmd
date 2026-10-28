@@ -1,0 +1,116 @@
+classDiagram
+direction TB
+class tc5deef679bb7["SDLControllerManager"] {
+  nativeSetupJNI()
+  nativeAddJoystick()
+  nativeRemoveJoystick()
+  nativeAddHaptic()
+  nativeRemoveHaptic()
+  onNativePadDown()
+  onNativePadUp()
+  onNativeJoy()
+  onNativeHat()
+  onNativeJoySensor()
+  initialize()
+  handleJoystickMotionEvent()
+  pollInputDevices()
+  joystickSetLED()
+  joystickSetSensorsEnabled()
+  pollHapticDevices()
+  hapticRun()
+  hapticRumble()
+  hapticStop()
+  isDeviceSDLJoystick()
+}
+class t731f45e9334b["SDLJoystickHandler"] {
+  SDLJoystickHandler()
+  pollInputDevices()
+  getJoystick()
+  handleMotionEvent()
+  getJoystickDescriptor()
+  getProductId()
+  getVendorId()
+  getAxisMask()
+  getButtonMask()
+  setLED()
+  setSensorsEnabled()
+}
+class tce8259115d59["SDLJoystick"] {
+}
+class t2e71aaa964ad["RangeComparator"] {
+  compare()
+}
+class t12f0fa6c1940["SDLHapticHandler_API31"] {
+  run()
+  rumble()
+  vibrate()
+}
+class te18ac463326c["SDLHapticHandler_API26"] {
+  run()
+}
+class teacbde17bc20["SDLHapticHandler"] {
+  SDLHapticHandler()
+  run()
+  rumble()
+  stop()
+  pollHapticDevices()
+  getHaptic()
+}
+class tc413ef9621b1["SDLHaptic"] {
+}
+class tb8fa5f3f6e8f["SDLGenericMotionListener_API14"] {
+  onGenericMotion()
+  supportsRelativeMouse()
+  inRelativeMode()
+  setRelativeMouseEnabled()
+  reclaimRelativeMouseModeIfNeeded()
+  checkRelativeEvent()
+  getEventX()
+  getEventY()
+  getPenDeviceType()
+}
+class ta3efe34bc751["SDLGenericMotionListener_API24"] {
+  supportsRelativeMouse()
+  inRelativeMode()
+  setRelativeMouseEnabled()
+  getEventX()
+  getEventY()
+}
+class t7a9d22718780["SDLGenericMotionListener_API26"] {
+  supportsRelativeMouse()
+  inRelativeMode()
+  setRelativeMouseEnabled()
+  reclaimRelativeMouseModeIfNeeded()
+  checkRelativeEvent()
+  getEventX()
+  getEventY()
+}
+class t51e0787a302a["SDLGenericMotionListener_API29"] {
+  getPenDeviceType()
+}
+class t039ea2072925["SDLJoySensorListener"] {
+  SDLJoySensorListener()
+  onAccuracyChanged()
+  onSensorChanged()
+}
+class b0aa863dd71f7["Comparator"] {
+  <<unresolved_base>>
+}
+t2e71aaa964ad ..> b0aa863dd71f7 : declared base
+teacbde17bc20 <|-- t12f0fa6c1940
+teacbde17bc20 <|-- te18ac463326c
+class b85aac53481cb["View"] {
+  <<unresolved_base>>
+}
+tb8fa5f3f6e8f ..> b85aac53481cb : declared base
+class b0d3ee2a53fa7["OnGenericMotionListener"] {
+  <<unresolved_base>>
+}
+tb8fa5f3f6e8f ..> b0d3ee2a53fa7 : declared base
+tb8fa5f3f6e8f <|-- ta3efe34bc751
+ta3efe34bc751 <|-- t7a9d22718780
+t7a9d22718780 <|-- t51e0787a302a
+class b56da5b146493["SensorEventListener"] {
+  <<unresolved_base>>
+}
+t039ea2072925 ..> b56da5b146493 : declared base

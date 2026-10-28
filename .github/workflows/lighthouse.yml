@@ -53,7 +53,7 @@ jobs:
       - name: Build minimal _site for CV pages
         run: |
           mkdir -p _site
-          for f in index.html index-en.html index-fr.html about-en.html about-fr.html 404.html; do
+          for f in index.html index-en.html index-fr.html 404.html; do
             [ -f "$f" ] && cp "$f" _site/
           done
           for f in *.png *.jpg *.jpeg *.ico *.webmanifest; do

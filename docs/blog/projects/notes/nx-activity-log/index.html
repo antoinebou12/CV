@@ -1,0 +1,561 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>NX-Activity-Log: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="NX-Activity-Log: Turning console play records into views"><meta itemprop=description content="NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="1396"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="NX-Activity-Log: Turning console play records into views"><meta property="og:description" content="NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="NX-Activity-Log: Turning console play records into views"><meta name=twitter:description content="NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/nx-activity-log/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/nx-activity-log/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>NX-Activity-Log: Turning console play records into views</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
+<a href=#glossary>Glossary</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Technical dossier</a>
+<a href=#installation>Getting started</a>
+<a href=#features>Features</a>
+<a href=#reader-guide>Reference</a>
+<a href=#project-references>Links</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>NX-Activity-Log: Turning console play records into views</h1><p class=repo-hero-lede>NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title summaries. Those records are inputs from the console rather than events generated by the UI.</p><div class=repo-status-row aria-label="Repository status"><span class="repo-badge kind">Hardware and graphics</span>
+<span class="repo-badge fork">Fork</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>C++ · 92.17%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"><span class="tag status">Upstream credited</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/NX-Activity-Log><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+View source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/NX-Activity-Log#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>C++ 92.17%</span><span class=repo-count>4</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="C++ 92.17%. Makefile 4.16%. C 3.44%."><span style=width:92.17% title="C++ 92.17%"></span><span style=width:4.16% title="Makefile 4.16%"></span><span style=width:3.44% title="C 3.44%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:92.17%><span>92.17%</span></span></td><td class=num>394,579</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>Makefile</td><td><span class=repo-lang-bar style=--p:4.16%><span>4.16%</span></span></td><td class=num>17,822</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>C</td><td><span class=repo-lang-bar style=--p:3.44%><span>3.44%</span></span></td><td class=num>14,713</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Assembly</td><td><span class=repo-lang-bar style=--p:0.23%><span>0.23%</span></span></td><td class=num>978</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/NX-Activity-Log>GitHub</a> · <a href=https://github.com/antoinebou12/NX-Activity-Log#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/NX-Activity-Log/languages>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>High-precision telemetry parser reading raw Switch playtime event logs without system telemetry bans.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Detailed gameplay analytics and playtime tracking for Switch homebrew.</p></article></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Getting started</h2><p class=repo-lede-sm>These commands come from the repository documentation. They were not run during this review.</p><div class=tabbody id=install-native data-tab-panel=native><aside class="repo-admonition info"><p class=repo-admonition-title>Installation not extracted</p><p>No reusable installation recipe was extracted from this repository.</p><p><a class="btn ghost" href=https://github.com/antoinebou12/NX-Activity-Log#readme>Open the README</a></p></aside></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Repository references</h2><p class=repo-evidence-label>Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prerequisites and first run</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/README.md#L9>Firmware / CFW requirements</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>HOS 22.0.5 (and 22.x): Atmosphere ≥ 1.11.0 (1.11.2 recommended for 22.5.0). Homebrew launch on 22.0.0+ relies on Atmosphere&rsquo;s am compatibility patches.</li><li>HOS 21.0.0+: Rebuild with libnx ≥ 4.10.0 (TLS ABI change). This release targets current libnx (4.11.x / latest).</li><li>Older firmwares: The same binary is intended to run under current Atmosphere on earlier HOS versions; use title/hbmenu launch rather than User Page if the forwarder path fails.
+Curious about what&rsquo;s next? See the original to-do list on Trello</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/README.md#L9>Read the full instructions ↗</a></section></details></div><details class=repo-guide-chapter><summary>Source documentation</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Forwarder/README.md><code>Forwarder/README.md</code></a></li></ul><p class=repo-evidence-label>2 documents read from 2 candidates.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Features and components <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Application lifecycle</dt><dd>main.cpp creates Main::Application, runs it and releases it afterward. The source tree separates console-facing code under nx from UI and utility modules. Import and export jobs have their own source files.</dd></div><div class=repo-feature><dt>Records and presentation</dt><dd>The documented views organize activity by user, game and time period. That requires keeping record extraction separate from grouping and display. Exported data is another output of the application, not a substitute for the source records.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Expand a component to follow its connections, or explore the full diagram.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>System components</strong>
+<span class=repo-figure-label>Context</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Console activity records</span></summary><ul class=repo-component-connections><li>To <a href=#component-1>Application record handling</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Application record handling</span></summary><ul class=repo-component-connections><li>From <a href=#component-0>Console activity records</a></li><li>To <a href=#component-2>User and title grouping</a></li><li>To <a href=#component-4>Export job</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>User and title grouping</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Application record handling</a></li><li>To <a href=#component-3>Activity views</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Activity views</span></summary><ul class=repo-component-connections><li>From <a href=#component-2>User and title grouping</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Export job</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Application record handling</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Interactive diagram (loads on open)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-nx-activity-log><p id=architecture-nx-activity-log class=repo-diagram-caption>System overview of the components and connections verified in the repository.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/nx-activity-log/overview-en.png loading=lazy decoding=async alt="Static architecture view for NX-Activity-Log"><figcaption>Static preview. The interactive diagram replaces it after Mermaid loads.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  n0[&#34;Console activity records&#34;]
+  n1[&#34;Application record handling&#34;]
+  n2[&#34;User and title grouping&#34;]
+  n3[&#34;Activity views&#34;]
+  n4[&#34;Export job&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n1 --&gt; n4
+</code></pre></div><details class=repo-diagram-text><summary>Text version of the diagram</summary><ul><li>Console activity records → Application record handling</li><li>Application record handling → User and title grouping</li><li>User and title grouping → Activity views</li><li>Application record handling → Export job</li></ul></details></div></details><details class=repo-trace><summary>Follow one path through the code</summary><p>Begin with Main::Application and follow the console-facing nx modules before the views. This distinguishes a change in aggregation from a change in which records are available on the device.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Technical dossier</h2><p class=repo-lede-sm>Built from the source at commit <a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06><code>757928a</code></a> (91 files). Each item comes from a pattern match in the code, so open the linked file before relying on it.</p><nav class=repo-dossier-toc aria-label="Dossier sections"><a href=#dossier-layers>Layers and modules</a><a href=#dossier-public>Public interface</a><a href=#dossier-private>Private interface</a><a href=#dossier-services>Services and hosting</a><a href=#dossier-entities>Entities</a><a href=#dossier-logic>Business logic</a><a href=#dossier-database>Database</a><a href=#dossier-integrations>External integrations</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Layers and modules</h3><p class=repo-evidence-label>Folders are sorted into layers by name, from the user interface down to data access. The diagram shows where code sits; it does not trace calls between layers.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Layered view</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Presentation&#34;]
+    direction LR
+    presentation_0[&#34;Application/ui&lt;br/&gt;49 files&#34;]
+  end
+  subgraph L_interface[&#34;Entry points and API&#34;]
+    direction LR
+    interface_0[&#34;Forwarder/source&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_application[&#34;Application services&#34;]
+    direction LR
+    application_0[&#34;Application/utils&lt;br/&gt;18 files&#34;]
+    application_1[&#34;Application/nx&lt;br/&gt;6 files&#34;]
+    application_2[&#34;Application/source&lt;br/&gt;6 files&#34;]
+    application_3[&#34;Application/include&lt;br/&gt;5 files&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI and hosting&#34;]
+    direction LR
+    hosting_0[&#34;(root)&lt;br/&gt;1 files&#34;]
+    hosting_1[&#34;.github&lt;br/&gt;1 files&#34;]
+    hosting_2[&#34;Application&lt;br/&gt;1 files&#34;]
+    hosting_3[&#34;Forwarder&lt;br/&gt;1 files&#34;]
+  end
+  L_presentation ~~~ L_interface
+  L_interface ~~~ L_application
+  L_application ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Application/include/ui><code>Application/ui</code></a></th><td>Presentation</td><td class=num>49</td><td class=num>26</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Application/include/utils><code>Application/utils</code></a></th><td>Application services</td><td class=num>18</td><td class=num>0</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx><code>Application/nx</code></a></th><td>Application services</td><td class=num>6</td><td class=num>8</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Application/source><code>Application/source</code></a></th><td>Application services</td><td class=num>6</td><td class=num>0</td><td>.cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Application/include><code>Application/include</code></a></th><td>Application services</td><td class=num>5</td><td class=num>5</td><td>.hpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/tree/757928a164399801dca1445a3cb3300f16abda06/Forwarder/source><code>Forwarder/source</code></a></th><td>Entry points and API</td><td class=num>1</td><td class=num>0</td><td>.c</td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Public interface</h3><p class=repo-evidence-label>What code outside the project can call. The project declares 39 public types.</p><h4>Entry points</h4><ul class="repo-file-list compact"><li><code>main.cpp</code> <span class=repo-evidence-label>entry file</span> <code>Application/source/main.cpp</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/main.cpp><code>Application/source/main.cpp</code></a></li><li><code>main.c</code> <span class=repo-evidence-label>entry file</span> <code>Forwarder/source/main.c</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Forwarder/source/main.c><code>Forwarder/source/main.c</code></a></li></ul><h4>Public headers <span class=repo-count>42</span></h4><p class=repo-inline-code><a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Application.ExportJob.hpp><code>Application/include/Application.ExportJob.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Application.ImportJob.hpp><code>Application/include/Application.ImportJob.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Application.hpp><code>Application/include/Application.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Config.hpp><code>Application/include/Config.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Types.hpp><code>Application/include/Types.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp><code>Application/include/nx/PlayData.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/Title.hpp><code>Application/include/nx/Title.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/User.hpp><code>Application/include/nx/User.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/ui/Theme.hpp><code>Application/include/ui/Theme.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/ui/ThemePresets.hpp><code>Application/include/ui/ThemePresets.hpp</code></a></p></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Private interface</h3><p class=repo-evidence-label>Code kept for internal use by the language’s conventions.</p><dl class=repo-dossier-stats><div><dt>static (file-local) function</dt><dd>7</dd></div></dl><ul class="repo-file-list compact"><li><code>readSetting</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Forwarder/source/main.c#L52><code>Forwarder/source/main.c:52</code></a></li><li><code>calculateMaxHeapSize</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Forwarder/source/main.c#L101><code>Forwarder/source/main.c:101</code></a></li><li><code>setupHbHeap</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Forwarder/source/main.c#L119><code>Forwarder/source/main.c:119</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services and hosting</h3><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/Makefile title=Application/Makefile>Native build (Make) ×3</a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/.github/workflows/main.yml title=.github/workflows/main.yml>CI deploy workflow</a></li></ul></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entities and data model <span class=repo-count>8</span></h3><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Entity class diagram</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+  direction LR
+  class E0[&#34;PlayEvent&#34;] {
+    &#43;PlayEventType type
+    &#43;AccountUid userID
+    &#43;TitleID titleID
+    &#43;EventType eventType
+    &#43;u64 clockTimestamp
+    &#43;u64 steadyTimestamp
+  }
+  class E1[&#34;AdjustmentValue&#34;] {
+    &#43;uint64_t titleID
+    &#43;AccountUid userID
+    &#43;int value
+    &#43;:Ini simpleIniParser
+    &#43;:vector std
+    &#43;bool gGraph_
+  }
+  class E2[&#34;PlaySession&#34;] {
+    &#43;u64 playtime
+    &#43;u64 startTimestamp
+    &#43;u64 endTimestamp
+    &#43;TitleID titleID
+    &#43;AccountUid userID
+    &#43;u64 firstPlayed
+  }
+  class E3[&#34;SortInfo&#34;] {
+    &#43;:vector std
+    &#43;u64 titleID
+    &#43;u64 firstPlayed
+    &#43;u64 lastPlayed
+    &#43;u64 playtime
+    &#43;u32 launches
+  }
+  class E4[&#34;PlayStatistics&#34;] {
+    &#43;TitleID titleID
+    &#43;AccountUid userID
+    &#43;u64 firstPlayed
+    &#43;u64 lastPlayed
+    &#43;u64 playtime
+    &#43;u32 launches
+  }
+  class E5[&#34;RecentPlayStatistics&#34;] {
+    &#43;TitleID titleID
+    &#43;u64 playtime
+    &#43;u32 launches
+    &#43;size_t index
+    &#43;size_t num
+    &#43;:vector std
+  }
+  class E6[&#34;PD_Session&#34;] {
+    &#43;size_t index
+    &#43;size_t num
+    &#43;:future std
+    &#43;uint64_t importTimestamp
+  }
+  class E7[&#34;Entry&#34;] {
+    &#43;:Rectangle Aether
+    &#43;:vector std
+  }
+</code></pre></div><p class=repo-evidence-label>An arrow links a field to the entity its type names.</p></details><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entity</th><th scope=col>Kind</th><th scope=col>First fields</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L32><code>PlayEvent</code></a></th><td>Data struct</td><td><code>type, userID, titleID, eventType, clockTimestamp, steadyTimestamp, playtime, startTimestamp</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Config.hpp#L8><code>AdjustmentValue</code></a></th><td>Data struct</td><td><code>titleID, userID, value, simpleIniParser, std, gGraph_, gIs24H_</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L44><code>PlaySession</code></a></th><td>Data struct</td><td><code>playtime, startTimestamp, endTimestamp, titleID, userID, firstPlayed, lastPlayed</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/ui/element/SortedList.hpp#L9><code>SortInfo</code></a></th><td>Data struct</td><td><code>std, titleID, firstPlayed, lastPlayed, playtime, launches, Aether</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L51><code>PlayStatistics</code></a></th><td>Data struct</td><td><code>titleID, userID, firstPlayed, lastPlayed, playtime, launches</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L62><code>RecentPlayStatistics</code></a></th><td>Data struct</td><td><code>titleID, playtime, launches, index, num, std</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L69><code>PD_Session</code></a></th><td>Data struct</td><td><code>index, num, std, importTimestamp</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/ui/element/Graph.hpp#L7><code>Entry</code></a></th><td>Data struct</td><td><code>Aether, std</code></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Business logic</h3><p class=repo-evidence-label>The classes with the most behaviour, leaving out UI code and the services and entities listed above.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Application.hpp#L35><code>Application</code></a> <span class=repo-evidence-label>Application services, 27 methods</span></dt><dd><code>createScreens, deleteScreens, checkForUpdate, initThreadFunc, reinitScreens, setHoldDelay</code></dd></div><div><dt><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/Config.hpp#L16><code>Config</code></a> <span class=repo-evidence-label>Application services, 22 methods</span></dt><dd><code>readConfig, writeConfig, adjustmentValues, hiddenTitles, gGraph, gIs24H</code></dd></div><div><dt><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/PlayData.hpp#L80><code>PlayData</code></a> <span class=repo-evidence-label>Application services, 12 methods</span></dt><dd><code>getPDSessions, readPlayDataFromPdm, readPlayDataFromImport, setProgressCallback, getCurrentProgress, getMaxProgress</code></dd></div><div><dt><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/Title.hpp#L7><code>Title</code></a> <span class=repo-evidence-label>Application services, 4 methods</span></dt><dd><code>titleID, isInstalled, name, imgSize</code></dd></div><div><dt><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/include/nx/User.hpp#L10><code>User</code></a> <span class=repo-evidence-label>Application services, 3 methods</span></dt><dd><code>ID, username, imgSize</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-database aria-labelledby=dossier-database-h><h3 id=dossier-database-h>Database and persistence</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/Application.ExportJob.cpp#L118 title=Application/source/Application.ExportJob.cpp>JSON files <span class=kind>2 files</span></a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/utils/NX.cpp#L195 title=Application/source/utils/NX.cpp>Active Record <span class=kind>1 files</span></a></li></ul></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>External integrations</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>System context</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;NX-Activity-Log&#34;]
+  c0([&#34;User&#34;])
+  c0 --&gt; sys
+  d0[&#34;Console network stack (libnx/…&#34;]
+  sys --&gt; d0
+  d1[&#34;GitHub API&#34;]
+  sys --&gt; d1
+  d2[(&#34;JSON files&#34;)]
+  sys --&gt; d2
+  d3[(&#34;Active Record&#34;)]
+  sys --&gt; d3
+  h{{&#34;Native build (Make)&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Callers on the left; on the right, the services and data stores the code uses.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/utils/Curl.cpp#L23 title=Application/source/utils/Curl.cpp>Console network stack (libnx/libctru) <span class=kind>transport</span></a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/utils/UpdateUtils.cpp#L11 title=Application/source/utils/UpdateUtils.cpp>GitHub API <span class=kind>platform</span></a></li></ul><h4>HTTP clients</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/utils/Curl.cpp#L23><code>libcurl</code></a></p><h4>Hosts named in the code</h4><ul class="repo-file-list compact"><li><code>api.github.com</code> <span class=repo-evidence-label>1 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/NX-Activity-Log/blob/757928a164399801dca1445a3cb3300f16abda06/Application/source/utils/UpdateUtils.cpp#L11><code>Application/source/utils/UpdateUtils.cpp:11</code></a></li></ul></section><p class=repo-dossier-missing>Nothing found for: Stack and dependencies, Security, Tests.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>39 declared types, with 12 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t4e1a8b16b16a[&#34;ExportJob&#34;] {
+  work()
+}
+class t096aa39364ca[&#34;ImportJob&#34;] {
+  work()
+}
+class t8e8298b1a9b7[&#34;Application&#34;] {
+  createScreens()
+  deleteScreens()
+  checkForUpdate()
+  initThreadFunc()
+}
+class t041c3287dd04[&#34;AdjustmentValue&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t43e8dd03878e[&#34;Config&#34;] {
+  readConfig()
+  writeConfig()
+  adjustmentValues()
+  hiddenTitles()
+}
+class t00560be273e6[&#34;PlayEvent&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t9b5b3b925b3c[&#34;PlaySession&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t54fded939917[&#34;PlayStatistics&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t5d5e193ce052[&#34;RecentPlayStatistics&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t7381507fcce0[&#34;PD_Session&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tecf3b954f1c7[&#34;PlayData&#34;] {
+  getPDSessions()
+  readPlayDataFromPdm()
+  readPlayDataFromImport()
+  setProgressCallback()
+}
+class teaa6245a0ea3[&#34;Title&#34;] {
+  titleID()
+  isInstalled()
+  name()
+  imgSize()
+}
+class b7eaf7d3050ac[&#34;Aether::ThreadPool::Job&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b7eaf7d3050ac &lt;|-- t4e1a8b16b16a
+class bea58313e0e40[&#34;Aether::ThreadPool::Job&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bea58313e0e40 &lt;|-- t096aa39364ca
+</code></pre></div><p class=repo-evidence-label>Unresolved bases remain labelled; full signatures are not reconstructed.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Reference</h2><p class=repo-reference-summary>90 / 90 eligible files read (106 in the tree); 0 oversized, 0 failed reads and 3 syntax diagnostics.</p><details class=repo-analysis-coverage><summary>What the scan covers</summary><p>Known dependency/build folders, credential files and binaries are excluded. The scan covers READMEs, recognized manifests and parser-supported source files.</p><p>Linguist statistics cover the whole repository and may include other languages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Constraints and checks</h2><aside class="repo-admonition warn">This is a fork, and console record access depends on the environment. The repository does not establish complete or tamper-proof historical tracking.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Files to read <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/main.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>Application/source/main.cpp</code></a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>Application/source/Application.cpp</code></a></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.ExportJob.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>Application/source/Application.ExportJob.cpp</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossary</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Find a term</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="No matching terms. Try another word." data-count=terms></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Repository</summary><p>The versioned source files, configuration, and history of a project.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>The repository’s entry document, usually covering its purpose and initial setup.</p></details><details id=term-dependency data-glossary-entry><summary>Dependency</summary><p>A library, tool, or service that another component needs to build or run.</p></details><details id=term-build data-glossary-entry><summary>Build</summary><p>The steps that turn source files and dependencies into a runnable program or distributable artifact.</p></details><details id=term-fork data-glossary-entry><summary>Fork</summary><p>A separate repository derived from another project. A change in a fork is not automatically a change in the upstream project.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources and project updates</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/NX-Activity-Log>GitHub</a><span>Source repository</span></li><li><a href=https://github.com/antoinebou12/NX-Activity-Log#readme>README</a><span>Repository documentation</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Project facts</p><div class=kv><span>Language</span><b>C++</b></div><div class=kv><span>Kind</span><b>Hardware and graphics</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/NX-Activity-Log>GitHub</a></div><div class=kv><span>Updated</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

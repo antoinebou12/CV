@@ -1,0 +1,602 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>ComfyUI-UML: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="ComfyUI-UML: Diagram rendering inside a node graph"><meta itemprop=description content="ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="2381"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/comfyui-uml/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="ComfyUI-UML: Diagram rendering inside a node graph"><meta property="og:description" content="ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="ComfyUI-UML: Diagram rendering inside a node graph"><meta name=twitter:description content="ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/comfyui-uml/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/comfyui-uml/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/comfyui-uml/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>ComfyUI-UML: Diagram rendering inside a node graph</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
+<a href=#glossary>Glossary</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Technical dossier</a>
+<a href=#installation>Getting started</a>
+<a href=#features>Features</a>
+<a href=#reader-guide>Reference</a>
+<a href=#project-references>Links</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>ComfyUI-UML: Diagram rendering inside a node graph</h1><p class=repo-hero-lede>ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the source and viewer links alongside that output.</p><div class=repo-status-row aria-label="Repository status"><span class="repo-badge kind">Integration</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/ComfyUI-UML/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>3</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>Python · 50.91%</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/ComfyUI-UML><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+View source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/ComfyUI-UML#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>Python 50.91%</span><span class=repo-count>3</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="Python 50.91%. JavaScript 45.75%. HTML 3.34%."><span style=width:50.91% title="Python 50.91%"></span><span style=width:45.75% title="JavaScript 45.75%"></span><span style=width:3.34% title="HTML 3.34%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:50.91%><span>50.91%</span></span></td><td class=num>130,995</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>JavaScript</td><td><span class=repo-lang-bar style=--p:45.75%><span>45.75%</span></span></td><td class=num>117,710</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>HTML</td><td><span class=repo-lang-bar style=--p:3.34%><span>3.34%</span></span></td><td class=num>8,584</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/ComfyUI-UML>GitHub</a> · <a href=https://github.com/antoinebou12/ComfyUI-UML#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/ComfyUI-UML/languages>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>Custom node implementation for ComfyUI node graphs integrating automated UML synthesis into image pipelines.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Visual AI workflows combining diagram generation with image refinement.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Related articles & deep dives</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/posts/comfyui-uml-diagram-workflows/><div class=repo-related-post-header><span class=repo-post-badge>Deep-dive article</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>ComfyUI-UML: diagrams as nodes, images and shareable source</h4><p>How ComfyUI-UML turns Mermaid and PlantUML source into images, file outputs and viewer links, with Kroki and optional local renderers.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Getting started</h2><p class=repo-lede-sm>These commands come from the repository documentation. They were not run during this review.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>comfy node install comfyui-uml</code></pre></div></div><details class=repo-manifest-tasks><summary>Tasks declared in manifests</summary></details></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Repository references</h2><p class=repo-evidence-label>Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prerequisites and first run</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L52>Installation</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><p>From Comfy Registry (recommended):
+Manual:</p><ol><li>Clone or copy this folder into ComfyUI/custom_nodes/.</li><li>Install dependencies: pip install -r requirements.txt or uv sync.</li><li>Optional — Local Mermaid (backend = local): install Node.js (LTS), then from this folder run cd web/js && npm ci (or npm install) so beautiful-mermaid is available for web/js/render_mermaid.mjs. PNG preview for SVG in the node: pip install cairosvg. Dynamic widget visibility: pip install comfy-dynamic-widgets (or extras from pyproject.toml).</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L52>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L5>Getting started</a></h3><p class=repo-excerpt-file><code>CONTRIBUTORS.md</code></p><div class=repo-source-markdown><ol><li>Clone the repository and open it in your editor.</li><li>Install dev dependencies (pick one):</li></ol><ul><li>uv sync &ndash;extra dev (recommended if you use uv)</li><li>pip install -e &ldquo;.[dev]&rdquo;</li></ul><ol start=3><li>Run tests: uv run pytest or pytest (from the repo root).</li><li>Lint/format: uv run ruff check . and uv run ruff format ., or install pre-commit and run pre-commit install.
+See docs/Testing.md for CI (pytest, comfy-test) and mock LLM behavior.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L5>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>Configuration and usage</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L70>Usage</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Add the UML Render (Mermaid/PlantUML/etc) node (category: UML). Choose backend (web/local), diagram_type, enter code, and set output_format (png, svg, jpeg, pdf, txt, base64 — validated per type). Optional diagram_options JSON for Kroki.
+Full usage, outputs, viewer, and LLM workflow: docs/Usage.md. Diagram type × format table: docs/KrokiFormats.md.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L70>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>Operations and troubleshooting</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L66>Updating</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>After updating (Manager, git pull, or manual), restart ComfyUI so nodes and web assets load. Other nodes failing to update are independent; retry that node and restart.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L66>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L24>Dependency updates</a></h3><p class=repo-excerpt-file><code>CONTRIBUTORS.md</code></p><div class=repo-source-markdown><ul><li>Dependabot opens PRs for Python (pyproject.toml / lockfile where applicable), npm under web/js, and GitHub Actions.</li><li>Renovate is enabled with a dependency dashboard and focuses on updates that do not overlap Dependabot (for example, grouped Action bumps). If two bots open the same update, close one and keep the preferred PR.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L24>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>Development and contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L76>Testing</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>CI runs pytest, Ruff, and npm ci in web/js (.github/workflows/pytest.yml), plus comfy-test on push/PR to main / master. Locally: uv sync &ndash;extra dev, then uv run pytest, uv run ruff check ., and optionally cd web/js && npm ci. See docs/Testing.md for details, comfy-test.toml, and AGENTS.md for agent/contributor workflow (including headless pytest notes).</div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L76>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L80>Development</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><p>To run linting and formatting on commit (JSON and Python):</p><ol><li>Install dev dependencies: pip install -e &ldquo;.[dev]&rdquo; or uv sync &ndash;extra dev.</li><li>Install pre-commit hooks: pre-commit install.
+Pre-commit will format JSON (key order preserved) and run Ruff (lint + format) on Python. To run on all files: pre-commit run &ndash;all-files.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L80>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L109>Contributing</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>See CONTRIBUTORS.md for dev setup, tests, and dependency automation (Dependabot / Renovate). For AI assistants and deeper change workflow (ordered checklist, Context7 for libraries), see AGENTS.md.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md#L109>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L1>Contributing to ComfyUI-UML</a></h3><p class=repo-excerpt-file><code>CONTRIBUTORS.md</code></p><div class=repo-source-markdown>Thanks for helping improve ComfyUI-UML.</div><a class=repo-guide-context href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md#L1>Read the full instructions ↗</a></section></details></div><details class=repo-guide-chapter><summary>Source documentation</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/CONTRIBUTORS.md><code>CONTRIBUTORS.md</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/docs/README.md><code>docs/README.md</code></a></li></ul><p class=repo-evidence-label>3 documents read from 3 candidates.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Features and components <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Plugin registration</dt><dd>The root __init__.py loads the nodes package under the unique name comfyui_uml_nodes. This avoids colliding with ComfyUI’s own nodes module. It exports the class mappings and the web directory used by the extension.</dd></div><div class=repo-feature><dt>Rendering and viewer</dt><dd>The nodes directory separates diagram generation, Kroki communication and viewer URLs. Browser assets are exposed through WEB_DIRECTORY, while route registration adds the viewer’s save-to-output integration. Local rendering options and Kroki are distinct backends.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Expand a component to follow its connections, or explore the full diagram.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>System components</strong>
+<span class=repo-figure-label>Context</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Diagram text</span></summary><ul class=repo-component-connections><li>To <a href=#component-1>Registered ComfyUI node</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Registered ComfyUI node</span></summary><ul class=repo-component-connections><li>From <a href=#component-0>Diagram text</a></li><li>To <a href=#component-2>Local renderer</a></li><li>To <a href=#component-3>Kroki service</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Local renderer</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Registered ComfyUI node</a></li><li>To <a href=#component-4>Image and viewer links</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Kroki service</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Registered ComfyUI node</a></li><li>To <a href=#component-4>Image and viewer links</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Image and viewer links</span></summary><ul class=repo-component-connections><li>From <a href=#component-2>Local renderer</a></li><li>From <a href=#component-3>Kroki service</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Interactive diagram (loads on open)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-comfyui-uml><p id=architecture-comfyui-uml class=repo-diagram-caption>System overview of the components and connections verified in the repository.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/comfyui-uml/system-overview.png loading=lazy decoding=async alt="Static architecture view for ComfyUI-UML"><figcaption>Static preview. The interactive diagram replaces it after Mermaid loads.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_workflow[&#34;ComfyUI Workflow&#34;]
+  node_workflow_nodes[&#34;ComfyUI Nodes&lt;br/&gt;[__init__.py]&#34;]
+  node_render_node[&#34;UML Render&lt;br/&gt;[uml_diagram.py]&#34;]
+  node_viewer_url_node[&#34;Diagram Viewer URL&lt;br/&gt;[uml_viewer_url.py]&#34;]
+  node_diagram_result[&#34;Diagram Result&#34;]
+end
+
+subgraph group_rendering[&#34;Diagram Rendering&#34;]
+  node_diagram_defaults[&#34;Diagram Defaults&lt;br/&gt;[default_code.py]&#34;]
+  node_render_client[&#34;Render Backends&lt;br/&gt;[kroki_client.py]&#34;]
+  node_local_mermaid[&#34;Local Mermaid&lt;br/&gt;[render_mermaid.mjs]&#34;]
+end
+
+subgraph group_generation[&#34;LLM Generation&#34;]
+  node_prompt_engine[&#34;Prompt Engine&#34;]
+  node_llm_call[&#34;LLM Call&lt;br/&gt;[uml_llm_call.py]&#34;]
+  node_code_assistant[&#34;LLM Code Assistant&lt;br/&gt;[uml_llm.py]&#34;]
+  node_llm_shared[&#34;LLM Providers&lt;br/&gt;[uml_llm_shared.py]&#34;]
+  node_prompt_templates[&#34;Prompt Templates&#34;]
+end
+
+subgraph group_viewer[&#34;Viewer Experience&#34;]
+  node_frontend_extension[&#34;ComfyUI Extension&lt;br/&gt;[ComfyUI-UML.js]&#34;]
+  node_viewer_shell[&#34;Viewer Shell&lt;br/&gt;[viewer_shell.mjs]&#34;]
+  node_url_utils[&#34;Viewer URL Utilities&lt;br/&gt;[viewerUrlUtils.mjs]&#34;]
+  node_view_registry[&#34;View Registry&lt;br/&gt;[view_manifest.js]&#34;]
+  node_format_views[&#34;Format Views&#34;]
+end
+
+node_user((&#34;ComfyUI User&#34;))
+node_kroki[&#34;Kroki API&#34;]
+
+node_user --&gt;|&#34;configures&#34;| node_workflow_nodes
+node_workflow_nodes --&gt;|&#34;runs&#34;| node_render_node
+node_prompt_engine --&gt;|&#34;supplies prompt&#34;| node_llm_call
+node_llm_call --&gt;|&#34;calls provider&#34;| node_llm_shared
+node_code_assistant --&gt;|&#34;calls provider&#34;| node_llm_shared
+node_prompt_engine --&gt;|&#34;loads templates&#34;| node_llm_shared
+node_prompt_engine -.-&gt;|&#34;loads presets&#34;| node_prompt_templates
+node_code_assistant -.-&gt;|&#34;loads presets&#34;| node_prompt_templates
+node_code_assistant --&gt;|&#34;provides diagram code&#34;| node_render_node
+node_render_node --&gt;|&#34;uses defaults&#34;| node_diagram_defaults
+node_render_node --&gt;|&#34;requests rendering&#34;| node_render_client
+node_render_client --&gt;|&#34;posts diagram&#34;| node_kroki
+node_render_client --&gt;|&#34;runs local renderer&#34;| node_local_mermaid
+node_render_node -.-&gt;|&#34;returns output&#34;| node_diagram_result
+node_render_node --&gt;|&#34;provides Kroki URL&#34;| node_viewer_url_node
+node_viewer_url_node --&gt;|&#34;opens preview&#34;| node_frontend_extension
+node_render_node --&gt;|&#34;opens viewer&#34;| node_frontend_extension
+node_frontend_extension --&gt;|&#34;builds viewer query&#34;| node_url_utils
+node_frontend_extension -.-&gt;|&#34;opens viewer&#34;| node_viewer_shell
+node_viewer_shell --&gt;|&#34;infers format&#34;| node_url_utils
+node_viewer_shell --&gt;|&#34;selects view&#34;| node_view_registry
+node_view_registry --&gt;|&#34;loads format view&#34;| node_format_views
+node_viewer_shell -.-&gt;|&#34;fetches diagram&#34;| node_diagram_result
+
+
+class node_workflow_nodes,node_render_node,node_viewer_url_node,node_diagram_result,node_user toneBlue
+class node_diagram_defaults,node_render_client,node_local_mermaid toneAmber
+class node_prompt_engine,node_llm_call,node_code_assistant,node_llm_shared,node_prompt_templates,node_kroki toneMint
+class node_frontend_extension,node_viewer_shell,node_url_utils,node_view_registry,node_format_views toneRose</code></pre></div><div class=repo-system-summary><p>ComfyUI nodes that create diagram source, render through Kroki or local backends, and expose images, files and viewer links. Optional language-model nodes can generate the source before the rendering path.</p><dl><div><dt>Components</dt><dd>19</dd></div><div><dt>Connections</dt><dd>23</dd></div><div><dt>Links supported by code or README</dt><dd>18/23</dd></div></dl></div><details class=repo-diagram-text><summary>Text version of the diagram</summary><ul><li>Diagram text → Registered ComfyUI node</li><li>Registered ComfyUI node → Local renderer</li><li>Registered ComfyUI node → Kroki service</li><li>Local renderer → Image and viewer links</li><li>Kroki service → Image and viewer links</li></ul></details></div></details><details class=repo-trace><summary>Follow one path through the code</summary><p>Start at NODE_CLASS_MAPPINGS, then follow a diagram node into its renderer. The loader uses an explicit module specification because ComfyUI may import the plugin directly from a file path.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Technical dossier</h2><p class=repo-lede-sm>Built from the source at commit <a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a><code>1f14115</code></a> (49 files). Each item comes from a pattern match in the code, so open the linked file before relying on it.</p><nav class=repo-dossier-toc aria-label="Dossier sections"><a href=#dossier-layers>Layers and modules</a><a href=#dossier-flow>Data flow</a><a href=#dossier-public>Public interface</a><a href=#dossier-private>Private interface</a><a href=#dossier-services>Services and hosting</a><a href=#dossier-logic>Business logic</a><a href=#dossier-database>Database</a><a href=#dossier-integrations>External integrations</a><a href=#dossier-stack>Stack and dependencies</a><a href=#dossier-security>Security</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Layers and modules</h3><p class=repo-evidence-label>Folders are sorted into layers by name, from the user interface down to data access. The diagram shows where code sits; it does not trace calls between layers.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Layered view</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Presentation&#34;]
+    direction LR
+    presentation_0[&#34;web/js&lt;br/&gt;61 files&#34;]
+    presentation_1[&#34;web/views&lt;br/&gt;8 files&#34;]
+    presentation_2[&#34;web&lt;br/&gt;5 files&#34;]
+  end
+  subgraph L_interface[&#34;Entry points and API&#34;]
+    direction LR
+    interface_0[&#34;nodes&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_application[&#34;Application services&#34;]
+    direction LR
+    application_0[&#34;nodes&lt;br/&gt;1 files&#34;]
+    application_1[&#34;scripts&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_domain[&#34;Domain and business rules&#34;]
+    direction LR
+    domain_0[&#34;web/js&lt;br/&gt;15 files&#34;]
+  end
+  subgraph L_infrastructure[&#34;Data and infrastructure&#34;]
+    direction LR
+    infrastructure_0[&#34;nodes&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_core[&#34;Core source&#34;]
+    direction LR
+    core_0[&#34;nodes&lt;br/&gt;7 files&#34;]
+    core_1[&#34;(root)&lt;br/&gt;3 files&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;web&lt;br/&gt;23 files&#34;]
+    tests_1[&#34;tests&lt;br/&gt;5 files&#34;]
+    tests_2[&#34;(root)&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI and hosting&#34;]
+    direction LR
+    hosting_0[&#34;.github&lt;br/&gt;10 files&#34;]
+  end
+  L_presentation ~~~ L_interface
+  L_interface ~~~ L_application
+  L_application ~~~ L_domain
+  L_domain ~~~ L_infrastructure
+  L_infrastructure ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js><code>web/js</code></a></th><td>Presentation</td><td class=num>76</td><td class=num>0</td><td>.ts .js .mjs</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes><code>nodes</code></a></th><td>Core source</td><td class=num>10</td><td class=num>6</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/views><code>web/views</code></a></th><td>Presentation</td><td class=num>8</td><td class=num>0</td><td>.mjs .js</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/web><code>web</code></a></th><td>Presentation</td><td class=num>5</td><td class=num>0</td><td>.html .mjs .js</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a><code>(root)</code></a></th><td>Core source</td><td class=num>3</td><td class=num>0</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts><code>scripts</code></a></th><td>Application services</td><td class=num>1</td><td class=num>2</td><td>.py</td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-flow aria-labelledby=dossier-flow-h><h3 id=dossier-flow-h>Data flow</h3><p class=repo-evidence-label>The calls from the <a href=https://gitdiagram.com/antoinebou12/ComfyUI-UML>GitDiagram</a> graph, in the order you meet them from the entry points. GitDiagram generates the graph with AI; the file paths it cites were checked against the repository tree.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Sequence diagram</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>sequenceDiagram
+  autonumber
+  participant P0 as Prompt Engine
+  participant P1 as LLM Call
+  participant P2 as LLM Providers
+  participant P3 as Prompt Templates
+  participant P4 as LLM Code Assistant
+  participant P5 as UML Render
+  participant P6 as ComfyUI User
+  participant P7 as ComfyUI Nodes
+  participant P8 as Diagram Defaults
+  participant P9 as Render Backends
+  participant P10 as Diagram Result
+  participant P11 as Diagram Viewer URL
+  participant P12 as ComfyUI Extension
+  participant P13 as Kroki API
+  participant P14 as Local Mermaid
+  P0-&gt;&gt;P1: supplies prompt
+  P0-&gt;&gt;P2: loads templates
+  P0--)P3: loads presets
+  P4-&gt;&gt;P2: calls provider
+  P4--)P3: loads presets
+  P4-&gt;&gt;P5: provides diagram code
+  P6-&gt;&gt;P7: configures
+  P1-&gt;&gt;P2: calls provider
+  P5-&gt;&gt;P8: uses defaults
+  P5-&gt;&gt;P9: requests rendering
+  P5--)P10: returns output
+  P5-&gt;&gt;P11: provides Kroki URL
+  P5-&gt;&gt;P12: opens viewer
+  P7-&gt;&gt;P5: runs
+  P9-&gt;&gt;P13: posts diagram
+  P9-&gt;&gt;P14: runs local renderer
+</code></pre></div></details><details class=repo-structure-details><summary>Steps as text</summary><ol class=repo-flow-steps><li><span class=from>Prompt Engine</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>LLM Call</span> <em>supplies prompt</em></li><li><span class=from>Prompt Engine</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>LLM Providers</span> <em>loads templates</em></li><li><span class=from>Prompt Engine</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Prompt Templates</span> <em>loads presets</em></li><li><span class=from>LLM Code Assistant</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>LLM Providers</span> <em>calls provider</em></li><li><span class=from>LLM Code Assistant</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Prompt Templates</span> <em>loads presets</em></li><li><span class=from>LLM Code Assistant</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>UML Render</span> <em>provides diagram code</em></li><li><span class=from>ComfyUI User</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>ComfyUI Nodes</span> <em>configures</em></li><li><span class=from>LLM Call</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>LLM Providers</span> <em>calls provider</em></li><li><span class=from>UML Render</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Diagram Defaults</span> <em>uses defaults</em></li><li><span class=from>UML Render</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Render Backends</span> <em>requests rendering</em></li><li><span class=from>UML Render</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Diagram Result</span> <em>returns output</em></li><li><span class=from>UML Render</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Diagram Viewer URL</span> <em>provides Kroki URL</em></li><li><span class=from>UML Render</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>ComfyUI Extension</span> <em>opens viewer</em></li><li><span class=from>ComfyUI Nodes</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>UML Render</span> <em>runs</em></li><li><span class=from>Render Backends</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Kroki API</span> <em>posts diagram</em></li><li><span class=from>Render Backends</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Local Mermaid</span> <em>runs local renderer</em></li><li><span class=from>Diagram Viewer URL</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>ComfyUI Extension</span> <em>opens preview</em></li><li><span class=from>ComfyUI Extension</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Viewer URL Utilities</span> <em>builds viewer query</em></li><li><span class=from>ComfyUI Extension</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Viewer Shell</span> <em>opens viewer</em></li><li><span class=from>Viewer Shell</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Viewer URL Utilities</span> <em>infers format</em></li><li><span class=from>Viewer Shell</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>View Registry</span> <em>selects view</em></li><li><span class=from>Viewer Shell</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Diagram Result</span> <em>fetches diagram</em></li><li><span class=from>View Registry</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Format Views</span> <em>loads format view</em></li></ol></details></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Public interface</h3><p class=repo-evidence-label>What code outside the project can call. The project declares 8 public types.</p><h4>Command line <span class=repo-count>5</span></h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L1529 title=scripts/generate_all_diagrams_workflow.py:1529><code>generate</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L1532 title=scripts/generate_all_diagrams_workflow.py:1532><code>normalize</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L1544 title=scripts/generate_all_diagrams_workflow.py:1544><code>sync-formats</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L1540 title=scripts/generate_all_diagrams_workflow.py:1540><code>-o</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L1541 title=scripts/generate_all_diagrams_workflow.py:1541><code>--indent</code></a></li></ul><h4>Package exports (<code>__all__</code>)</h4><p class=repo-inline-code><code>NODE_CLASS_MAPPINGS</code> <code>NODE_DISPLAY_NAME_MAPPINGS</code> <code>WEB_DIRECTORY</code> <code>LLMCall</code> <code>LLMPromptEngine</code> <code>UMLLLMCodeGenerator</code> <code>UMLDiagram</code> <code>UMLViewerURL</code></p></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Private interface</h3><p class=repo-evidence-label>Code kept for internal use by the language’s conventions.</p><dl class=repo-dossier-stats><div><dt>underscore helper</dt><dd>63</dd></div></dl><ul class="repo-file-list compact"><li><code>_build_default_code_dict</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/default_code.py#L43><code>nodes/default_code.py:43</code></a></li><li><code>_validate_type_format</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/kroki_client.py#L95><code>nodes/kroki_client.py:95</code></a></li><li><code>_decode_base64_response</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/kroki_client.py#L146><code>nodes/kroki_client.py:146</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services and hosting</h3><div class=repo-dossier-grid><article class=repo-dossier-card><h4>Service <span class=repo-count>1</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_prompt_engine.py#L14><code>LLMPromptEngine</code></a> <span class=repo-evidence-label>INPUT_TYPES, VALIDATE_INPUTS, run</span></li></ul></article></div><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.github/workflows/publish-node.yml title=.github/workflows/publish-node.yml>CI deploy workflow</a></li></ul></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Business logic</h3><p class=repo-evidence-label>The classes with the most behaviour, leaving out UI code and the services and entities listed above.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_call.py#L22><code>LLMCall</code></a> <span class=repo-evidence-label>Core source, 3 methods</span></dt><dd><code>INPUT_TYPES, VALIDATE_INPUTS, run</code></dd></div><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_diagram.py#L275><code>UMLDiagram</code></a> <span class=repo-evidence-label>Core source, 3 methods</span></dt><dd><code>INPUT_TYPES, VALIDATE_INPUTS, run</code></dd></div><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm.py#L27><code>UMLLLMCodeGenerator</code></a> <span class=repo-evidence-label>Core source, 3 methods</span></dt><dd><code>INPUT_TYPES, VALIDATE_INPUTS, run</code></dd></div><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_viewer_url.py#L63><code>UMLViewerURL</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>INPUT_TYPES, run</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-database aria-labelledby=dossier-database-h><h3 id=dossier-database-h>Database and persistence</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/scripts/generate_all_diagrams_workflow.py#L406 title=scripts/generate_all_diagrams_workflow.py>JSON files <span class=kind>1 files</span></a></li></ul></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>External integrations</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>System context</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;ComfyUI-UML&#34;]
+  c0([&#34;Command-line user&#34;])
+  c0 --&gt; sys
+  d0[&#34;Kroki&#34;]
+  sys --&gt; d0
+  d1[&#34;Anthropic API&#34;]
+  sys --&gt; d1
+  d2[&#34;Google Cloud / Firebase&#34;]
+  sys --&gt; d2
+  d3[&#34;Ollama&#34;]
+  sys --&gt; d3
+  d4[&#34;OpenAI API&#34;]
+  sys --&gt; d4
+  d5[(&#34;JSON files&#34;)]
+  sys --&gt; d5
+  d6[&#34;generativelanguage.googleapis…&#34;]
+  sys --&gt; d6
+  h{{&#34;CI deploy workflow&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Callers on the left; on the right, the services and data stores the code uses.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/default_code.py#L4 title=nodes/default_code.py>Kroki <span class=kind>rendering</span></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L69 title=nodes/uml_llm_shared.py>Anthropic API <span class=kind>ai</span></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L71 title=nodes/uml_llm_shared.py>Google Cloud / Firebase <span class=kind>cloud</span></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L70 title=nodes/uml_llm_shared.py>Ollama <span class=kind>ai</span></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L68 title=nodes/uml_llm_shared.py>OpenAI API <span class=kind>ai</span></a></li></ul><h4>HTTP clients</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/kroki_client.py#L210><code>requests</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/kroki_client.py#L15><code>httpx</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_routes.py#L9><code>aiohttp</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/ComfyUI-UML.js#L332><code>fetch</code></a></p><h4>Hosts named in the code</h4><ul class="repo-file-list compact"><li><code>kroki.io</code> <span class=repo-evidence-label>3 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_diagram.py#L295><code>nodes/uml_diagram.py:295</code></a></li><li><code>api.anthropic.com</code> <span class=repo-evidence-label>1 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L69><code>nodes/uml_llm_shared.py:69</code></a></li><li><code>api.openai.com</code> <span class=repo-evidence-label>1 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L68><code>nodes/uml_llm_shared.py:68</code></a></li><li><code>generativelanguage.googleapis.com</code> <span class=repo-evidence-label>1 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L71><code>nodes/uml_llm_shared.py:71</code></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack and dependencies</h3><details class=repo-structure-details><summary><strong>Python</strong> <code>pyproject.toml</code> <span class=repo-evidence-label>2 runtime, 6 dev</span></summary><p><span class="tag status">Python >=3.12</span></p><h4>Runtime</h4><p class=repo-inline-code><code>httpx >=0.24.0</code> <code>kroki >=0.1.6</code></p><h4>Development</h4><p class=repo-inline-code><code>cairosvg >=2.7</code> <code>comfy-dynamic-widgets >=0.1.6</code> <code>pre-commit >=3.6.0</code> <code>pytest >=7.0</code> <code>pytest-asyncio >=0.21</code> <code>ruff >=0.8.0</code></p><p><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/pyproject.toml>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>Python</strong> <code>requirements.txt</code> <span class=repo-evidence-label>2 runtime</span></summary><h4>Runtime</h4><p class=repo-inline-code><code>httpx >=0.24.0</code> <code>kroki >=0.1.6</code></p><p><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/requirements.txt>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>Node.js</strong> <code>web/js/package.json</code> <span class=repo-evidence-label>2 runtime</span></summary><h4>Runtime</h4><p class=repo-inline-code><code>beautiful-mermaid ^1.0.0</code> <code>simple-chromium-ai ^0.2.1</code></p><p><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js/package.json>Open the manifest</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Security</h3><h4>Controls</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L117 title=nodes/uml_llm_shared.py>Bearer authentication <span class=kind>auth</span></a></li></ul><h4>Supply chain</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.github/dependabot.yml title=.github/dependabot.yml>Dependabot updates</a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/renovate.json title=renovate.json>Renovate updates</a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/SECURITY.md title=SECURITY.md>Security policy</a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.github/workflows/codeql.yml title=.github/workflows/codeql.yml>CodeQL scanning</a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/uv.lock title=uv.lock>Lockfile (pinned dependencies)</a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.pre-commit-config.yaml title=.pre-commit-config.yaml>pre-commit hooks</a></li></ul><h4>Environment variables <span class=repo-count>8</span></h4><p class=repo-evidence-label>Only the names are shown. Names that look like secrets are underlined.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js/render_mermaid.mjs#L33><code>BEAUTIFUL_MERMAID_ASCII_USE_ASCII</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js/render_mermaid.mjs#L37><code>BEAUTIFUL_MERMAID_THEME</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/__init__.py#L16><code>COMFYUI_UML_SKIP_COMFY_ENV</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js/render_mermaid.mjs#L32><code>BEAUTIFUL_MERMAID_OUTPUT</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/__init__.py#L8><code>COMFYUI_UML_PYTEST</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L59><code>COMFY_UI_UML_MOCK_LLM</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L64><code>GITHUB_ACTIONS</code></a> <a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/nodes/uml_llm_shared.py#L222><code>OLLAMA_BASE_URL</code></a></p></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Test files</dt><dd>29</dd></div><div><dt>Source files</dt><dd>103</dd></div><div><dt>Test cases, about</dt><dd>49</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/tests/conftest.py title=tests/conftest.py>pytest</a></li></ul><h4>Where the tests are</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/js/node_modules/beautiful-mermaid/src/__tests__><code>web/js/node_modules/beautiful-mermaid/src/__tests__</code></a> <span class=repo-evidence-label>22</span> <a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/tests><code>tests</code></a> <span class=repo-evidence-label>5</span> <a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/.><code>.</code></a> <span class=repo-evidence-label>1</span> <a href=https://github.com/antoinebou12/ComfyUI-UML/tree/1f1411580e0db67efd7a4ad669e42ba8677f546a/web/tests><code>web/tests</code></a> <span class=repo-evidence-label>1</span></p><h4>Continuous integration</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.github/workflows/codeql.yml>CodeQL</a></dt><dd><code>codeql</code></dd></div><div><dt><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/1f1411580e0db67efd7a4ad669e42ba8677f546a/.github/workflows/pytest.yml>Pytest</a></dt><dd><code>pytest, ruff</code></dd></div></dl></section><p class=repo-dossier-missing>Nothing found for: Entities.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>11 declared types, with 11 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class tb654476aede8[&#34;KrokiError&#34;] {
+}
+class t50d2adfa6e30[&#34;UMLDiagram&#34;] {
+  INPUT_TYPES()
+  VALIDATE_INPUTS()
+  run()
+}
+class tf5d8a3add21d[&#34;UMLLLMCodeGenerator&#34;] {
+  INPUT_TYPES()
+  VALIDATE_INPUTS()
+  run()
+}
+class t54e8aa4c2ef3[&#34;LLMCall&#34;] {
+  INPUT_TYPES()
+  VALIDATE_INPUTS()
+  run()
+}
+class tad1d573d8063[&#34;LLMPromptEngine&#34;] {
+  INPUT_TYPES()
+  VALIDATE_INPUTS()
+  run()
+}
+class tf971647cbde8[&#34;UMLViewerURL&#34;] {
+  INPUT_TYPES()
+  run()
+}
+class t12ed9326b7d8[&#34;Args&#34;] {
+}
+class t00114166eb81[&#34;Args&#34;] {
+}
+class tc2da0bee5d97[&#34;Obj&#34;] {
+}
+class t0087e40115b2[&#34;Obj&#34;] {
+}
+class ta16414e60e88[&#34;Obj&#34;] {
+  __str__()
+}
+class b60d1d89f176e[&#34;Exception&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b60d1d89f176e &lt;|-- tb654476aede8
+</code></pre></div><p class=repo-evidence-label>Unresolved bases remain labelled; full signatures are not reconstructed.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Reference</h2><p class=repo-reference-summary>39 / 39 eligible files read (330 in the tree); 0 oversized, 0 failed reads and 0 syntax diagnostics.</p><details class=repo-analysis-coverage><summary>What the scan covers</summary><p>Known dependency/build folders, credential files and binaries are excluded. The scan covers READMEs, recognized manifests and parser-supported source files.</p><p>Linguist statistics cover the whole repository and may include other languages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Constraints and checks</h2><aside class="repo-admonition warn">Kroki rendering sends diagram text to the configured service. Use a suitable private endpoint for confidential diagrams and check which local renderer dependencies are installed.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Files to read <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/main/__init__.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>__init__.py</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/uml_diagram.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>nodes/uml_diagram.py</code></a></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/kroki_client.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>nodes/kroki_client.py</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossary</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Find a term</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="No matching terms. Try another word." data-count=terms></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Repository</summary><p>The versioned source files, configuration, and history of a project.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>The repository’s entry document, usually covering its purpose and initial setup.</p></details><details id=term-dependency data-glossary-entry><summary>Dependency</summary><p>A library, tool, or service that another component needs to build or run.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>A request-and-response protocol used by browsers and web services. A method, path, headers, and optional body describe a request.</p></details><details id=term-port data-glossary-entry><summary>Published port</summary><p>A host port mapped to a service’s container port. Publishing a port can expose that service beyond its container network.</p></details><details id=term-cli data-glossary-entry><summary>CLI</summary><p>A text interface in which commands and arguments select operations. Exit codes let scripts detect success or failure.</p></details><details id=term-build data-glossary-entry><summary>Build</summary><p>The steps that turn source files and dependencies into a runnable program or distributable artifact.</p></details><details id=term-ci data-glossary-entry><summary>Continuous integration</summary><p>Automated checks that run when source changes, such as building, testing, and linting. Passing checks cover only what those checks exercise.</p></details><details id=term-mermaid data-glossary-entry><summary>Mermaid</summary><p>A text-based diagram language. Nodes and connections describe a model; the diagram itself does not execute the project.</p></details><details id=term-gpu data-glossary-entry><summary>GPU</summary><p>A processor designed for parallel workloads, including graphics rendering and many numerical operations.</p></details><details id=term-backend data-glossary-entry><summary>Backend</summary><p>An implementation behind a shared interface. Depending on context, it can mean a server-side service or a graphics, input, or storage implementation.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources and project updates</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/ComfyUI-UML>GitHub</a><span>Source repository</span></li><li><a href=https://github.com/antoinebou12/ComfyUI-UML#readme>README</a><span>Repository documentation</span></li><li><a href=/CV/blog/posts/comfyui-uml-diagram-workflows/>ComfyUI-UML: diagrams as nodes, images and shareable source</a><span>Oct 20, 2026 · Project story</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Project facts</p><div class=kv><span>Language</span><b>Python</b></div><div class=kv><span>Kind</span><b>Integration</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/ComfyUI-UML>GitHub</a></div><div class=kv><span>Updated</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

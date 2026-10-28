@@ -51,7 +51,7 @@ $Site = Join-Path $RepoRoot '_site'
 if (Test-Path $Site) { Remove-Item -Recurse -Force $Site }
 New-Item -ItemType Directory -Path $Site | Out-Null
 
-foreach ($f in @('index.html', 'index-en.html', 'index-fr.html', 'about-en.html', 'about-fr.html', '404.html', 'resume.md', 'resume-fr.md', 'resume.json', 'resume-fr.json')) {
+foreach ($f in @('index.html', 'index-en.html', 'index-fr.html', '404.html', 'resume.md', 'resume-fr.md', 'resume.json', 'resume-fr.json')) {
     if (Test-Path $f) { Copy-Item $f $Site }
 }
 Get-ChildItem -Path (Join-Path $RepoRoot '*') -File -Include *.png, *.jpg, *.jpeg, *.ico, *.webmanifest, *.xml |

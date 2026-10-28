@@ -1,0 +1,93 @@
+flowchart TD
+
+subgraph group_runtime["MCP Runtime"]
+  node_mcp_server["MCP Server<br/>[server.py]"]
+  node_diagram_tools["Diagram Tools<br/>[diagram_tools.py]"]
+  node_plugin_loader["Plugin Loader<br/>[loader.py]"]
+end
+
+subgraph group_diagrams["Diagram Workflow"]
+  node_validation["Input Validation"]
+  node_diagram_service["Diagram Service<br/>[diagram_service.py]"]
+  node_rendering["Diagram Rendering"]
+  node_kroki["Kroki Renderers<br/>[kroki.py]"]
+  node_render_cache["Render Cache<br/>[render_cache.py]"]
+  node_delivery["Chat and Image Output<br/>[chat_packet.py]"]
+  node_catalog["Diagram Catalog<br/>[diagram_catalog.py]"]
+end
+
+subgraph group_agent["Agent Interfaces"]
+  node_prompts["Diagram Prompts<br/>[diagram_prompts.py]"]
+  node_resources["Diagram Resources"]
+  node_agui["AG-UI Events<br/>[agui.py]"]
+end
+
+subgraph group_admin["Admin Console"]
+  node_admin_api["Admin API<br/>[routes.py]"]
+  node_admin_settings["Settings Service"]
+  node_kroki_admin["Kroki Playground<br/>[kroki_routes.py]"]
+  node_console_ui["Admin Web Console<br/>[App.tsx]"]
+end
+
+subgraph group_operations["Security and Operations"]
+  node_enterprise_auth["Bearer Authentication<br/>[mcp_auth.py]"]
+  node_audit["Audit and Metrics<br/>[audit.py]"]
+end
+
+node_client(("AI Client"))
+node_kroki_service["Kroki Service"]
+
+node_client -->|"requests tools"| node_mcp_server
+node_mcp_server -->|"registers tools"| node_diagram_tools
+node_diagram_tools -->|"validates input"| node_validation
+node_diagram_tools -->|"requests generation"| node_diagram_service
+node_diagram_service -->|"generates diagram"| node_rendering
+node_diagram_service -->|"reads and writes"| node_render_cache
+node_rendering -->|"renders source"| node_kroki
+node_kroki -.->|"sends render request"| node_kroki_service
+node_diagram_service -->|"builds display output"| node_delivery
+node_diagram_tools -->|"lists diagram types"| node_catalog
+node_mcp_server -->|"registers prompts"| node_prompts
+node_mcp_server -->|"registers resources"| node_resources
+node_mcp_server -.->|"serves event interface"| node_agui
+node_console_ui -.->|"uses console API"| node_admin_api
+node_admin_api -->|"reads and saves"| node_admin_settings
+node_admin_api -->|"adds Kroki routes"| node_kroki_admin
+node_kroki_admin -->|"renders playground"| node_diagram_service
+node_enterprise_auth -.->|"protects requests"| node_mcp_server
+node_admin_api -->|"records operations"| node_audit
+node_mcp_server -->|"loads plugins"| node_plugin_loader
+node_plugin_loader -.->|"routes plugin types"| node_kroki
+
+click node_mcp_server "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/server.py"
+click node_diagram_tools "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/tools/diagram_tools.py"
+click node_validation "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/diagram_validation.py"
+click node_diagram_service "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/diagram_service.py"
+click node_rendering "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/diagram_rendering.py"
+click node_kroki "https://github.com/antoinebou12/uml-mcp/blob/main/tools/kroki/kroki.py"
+click node_render_cache "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/render_cache.py"
+click node_delivery "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/chat_packet.py"
+click node_catalog "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/diagram_catalog.py"
+click node_prompts "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/prompts/diagram_prompts.py"
+click node_resources "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/resources/diagram_resources.py"
+click node_agui "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/agui.py"
+click node_admin_api "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/admin/routes.py"
+click node_admin_settings "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/admin/settings_service.py"
+click node_kroki_admin "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/admin/kroki_routes.py"
+click node_console_ui "https://github.com/antoinebou12/uml-mcp/blob/main/frontend/src/App.tsx"
+click node_enterprise_auth "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/auth/mcp_auth.py"
+click node_audit "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/observability/audit.py"
+click node_plugin_loader "https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/plugins/loader.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_mcp_server,node_diagram_tools,node_plugin_loader,node_client toneBlue
+class node_validation,node_diagram_service,node_rendering,node_kroki,node_render_cache,node_delivery,node_catalog toneAmber
+class node_prompts,node_resources,node_agui toneMint
+class node_admin_api,node_admin_settings,node_kroki_admin,node_console_ui toneRose
+class node_enterprise_auth,node_audit,node_kroki_service toneIndigo

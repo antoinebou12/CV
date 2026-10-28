@@ -1,6 +1,6 @@
 # Antoine Boucher
 
-Software Engineer — Platform and graphics
+Software Engineer: Platform and graphics
 
 ## Contact
 - Email: antoine@antoineboucher.info
@@ -8,24 +8,24 @@ Software Engineer — Platform and graphics
 - Web: https://antoineboucher.info/CV/index-en.html
 - Location: Montréal, QC, CA
 - GitHub: https://github.com/antoinebou12
-- LinkedIn: https://www.linkedin.com/in/antoineboucher
+- LinkedIn: https://www.linkedin.com/in/antoineboucher12
 
 ## Summary
 
-Platform and graphics engineer: backends, cloud operations, and developer tooling. Interactive graphics (C++/OpenGL, Blender); current stack includes Java/Kotlin, Python, Docker/Kubernetes, and infrastructure-as-code.
+Platform and graphics engineer: delivery across TypeScript, .NET, Java/Kotlin, Python, and Docker/Kubernetes; M.Sc. research in interactive graphics with C++/OpenGL and Blender (real-time surface wear, friction, and textures).
 
 ## Experience
 
 ### Software Developer Intern — Digital and Analytics Solutions @ La Caisse (Caisse de dépôt et placement du Québec)
 
-2026-09 — 2026-12 | Montréal, QC
-- Contribute across the full development lifecycle of cloud-optimized application solutions
-- Design standalone, reusable, and testable modules and components
-- Collaborate on visual reporting and integrated and acceptance testing
+2026-08 — present | Montréal, QC
+- Develop business-process automation with SharePoint, TypeScript, C# and .NET
+- Contribute to API integrations and migration work from SnapLogic
+- Work with a cross-functional team to turn business needs into application and integration requirements
 
 ### Secure cloud platforms @ IMC2 — Institut multidisciplinaire en cybersécurité et cyberrésilience
 
-2025-03 — 2026-02 | Montréal, QC (Remote)
+2025-03 — 2026-01 | Montréal, QC (Remote)
 - Split a monolith into per-service repos and ran 5 GitLab CI/CD pipelines with dedicated runners on two GKE clusters in GCP; Terraform handled networking and observability for repeatable cloud releases
 - Added JUnit and Playwright E2E coverage across 5 Java microservices; wired Android builds into the Terraform-managed GKE stack on GCP
 - Built scripted cybersecurity risk analysis across 1000+ risks and 181+ threat categories with weighted scoring and an Angular triage UI
@@ -65,9 +65,9 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 
 ## Education
 
-### Master's Degree, Information Technology Engineering — École de technologie supérieure (ÉTS)
+### M.Sc., Information Technology Engineering — École de technologie supérieure (ÉTS)
 
-2023-08 — 2026-08
+2023-08 — 2026-09
 - Thesis: real-time surface wear in interactive physics simulations, with dynamic friction and textures
 
 ### Bachelor's Degree, Information Technology Engineering — École de technologie supérieure (ÉTS)
@@ -89,6 +89,18 @@ Platform and graphics engineer: backends, cloud operations, and developer toolin
 
 ## Selected projects
 
+### [Dimension](https://github.com/antoinebou12/Dimension)
+
+Exploratory Rust workspace for linear algebra, numerical methods and a wgpu renderer targeting native windows and WebAssembly.
+
+### [DasherControl](https://github.com/antoinebou12/DasherControl)
+
+Homelab dashboard experiment with Vue applets, a Rust/Rocket backend, saved workspaces and a Docker interface.
+
+### [bloc](https://github.com/antoinebou12/bloc)
+
+Fork of MrKuros/Blender-Cloud-Storage with S3 and MinIO connections, folder browsing, fuzzy search and mesh import operators in Blender.
+
 ### [uml-mcp](https://github.com/antoinebou12/uml-mcp)
 
 Open-source MCP server that turns architecture prompts into UML and related diagrams (Mermaid, PlantUML, Kroki) for Cursor and ChatGPT.
@@ -97,11 +109,11 @@ Open-source MCP server that turns architecture prompts into UML and related diag
 
 Homebrew fork of Moonlight-Switch for Apollo/Sunshine PC streaming on Nintendo Switch with in-app overlay and performance stats.
 
-### [moonlight-N3DS](https://github.com/antoinebou12/moonlight-N3DS)
+### [Artemis-N3DS](https://github.com/antoinebou12/Artemis-N3DS)
 
-Maintained fork of zoeyjodon/moonlight-N3DS — GameStream client experiments for New 3DS homebrew.
+Maintained fork of zoeyjodon/moonlight-N3DS: GameStream client experiments for New 3DS homebrew.
 
-### [sm64coopdx-switch](https://github.com/antoinebou12/sm64coopdx-switch)
+### [sm64coopdx-switch-N3DS](https://github.com/antoinebou12/sm64coopdx-switch-N3DS)
 
 Nintendo Switch homebrew port of coop-deluxe/sm64coopdx (online co-op SM64; user-supplied ROM).
 
@@ -126,6 +138,9 @@ Maintained Home Assistant HACS integration for Renpho weight and body-compositio
 .NET Serilog sink connecting logs and errors to Sentry across multiple NuGet package ids.
 
 ## Certifications
+- Claude Academy: Introduction to Model Context Protocol
+- Claude Academy: Building with the Claude API
+- Claude Academy: Claude Platform 101
 - [AWS Certified Cloud Practitioner](https://www.credly.com/badges/b57717b2-640e-459b-be04-6de7062b1564)
 - [Programme québécois d'entrepreneuriat scientifique (QcES)](https://verified.sertifier.com/fr/verify/37471918795197/)
 - [Cloud Quest (Cloud Practitioner, Data Analytics, Machine Learning, Serverless Developer, Networking, Solutions Architect)](https://www.credly.com/users/antoine-boucher/badges)

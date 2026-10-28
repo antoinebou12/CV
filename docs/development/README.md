@@ -71,7 +71,7 @@ CV/
 ├── cv-fr/                 # French LaTeX CV source (same structure)
 ├── papers/                # Publications
 ├── configs/              # Configuration files
-├── k8s/                  # Kubernetes manifests
+├── hugo/                 # Hugo blog source
 ├── .github/              # GitHub Actions
 │   └── workflows/
 └── docs/                 # Documentation

@@ -59,9 +59,12 @@ gzip_types text/plain text/css text/xml text/javascript
 ### Security Headers
 
 ```nginx
-add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
-add_header X-XSS-Protection "1; mode=block" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Cross-Origin-Opener-Policy "same-origin-allow-popups" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()" always;
+# Keep CSP in sync with hugo/static/_headers (long; omit here if managed at the CDN).
 ```
 
 ### Static Asset Caching
@@ -284,5 +287,4 @@ location / {
 ## Next Steps
 
 - [Docker Setup](./docker.md) - Docker integration
-- [Kubernetes Configuration](./kubernetes.md) - K8s integration
 - [Infrastructure Overview](./README.md) - Infrastructure docs

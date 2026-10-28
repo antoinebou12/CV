@@ -1,0 +1,13 @@
+flowchart TD
+  n0["GameStream host"]
+  n1["Streaming session"]
+  n2["FFmpeg video decoder"]
+  n3["deko3d renderer"]
+  n4["Switch display"]
+  n5["Controller input"]
+  n0 --> n1
+  n1 --> n2
+  n2 --> n3
+  n3 --> n4
+  n5 --> n1
+  n1 --> n0

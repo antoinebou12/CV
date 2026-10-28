@@ -8,61 +8,54 @@ web
 
 ## Users
 
-- Recruiters and hiring managers evaluating Antoine Boucher for software engineering roles, especially platform, reliability, backend/cloud, and graphics or simulation work.
-- Technical collaborators evaluating concrete projects, research, teaching, and open-source contributions.
-- Human readers, ATS systems, search engines, and AI agents that need the same professional record in accessible, structured formats.
+People opening the public project catalog and an individual project page: they need to understand what a repository does, how to start it, and where the architecture, API, and limits are documented. Antoine maintains the pages from repository READMEs and source.
 
 ## Product Purpose
 
-Present Antoine Boucher's professional profile and evidence in English and French, help visitors understand the combination of platform engineering and interactive graphics, and make it easy to inspect relevant work, download a CV, or make contact. Success means a visitor can quickly establish fit and credibility without reconstructing the story from disconnected profiles.
+The project pages are bilingual technical case studies for the public repositories. Success means a reader can say what the software does, who it is for, and how to start it, then reach source-backed architecture, permissions, and deployment without reading the repository as a raw dump.
 
 ## Positioning
 
-The site combines a concise bilingual CV, a deeper technical blog and project record, and machine-readable resume and discovery formats. Its distinguishing professional thread is **platform and graphics**: production systems, cloud delivery, security, teaching, and open source remain visible without displacing the graphics and simulation specialization.
+Each page keeps one visual system for documentation pages, then follows that repository’s README and verified source. Sections that the repository does not have, such as an HTTP API or an algorithm walkthrough, are omitted.
 
 ## Operating Context
 
-- The static CV pages are the fast evaluation surface; About pages add context without duplicating the full CV.
-- The Hugo blog provides long-form posts, project pages, recipes, search, and bilingual navigation.
-- PDF resumes support applications and printing; JSON Resume, Markdown, JSON-LD, `llms.txt`, and `.well-known` assets support automated readers.
-- GitHub is the source of truth and GitHub Pages is the primary public deployment path. Docker and Kubernetes deployment assets are also maintained.
-- Contact paths include email, GitHub, LinkedIn, and a Cal.com introduction call.
+Pages are generated in the Hugo site under `hugo/` and published with the CV blog. English and French notes share `hugo/data/repository_notes.json`, `repository_analysis.json`, `repository_handbooks.json`, `repository_api_guides.json`, and `repository_profiles.json`. Facts that are not in those files or in a named source file are not added.
 
 ## Capabilities and Constraints
 
-- English and French content must remain equivalent in structure and meaning.
-- `index-en.html` and `index-fr.html` are canonical static CV pages; `index.html` is synchronized from English.
-- About pages are generated from `data/aeo.yaml`; machine-readable resumes are generated from `data/resume.en.json` and `data/resume.fr.json`.
-- The Hugo site under `hugo/` is built separately and merged into the deploy artifact.
-- Public CV pages remain PDF- and contact-oriented and do not expose cover-letter links.
-- Thesis descriptions may be public, but thesis PDF files must remain hidden from the public repository and deploy artifact.
-- Existing factual claims, dates, metrics, links, and project ownership must not be invented or silently changed.
+- Fixed opening order on every project page: title, technology badges, GitHub Linguist language percentages, introduction, Getting Started.
+- After that, README excerpts stay in their extracted order, then features, architecture, optional workflow, API, deployment, and developer references.
+- Language percentages come from measured language bytes. If GitHub reports none, the page says so.
+- API permissions distinguish a check found in a handler from a role name that appears only in a README.
+- Example passwords from a README stay labeled as local-development samples.
+- Docker pages show services, published ports, volumes, and network mode only from Compose or the README. `depends_on` is startup order, not readiness.
+- Workflow steppers and algorithm panels render only when a profile records verified steps or a verified problem statement.
+- The catalog lists every repository in static HTML. Search, language filters, and sorting run in the browser without a search service.
+- Inferred and still open: whether employers or collaborators are the primary audience. The page job above is taken from the requested redesign.
 
 ## Brand Commitments
 
-- Use the name Antoine Boucher and lead with “Software Engineer — Platform and graphics” in English and “Ingénieur logiciel — Plateforme et infographie” in French.
-- Keep the voice natural, direct, technically credible, and human rather than corporate or AI-sounding.
-- Preserve the breadth of backend, security, cloud, teaching, and open-source work without leading with a long tool list.
-- Treat the current portrait and published project assets as identity and evidence, not disposable decoration.
+Bilingual EN/FR copy. Shared spine tokens in `design/tokens.json` (focus, accent, spacing) sync into CV and Hugo; density differs by surface. Blog posts keep the journal theme (Fraunces, Open Sans, cream and teal). Project pages with `repository_note` and the projects catalog use the documentation shell from DESIGN.md (system UI, panel cards, ChitUI-preview palette; no Fraunces). Agents follow `.cursor/skills/project-docs/SKILL.md` when editing those pages. Playwright UX gates live under `tools/ux-audit/`.
 
 ## Evidence on Hand
 
-- Canonical resume data: `data/resume.en.json`, `data/resume.fr.json`, and `data/cv.yaml`.
-- About and answer-engine content: `data/aeo.yaml`.
-- Bilingual HTML CV and About pages at the repository root.
-- Bilingual LaTeX CV sources and compiled resume artifacts under `cv-en/` and `cv-fr/`.
-- Hugo posts and project pages under `hugo/content/`, including public project demonstrations and accepted contributions.
-- Public GitHub repositories, certifications, teaching experience, recommendations, and employment history linked from the site.
-- No future work may fabricate employers, clients, testimonials, benchmarks, awards, or usage metrics.
+- Repository note template: `hugo/layouts/shortcodes/repository-note.html`
+- Catalog: `hugo/layouts/projects/list.html`
+- Shell styles: `hugo/assets/repository-notes.css`, `hugo/assets/projects-directory.css`
+- Linguist bytes and install excerpts: `hugo/data/repository_analysis.json`
+- TCH099 routes and handlers inspected at commit `a7323c88b2ae6c12d89ef685c6a4cf4325218afc`, including `routes.php`, `docker-compose.yml`, and `api/utils/utils.php`
+- ChitUI README commands: virtualenv setup, `python main.py`, port `54780`, and `docker run --net=host`
+- Do not invent language percentages, live demo status, benchmarks, or production credentials.
 
 ## Product Principles
 
-1. Establish role fit quickly, then provide concrete evidence for deeper evaluation.
-2. Keep English, French, printable, and machine-readable representations aligned.
-3. Preserve factual precision and privacy over promotional embellishment.
-4. Make technical breadth navigable while maintaining a clear platform-and-graphics narrative.
-5. Prefer durable, progressively enhanced pages that remain useful without animation or client-side effects.
+- The README and the handler are the sources. The template only arranges them.
+- The same opening structure on every project, then only the sections that repository supports.
+- A diagram is readable at its default size, with a text alternative.
+- Permissions and deployment claims name the file that justifies them.
+- The catalog works before JavaScript; filtering improves it.
 
 ## Accessibility & Inclusion
 
-The site must remain keyboard accessible, responsive from narrow mobile screens through desktop layouts, readable with reduced motion enabled, and usable with sufficient contrast and appropriately sized interactive targets. English and French visitors should receive equivalent navigation, content hierarchy, and contact paths.
+Project pages and the catalog target WCAG AA contrast for text, keyboard access to diagram controls, tabs, steppers, and filters, and a text alternative for every architecture diagram. Information is not conveyed by color alone.

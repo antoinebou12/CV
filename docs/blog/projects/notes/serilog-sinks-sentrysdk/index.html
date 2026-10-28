@@ -1,0 +1,602 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Serilog.Sinks.SentrySDK: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Serilog.Sinks.SentrySDK: Adapting log events to Sentry"><meta itemprop=description content="Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="2500"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Serilog.Sinks.SentrySDK: Adapting log events to Sentry"><meta property="og:description" content="Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="Serilog.Sinks.SentrySDK: Adapting log events to Sentry"><meta name=twitter:description content="Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/serilog-sinks-sentrysdk/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/serilog-sinks-sentrysdk/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>Serilog.Sinks.SentrySDK: Adapting log events to Sentry</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
+<a href=#glossary>Glossary</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Technical dossier</a>
+<a href=#installation>Getting started</a>
+<a href=#features>Features</a>
+<a href=#reader-guide>Reference</a>
+<a href=#project-references>Links</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>Serilog.Sinks.SentrySDK: Adapting log events to Sentry</h1><p class=repo-hero-lede>Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information for Sentry rather than asking every call site to invoke the SDK directly.</p><div class=repo-status-row aria-label="Repository status"><span class="repo-badge kind">Library</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>2</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>C# · 98.04%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+View source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README
+</a><a class="btn ghost" href=https://www.nuget.org/packages/Serilog.Sinks.SentrySDK>NuGet package</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>C# 98.04%</span><span class=repo-count>2</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="C# 98.04%. PowerShell 1.96%."><span style=width:98.04% title="C# 98.04%"></span><span style=width:1.96% title="PowerShell 1.96%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C#</td><td><span class=repo-lang-bar style=--p:98.04%><span>98.04%</span></span></td><td class=num>89,769</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>PowerShell</td><td><span class=repo-lang-bar style=--p:1.96%><span>1.96%</span></span></td><td class=num>1,795</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK>GitHub</a> · <a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/Serilog.Sinks.SentrySDK/languages>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>Production .NET 6+ Serilog sink bridging structured logging and Sentry error telemetry with zero allocation overhead.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Enterprise .NET microservice error observability and distributed trace correlation.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Related articles & deep dives</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/posts/serilog-sentrysdk-structured-errors/><div class=repo-related-post-header><span class=repo-post-badge>Deep-dive article</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>Serilog.Sinks.SentrySDK: connecting structured logs to error reporting</h4><p>A tour of the Serilog Sentry sink: SDK initialization, event handling, ASP.NET Core context, NuGet packages and observable project activity.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Getting started</h2><p class=repo-lede-sm>These commands come from the repository documentation. They were not run during this review.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>dotnet add package Serilog.Sinks.SentrySDK
+Install-Package Serilog.Sinks.SentrySDK</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Build, run tests, and coverage (local development)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>dotnet restore src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj
+dotnet build src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj -c Release
+dotnet build src/Serilog.Sinks.SentrySDK.AspNetCore/Serilog.Sinks.SentrySDK.AspNetCore.csproj -c Release
+dotnet test src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj
+dotnet test src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/Serilog.Sinks.SentrySDK.AspNetCore.Tests.csproj</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Build, run tests, and coverage (local development)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./reports/coverage src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Code formatting (dotnet format)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>dotnet restore src/Serilog.Sinks.SentrySDK.sln
+dotnet format src/Serilog.Sinks.SentrySDK.sln</code></pre></div></div><div class=terminal role=group aria-label="Repository command"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Code formatting (dotnet format)</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copy</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>dotnet format src/Serilog.Sinks.SentrySDK.sln --verify-no-changes</code></pre></div></div></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Repository references</h2><p class=repo-evidence-label>Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prerequisites and first run</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L46>Installation</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>The library is available on NuGet as Serilog.Sinks.SentrySDK, or alternate ids Serilog.Sinks.SentrySDK.6 / Serilog.Sinks.SentrySDK.10 if you want a single target framework per package.
+You can install it with the following command:
+This package references the Sentry NuGet package (6.3.2), the same major line as the Sentry for .NET documentation. For generic SDK setup (DSN, SendDefaultPii, debug), see the official Quick Start. Initialize the SDK as early as possible so startup failures are reported. This sink calls SentrySdk.Init internally when you configure WriteTo.Sentry with a DSN; avoid calling SentrySdk.Init again for the same process unless you coordinate a single initialization path.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L46>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L63>Build, run tests, and coverage (local development)</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Prerequisites: .NET SDK 10 to build and run tests. The published libraries multi-target net6.0 and net10.0 (one package includes both under lib/). CI also installs the 6.0.x SDK band so net6.0 targets build cleanly on the runner.
+From the repository root:
+Run tests with coverage (same approach as CI, using coverlet):
+CI uploads Cobertura to Codecov; keep or improve coverage when you change production code.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L63>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L32>Installation</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README.md</code></p><div class=repo-source-markdown>Core sink:
+ASP.NET Core companion (user/request context in logs):
+Alternate ids (single TFM per package): Serilog.Sinks.SentrySDK.6, Serilog.Sinks.SentrySDK.10, and matching AspNetCore ids — see Available packages.
+This stack references the Sentry NuGet package (6.3.2), the same major line as Sentry for .NET. For DSN, SendDefaultPii, and debug options, see the Quick Start. Initialize as early as possible so startup failures are reported. This sink calls SentrySdk.Init when you configure WriteTo.Sentry with a DSN; avoid a second SentrySdk.Init in the same process unless you deliberately use one initialization path.
+Set a valid Sentry DSN in appsettings.json or in code. Without a DSN, the sink throws when the DSN argument is empty. Demos show JSON and programmatic configuration.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L32>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L60>Getting started</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README.md</code></p><div class=repo-source-markdown>Add the sink so logs are sent to Sentry. You can use Serilog.Settings.Configuration with JSON:
+Optional configureSentryOptions and beforeSend on WriteTo.Sentry map to init-time SentryOptions and a chained SetBeforeSend. A fuller argument list and examples are in the repository README — Getting Started.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L60>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README_NET6.md#L20>Installation</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README_NET6.md</code></p><div class=repo-source-markdown>This stack references Sentry (6.3.2). See the Sentry .NET Quick Start. This sink calls SentrySdk.Init when you configure WriteTo.Sentry with a DSN; avoid duplicate in-process initialization.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README_NET6.md#L20>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>API and integration</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L1>Serilog.Sinks.SentrySDK</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>A Serilog sink for Sentry that simplifies error and log management in your applications.
+Based on serilog-contrib/serilog-sinks-sentry</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L1>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L235>Sentry SDK</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Reference for the Sentry .NET SDK SentryOptions (this package references Sentry 6.3.2). The This sink column describes how each member relates to WriteTo.Sentry in this library.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md#L235>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/CONTRIBUTING.md#L1>Contributing to Serilog.Sinks.SentrySDK</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown>Thank you for helping improve this project. This document describes how we work on GitHub and what we expect in contributions.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/CONTRIBUTING.md#L1>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L1>Serilog.Sinks.SentrySDK</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README.md</code></p><div class=repo-source-markdown>A Serilog sink for Sentry that simplifies error and log management in your applications. It builds on the Sentry .NET SDK and official Serilog integration.
+Based on serilog-contrib/serilog-sinks-sentry</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L1>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L131>Sentry SDK options vs this sink</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README.md</code></p><div class=repo-source-markdown>This package aligns with Sentry .NET 6.3.2. The repository README maps SentryOptions properties and methods to WriteTo.Sentry parameters (large tables): Sentry SDK and Mapping to WriteTo.Sentry.
+Further reading: Data Management, Structured logs, Migration guide.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L131>Read the full instructions ↗</a></section></details><details class=repo-guide-chapter><summary><span>Development and contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/CONTRIBUTING.md#L21>Tests and coverage</a></h3><p class=repo-excerpt-file><code>CONTRIBUTING.md</code></p><div class=repo-source-markdown><ul><li>Run tests locally before pushing:</li><li>CI runs these tests and uploads coverage to Codecov. Prefer new tests for new code paths (e.g. factories, sink behavior, middleware) so coverage does not drop unnecessarily.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/CONTRIBUTING.md#L21>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L137>Demos, build, contributing</a></h3><p class=repo-excerpt-file><code>src/PACKAGE_README.md</code></p><div class=repo-source-markdown><ul><li>Demos: demos/README.md on GitHub</li><li>Solution and local build/test commands: README — Build, run tests, and coverage</li><li>CONTRIBUTING.md
+Full documentation (CI, publishing, formatting): README.md on GitHub.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L137>Read the full instructions ↗</a></section></details></div><details class=repo-guide-chapter><summary>Source documentation</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/CONTRIBUTING.md><code>CONTRIBUTING.md</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/README.md><code>demos/README.md</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md><code>src/PACKAGE_README.md</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README_NET6.md><code>src/PACKAGE_README_NET6.md</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README_NET10.md><code>src/PACKAGE_README_NET10.md</code></a></li></ul><p class=repo-evidence-label>6 documents read from 6 candidates.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Features and components <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Sink and SDK boundary</dt><dd>SentrySink.cs defines an SDK wrapper interface with capture-message, capture-exception and transaction methods. The wrapper delegates to SentrySdk. This boundary gives tests a substitute for the external SDK calls.</dd></div><div class=repo-feature><dt>Application context</dt><dd>The source tree separates the sink package from ASP.NET Core integration and tests. Request and user factories adapt HTTP context. Logging configuration and request enrichment therefore have different responsibilities.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Expand a component to follow its connections, or explore the full diagram.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>System components</strong>
+<span class=repo-figure-label>Context</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Application log event</span></summary><ul class=repo-component-connections><li>To <a href=#component-1>Serilog pipeline</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Serilog pipeline</span></summary><ul class=repo-component-connections><li>From <a href=#component-0>Application log event</a></li><li>To <a href=#component-2>Sentry sink and context</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Sentry sink and context</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Serilog pipeline</a></li><li>To <a href=#component-3>SDK wrapper</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>SDK wrapper</span></summary><ul class=repo-component-connections><li>From <a href=#component-2>Sentry sink and context</a></li><li>To <a href=#component-4>Sentry SDK</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Sentry SDK</span></summary><ul class=repo-component-connections><li>From <a href=#component-3>SDK wrapper</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Interactive diagram (loads on open)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-serilog-sinks-sentrysdk><p id=architecture-serilog-sinks-sentrysdk class=repo-diagram-caption>System overview of the components and connections verified in the repository.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/serilog-sinks-sentrysdk/system-overview.png loading=lazy decoding=async alt="Static architecture view for Serilog.Sinks.SentrySDK"><figcaption>Static preview. The interactive diagram replaces it after Mermaid loads.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_logging[&#34;Serilog integration&#34;]
+  node_sinkconfig[&#34;Sink registration&#34;]
+  node_sink[&#34;Event sink&lt;br/&gt;[SentrySink.cs]&#34;]
+end
+
+subgraph group_sentry[&#34;Sentry event delivery&#34;]
+  node_requestfactory[&#34;Request factory&#34;]
+  node_userfactory[&#34;User factory&#34;]
+  node_sentrysdk[&#34;Sentry SDK&#34;]
+end
+
+subgraph group_web[&#34;ASP.NET Core context&#34;]
+  node_contextadapter[&#34;HTTP adapter&#34;]
+  node_middleware[&#34;Request middleware&#34;]
+  node_destructure[&#34;Context destructuring&#34;]
+  node_contextcontract[&#34;HTTP context contract&#34;]
+end
+
+node_app((&#34;Application&#34;))
+node_serilog[&#34;Serilog pipeline&#34;]
+node_sentryservice((&#34;Sentry service&#34;))
+
+node_app --&gt;|&#34;writes events&#34;| node_serilog
+node_serilog --&gt;|&#34;configures sink&#34;| node_sinkconfig
+node_sinkconfig --&gt;|&#34;creates sink&#34;| node_sink
+node_sink --&gt;|&#34;captures events&#34;| node_sentrysdk
+node_sentrysdk -.-&gt;|&#34;sends telemetry&#34;| node_sentryservice
+node_middleware --&gt;|&#34;pushes context&#34;| node_contextadapter
+node_middleware --&gt;|&#34;logs exceptions&#34;| node_serilog
+node_contextadapter --&gt;|&#34;implements&#34;| node_contextcontract
+node_destructure --&gt;|&#34;recognizes context&#34;| node_contextcontract
+node_requestfactory --&gt;|&#34;reads request data&#34;| node_contextcontract
+node_userfactory --&gt;|&#34;reads user data&#34;| node_contextcontract
+node_sink -.-&gt;|&#34;uses request context&#34;| node_requestfactory
+node_sink -.-&gt;|&#34;uses user context&#34;| node_userfactory
+
+
+class node_sinkconfig,node_sink toneBlue
+class node_requestfactory,node_userfactory,node_sentrysdk toneAmber
+class node_contextadapter,node_middleware,node_destructure,node_contextcontract toneMint
+class node_app,node_serilog,node_sentryservice toneIndigo</code></pre></div><div class=repo-system-summary><p>A Serilog sink that configures the Sentry SDK and maps log events to messages, exceptions, breadcrumbs and optional traces. The ASP.NET Core package adds request and user context through an HTTP-context adapter.</p><dl><div><dt>Components</dt><dd>12</dd></div><div><dt>Connections</dt><dd>13</dd></div><div><dt>Links supported by code or README</dt><dd>10/13</dd></div></dl></div><details class=repo-diagram-text><summary>Text version of the diagram</summary><ul><li>Application log event → Serilog pipeline</li><li>Serilog pipeline → Sentry sink and context</li><li>Sentry sink and context → SDK wrapper</li><li>SDK wrapper → Sentry SDK</li></ul></details></div></details><details class=repo-trace><summary>Follow one path through the code</summary><p>Follow an exception-bearing log through the sink and compare it with a message-only event. The wrapper exposes separate capture operations, so a useful test checks the chosen operation and its event data, not only that a call occurred.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Technical dossier</h2><p class=repo-lede-sm>Built from the source at commit <a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b><code>d0b5c25</code></a> (45 files). Each item comes from a pattern match in the code, so open the linked file before relying on it.</p><nav class=repo-dossier-toc aria-label="Dossier sections"><a href=#dossier-layers>Layers and modules</a><a href=#dossier-flow>Data flow</a><a href=#dossier-public>Public interface</a><a href=#dossier-private>Private interface</a><a href=#dossier-services>Services and hosting</a><a href=#dossier-entities>Entities</a><a href=#dossier-logic>Business logic</a><a href=#dossier-integrations>External integrations</a><a href=#dossier-stack>Stack and dependencies</a><a href=#dossier-security>Security</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Layers and modules</h3><p class=repo-evidence-label>Folders are sorted into layers by name, from the user interface down to data access. The diagram shows where code sits; it does not trace calls between layers.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Layered view</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Presentation&#34;]
+    direction LR
+    presentation_0[&#34;demos/SentryWeb&lt;br/&gt;6 files&#34;]
+    presentation_1[&#34;Serilog.Sinks.SentrySDK.AspNetCore.Tests/reports&lt;br/&gt;1 files&#34;]
+    presentation_2[&#34;Serilog.Sinks.SentrySDK.Tests/reports&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_interface[&#34;Entry points and API&#34;]
+    direction LR
+    interface_0[&#34;demos/SentryWeb&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_domain[&#34;Domain and business rules&#34;]
+    direction LR
+    domain_0[&#34;demos/SentryWeb&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_infrastructure[&#34;Data and infrastructure&#34;]
+    direction LR
+    infrastructure_0[&#34;demos/SentryWeb&lt;br/&gt;11 files&#34;]
+    infrastructure_1[&#34;Serilog.Sinks.SentrySDK.AspNetCore&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_core[&#34;Core source&#34;]
+    direction LR
+    core_0[&#34;Serilog.Sinks.SentrySDK&lt;br/&gt;6 files&#34;]
+    core_1[&#34;demos/SentryWeb&lt;br/&gt;5 files&#34;]
+    core_2[&#34;Serilog.Sinks.SentrySDK.AspNetCore&lt;br/&gt;4 files&#34;]
+    core_3[&#34;(root)&lt;br/&gt;1 files&#34;]
+    core_more[&#34;&#43;1&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;Serilog.Sinks.SentrySDK.Tests&lt;br/&gt;6 files&#34;]
+    tests_1[&#34;Serilog.Sinks.SentrySDK.AspNetCore.Tests&lt;br/&gt;5 files&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI and hosting&#34;]
+    direction LR
+    hosting_0[&#34;.github&lt;br/&gt;10 files&#34;]
+  end
+  L_presentation ~~~ L_interface
+  L_interface ~~~ L_domain
+  L_domain ~~~ L_infrastructure
+  L_infrastructure ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb><code>demos/SentryWeb</code></a></th><td>Data and infrastructure</td><td class=num>24</td><td class=num>5</td><td>.js .css .cs</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK><code>Serilog.Sinks.SentrySDK</code></a></th><td>Core source</td><td class=num>6</td><td class=num>14</td><td>.cs</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore><code>Serilog.Sinks.SentrySDK.AspNetCore</code></a></th><td>Core source</td><td class=num>5</td><td class=num>5</td><td>.cs</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b><code>(root)</code></a></th><td>Core source</td><td class=num>1</td><td class=num>0</td><td>.ps1</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/reports><code>Serilog.Sinks.SentrySDK.AspNetCore.Tests/reports</code></a></th><td>Presentation</td><td class=num>1</td><td class=num>0</td><td>.xml</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/reports><code>Serilog.Sinks.SentrySDK.Tests/reports</code></a></th><td>Presentation</td><td class=num>1</td><td class=num>0</td><td>.xml</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole><code>demos/SentryConsole</code></a></th><td>Core source</td><td class=num>1</td><td class=num>1</td><td>.cs</td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-flow aria-labelledby=dossier-flow-h><h3 id=dossier-flow-h>Data flow</h3><p class=repo-evidence-label>The calls from the <a href=https://gitdiagram.com/antoinebou12/Serilog.Sinks.SentrySDK>GitDiagram</a> graph, in the order you meet them from the entry points. GitDiagram generates the graph with AI; the file paths it cites were checked against the repository tree.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Sequence diagram</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>sequenceDiagram
+  autonumber
+  participant P0 as Request middleware
+  participant P1 as HTTP adapter
+  participant P2 as Serilog pipeline
+  participant P3 as Context destructuring
+  participant P4 as HTTP context contract
+  participant P5 as Application
+  participant P6 as Sink registration
+  participant P7 as Event sink
+  participant P8 as Sentry SDK
+  participant P9 as Request factory
+  participant P10 as User factory
+  participant P11 as Sentry service
+  P0-&gt;&gt;P1: pushes context
+  P0-&gt;&gt;P2: logs exceptions
+  P3-&gt;&gt;P4: recognizes context
+  P5-&gt;&gt;P2: writes events
+  P1-&gt;&gt;P4: implements
+  P2-&gt;&gt;P6: configures sink
+  P6-&gt;&gt;P7: creates sink
+  P7-&gt;&gt;P8: captures events
+  P7--)P9: uses request context
+  P7--)P10: uses user context
+  P8--)P11: sends telemetry
+  P9-&gt;&gt;P4: reads request data
+  P10-&gt;&gt;P4: reads user data
+</code></pre></div></details><details class=repo-structure-details><summary>Steps as text</summary><ol class=repo-flow-steps><li><span class=from>Request middleware</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>HTTP adapter</span> <em>pushes context</em></li><li><span class=from>Request middleware</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Serilog pipeline</span> <em>logs exceptions</em></li><li><span class=from>Context destructuring</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>HTTP context contract</span> <em>recognizes context</em></li><li><span class=from>Application</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Serilog pipeline</span> <em>writes events</em></li><li><span class=from>HTTP adapter</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>HTTP context contract</span> <em>implements</em></li><li><span class=from>Serilog pipeline</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Sink registration</span> <em>configures sink</em></li><li><span class=from>Sink registration</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Event sink</span> <em>creates sink</em></li><li><span class=from>Event sink</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>Sentry SDK</span> <em>captures events</em></li><li><span class=from>Event sink</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Request factory</span> <em>uses request context</em></li><li><span class=from>Event sink</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>User factory</span> <em>uses user context</em></li><li><span class=from>Sentry SDK</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>to</span> <span class=to>Sentry service</span> <em>sends telemetry</em></li><li><span class=from>Request factory</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>HTTP context contract</span> <em>reads request data</em></li><li><span class=from>User factory</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>to</span> <span class=to>HTTP context contract</span> <em>reads user data</em></li></ol></details></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Public interface</h3><p class=repo-evidence-label>What code outside the project can call. The project declares 25 public types.</p><h4>Entry points</h4><ul class="repo-file-list compact"><li><code>Program.cs</code> <span class=repo-evidence-label>entry file</span> <code>demos/SentryConsole/Program.cs</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs><code>demos/SentryConsole/Program.cs</code></a></li><li><code>Program.cs</code> <span class=repo-evidence-label>entry file</span> <code>demos/SentryWeb/Program.cs</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Program.cs><code>demos/SentryWeb/Program.cs</code></a></li></ul></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Private interface</h3><p class=repo-evidence-label>Code kept for internal use by the language’s conventions.</p><dl class=repo-dossier-stats><div><dt>private / internal method</dt><dd>3</dd></div></dl><ul class="repo-file-list compact"><li><code>ConfigureLogging</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Startup.cs#L24><code>demos/SentryWeb/Startup.cs:24</code></a></li><li><code>EmitWithoutTracing</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L464><code>src/Serilog.Sinks.SentrySDK/SentrySink.cs:464</code></a></li><li><code>GetBreadcrumbLevel</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L520><code>src/Serilog.Sinks.SentrySDK/SentrySink.cs:520</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services and hosting</h3><div class=repo-dossier-grid><article class=repo-dossier-card><h4>Service <span class=repo-count>2</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L77><code>ITransactionService</code></a> <span class=repo-evidence-label>StartChild</span></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L93><code>TransactionService</code></a> <span class=repo-evidence-label>StartChild</span></li></ul></article><article class=repo-dossier-card><h4>Controller <span class=repo-count>1</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Controllers/HomeController.cs#L12><code>HomeController</code></a> <span class=repo-evidence-label>Index, About, Contact…</span></li></ul></article><article class=repo-dossier-card><h4>Adapter <span class=repo-count>1</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/AspCoreHttpContextAdapter.cs#L20><code>AspCoreHttpContextAdapter</code></a> <span class=repo-evidence-label>AspCoreHttpContextAdapter, GetRequestBody, GetRequestBodyAsync</span></li></ul></article></div><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/CI.yml title=.github/workflows/CI.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/publish-nuget-net6.yml title=.github/workflows/publish-nuget-net6.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/tests.yml title=.github/workflows/tests.yml>CI deploy workflow</a></li></ul></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entities and data model <span class=repo-count>1</span></h3><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entity</th><th scope=col>Kind</th><th scope=col>First fields</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Models/ErrorViewModel.cs#L5><code>ErrorViewModel</code></a></th><td>Record or interface</td><td><code>RequestId</code></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Business logic</h3><p class=repo-evidence-label>The classes with the most behaviour, leaving out UI code and the services and entities listed above.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L106><code>SentrySink</code></a> <span class=repo-evidence-label>Core source, 11 methods</span></dt><dd><code>SentrySink, Emit, EmitWithoutTracing, GetBreadcrumbLevel, GetSentryLevel, ExceptionDataToScopeExtrasDictionary</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs#L15><code>Program</code></a> <span class=repo-evidence-label>Core source, 5 methods</span></dt><dd><code>Main, ThrowDivideByZeroSecondTier, DivByZero, ThrowParseExceptionSecondTier, ConvertToInt</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L45><code>SentrySdkWrapper</code></a> <span class=repo-evidence-label>Core source, 4 methods</span></dt><dd><code>SentrySdkWrapper, CaptureMessage, CaptureException, StartTransaction</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Startup.cs#L15><code>Startup</code></a> <span class=repo-evidence-label>Core source, 4 methods</span></dt><dd><code>Startup, ConfigureLogging, ConfigureServices, Configure</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/SentrySink.cs#L20><code>ISentrySdkWrapper</code></a> <span class=repo-evidence-label>Core source, 3 methods</span></dt><dd><code>CaptureMessage, CaptureException, StartTransaction</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/ExceptionExtensions.cs#L8><code>ExceptionExtensions</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>CheckIfCaptured, SetCaptured</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/Program.cs#L8><code>Program</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>Main, CreateHostBuilder</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs#L21><code>SentryRequestFactory</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>SentryRequestFactory, Create</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/SentrySinkContextMiddleware.cs#L11><code>SentrySinkContextMiddleware</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>SentrySinkContextMiddleware, Invoke</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryUserFactory.cs#L22><code>SentryUserFactory</code></a> <span class=repo-evidence-label>Core source, 2 methods</span></dt><dd><code>SentryUserFactory, Create</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>External integrations</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs#L6 title=demos/SentryConsole/Program.cs>Sentry <span class=kind>observability</span></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack and dependencies</h3><details class=repo-structure-details><summary><strong>.NET</strong> <code>demos/SentryConsole/SentryConsole.csproj</code> <span class=repo-evidence-label>7 runtime</span></summary><p><span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>Newtonsoft.Json 13.0.4</code> <code>Serilog 4.3.1</code> <code>Serilog.Exceptions 8.4.0</code> <code>Serilog.Sinks.File 7.0.0</code> <code>Sentry.Serilog 6.4.1</code> <code>Microsoft.Extensions.Configuration.Json 10.0.13</code> <code>Microsoft.Extensions.Configuration.Binder 10.0.13</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/SentryConsole.csproj>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>.NET</strong> <code>demos/SentryWeb/SentryWeb.csproj</code> <span class=repo-evidence-label>7 runtime</span></summary><p><span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>Newtonsoft.Json 13.0.4</code> <code>Serilog 4.3.1</code> <code>Serilog.Exceptions 8.4.0</code> <code>Serilog.Sinks.File 7.0.0</code> <code>Sentry.Serilog 6.4.1</code> <code>Microsoft.Extensions.Configuration.Json 10.0.13</code> <code>Microsoft.Extensions.Configuration.Binder 10.0.13</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryWeb/SentryWeb.csproj>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>.NET</strong> <code>src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/Serilog.Sinks.SentrySDK.AspNetCore.Tests.csproj</code> <span class=repo-evidence-label>17 runtime</span></summary><p><span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>xunit 2.9.3</code> <code>Moq 4.20.72</code> <code>Castle.Core 5.2.1</code> <code>xunit.runner.visualstudio 3.1.5</code> <code>Microsoft.NET.Test.Sdk 18.5.1</code> <code>coverlet.collector 10.0.0</code> <code>FluentAssertions 8.9.0</code> <code>coverlet.msbuild 10.0.0</code> <code>Sentry 6.4.1</code> <code>Sentry.Serilog 6.4.1</code> <code>Serilog 4.3.1</code> <code>Serilog.Exceptions 8.4.0</code> <code>Serilog.Settings.Configuration 10.0.0</code> <code>Serilog.Sinks.Console 6.1.1</code> <code>Serilog.Sinks.File 7.0.0</code> <code>Serilog.Sinks.Sentry 2.4.3</code> <code>Newtonsoft.Json 13.0.4</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/Serilog.Sinks.SentrySDK.AspNetCore.Tests.csproj>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>.NET</strong> <code>src/Serilog.Sinks.SentrySDK.AspNetCore/Serilog.Sinks.SentrySDK.AspNetCore.csproj</code> <span class=repo-evidence-label>4 runtime</span></summary><p><span class="tag status">Target net6.0;net10.0</span> <span class="tag status">Target net6.0</span> <span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>Microsoft.SourceLink.GitHub 10.0.402</code> <code>Sentry 6.4.1</code> <code>Sentry.Serilog 6.4.1</code> <code>Serilog.Settings.Configuration 10.0.0</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore/Serilog.Sinks.SentrySDK.AspNetCore.csproj>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>.NET</strong> <code>src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj</code> <span class=repo-evidence-label>19 runtime</span></summary><p><span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>xunit 2.9.3</code> <code>Moq 4.20.72</code> <code>Castle.Core 5.2.1</code> <code>xunit.runner.visualstudio 3.1.5</code> <code>Microsoft.NET.Test.Sdk 18.5.1</code> <code>Microsoft.AspNetCore.Http.Abstractions 2.3.13</code> <code>coverlet.collector 10.0.0</code> <code>FluentAssertions 8.9.0</code> <code>coverlet.msbuild 10.0.0</code> <code>Sentry 6.4.1</code> <code>Sentry.Serilog 6.4.1</code> <code>Serilog 4.3.1</code> <code>Serilog.Exceptions 8.4.0</code> <code>Serilog.Settings.Configuration 10.0.0</code> <code>Serilog.Sinks.Console 6.1.1</code> <code>Serilog.Sinks.File 7.0.0</code> <code>Serilog.Sinks.Sentry 2.4.3</code> <code>Newtonsoft.Json 13.0.4</code> <code>Serilog.Sinks.TestCorrelator 4.0.0</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>.NET</strong> <code>src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj</code> <span class=repo-evidence-label>10 runtime</span></summary><p><span class="tag status">Target net6.0;net10.0</span> <span class="tag status">Target net6.0</span> <span class="tag status">Target net10.0</span></p><h4>Runtime</h4><p class=repo-inline-code><code>Sentry 6.4.1</code> <code>Sentry.Serilog 6.4.1</code> <code>Serilog 4.3.1</code> <code>Serilog.Exceptions 8.4.0</code> <code>Serilog.Settings.Configuration 10.0.0</code> <code>Serilog.Sinks.Console 6.1.1</code> <code>Serilog.Sinks.File 7.0.0</code> <code>Serilog.Sinks.Sentry 2.4.3</code> <code>Newtonsoft.Json 13.0.4</code> <code>Microsoft.SourceLink.GitHub 10.0.402</code></p><p><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj>Open the manifest</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Security</h3><h4>Supply chain</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/dependabot.yml title=.github/dependabot.yml>Dependabot updates</a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/renovate.json title=renovate.json>Renovate updates</a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/SECURITY.md title=SECURITY.md>Security policy</a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/codeql.yml title=.github/workflows/codeql.yml>CodeQL scanning</a></li></ul><h4>Environment variables <span class=repo-count>1</span></h4><p class=repo-evidence-label>Only the names are shown. Names that look like secrets are underlined.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/demos/SentryConsole/Program.cs#L26 class=is-secret><code>SENTRY_DSN</code></a></p></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Test files</dt><dd>11</dd></div><div><dt>Source files</dt><dd>39</dd></div><div><dt>Test cases, about</dt><dd>50</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs title=src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/AspCoreHttpContextAdapterTests.cs>xUnit</a></li></ul><h4>Where the tests are</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.Tests><code>src/Serilog.Sinks.SentrySDK.Tests</code></a> <span class=repo-evidence-label>6</span> <a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/tree/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/Serilog.Sinks.SentrySDK.AspNetCore.Tests><code>src/Serilog.Sinks.SentrySDK.AspNetCore.Tests</code></a> <span class=repo-evidence-label>5</span></p><h4>Continuous integration</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/CI.yml>.NET Core CI</a></dt><dd><code>dotnet test</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/codeql.yml>CodeQL</a></dt><dd><code>codeql</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/publish-nuget-net6.yml>Publish NuGet (.6 and .10 lines)</a></dt><dd><code>dotnet test</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/.github/workflows/tests.yml>.NET Core Test</a></dt><dd><code>dotnet test</code></dd></div></dl></section><p class=repo-dossier-missing>Nothing found for: Database.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>38 declared types, with 12 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class ta0f4fc6d8b31[&#34;ISentryRequestFactory&#34;] {
+  &lt;&lt;interface&gt;&gt;
+  Create()
+}
+class tab0f434b248f[&#34;SentryRequestFactory&#34;] {
+  SentryRequestFactory()
+  Create()
+}
+class t94a164d611c8[&#34;ISentryRequest&#34;] {
+  &lt;&lt;interface&gt;&gt;
+}
+class t66938c58944a[&#34;SentryRequest&#34;] {
+}
+class td9dd9f1be134[&#34;ISentrySdkWrapper&#34;] {
+  &lt;&lt;interface&gt;&gt;
+  CaptureMessage()
+  CaptureException()
+  StartTransaction()
+}
+class t436d77520181[&#34;SentrySdkWrapper&#34;] {
+  SentrySdkWrapper()
+  CaptureMessage()
+  CaptureException()
+  StartTransaction()
+}
+class t9aa877270a99[&#34;ITransactionService&#34;] {
+  &lt;&lt;interface&gt;&gt;
+  StartChild()
+}
+class t7f1535817357[&#34;TransactionService&#34;] {
+  StartChild()
+}
+class t53092b4cd27d[&#34;SentrySink&#34;] {
+  SentrySink()
+  Emit()
+  EmitWithoutTracing()
+  GetBreadcrumbLevel()
+}
+class t3bef4532763b[&#34;SentrySinkExtensions&#34;] {
+  Sentry()
+}
+class t6b344cd3bb4d[&#34;Program&#34;] {
+  Main()
+  ThrowDivideByZeroSecondTier()
+  DivByZero()
+  ThrowParseExceptionSecondTier()
+}
+class t0108ee6641d7[&#34;HomeController&#34;] {
+  Index()
+  About()
+  Contact()
+  Error()
+}
+ta0f4fc6d8b31 &lt;|.. tab0f434b248f
+t94a164d611c8 &lt;|.. t66938c58944a
+td9dd9f1be134 &lt;|.. t436d77520181
+t9aa877270a99 &lt;|.. t7f1535817357
+class bc2d528bdb08a[&#34;ILogEventSink&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+t53092b4cd27d ..&gt; bc2d528bdb08a : declared base
+class b06fa01e7e2b1[&#34;IDisposable&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+t53092b4cd27d ..&gt; b06fa01e7e2b1 : declared base
+class bd8f3faa41a98[&#34;Controller&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+t0108ee6641d7 ..&gt; bd8f3faa41a98 : declared base
+</code></pre></div><p class=repo-evidence-label>Unresolved bases remain labelled; full signatures are not reconstructed.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Reference</h2><p class=repo-reference-summary>32 / 32 eligible files read (117 in the tree); 0 oversized, 0 failed reads and 0 syntax diagnostics.</p><details class=repo-analysis-coverage><summary>What the scan covers</summary><p>Known dependency/build folders, credential files and binaries are excluded. The scan covers READMEs, recognized manifests and parser-supported source files.</p><p>Linguist statistics cover the whole repository and may include other languages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Constraints and checks</h2><aside class="repo-admonition warn">Request context can contain personal data. Review enrichment and filtering before forwarding it; package presence alone does not establish a privacy policy.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Files to read <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/SentrySink.cs><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/Serilog.Sinks.SentrySDK/SentrySink.cs</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs</code></a></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossary</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Find a term</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="No matching terms. Try another word." data-count=terms></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Repository</summary><p>The versioned source files, configuration, and history of a project.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>The repository’s entry document, usually covering its purpose and initial setup.</p></details><details id=term-dependency data-glossary-entry><summary>Dependency</summary><p>A library, tool, or service that another component needs to build or run.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>A request-and-response protocol used by browsers and web services. A method, path, headers, and optional body describe a request.</p></details><details id=term-cli data-glossary-entry><summary>CLI</summary><p>A text interface in which commands and arguments select operations. Exit codes let scripts detect success or failure.</p></details><details id=term-ci data-glossary-entry><summary>Continuous integration</summary><p>Automated checks that run when source changes, such as building, testing, and linting. Passing checks cover only what those checks exercise.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources and project updates</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK>GitHub</a><span>Source repository</span></li><li><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK#readme>README</a><span>Repository documentation</span></li><li><a href=/CV/blog/posts/serilog-sentrysdk-structured-errors/>Serilog.Sinks.SentrySDK: connecting structured logs to error reporting</a><span>Oct 20, 2026 · Project story</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Project facts</p><div class=kv><span>Language</span><b>C#</b></div><div class=kv><span>Kind</span><b>Library</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/Serilog.Sinks.SentrySDK>GitHub</a></div><div class=kv><span>Updated</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

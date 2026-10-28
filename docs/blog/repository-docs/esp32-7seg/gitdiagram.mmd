@@ -1,0 +1,87 @@
+flowchart TD
+
+subgraph group_firmware["ESP32 firmware"]
+  node_boot["Firmware startup<br/>[main.cpp]"]
+  node_wifi["Wi-Fi setup<br/>[wifi.cpp]"]
+  node_credentials[("Wi-Fi credentials<br/>[wifi.cpp]")]
+  node_timer_display["Timer display<br/>[display.cpp]"]
+end
+
+subgraph group_web["Web control"]
+  node_http_server["HTTP and WebSocket server<br/>[web_server.cpp]"]
+  node_web_pages["Browser interface<br/>[web_page.h]"]
+end
+
+subgraph group_android["Android app"]
+  node_android_entry["Android navigation<br/>[MainActivity.kt]"]
+  node_timer_ui["Timer controls"]
+  node_wifi_ui["Wi-Fi onboarding"]
+  node_settings_ui["Settings"]
+  node_browser_ui["Embedded browser view"]
+  node_stop_receiver["Timer stop receiver"]
+  node_settings_adapter["Settings list adapter<br/>[SettingsAdapter.kt]"]
+end
+
+subgraph group_android_net["Android networking"]
+  node_timer_api["Timer API contract<br/>[TimerApiService.kt]"]
+  node_retrofit["HTTP client setup"]
+  node_ws_client["WebSocket client<br/>[WebSocketClient.kt]"]
+  node_preferences[("App preferences")]
+end
+
+node_operator(("User"))
+node_browser(("Browser"))
+node_display_hw{{"7-segment display"}}
+
+node_operator -->|"controls"| node_browser
+node_browser -->|"submits controls"| node_http_server
+node_boot -->|"loads or configures"| node_wifi
+node_boot -->|"starts display"| node_timer_display
+node_boot -->|"starts server"| node_http_server
+node_wifi -->|"reads and writes"| node_credentials
+node_http_server -->|"handles Wi-Fi routes"| node_wifi
+node_http_server -->|"dispatches timer updates"| node_timer_display
+node_http_server -->|"serves pages"| node_web_pages
+node_timer_display -->|"drives display"| node_display_hw
+node_operator -.->|"uses app"| node_android_entry
+node_timer_ui -->|"requests timer actions"| node_retrofit
+node_timer_ui -->|"opens timer socket"| node_ws_client
+node_wifi_ui -->|"sends credentials"| node_retrofit
+node_settings_ui -->|"uses adapter"| node_settings_adapter
+node_settings_ui -->|"loads device data"| node_retrofit
+node_retrofit -->|"creates service"| node_timer_api
+node_retrofit -->|"initializes preferences"| node_preferences
+node_timer_ui -->|"registers timer events"| node_stop_receiver
+node_timer_api -.->|"calls matching routes"| node_http_server
+node_ws_client -.->|"connects to socket"| node_http_server
+
+click node_boot "https://github.com/antoinebou12/esp32-7seg/blob/main/src/main.cpp"
+click node_wifi "https://github.com/antoinebou12/esp32-7seg/blob/main/src/wifi.cpp"
+click node_credentials "https://github.com/antoinebou12/esp32-7seg/blob/main/src/wifi.cpp"
+click node_timer_display "https://github.com/antoinebou12/esp32-7seg/blob/main/src/display.cpp"
+click node_http_server "https://github.com/antoinebou12/esp32-7seg/blob/main/src/web_server.cpp"
+click node_web_pages "https://github.com/antoinebou12/esp32-7seg/blob/main/include/web_page.h"
+click node_android_entry "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/MainActivity.kt"
+click node_timer_ui "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/fragment/TimerControlFragment.kt"
+click node_wifi_ui "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/fragment/WiFiConnectFragment.kt"
+click node_settings_ui "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/fragment/SettingsFragment.kt"
+click node_browser_ui "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/fragment/WebBrowserFragment.kt"
+click node_timer_api "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/api/TimerApiService.kt"
+click node_retrofit "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/api/RetrofitInstance.kt"
+click node_ws_client "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/api/WebSocketClient.kt"
+click node_preferences "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/config/PreferencesHelper.kt"
+click node_stop_receiver "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/receiver/TimerStopReceiver.kt"
+click node_settings_adapter "https://github.com/antoinebou12/esp32-7seg/blob/main/android/app/src/main/java/com/esptimer/adapter/SettingsAdapter.kt"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_boot,node_wifi,node_credentials,node_timer_display,node_operator,node_browser toneBlue
+class node_http_server,node_web_pages toneAmber
+class node_android_entry,node_timer_ui,node_wifi_ui,node_settings_ui,node_browser_ui,node_stop_receiver,node_settings_adapter toneMint
+class node_timer_api,node_retrofit,node_ws_client,node_preferences toneRose
+class node_display_hw toneIndigo

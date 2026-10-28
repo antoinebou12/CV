@@ -26,7 +26,6 @@ _COURSE_CODE_RE = re.compile(r"^[A-Z]{2,6}\d{2,5}$")
 
 EN_STATIC = (
     "index-en.html",
-    "about-en.html",
     "index.html",
     "404.html",
     "AGENTS.md",
@@ -34,7 +33,6 @@ EN_STATIC = (
 
 FR_STATIC = (
     "index-fr.html",
-    "about-fr.html",
 )
 
 EN_DIRS = ("cv-en/latex", "letters/en", "docs", "scripts")

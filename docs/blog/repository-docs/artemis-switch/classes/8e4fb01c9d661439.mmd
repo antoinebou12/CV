@@ -1,0 +1,31 @@
+classDiagram
+direction TB
+class t9adbb6d17980["DerpFrame"] {
+  <<struct>>
+}
+class t9a19d264b105["DerpCodec"] {
+  encode()
+  parse()
+  append()
+  take()
+}
+class t689b745dd7b8["IDerpCrypto"] {
+  seal()
+  open()
+}
+class te9d9023cb97b["DerpCrypto"] {
+  seal()
+  open()
+}
+class t0bb45d4b02cd["DerpSession"] {
+  connect()
+  sendPacket()
+  sendPing()
+  recvFrame()
+  writeRaw()
+  close()
+  interrupt()
+  isConnected()
+  serverKey()
+}
+t689b745dd7b8 <|-- te9d9023cb97b

@@ -1,0 +1,41 @@
+classDiagram
+direction TB
+class t7aedfc68f2a9["GenerateUMLInput"] {
+  validate_diagram_type()
+  validate_code()
+  validate_output_format()
+  validate_output_format_for_diagram_type()
+  validate_output_location()
+}
+class t422e75b86a88["ValidateUMLInput"] {
+  validate_diagram_type()
+  validate_code()
+  validate_output_format()
+  validate_output_format_for_diagram_type()
+}
+class t7e136682cb10["DiagramResult"] {
+}
+class t3665d5ffba54["ValidationResult"] {
+}
+class t6a5c42a12f7c["BatchDiagramItem"] {
+}
+class td6772addbcc0["BatchDiagramResult"] {
+}
+class t82e48bd221d0["DiagramTypeInfo"] {
+}
+class t2e28e9537e38["DiagramTypesOutput"] {
+}
+class b44eab2db3350["BaseModel"] {
+  <<unresolved_base>>
+}
+b44eab2db3350 <|-- t7aedfc68f2a9
+b44eab2db3350 <|-- t422e75b86a88
+b44eab2db3350 <|-- t7e136682cb10
+b44eab2db3350 <|-- t3665d5ffba54
+t7e136682cb10 <|-- t6a5c42a12f7c
+b44eab2db3350 <|-- td6772addbcc0
+b44eab2db3350 <|-- t82e48bd221d0
+class b437a050491d2["RootModel[dict[str, DiagramTypeInfo]]"] {
+  <<unresolved_base>>
+}
+b437a050491d2 <|-- t2e28e9537e38

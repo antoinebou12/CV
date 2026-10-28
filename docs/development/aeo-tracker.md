@@ -25,15 +25,13 @@ Replace enterprise consulting prompts with prompts aligned to public content:
 | Artifact | Path |
 |----------|------|
 | Snippet lead | `index-en.html` / `index-fr.html` (`.aeo-lead.aeo-agent-only` at end of `<main>`) |
-| About pages (hero, summary cards, nested FAQ) | `about-en.html` / `about-fr.html`; styles `css/cv-about-page.css` |
-| FAQ + FAQPage JSON-LD | Same About pages; `Person.knowsAbout` in JSON-LD |
-| Freshness | `article:modified_time`, `<time datetime>`, JSON-LD `dateModified` |
-| Source data | `data/aeo.yaml` (`lead`, `hero`, `summaryCards`, `faq`, `recognition`, `technicalProfile`, `personKnowsAbout`) → `python scripts/build/generate_aeo_content.py --all` |
+| Freshness | `article:modified_time`, `<time datetime>` |
+| Source data | `data/aeo.yaml` (`lead`, `lastUpdated`, …) → `python scripts/build/generate_aeo_content.py --all` (CV patches only; no About HTML pages) |
 
 ## After deploy
 
 1. Merge to `main` and wait for the GitHub Actions deploy workflow (runs `generate_aeo_content.py` and `generate_person_jsonld.py`).
-2. Purge Cloudflare cache (`/CV/`, `/.well-known/*`, `/llms.txt`, `/robots.txt`, `/CV/about-en.html`).
+2. Purge Cloudflare cache (`/CV/`, `/.well-known/*`, `/llms.txt`, `/robots.txt`).
 3. Run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify-agent-ready-production.ps1 -SitePrefix /CV` — all checks should pass.
 4. Re-run **AEO Readiness** on the tracker URL.
 

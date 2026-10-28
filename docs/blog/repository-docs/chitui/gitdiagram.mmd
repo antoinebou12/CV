@@ -1,0 +1,69 @@
+flowchart TD
+
+subgraph group_server["Server and discovery"]
+  node_app["HTTP and Socket.IO server<br/>[main.py]"]
+  node_discovery["Printer discovery<br/>[main.py]"]
+  node_upload["File upload handling<br/>[main.py]"]
+  node_transfer["Printer file transfer<br/>[main.py]"]
+end
+
+subgraph group_printer["Printer communication"]
+  node_commands["SDCP commands<br/>[main.py]"]
+  node_connection["Printer WebSocket connection<br/>[main.py]"]
+end
+
+subgraph group_webui["Browser interface"]
+  node_index["Web page entry<br/>[index.html]"]
+  node_ui["Printer dashboard and actions<br/>[chitui.js]"]
+  node_protocol["SDCP constants<br/>[sdcp.js]"]
+  node_theme["Theme preferences<br/>[color-modes.js]"]
+end
+
+node_user(("Operator"))
+node_browser(("Web browser"))
+node_printer["SDCP printer"]
+
+node_user -->|"uses"| node_browser
+node_browser -->|"opens interface"| node_app
+node_app -->|"serves"| node_index
+node_user -->|"operates"| node_ui
+node_ui -->|"sends events"| node_app
+node_app -->|"emits updates"| node_ui
+node_app -->|"runs discovery"| node_discovery
+node_discovery -->|"broadcasts discovery"| node_printer
+node_app -->|"connects printers"| node_connection
+node_connection -->|"opens WebSocket"| node_printer
+node_app -->|"dispatches requests"| node_commands
+node_commands -->|"sends SDCP"| node_printer
+node_printer -->|"sends messages"| node_connection
+node_connection -->|"routes printer events"| node_app
+node_browser -->|"posts print file"| node_upload
+node_app -->|"handles upload"| node_upload
+node_upload -->|"starts transfer"| node_transfer
+node_transfer -->|"uploads file"| node_printer
+node_ui -->|"uses constants"| node_protocol
+node_index -.->|"loads interface code"| node_ui
+node_index -.->|"loads theme control"| node_theme
+
+click node_app "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_discovery "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_upload "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_transfer "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_commands "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_connection "https://github.com/antoinebou12/chitui/blob/master/main.py"
+click node_index "https://github.com/antoinebou12/chitui/blob/master/web/index.html"
+click node_ui "https://github.com/antoinebou12/chitui/blob/master/web/js/chitui.js"
+click node_protocol "https://github.com/antoinebou12/chitui/blob/master/web/js/sdcp.js"
+click node_theme "https://github.com/antoinebou12/chitui/blob/master/web/js/color-modes.js"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_app,node_discovery,node_upload,node_transfer,node_browser toneBlue
+class node_commands,node_connection toneAmber
+class node_index,node_ui,node_protocol,node_theme toneMint
+class node_user,node_printer toneIndigo

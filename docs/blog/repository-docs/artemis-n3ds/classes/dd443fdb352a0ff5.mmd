@@ -1,0 +1,24 @@
+classDiagram
+direction TB
+class ta7f589e4be09["VideoDecoderBase"] {
+  accept()
+  _accept_touch_state_changed()
+  _accept_keyboard_state_changed()
+}
+class tb2f58dc75feb["MockVideoDecoder"] {
+}
+class t391f53097446["SoftVideoDecoder"] {
+  submit_decode_unit()
+  _write_yuv_to_framebuffer()
+}
+class t4ad2ea8a811e["MvdDecoder"] {
+  submit_decode_unit()
+  _decode()
+}
+class b34b203f09b57["ISubscriber"] {
+  <<unresolved_base>>
+}
+b34b203f09b57 <|-- ta7f589e4be09
+ta7f589e4be09 <|-- tb2f58dc75feb
+ta7f589e4be09 <|-- t391f53097446
+ta7f589e4be09 <|-- t4ad2ea8a811e

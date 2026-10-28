@@ -156,7 +156,8 @@ body.blog-site {
 /* Language selector: compact segments with an explicit selected state. */
 /* Keyboard access and comfortable controls across light and dark themes. */
 .site-skip-link { position: fixed; top: 12px; left: 12px; z-index: 1000; min-height: 44px; padding: 12px 18px; background: #fff; color: #173d3a; border: 3px solid #173d3a; border-radius: 4px; transform: translateY(-160%); display: inline-flex; align-items: center; }
-.site-skip-link:focus { transform: translateY(0); }
+.site-skip-link:not(:focus) { clip-path: inset(50%); }
+.site-skip-link:focus { transform: translateY(0); clip-path: none; color: #173d3a !important; background: #fff !important; }
 #main-content:focus { outline: none; }
 .site-header :is(a,button):focus-visible { outline-color: #fff !important; outline-offset: 2px !important; }
 .site-header .btn-dark { display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: none !important; color: #fff !important; filter: none !important; }

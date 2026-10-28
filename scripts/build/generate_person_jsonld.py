@@ -155,8 +155,6 @@ def build_graph(data: dict, page_url: str, lang: str) -> dict:
     person_id = f"{page_url}#person"
     webpage_id = f"{page_url}#webpage"
     website_id = f"{SITE_ROOT}/#website"
-    about_url = f"{SITE_ROOT}/about-{lang}.html"
-    about_id = f"{about_url}#webpage"
     last_mod, date_pub = load_aeo_dates()
 
     person: dict = {
@@ -211,7 +209,7 @@ def build_graph(data: dict, page_url: str, lang: str) -> dict:
         "datePublished": iso_date(date_pub),
         "isPartOf": {"@id": website_id},
         "mainEntity": {"@id": person_id},
-        "about": {"@id": about_id},
+        "about": {"@id": person_id},
         "speakable": {
             "@type": "SpeakableSpecification",
             "cssSelector": [".aeo-lead"],

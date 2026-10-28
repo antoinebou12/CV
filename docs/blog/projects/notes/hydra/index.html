@@ -1,0 +1,622 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>hydra: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="hydra: An Electron application across process boundaries"><meta itemprop=description content="This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="2132"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/hydra/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="hydra: An Electron application across process boundaries"><meta property="og:description" content="This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="hydra: An Electron application across process boundaries"><meta name=twitter:description content="This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/hydra/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/hydra/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/hydra/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>hydra: An Electron application across process boundaries</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
+<a href=#glossary>Glossary</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Technical dossier</a>
+<a href=#installation>Getting started</a>
+<a href=#features>Features</a>
+<a href=#reader-guide>Reference</a>
+<a href=#project-references>Links</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>hydra: An Electron application across process boundaries</h1><p class=repo-hero-lede>This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those boundaries explain why the project has several toolchains rather than one frontend build.</p><div class=repo-status-row aria-label="Repository status"><span class="repo-badge kind">Application and tools</span>
+<span class="repo-badge fork">Fork</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>TypeScript · 81.85%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"><span class="tag status">Upstream credited</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/hydra><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+View source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/hydra#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>TypeScript 81.85%</span><span class=repo-count>7</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="TypeScript 81.85%. SCSS 10.64%. Rust 6.46%. Python 0.55%."><span style=width:81.85% title="TypeScript 81.85%"></span><span style=width:10.64% title="SCSS 10.64%"></span><span style=width:6.46% title="Rust 6.46%"></span><span style=width:.55% title="Python 0.55%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>TypeScript</td><td><span class=repo-lang-bar style=--p:81.85%><span>81.85%</span></span></td><td class=num>5,693,766</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>SCSS</td><td><span class=repo-lang-bar style=--p:10.64%><span>10.64%</span></span></td><td class=num>739,993</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>Rust</td><td><span class=repo-lang-bar style=--p:6.46%><span>6.46%</span></span></td><td class=num>449,445</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:0.55%><span>0.55%</span></span></td><td class=num>38,598</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>JavaScript</td><td><span class=repo-lang-bar style=--p:0.49%><span>0.49%</span></span></td><td class=num>33,740</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>HTML</td><td><span class=repo-lang-bar style=--p:0.01%><span>0.01%</span></span></td><td class=num>981</td></tr></tbody></table><details class=repo-language-more><summary>1 more languages</summary><table class=repo-lang-table><tbody><tr><td>NSIS</td><td>0%</td><td class=num>119</td></tr></tbody></table></details><p class=repo-snapshot><a href=https://github.com/antoinebou12/hydra>GitHub</a> · <a href=https://github.com/antoinebou12/hydra#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/hydra/languages>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>Desktop Electron and TypeScript application orchestrating gaming library metadata and downloads.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Open-source alternative game launcher and library organizer.</p></article></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Getting started</h2><p class=repo-lede-sm>These commands come from the repository documentation. They were not run during this review.</p><div class=tabbody id=install-native data-tab-panel=native><aside class="repo-admonition info"><p class=repo-admonition-title>Installation not extracted</p><p>No reusable installation recipe was extracted from this repository.</p><p><a class="btn ghost" href=https://github.com/antoinebou12/hydra#readme>Open the README</a></p></aside><details class=repo-manifest-tasks><summary>Tasks declared in manifests</summary><h3><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/package.json><code>package.json</code></a></h3><dl class=repo-deflist><div><dt><code>test</code></dt><dd><code>node --import ./scripts/register-ts-node.mjs --test "src/**/*.test.ts"</code></dd></div><div><dt><code>lint</code></dt><dd><code>eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix</code></dd></div><div><dt><code>typecheck</code></dt><dd><code>npm run typecheck:node && npm run typecheck:web</code></dd></div><div><dt><code>start</code></dt><dd><code>electron-vite preview</code></dd></div><div><dt><code>dev</code></dt><dd><code>electron-vite dev</code></dd></div><div><dt><code>build</code></dt><dd><code>npm run typecheck && electron-vite build</code></dd></div></dl></details></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Repository references</h2><p class=repo-evidence-label>Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prerequisites and first run</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/README.md#L28>Build from source and contributing</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Please, refer to our Documentation pages: docs.hydralauncher.gg</div><a class=repo-guide-context href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/README.md#L28>Read the full instructions ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/README.md#L32>Local development requirements</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>Node.js + Yarn</li><li>Python 3.9+ with pip install -r requirements.txt</li><li>Rust toolchain (for hydra-native)
+After installing dependencies, postinstall now builds the Rust native addon automatically (hydra-native/hydra-native.node).
+Packaging scripts (yarn build:win, yarn build:mac, yarn build:linux, yarn build:unpack) now run yarn build:python-rpc automatically.</li></ul></div><a class=repo-guide-context href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/README.md#L32>Read the full instructions ↗</a></section></details></div><details class=repo-guide-chapter><summary>Source documentation</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/README.md><code>README.md</code></a></li></ul><p class=repo-evidence-label>1 documents read from 1 candidates.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Features and components <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Main and renderer</dt><dd>package.json points Electron to out/main/index.js. Separate TypeScript checks cover node and web code. Electron-Vite builds the desktop application, while React and the UI libraries belong to the renderer side.</dd></div><div class=repo-feature><dt>Native and Python modules</dt><dd>build:native runs a dedicated addon script. build:python-rpc packages python_rpc separately, and platform packaging invokes both paths. Installing JavaScript dependencies alone is therefore not the complete release build.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Expand a component to follow its connections, or explore the full diagram.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>System components</strong>
+<span class=repo-figure-label>Context</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>React renderer</span></summary><ul class=repo-component-connections><li>To <a href=#component-1>Electron process boundary</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Electron process boundary</span></summary><ul class=repo-component-connections><li>From <a href=#component-0>React renderer</a></li><li>To <a href=#component-2>Main-process services</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Main-process services</span></summary><ul class=repo-component-connections><li>From <a href=#component-1>Electron process boundary</a></li><li>To <a href=#component-3>Native addon</a></li><li>To <a href=#component-4>Python RPC component</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Native addon</span></summary><ul class=repo-component-connections><li>From <a href=#component-2>Main-process services</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Python RPC component</span></summary><ul class=repo-component-connections><li>From <a href=#component-2>Main-process services</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Interactive diagram (loads on open)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-hydra><p id=architecture-hydra class=repo-diagram-caption>System overview of the components and connections verified in the repository.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/hydra/overview-en.png loading=lazy decoding=async alt="Static architecture view for hydra"><figcaption>Static preview. The interactive diagram replaces it after Mermaid loads.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  n0[&#34;React renderer&#34;]
+  n1[&#34;Electron process boundary&#34;]
+  n2[&#34;Main-process services&#34;]
+  n3[&#34;Native addon&#34;]
+  n4[&#34;Python RPC component&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n2 --&gt; n4
+</code></pre></div><details class=repo-diagram-text><summary>Text version of the diagram</summary><ul><li>React renderer → Electron process boundary</li><li>Electron process boundary → Main-process services</li><li>Main-process services → Native addon</li><li>Main-process services → Python RPC component</li></ul></details></div></details><details class=repo-trace><summary>Follow one path through the code</summary><p>Start with the build scripts and distinguish renderer compilation, native-addon compilation and Python packaging. Then inspect the process API for a particular feature; package dependencies alone do not identify which process owns it.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Technical dossier</h2><p class=repo-lede-sm>Built from the source at commit <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e><code>e769e3b</code></a> (1343 files). Each item comes from a pattern match in the code, so open the linked file before relying on it.</p><nav class=repo-dossier-toc aria-label="Dossier sections"><a href=#dossier-layers>Layers and modules</a><a href=#dossier-public>Public interface</a><a href=#dossier-private>Private interface</a><a href=#dossier-services>Services and hosting</a><a href=#dossier-entities>Entities</a><a href=#dossier-logic>Business logic</a><a href=#dossier-database>Database</a><a href=#dossier-integrations>External integrations</a><a href=#dossier-stack>Stack and dependencies</a><a href=#dossier-security>Security</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Layers and modules</h3><p class=repo-evidence-label>Folders are sorted into layers by name, from the user interface down to data access. The diagram shows where code sits; it does not trace calls between layers.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Layered view</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Presentation&#34;]
+    direction LR
+    presentation_0[&#34;renderer/pages&lt;br/&gt;317 files&#34;]
+    presentation_1[&#34;big-picture/components&lt;br/&gt;151 files&#34;]
+    presentation_2[&#34;big-picture/pages&lt;br/&gt;95 files&#34;]
+    presentation_3[&#34;renderer/components&lt;br/&gt;94 files&#34;]
+    presentation_more[&#34;&#43;9&#34;]
+  end
+  subgraph L_interface[&#34;Entry points and API&#34;]
+    direction LR
+    interface_0[&#34;big-picture/hooks&lt;br/&gt;2 files&#34;]
+    interface_1[&#34;helpers&lt;br/&gt;2 files&#34;]
+    interface_2[&#34;main&lt;br/&gt;2 files&#34;]
+    interface_3[&#34;renderer/context&lt;br/&gt;2 files&#34;]
+    interface_more[&#34;&#43;34&#34;]
+  end
+  subgraph L_application[&#34;Application services&#34;]
+    direction LR
+    application_0[&#34;services/cloud-save&lt;br/&gt;79 files&#34;]
+    application_1[&#34;services&lt;br/&gt;43 files&#34;]
+    application_2[&#34;services/emulators&lt;br/&gt;38 files&#34;]
+    application_3[&#34;services/retroarch&lt;br/&gt;13 files&#34;]
+    application_more[&#34;&#43;12&#34;]
+  end
+  subgraph L_domain[&#34;Domain and business rules&#34;]
+    direction LR
+    domain_0[&#34;big-picture/components&lt;br/&gt;44 files&#34;]
+    domain_1[&#34;types&lt;br/&gt;13 files&#34;]
+    domain_2[&#34;native/hydra-native&lt;br/&gt;6 files&#34;]
+    domain_3[&#34;big-picture/types&lt;br/&gt;4 files&#34;]
+    domain_more[&#34;&#43;3&#34;]
+  end
+  subgraph L_infrastructure[&#34;Data and infrastructure&#34;]
+    direction LR
+    infrastructure_0[&#34;big-picture/components&lt;br/&gt;6 files&#34;]
+    infrastructure_1[&#34;events/leveldb&lt;br/&gt;6 files&#34;]
+    infrastructure_2[&#34;level/sublevels&lt;br/&gt;3 files&#34;]
+    infrastructure_3[&#34;native/hydra-native&lt;br/&gt;1 files&#34;]
+  end
+  subgraph L_core[&#34;Core source&#34;]
+    direction LR
+    core_0[&#34;events/library&lt;br/&gt;61 files&#34;]
+    core_1[&#34;native/hydra-native&lt;br/&gt;45 files&#34;]
+    core_2[&#34;events/emulators&lt;br/&gt;37 files&#34;]
+    core_3[&#34;renderer/hooks&lt;br/&gt;25 files&#34;]
+    core_more[&#34;&#43;35&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;services&lt;br/&gt;55 files&#34;]
+    tests_1[&#34;renderer&lt;br/&gt;8 files&#34;]
+    tests_2[&#34;events&lt;br/&gt;6 files&#34;]
+    tests_3[&#34;big-picture&lt;br/&gt;2 files&#34;]
+    tests_more[&#34;&#43;2&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI and hosting&#34;]
+    direction LR
+    hosting_0[&#34;.github&lt;br/&gt;8 files&#34;]
+  end
+  L_presentation ~~~ L_interface
+  L_interface ~~~ L_application
+  L_application ~~~ L_domain
+  L_domain ~~~ L_infrastructure
+  L_infrastructure ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/pages><code>renderer/pages</code></a></th><td>Presentation</td><td class=num>317</td><td class=num>204</td><td>.tsx .scss .ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components><code>big-picture/components</code></a></th><td>Presentation</td><td class=num>201</td><td class=num>153</td><td>.tsx .scss .ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/pages><code>big-picture/pages</code></a></th><td>Presentation</td><td class=num>97</td><td class=num>117</td><td>.tsx .scss .ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/components><code>renderer/components</code></a></th><td>Presentation</td><td class=num>94</td><td class=num>51</td><td>.tsx .scss .ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save><code>services/cloud-save</code></a></th><td>Application services</td><td class=num>79</td><td class=num>45</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/library><code>events/library</code></a></th><td>Core source</td><td class=num>63</td><td class=num>17</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native><code>native/hydra-native</code></a></th><td>Core source</td><td class=num>54</td><td class=num>78</td><td>.rs</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services><code>services</code></a></th><td>Application services</td><td class=num>43</td><td class=num>48</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/emulators><code>events/emulators</code></a></th><td>Core source</td><td class=num>38</td><td class=num>7</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators><code>services/emulators</code></a></th><td>Application services</td><td class=num>38</td><td class=num>52</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/hooks><code>renderer/hooks</code></a></th><td>Core source</td><td class=num>26</td><td class=num>12</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/cloud-save><code>events/cloud-save</code></a></th><td>Core source</td><td class=num>25</td><td class=num>4</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/hooks><code>big-picture/hooks</code></a></th><td>Core source</td><td class=num>23</td><td class=num>3</td><td>.ts</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/retroarch><code>events/retroarch</code></a></th><td>Core source</td><td class=num>23</td><td class=num>10</td><td>.ts</td></tr></tbody></table></div><p class=repo-evidence-label>54 smaller modules are not shown.</p></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Public interface</h3><p class=repo-evidence-label>What code outside the project can call. The project declares 1251 public types.</p><h4>Entry points</h4><ul class="repo-file-list compact"><li><code>main</code> <span class=repo-evidence-label>package export</span> <code>./out/main/index.js</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/package.json><code>package.json</code></a></li><li><code>main.py</code> <span class=repo-evidence-label>entry file</span> <code>python_rpc/main.py</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/main.py><code>python_rpc/main.py</code></a></li><li><code>index.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/locales/index.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/locales/index.ts><code>src/locales/index.ts</code></a></li><li><code>index.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/main/index.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/index.ts><code>src/main/index.ts</code></a></li><li><code>main.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/main/main.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/main.ts><code>src/main/main.ts</code></a></li><li><code>index.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/preload/index.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/preload/index.ts><code>src/preload/index.ts</code></a></li><li><code>index.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/shared/index.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/shared/index.ts><code>src/shared/index.ts</code></a></li><li><code>index.ts</code> <span class=repo-evidence-label>entry file</span> <code>src/types/index.ts</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/index.ts><code>src/types/index.ts</code></a></li></ul></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Private interface</h3><p class=repo-evidence-label>Code kept for internal use by the language’s conventions.</p><dl class=repo-dossier-stats><div><dt>private member</dt><dd>672</dd></div><div><dt>module-private function</dt><dd>331</dd></div><div><dt>crate-visible function</dt><dd>11</dd></div><div><dt>underscore helper</dt><dd>11</dd></div></dl><ul class="repo-file-list compact"><li><code>main</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/build.rs#L1><code>native/hydra-native/build.rs:1</code></a></li><li><code>no_overlap</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/custom_path_overlap.rs#L35><code>native/hydra-native/src/cloud_save/custom_path_overlap.rs:35</code></a></li><li><code>overlap</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/custom_path_overlap.rs#L43><code>native/hydra-native/src/cloud_save/custom_path_overlap.rs:43</code></a></li><li><code>format_modified_at</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/hashing/batch.rs#L49><code>native/hydra-native/src/cloud_save/hashing/batch.rs:49</code></a></li><li><code>ensure_crypto_provider</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/http.rs#L10><code>native/hydra-native/src/cloud_save/http.rs:10</code></a></li><li><code>build_blob_http_client</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/http.rs#L16><code>native/hydra-native/src/cloud_save/http.rs:16</code></a></li><li><code>_build_add_torrent_params</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/torrent_downloader.py#L136><code>python_rpc/torrent_downloader.py:136</code></a></li><li><code>_apply_trackers</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/torrent_downloader.py#L181><code>python_rpc/torrent_downloader.py:181</code></a></li><li><code>_get_torrent_info</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/torrent_downloader.py#L200><code>python_rpc/torrent_downloader.py:200</code></a></li><li><code>instance</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/gamepad.service.ts#L81><code>src/big-picture/src/services/gamepad.service.ts:81</code></a></li><li><code>sticksDeadzone</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/gamepad.service.ts#L82><code>src/big-picture/src/services/gamepad.service.ts:82</code></a></li><li><code>sticksDirectionThreshold</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/gamepad.service.ts#L84><code>src/big-picture/src/services/gamepad.service.ts:84</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services and hosting</h3><div class=repo-dossier-grid><article class=repo-dossier-card><h4>Service <span class=repo-count>16</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/navigation.service.ts#L134><code>NavigationService</code></a> <span class=repo-evidence-label>constructor, getInstance, registerLayer…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/gamepad.service.ts#L80><code>GamepadService</code></a> <span class=repo-evidence-label>getInstance, constructor, isWindowAvailable…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/download-manager.ts#L92><code>DownloadManager</code></a> <span class=repo-evidence-label>hasActiveDownload, isJsDownloadActive, getActiveDownloadId…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/window-manager.ts#L47><code>WindowManager</code></a> <span class=repo-evidence-label>isArtworkRendererRequest, mainWindow, gameLauncherWindow…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/game-files-manager.ts#L42><code>GameFilesManager</code></a> <span class=repo-evidence-label>constructor, gameKey, updateExtractionProgress…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/navigation-item-actions.service.ts#L53><code>NavigationItemActionsService</code></a> <span class=repo-evidence-label>getInstance, registerItemActions, triggerPrimaryForFocusedItem…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/services/navigation-screen-actions.service.ts#L16><code>NavigationScreenActionsService</code></a> <span class=repo-evidence-label>getInstance, registerActions, updateActions…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/common-redist-manager.ts#L16><code>CommonRedistManager</code></a> <span class=repo-evidence-label>installCommonRedist, canInstallCommonRedist, checkSystemRedistributables…</span></li></ul></article><article class=repo-dossier-card><h4>Client <span class=repo-count>7</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/premiumize.ts#L84><code>PremiumizeClient</code></a> <span class=repo-evidence-label>authorize, getSearchParams, ensureSuccess…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/all-debrid.ts#L102><code>AllDebridClient</code></a> <span class=repo-evidence-label>throttle, applyThrottle, authorize…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/sse/websocket-client.ts#L211><code>RealtimeWebSocketClient</code></a> <span class=repo-evidence-label>constructor, connect, close…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/torbox.ts#L19><code>TorBoxClient</code></a> <span class=repo-evidence-label>authorize, addMagnet, getTorrentInfo…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/real-debrid.ts#L11><code>RealDebridClient</code></a> <span class=repo-evidence-label>authorize, addMagnet, getTorrentInfo…</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/sse/sse-client.ts#L66><code>SSEClient</code></a> <span class=repo-evidence-label>connect, close, reconnectNow</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/retro-achievements/retro-achievements-client.ts#L24><code>RetroAchievementsClient</code></a> <span class=repo-evidence-label>getGameInfoAndUserProgress</span></li></ul></article><article class=repo-dossier-card><h4>Store <span class=repo-count>2</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/cloud-save-environment.ts#L18><code>PrefixGenerationStore</code></a> <span class=repo-evidence-label>get, put, del</span></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/automatic-sync-default-migration-policy.ts#L3><code>CloudSaveAutomaticSyncDefaultMigrationStore</code></a></li></ul></article></div><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/build-renderer.yml title=.github/workflows/build-renderer.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/release.yml title=.github/workflows/release.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/text-integrity.yml title=.github/workflows/text-integrity.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/trigger-lp.yml title=.github/workflows/trigger-lp.yml>CI deploy workflow</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/update-aur.yml title=.github/workflows/update-aur.yml>CI deploy workflow</a></li></ul></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entities and data model <span class=repo-count>1136</span></h3><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Entity class diagram</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+  direction LR
+  class E0[&#34;ArtworkItem&#34;] {
+    &#43;number id
+    &#43;number score
+    &#43;string url
+    &#43;string thumb
+    &#43;number width
+    &#43;number height
+  }
+  class E1[&#34;BigPictureCloudSaveContextValue&#34;] {
+    &#43;CloudSaveOverview overview
+    &#43;boolean isRefreshing
+    &#43;boolean isSyncing
+    &#43;boolean hasError
+    &#43;CloudSaveSyncProgressPayload progress
+    &#43;boolean canUseCloudSaves
+  }
+  class E2[&#34;BigPictureCloudSaveCustomPathModalProps&#34;] {
+    &#43;CloudSaveCustomPathApproval approval
+    &#43;boolean isSelecting
+    &#43;boolean isConfirming
+    &#43;boolean isFileExplorerVisible
+    &#43;string errorMessage
+    &#43;onOpenFileExplorer
+  }
+  class E3[&#34;BigPictureCloudSavePanelProps&#34;] {
+    &#43;boolean showLaunchConflictWarning
+    &#43;boolean stealFocusOnActionAppear
+    &#43;CloudSaveOverview overview
+    &#43;boolean isLoading
+    &#43;boolean isSyncing
+    &#43;boolean isGameRunning
+  }
+  class E4[&#34;BuiltLocalSaveFile&#34;] {
+    &#43;String variant_id
+    &#43;String rule_id
+    &#43;String raw_path
+    &#43;String relative_path
+    &#43;String absolute_path
+    &#43;String hash
+  }
+  class E5[&#34;CatalogueSearchPayload&#34;] {
+    &#43;string title
+    &#43;sortOrder
+    &#43;string downloadSourceFingerprints
+    &#43;number tags
+    &#43;string publishers
+    &#43;string genres
+  }
+  class E6[&#34;CloudSaveCustomPathApproval&#34;] {
+    &#43;string id
+    &#43;CloudSaveGameId gameId
+    &#43;purpose
+    &#43;string rawPath
+    &#43;string suggestedPath
+    &#43;string selectedPath
+  }
+  class E7[&#34;CloudSaveMergeResult&#34;] {
+    &#43;SnapshotVariant variants
+    &#43;SnapshotFile files
+    &#43;CloudSaveMergeConflict conflicts
+    &#43;string restoreEntryIds
+    &#43;string deleteRemoteEntryIds
+    &#43;string deleteLocalEntryIds
+  }
+  class E8[&#34;CloudSaveOverview&#34;] {
+    &#43;localSnapshotSummary
+    &#43;string updatedAt
+    &#43;number totalSizeBytes
+    &#43;boolean isAutomaticSyncEnabled
+    &#43;CloudSaveSyncAction suggestedAction
+    &#43;number discoveredVariantCount
+  }
+  class E9[&#34;CloudSavePathContext&#34;] {
+    &#43;platform
+    &#43;string homeDir
+    &#43;string documentsDir
+    &#43;string appDataDir
+    &#43;string executablePath
+    &#43;string winePrefixPath
+  }
+  E1 --&gt; E8 : overview
+  E2 --&gt; E6 : approval
+  E3 --&gt; E8 : overview
+</code></pre></div><p class=repo-evidence-label>An arrow links a field to the entity its type names.</p></details><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entity</th><th scope=col>Kind</th><th scope=col>First fields</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/artwork.types.ts#L13><code>ArtworkItem</code></a></th><td>Record or interface</td><td><code>id, score, url, thumb, width, height, style, nsfw</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/pages/game/cloud-save-v2/cloud-save-v2-context.tsx#L45><code>BigPictureCloudSaveContextValue</code></a></th><td>Record or interface</td><td><code>overview, isRefreshing, isSyncing, hasError, progress, canUseCloudSaves, hasExecutablePath, openManager</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/pages/game/cloud-save-v2/cloud-save-custom-path-modal.tsx#L20><code>BigPictureCloudSaveCustomPathModalProps</code></a></th><td>Record or interface</td><td><code>approval, isSelecting, isConfirming, isFileExplorerVisible, errorMessage, onOpenFileExplorer, onCloseFileExplorer, onSelectPath</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/pages/game/cloud-save-v2/cloud-save-modal.tsx#L52><code>BigPictureCloudSavePanelProps</code></a></th><td>Record or interface</td><td><code>showLaunchConflictWarning, stealFocusOnActionAppear, overview, isLoading, isSyncing, isGameRunning, hasExecutablePath, hasError</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/local_snapshot/types.rs#L76><code>BuiltLocalSaveFile</code></a></th><td>Record or interface</td><td><code>variant_id, rule_id, raw_path, relative_path, absolute_path, hash, size_bytes, last_modified_at</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/index.ts#L525><code>CatalogueSearchPayload</code></a></th><td>Record or interface</td><td><code>title, sortOrder, downloadSourceFingerprints, tags, publishers, genres, developers, protondbSupportBadges</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L89><code>CloudSaveCustomPathApproval</code></a></th><td>Record or interface</td><td><code>id, gameId, purpose, rawPath, suggestedPath, selectedPath, canUseSuggestedPath, fileCount</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L769><code>CloudSaveMergeResult</code></a></th><td>Record or interface</td><td><code>variants, files, conflicts, restoreEntryIds, deleteRemoteEntryIds, deleteLocalEntryIds, unresolvedRemoteEntryIds, partial</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L315><code>CloudSaveOverview</code></a></th><td>Record or interface</td><td><code>localSnapshotSummary, updatedAt, totalSizeBytes, isAutomaticSyncEnabled, suggestedAction, discoveredVariantCount, unresolvedRemoteVariantCount, unconfiguredCustomPathCount</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L234><code>CloudSavePathContext</code></a></th><td>Record or interface</td><td><code>platform, homeDir, documentsDir, appDataDir, executablePath, winePrefixPath, steamPath, storeUserContext</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L752><code>CloudSaveSyncAnchor</code></a></th><td>Record or interface</td><td><code>schemaVersion, environmentId, baseSnapshotId, baseVersion, baseAggregateHash, entries, unresolvedRemoteEntryIds, updatedAt</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/cloud-save.types.ts#L388><code>CloudSaveV2FileDetails</code></a></th><td>Record or interface</td><td><code>state, local, activeSnapshot, customPaths, unresolvedCustomPaths, comparisons, variants, variantId</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/pages/game/game-settings-modal/cloud-saves-list.tsx#L20><code>CloudSavesListProps</code></a></th><td>Record or interface</td><td><code>artifacts, loading, restoringArtifactId, updatingArtifactId, deletingArtifactId, onRestoreArtifact, onToggleArtifactFreeze, artifactId</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/types/index.ts#L495><code>ComparedAchievements</code></a></th><td>Record or interface</td><td><code>achievementsPointsTotal, owner, totalAchievementCount, unlockedAchievementCount, achievementsPointsEarnedSum, target, displayName, profileImageUrl</code></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Business logic</h3><p class=repo-evidence-label>The classes with the most behaviour, leaving out UI code and the services and entities listed above.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download/js-http-downloader.ts#L64><code>JsHttpDownloader</code></a> <span class=repo-evidence-label>Application services, 38 methods</span></dt><dd><code>setMaxDownloadSpeedBytesPerSecond, startDownload, startDownloadWithRetry, startStallDetection, stopStallDetection, triggerRetry</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hosters/gofile.ts#L52><code>GofileApi</code></a> <span class=repo-evidence-label>Application services, 28 methods</span></dt><dd><code>userAgent, configuredToken, cachePath, sleep, isRetryableStatus, fetchWithTimeout</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/download-orchestrator.ts#L72><code>DownloadOrchestrator</code></a> <span class=repo-evidence-label>Application services, 24 methods</span></dt><dd><code>onNetworkStatusChanged, clearReconnectGrace, stopActiveDownloadForNoNetwork, getAllDownloads, getDownload, activateDownload</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators/ps2-memory-card/ps2-memory-card-writer.ts#L132><code>Ps2CardWriter</code></a> <span class=repo-evidence-label>Application services, 23 methods</span></dt><dd><code>constructor, open, close, readPage, writePage, readCluster</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hydra-api.ts#L32><code>HydraApi</code></a> <span class=repo-evidence-label>Application services, 20 methods</span></dt><dd><code>secondsToMilliseconds, isLoggedIn, hasActiveSubscription, updateUserSubscription, handleExternalAuth, handleSignOut</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/native-addon.ts#L186><code>NativeAddon</code></a> <span class=repo-evidence-label>Application services, 20 methods</span></dt><dd><code>resolveAddonPath, load, getWorker, processProfileImage, processFriendImage, drainResolvers</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/achievement-notification-presenter.ts#L60><code>AchievementNotificationPresenter</code></a> <span class=repo-evidence-label>Application services, 18 methods</span></dt><dd><code>constructor, enqueueAchievements, enqueueCombined, notifyThemeUpdated, handleRendererEvent, handleHostReadyEvent</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators/ps2-memory-card/ps2-memory-card.ts#L178><code>Ps2MemoryCard</code></a> <span class=repo-evidence-label>Application services, 13 methods</span></dt><dd><code>constructor, open, close, readPage, readCluster, readClusterCached</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/python-rpc.ts#L77><code>PythonRPC</code></a> <span class=repo-evidence-label>Application services, 13 methods</span></dt><dd><code>logStderr, logStdout, processStdoutBuffer, handleStdoutLine, markReady, resetReadyState</code></dd></div><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/wine.ts#L12><code>Wine</code></a> <span class=repo-evidence-label>Application services, 12 methods</span></dt><dd><code>getBuiltInDefaultPrefixPath, syncUserPreferences, getDefaultPrefixPath, getLegacyDefaultPrefixPath, getDefaultPrefixPathForGame, getEffectivePrefixPath</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-database aria-labelledby=dossier-database-h><h3 id=dossier-database-h>Database and persistence</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/hooks/use-feature.hook.ts#L17 title=src/big-picture/src/hooks/use-feature.hook.ts>Browser localStorage <span class=kind>14 files</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/inspect-ps1-memcard.cjs#L39 title=scripts/inspect-ps1-memcard.cjs>JSON files <span class=kind>11 files</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/pages/settings/behavior-section.tsx#L80 title=src/big-picture/src/pages/settings/behavior-section.tsx>Device flash storage <span class=kind>4 files</span></a></li></ul></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>External integrations</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>System context</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;hydra&#34;]
+  c0([&#34;User&#34;])
+  c0 --&gt; sys
+  d0[&#34;WebSocket&#34;]
+  sys --&gt; d0
+  d1[&#34;AWS&#34;]
+  sys --&gt; d1
+  d2[&#34;GitHub API&#34;]
+  sys --&gt; d2
+  d3[&#34;Sentry&#34;]
+  sys --&gt; d3
+  d4[(&#34;Browser localStorage&#34;)]
+  sys --&gt; d4
+  d5[(&#34;JSON files&#34;)]
+  sys --&gt; d5
+  d6[(&#34;Device flash storage&#34;)]
+  sys --&gt; d6
+  d7[&#34;real-debrid.com&#34;]
+  sys --&gt; d7
+  d8[&#34;retroachievements.org&#34;]
+  sys --&gt; d8
+  d9[&#34;www.premiumize.me&#34;]
+  sys --&gt; d9
+  d10[&#34;alldebrid.com&#34;]
+  sys --&gt; d10
+  h{{&#34;CI deploy workflow&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Callers on the left; on the right, the services and data stores the code uses.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/sse/sse-client.ts#L13 title=src/main/services/sse/sse-client.ts>WebSocket <span class=kind>transport</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L2 title=scripts/upload-build.cjs>AWS <span class=kind>cloud</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators/emulator-install-sources.ts#L233 title=src/main/services/emulators/emulator-install-sources.ts>GitHub API <span class=kind>platform</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/main.tsx#L26 title=src/renderer/src/main.tsx>Sentry <span class=kind>observability</span></a></li></ul><h4>HTTP clients</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L56><code>fetch</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/postinstall.cjs#L1><code>axios</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/http.rs#L8><code>reqwest</code></a></p><h4>Hosts named in the code</h4><ul class="repo-file-list compact"><li><code>real-debrid.com</code> <span class=repo-evidence-label>3 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/pages/settings/integrations.tsx#L47><code>src/big-picture/src/pages/settings/integrations.tsx:47</code></a></li><li><code>retroachievements.org</code> <span class=repo-evidence-label>3 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/retro-achievements/retro-achievements-client.ts#L26><code>src/main/services/retro-achievements/retro-achievements-client.ts:26</code></a></li><li><code>www.premiumize.me</code> <span class=repo-evidence-label>3 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/pages/settings/integrations.tsx#L48><code>src/big-picture/src/pages/settings/integrations.tsx:48</code></a></li><li><code>alldebrid.com</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/pages/settings/integrations.tsx#L49><code>src/big-picture/src/pages/settings/integrations.tsx:49</code></a></li><li><code>aur.archlinux.org</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators/emulator-install-sources.ts#L83><code>src/main/services/emulators/emulator-install-sources.ts:83</code></a></li><li><code>cdn.losbroxas.org</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/manifest/source.rs#L1><code>native/hydra-native/src/cloud_save/manifest/source.rs:1</code></a></li><li><code>flathub.org</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/emulators/emulator-install-sources.ts#L147><code>src/main/services/emulators/emulator-install-sources.ts:147</code></a></li><li><code>gofile.io</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hosters/gofile.ts#L57><code>src/main/services/hosters/gofile.ts:57</code></a></li><li><code>mediafire.com</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hosters/mediafire.ts#L29><code>src/main/services/hosters/mediafire.ts:29</code></a></li><li><code>pixeldrain.com</code> <span class=repo-evidence-label>2 files</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hosters/pixeldrain.ts#L36><code>src/main/services/hosters/pixeldrain.ts:36</code></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack and dependencies</h3><details class=repo-structure-details><summary><strong>Node.js</strong> <code>package.json</code> <span class=repo-evidence-label>78 runtime, 38 dev</span></summary><p><span class="tag status">npm please-use-yarn</span> <span class="tag status">yarn >= 1.19.1</span></p><h4>Runtime</h4><p class=repo-inline-code><code>@atlaskit/pragmatic-drag-and-drop ^1.8.1</code> <code>@electron-toolkit/preload ^3.0.2</code> <code>@electron-toolkit/utils ^4.0.0</code> <code>@floating-ui/dom ^1.7.6</code> <code>@fontsource/noto-sans ^5.2.10</code> <code>@fontsource/space-grotesk ^5.2.10</code> <code>@hookform/resolvers ^5.2.2</code> <code>@monaco-editor/react ^4.6.0</code> <code>@phosphor-icons/react ^2.1.10</code> <code>@primer/octicons-react ^19.9.0</code> <code>@radix-ui/react-dropdown-menu ^2.1.16</code> <code>@radix-ui/react-slot ^1.2.4</code> <code>@reduxjs/toolkit ^2.2.3</code> <code>@sentry/react ^10.33.0</code> <code>@tanstack/react-virtual ^3.14.3</code> <code>@tiptap/extension-bold ^3.6.2</code> <code>@tiptap/extension-italic ^3.6.2</code> <code>@tiptap/extension-link ^3.6.2</code> <code>@tiptap/extension-underline ^3.6.2</code> <code>@tiptap/react ^3.6.2</code> <code>@tiptap/starter-kit ^3.6.2</code> <code>auto-launch ^5.0.6</code> <code>axios ^1.16.0</code> <code>axios-cookiejar-support ^5.0.5</code> …</p><h4>Development</h4><p class=repo-inline-code><code>@aws-sdk/client-s3 ^3.705.0</code> <code>@commitlint/cli ^19.6.0</code> <code>@commitlint/config-conventional ^19.6.0</code> <code>@electron-toolkit/eslint-config-prettier ^2.0.0</code> <code>@electron-toolkit/eslint-config-ts ^2.0.0</code> <code>@electron-toolkit/tsconfig ^1.0.1</code> <code>@swc/core ^1.4.16</code> <code>@types/auto-launch ^5.0.5</code> <code>@types/canvas-confetti ^1.9.0</code> <code>@types/color ^3.0.6</code> <code>@types/jsdom ^21.1.7</code> <code>@types/jsonwebtoken ^9.0.8</code> <code>@types/lodash-es ^4.17.12</code> <code>@types/node ^20.12.7</code> <code>@types/parse-torrent ^5.8.7</code> <code>@types/react ^18.2.48</code></p><p><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/package.json>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>Python</strong> <code>requirements.txt</code> <span class=repo-evidence-label>2 runtime</span></summary><h4>Runtime</h4><p class=repo-inline-code><code>libtorrent</code> <code>cx_Freeze == 7.2.3</code></p><p><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/requirements.txt>Open the manifest</a></p></details><details class=repo-structure-details><summary><strong>Rust</strong> <code>native/hydra-native/Cargo.toml</code> <span class=repo-evidence-label>23 runtime, 1 dev</span></summary><p><span class="tag status">Rust edition 2021</span></p><h4>Runtime</h4><p class=repo-inline-code><code>anyhow 1.0</code> <code>blake3 =1.8.5</code> <code>filetime 0.2</code> <code>globetter =0.2.0</code> <code>globset =0.4.15</code> <code>image 0.25.8</code> <code>indexmap 2.14</code> <code>mime_guess 2.0.5</code> <code>napi 3.5.2</code> <code>napi-derive 3.3.2</code> <code>rayon =1.11.0</code> <code>reqwest 0.13</code> <code>rustls 0.23</code> <code>serde 1.0.228</code> <code>serde_json 1.0.150</code> <code>serde_yaml_ng 0.10</code> <code>sha2 0.10</code> <code>sysinfo 0.37.2</code> <code>time =0.3.44</code> <code>tokio 1.52</code> <code>unicode-normalization 0.1.25</code> <code>uuid 1.11.0</code> <code>walkdir =2.5.0</code></p><h4>Development</h4><p class=repo-inline-code><code>tempfile 3.27</code></p><p><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/Cargo.toml>Open the manifest</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Security</h3><h4>Controls</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/pages/game-details/cloud-sync-rename-artifact-modal/cloud-sync-rename-artifact-modal.tsx#L8 title=src/renderer/src/pages/game-details/cloud-sync-rename-artifact-modal/cloud-sync-rename-artifact-modal.tsx>Schema validation (TS) <span class=kind>validation</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/setup.py#L13 title=python_rpc/setup.py>Password hashing <span class=kind>auth</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/torrent_downloader.py#L125 title=python_rpc/torrent_downloader.py>Rate limiting <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/python_rpc/main.py#L1 title=python_rpc/main.py>HMAC / constant-time comparison <span class=kind>auth</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/auth/get-session-hash.ts#L1 title=src/main/events/auth/get-session-hash.ts>JWT tokens <span class=kind>auth</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/notifications/local-notifications.ts#L8 title=src/main/services/notifications/local-notifications.ts>Secret handling / secure randomness <span class=kind>secrets</span></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/http.rs#L13 title=native/hydra-native/src/cloud_save/http.rs>TLS configuration <span class=kind>transport</span></a></li></ul><h4>Supply chain</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/SECURITY.md title=SECURITY.md>Security policy</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/Cargo.lock title=native/hydra-native/Cargo.lock>Lockfile (pinned dependencies)</a></li><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.env.example title=.env.example>Example environment file (no values)</a></li></ul><h4>Environment variables <span class=repo-count>34</span></h4><p class=repo-evidence-label>Only the names are shown. Names that look like secrets are underlined.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/hosters/gofile.ts#L85 class=is-secret><code>GOFILE_TOKEN</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L19 class=is-secret><code>S3_ACCESS_KEY_ID</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L20 class=is-secret><code>S3_SECRET_ACCESS_KEY</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/native-addon.ts#L122><code>LD_LIBRARY_PATH</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/custom-path.ts#L125><code>LOCALAPPDATA</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/providers/navigation-input.provider.tsx#L174><code>NODE_ENV</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/custom-path.ts#L118><code>APPDATA</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/helpers/hydra-executable-path.ts#L18><code>PORTABLE_EXECUTABLE_FILE</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/misc/file-system.ts#L38><code>ELECTRON_RENDERER_URL</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/custom-path.ts#L114><code>USERPROFILE</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L6><code>BUILD_WEBHOOK_URL</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/window-manager.ts#L41><code>WAYLAND_DISPLAY</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save/custom-path.ts#L149><code>XDG_CONFIG_HOME</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/window-manager.ts#L40><code>XDG_SESSION_TYPE</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/helpers/hydra-executable-path.ts#L17><code>APPIMAGE</code></a> <a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/scripts/upload-build.cjs#L65><code>BRANCH_NAME</code></a></p><aside class="repo-admonition warn"><p class=repo-admonition-title>Worth a manual check</p><ul><li>raw HTML injection, 13 files · <a class=repo-evidence-link href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/big-picture/src/components/pages/game/game-reviews/index.tsx#L292><code>src/big-picture/src/components/pages/game/game-reviews/index.tsx:292</code></a></li></ul></aside></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Test files</dt><dd>73</dd></div><div><dt>Source files</dt><dd>1510</dd></div><div><dt>Test cases, about</dt><dd>583</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/native/hydra-native/src/cloud_save/custom_path_overlap.rs title=native/hydra-native/src/cloud_save/custom_path_overlap.rs>cargo test</a></li></ul><h4>Where the tests are</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/cloud-save><code>src/main/services/cloud-save</code></a> <span class=repo-evidence-label>40</span> <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services><code>src/main/services</code></a> <span class=repo-evidence-label>8</span> <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/library><code>src/main/events/library</code></a> <span class=repo-evidence-label>3</span> <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/renderer/src/pages/game-details/cloud-save-v2><code>src/renderer/src/pages/game-details/cloud-save-v2</code></a> <span class=repo-evidence-label>3</span> <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/events/cloud-save><code>src/main/events/cloud-save</code></a> <span class=repo-evidence-label>2</span> <a href=https://github.com/antoinebou12/hydra/tree/e769e3b398c039a9e3d9977dbb1e5aa70776732e/src/main/services/sse><code>src/main/services/sse</code></a> <span class=repo-evidence-label>2</span></p><h4>Continuous integration</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/hydra/blob/e769e3b398c039a9e3d9977dbb1e5aa70776732e/.github/workflows/lint.yml>Lint</a></dt><dd><code>yarn test</code></dd></div></dl></section></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>1254 declared types, with 12 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t497b591ddfee[&#34;CheckCloudSaveCustomPathOverlapInput&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t546b0e1d60a3[&#34;CheckCloudSaveCustomPathOverlapResult&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t4193b7c58165[&#34;CanonicalSnapshotVariant&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t9be9d73de926[&#34;CanonicalSnapshotFile&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t9e1524c40c18[&#34;CanonicalSnapshot&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class te94442ffd312[&#34;HashFilesBestEffortResult&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t7de7357401f4[&#34;SnapshotAggregateHashFile&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class tba32df98af48[&#34;BuildSnapshotAggregateHashInput&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t8896e2a0569a[&#34;LocalFileHashCacheEntry&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t15b26b607bab[&#34;HashedLocalFile&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t111381412a72[&#34;HashFilesResult&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t0ff949433faa[&#34;SnapshotVariant&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+</code></pre></div><p class=repo-evidence-label>Unresolved bases remain labelled; full signatures are not reconstructed.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Reference</h2><p class=repo-reference-summary>1335 / 1335 eligible files read (1725 in the tree); 0 oversized, 0 failed reads and 1 syntax diagnostics.</p><details class=repo-analysis-coverage><summary>What the scan covers</summary><p>Known dependency/build folders, credential files and binaries are excluded. The scan covers READMEs, recognized manifests and parser-supported source files.</p><p>Linguist statistics cover the whole repository and may include other languages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Constraints and checks</h2><aside class="repo-admonition warn">This note describes a fork’s structure and retains upstream credit. It does not claim authorship of the launcher or verify its download sources.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Files to read <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/hydra/blob/main/package.json><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>package.json</code></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/main/electron.vite.config.ts><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>electron.vite.config.ts</code></a></li><li><a href=https://github.com/antoinebou12/hydra/blob/main/README.md><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>README.md</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossary</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Find a term</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="No matching terms. Try another word." data-count=terms></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Repository</summary><p>The versioned source files, configuration, and history of a project.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>The repository’s entry document, usually covering its purpose and initial setup.</p></details><details id=term-dependency data-glossary-entry><summary>Dependency</summary><p>A library, tool, or service that another component needs to build or run.</p></details><details id=term-api data-glossary-entry><summary>API</summary><p>An interface through which software components exchange requests and results. An API does not have to use HTTP.</p></details><details id=term-cli data-glossary-entry><summary>CLI</summary><p>A text interface in which commands and arguments select operations. Exit codes let scripts detect success or failure.</p></details><details id=term-build data-glossary-entry><summary>Build</summary><p>The steps that turn source files and dependencies into a runnable program or distributable artifact.</p></details><details id=term-gpu data-glossary-entry><summary>GPU</summary><p>A processor designed for parallel workloads, including graphics rendering and many numerical operations.</p></details><details id=term-fork data-glossary-entry><summary>Fork</summary><p>A separate repository derived from another project. A change in a fork is not automatically a change in the upstream project.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources and project updates</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/hydra>GitHub</a><span>Source repository</span></li><li><a href=https://github.com/antoinebou12/hydra#readme>README</a><span>Repository documentation</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Project facts</p><div class=kv><span>Language</span><b>TypeScript</b></div><div class=kv><span>Kind</span><b>Application and tools</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/hydra>GitHub</a></div><div class=kv><span>Updated</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

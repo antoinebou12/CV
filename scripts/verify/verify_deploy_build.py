@@ -50,13 +50,13 @@ def validate_agent_ready(site_dir: Path) -> None:
     sitemap_text = sitemap.read_text(encoding="utf-8")
     if "index-en.html" not in sitemap_text:
         raise SystemExit("sitemap.xml should list index-en.html")
-    for needle in ("resume.md", "resume.json", "llms.txt", "about-en.html"):
+    for needle in ("resume.md", "resume.json", "llms.txt"):
         if needle not in sitemap_text:
             raise SystemExit(f"sitemap.xml should list {needle}")
 
     for rel in ("about-en.html", "about-fr.html"):
-        if not (site_dir / rel).is_file():
-            raise SystemExit(f"Missing deploy artifact: {rel}")
+        if (site_dir / rel).is_file():
+            raise SystemExit(f"Unexpected deploy artifact (About pages removed): {rel}")
 
     for rel in ("resume.md", "resume.json", "resume-fr.md", "resume-fr.json"):
         if not (site_dir / rel).is_file():

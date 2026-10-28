@@ -1,0 +1,654 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>D2COpenAIPlugin: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes"><meta itemprop=description content="D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="2375"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/d2copenaiplugin/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes"><meta property="og:description" content="D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes"><meta name=twitter:description content="D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/d2copenaiplugin/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#glossary>Glossaire</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Dossier technique</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes</h1><p class=repo-hero-lede>D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours PlantUML, Mermaid ou Kroki selon le langage demandé.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Application et services</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/D2COpenAIPlugin/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>9</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>Python · 100%</span></li><li class=repo-chip><span>MIT</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/D2COpenAIPlugin><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/D2COpenAIPlugin#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>Python 100%</span><span class=repo-count>1</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="Python 100%."><span style=width:100% title="Python 100%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:100%><span>100%</span></span></td><td class=num>60 743</td></tr></tbody></table><p class=repo-snapshot><a href=https://github.com/antoinebou12/D2COpenAIPlugin>GitHub</a> · <a href=https://github.com/antoinebou12/D2COpenAIPlugin#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/D2COpenAIPlugin/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Plugin ChatGPT officiel avec spécification OpenAPI pour convertir des descriptions en diagrammes.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Intégration ChatGPT pour architectes et développeurs logiciels.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Articles et retours d’expérience liés</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/fr/posts/d2c-openai-diagram-plugin/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>Plugin OpenAI D2C — diagrammes PlantUML, Mermaid et D2</h4><p>Plugin ChatGPT pour diagrammes PlantUML, Mermaid et D2 — genèse, installation, exemples de prompts, limites vs gabarits AIPRM.</p></a><a class=repo-related-post-card href=/CV/blog/fr/posts/gpt-store-diagram-tool/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>25k utilisations de l'outil de diagrammes sur le GPT Store</h4><p>L'outil de diagrammes UML a atteint 25k utilisations sur le GPT Store. Je l'ai fait pour éviter Lucidchart, et je cherche quelqu'un pour le reprendre.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>git clone https://github.com/antoinebou12/D2COpenAIPlugin.git
+cd D2COpenAIPlugin
+python -m venv .venv</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>.\.venv\Scripts\Activate.ps1</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>source .venv/bin/activate</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install -r requirements-dev.txt
+python -m pytest
+uvicorn app:app --host 127.0.0.1 --port 5003</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Quick start</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>python app.py</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>plantuml/README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install plantumlapi</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>plantuml/README.md · Installation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>pip install git&#43;https://github.com/antoinebou12/plantumlapi</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>plantuml/README.md · Command Line Usage</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>usage: plantuml.py [-h] [-o OUT] [-s SERVER] filename [filename ...]
+Generate images from PlantUML defined files using PlantUML server
+positional arguments: 
+  filename            file(s) to generate images from
+optional arguments: 
+  -h, --help          show this help message and exit 
+  -o OUT, --out OUT   directory to put the files into 
+  -s SERVER, --server SERVER 
+                      server to generate from; defaults to plantuml.com </code></pre></div></div><details class=repo-manifest-tasks><summary>Commandes déclarées dans les manifestes</summary></details></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p class=repo-evidence-label>Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prérequis et premier essai</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L37>Requirements</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>Python 3.10+ (CI uses 3.12)</li><li>pip and a virtual environment (recommended)
+Optional:</li><li>D2/main — small helper binary expected at ./D2/main for D2 encoding in D2/run_d2.py (only needed if you use the D2 code paths locally)</li></ul><hr></div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L37>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L48>Quick start</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><h4 id=equivalent-one-liner-after-activation>Activate the venv (Windows PowerShell):
+Activate the venv (macOS / Linux):
+Install dependencies and run the API:
+Equivalent one-liner after activation:</h4></div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L48>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/README.md#L9>Installation</a></h3><p class=repo-excerpt-file><code>plantuml/README.md</code></p><div class=repo-source-markdown>To install, run the following command:</div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/README.md#L9>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>API et intégration</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L86>API</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td data-label=Field>lang</td><td data-label=Type>string</td><td data-label=Required>yes</td><td data-label=Description>e.g. plantuml, mermaid, d2, or a Kroki type allowed by the server</td></tr><tr><td data-label=Field>type</td><td data-label=Type>string</td><td data-label=Required>yes</td><td data-label=Description>e.g. class, sequence, activity (used for validation / logging)</td></tr><tr><td data-label=Field>code</td><td data-label=Type>string</td><td data-label=Required>yes</td><td data-label=Description>Diagram source (max length enforced in app.py)</td></tr><tr><td data-label=Field>theme</td><td data-label=Type>string</td><td data-label=Required>no</td><td data-label=Description>PlantUML / Mermaid theming where applicable</td></tr><tr><td data-label=Field>Example (PlantUML) with curl (bash / Git Bash):</td><td data-label=Type></td><td data-label=Required></td><td data-label=Description></td></tr><tr><td data-label=Field>Example with PowerShell:</td><td data-label=Type></td><td data-label=Required></td><td data-label=Description></td></tr></tbody></table></div><h4 id=json-body>POST /generate_diagram
+JSON body:</h4></div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L86>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Exploitation et dépannage</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L125>Deployment (Vercel)</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><hr></div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L125>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Développement et contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L142>Contributing / security</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><ul><li>Tests: python -m pytest (see .github/workflows/CI.yml)</li><li>Security policy: SECURITY.md</li></ul><hr></div><a class=repo-guide-context href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L142>Lire les instructions complètes ↗</a></section></details></div><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/README.md><code>plantuml/README.md</code></a></li></ul><p class=repo-evidence-label>2 documents lus parmi 2 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Modèle de requête</dt><dd>DiagramRequest contient lang, type, code et theme. Des validations contrôlent le langage et la longueur de la source. /generate_diagram rejette les champs manquants avant de choisir un moteur et de construire les liens de résultat et d’édition.</dd></div><div class=repo-feature><dt>Adaptateurs de rendu</dt><dd>PlantUML utilise son client dédié, Mermaid construit un état d’éditeur et les alias D2 passent au moteur d2 de Kroki. Les autres langages utilisent le registre Kroki. Les adaptateurs isolent les conventions de liens et d’encodage.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Ouvrez un composant pour suivre ses connexions, ou explorez le diagramme complet.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>Composants du système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Requête structurée</span></summary><ul class=repo-component-connections><li>Vers <a href=#component-1>Modèle et route FastAPI</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Modèle et route FastAPI</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-0>Requête structurée</a></li><li>Vers <a href=#component-2>Adaptateur PlantUML</a></li><li>Vers <a href=#component-3>Encodeur d’état Mermaid</a></li><li>Vers <a href=#component-4>Adaptateur Kroki</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Adaptateur PlantUML</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-1>Modèle et route FastAPI</a></li><li>Vers <a href=#component-5>Liens de résultat et d’édition</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Encodeur d’état Mermaid</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-1>Modèle et route FastAPI</a></li><li>Vers <a href=#component-5>Liens de résultat et d’édition</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Adaptateur Kroki</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-1>Modèle et route FastAPI</a></li><li>Vers <a href=#component-5>Liens de résultat et d’édition</a></li></ul></details></li><li><details class=repo-component id=component-5><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Liens de résultat et d’édition</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-2>Adaptateur PlantUML</a></li><li>Depuis <a href=#component-3>Encodeur d’état Mermaid</a></li><li>Depuis <a href=#component-4>Adaptateur Kroki</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-d2copenaiplugin><p id=architecture-d2copenaiplugin class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/d2copenaiplugin/system-overview.png loading=lazy decoding=async alt="Vue statique de l’architecture de D2COpenAIPlugin"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+
+subgraph group_api[&#34;API surface&#34;]
+  node_api[&#34;FastAPI endpoint&lt;br/&gt;[app.py]&#34;]
+  node_request[&#34;Request validation&lt;br/&gt;[app.py]&#34;]
+  node_response[&#34;Diagram response&lt;br/&gt;[app.py]&#34;]
+end
+
+subgraph group_formats[&#34;Diagram formats&#34;]
+  node_plantuml[&#34;PlantUML renderer&lt;br/&gt;[__init__.py]&#34;]
+  node_mermaid[&#34;Mermaid state and links&lt;br/&gt;[mermaid.py]&#34;]
+  node_d2encoder[&#34;D2 encoder&lt;br/&gt;[d2.py]&#34;]
+  node_d2runner[&#34;D2 binary runner&lt;br/&gt;[run_d2.py]&#34;]
+  node_kroki[&#34;Kroki client&lt;br/&gt;[kroki.py]&#34;]
+end
+
+subgraph group_integration[&#34;Rendering services&#34;]
+  node_plantservice[&#34;PlantUML server&#34;]
+  node_mermaidink[&#34;Mermaid image service&#34;]
+  node_mermaidlive[&#34;Mermaid Live Editor&#34;]
+  node_krokiservice[&#34;Kroki service&#34;]
+end
+
+subgraph group_assets[&#34;Plugin assets&#34;]
+  node_pluginassets[&#34;Plugin metadata&lt;br/&gt;[ai-plugin.json]&#34;]
+  node_openapi[&#34;OpenAPI specification&lt;br/&gt;[openapi.yaml]&#34;]
+  node_privacy[&#34;Privacy policy&lt;br/&gt;[privacy.txt]&#34;]
+  node_logo[&#34;Plugin logo&#34;]
+end
+
+node_client((&#34;Plugin client&#34;))
+
+node_client --&gt;|&#34;submits request&#34;| node_api
+node_api --&gt;|&#34;validates&#34;| node_request
+node_api --&gt;|&#34;dispatches PlantUML&#34;| node_plantuml
+node_plantuml --&gt;|&#34;requests rendering&#34;| node_plantservice
+node_api --&gt;|&#34;dispatches Mermaid&#34;| node_mermaid
+node_api --&gt;|&#34;dispatches D2 or allow-list&#34;| node_kroki
+node_kroki --&gt;|&#34;requests rendering&#34;| node_krokiservice
+node_mermaid --&gt;|&#34;creates image URL&#34;| node_mermaidink
+node_mermaid --&gt;|&#34;creates editor URL&#34;| node_mermaidlive
+node_api --&gt;|&#34;returns result&#34;| node_response
+node_pluginassets --&gt;|&#34;served by&#34;| node_api
+node_openapi --&gt;|&#34;describes API&#34;| node_api
+node_privacy --&gt;|&#34;served by&#34;| node_api
+node_logo --&gt;|&#34;served by&#34;| node_api
+node_d2runner -.-&gt;|&#34;runs encoder binary&#34;| node_d2encoder
+
+
+class node_api,node_request,node_response,node_client toneBlue
+class node_plantuml,node_mermaid,node_d2encoder,node_d2runner,node_kroki toneAmber
+class node_plantservice,node_mermaidink,node_mermaidlive,node_krokiservice toneMint
+class node_pluginassets,node_openapi,node_privacy,node_logo toneRose</code></pre></div><div class=repo-system-summary><p>Un service FastAPI de diagrammes qui valide les requêtes, choisit un parcours PlantUML, Mermaid, D2 ou Kroki, puis renvoie le rendu et les liens d’édition. Le service publie aussi les fichiers du plugin, la description OpenAPI et la politique de confidentialité.</p><dl><div><dt>Composants</dt><dd>17</dd></div><div><dt>Connexions</dt><dd>15</dd></div><div><dt>Liens appuyés par le code ou le README</dt><dd>13/15</dd></div></dl></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Requête structurée → Modèle et route FastAPI</li><li>Modèle et route FastAPI → Adaptateur PlantUML</li><li>Modèle et route FastAPI → Encodeur d’état Mermaid</li><li>Modèle et route FastAPI → Adaptateur Kroki</li><li>Adaptateur PlantUML → Liens de résultat et d’édition</li><li>Encodeur d’état Mermaid → Liens de résultat et d’édition</li><li>Adaptateur Kroki → Liens de résultat et d’édition</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Comparez les branches PlantUML et D2 dans app.py. Elles partagent le modèle d’entrée, mais utilisent des adaptateurs distincts. La validation de type journalise une valeur invalide sans lever d’erreur; elle diffère donc du contrôle strict du langage.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Dossier technique</h2><p class=repo-lede-sm>Établi à partir du code au commit <a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a><code>7d15ee1</code></a> (23 fichiers). Chaque élément vient d’une correspondance de motif dans le code: ouvrez le fichier lié avant de vous y fier.</p><nav class=repo-dossier-toc aria-label="Sections du dossier"><a href=#dossier-layers>Couches et modules</a><a href=#dossier-flow>Flux de données</a><a href=#dossier-public>Interface publique</a><a href=#dossier-private>Interface privée</a><a href=#dossier-services>Services et hébergement</a><a href=#dossier-entities>Entités</a><a href=#dossier-logic>Logique métier</a><a href=#dossier-integrations>Intégrations externes</a><a href=#dossier-stack>Stack et dépendances</a><a href=#dossier-security>Sécurité</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Couches et modules</h3><p class=repo-evidence-label>Les dossiers sont classés par couche selon leur nom, de l’interface utilisateur jusqu’à l’accès aux données. Le diagramme montre où se trouve le code; il ne trace pas les appels entre couches.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Vue en couches</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_interface[&#34;Points d’entrée et API&#34;]
+    direction LR
+    interface_0[&#34;(root)&lt;br/&gt;1 fichiers&#34;]
+  end
+  subgraph L_core[&#34;Source principale&#34;]
+    direction LR
+    core_0[&#34;D2&lt;br/&gt;3 fichiers&#34;]
+    core_1[&#34;kroki&lt;br/&gt;2 fichiers&#34;]
+    core_2[&#34;mermaid&lt;br/&gt;2 fichiers&#34;]
+    core_3[&#34;plantuml/themes&lt;br/&gt;2 fichiers&#34;]
+    core_more[&#34;&#43;2&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;(root)&lt;br/&gt;1 fichiers&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI et hébergement&#34;]
+    direction LR
+    hosting_0[&#34;(root)&lt;br/&gt;1 fichiers&#34;]
+    hosting_1[&#34;.github&lt;br/&gt;1 fichiers&#34;]
+  end
+  L_interface ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules et couche principale</caption><thead><tr><th scope=col>Module</th><th scope=col>Couche</th><th scope=col>Fichiers</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2><code>D2</code></a></th><td>Source principale</td><td class=num>3</td><td class=num>2</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a><code>(root)</code></a></th><td>Source principale</td><td class=num>2</td><td class=num>1</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki><code>kroki</code></a></th><td>Source principale</td><td class=num>2</td><td class=num>4</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/mermaid><code>mermaid</code></a></th><td>Source principale</td><td class=num>2</td><td class=num>3</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/themes><code>plantuml/themes</code></a></th><td>Source principale</td><td class=num>2</td><td class=num>7</td><td>.py</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml><code>plantuml</code></a></th><td>Source principale</td><td class=num>1</td><td class=num>4</td><td>.py</td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-flow aria-labelledby=dossier-flow-h><h3 id=dossier-flow-h>Flux de données</h3><p class=repo-evidence-label>Les appels du diagramme <a href=https://gitdiagram.com/antoinebou12/D2COpenAIPlugin>GitDiagram</a>, dans l’ordre où on les rencontre depuis les points d’entrée. GitDiagram produit ce graphe par IA; les chemins de fichiers cités ont été comparés à l’arbre du dépôt.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Diagramme de séquence</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>sequenceDiagram
+  autonumber
+  participant P0 as D2 binary runner
+  participant P1 as D2 encoder
+  participant P2 as Plugin metadata
+  participant P3 as FastAPI endpoint
+  participant P4 as OpenAPI specification
+  participant P5 as Privacy policy
+  participant P6 as Plugin logo
+  participant P7 as Plugin client
+  participant P8 as Request validation
+  participant P9 as PlantUML renderer
+  participant P10 as Mermaid state and links
+  participant P11 as Kroki client
+  participant P12 as Diagram response
+  participant P13 as PlantUML server
+  participant P14 as Mermaid image service
+  participant P15 as Mermaid Live Editor
+  participant P16 as Kroki service
+  P0--)P1: runs encoder binary
+  P2-&gt;&gt;P3: served by
+  P4-&gt;&gt;P3: describes API
+  P5-&gt;&gt;P3: served by
+  P6-&gt;&gt;P3: served by
+  P7-&gt;&gt;P3: submits request
+  P3-&gt;&gt;P8: validates
+  P3-&gt;&gt;P9: dispatches PlantUML
+  P3-&gt;&gt;P10: dispatches Mermaid
+  P3-&gt;&gt;P11: dispatches D2 or allow-list
+  P3-&gt;&gt;P12: returns result
+  P9-&gt;&gt;P13: requests rendering
+  P10-&gt;&gt;P14: creates image URL
+  P10-&gt;&gt;P15: creates editor URL
+  P11-&gt;&gt;P16: requests rendering
+</code></pre></div></details><details class=repo-structure-details><summary>Étapes en texte</summary><ol class=repo-flow-steps><li><span class=from>D2 binary runner</span> <span class="arrow async" aria-hidden=true>⇢</span><span class=sr-only>vers</span> <span class=to>D2 encoder</span> <em>runs encoder binary</em></li><li><span class=from>Plugin metadata</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>FastAPI endpoint</span> <em>served by</em></li><li><span class=from>OpenAPI specification</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>FastAPI endpoint</span> <em>describes API</em></li><li><span class=from>Privacy policy</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>FastAPI endpoint</span> <em>served by</em></li><li><span class=from>Plugin logo</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>FastAPI endpoint</span> <em>served by</em></li><li><span class=from>Plugin client</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>FastAPI endpoint</span> <em>submits request</em></li><li><span class=from>FastAPI endpoint</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Request validation</span> <em>validates</em></li><li><span class=from>FastAPI endpoint</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>PlantUML renderer</span> <em>dispatches PlantUML</em></li><li><span class=from>FastAPI endpoint</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Mermaid state and links</span> <em>dispatches Mermaid</em></li><li><span class=from>FastAPI endpoint</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Kroki client</span> <em>dispatches D2 or allow-list</em></li><li><span class=from>FastAPI endpoint</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Diagram response</span> <em>returns result</em></li><li><span class=from>PlantUML renderer</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>PlantUML server</span> <em>requests rendering</em></li><li><span class=from>Mermaid state and links</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Mermaid image service</span> <em>creates image URL</em></li><li><span class=from>Mermaid state and links</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Mermaid Live Editor</span> <em>creates editor URL</em></li><li><span class=from>Kroki client</span> <span class=arrow aria-hidden=true>→</span><span class=sr-only>vers</span> <span class=to>Kroki service</span> <em>requests rendering</em></li></ol></details></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Interface publique</h3><p class=repo-evidence-label>Ce que du code extérieur au projet peut appeler. Le projet déclare 21 types publics.</p><h4>Routes HTTP <span class=repo-count>6</span></h4><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Carte des routes par préfixe</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  api([&#34;HTTP API&#34;])
+  g0[&#34;/.well-known&#34;]
+  api --&gt; g0
+  g0r0[&#34;GET /.well-known/ai-plugin.json&#34;]
+  g0 --&gt; g0r0
+  g0r1[&#34;GET /.well-known/privacy.txt&#34;]
+  g0 --&gt; g0r1
+  g1[&#34;/generate_diagram&#34;]
+  api --&gt; g1
+  g1r0[&#34;POST /generate_diagram&#34;]
+  g1 --&gt; g1r0
+  g2[&#34;/logo.png&#34;]
+  api --&gt; g2
+  g2r0[&#34;GET /logo.png&#34;]
+  g2 --&gt; g2r0
+  g3[&#34;/openapi.json&#34;]
+  api --&gt; g3
+  g3r0[&#34;GET /openapi.json&#34;]
+  g3 --&gt; g3r0
+  g4[&#34;/openapi.yaml&#34;]
+  api --&gt; g4
+  g4r0[&#34;GET /openapi.yaml&#34;]
+  g4 --&gt; g4r0
+</code></pre></div></details><div class=tablewrap><table class="repo-permission-table repo-route-table"><thead><tr><th scope=col>Méthode</th><th scope=col>Chemin</th><th scope=col>Source</th></tr></thead><tbody><tr><td><span class="repo-method m-post">POST</span></td><td><code>/generate_diagram</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L82><code>app.py:82</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/logo.png</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L133><code>app.py:133</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/.well-known/ai-plugin.json</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L138><code>app.py:138</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/openapi.yaml</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L144><code>app.py:144</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/openapi.json</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L150><code>app.py:150</code></a></td></tr><tr><td><span class="repo-method m-get">GET</span></td><td><code>/.well-known/privacy.txt</code></td><td><a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L155><code>app.py:155</code></a></td></tr></tbody></table></div><h4>Points d’entrée</h4><ul class="repo-file-list compact"><li><code>app.py</code> <span class=repo-evidence-label>fichier d’entrée</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py><code>app.py</code></a></li></ul></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Interface privée</h3><p class=repo-evidence-label>Code réservé à l’usage interne selon les conventions du langage.</p><dl class=repo-dossier-stats><div><dt>Assistant préfixé _</dt><dd>6</dd></div></dl><ul class="repo-file-list compact"><li><code>_encode_3bytes</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L294><code>kroki/kroki.py:294</code></a></li><li><code>_encode_6bit</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L318><code>kroki/kroki.py:318</code></a></li><li><code>_encode3bytes</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/__init__.py#L199><code>plantuml/__init__.py:199</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services et hébergement</h3><h4>Où il s’exécute</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/vercel.json title=vercel.json>Vercel</a></li></ul></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entités et modèle de données <span class=repo-count>5</span></h3><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Diagramme de classes des entités</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+  direction LR
+  class E0[&#34;DiagramRequest&#34;] {
+    &#43;str lang
+    &#43;str type
+    &#43;str code
+    &#43;str theme
+  }
+  class E1[&#34;EXTERNAL_THEMES&#34;] {
+    &lt;&lt;enumeration&gt;&gt;
+  }
+  class E2[&#34;Layout&#34;] {
+    &lt;&lt;enumeration&gt;&gt;
+  }
+  class E3[&#34;THEMES&#34;] {
+    &lt;&lt;enumeration&gt;&gt;
+  }
+  class E4[&#34;Theme&#34;] {
+    &lt;&lt;enumeration&gt;&gt;
+  }
+</code></pre></div><p class=repo-evidence-label>Une flèche relie un champ à l’entité que son type nomme.</p></details><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entité</th><th scope=col>Nature</th><th scope=col>Premiers champs</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L47><code>DiagramRequest</code></a></th><td>Schéma validé</td><td><code>lang, type, code, theme</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/themes/theme.py#L47><code>EXTERNAL_THEMES</code></a></th><td>Énumération</td><td></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2/d2.py#L90><code>Layout</code></a></th><td>Énumération</td><td></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/themes/theme.py#L3><code>THEMES</code></a></th><td>Énumération</td><td></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2/d2.py#L95><code>Theme</code></a></th><td>Énumération</td><td></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Logique métier</h3><p class=repo-evidence-label>Les classes qui portent le plus de comportement, hors interface utilisateur et hors services et entités déjà listés.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L70><code>Kroki</code></a> <span class=repo-evidence-label>Source principale, 10 méthodes</span></dt><dd><code>__init__, get_url, get_playground_url, render_diagram, generate_diagram, deflate_and_encode</code></dd></div><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/__init__.py#L62><code>PlantUML</code></a> <span class=repo-evidence-label>Source principale, 9 méthodes</span></dt><dd><code>__init__, get_url, process, process_file, deflate_and_encode, encode</code></dd></div><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/plantuml/themes/__init__.py#L59><code>PlantUML</code></a> <span class=repo-evidence-label>Source principale, 9 méthodes</span></dt><dd><code>__init__, get_url, process, process_file, deflate_and_encode, encode</code></dd></div><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/mermaid/mermaid.py#L48><code>PakoSerde</code></a> <span class=repo-evidence-label>Source principale, 4 méthodes</span></dt><dd><code>serialize, deserialize, pako_deflate, pako_inflate</code></dd></div><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/mermaid/mermaid.py#L39><code>Base64Serde</code></a> <span class=repo-evidence-label>Source principale, 2 méthodes</span></dt><dd><code>serialize, deserialize</code></dd></div><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/mermaid/mermaid.py#L32><code>Serde</code></a> <span class=repo-evidence-label>Source principale, 2 méthodes</span></dt><dd><code>serialize, deserialize</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>Intégrations externes</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Contexte du système</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;D2COpenAIPlugin&#34;]
+  c0([&#34;Client HTTP&#34;])
+  c0 --&gt; sys
+  d0[&#34;PlantUML server&#34;]
+  sys --&gt; d0
+  d1[&#34;Kroki&#34;]
+  sys --&gt; d1
+  d2[&#34;play.d2lang.com&#34;]
+  sys --&gt; d2
+  d3[&#34;mermaid.live&#34;]
+  sys --&gt; d3
+  d4[&#34;api.d2lang.com&#34;]
+  sys --&gt; d4
+  h{{&#34;Vercel&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Les appelants à gauche; à droite, les services et magasins de données que le code utilise.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L97 title=app.py>PlantUML server <span class=kind>rendu</span></a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L11 title=app.py>Kroki <span class=kind>rendu</span></a></li></ul><h4>Clients HTTP</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L10><code>httpx</code></a></p><h4>Hôtes nommés dans le code</h4><ul class="repo-file-list compact"><li><code>play.d2lang.com</code> <span class=repo-evidence-label>3 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2/d2.py#L125><code>D2/d2.py:125</code></a></li><li><code>www.plantuml.com</code> <span class=repo-evidence-label>3 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L97><code>app.py:97</code></a></li><li><code>mermaid.live</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L84><code>kroki/kroki.py:84</code></a></li><li><code>api.d2lang.com</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2/run_d2.py#L22><code>D2/run_d2.py:22</code></a></li><li><code>chat.openai.com</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L31><code>app.py:31</code></a></li><li><code>dreampuf.github.io</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L87><code>kroki/kroki.py:87</code></a></li><li><code>kroki.io</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/kroki/kroki.py#L90><code>kroki/kroki.py:90</code></a></li><li><code>mermaid.ink</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/mermaid/mermaid.py#L106><code>mermaid/mermaid.py:106</code></a></li><li><code>openai-uml-plugin.vercel.app</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L19><code>app.py:19</code></a></li><li><code>ss7.vzw.com</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/D2/d2.py#L175><code>D2/d2.py:175</code></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack et dépendances</h3><details class=repo-structure-details><summary><strong>Node.js</strong> <code>package.json</code> <span class=repo-evidence-label></span></summary><p><span class="tag status">node 24.x</span></p><p><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/package.json>Ouvrir le manifeste</a></p></details><details class=repo-structure-details><summary><strong>Python</strong> <code>requirements.txt</code> <span class=repo-evidence-label>5 à l’exécution</span></summary><h4>Exécution</h4><p class=repo-inline-code><code>fastapi ==0.136.0</code> <code>uvicorn ==0.44.0</code> <code>httpx ==0.28.1</code> <code>pydantic >=2.10.0,&lt;3</code> <code>aiofiles</code></p><p><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/requirements.txt>Ouvrir le manifeste</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Sécurité</h3><h4>Contrôles</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L8 title=app.py>Politique CORS <span class=kind>web</span></a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/app.py#L4 title=app.py>Validation Pydantic <span class=kind>validation</span></a></li></ul><h4>Chaîne d’approvisionnement</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/renovate.json title=renovate.json>Mises à jour Renovate</a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/SECURITY.md title=SECURITY.md>Politique de sécurité</a></li></ul></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Fichiers de test</dt><dd>1</dd></div><div><dt>Fichiers source</dt><dd>12</dd></div><div><dt>Cas de test, environ</dt><dd>16</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/test_app.py title=test_app.py>pytest</a></li></ul><h4>Où sont les tests</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/D2COpenAIPlugin/tree/7d15ee155d5f392b1d90192dc2e21ec479a6291a/.><code>.</code></a> <span class=repo-evidence-label>1</span></p><h4>Intégration continue</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/.github/workflows/CI.yml>Python application test with FastAPI and Pytest</a></dt><dd><code>pytest</code></dd></div></dl></section><p class=repo-dossier-missing>Rien trouvé pour: Base de données.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>21 types déclarés, dont 12 dans l’aperçu des relations de base.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class te235e58dd5f7[&#34;DiagramRequest&#34;] {
+  validate_lang()
+  validate_type()
+  validate_code()
+}
+class t4e73a5f77051[&#34;KrokiError&#34;] {
+}
+class t7b9c286d0daa[&#34;KrokiConnectionError&#34;] {
+}
+class t125669ef086e[&#34;KrokiHTTPError&#34;] {
+  __init__()
+}
+class te53f5e9c5fc5[&#34;Kroki&#34;] {
+  __init__()
+  get_url()
+  get_playground_url()
+  render_diagram()
+}
+class t8bdd6c0a1a17[&#34;Serde&#34;] {
+  serialize()
+  deserialize()
+}
+class tb6d1e408057f[&#34;Base64Serde&#34;] {
+  serialize()
+  deserialize()
+}
+class td8a94fefdf74[&#34;PakoSerde&#34;] {
+  serialize()
+  deserialize()
+  pako_deflate()
+  pako_inflate()
+}
+class t3d10982f0435[&#34;Layout&#34;] {
+}
+class tda3378b45b31[&#34;Theme&#34;] {
+}
+class tc157562f2b44[&#34;PlantUMLError&#34;] {
+}
+class t0b0db7ecf15c[&#34;PlantUMLConnectionError&#34;] {
+}
+class bda110f9bf6d7[&#34;BaseModel&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bda110f9bf6d7 &lt;|-- te235e58dd5f7
+class b03e969ca3e08[&#34;Exception&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b03e969ca3e08 &lt;|-- t4e73a5f77051
+t4e73a5f77051 &lt;|-- t7b9c286d0daa
+t4e73a5f77051 &lt;|-- t125669ef086e
+t8bdd6c0a1a17 &lt;|-- tb6d1e408057f
+t8bdd6c0a1a17 &lt;|-- td8a94fefdf74
+class bb5991911b5e9[&#34;Enum&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bb5991911b5e9 &lt;|-- t3d10982f0435
+bb5991911b5e9 &lt;|-- tda3378b45b31
+class b864a57f6df91[&#34;Exception&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b864a57f6df91 &lt;|-- tc157562f2b44
+tc157562f2b44 &lt;|-- t0b0db7ecf15c
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées; les signatures complètes ne sont pas reconstruites.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><p class=repo-reference-summary>17 / 17 fichiers admissibles lus (35 dans l’arbre); 0 trop volumineux, 0 échec de lecture et 0 diagnostic de syntaxe.</p><details class=repo-analysis-coverage><summary>Ce que couvre l’analyse</summary><p>Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus. La collecte couvre les README, les manifestes reconnus et les fichiers source pris en charge.</p><p>Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">Le manifeste décrit le format d’intégration d’origine. Sa présence ne prouve ni la disponibilité actuelle dans un produit tiers ni la confidentialité d’un rendu distant.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/app.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>app.py</code></a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/kroki/kroki.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>kroki/kroki.py</code></a></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/mermaid/mermaid.py><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>mermaid/mermaid.py</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossaire</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Chercher un terme</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="Aucun terme trouvé. Essayez un autre mot." data-count=termes></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Dépôt</summary><p>Les fichiers source, la configuration et l’historique versionné d’un projet.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>Le document d’entrée du dépôt, qui présente généralement son rôle et son installation.</p></details><details id=term-dependency data-glossary-entry><summary>Dépendance</summary><p>Une bibliothèque, un outil ou un service nécessaire à la compilation ou à l’exécution d’un composant.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>Un protocole de requête et réponse utilisé par les navigateurs et services web. Une requête comprend une méthode, un chemin, des en-têtes et parfois un corps.</p></details><details id=term-build data-glossary-entry><summary>Compilation</summary><p>Les étapes qui transforment les sources et dépendances en programme exécutable ou en livrable distribuable.</p></details><details id=term-mermaid data-glossary-entry><summary>Mermaid</summary><p>Un langage de diagrammes textuel. Les nœuds et liens décrivent un modèle ; le diagramme n’exécute pas le projet.</p></details><details id=term-gpu data-glossary-entry><summary>GPU</summary><p>Un processeur conçu pour les calculs parallèles, dont le rendu graphique et de nombreuses opérations numériques.</p></details><details id=term-backend data-glossary-entry><summary>Backend</summary><p>Une implémentation derrière une interface commune. Selon le contexte, il peut s’agir d’un service côté serveur ou d’une implémentation graphique, d’entrée ou de stockage.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources et actualités du projet</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/D2COpenAIPlugin#readme>README</a><span>Documentation du dépôt</span></li><li><a href=/CV/blog/fr/posts/d2c-openai-diagram-plugin/>Plugin OpenAI D2C — diagrammes PlantUML, Mermaid et D2</a><span>6 sept. 2022 · Récit du projet</span></li><li><a href=/CV/blog/fr/posts/gpt-store-diagram-tool/>25k utilisations de l'outil de diagrammes sur le GPT Store</a><span>24 oct. 2025 · Récit du projet</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Langage</span><b>Python</b></div><div class=kv><span>Catégorie</span><b>Application et services</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/D2COpenAIPlugin>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

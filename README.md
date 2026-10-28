@@ -6,8 +6,8 @@ A comprehensive, multilingual CV/resume website with automated LaTeX compilation
 
 - **Multilingual Support**: English and French versions of both HTML and PDF CVs
 - **Automated Builds**: Python-based build script with Docker for LaTeX compilation
-- **Multiple Deployment Options**: GitHub Pages, Docker, Kubernetes
-- **Modern Stack**: HTML5, LaTeX (XeLaTeX), Docker, Kubernetes, GitHub Actions
+- **Multiple Deployment Options**: GitHub Pages and Docker
+- **Modern Stack**: HTML5, LaTeX (XeLaTeX), Docker, GitHub Actions
 - **Linktree Integration**: Social links page included
 - **CI/CD**: Automated compilation and deployment via GitHub Actions
 
@@ -77,8 +77,6 @@ CV/
 ├── linktree/              # Linktree website
 ├── papers/                # Publications and papers
 ├── configs/               # Configuration files (nginx, traefik, etc.)
-├── k8s/                   # Kubernetes manifests
-├── helm/                  # Helm charts
 ├── hugo/                  # Hugo blog (Paper theme): posts, projects, recipes, search
 ├── docs/                  # Documentation
 └── .github/              # GitHub Actions workflows
@@ -195,22 +193,6 @@ docker-compose up -d
 
 See [Docker Deployment Guide](docs/deployment/docker.md) for details.
 
-### Kubernetes
-
-Deploy to a Kubernetes cluster:
-
-```bash
-kubectl apply -f k8s/
-```
-
-Or using Helm:
-
-```bash
-helm install cv-stack ./helm/cv-stack
-```
-
-See [Kubernetes Deployment Guide](docs/deployment/kubernetes.md) for details.
-
 ## 📚 Documentation
 
 Comprehensive documentation is available in the `docs/` directory:
@@ -218,7 +200,7 @@ Comprehensive documentation is available in the `docs/` directory:
 - **[Setup Guide](docs/setup/README.md)** - Installation and local development setup
 - **[Development Guide](docs/development/README.md)** - Development workflows and best practices
 - **[Deployment Guide](docs/deployment/README.md)** - Deployment options and instructions
-- **[Infrastructure Guide](docs/infrastructure/README.md)** - Docker, Kubernetes, and Nginx configuration
+- **[Infrastructure Guide](docs/infrastructure/README.md)** - Docker and Nginx configuration
 - **[Hugo blog (Paper theme)](docs/development/hugo-navigation.md)** - Menus, i18n, `baseURL`, mobile menu, dark mode
 
 ## 🔧 Development
@@ -280,7 +262,6 @@ See [GitHub Actions Guide](docs/development/github-actions.md) for details.
 
 - **GitHub Pages not updating**: Check GitHub Actions workflow status
 - **Docker container issues**: Check logs with `docker-compose logs`
-- **Kubernetes issues**: Check pod status with `kubectl get pods`
 
 See [Troubleshooting Guide](docs/README.md#troubleshooting) for more details.
 

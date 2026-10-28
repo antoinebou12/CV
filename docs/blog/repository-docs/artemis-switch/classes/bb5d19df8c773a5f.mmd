@@ -1,0 +1,37 @@
+classDiagram
+direction TB
+class t3d03f8bc97e3["TsLwipRelay"] {
+  TsLwipRelay()
+  start()
+  stop()
+  addTcp()
+  addUdp()
+  isRunning()
+  log()
+  runLoop()
+  signalWake()
+  processIncomingQueue()
+  pollTcpListeners()
+  pollTcpConnections()
+  pollUdpSockets()
+  logClosed()
+  handleIncomingPacket()
+  onTunnelRecv()
+  onTcpConnected()
+  onTcpRecv()
+  onTcpError()
+  onUdpRecv()
+  onNetifOutput()
+}
+class tdce754a74924["TcpConnection"] {
+  <<struct>>
+}
+class t24120d7b9ce5["UdpBinding"] {
+  <<struct>>
+}
+class tf2f4f345eac1["IncomingSlot"] {
+  <<struct>>
+}
+class t90190908bb4a["RelayNetif"] {
+  <<struct>>
+}

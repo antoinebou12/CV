@@ -204,6 +204,5 @@ ls -la configs/nginx/
 
 ## Next Steps
 
-- [Kubernetes Configuration](./kubernetes.md) - K8s setup
 - [Nginx Configuration](./nginx.md) - Nginx details
 - [Docker Deployment](../deployment/docker.md) - Deployment guide

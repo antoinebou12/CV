@@ -1,0 +1,680 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Artemis-Switch: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu; le client reçoit l’audio et la vidéo compressés tout en renvoyant les…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/main.min.c2c37874781a8195f9e2b0d9c83fe9cc8f4c875a6078957cb1dbcc5046c986f0.css integrity="sha256-wsN4dHgagZX54rDZyD/pzI9Mh1pgeJV8sdvMUEbJhvA="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7b5c633cf19fa3746d03a7c37dee5fad6c05c8bb66ee55ba53701eaefd7cba75.css integrity="sha256-e1xjPPGfo3RtA6fDfe5frWwFyLtm7lW6U3Aerv18unU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.d575a44ea4ea48f497e2087813736fa139c7dfa7ee5d215ae9320885934fc827.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Artemis-Switch : Une image du PC à l’écran"><meta itemprop=description content="Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu; le client reçoit l’audio et la vidéo compressés tout en renvoyant les…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="2868"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-switch/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Artemis-Switch : Une image du PC à l’écran"><meta property="og:description" content="Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu; le client reçoit l’audio et la vidéo compressés tout en renvoyant les…"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="Artemis-Switch : Une image du PC à l’écran"><meta name=twitter:description content="Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu; le client reçoit l’audio et la vidéo compressés tout en renvoyant les…"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-switch/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Aller au contenu</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/artemis-switch/>EN</a><span class=opacity-40>|</span><span class=opacity-85 aria-current=true>FR</span></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Sections du site"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/posts/>Articles</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/tags/conference/>Conférences</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/recipes/>Recettes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/fr/search/>Recherche</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Liens sociaux"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-fr.html>Accueil CV</a>
+<button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Basculer le thème sombre" aria-pressed=false>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Langue><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/projects/notes/artemis-switch/>EN</a><span class="opacity-40 px-2" aria-hidden=true>|</span><span class=opacity-85 aria-current=true>FR</span></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>Artemis-Switch : Une image du PC à l’écran</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="Sur cette page"><p class=repo-sidenav-label>Sur cette page</p><a href=#overview class=active>Aperçu</a>
+<a href=#glossary>Glossaire</a>
+<a href=#architecture>Architecture</a>
+<a href=#dossier>Dossier technique</a>
+<a href=#installation>Démarrage</a>
+<a href=#features>Composants</a>
+<a href=#reader-guide>Référence</a>
+<a href=#project-references>Liens</a></nav><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><span class=repo-mark aria-hidden=true><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h13a1 1 0 011 1v17H6a3 3 0 01-3-3V5a2 2 0 012-2z"/><path d="M3 18a3 3 0 013-3h13M7 3v7l2-1 2 1V3M8 19h7"/></svg></span><h1 id=single-post-title class=repo-doc-title>Artemis-Switch : Une image du PC à l’écran</h1><p class=repo-hero-lede>Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu; le client reçoit l’audio et la vidéo compressés tout en renvoyant les commandes. L’affichage d’une image constitue une étape de cet aller-retour.</p><div class=repo-status-row aria-label="État du dépôt"><span class="repo-badge kind">Matériel et infographie</span>
+<span class="repo-badge fork">Fork</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
+<span>Mis à jour <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/Artemis-Switch/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
+<span>29</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
+<span>C++ · 53.78%</span></li><li class=repo-chip><span>GPL-3.0</span></li></ul><div class=repo-tech-badges aria-label="Technologies vérifiées"><span class="tag status">Crédit amont</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/Artemis-Switch><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+Code source
+</a><a class="btn ghost" href=https://github.com/antoinebou12/Artemis-Switch#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
+README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Langages du dépôt</span><span class=repo-language-primary>C++ 53.78%</span><span class=repo-count>11</span></summary><div class=repo-language-content><p class=repo-lede-sm>Parts calculées à partir des octets GitHub Linguist.</p><div class=repo-language-track role=img aria-label="C++ 53.78%. C 33.23%. Java 5.69%. CMake 3.51%. Objective-C++ 1.95%. Shell 0.75%."><span style=width:53.78% title="C++ 53.78%"></span><span style=width:33.23% title="C 33.23%"></span><span style=width:5.69% title="Java 5.69%"></span><span style=width:3.51% title="CMake 3.51%"></span><span style=width:1.95% title="Objective-C++ 1.95%"></span><span style=width:.75% title="Shell 0.75%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Langage</th><th scope=col>%</th><th scope=col>Octets</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:53.78%><span>53.78%</span></span></td><td class=num>2 312 036</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>C</td><td><span class=repo-lang-bar style=--p:33.23%><span>33.23%</span></span></td><td class=num>1 428 795</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>Java</td><td><span class=repo-lang-bar style=--p:5.69%><span>5.69%</span></span></td><td class=num>244 691</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>CMake</td><td><span class=repo-lang-bar style=--p:3.51%><span>3.51%</span></span></td><td class=num>150 826</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Objective-C++</td><td><span class=repo-lang-bar style=--p:1.95%><span>1.95%</span></span></td><td class=num>83 846</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>Shell</td><td><span class=repo-lang-bar style=--p:0.75%><span>0.75%</span></span></td><td class=num>32 086</td></tr></tbody></table><details class=repo-language-more><summary>5 autres langages</summary><table class=repo-lang-table><tbody><tr><td>Swift</td><td>0.38%</td><td class=num>16 275</td></tr><tr><td>Python</td><td>0.35%</td><td class=num>15 226</td></tr><tr><td>GLSL</td><td>0.34%</td><td class=num>14 440</td></tr><tr><td>Makefile</td><td>0.02%</td><td class=num>662</td></tr><tr><td>PowerShell</td><td>0.01%</td><td class=num>271</td></tr></tbody></table></details><p class=repo-snapshot><a href=https://github.com/antoinebou12/Artemis-Switch>GitHub</a> · <a href=https://github.com/antoinebou12/Artemis-Switch#readme>README</a> · <a href=https://api.github.com/repos/antoinebou12/Artemis-Switch/languages>Statistiques de langages</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Aperçu</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Pourquoi il existe</h3><p>Client GameStream C++ accéléré matériellement avec calage d'images NVN pour une fluidité sans saccade.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Cas d’usage</h3><p>Diffusion de jeux PC vers Nintendo Switch en mode portable avec latence minimale.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Articles et retours d’expérience liés</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/fr/posts/artemis-switch-frame-pacing/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>Artemis Switch : suivre une image du réseau à l’écran</h4><p>Dans Artemis Switch : transport Moonlight, NVDEC, deko3d, cadence des images et télémétrie pour comprendre les délais du streaming.</p></a><a class=repo-related-post-card href=/CV/blog/fr/posts/handheld-streaming-homebrew/><div class=repo-related-post-header><span class=repo-post-badge>Article approfondi</span>
+<span class=repo-post-arrow aria-hidden=true>→</span></div><h4>Streaming portable et homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch</h4><p>Streaming PC sur Nintendo Switch avec Artemis (Apollo/Sunshine), Moonlight sur New 3DS, et un port Switch de sm64coopdx — trois dépôts homebrew et leur rôle.</p></a></div></div></section><span id=first-steps class=repo-section-anchor aria-hidden=true></span><section class="doc repo-auto-docs" aria-labelledby=installation id=installation><h2>Démarrage</h2><p class=repo-lede-sm>Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.</p><div class=tabbody id=install-native data-tab-panel=native><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Developer build</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>git clone --recursive https://github.com/antoinebou12/Artemis-Switch.git
+cd Artemis-Switch
+cmake -B build/switch -DCMAKE_BUILD_TYPE=Release -DPLATFORM_SWITCH=ON -DUSE_DEKO3D=ON
+cmake --build build/switch --target Moonlight.nro --parallel</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Developer validation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>python tests/i18n_consistency_test.py
+python tests/release_contract_test.py
+cmake -S tests -B build/tests -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/tests --parallel
+ctest --test-dir build/tests --output-on-failure</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Developer validation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>python -m pip install ruff==0.12.10
+python scripts/lint.py
+cmake -S tests -B build/lint -DCMAKE_BUILD_TYPE=Debug -DARTEMIS_STRICT_WARNINGS=ON -DARTEMIS_ENABLE_CLANG_TIDY=ON
+cmake --build build/lint --parallel</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>README.md · Developer validation</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>cmake -S ci/integration -B build/integration -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/integration --parallel
+ctest --test-dir build/integration --output-on-failure</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>app/platforms/android-project/README.md · Building</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>cd android-project</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>app/platforms/android-project/README.md · Building</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>./build_libromfs_generator.sh</code></pre></div></div><div class=terminal role=group aria-label="Commande du dépôt"><div class=terminal-head><span class=terminal-title><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3.5A1.5 1.5.0 014.5 2h11A1.5 1.5.0 0117 3.5v13A1.5 1.5.0 0115.5 18h-11A1.5 1.5.0 013 16.5v-13zm1.5-.25a.25.25.0 00-.25.25v13c0 .14.11.25.25.25h11a.25.25.0 00.25-.25v-13a.25.25.0 00-.25-.25h-11zM6 6.1 8.15 8 6 9.9 5.2 9 6.35 8 5.2 7l.8-.9zm3.5 3.15h4v1.25h-4V9.25z"/></svg><span>app/platforms/android-project/README.md · Building</span></span>
+<button type=button class=copy data-copy><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.5 2A2.5 2.5.0 004 4.5v8A2.5 2.5.0 006.5 15H7v.5A2.5 2.5.0 009.5 18h6a2.5 2.5.0 002.5-2.5v-8A2.5 2.5.0 0015.5 5H15v-.5A2.5 2.5.0 0012.5 2h-6zm7.25 3H9.5A2.5 2.5.0 007 7.5v6.25h-.5A1.25 1.25.0 015.25 12.5v-8A1.25 1.25.0 016.5 3.25h6a1.25 1.25.0 011.25 1.25V5zM9.5 6.25h6a1.25 1.25.0 011.25 1.25v8a1.25 1.25.0 01-1.25 1.25h-6A1.25 1.25.0 018.25 15.5v-8A1.25 1.25.0 019.5 6.25z"/></svg><span>Copier</span></button></div><div class=terminal-panel><pre class=terminal-body tabindex=0><code>export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jbr/Contents/Home
+export ANDROID_SDK_ROOT=~/Library/Android/sdk
+./gradlew assembleDebug
+./gradlew installDebug</code></pre></div></div></div></section><section class=repo-reader-guide aria-labelledby=reader-guide><h2 id=reader-guide>Références du dépôt</h2><p class=repo-evidence-label>Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.</p><div class=repo-guide-chapters><details class=repo-guide-chapter><summary><span>Prérequis et premier essai</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/NRO_INSTALL.md#L1>Install the Artemis Switch NRO</a></h3><p class=repo-excerpt-file><code>docs/NRO_INSTALL.md</code></p><div class=repo-source-markdown><p>Use one of these files from dist/nro:</p><ol><li>Easy install: extract Artemis-Switch-SD.zip to the root of the Switch SD card.</li><li>Manual install: copy Artemis-Switch.nro to sdmc:/switch/Artemis-Switch/Artemis-Switch.nro.
+Launch the Homebrew Menu with title redirection/full RAM mode, then select Artemis Switch. Applet mode is not supported for reliable streaming.
+The ZIP contains only the ready-to-copy switch/Artemis-Switch/Artemis-Switch.nro layout. Apollo and Sunshine both use the normal Moonlight/GameStream pairing flow.</li></ol></div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/NRO_INSTALL.md#L1>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L1>Install</a></h3><p class=repo-excerpt-file><code>docs/source/install.md</code></p><div class=repo-source-markdown>Use a file from a GitHub Release or from dist/nro after a local Switch build.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L1>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L5>Easy install</a></h3><p class=repo-excerpt-file><code>docs/source/install.md</code></p><div class=repo-source-markdown>Extract Artemis-Switch-SD.zip to the root of the Switch SD card. That ZIP is only the ready-to-copy layout:</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L5>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L13>Manual install</a></h3><p class=repo-excerpt-file><code>docs/source/install.md</code></p><div class=repo-source-markdown>Copy Artemis-Switch.nro to:</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md#L13>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Configuration et utilisation</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L65>Recommended host and clients</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Hosts and clients are separate. Pick a server on the PC, then a client on each device. Artemis uses Moonlight/GameStream for pairing and streaming; host administration stays in the selected host&rsquo;s own web UI.</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L65>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L101>Client (device)</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><div class=post-table-scroll><table><thead><tr><th>Client</th><th>Device</th><th>Notes</th></tr></thead><tbody><tr><td data-label=Client>Artemis Switch (this app)</td><td data-label=Device>Nintendo Switch</td><td data-label=Notes>Moonlight-Switch fork with FSR/RCAS, stream profiles, and Switch presentation.</td></tr><tr><td data-label=Client>Artemide</td><td data-label=Device>Android</td><td data-label=Notes>Highly recommended on Android: ultra-low latency (ULL), direct presentation, built-in FSR upscaling. FSR Performance / Balanced / Quality presets inspired this fork.</td></tr><tr><td data-label=Client>Artemis (Moonlight Noir)</td><td data-label=Device>Android</td><td data-label=Notes>Apollo’s companion client (virtual display / host UX inspiration).</td></tr><tr><td data-label=Client>Moonlight</td><td data-label=Device>PC, Android, iOS, …</td><td data-label=Notes>Official clients.</td></tr><tr><td data-label=Client>Moonlight V+</td><td data-label=Device>Android</td><td data-label=Notes>Alternative Android fork (frame-gen and extra host tools).</td></tr><tr><td data-label=Client>Why this stack: Vibeshine, Vibepollo, Apollo, or GameStream-enabled Punktfunk on the PC plus Artemide on Android (and Artemis Switch on the docked/handheld Switch) is the closest to a console-like session: the host manages display behavior, while the client stays low-latency and can…</td><td data-label=Device></td><td data-label=Notes></td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L101>Lire les instructions complètes ↗</a></section></details><details class=repo-guide-chapter><summary><span>Développement et contributions</span></summary><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L476>Developer build</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown><p>Prerequisites: Git, CMake 3.20 or newer, and a standard
+devkitPro devkitA64 environment.
+Clone recursively so every dependency under extern/ is initialized:
+Repository layout</p><div class=post-table-scroll><table><thead><tr><th>Path</th><th>Purpose</th></tr></thead><tbody><tr><td data-label=Path>app/src/</td><td data-label=Purpose>Application, streaming, renderer, input, and feature implementation</td></tr><tr><td data-label=Path>app/include/</td><td data-label=Purpose>UI and application declarations</td></tr><tr><td data-label=Path>resources/</td><td data-label=Purpose>Borealis XML, images, shaders, and translations</td></tr><tr><td data-label=Path>tests/</td><td data-label=Purpose>Portable unit and contract tests</td></tr><tr><td data-label=Path>ci/integration/</td><td data-label=Purpose>Cross-feature integration test build</td></tr><tr><td data-label=Path>docs/</td><td data-label=Purpose>GitHub Pages source and engineering notes</td></tr><tr><td data-label=Path>.github/workflows/</td><td data-label=Purpose>Build, test, sanitizer, and release automation</td></tr><tr><td data-label=Path>extern/</td><td data-label=Purpose>Pinned third-party dependencies and Git submodules</td></tr><tr><td data-label=Path>Keep Switch-specific behavior behind the existing platform and capability gates.</td><td data-label=Purpose></td></tr><tr><td data-label=Path>Do not make project-specific changes inside vendored extern/ dependencies.</td><td data-label=Purpose></td></tr><tr><td data-label=Path>Moonlight.nro and Moonlight.elf remain…</td><td data-label=Purpose></td></tr></tbody></table></div></div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L476>Lire les instructions complètes ↗</a></section><section class=repo-source-excerpt><h3><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L515>Developer validation</a></h3><p class=repo-excerpt-file><code>README.md</code></p><div class=repo-source-markdown>Lint changed first-party files and run the strict portable C++ analysis surface:
+The changed-file linter checks UTF-8/text hygiene, JSON and Python syntax, Ruff,
+and clang-format. Vendored dependencies under extern/ are excluded.
+Cross-feature integration:</div><a class=repo-guide-context href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md#L515>Lire les instructions complètes ↗</a></section></details></div><details class=repo-guide-chapter><summary>Documentation source</summary><ul class=repo-guide-files role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/README.md><code>README.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/README.md><code>docs/README.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/NRO_INSTALL.md><code>docs/NRO_INSTALL.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/source/install.md><code>docs/source/install.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/README.md><code>app/platforms/android-project/README.md</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/README_ZH.md><code>app/platforms/android-project/README_ZH.md</code></a></li></ul><p class=repo-evidence-label>6 documents lus parmi 6 candidats.</p></details></section><section class=doc aria-labelledby=features id=features><h2>Fonctions et composants <span class=repo-count>2</span></h2><dl class=repo-deflist><div class=repo-feature><dt>Session et interface</dt><dd>L’interface Borealis gère le choix de l’hôte et les réglages. MoonlightSession coordonne le streaming et son fournisseur Switch choisit les implémentations vidéo et audio. L’interface et le traitement des médias ont des cycles de vie différents.</dd></div><div class=repo-feature><dt>Sortie propre à la plateforme</dt><dd>Le fournisseur construit FFmpegVideoDecoder. Avec BOREALIS_USE_DEKO3D, il choisit ArtemisDKVideoRenderer; d’autres options choisissent d’autres moteurs. L’audio Switch utilise AudrenAudioRenderer. Ces choix sont explicites à la compilation.</dd></div></dl></section><section class=doc aria-labelledby=architecture id=architecture><h2>Architecture</h2><p class=repo-lede-sm>Ouvrez un composant pour suivre ses connexions, ou explorez le diagramme complet.</p><div class=fig data-arch-shell><div class=fighead><strong data-arch-title id=arch-context-title>Composants du système</strong>
+<span class=repo-figure-label>Contexte</span></div><div data-arch-panel=context class=arch-panel id=arch-context role=group aria-labelledby=arch-context-title><ul class=repo-flow role=list><li><details class=repo-component id=component-0><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Hôte GameStream</span></summary><ul class=repo-component-connections><li>Vers <a href=#component-1>Session de streaming</a></li><li>Depuis <a href=#component-1>Session de streaming</a></li></ul></details></li><li><details class=repo-component id=component-1><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Session de streaming</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-0>Hôte GameStream</a></li><li>Vers <a href=#component-2>Décodeur vidéo FFmpeg</a></li><li>Depuis <a href=#component-5>Commandes manette</a></li><li>Vers <a href=#component-0>Hôte GameStream</a></li></ul></details></li><li><details class=repo-component id=component-2><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Décodeur vidéo FFmpeg</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-1>Session de streaming</a></li><li>Vers <a href=#component-3>Rendu deko3d</a></li></ul></details></li><li><details class=repo-component id=component-3><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Rendu deko3d</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-2>Décodeur vidéo FFmpeg</a></li><li>Vers <a href=#component-4>Écran Switch</a></li></ul></details></li><li><details class=repo-component id=component-4><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Écran Switch</span></summary><ul class=repo-component-connections><li>Depuis <a href=#component-3>Rendu deko3d</a></li></ul></details></li><li><details class=repo-component id=component-5><summary><span class=repo-flow-icon aria-hidden=true><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><span class=repo-flow-label>Commandes manette</span></summary><ul class=repo-component-connections><li>Vers <a href=#component-1>Session de streaming</a></li></ul></details></li></ul></div></div><details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span>
+<span>Diagramme interactif (chargement à l’ouverture)</span></summary><div class=repo-diagram-block role=group aria-labelledby=architecture-artemis-switch><p id=architecture-artemis-switch class=repo-diagram-caption>Vue générale des composants et des échanges vérifiés dans le dépôt.</p><div class=repo-progressive-diagram data-mermaid-fallback><figure class=repo-static-diagram data-mermaid-image-fallback><img src=/CV/blog/repository-docs/artemis-switch/overview-fr.png loading=lazy decoding=async alt="Vue statique de l’architecture de Artemis-Switch"><figcaption>Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.</figcaption></figure><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  n0[&#34;Hôte GameStream&#34;]
+  n1[&#34;Session de streaming&#34;]
+  n2[&#34;Décodeur vidéo FFmpeg&#34;]
+  n3[&#34;Rendu deko3d&#34;]
+  n4[&#34;Écran Switch&#34;]
+  n5[&#34;Commandes manette&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n5 --&gt; n1
+  n1 --&gt; n0
+</code></pre></div><details class=repo-diagram-text><summary>Version texte du diagramme</summary><ul><li>Hôte GameStream → Session de streaming</li><li>Session de streaming → Décodeur vidéo FFmpeg</li><li>Décodeur vidéo FFmpeg → Rendu deko3d</li><li>Rendu deko3d → Écran Switch</li><li>Commandes manette → Session de streaming</li><li>Session de streaming → Hôte GameStream</li></ul></details></div></details><details class=repo-trace><summary>Suivre un parcours dans le code</summary><p>Lisez les méthodes du fournisseur pour identifier le moteur compilé, puis suivez les images décodées vers ce moteur. Les délais réseau, de décodage et d’affichage doivent être mesurés séparément pour expliquer un flux lent.</p></details></section><section class="doc repo-dossier" aria-labelledby=dossier id=dossier-section><h2 id=dossier>Dossier technique</h2><p class=repo-lede-sm>Établi à partir du code au commit <a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd><code>33e6854</code></a> (634 fichiers). Chaque élément vient d’une correspondance de motif dans le code: ouvrez le fichier lié avant de vous y fier.</p><nav class=repo-dossier-toc aria-label="Sections du dossier"><a href=#dossier-layers>Couches et modules</a><a href=#dossier-public>Interface publique</a><a href=#dossier-private>Interface privée</a><a href=#dossier-services>Services et hébergement</a><a href=#dossier-entities>Entités</a><a href=#dossier-logic>Logique métier</a><a href=#dossier-database>Base de données</a><a href=#dossier-integrations>Intégrations externes</a><a href=#dossier-stack>Stack et dépendances</a><a href=#dossier-security>Sécurité</a><a href=#dossier-tests>Tests</a></nav><section class=repo-dossier-part id=dossier-layers aria-labelledby=dossier-layers-h><h3 id=dossier-layers-h>Couches et modules</h3><p class=repo-evidence-label>Les dossiers sont classés par couche selon leur nom, de l’interface utilisateur jusqu’à l’accès aux données. Le diagramme montre où se trouve le code; il ne trace pas les appels entre couches.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Vue en couches</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart TB
+  subgraph L_presentation[&#34;Présentation&#34;]
+    direction LR
+    presentation_0[&#34;resources/xml&lt;br/&gt;19 fichiers&#34;]
+    presentation_1[&#34;features/ui&lt;br/&gt;9 fichiers&#34;]
+    presentation_2[&#34;platforms/android-project&lt;br/&gt;5 fichiers&#34;]
+    presentation_3[&#34;views&lt;br/&gt;2 fichiers&#34;]
+    presentation_more[&#34;&#43;1&#34;]
+  end
+  subgraph L_application[&#34;Services applicatifs&#34;]
+    direction LR
+    application_0[&#34;src&lt;br/&gt;51 fichiers&#34;]
+    application_1[&#34;remote_access/tailscale&lt;br/&gt;41 fichiers&#34;]
+    application_2[&#34;streaming&lt;br/&gt;37 fichiers&#34;]
+    application_3[&#34;include&lt;br/&gt;27 fichiers&#34;]
+    application_more[&#34;&#43;28&#34;]
+  end
+  subgraph L_infrastructure[&#34;Données et infrastructure&#34;]
+    direction LR
+    infrastructure_0[&#34;switch/libavutil&lt;br/&gt;100 fichiers&#34;]
+    infrastructure_1[&#34;switch/libavcodec&lt;br/&gt;25 fichiers&#34;]
+    infrastructure_2[&#34;switch/curl&lt;br/&gt;12 fichiers&#34;]
+    infrastructure_3[&#34;remote_access/providers&lt;br/&gt;6 fichiers&#34;]
+    infrastructure_more[&#34;&#43;2&#34;]
+  end
+  subgraph L_core[&#34;Source principale&#34;]
+    direction LR
+    core_0[&#34;(root)&lt;br/&gt;1 fichiers&#34;]
+    core_1[&#34;docs/source&lt;br/&gt;1 fichiers&#34;]
+  end
+  subgraph L_tests[&#34;Tests&#34;]
+    direction LR
+    tests_0[&#34;tests&lt;br/&gt;78 fichiers&#34;]
+  end
+  subgraph L_hosting[&#34;Build, CI et hébergement&#34;]
+    direction LR
+    hosting_0[&#34;.github&lt;br/&gt;15 fichiers&#34;]
+    hosting_1[&#34;(root)&lt;br/&gt;2 fichiers&#34;]
+    hosting_2[&#34;platforms&lt;br/&gt;2 fichiers&#34;]
+    hosting_3[&#34;ci&lt;br/&gt;1 fichiers&#34;]
+    hosting_more[&#34;&#43;2&#34;]
+  end
+  L_presentation ~~~ L_application
+  L_application ~~~ L_infrastructure
+  L_infrastructure ~~~ L_core
+  L_core ~~~ L_tests
+  L_core ~~~ L_hosting
+</code></pre></div></details><div class=tablewrap><table class=repo-permission-table><caption class=sr-only>Modules et couche principale</caption><thead><tr><th scope=col>Module</th><th scope=col>Couche</th><th scope=col>Fichiers</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil><code>switch/libavutil</code></a></th><td>Données et infrastructure</td><td class=num>100</td><td class=num>195</td><td>.h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src><code>src</code></a></th><td>Services applicatifs</td><td class=num>51</td><td class=num>39</td><td>.cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale><code>remote_access/tailscale</code></a></th><td>Services applicatifs</td><td class=num>41</td><td class=num>62</td><td>.cpp .hpp .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming><code>streaming</code></a></th><td>Services applicatifs</td><td class=num>37</td><td class=num>32</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include><code>include</code></a></th><td>Services applicatifs</td><td class=num>27</td><td class=num>30</td><td>.hpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavcodec><code>switch/libavcodec</code></a></th><td>Données et infrastructure</td><td class=num>25</td><td class=num>30</td><td>.h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project><code>platforms/android-project</code></a></th><td>Services applicatifs</td><td class=num>24</td><td class=num>35</td><td>.java .xml .gradle</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/video><code>streaming/video</code></a></th><td>Services applicatifs</td><td class=num>24</td><td class=num>16</td><td>.hpp .glsl .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/input><code>features/input</code></a></th><td>Services applicatifs</td><td class=num>21</td><td class=num>22</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/resources/xml><code>resources/xml</code></a></th><td>Présentation</td><td class=num>19</td><td class=num>0</td><td>.xml</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access><code>remote_access</code></a></th><td>Services applicatifs</td><td class=num>17</td><td class=num>20</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/video><code>features/video</code></a></th><td>Services applicatifs</td><td class=num>13</td><td class=num>8</td><td>.hpp .cpp</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/curl><code>switch/curl</code></a></th><td>Données et infrastructure</td><td class=num>12</td><td class=num>18</td><td>.h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/benchmark><code>benchmark</code></a></th><td>Services applicatifs</td><td class=num>11</td><td class=num>13</td><td>.hpp .cpp</td></tr></tbody></table></div><p class=repo-evidence-label>30 modules plus petits ne sont pas affichés.</p></section><section class=repo-dossier-part id=dossier-public aria-labelledby=dossier-public-h><h3 id=dossier-public-h>Interface publique</h3><p class=repo-evidence-label>Ce que du code extérieur au projet peut appeler. Le projet déclare 637 types publics.</p><h4>Ligne de commande <span class=repo-count>2</span></h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/scripts/lint.py#L119 title=scripts/lint.py:119><code>--base</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/scripts/lint.py#L120 title=scripts/lint.py:120><code>--head</code></a></li></ul><h4>Points d’entrée</h4><ul class="repo-file-list compact"><li><code>main.cpp</code> <span class=repo-evidence-label>fichier d’entrée</span> <code>app/src/main.cpp</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/main.cpp><code>app/src/main.cpp</code></a></li></ul><h4>En-têtes publics <span class=repo-count>175</span></h4><p class=repo-inline-code><a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/about_tab.hpp><code>app/include/about_tab.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/active_remote_route.hpp><code>app/include/active_remote_route.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/add_host_tab.hpp><code>app/include/add_host_tab.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/app_cell.hpp><code>app/include/app_cell.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/app_list_view.hpp><code>app/include/app_list_view.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/artemis_settings_tab.hpp><code>app/include/artemis_settings_tab.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/button_selecting_dialog.hpp><code>app/include/button_selecting_dialog.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/discovery_candidate.hpp><code>app/include/discovery_candidate.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/favorite_tab.hpp><code>app/include/favorite_tab.hpp</code></a> <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/include/forwarder_maker.hpp><code>app/include/forwarder_maker.hpp</code></a></p></section><section class=repo-dossier-part id=dossier-private aria-labelledby=dossier-private-h><h3 id=dossier-private-h>Interface privée</h3><p class=repo-evidence-label>Code réservé à l’usage interne selon les conventions du langage.</p><dl class=repo-dossier-stats><div><dt>Espace de noms anonyme</dt><dd>98</dd></div><div><dt>Méthode privée ou interne</dt><dd>65</dd></div><div><dt>Fonction static (locale au fichier)</dt><dd>35</dd></div></dl><ul class="repo-file-list compact"><li><code>onDestroy</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/com/borealis/demo/DemoActivity.java#L8><code>app/platforms/android-project/app/src/main/java/com/borealis/demo/DemoActivity.java:8</code></a></li><li><code>getLibraries</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/com/borealis/demo/DemoActivity.java#L20><code>app/platforms/android-project/app/src/main/java/com/borealis/demo/DemoActivity.java:20</code></a></li><li><code>GattOperation</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceBLESteamController.java#L82><code>app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceBLESteamController.java:82</code></a></li><li><code>namespace { }</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/add_host_tab.cpp#L18><code>app/src/add_host_tab.cpp:18</code></a></li><li><code>namespace { }</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/add_host_tab.cpp#L252><code>app/src/add_host_tab.cpp:252</code></a></li><li><code>namespace { }</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/add_host_tab.cpp#L516><code>app/src/add_host_tab.cpp:516</code></a></li><li><code>_mbedtls_sha1</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/MbedTLSCryptoManager.cpp#L21><code>app/src/crypto/MbedTLSCryptoManager.cpp:21</code></a></li><li><code>_mbedtls_sha256</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/MbedTLSCryptoManager.cpp#L30><code>app/src/crypto/MbedTLSCryptoManager.cpp:30</code></a></li><li><code>_mbedtls_cert_signature</code> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/MbedTLSCryptoManager.cpp#L39><code>app/src/crypto/MbedTLSCryptoManager.cpp:39</code></a></li></ul></section><section class=repo-dossier-part id=dossier-services aria-labelledby=dossier-services-h><h3 id=dossier-services-h>Services et hébergement</h3><div class=repo-dossier-grid><article class=repo-dossier-card><h4>Service <span class=repo-count>25</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceManager.java#L28><code>HIDDeviceManager</code></a> <span class=repo-evidence-label>acquire, release, HIDDeviceManager…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/RemoteAccessManager.hpp#L27><code>RemoteAccessManager</code></a> <span class=repo-evidence-label>registerProvider, providers, availableProviders…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/InputManager.hpp#L55><code>MoonlightInputManager</code></a> <span class=repo-evidence-label>dropInput, resetForNewSession, stopAllRumble…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLControllerManager.java#L29><code>SDLControllerManager</code></a> <span class=repo-evidence-label>nativeSetupJNI, nativeAddJoystick, nativeRemoveJoystick…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/MbedTLSCryptoManager.hpp#L9><code>MbedTLSCryptoManager</code></a> <span class=repo-evidence-label>load_cert_key_pair, generate_new_cert_key_pair, remove_cert_key_pair…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/OpenSSLCryptoManager.hpp#L9><code>OpenSSLCryptoManager</code></a> <span class=repo-evidence-label>load_cert_key_pair, generate_new_cert_key_pair, remove_cert_key_pair…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/video/D3D11/D3D11VideoRenderer.hpp#L14><code>D3D11VideoRenderer</code></a> <span class=repo-evidence-label>draw, ensureContext, initialize…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/utils/NetBirdManager.hpp#L21><code>NetBirdManager</code></a> <span class=repo-evidence-label>NetBirdManager, ensure_connected, ready…</span></li></ul></article><article class=repo-dossier-card><h4>Magasin d’état <span class=repo-count>13</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/StreamConfigProfileStore.hpp#L110><code>StreamConfigProfileStore</code></a> <span class=repo-evidence-label>get, create, rename…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/host/WakeOnLanOverridesStore.hpp#L13><code>WakeOnLanOverridesStore</code></a> <span class=repo-evidence-label>get, set, clear…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/video/DisplayTransformStore.hpp#L7><code>DisplayTransformStore</code></a> <span class=repo-evidence-label>get, set, setRotation…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/video/ZoomPanStore.hpp#L12><code>ZoomPanStore</code></a> <span class=repo-evidence-label>setRemember, setState, reset…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/apollo/ApolloHostOptionsStore.hpp#L10><code>ApolloHostOptionsStore</code></a> <span class=repo-evidence-label>get, set, reload…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/input/InputSettingsStore.hpp#L8><code>InputSettingsStore</code></a> <span class=repo-evidence-label>setPointer, setShortcuts, reload…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/video/VideoScaleStore.hpp#L7><code>VideoScaleStore</code></a> <span class=repo-evidence-label>get, set, reload…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/input/SwitchMotionPolicyStore.hpp#L7><code>SwitchMotionPolicyStore</code></a> <span class=repo-evidence-label>set, reload, save…</span></li></ul></article><article class=repo-dossier-card><h4>Fournisseur <span class=repo-count>7</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/providers/NetBirdProvider.hpp#L16><code>NetBirdProvider</code></a> <span class=repo-evidence-label>id, name, available…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/providers/TailscaleProvider.hpp#L17><code>TailscaleProvider</code></a> <span class=repo-evidence-label>id, name, available…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/IRemoteAccessProvider.hpp#L59><code>IRemoteAccessProvider</code></a> <span class=repo-evidence-label>id, name, available…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/providers/WireGuardProvider.hpp#L5><code>WireGuardProvider</code></a> <span class=repo-evidence-label>id, name, available…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/switch/SwitchMoonlightSessionDecoderAndRenderProvider.hpp#L3><code>SwitchMoonlightSessionDecoderAndRenderProvider</code></a> <span class=repo-evidence-label>SwitchMoonlightSessionDecoderAndRenderProvider</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/ios/MoonlightShortcuts.swift#L435><code>MoonlightShortcutsProvider</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/MoonlightSessionDecoderAndRenderProvider.hpp#L6><code>MoonlightSessionDecoderAndRenderProvider</code></a></li></ul></article><article class=repo-dossier-card><h4>Gestionnaire <span class=repo-count>5</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLControllerManager.java#L162><code>SDLJoystickHandler</code></a> <span class=repo-evidence-label>SDLJoystickHandler, pollInputDevices, getJoystick…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLControllerManager.java#L675><code>SDLHapticHandler</code></a> <span class=repo-evidence-label>SDLHapticHandler, run, rumble…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLActivity.java#L2188><code>SDLClipboardHandler</code></a> <span class=repo-evidence-label>SDLClipboardHandler, clipboardHasText, clipboardGetText…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/BorealisHandler.java#L10><code>BorealisHandler</code></a> <span class=repo-evidence-label>handleMessage</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLActivity.java#L906><code>SDLCommandHandler</code></a> <span class=repo-evidence-label>handleMessage</span></li></ul></article><article class=repo-dossier-card><h4>Client <span class=repo-count>2</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/GameStreamClient.hpp#L62><code>GameStreamClient</code></a> <span class=repo-evidence-label>server_data, active_address, start…</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/TailscaleNoise.hpp#L15><code>NoiseClient</code></a> <span class=repo-evidence-label>NoiseClient, begin, complete…</span></li></ul></article><article class=repo-dossier-card><h4>Contrôleur <span class=repo-count>1</span></h4><ul role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceBLESteamController.java#L29><code>HIDDeviceBLESteamController</code></a> <span class=repo-evidence-label>HIDDeviceBLESteamController, getIdentifier, getGatt…</span></li></ul></article></div><h4>Où il s’exécute</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docker-compose.yml title=docker-compose.yml>Pile Docker Compose</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/docs/Makefile title=docs/Makefile>Build natif (Make)</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/CMakeLists.txt title=CMakeLists.txt>Build CMake ×6</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/all-builds.yml title=.github/workflows/all-builds.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/android-apk.yml title=.github/workflows/android-apk.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/build-dist-once.yml title=.github/workflows/build-dist-once.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/docker-image.yml title=.github/workflows/docker-image.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/docs.yml title=.github/workflows/docs.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/feature-integration-ci.yml title=.github/workflows/feature-integration-ci.yml>Workflow de déploiement CI</a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/linux.yml title=.github/workflows/linux.yml>Workflow de déploiement CI</a></li></ul><h4>Services Compose</h4><p class=repo-inline-code><code>artemis-switch-build</code></p></section><section class=repo-dossier-part id=dossier-entities aria-labelledby=dossier-entities-h><h3 id=dossier-entities-h>Entités et modèle de données <span class=repo-count>437</span></h3><details class=repo-diagram-details data-mermaid-lazy><summary><span class="repo-badge tool">Mermaid</span> <span>Diagramme de classes des entités</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+  direction LR
+  class E0[&#34;AVCodec&#34;] {
+    &#43;char name
+    &#43;char long_name
+    &#43;enum type
+    &#43;enum id
+    &#43;int capabilities
+    &#43;uint8_t max_lowres
+  }
+  class E1[&#34;AVCodecContext&#34;] {
+    &#43;AVClass av_class
+    &#43;int log_level_offset
+    &#43;enum codec_type
+    &#43;struct codec
+    &#43;enum codec_id
+    &#43;unsigned codec_tag
+  }
+  class E2[&#34;AVCodecDescriptor&#34;] {
+    &#43;enum id
+    &#43;enum type
+    &#43;char name
+    &#43;char long_name
+    &#43;int props
+    &#43;NULL
+  }
+  class E3[&#34;AVCodecParserContext&#34;] {
+    &#43;void priv_data
+    &#43;struct parser
+    &#43;int64_t frame_offset
+    &#43;int64_t cur_offset
+    &#43;int64_t next_frame_offset
+    &#43;int pict_type
+  }
+  class E4[&#34;AVDOVIColorMetadata&#34;] {
+    &#43;uint8_t dm_metadata_id
+    &#43;uint8_t scene_refresh_flag
+    &#43;AVRational ycc_to_rgb_matrix
+    &#43;AVRational ycc_to_rgb_offset
+    &#43;AVRational rgb_to_lms_matrix
+    &#43;uint16_t signal_eotf
+  }
+  class E5[&#34;AVDOVIDataMapping&#34;] {
+    &#43;uint8_t vdr_rpu_id
+    &#43;uint8_t mapping_color_space
+    &#43;uint8_t mapping_chroma_format_idc
+    &#43;AVDOVIReshapingCurve curves
+    &#43;enum nlq_method_idc
+    &#43;uint32_t num_x_partitions
+  }
+  class E6[&#34;AVDOVIDecoderConfigurationRecord&#34;] {
+    &#43;uint8_t dv_version_major
+    &#43;uint8_t dv_version_minor
+    &#43;uint8_t dv_profile
+    &#43;uint8_t dv_level
+    &#43;uint8_t rpu_present_flag
+    &#43;uint8_t el_present_flag
+  }
+  class E7[&#34;AVDOVIDmData&#34;] {
+    &#43;uint8_t level
+    &#43;AVDOVIDmLevel1 l1
+    &#43;AVDOVIDmLevel2 l2
+    &#43;AVDOVIDmLevel3 l3
+    &#43;AVDOVIDmLevel4 l4
+    &#43;AVDOVIDmLevel5 l5
+  }
+  class E8[&#34;AVDOVIDmLevel1&#34;] {
+    &#43;uint16_t min_pq
+    &#43;uint16_t max_pq
+    &#43;uint16_t avg_pq
+    &#43;uint16_t target_max_pq
+    &#43;uint16_t trim_slope
+    &#43;uint16_t trim_offset
+  }
+  class E9[&#34;AVDOVIDmLevel10&#34;] {
+    &#43;uint8_t target_display_index
+    &#43;uint16_t target_max_pq
+    &#43;uint16_t target_min_pq
+    &#43;uint8_t target_primary_index
+    &#43;AVColorPrimariesDesc target_display_primaries
+    &#43;uint8_t content_type
+  }
+  E1 --&gt; E0 : codec
+  E7 --&gt; E8 : l1
+</code></pre></div><p class=repo-evidence-label>Une flèche relie un champ à l’entité que son type nomme.</p></details><div class=tablewrap><table class=repo-permission-table><thead><tr><th scope=col>Entité</th><th scope=col>Nature</th><th scope=col>Premiers champs</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavcodec/codec.h#L187><code>AVCodec</code></a></th><td>Structure de données</td><td><code>name, long_name, type, id, capabilities, max_lowres, supported_framerates, pix_fmts</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavcodec/avcodec.h#L451><code>AVCodecContext</code></a></th><td>Structure de données</td><td><code>av_class, log_level_offset, codec_type, codec, codec_id, codec_tag, priv_data, internal</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavcodec/codec_desc.h#L38><code>AVCodecDescriptor</code></a></th><td>Structure de données</td><td><code>id, type, name, long_name, props, NULL, mime_types, profiles</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavcodec/avcodec.h#L2748><code>AVCodecParserContext</code></a></th><td>Structure de données</td><td><code>priv_data, parser, frame_offset, cur_offset, next_frame_offset, pict_type, repeat_pict, pts</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L171><code>AVDOVIColorMetadata</code></a></th><td>Structure de données</td><td><code>dm_metadata_id, scene_refresh_flag, ycc_to_rgb_matrix, ycc_to_rgb_offset, rgb_to_lms_matrix, signal_eotf, signal_eotf_param0, signal_eotf_param1</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L152><code>AVDOVIDataMapping</code></a></th><td>Structure de données</td><td><code>vdr_rpu_id, mapping_color_space, mapping_chroma_format_idc, curves, nlq_method_idc, num_x_partitions, num_y_partitions, nlq</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L55><code>AVDOVIDecoderConfigurationRecord</code></a></th><td>Structure de données</td><td><code>dv_version_major, dv_version_minor, dv_profile, dv_level, rpu_present_flag, el_present_flag, bl_present_flag, dv_bl_signal_compatibility_id</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L310><code>AVDOVIDmData</code></a></th><td>Structure de données</td><td><code>level, l1, l2, l3, l4, l5, l6, l8</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L203><code>AVDOVIDmLevel1</code></a></th><td>Structure de données</td><td><code>min_pq, max_pq, avg_pq, target_max_pq, trim_slope, trim_offset, trim_power, trim_chroma_weight</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L269><code>AVDOVIDmLevel10</code></a></th><td>Structure de données</td><td><code>target_display_index, target_max_pq, target_min_pq, target_primary_index, target_display_primaries, content_type, whitepoint, reference_mode_flag</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L278><code>AVDOVIDmLevel11</code></a></th><td>Structure de données</td><td><code>content_type, whitepoint, reference_mode_flag, sharpness, noise_reduction, mpeg_noise_reduction, frame_rate_conversion, brightness</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L210><code>AVDOVIDmLevel2</code></a></th><td>Structure de données</td><td><code>target_max_pq, trim_slope, trim_offset, trim_power, trim_chroma_weight, trim_saturation_gain, ms_weight, min_pq_offset</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L290><code>AVDOVIDmLevel254</code></a></th><td>Structure de données</td><td><code>dm_mode, dm_version_index, dm_run_mode, dm_run_version, dm_debug, level, l1, l2</code></td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/dovi_meta.h#L296><code>AVDOVIDmLevel255</code></a></th><td>Structure de données</td><td><code>dm_run_mode, dm_run_version, dm_debug, level, l1, l2, l3, l4</code></td></tr></tbody></table></div></section><section class=repo-dossier-part id=dossier-logic aria-labelledby=dossier-logic-h><h3 id=dossier-logic-h>Logique métier</h3><p class=repo-evidence-label>Les classes qui portent le plus de comportement, hors interface utilisateur et hors services et entités déjà listés.</p><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/utils/Settings.hpp#L141><code>Settings</code></a> <span class=repo-evidence-label>Services applicatifs, 157 méthodes</span></dt><dd><code>working_dir, set_working_dir, launch_path, set_launch_path, key_dir, boxart_dir</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLActivity.java#L60><code>SDLActivity</code></a> <span class=repo-evidence-label>Services applicatifs, 117 méthodes</span></dt><dd><code>getMotionListener, main, getMainSharedObject, getMainFunction, getLibraries, loadLibraries</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/TailscaleWgxRoute.cpp#L240><code>RealWgxBackend</code></a> <span class=repo-evidence-label>Services applicatifs, 37 méthodes</span></dt><dd><code>realEgressCallback, sendEgress, toSockaddr, fromSockaddr, discoverLanAddress, startDirectPath</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/MoonlightSession.hpp#L13><code>MoonlightSession</code></a> <span class=repo-evidence-label>Services applicatifs, 35 méthodes</span></dt><dd><code>set_provider, start, stop, stopForApplicationExit, set_address, setApolloLaunchOptions</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/AVFrameHolder.hpp#L29><code>AVFrameQueue</code></a> <span class=repo-evidence-label>Services applicatifs, 28 méthodes</span></dt><dd><code>push, pushTransferred, recycleWriteFrame, configure, capacityFor, size</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/AVFrameHolder.hpp#L146><code>AVFrameHolder</code></a> <span class=repo-evidence-label>Services applicatifs, 23 méthodes</span></dt><dd><code>push, pushTransferred, get, acquireWriteFrame, recycleWriteFrame, prepare</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/FramePipelineTelemetry.hpp#L13><code>FramePipelineTelemetry</code></a> <span class=repo-evidence-label>Services applicatifs, 16 méthodes</span></dt><dd><code>reset, noteStreamStart, noteFirstPacket, noteDecodedFrame, consumePendingDecodeTiming, noteFrameQueued</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/TailscaleCore.hpp#L67><code>TailscaleCore</code></a> <span class=repo-evidence-label>Services applicatifs, 22 méthodes</span></dt><dd><code>TailscaleCore, start, stop, snapshot, resolveRoute, activateRoute</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/SDLSurface.java#L35><code>SDLSurface</code></a> <span class=repo-evidence-label>Services applicatifs, 21 méthodes</span></dt><dd><code>SDLSurface, handlePause, handleResume, getNativeSurface, enableMediaCodecOverlay, surfaceCreated</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/relay/TsLwipRelay.hpp#L46><code>TsLwipRelay</code></a> <span class=repo-evidence-label>Services applicatifs, 21 méthodes</span></dt><dd><code>TsLwipRelay, start, stop, addTcp, addUdp, isRunning</code></dd></div></dl></section><section class=repo-dossier-part id=dossier-database aria-labelledby=dossier-database-h><h3 id=dossier-database-h>Base de données et persistance</h3><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/forwarder_maker.cpp#L1160 title=app/src/forwarder_maker.cpp>Active Record <span class=kind>1 fichiers</span></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceManager.java#L17 title=app/platforms/android-project/app/src/main/java/org/libsdl/app/HIDDeviceManager.java>Préférences Android <span class=kind>1 fichiers</span></a></li></ul></section><section class=repo-dossier-part id=dossier-integrations aria-labelledby=dossier-integrations-h><h3 id=dossier-integrations-h>Intégrations externes</h3><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Contexte du système</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>flowchart LR
+  sys[&#34;Artemis-Switch&#34;]
+  c0([&#34;Utilisateur en ligne de commande&#34;])
+  c0 --&gt; sys
+  d0[&#34;Pile réseau console (libnx/li…&#34;]
+  sys --&gt; d0
+  d1[&#34;WebSocket&#34;]
+  sys --&gt; d1
+  d2[(&#34;Active Record&#34;)]
+  sys --&gt; d2
+  d3[(&#34;Préférences Android&#34;)]
+  sys --&gt; d3
+  d4[&#34;api.netbird.io&#34;]
+  sys --&gt; d4
+  d5[&#34;aomediacodec.github.io&#34;]
+  sys --&gt; d5
+  d6[&#34;gbatemp.net&#34;]
+  sys --&gt; d6
+  d7[&#34;www.patreon.com&#34;]
+  sys --&gt; d7
+  h{{&#34;Pile Docker Compose&#34;}}
+  h -.- sys
+</code></pre></div><p class=repo-evidence-label>Les appelants à gauche; à droite, les services et magasins de données que le code utilise.</p></details><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/libgamestream/http.cpp#L93 title=app/src/libgamestream/http.cpp>Pile réseau console (libnx/libctru) <span class=kind>transport</span></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/curl/curl.h#L3291 title=lib/switch/include/curl/curl.h>WebSocket <span class=kind>transport</span></a></li></ul><h4>Clients HTTP</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/libgamestream/http.cpp#L93><code>libcurl</code></a></p><h4>Hôtes nommés dans le code</h4><ul class="repo-file-list compact"><li><code>api.netbird.io</code> <span class=repo-evidence-label>2 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/artemis_settings_tab.cpp#L616><code>app/src/artemis_settings_tab.cpp:616</code></a></li><li><code>aomediacodec.github.io</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/lib/switch/include/libavutil/iamf.h#L27><code>lib/switch/include/libavutil/iamf.h:27</code></a></li><li><code>gbatemp.net</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/about_tab.cpp#L80><code>app/src/about_tab.cpp:80</code></a></li><li><code>www.patreon.com</code> <span class=repo-evidence-label>1 fichiers</span> · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/about_tab.cpp#L69><code>app/src/about_tab.cpp:69</code></a></li></ul></section><section class=repo-dossier-part id=dossier-stack aria-labelledby=dossier-stack-h><h3 id=dossier-stack-h>Stack et dépendances</h3><details class=repo-structure-details><summary><strong>C/C++ (CMake)</strong> <code>CMakeLists.txt</code> <span class=repo-evidence-label>8 à l’exécution</span></summary><p><span class="tag status">CMake ≥ 3.10</span></p><h4>Exécution</h4><p class=repo-inline-code><code>PkgConfig</code> <code>MbedTLS</code> <code>OpenSSL</code> <code>SDL2</code> <code>CURL</code> <code>Jansson</code> <code>EXPAT</code> <code>PNG</code></p><p><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/CMakeLists.txt>Ouvrir le manifeste</a></p></details><details class=repo-structure-details><summary><strong>JVM (Gradle)</strong> <code>app/platforms/android-project/app/build.gradle</code> <span class=repo-evidence-label></span></summary><p><span class="tag status">compileSdk Version</span> <span class="tag status">minSdk Version</span> <span class="tag status">targetSdk Version</span></p><p><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/platforms/android-project/app/build.gradle>Ouvrir le manifeste</a></p></details></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Sécurité</h3><h4>Contrôles</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/TailscaleNoise.cpp#L71 title=app/src/remote_access/tailscale/TailscaleNoise.cpp>HMAC / comparaison à temps constant <span class=kind>authentification</span></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/remote_access/tailscale/TailscaleStateStore.cpp#L9 title=app/src/remote_access/tailscale/TailscaleStateStore.cpp>Hachage des mots de passe <span class=kind>authentification</span></a></li></ul><h4>Chaîne d’approvisionnement</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/renovate.json title=renovate.json>Mises à jour Renovate</a></li></ul><h4>Variables d’environnement <span class=repo-count>3</span></h4><p class=repo-evidence-label>Seuls les noms sont repris. Les noms qui ressemblent à des secrets sont soulignés.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/streaming/video/Metal/streamutils.cpp#L366><code>DRM_DEV</code></a> <a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/i18n/AppLocalePreference.cpp#L54><code>HOME</code></a> <a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/features/i18n/AppLocalePreference.cpp#L63><code>USERPROFILE</code></a></p><aside class="repo-admonition warn"><p class=repo-admonition-title>À vérifier à la main</p><ul><li>Appel de chaîne C non borné, 2 fichiers · <a class=repo-evidence-link href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/app/src/crypto/Data.cpp#L142><code>app/src/crypto/Data.cpp:142</code></a></li></ul></aside></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Tests</h3><dl class=repo-dossier-stats><div><dt>Fichiers de test</dt><dd>78</dd></div><div><dt>Fichiers source</dt><dd>568</dd></div><div><dt>Cas de test, environ</dt><dd>0</dd></div></dl><h4>Où sont les tests</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/Artemis-Switch/tree/33e6854781a47e86ae349e0a7646ff00bd924ddd/tests><code>tests</code></a> <span class=repo-evidence-label>78</span></p><h4>Intégration continue</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/feature-integration-ci.yml>Feature and Integration CI</a></dt><dd><code>ctest</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/lint.yml>Lint</a></dt><dd><code>ruff</code></dd></div><div><dt><a href=https://github.com/antoinebou12/Artemis-Switch/blob/33e6854781a47e86ae349e0a7646ff00bd924ddd/.github/workflows/unit-tests.yml>Unit tests</a></dt><dd><code>ctest</code></dd></div></dl></section></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types et structure des fichiers</h2><p class=repo-section-intro>651 types déclarés, dont 12 dans l’aperçu des relations de base.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Diagramme des types</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+direction TB
+class t27b200e5e641[&#34;AboutTab&#34;] {
+}
+class t1d8fa37de9f9[&#34;ActiveRemoteRoute&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class t76b3bc05a24d[&#34;AddHostTab&#34;] {
+  findHost()
+  stopSearchHost()
+  connectHost()
+  fillSearchBox()
+}
+class t71f8fd94394b[&#34;AppCell&#34;] {
+  setFavorite()
+  updateFavoriteAction()
+}
+class tcb6c23872ee9[&#34;AppListView&#34;] {
+  onLayout()
+  willAppear()
+  draw()
+  blockInput()
+}
+class t5416fcf29d4d[&#34;ArtemisSettingsTab&#34;] {
+  refreshValues()
+  editWidth()
+  editHeight()
+  refreshRemoteAccessRows()
+}
+class taa0a005beea4[&#34;ButtonSelectingDialog&#34;] {
+  open()
+  reloadLabel()
+  buttonsText()
+  draw()
+}
+class t0cab5ff3d09b[&#34;DiscoveryCandidate&#34;] {
+  &lt;&lt;struct&gt;&gt;
+  isDirect()
+}
+class t9649c53d1d2d[&#34;FavoriteTab&#34;] {
+  refreshIfNeeded()
+  setRefreshNeeded()
+  updateAppList()
+}
+class tae773a498879[&#34;ClickGestureRecognizer&#34;] {
+  recognitionLoop()
+}
+class t03d6e2ef334c[&#34;FingersGestureRecognizer&#34;] {
+  recognitionLoop()
+}
+class t96b64c4eb4d8[&#34;TwoFingerScrollState&#34;] {
+  &lt;&lt;struct&gt;&gt;
+}
+class b66d2434ea20a[&#34;brls::Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b66d2434ea20a &lt;|-- t27b200e5e641
+class b12e371ab4244[&#34;brls::Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b12e371ab4244 &lt;|-- t76b3bc05a24d
+class b9fb6426c89d6[&#34;Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b9fb6426c89d6 &lt;|-- t71f8fd94394b
+class bd9fae1c39e24[&#34;Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bd9fae1c39e24 &lt;|-- tcb6c23872ee9
+class bc8de2cffa73c[&#34;brls::Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+bc8de2cffa73c &lt;|-- t5416fcf29d4d
+class b4629afd0f9ec[&#34;Dialog&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b4629afd0f9ec &lt;|-- taa0a005beea4
+class b3def5b4c744e[&#34;brls::Box&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b3def5b4c744e &lt;|-- t9649c53d1d2d
+class b1c2ec6b5bcbd[&#34;brls::GestureRecognizer&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b1c2ec6b5bcbd &lt;|-- tae773a498879
+class b905c043cc5ee[&#34;brls::GestureRecognizer&#34;] {
+  &lt;&lt;unresolved_base&gt;&gt;
+}
+b905c043cc5ee &lt;|-- t03d6e2ef334c
+</code></pre></div><p class=repo-evidence-label>Les bases non résolues restent identifiées; les signatures complètes ne sont pas reconstruites.</p></details></section><section class=repo-reference aria-labelledby=reader-guide><h2 id=reader-guide>Référence</h2><p class=repo-reference-summary>616 / 616 fichiers admissibles lus (962 dans l’arbre); 0 trop volumineux, 0 échec de lecture et 88 diagnostic de syntaxe.</p><details class=repo-analysis-coverage><summary>Ce que couvre l’analyse</summary><p>Les dossiers connus de dépendances et de compilation, les fichiers d’identifiants et les binaires sont exclus. La collecte couvre les README, les manifestes reconnus et les fichiers source pris en charge.</p><p>Les statistiques Linguist couvrent l’ensemble du dépôt et peuvent inclure d’autres langages.</p></details></section></div><aside class="doc repo-note-constraint" aria-labelledby=constraints id=constraints><h2>Limites et points à vérifier</h2><aside class="repo-admonition warn">Une compilation réussie ne mesure ni la latence matérielle ni la stabilité ou les codecs de chaque cible. Le crédit des auteurs Moonlight d’origine est conservé.</aside></aside><section class="doc repo-note-sources" aria-labelledby=source-files id=source-files><h2>Fichiers à lire <span class=repo-count>3</span></h2><ul class=repo-file-list><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/main.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>app/src/main.cpp</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/streaming/MoonlightSession.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>app/src/streaming/MoonlightSession.cpp</code></a></li><li><a href=https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/streaming/switch/SwitchMoonlightSessionDecoderAndRenderProvider.cpp><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 1.5A1.5 1.5.0 002.5 3v10A1.5 1.5.0 004 14.5h8A1.5 1.5.0 0013.5 13V5.2L10.3 2H4zM3.5 3A.5.5.0 014 2.5h5.5V5A1.5 1.5.0 0011 6.5h2.5V13a.5.5.0 01-.5.5H4a.5.5.0 01-.5-.5V3z"/></svg>
+<code>app/src/streaming/switch/SwitchMoonlightSessionDecoderAndRenderProvider.cpp</code></a></li></ul></section><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading>Glossaire</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Chercher un terme</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="Aucun terme trouvé. Essayez un autre mot." data-count=termes></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Dépôt</summary><p>Les fichiers source, la configuration et l’historique versionné d’un projet.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>Le document d’entrée du dépôt, qui présente généralement son rôle et son installation.</p></details><details id=term-dependency data-glossary-entry><summary>Dépendance</summary><p>Une bibliothèque, un outil ou un service nécessaire à la compilation ou à l’exécution d’un composant.</p></details><details id=term-session data-glossary-entry><summary>Session</summary><p>Un état conservé entre plusieurs requêtes, souvent pour suivre un utilisateur connecté. L’authentification et les permissions restent des vérifications distinctes.</p></details><details id=term-port data-glossary-entry><summary>Port publié</summary><p>Un port de l’hôte associé au port d’un service dans un conteneur. Sa publication peut rendre le service accessible hors du réseau des conteneurs.</p></details><details id=term-cli data-glossary-entry><summary>Interface en ligne de commande</summary><p>Une interface textuelle où les commandes et arguments choisissent les opérations. Les codes de retour permettent aux scripts de détecter un succès ou un échec.</p></details><details id=term-build data-glossary-entry><summary>Compilation</summary><p>Les étapes qui transforment les sources et dépendances en programme exécutable ou en livrable distribuable.</p></details><details id=term-gpu data-glossary-entry><summary>GPU</summary><p>Un processeur conçu pour les calculs parallèles, dont le rendu graphique et de nombreuses opérations numériques.</p></details><details id=term-shader data-glossary-entry><summary>Shader</summary><p>Un programme exécuté à une étape d’un pipeline graphique ou de calcul, par exemple pour transformer des sommets ou calculer la couleur des pixels.</p></details><details id=term-decoder data-glossary-entry><summary>Décodeur vidéo</summary><p>Un composant qui reconstruit des images à partir d’un flux vidéo compressé. Le décodage et l’affichage sont des étapes distinctes.</p></details><details id=term-backend data-glossary-entry><summary>Backend</summary><p>Une implémentation derrière une interface commune. Selon le contexte, il peut s’agir d’un service côté serveur ou d’une implémentation graphique, d’entrée ou de stockage.</p></details><details id=term-firmware data-glossary-entry><summary>Micrologiciel</summary><p>Un logiciel exécuté sur un appareil ou microcontrôleur pour contrôler son matériel et ses communications.</p></details><details id=term-fork data-glossary-entry><summary>Fork</summary><p>Un dépôt distinct dérivé d’un autre projet. Une modification du fork ne devient pas automatiquement une modification du projet amont.</p></details></div></section><script src=/CV/blog/documentation-reader.min.d49ee401c606337e51f699822dde88b2002d14854f623083112a8ea365c1b8b1.js integrity="sha256-1J7kAcYGM35R9pmCLd6IsgAtFIVPYjCDESqOo2XBuLE=" defer></script><section class="doc repo-project-references" aria-labelledby=project-references-heading id=project-references><h2 id=project-references-heading>Sources et actualités du projet</h2><ul class=repo-reference-list><li><a href=https://github.com/antoinebou12/Artemis-Switch>GitHub</a><span>Dépôt source</span></li><li><a href=https://github.com/antoinebou12/Artemis-Switch#readme>README</a><span>Documentation du dépôt</span></li><li><a href=/CV/blog/fr/posts/artemis-switch-frame-pacing/>Artemis Switch : suivre une image du réseau à l’écran</a><span>20 oct. 2026 · Récit du projet</span></li><li><a href=/CV/blog/fr/posts/handheld-streaming-homebrew/>Streaming portable et homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch</a><span>2 sept. 2026 · Récit du projet</span></li></ul></section></div><aside class=repo-context><div class=repo-facts><p class=repo-sidenav-label>Fiche projet</p><div class=kv><span>Langage</span><b>C++</b></div><div class=kv><span>Catégorie</span><b>Matériel et infographie</b></div><div class=kv><span>Source</span><a href=https://github.com/antoinebou12/Artemis-Switch>GitHub</a></div><div class=kv><span>Mis à jour</span><b><time datetime=2026-10-23>2026-10-23</time></b></div></div></aside></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    return {
+      source: block.textContent,
+      original,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  function blockReady(block) {
+    if (!block.lazyHost) return true;
+    return block.lazyHost.open === true;
+  }
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    async function paintDiagrams() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } finally { rendering = false; }
+    }
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><footer class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"><div class=mr-auto>&copy;2026
+<a class=link href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><a class="link mx-6" href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

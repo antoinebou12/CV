@@ -95,26 +95,6 @@ See [Docker Deployment](../deployment/docker.md) for details.
 **Pros**: Full features, production-like environment, includes Nginx
 **Cons**: Requires Docker, more setup
 
-### Option 3: Kubernetes (For Production)
-
-Deploy to a Kubernetes cluster:
-
-```bash
-# Apply manifests
-kubectl apply -f k8s/
-
-# Check status
-kubectl get pods -n cv-stack
-
-# View logs
-kubectl logs -f <pod-name> -n cv-stack
-```
-
-See [Kubernetes Deployment](../deployment/kubernetes.md) for details.
-
-**Pros**: Scalable, production-ready, cloud-native
-**Cons**: Requires Kubernetes cluster, complex setup
-
 ## Initial Configuration
 
 ### 1. Verify Installation

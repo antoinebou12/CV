@@ -16,18 +16,69 @@
         body,
         html {
             margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
+            min-height: 100%;
+        }
+
+        body {
+            background: oklch(0.398 0.047 248);
+            color: oklch(0.31 0.035 240);
+            font-family: "Open Sans", "Segoe UI", sans-serif;
         }
 
         #scene-container {
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: #000;
+        }
+
+        .not-found {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px 20px;
+        }
+
+        .not-found-card {
+            width: min(100%, 28rem);
+            padding: 32px 28px;
+            background: oklch(0.985 0.006 190);
+            border-radius: 6px;
+        }
+
+        .not-found h1 {
+            margin: 0 0 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .not-found p {
+            margin: 0;
+            color: oklch(0.46 0.025 240);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .not-found nav {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: black;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin-top: 20px;
+        }
+
+        .not-found a {
+            color: oklch(0.31 0.035 240);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #scene-container { display: none; }
         }
     </style>
     <script type="importmap">
@@ -44,13 +95,28 @@
 </head>
 
 <body>
-    <div id="scene-container"></div>
+    <div id="scene-container" hidden></div>
+    <main class="not-found">
+        <div class="not-found-card">
+            <h1>Page not found</h1>
+            <p>This address is not on the site.</p>
+            <nav aria-label="Continue">
+                <a href="index-en.html">English CV</a>
+                <a href="index-fr.html">CV français</a>
+                <a href="https://antoineboucher.info/CV/blog/">Blog</a>
+            </nav>
+        </div>
+    </main>
     <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'OrbitControls';
-        import { GLTFLoader } from 'GLTFLoader';
-        import { FontLoader } from 'FontLoader';
-        import { TextGeometry } from 'TextGeometry';
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            // The HTML card stays the page. Do not load the remote scene.
+        } else {
+        const THREE = await import('three');
+        const { GLTFLoader } = await import('GLTFLoader');
+        const { FontLoader } = await import('FontLoader');
+        const { TextGeometry } = await import('TextGeometry');
+
+        document.getElementById('scene-container').hidden = false;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -161,6 +227,7 @@
         }
 
         animate();
+        }
     </script>
 </body>
 

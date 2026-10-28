@@ -1,0 +1,110 @@
+flowchart TD
+
+subgraph group_host["Hosts and pairing"]
+  node_discovery["Host discovery<br/>[host_discovery.cpp]"]
+  node_pairing[("Pair records<br/>[pair_record.cpp]")]
+  node_gamestream["GameStream client<br/>[client.c]"]
+  node_xml["Protocol XML<br/>[xml.c]"]
+end
+
+subgraph group_session["Session coordination"]
+  node_main["Application flow<br/>[n3ds_main.cpp]"]
+  node_ui["Console menus<br/>[n3ds_ui.cpp]"]
+  node_connection["Stream connection"]
+  node_dispatcher["Message dispatcher<br/>[dispatcher.cpp]"]
+end
+
+subgraph group_stream["Stream pipeline"]
+  node_presentation["Presentation state"]
+  node_decoder["Video decoders"]
+  node_mvd["Hardware decode<br/>[n3ds_video_mvd.cpp]"]
+  node_software["Software decode"]
+  node_renderer["Screen renderers"]
+  node_graphics["Graphics lifecycle"]
+  node_audio["Audio output<br/>[n3ds_audio.cpp]"]
+end
+
+subgraph group_interaction["Input and helpers"]
+  node_input["Console input<br/>[n3ds_input.cpp]"]
+  node_touch["Touch handlers<br/>[TouchHandler.hpp]"]
+  node_menuhub["In-stream helper hub"]
+  node_bottomui["Bottom-screen UI"]
+end
+
+subgraph group_state["Settings and telemetry"]
+  node_config[("Configuration<br/>[config.cpp]")]
+  node_appcache[("App list cache<br/>[app_list_cache.cpp]")]
+  node_profiles["Stream profiles<br/>[stream_profile.cpp]"]
+  node_telemetry[("Stream telemetry")]
+  node_benchmark["Performance metrics"]
+end
+
+node_user(("3DS user"))
+
+node_user -->|"uses"| node_main
+node_main -->|"finds hosts"| node_discovery
+node_main -->|"pairs host"| node_pairing
+node_main -.->|"manages host"| node_gamestream
+node_gamestream -->|"parses responses"| node_xml
+node_discovery -->|"uses records"| node_pairing
+node_main -->|"shows menus"| node_ui
+node_main -->|"lists apps"| node_appcache
+node_main -->|"starts session"| node_connection
+node_main -->|"loads settings"| node_config
+node_main -->|"selects profile"| node_profiles
+node_main -->|"handles controls"| node_input
+node_input -->|"posts events"| node_dispatcher
+node_input -->|"owns handlers"| node_touch
+node_main -->|"dispatches events"| node_dispatcher
+node_user -->|"opens helpers"| node_menuhub
+node_menuhub -->|"posts actions"| node_dispatcher
+node_menuhub -.->|"draws interface"| node_bottomui
+node_user -->|"chooses stream"| node_connection
+node_connection -.->|"receives video"| node_decoder
+node_decoder -.->|"hardware path"| node_mvd
+node_decoder -.->|"software path"| node_software
+node_decoder -->|"renders frames"| node_renderer
+node_renderer -->|"uses layout state"| node_presentation
+node_renderer -->|"uses graphics lifecycle"| node_graphics
+node_connection -.->|"streams audio"| node_audio
+node_user -->|"views or saves metrics"| node_telemetry
+node_user -->|"views performance"| node_benchmark
+node_main -->|"uses telemetry store"| node_telemetry
+
+click node_main "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/n3ds_main.cpp"
+click node_ui "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/n3ds_ui.cpp"
+click node_discovery "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/host_discovery.cpp"
+click node_pairing "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/system/pair_record.cpp"
+click node_gamestream "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/libgamestream/client.c"
+click node_xml "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/libgamestream/xml.c"
+click node_connection "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/system/n3ds_connection.cpp"
+click node_dispatcher "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/system/dispatcher.cpp"
+click node_config "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/config.cpp"
+click node_appcache "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/app_list_cache.cpp"
+click node_profiles "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/stream_profile.cpp"
+click node_input "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/input/n3ds_input.cpp"
+click node_touch "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/input/touch/TouchHandler.hpp"
+click node_menuhub "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/input/touch/MenuTouchHandler.cpp"
+click node_bottomui "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/input/touch/stream_bottom_ui.hpp"
+click node_presentation "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/presentation_state.cpp"
+click node_decoder "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/video/n3ds_video_base.cpp"
+click node_mvd "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/video/n3ds_video_mvd.cpp"
+click node_software "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/video/n3ds_video_soft.cpp"
+click node_renderer "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/video/renderer/N3dsRendererBase.cpp"
+click node_graphics "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/graphics_lifecycle.cpp"
+click node_audio "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/audio/n3ds_audio.cpp"
+click node_telemetry "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/stream_telemetry_store.cpp"
+click node_benchmark "https://github.com/antoinebou12/artemis-n3ds/blob/n3ds-main/src/stream_benchmark.cpp"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_discovery,node_pairing,node_gamestream,node_xml,node_user toneBlue
+class node_main,node_ui,node_connection,node_dispatcher toneAmber
+class node_presentation,node_decoder,node_mvd,node_software,node_renderer,node_graphics,node_audio toneMint
+class node_input,node_touch,node_menuhub,node_bottomui toneRose
+class node_config,node_appcache,node_profiles,node_telemetry,node_benchmark toneIndigo

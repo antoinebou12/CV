@@ -1,0 +1,68 @@
+classDiagram
+direction TB
+class t8621b2aff720["AllDebridError"] {
+  <<interface>>
+}
+class tbfaa7ee08af3["AllDebridApiResponse"] {
+  <<interface>>
+}
+class t0876d9ed2e8b["AllDebridUserResponse"] {
+  <<interface>>
+}
+class tb629965a63db["AllDebridLinkUnlockResponse"] {
+  <<interface>>
+}
+class tc68e0999a802["AllDebridDelayedResponse"] {
+  <<interface>>
+}
+class tbd5aaf5ad8c9["AllDebridMagnet"] {
+  <<interface>>
+}
+class tab98319fb764["AllDebridMagnetUploadResponse"] {
+  <<interface>>
+}
+class ted5cc148bdb2["AllDebridMagnetStatusResponse"] {
+  <<interface>>
+}
+class tb38d4c393736["AllDebridMagnetFileNode"] {
+  <<interface>>
+}
+class te3b284dd3a6e["AllDebridMagnetFilesItem"] {
+  <<interface>>
+}
+class t2679b4d42fda["AllDebridMagnetFilesResponse"] {
+  <<interface>>
+}
+class t7b387b67c2be["AllDebridFileEntry"] {
+  <<interface>>
+}
+class td8d027ae368a["AllDebridDownloadInfo"] {
+  <<interface>>
+}
+class td3302fac6f4b["AllDebridDownloadEntry"] {
+  <<interface>>
+}
+class t16bd7112327b["AllDebridClient"] {
+  throttle()
+  applyThrottle()
+  authorize()
+  getSearchParams()
+  ensureSuccess()
+  getMagnetInfoHash()
+  normalizeMagnets()
+  normalizeMagnetFiles()
+  extractFilenameFromLink()
+  extractFileEntries()
+  getUser()
+  unlockLink()
+  waitForDelayedLink()
+  getMagnetStatus()
+  getMagnetFiles()
+  addMagnet()
+  getMagnetId()
+  getDownloadEntries()
+  unlockDownloadLink()
+  getDownloadInfo()
+  getDownloadUrl()
+  isCached()
+}

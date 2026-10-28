@@ -29,6 +29,11 @@ env/
 .env.*
 !.env.example
 
+# Node (Playwright UX audit and other local tooling)
+node_modules/
+tools/ux-audit/playwright-report/
+tools/ux-audit/test-results/
+
 # OS junk
 .DS_Store
 Thumbs.db
@@ -40,6 +45,9 @@ desktop.ini
 *.swp
 *.swo
 *~
+
+# Runtime logs (not site source)
+/logs/
 
 # Local Hugo / deploy verify output (CI builds _site on the runner only)
 /_site/
@@ -83,3 +91,8 @@ hugo/content/posts/ai-figurines-3d-printing/models/*.glb
 
 # Local scratch output (e2e staging site, review captures)
 /tmp/
+
+# Temporary Hugo and review builds (contain decks over the 100 MB GitHub limit)
+/_site_loop/
+/.tmp-responsive/
+/hugo/tmp-hugo-*/

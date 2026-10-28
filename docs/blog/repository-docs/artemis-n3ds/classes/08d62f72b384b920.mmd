@@ -1,0 +1,109 @@
+classDiagram
+direction TB
+class tb64aad1dc459["_GAMEPAD_STATE"] {
+  <<struct>>
+}
+class t665557cda82f["TouchHandlerBase"] {
+  handle_touch_down()
+  handle_touch_up()
+  handle_touch_hold()
+  captures_gamepad_input()
+  handle_navigation()
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+}
+class t659ba12f1334["DebugTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+}
+class t9c6b5e983552["MenuTouchHandler"] {
+  captures_gamepad_input()
+  handle_navigation()
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  paint_page()
+  update_touch_target()
+  activate_selected()
+  move_selection()
+  change_page()
+}
+class tf866d7956919["PerformanceTouchHandler"] {
+  captures_gamepad_input()
+  handle_navigation()
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  redraw()
+  save_csv()
+  go_back()
+}
+class t1bbf5a40b380["GamepadTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  apply_host_buttons()
+}
+class t114d95ceef2a["MouseTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+}
+class t6cae4644cc37["KeyInfo"] {
+  <<struct>>
+}
+class t99957b7f73ce["KeyboardTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  get_keycode()
+  set_screen()
+  set_screen_key()
+  set_shift_keys()
+  handle_default()
+  cycle_key_state()
+  handle_alt_keyboard()
+  get_key_mod()
+}
+class tf1d9939b727b["ShortcutsTouchHandler"] {
+  captures_gamepad_input()
+  handle_navigation()
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  paint_page()
+  activate()
+  change_page()
+  hit_shortcut()
+}
+class tb469a30c443d["MirrorTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+}
+class td30b3d844e55["StretchTouchHandler"] {
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+}
+class tef7b91a0eedd["MagnifyTouchHandler"] {
+  captures_gamepad_input()
+  handle_navigation()
+  _handle_touch_down()
+  _handle_touch_up()
+  _handle_touch_hold()
+  _set_touch_offsets()
+  _lock_view()
+}
+t665557cda82f <|-- t659ba12f1334
+t665557cda82f <|-- t9c6b5e983552
+t665557cda82f <|-- tf866d7956919
+t665557cda82f <|-- t1bbf5a40b380
+t665557cda82f <|-- t114d95ceef2a
+t665557cda82f <|-- t99957b7f73ce
+t665557cda82f <|-- tf1d9939b727b
+t665557cda82f <|-- tb469a30c443d
+t665557cda82f <|-- td30b3d844e55
+t665557cda82f <|-- tef7b91a0eedd

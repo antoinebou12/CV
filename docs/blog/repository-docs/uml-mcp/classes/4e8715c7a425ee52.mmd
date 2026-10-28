@@ -1,0 +1,49 @@
+classDiagram
+direction TB
+class t94b92482952b["TestParseArgs"] {
+  test_defaults()
+  test_debug_transport_http_host_port_list_tools()
+  test_invalid_transport_raises()
+}
+class tbab3da0a47b1["TestSetupLogging"] {
+  _restore_root_logger()
+  test_debug_sets_debug_level()
+  test_no_debug_sets_info_level()
+  test_adds_rotating_file_handler_in_logs_dir()
+}
+class t4e5b0e19c5b1["TestSafeImport"] {
+  test_nonexistent_module_returns_none()
+  test_real_module_returns_module()
+}
+class t6053a0714245["TestDisplayTools"] {
+  test_display_tools_no_exception()
+}
+class td636ec752b3a["TestDisplayPrompts"] {
+  test_display_prompts_no_exception()
+}
+class tffe4d20686d4["TestDisplayResources"] {
+  test_display_resources_no_exception()
+}
+class t7b8e68358c46["TestRun"] {
+  test_list_tools_exits_without_starting_server()
+  test_list_tools_stdio_exits_without_starting_server()
+  test_run_http_calls_start_server()
+  test_run_missing_modules_exits()
+  test_run_handles_keyboard_interrupt()
+  test_run_handles_generic_exception()
+}
+class t61b10c376a48["TestStdioUI"] {
+  test_stdio_ui_disabled_by_default()
+  test_stdio_ui_enabled_with_env_var()
+  test_should_render_for_http()
+  test_should_not_render_for_stdio_by_default()
+  test_should_render_for_stdio_with_env()
+}
+class tf5313abb9982["TestDisplayFallbacks"] {
+  test_display_tools_fallback_with_tools()
+  test_display_tools_fallback_empty()
+  test_display_prompts_fallback_with_prompts()
+  test_display_prompts_fallback_empty()
+  test_display_resources_fallback_with_resources()
+  test_display_resources_fallback_empty()
+}

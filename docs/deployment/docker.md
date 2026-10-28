@@ -189,6 +189,5 @@ environment:
 
 ## Next Steps
 
-- [Kubernetes Deployment](./kubernetes.md) - Deploy to Kubernetes
 - [GitHub Pages](./github-pages.md) - Alternative deployment method
 - [Infrastructure Docs](../infrastructure/docker.md) - Detailed Docker documentation

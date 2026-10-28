@@ -1,0 +1,14 @@
+classDiagram
+direction TB
+class t6d635026c004["TestRateLimitedHelper"] {
+  test_disabled_when_limit_zero()
+  test_allows_up_to_limit_then_blocks()
+  test_buckets_are_per_client_ip()
+  test_old_entries_expire_after_sixty_seconds()
+}
+class td6582e71e6cc["TestRequestIdAndRateLimitMiddleware"] {
+  test_propagates_incoming_x_request_id()
+  test_generates_x_request_id_when_absent()
+  test_rate_limit_returns_429_on_protected_paths()
+  test_non_protected_path_not_subject_to_rate_limit()
+}

@@ -1,0 +1,1152 @@
+{
+  "repo": "another-install-script",
+  "slug": "another-install-script",
+  "commit": "6e1e193260504106593f6b92bb799aacafdf0e2b",
+  "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/",
+  "tree_url": "https://github.com/antoinebou12/another-install-script/tree/6e1e193260504106593f6b92bb799aacafdf0e2b",
+  "fetched_at": "2026-10-24T01:36:01.385259+00:00",
+  "languages": [
+    {
+      "name": "Shell",
+      "bytes": 129426,
+      "percent": 93.8
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 4311,
+      "percent": 3.12
+    },
+    {
+      "name": "Python",
+      "bytes": 4242,
+      "percent": 3.07
+    }
+  ],
+  "language_bytes": 137979,
+  "coverage": {
+    "tree_files": 291,
+    "eligible_files": 203,
+    "read_files": 203,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [
+      {
+        "file": "src/config.sh",
+        "error": "syntax-errors"
+      }
+    ],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 30,
+      "heading": "How to install",
+      "commands": "git clone https://github.com/antoinebou13/another-install-script.git\ncd another-install-script\nsudo bash setup.sh"
+    },
+    {
+      "file": "README.md",
+      "line": 92,
+      "heading": "Project Structure",
+      "commands": "+-- docs\n|   +-- vendor\n|       +-- ...\n|   +-- docs.md\n|   +-- generate_docs.md\n|   +-- ...\n+-- containers\n|   +-- $container_name\n|   |   |   +-- docker-compose.yml\n|   |   |   +-- $container_name.sh\n|   |   |   +-- ...\n+-- src"
+    },
+    {
+      "file": "README.md",
+      "line": 133,
+      "heading": "How to run coverage and tests",
+      "commands": "cd tests\nbash test.sh"
+    },
+    {
+      "file": "README.md",
+      "line": 140,
+      "heading": "How to run coverage and tests",
+      "commands": "cd tests\nbash coverage.sh"
+    },
+    {
+      "file": "README.md",
+      "line": 149,
+      "heading": "How to generate the documentation",
+      "commands": "git submodule update --init --recursive\ngit pull --recurse-submodules\ngit submodule update --remote\ncd docs/generator\nchmod +x generate_docs.sh\nbash generate_docs.sh ../docs.md"
+    }
+  ],
+  "manifests": [],
+  "type_count": 2,
+  "types": [
+    {
+      "id": "t9c1d5cd3c00c",
+      "name": "GeneratorAIS",
+      "kind": "class",
+      "file": "src/containers_list.py",
+      "line": 8,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "read_yml",
+        "generate_containers_list",
+        "write_containers_list_text"
+      ],
+      "bases": [
+        "object"
+      ]
+    },
+    {
+      "id": "t51dcacef3aad",
+      "name": "ReverseProxy",
+      "kind": "class",
+      "file": "src/nginx_reverse_proxy.py",
+      "line": 9,
+      "language": "python",
+      "methods": [
+        "read_yml",
+        "generate_nginx_conf",
+        "generate_server_block"
+      ],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "src/containers_list.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/containers_list.py",
+      "download": "repository-docs/another-install-script/classes/2570dd363ead3cff.mmd"
+    },
+    {
+      "path": "src/nginx_reverse_proxy.py",
+      "types": 1,
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/nginx_reverse_proxy.py",
+      "download": "repository-docs/another-install-script/classes/7aef38c0586178c0.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "setup.sh",
+      "blob_sha": "89cf62c5cb5fdfb4a6d8475fc7cd4a6393846e92",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/setup.sh"
+    },
+    {
+      "path": "src/menu.sh",
+      "blob_sha": "522cb5f4d456ca4075ae9662370cd50b527bef73",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/menu.sh"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "808e6264f5b81824c6e2edd7ec3cd53516ab6a19",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/README.md"
+    },
+    {
+      "path": "uninstall.sh",
+      "blob_sha": "75735f2a2bb36b3ed691ec67de4435224602eaec",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/uninstall.sh"
+    },
+    {
+      "path": "version.sh",
+      "blob_sha": "24883768b68bdddc76b5129475ad814535c80ebf",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/version.sh"
+    },
+    {
+      "path": "src/backup.sh",
+      "blob_sha": "60246c385ade1099e667f0a0a02de1c57d980eb1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/backup.sh"
+    },
+    {
+      "path": "src/config.sh",
+      "blob_sha": "c8c9c8da76aac3df21b2e792c00490c7f1d3e313",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/config.sh"
+    },
+    {
+      "path": "src/containers.sh",
+      "blob_sha": "9d72deabb93d42c46fd84c2f623c9e05a340164e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/containers.sh"
+    },
+    {
+      "path": "src/containers_list.py",
+      "blob_sha": "8d05fb8a950319b8f575581563c906c260b98bb7",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/containers_list.py"
+    },
+    {
+      "path": "src/docker.sh",
+      "blob_sha": "f2adf05d8f7307d8901bde01cbf60d953f0f3d28",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/docker.sh"
+    },
+    {
+      "path": "src/firewall.sh",
+      "blob_sha": "46931c08c9fff54a22d0cc471b1fc9558ea9b718",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/firewall.sh"
+    },
+    {
+      "path": "src/install.sh",
+      "blob_sha": "4597ef4e5a64f143631a57a507d95bc399be363d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/install.sh"
+    },
+    {
+      "path": "src/nginx_reverse_proxy.py",
+      "blob_sha": "23eddcac2eaca67fd01c0ee0c8bf6e11af8ff127",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/nginx_reverse_proxy.py"
+    },
+    {
+      "path": "src/other.sh",
+      "blob_sha": "4ce153fe9a37cfe19f5cbd330b2694b4e5ed6a6e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/other.sh"
+    },
+    {
+      "path": "src/router.sh",
+      "blob_sha": "7dd94876820209d7509359feb218365c65071ff3",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/router.sh"
+    },
+    {
+      "path": "src/utils.sh",
+      "blob_sha": "d631080425a6bd774ff6ff6e1b4f1f9f64668c99",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/src/utils.sh"
+    },
+    {
+      "path": "tests/coverage.sh",
+      "blob_sha": "5cd409a2e6afe63ae9a5041196b9be082215789a",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/tests/coverage.sh"
+    },
+    {
+      "path": "tests/linter.sh",
+      "blob_sha": "c9ae95d89e6913010f0044eed99b7da31bdcdff1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/tests/linter.sh"
+    },
+    {
+      "path": "tests/tests.sh",
+      "blob_sha": "917b46606e385a2066a438a23532d01dcfa0740d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/tests/tests.sh"
+    },
+    {
+      "path": "containers/.template/.template.sh",
+      "blob_sha": "ca804ef2e773ea18ee5a745d97f0005d15140138",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/.template/.template.sh"
+    },
+    {
+      "path": "containers/.template/docker-compose.yml",
+      "blob_sha": "627ff76833e31ad27b54ac4123a0aedb3d87fec0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/.template/docker-compose.yml"
+    },
+    {
+      "path": "containers/airsonic/airsonic.sh",
+      "blob_sha": "5b135db0889084f3cead891101f596e9845f7e09",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/airsonic/airsonic.sh"
+    },
+    {
+      "path": "containers/airsonic/docker-compose.yml",
+      "blob_sha": "52b0d21c2a72dac7465d5218c099784e2ba1a7ae",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/airsonic/docker-compose.yml"
+    },
+    {
+      "path": "containers/ansiblesemaphore/ansiblesemaphore.sh",
+      "blob_sha": "74e5b85e6f262e73d96c01cd5a062249695ea0ee",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ansiblesemaphore/ansiblesemaphore.sh"
+    },
+    {
+      "path": "containers/ansiblesemaphore/docker-compose.yml",
+      "blob_sha": "4c5c22ba0c347bb1004de342e7dee5f5b97876f3",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ansiblesemaphore/docker-compose.yml"
+    },
+    {
+      "path": "containers/bitwarden/bitwarden.sh",
+      "blob_sha": "952cec410ebdb0901c51a0ae3bd51060185c0c22",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/bitwarden/bitwarden.sh"
+    },
+    {
+      "path": "containers/bitwarden/docker-compose.yml",
+      "blob_sha": "56036eacc59442f281036b66a4640e4da8ff7c7f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/bitwarden/docker-compose.yml"
+    },
+    {
+      "path": "containers/bookstack/bookstack.sh",
+      "blob_sha": "e7d8c0e5df2354f1a1ee8518d7a0530f05642d5b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/bookstack/bookstack.sh"
+    },
+    {
+      "path": "containers/bookstack/docker-compose.yml",
+      "blob_sha": "562c4d9fdab4d62106933d42e70f0eb0c13d9ab1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/bookstack/docker-compose.yml"
+    },
+    {
+      "path": "containers/calibre/calibre.sh",
+      "blob_sha": "1629c36b7b568e7b2b94ca0597f020fb2304ef58",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/calibre/calibre.sh"
+    },
+    {
+      "path": "containers/calibre/docker-compose.yml",
+      "blob_sha": "7012c813cdb298a150a245e4adce654b77874790",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/calibre/docker-compose.yml"
+    },
+    {
+      "path": "containers/chevereto/chevereto.sh",
+      "blob_sha": "74720aab9351262eab72aab9baff3e12161c475d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/chevereto/chevereto.sh"
+    },
+    {
+      "path": "containers/chevereto/docker-compose.yml",
+      "blob_sha": "6b10fe73e0b5fe9ef3ba01b6809bc15134da4f4b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/chevereto/docker-compose.yml"
+    },
+    {
+      "path": "containers/cloudtorrent/cloudtorrent.sh",
+      "blob_sha": "81111e75e433501ae6cc17ba2980fb3e6e4dbf66",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/cloudtorrent/cloudtorrent.sh"
+    },
+    {
+      "path": "containers/cloudtorrent/docker-compose.yml",
+      "blob_sha": "e3d45870ffbb07933bf08741a5b63eb074ee3307",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/cloudtorrent/docker-compose.yml"
+    },
+    {
+      "path": "containers/code-server/code-server.sh",
+      "blob_sha": "af2362ea51c5e330db60739bae26de65d344078e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/code-server/code-server.sh"
+    },
+    {
+      "path": "containers/code-server/docker-compose.yml",
+      "blob_sha": "3ef27a756905216430aef18c2524dfe1a7738d9d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/code-server/docker-compose.yml"
+    },
+    {
+      "path": "containers/couchpotato/couchpotato.sh",
+      "blob_sha": "4bdfd5e3901bb4086ac2d810a41145250b7c1c8d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/couchpotato/couchpotato.sh"
+    },
+    {
+      "path": "containers/couchpotato/docker-compose.yml",
+      "blob_sha": "8308d429cde1077673d50daa864d5262d490b863",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/couchpotato/docker-compose.yml"
+    },
+    {
+      "path": "containers/cyberchef/cyberchef.sh",
+      "blob_sha": "732fa8582005c9383f36a720c7e02d6a4f1a6229",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/cyberchef/cyberchef.sh"
+    },
+    {
+      "path": "containers/cyberchef/docker-compose.yml",
+      "blob_sha": "0d582816e81edb87b2f0aa6147a69a34ddc28174",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/cyberchef/docker-compose.yml"
+    },
+    {
+      "path": "containers/dailynotes/dailynotes.sh",
+      "blob_sha": "5c4dda59fd2ae104e6b9a4d826d4d7087e0a2d16",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/dailynotes/dailynotes.sh"
+    },
+    {
+      "path": "containers/dailynotes/docker-compose.yml",
+      "blob_sha": "6773b41fdba0c02216ffb625be4519e840fca455",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/dailynotes/docker-compose.yml"
+    },
+    {
+      "path": "containers/dashmachine/dashmachine.sh",
+      "blob_sha": "42d17440f6dfa656b0ecf43afef6e3c96c3b9685",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/dashmachine/dashmachine.sh"
+    },
+    {
+      "path": "containers/dashmachine/docker-compose.yml",
+      "blob_sha": "78281c175ddc3fd8193fad039b6e3a58b21b9750",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/dashmachine/docker-compose.yml"
+    },
+    {
+      "path": "containers/deezldr/deezldr.sh",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/deezldr/deezldr.sh"
+    },
+    {
+      "path": "containers/deezldr/docker-compose.yml",
+      "blob_sha": "a9c19f6d88da75d23b5efda291594edb70a50c13",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/deezldr/docker-compose.yml"
+    },
+    {
+      "path": "containers/deluge/deluge.sh",
+      "blob_sha": "28b95875d198622c464f96cd6cadacbb2153e57f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/deluge/deluge.sh"
+    },
+    {
+      "path": "containers/deluge/docker-compose.yml",
+      "blob_sha": "d6649eb1da34aa89c793f6ca79458168a49c9794",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/deluge/docker-compose.yml"
+    },
+    {
+      "path": "containers/drawio/docker-compose.yml",
+      "blob_sha": "988b3c1dc7fc5eefbe7e4b3e53d17a9e29f9b32b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/drawio/docker-compose.yml"
+    },
+    {
+      "path": "containers/drawio/drawio.sh",
+      "blob_sha": "185077504efab6049c3db585249bf9383141b364",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/drawio/drawio.sh"
+    },
+    {
+      "path": "containers/duplicati/docker-compose.yml",
+      "blob_sha": "810d0d642700edb2c18de9376950643f0280bccf",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/duplicati/docker-compose.yml"
+    },
+    {
+      "path": "containers/duplicati/duplicati.sh",
+      "blob_sha": "1e9fd2c322b9a936285b60c8bd1fb3ef0a048f72",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/duplicati/duplicati.sh"
+    },
+    {
+      "path": "containers/emby/docker-compose.yml",
+      "blob_sha": "d12b95e55558a8bf227bfe109d4d625f3a829807",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/emby/docker-compose.yml"
+    },
+    {
+      "path": "containers/emby/emby.sh",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/emby/emby.sh"
+    },
+    {
+      "path": "containers/firefly-iii/docker-compose.yml",
+      "blob_sha": "116348786c570155023bc1a8a2fdaf4646264577",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/firefly-iii/docker-compose.yml"
+    },
+    {
+      "path": "containers/firefly-iii/firefly-iii.sh",
+      "blob_sha": "fb1aa8a0eae5715eb55dfe7067d80d631af8654c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/firefly-iii/firefly-iii.sh"
+    },
+    {
+      "path": "containers/freshrss/docker-compose.yml",
+      "blob_sha": "e2b85c943b481dc3c9f6dd9225df1b07338bb0f4",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/freshrss/docker-compose.yml"
+    },
+    {
+      "path": "containers/freshrss/freshrss.sh",
+      "blob_sha": "447990bdcce14912f8e7cc5a7d2abaa9822e3ee9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/freshrss/freshrss.sh"
+    },
+    {
+      "path": "containers/gitea/docker-compose.yml",
+      "blob_sha": "5e97cd7fce77b176ddaa76183a40248d6dadfc73",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gitea/docker-compose.yml"
+    },
+    {
+      "path": "containers/gitea/gitea.sh",
+      "blob_sha": "5de3345f0a880c9d160d47c31d979d8e69f4f3db",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gitea/gitea.sh"
+    },
+    {
+      "path": "containers/gitlab/docker-compose.yml",
+      "blob_sha": "af62e934a84701c432f4b15f1e4a9a8a702e2579",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gitlab/docker-compose.yml"
+    },
+    {
+      "path": "containers/gitlab/gitlab.sh",
+      "blob_sha": "3f2a96ebd72e84f80ac5e6bd7b7de0574403f914",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gitlab/gitlab.sh"
+    },
+    {
+      "path": "containers/gogs/docker-compose.yml",
+      "blob_sha": "f26cffaedef3fe6ccc7d7c82b7074aa226979afc",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gogs/docker-compose.yml"
+    },
+    {
+      "path": "containers/gogs/gogs.sh",
+      "blob_sha": "3d6da35b958120f0b68a3f971dce1fed529cb968",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/gogs/gogs.sh"
+    },
+    {
+      "path": "containers/goshiori/docker-compose.yml",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/goshiori/docker-compose.yml"
+    },
+    {
+      "path": "containers/goshiori/go-shiori.sh",
+      "blob_sha": "e5edb60c2ee322ebbb5947c70c13d82221413dda",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/goshiori/go-shiori.sh"
+    },
+    {
+      "path": "containers/grafana/docker-compose.yml",
+      "blob_sha": "941aba6ba1fecee89ca4b5e21d7c2c906932924d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/grafana/docker-compose.yml"
+    },
+    {
+      "path": "containers/grafana/grafana.sh",
+      "blob_sha": "bb453384eb804ea2e6578e1056976539a6c9be29",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/grafana/grafana.sh"
+    },
+    {
+      "path": "containers/grocy/docker-compose.yml",
+      "blob_sha": "4682b1743c32c1264b18602155c9117ad2f7ba33",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/grocy/docker-compose.yml"
+    },
+    {
+      "path": "containers/grocy/grocy.sh",
+      "blob_sha": "c04656bbbd2c8bea407f12f314a63a5e25b16f72",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/grocy/grocy.sh"
+    },
+    {
+      "path": "containers/guacamole/docker-compose.yml",
+      "blob_sha": "1614d22a8ce99e18ae3fc723f9620cee8d04c738",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/guacamole/docker-compose.yml"
+    },
+    {
+      "path": "containers/guacamole/guacamole.sh",
+      "blob_sha": "c29eb19daf4b2b0300da12f52d2ba0a570401520",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/guacamole/guacamole.sh"
+    },
+    {
+      "path": "containers/headphones/docker-compose.yml",
+      "blob_sha": "da0cda8f659b9e696a98043532a16263aa792609",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/headphones/docker-compose.yml"
+    },
+    {
+      "path": "containers/headphones/headphones.sh",
+      "blob_sha": "adee8a54bc6d147707e3780c3aaa083b088a1d4a",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/headphones/headphones.sh"
+    },
+    {
+      "path": "containers/heimdall/docker-compose.yml",
+      "blob_sha": "53699cacd8722a71fd9727296584c6be1761017c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/heimdall/docker-compose.yml"
+    },
+    {
+      "path": "containers/heimdall/heimdall.sh",
+      "blob_sha": "c9d0a9c0360c2b8474a68e0f3f053b8eaecf583c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/heimdall/heimdall.sh"
+    },
+    {
+      "path": "containers/htpcdownloadbox/docker-compose.yml",
+      "blob_sha": "562b17abfa9c967b045eac3c1f1f423b07b80f70",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/htpcdownloadbox/docker-compose.yml"
+    },
+    {
+      "path": "containers/htpcdownloadbox/htpcdownloadbox.sh",
+      "blob_sha": "ccbddfa112875ffae9b154a4fdf99427768b576d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/htpcdownloadbox/htpcdownloadbox.sh"
+    },
+    {
+      "path": "containers/huginn/docker-compose.yml",
+      "blob_sha": "d9f3b40771bedd596ba8a0030e457da7c9731922",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/huginn/docker-compose.yml"
+    },
+    {
+      "path": "containers/huginn/huginn.sh",
+      "blob_sha": "75f5936545fdca68b93bfe63d464a0d403ad33ef",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/huginn/huginn.sh"
+    },
+    {
+      "path": "containers/invidious/docker-compose.yml",
+      "blob_sha": "4776adf4247eb472c01f7f143fa74e6ebc479b40",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/invidious/docker-compose.yml"
+    },
+    {
+      "path": "containers/invidious/invidious.sh",
+      "blob_sha": "2fde7bba44338f18928a825fa15a0097c79585f3",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/invidious/invidious.sh"
+    },
+    {
+      "path": "containers/jackett/docker-compose.yml",
+      "blob_sha": "5c14dfcb3e92672b28ff0732c8d14a03c6f50a19",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jackett/docker-compose.yml"
+    },
+    {
+      "path": "containers/jackett/jackett.sh",
+      "blob_sha": "b42403f2cfe90819ec670041d093abd187c4e8ed",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jackett/jackett.sh"
+    },
+    {
+      "path": "containers/jellyfin/docker-compose.yml",
+      "blob_sha": "c21320fde1dd1f4472ef6aa361795f7fd410f7c0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jellyfin/docker-compose.yml"
+    },
+    {
+      "path": "containers/jellyfin/jellyfin.sh",
+      "blob_sha": "bdb8795cac2a23b9894c138c0e1e7e7344cb5bd8",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jellyfin/jellyfin.sh"
+    },
+    {
+      "path": "containers/jenkins/docker-compose.yml",
+      "blob_sha": "0cbd7146b8e61d075c8f72ca54f4915fa396a17c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jenkins/docker-compose.yml"
+    },
+    {
+      "path": "containers/jenkins/jenkins.sh",
+      "blob_sha": "d5d6477b511d9c77b08b3931fdc792f7a6df6230",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jenkins/jenkins.sh"
+    },
+    {
+      "path": "containers/jitsi/jitsi.sh",
+      "blob_sha": "20f234d6146dbf3bc738448c04596586bcb1e4dc",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jitsi/jitsi.sh"
+    },
+    {
+      "path": "containers/jupyterlab/docker-compose.yml",
+      "blob_sha": "5100fc0af6c53a4908edbdb783fae2ac14489bcd",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jupyterlab/docker-compose.yml"
+    },
+    {
+      "path": "containers/jupyterlab/jupyterlab.sh",
+      "blob_sha": "f80f8f925a2b33998211467e6acc012f1210fb76",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/jupyterlab/jupyterlab.sh"
+    },
+    {
+      "path": "containers/kdedocker/docker-compose.yml",
+      "blob_sha": "2e20bf20a2919b25a9a9e3734788eb96337feb2e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kdedocker/docker-compose.yml"
+    },
+    {
+      "path": "containers/kdedocker/kdedocker.sh",
+      "blob_sha": "0b43e903e97e95000bf2a15e6bfa49c2f16ea9e5",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kdedocker/kdedocker.sh"
+    },
+    {
+      "path": "containers/keycloak/docker-compose.yml",
+      "blob_sha": "33159ae0955b7ea3d491e26032ea8c0f6f693c9f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/keycloak/docker-compose.yml"
+    },
+    {
+      "path": "containers/keycloak/keycloak.sh",
+      "blob_sha": "7ff50df959272fb09df7264b64bcb83ace462a14",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/keycloak/keycloak.sh"
+    },
+    {
+      "path": "containers/kimai/docker-compose.yml",
+      "blob_sha": "634aafe9caef13b4d502e66abc20abf82196365d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kimai/docker-compose.yml"
+    },
+    {
+      "path": "containers/kimai/kimai.sh",
+      "blob_sha": "d226f9cc1019c06964a0bd1cf76e9918ff7d9d53",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kimai/kimai.sh"
+    },
+    {
+      "path": "containers/komga/docker-compose.yml",
+      "blob_sha": "85aaa1e2738ab0957310bdcf697613b79615b97d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/komga/docker-compose.yml"
+    },
+    {
+      "path": "containers/komga/komga.sh",
+      "blob_sha": "9ac3409bba3db85f4da1d2a575a5dd73c9ddbda9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/komga/komga.sh"
+    },
+    {
+      "path": "containers/kopano/docker-compose.yml",
+      "blob_sha": "5749bc09a3f5f221d8cc91f66af2e12d72e9fcf8",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kopano/docker-compose.yml"
+    },
+    {
+      "path": "containers/kopano/kopano.sh",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/kopano/kopano.sh"
+    },
+    {
+      "path": "containers/liberapay/liberapay.sh",
+      "blob_sha": "edab51ab8f0a65458beadf371fe48aca6bb51ce2",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/liberapay/liberapay.sh"
+    },
+    {
+      "path": "containers/libresignage/docker-compose.yml",
+      "blob_sha": "08c1d972a47ead373f17b8b50656f4f8486cb013",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/libresignage/docker-compose.yml"
+    },
+    {
+      "path": "containers/libresignage/libresignage.sh",
+      "blob_sha": "93fe4197abe66537a970fa12710c87dd847b46c1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/libresignage/libresignage.sh"
+    },
+    {
+      "path": "containers/linkd/docker-compose.yml",
+      "blob_sha": "e9e31166150edde4c940cdf2ff87bc473162411c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/linkd/docker-compose.yml"
+    },
+    {
+      "path": "containers/linkd/linkd.sh",
+      "blob_sha": "a0069bfe18b1f273becf429743f6791aa0ccb05b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/linkd/linkd.sh"
+    },
+    {
+      "path": "containers/lodestone/docker-compose.yml",
+      "blob_sha": "79b84b9f79f24a6429a547eb49b1109081a54c2e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/lodestone/docker-compose.yml"
+    },
+    {
+      "path": "containers/lodestone/lodestone.sh",
+      "blob_sha": "afd309034b5085a6d2b6e3aba4b48eb02d1dd866",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/lodestone/lodestone.sh"
+    },
+    {
+      "path": "containers/lychee/docker-compose.yml",
+      "blob_sha": "133edb827aed09bffa693ea5b502643fa1750c66",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/lychee/docker-compose.yml"
+    },
+    {
+      "path": "containers/lychee/lychee.sh",
+      "blob_sha": "6d1a019def459bbe04c677d755330cd897e3ee14",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/lychee/lychee.sh"
+    },
+    {
+      "path": "containers/mailcow/docker-compose.yml",
+      "blob_sha": "627ff76833e31ad27b54ac4123a0aedb3d87fec0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mailcow/docker-compose.yml"
+    },
+    {
+      "path": "containers/mailcow/mailcow.sh",
+      "blob_sha": "887995281f5b3afa6b91e4abc956ba6fadb8d2ac",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mailcow/mailcow.sh"
+    },
+    {
+      "path": "containers/mango/docker-compose.yml",
+      "blob_sha": "cd2ba66421191b2376449b539456ec6637030188",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mango/docker-compose.yml"
+    },
+    {
+      "path": "containers/mango/mango.sh",
+      "blob_sha": "31862624fcf09dada620b10d5cb8bb2ffb2f496b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mango/mango.sh"
+    },
+    {
+      "path": "containers/mcmyadmin/docker-compose.yml",
+      "blob_sha": "d42b342034c649e88daf522e6ae4008d277bf6b0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mcmyadmin/docker-compose.yml"
+    },
+    {
+      "path": "containers/mcmyadmin/mcmyadmin.sh",
+      "blob_sha": "6ed6d64c893e9fb7ba9be31af826adbb7c624fc9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mcmyadmin/mcmyadmin.sh"
+    },
+    {
+      "path": "containers/medusa/docker-compose.yml",
+      "blob_sha": "e814c692d482fe01156b1a60fb066fc7a47e4125",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/medusa/docker-compose.yml"
+    },
+    {
+      "path": "containers/medusa/medusa.sh",
+      "blob_sha": "c1357b14a89c06be2f2d2f3b38a07ab4b7e3b453",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/medusa/medusa.sh"
+    },
+    {
+      "path": "containers/meshcentral/docker-compose.yml",
+      "blob_sha": "6076c0cfc764fcf471d3060d5d1ee5fa74913830",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/meshcentral/docker-compose.yml"
+    },
+    {
+      "path": "containers/meshcentral/meshcentral.sh",
+      "blob_sha": "cc1989f4926657e9bc0df46c516668e9deb9ad7c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/meshcentral/meshcentral.sh"
+    },
+    {
+      "path": "containers/minecraft/docker-compose.yml",
+      "blob_sha": "e0b7cbafea188682161e8650bbb0eb9b1fbf4032",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/minecraft/docker-compose.yml"
+    },
+    {
+      "path": "containers/minecraft/minecraft.sh",
+      "blob_sha": "076cca47edd26d1376b9b50fc41b87b32ad41c49",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/minecraft/minecraft.sh"
+    },
+    {
+      "path": "containers/monica/docker-compose.yml",
+      "blob_sha": "4065ba7fd98e28e7be5fb411750b47b3fcac9c85",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/monica/docker-compose.yml"
+    },
+    {
+      "path": "containers/monica/monica.sh",
+      "blob_sha": "653143a7be13450e41b20dcd9888d6d88244e3b4",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/monica/monica.sh"
+    },
+    {
+      "path": "containers/mqtt/docker-compose.yml",
+      "blob_sha": "e50c4ebf5fdb89c562d98316a79be579e04cc4ec",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mqtt/docker-compose.yml"
+    },
+    {
+      "path": "containers/mqtt/mqtt.sh",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mqtt/mqtt.sh"
+    },
+    {
+      "path": "containers/mumble/docker-compose.yml",
+      "blob_sha": "8a2dd1c5a11b9c4db5d6b6290dbf98de06b93b0e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mumble/docker-compose.yml"
+    },
+    {
+      "path": "containers/mumble/mumble.sh",
+      "blob_sha": "e021f3b8ff04dfbbe7964708c8ac7089c34e84a9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mumble/mumble.sh"
+    },
+    {
+      "path": "containers/mylar/docker-compose.yml",
+      "blob_sha": "2bc61b2c110ac73c83b137dc80a02eec269eef94",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mylar/docker-compose.yml"
+    },
+    {
+      "path": "containers/mylar/mylar.sh",
+      "blob_sha": "0bfcaf4055e035b1ae6e9888467a2034eebd038d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/mylar/mylar.sh"
+    },
+    {
+      "path": "containers/n8n/docker-compose.yml",
+      "blob_sha": "0a2fa538ac16544c780b96178e58321049fc0f72",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/n8n/docker-compose.yml"
+    },
+    {
+      "path": "containers/n8n/init-data.sh",
+      "blob_sha": "bf5c10c84ed5eca9c6f36a067f5640b25e0be136",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/n8n/init-data.sh"
+    },
+    {
+      "path": "containers/n8n/n8n.sh",
+      "blob_sha": "d0732eff6c622c3c82e817f85172e28a3a03b31c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/n8n/n8n.sh"
+    },
+    {
+      "path": "containers/neko/docker-compose.yml",
+      "blob_sha": "1ae730ca1446522271fa99209a167a394cb2df9e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/neko/docker-compose.yml"
+    },
+    {
+      "path": "containers/neko/neko.sh",
+      "blob_sha": "83767e848ac3798d0f3529941acb5b502788076c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/neko/neko.sh"
+    },
+    {
+      "path": "containers/netdata/docker-compose.yml",
+      "blob_sha": "01122092174d16e5ab2924f43c2f07a2c22f2d41",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/netdata/docker-compose.yml"
+    },
+    {
+      "path": "containers/netdata/netdata.sh",
+      "blob_sha": "15dffeef679456c5a5f51d244faf80fc48056750",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/netdata/netdata.sh"
+    },
+    {
+      "path": "containers/newspipe/docker-compose.yml",
+      "blob_sha": "c973eaa1e6c10e8a6ac366ae34804167194c4769",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/newspipe/docker-compose.yml"
+    },
+    {
+      "path": "containers/newspipe/newspipe.sh",
+      "blob_sha": "7625a9be7d5c740dc84e2d759d75dd85753d1d71",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/newspipe/newspipe.sh"
+    },
+    {
+      "path": "containers/nextcloud/docker-compose.yml",
+      "blob_sha": "35ab45374f2d8581633566731b0b0a8546364ea8",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/nextcloud/docker-compose.yml"
+    },
+    {
+      "path": "containers/nextcloud/nextcloud.sh",
+      "blob_sha": "0e7dc3ca4f82aa28ca851e0c9d9c730b1d7c3001",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/nextcloud/nextcloud.sh"
+    },
+    {
+      "path": "containers/odoo/docker-compose.yml",
+      "blob_sha": "21d5b3edcc09a33301bd5db601335c58299de404",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/odoo/docker-compose.yml"
+    },
+    {
+      "path": "containers/odoo/odoo.sh",
+      "blob_sha": "48aa720c502630f68f0f8ce1c118ee20256fcd77",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/odoo/odoo.sh"
+    },
+    {
+      "path": "containers/olaris/docker-compose.yml",
+      "blob_sha": "d9f8a80f9ab6d503503f4893a2583227684a87ce",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/olaris/docker-compose.yml"
+    },
+    {
+      "path": "containers/olaris/olaris.sh",
+      "blob_sha": "80a5e769ab41b6db293f22eed894a77d7e5f6186",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/olaris/olaris.sh"
+    },
+    {
+      "path": "containers/ombi/docker-compose.yml",
+      "blob_sha": "b6a8257a601dbff9fbca5c97ddfeb30ad53f18e0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ombi/docker-compose.yml"
+    },
+    {
+      "path": "containers/ombi/ombi.sh",
+      "blob_sha": "e891dfb5d6a9cc9450898454ab855444b8fccb24",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ombi/ombi.sh"
+    },
+    {
+      "path": "containers/onlyoffice/docker-compose.yml",
+      "blob_sha": "ea855404be16cecc682dfdd31d6bdbc50f5026b7",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/onlyoffice/docker-compose.yml"
+    },
+    {
+      "path": "containers/onlyoffice/onlyoffice.sh",
+      "blob_sha": "7a034c2e7673635f07e0e0e5de48ee4f315cd8e2",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/onlyoffice/onlyoffice.sh"
+    },
+    {
+      "path": "containers/openldap/docker-compose.yml",
+      "blob_sha": "11977f2035d6f184f3faf9f011bba0a117bf652f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openldap/docker-compose.yml"
+    },
+    {
+      "path": "containers/openldap/openldap.sh",
+      "blob_sha": "b44259b316717ec859b2a4d372ed5198907cc3f1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openldap/openldap.sh"
+    },
+    {
+      "path": "containers/openstreamingplatform/docker-compose.yml",
+      "blob_sha": "55c249b6549b54a9f2135f2714df736d55b57da0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openstreamingplatform/docker-compose.yml"
+    },
+    {
+      "path": "containers/openstreamingplatform/openstreamingplatform.sh",
+      "blob_sha": "4be34e412a7d5fc03d6943c82b03cbf9af8439a1",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openstreamingplatform/openstreamingplatform.sh"
+    },
+    {
+      "path": "containers/opentogethertube/docker-compose.yml",
+      "blob_sha": "2d0a1e1e49c7c43e3f45d722569520257f4d3824",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/opentogethertube/docker-compose.yml"
+    },
+    {
+      "path": "containers/opentogethertube/opentogethertube.sh",
+      "blob_sha": "ea3775d04fbb14b90521acef8e39f81f0bd8f8ec",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/opentogethertube/opentogethertube.sh"
+    },
+    {
+      "path": "containers/openvpn/docker-compose.yml",
+      "blob_sha": "e4abfc62cca852bb0d35b3572a8b7864b805008e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openvpn/docker-compose.yml"
+    },
+    {
+      "path": "containers/openvpn/openvpn.sh",
+      "blob_sha": "aa4312d966dc5b68fa71819c3e92344cb3953f38",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/openvpn/openvpn.sh"
+    },
+    {
+      "path": "containers/osjs/docker-compose.yml",
+      "blob_sha": "ff8f3dd3c24d0d5578ba98d438f89798884f190f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/osjs/docker-compose.yml"
+    },
+    {
+      "path": "containers/osjs/osjs.sh",
+      "blob_sha": "83aa1a8744577f5314d3c3898857f74a289c4718",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/osjs/osjs.sh"
+    },
+    {
+      "path": "containers/paperless/docker-compose.yml",
+      "blob_sha": "3ff70844a3aca24ea248b91af4eca7f1604c4409",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/paperless/docker-compose.yml"
+    },
+    {
+      "path": "containers/paperless/paperless.sh",
+      "blob_sha": "8e83dbce71d589bf647fc213e0848dee3a2a16f0",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/paperless/paperless.sh"
+    },
+    {
+      "path": "containers/piwigo/docker-compose.yml",
+      "blob_sha": "ac6af69bc58764d6074cfd611dfdb77e6a218dd9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/piwigo/docker-compose.yml"
+    },
+    {
+      "path": "containers/piwigo/piwigo.sh",
+      "blob_sha": "8a09e12d719543a9278bfcc9764f7a9a6646ed89",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/piwigo/piwigo.sh"
+    },
+    {
+      "path": "containers/plex/docker-compose.yml",
+      "blob_sha": "a09ac24f7f6eec52c1b108980e4b2ab24bf93dc7",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/plex/docker-compose.yml"
+    },
+    {
+      "path": "containers/plex/plex.sh",
+      "blob_sha": "e3c2fa4be2234f08b36ef20adfa7bb76f9240431",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/plex/plex.sh"
+    },
+    {
+      "path": "containers/portainer/docker-compose.yml",
+      "blob_sha": "98ccf2cd01c1837b6394868c4f67ba794da03358",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/portainer/docker-compose.yml"
+    },
+    {
+      "path": "containers/portainer/portainer.sh",
+      "blob_sha": "02f883f6bc9659349bf20e8a46fe3666dfd72fbb",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/portainer/portainer.sh"
+    },
+    {
+      "path": "containers/privatebin/docker-compose.yml",
+      "blob_sha": "48b7a42a4545f9198a84f14811ac26a3a881341c",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/privatebin/docker-compose.yml"
+    },
+    {
+      "path": "containers/privatebin/privatebin.sh",
+      "blob_sha": "a6aba58f04dd1418665d8a80cb9ac629e5ea1b2e",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/privatebin/privatebin.sh"
+    },
+    {
+      "path": "containers/pyload/docker-compose.yml",
+      "blob_sha": "57a6aeb9978bcf6a726cfeffa57424a771a5f7d9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/pyload/docker-compose.yml"
+    },
+    {
+      "path": "containers/pyload/pyload.sh",
+      "blob_sha": "c1faffd3e6e551a486d56dcbb8df83abf3df5262",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/pyload/pyload.sh"
+    },
+    {
+      "path": "containers/qbittorentvpn/docker-compose.yml",
+      "blob_sha": "83c0350d36cd8825375292f4a7c9c38d88358016",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/qbittorentvpn/docker-compose.yml"
+    },
+    {
+      "path": "containers/qbittorentvpn/qbittorrentvpn.sh",
+      "blob_sha": "bdaad05fedd52dbcf50bea10c525fec5870360a9",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/qbittorentvpn/qbittorrentvpn.sh"
+    },
+    {
+      "path": "containers/radarr/docker-compose.yml",
+      "blob_sha": "12e68bfc9b617786884d8cbb6fffe43401c7b6e5",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/radarr/docker-compose.yml"
+    },
+    {
+      "path": "containers/radarr/radarr.sh",
+      "blob_sha": "d8410f0abe7c6f9a8a02ae3d678c42b9380b5769",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/radarr/radarr.sh"
+    },
+    {
+      "path": "containers/recipes/docker-compose.yml",
+      "blob_sha": "2bd401bc318d9c7c5ce5e1401a11a4883c6424d2",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/recipes/docker-compose.yml"
+    },
+    {
+      "path": "containers/recipes/template.sh",
+      "blob_sha": "eeee6474452c7eb3a5afa6506a1610718463818f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/recipes/template.sh"
+    },
+    {
+      "path": "containers/rocketchat/docker-compose.yml",
+      "blob_sha": "0683abb2fab14655c8961587957de338bfa75f86",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/rocketchat/docker-compose.yml"
+    },
+    {
+      "path": "containers/rocketchat/rocketchat.sh",
+      "blob_sha": "e931e282f0f17a4358df66bde239f4017fcf4074",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/rocketchat/rocketchat.sh"
+    },
+    {
+      "path": "containers/sonarr/docker-compose.yml",
+      "blob_sha": "00e914b057c9b313d886513f59ded07a47e18e32",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/sonarr/docker-compose.yml"
+    },
+    {
+      "path": "containers/sonarr/sonarr.sh",
+      "blob_sha": "50cb9d57446c99025403f8ad127845013c632096",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/sonarr/sonarr.sh"
+    },
+    {
+      "path": "containers/spiderfoot/docker-compose.yml",
+      "blob_sha": "8043e80b881ce0eaa3b4ada3d9eae5346b08d2c3",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/spiderfoot/docker-compose.yml"
+    },
+    {
+      "path": "containers/spiderfoot/spiderfoot.sh",
+      "blob_sha": "a6f91d54738cbd1228da996b728c6710b1f8ed68",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/spiderfoot/spiderfoot.sh"
+    },
+    {
+      "path": "containers/statping/docker-compose.yml",
+      "blob_sha": "d62f8d9bc9b3a2bf5e0e5dd9047dc1647f844f07",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/statping/docker-compose.yml"
+    },
+    {
+      "path": "containers/statping/statping.sh",
+      "blob_sha": "1510cce67fc31190cc9f757e84bd868e90bfa82f",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/statping/statping.sh"
+    },
+    {
+      "path": "containers/syncthing/docker-compose.yml",
+      "blob_sha": "b8d7a9fd27c6c8f200efedd5f58ef45f1d77ab88",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/syncthing/docker-compose.yml"
+    },
+    {
+      "path": "containers/syncthing/syncthing.sh",
+      "blob_sha": "1c5c55516e3396f1805c83d40bbafbea9d83d3ab",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/syncthing/syncthing.sh"
+    },
+    {
+      "path": "containers/tautulli/docker-compose.yml",
+      "blob_sha": "0d67919095f8f742245933ec265901c0be6010a2",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/tautulli/docker-compose.yml"
+    },
+    {
+      "path": "containers/tautulli/tautulli.sh",
+      "blob_sha": "7f9cb4d578d22e6b000874e7b720306468eae2d3",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/tautulli/tautulli.sh"
+    },
+    {
+      "path": "containers/tdarr/docker-compose.yml",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/tdarr/docker-compose.yml"
+    },
+    {
+      "path": "containers/tdarr/tdarr.sh",
+      "blob_sha": "c6a36fe38c733f2bddfa877a736872e1ec537d75",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/tdarr/tdarr.sh"
+    },
+    {
+      "path": "containers/teamspeak/docker-compose.yml",
+      "blob_sha": "a9839799388d18654916ae5c26b25736f8fb3de6",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/teamspeak/docker-compose.yml"
+    },
+    {
+      "path": "containers/teamspeak/teamspeak.sh",
+      "blob_sha": "80d7c86a26a38191ff36074bad8f1037848ad14b",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/teamspeak/teamspeak.sh"
+    },
+    {
+      "path": "containers/ubuntuxrdp/docker-compose.yml",
+      "blob_sha": "a6fdbeb93f44d36a4a98bf3215db031d4a489159",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ubuntuxrdp/docker-compose.yml"
+    },
+    {
+      "path": "containers/ubuntuxrdp/ubuntuxrdp.sh",
+      "blob_sha": "e5d5dd464f2dfd61ff33d8b2237870c7fe664a50",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/ubuntuxrdp/ubuntuxrdp.sh"
+    },
+    {
+      "path": "containers/wallabag/docker-compose.yml",
+      "blob_sha": "a33ea8b402eaf07044499f37ccf1685abf035d50",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/wallabag/docker-compose.yml"
+    },
+    {
+      "path": "containers/wallabag/wallabag.sh",
+      "blob_sha": "5ff9465c1c5812cd38e9307be92789219cb2e493",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/wallabag/wallabag.sh"
+    },
+    {
+      "path": "containers/wireguardweb/docker-compose.yml",
+      "blob_sha": "a8b0ce2172ef3ae92f8ccdadc75d598c3bd14ad6",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/wireguardweb/docker-compose.yml"
+    },
+    {
+      "path": "containers/wireguardweb/wireguardweb.sh",
+      "blob_sha": "1bc96c6c3f98a0f6f2095b57e0aa01d12d1ae1b2",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/wireguardweb/wireguardweb.sh"
+    },
+    {
+      "path": "containers/youtransfer/docker-compose.yml",
+      "blob_sha": "0e45f18b03a37f34cb172f4a70fe475b67f9f795",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/youtransfer/docker-compose.yml"
+    },
+    {
+      "path": "containers/youtransfer/youtransfer.sh",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/containers/youtransfer/youtransfer.sh"
+    },
+    {
+      "path": "vm/vagrant/vagrant.sh",
+      "blob_sha": "836f01082c2c3fb0ed7a67d3dbcc857090a6972d",
+      "source_url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/vm/vagrant/vagrant.sh"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"another-install-script\"]\n  f0[\"setup.sh\"]\n  root --> f0\n  f1[\"src/menu.sh\"]\n  root --> f1\n  f2[\"README.md\"]\n  root --> f2\n  f3[\"uninstall.sh\"]\n  root --> f3\n  f4[\"version.sh\"]\n  root --> f4\n  f5[\"src/backup.sh\"]\n  root --> f5\n  f6[\"src/config.sh\"]\n  root --> f6\n  f7[\"src/containers.sh\"]\n  root --> f7\n  f8[\"src/containers_list.py\"]\n  root --> f8\n  f9[\"src/docker.sh\"]\n  root --> f9\n  f10[\"src/firewall.sh\"]\n  root --> f10\n  f11[\"src/install.sh\"]\n  root --> f11\n  f12[\"src/nginx_reverse_proxy.py\"]\n  root --> f12\n  f13[\"src/other.sh\"]\n  root --> f13\n  f14[\"src/router.sh\"]\n  root --> f14\n  f15[\"src/utils.sh\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t9c1d5cd3c00c[\"GeneratorAIS\"] {\n  __init__()\n  read_yml()\n  generate_containers_list()\n  write_containers_list_text()\n}\nclass t51dcacef3aad[\"ReverseProxy\"] {\n  read_yml()\n  generate_nginx_conf()\n  generate_server_block()\n}\nclass bb0976d8612e0[\"object\"] {\n  <<unresolved_base>>\n}\nbb0976d8612e0 <|-- t9c1d5cd3c00c\n",
+  "overview_types": 2,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/antoinebou12/another-install-script",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/another-install-script/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_cli[\"CLI management\"]\n  node_menu[\"CLI menu<br/>[menu.sh]\"]\n  node_router[\"Command router<br/>[router.sh]\"]\n  node_utilities[\"Shell utilities<br/>[utils.sh]\"]\nend\n\nsubgraph group_services[\"Service deployment\"]\n  node_service_catalog[\"Service catalog\"]\n  node_service_scripts[\"Service installers\"]\n  node_compose_definitions[\"Compose definitions\"]\n  node_container_manager[\"Container manager<br/>[containers.sh]\"]\n  node_docker_manager[\"Docker operations<br/>[docker.sh]\"]\nend\n\nsubgraph group_system[\"Server management\"]\n  node_program_installer[\"Program installer<br/>[install.sh]\"]\n  node_other_tools[\"Other programs<br/>[other.sh]\"]\n  node_firewall[\"Firewall management<br/>[firewall.sh]\"]\n  node_backup[\"Backup management<br/>[backup.sh]\"]\nend\n\nsubgraph group_config[\"Configuration utilities\"]\n  node_config_loader[\"Config management<br/>[config.sh]\"]\n  node_list_generator[\"Service list generator<br/>[containers_list.py]\"]\n  node_proxy_generator[\"Proxy config generator\"]\n  node_settings[\"System settings<br/>[config.yml]\"]\nend\n\nnode_user((\"Server administrator\"))\nnode_docker[\"Docker\"]\n\nnode_user -->|\"chooses services\"| node_menu\nnode_menu -.->|\"routes commands\"| node_router\nnode_router -.->|\"manages containers\"| node_container_manager\nnode_container_manager -.->|\"uses Docker operations\"| node_docker_manager\nnode_docker_manager -.->|\"operates\"| node_docker\nnode_service_scripts -.->|\"uses definitions\"| node_compose_definitions\nnode_container_manager -.->|\"installs services\"| node_service_catalog\nnode_user -->|\"requests programs\"| node_program_installer\nnode_program_installer -.->|\"offers programs\"| node_other_tools\nnode_list_generator -->|\"reads settings\"| node_settings\nnode_proxy_generator -->|\"reads settings\"| node_settings\n\n\nclass node_menu,node_router,node_utilities toneBlue\nclass node_service_catalog,node_service_scripts,node_compose_definitions,node_container_manager,node_docker_manager toneAmber\nclass node_program_installer,node_other_tools,node_firewall,node_backup,node_user toneMint\nclass node_config_loader,node_list_generator,node_proxy_generator,node_settings toneRose\nclass node_docker toneIndigo",
+    "linked_paths": 16
+  }
+}

@@ -55,11 +55,11 @@ After deploy and Cloudflare cache purge, verify these resolve (apex paths are pr
 | `https://antoineboucher.info/llms.txt` | Identity block + machine-readable resume links |
 | `https://antoineboucher.info/.well-known/api-catalog` | JSON linkset (not 404) |
 | `https://antoineboucher.info/CV/resume.md` / `resume.json` | Deployed artifacts |
-| `https://antoineboucher.info/CV/about-en.html` | English FAQ (AEO answer target) |
+| `https://antoineboucher.info/CV/index-en.html` | English CV (AEO lead on page) |
 
 If `/.well-known/api-catalog` still returns **404** or HTML, the promoted artifact is not live yet or orange-cloud cache/rules need the Transform Rules in §3 below.
 
-### 2) Response header Transform Rules (Link on homepage)
+### 2) Response header Transform Rules (Link on homepage + security)
 
 Rules → Transform Rules → **Modify response header** (or Response Header Transform Rules, product wording varies).
 
@@ -68,6 +68,26 @@ Rules → Transform Rules → **Modify response header** (or Response Header Tra
 | `AgentLinkHome` | `(http.host eq "antoineboucher.info" and (http.request.uri.path eq "/" or http.request.uri.path eq "/index.html"))` | `Link` | `</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/agent-skills/index.json>; rel="service-doc"; type="application/json", </llms.txt>; rel="describedby"; type="text/plain"` |
 
 Use **one** `Link` header value (comma-separated relations per RFC 8288). Adjust `http.host` if you use `www`.
+
+GitHub Pages ignores [`hugo/static/_headers`](../../hugo/static/_headers). Live production (orange-cloud + GitHub Pages, checked 2026-10-24) already sends `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy: geolocation=(), microphone=(), camera=()`. It does **not** send `Content-Security-Policy`.
+
+Add CSP (and optional COOP) via the Worker in [`cloudflare/workers/agent-ready-home/`](../../cloudflare/workers/agent-ready-home/README.md) (forces CSP on every response) **or** a Transform Rule:
+
+| Rule name | When | Set header | Value |
+|-----------|------|------------|--------|
+| `SecurityCSP` | `(http.host eq "antoineboucher.info")` (and `www` if used) | `Content-Security-Policy` | Copy the CSP line from [`hugo/static/_headers`](../../hugo/static/_headers) (keep in sync when that file changes) |
+
+**Script (API):** with a token that has **Zone Transform Rules Write**:
+
+```powershell
+$env:CLOUDFLARE_API_TOKEN = '...'   # optional: $env:CLOUDFLARE_ZONE_ID = '...'
+.\scripts\deploy\apply-security-csp.ps1
+.\scripts\deploy\apply-security-csp.ps1 -DryRun   # print payload only
+```
+
+The script upserts rule `ref: security_csp` (CSP + `Cross-Origin-Opener-Policy`) from `hugo/static/_headers` without wiping unrelated Transform Rules.
+
+Optional: `Cross-Origin-Opener-Policy: same-origin-allow-popups` if not already present. Do not weaken live `X-Frame-Options: DENY` to `SAMEORIGIN`.
 
 ### 3) Response Content-Type for discovery JSON
 
@@ -95,9 +115,9 @@ Static hosting alone cannot vary `Content-Type` by `Accept` for `/`. Use the Wor
 
 ## AEO readiness (answer engines)
 
-- **Copy source:** [`data/aeo.yaml`](../../data/aeo.yaml) (lead, FAQ, `lastUpdated`).
-- **Regenerate:** `python scripts/build/generate_aeo_content.py --all` → [`about-en.html`](../../about-en.html), [`about-fr.html`](../../about-fr.html), patches CV lead/freshness/nav.
-- **JSON-LD:** FAQPage on About pages; Person/WebSite/Speakable on CV via `generate_person_jsonld.py --all`.
+- **Copy source:** [`data/aeo.yaml`](../../data/aeo.yaml) (lead, `lastUpdated`; FAQ retained in YAML only).
+- **Regenerate:** `python scripts/build/generate_aeo_content.py --all` → patches CV lead/freshness/nav on [`index-en.html`](../../index-en.html) / [`index-fr.html`](../../index-fr.html).
+- **JSON-LD:** Person/WebSite/Speakable on CV via `generate_person_jsonld.py --all`.
 - **Tracker UI:** see [`aeo-tracker.md`](aeo-tracker.md). Off-site alignment: [`offsite-entity-alignment.md`](offsite-entity-alignment.md).
 
 ## Machine-readable resume and SEO

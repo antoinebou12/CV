@@ -1,0 +1,54 @@
+classDiagram
+direction TB
+class t4f79cda6c5a7["GofileAccountsReponse"] {
+  <<interface>>
+}
+class t69695f719340["GofileContentChild"] {
+  <<interface>>
+}
+class tf55800e7e768["GofileContentsResponse"] {
+  <<interface>>
+}
+class t93edc98765dc["GofileContentMetadata"] {
+  <<interface>>
+}
+class t0d0f6c0b0668["GofileGuestTokenCache"] {
+  <<interface>>
+}
+class t76c082527811["RequestTimeoutError"] {
+  constructor()
+}
+class t2118ed6180c3["GofileApi"] {
+  userAgent()
+  configuredToken()
+  cachePath()
+  sleep()
+  isRetryableStatus()
+  fetchWithTimeout()
+  extractWebsiteTokenSecret()
+  discoverWebsiteTokenScriptUrl()
+  fetchWebsiteTokenScript()
+  getWebsiteTokenSecret()
+  generateWebsiteToken()
+  hashPassword()
+  getBaseHeaders()
+  loadCachedGuestToken()
+  persistGuestToken()
+  createGuestToken()
+  initialize()
+  authorize()
+  getDownloadLink()
+  getAlternateCdnDownloadLinkIfAvailable()
+  pruneAlternateCdnProbeCache()
+  probeAlternateCdn()
+  parseLinksRecursively()
+  getContentPage()
+  statusToMessage()
+  accessErrorMessage()
+  isLikelyTokenAuthError()
+  checkDownloadUrl()
+}
+class bf0a6f7921d58["Error"] {
+  <<unresolved_base>>
+}
+t76c082527811 ..> bf0a6f7921d58 : declared base
