@@ -19,13 +19,13 @@
 .expertise-title {
   margin: 0;
   color: var(--editorial-ink);
-  font: 600 1.15rem/1.3 var(--editorial-body);
+  font: 600 18.4px/1.3 var(--editorial-body);
 }
 
 .expertise-subtitle {
   margin: 4px 0 0;
   color: var(--editorial-muted);
-  font: 400 0.875rem/1.45 var(--editorial-body);
+  font: 400 14px/1.45 var(--editorial-body);
 }
 
 .expertise-skill-typing {
@@ -55,7 +55,7 @@
   border-radius: 999px;
   background: var(--editorial-paper);
   color: var(--editorial-ink);
-  font: 400 0.9rem/1.4 var(--editorial-body);
+  font: 400 14.4px/1.4 var(--editorial-body);
   caret-color: var(--editorial-accent);
 }
 
@@ -85,7 +85,7 @@
   border-radius: 999px;
   background: transparent;
   color: var(--editorial-ink);
-  font: 600 0.78rem/1.3 var(--editorial-body);
+  font: 600 12.48px/1.3 var(--editorial-body);
   cursor: pointer;
 }
 
@@ -137,7 +137,7 @@
   border-radius: var(--radius-sm, 4px);
   background: transparent;
   color: var(--editorial-muted);
-  font: 600 0.8rem/1.35 var(--editorial-body);
+  font: 600 12.8px/1.35 var(--editorial-body);
   text-align: left;
   cursor: pointer;
 }
@@ -202,12 +202,12 @@ html.dark .expertise-sub:hover {
 .expertise-main-title {
   margin: 0;
   color: var(--editorial-ink);
-  font: 600 1rem/1.3 var(--editorial-body);
+  font: 600 16px/1.3 var(--editorial-body);
 }
 
 .expertise-count {
   color: var(--editorial-muted);
-  font: 400 0.8rem/1.3 var(--editorial-body);
+  font: 400 12.8px/1.3 var(--editorial-body);
   white-space: nowrap;
 }
 
@@ -224,7 +224,7 @@ html.dark .expertise-sub:hover {
 .expertise-subgroup-label {
   margin: 0 0 8px;
   color: var(--editorial-muted);
-  font: 600 0.75rem/1.3 var(--editorial-body);
+  font: 600 12px/1.3 var(--editorial-body);
 }
 
 .expertise-pills {
@@ -257,7 +257,7 @@ html.dark .expertise-sub:hover {
   gap: 7px;
   padding: 6px 10px;
   color: var(--editorial-ink);
-  font: 600 0.8rem/1.2 var(--editorial-body);
+  font: 600 12.8px/1.2 var(--editorial-body);
   text-decoration: none;
 }
 
@@ -280,7 +280,7 @@ html.dark .expertise-sub:hover {
 .expertise-pill-icon:not(img) {
   display: inline-grid;
   place-items: center;
-  font-size: 0.7rem;
+  font-size: 11.2px;
 }
 
 @keyframes expertise-caret { 50% { opacity: 0; } }
@@ -317,7 +317,7 @@ html.dark .expertise-sub:hover {
   border-radius: 0 999px 999px 0;
   background: transparent;
   color: var(--editorial-muted);
-  font: 600 0.68rem/1.2 var(--editorial-body);
+  font: 600 10.88px/1.2 var(--editorial-body);
   cursor: pointer;
 }
 
@@ -344,8 +344,9 @@ html.dark .expertise-sub:hover {
   stroke-linejoin: round;
 }
 
-html.dark .expertise-pill-icon[src*="csharp"] {
-  filter: brightness(0) invert(1);
+/* Brand logos are drawn for light backgrounds, so dark mode sets each one on a light tile. */
+html.dark img.expertise-pill-icon {
+  background: oklch(0.94 0.01 230);
 }
 
 .expertise-evidence:hover,
@@ -376,7 +377,7 @@ html.dark .expertise-pill-icon[src*="csharp"] {
   gap: 4px;
   padding: 5px 6px;
   color: var(--editorial-ink);
-  font-size: 0.72rem;
+  font-size: 11.52px;
   line-height: 1.3;
   text-decoration: none;
 }
@@ -401,7 +402,7 @@ html.dark .expertise-evidence-popover {
 .expertise-empty {
   margin: 8px 0 0;
   color: var(--editorial-muted);
-  font: 400 0.875rem/1.45 var(--editorial-body);
+  font: 400 14px/1.45 var(--editorial-body);
 }
 
 .expertise-panel {

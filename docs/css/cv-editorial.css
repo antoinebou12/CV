@@ -8,6 +8,7 @@
   --editorial-accent: var(--hero-accent);
   --editorial-soft: var(--hero-soft);
   --editorial-rule: var(--hero-rule);
+  --editorial-job-panel: oklch(0.978 0.008 190);
   --editorial-display: var(--type-display);
   --editorial-body: var(--type-body);
   --editorial-ease: var(--motion-ease-editorial);
@@ -34,6 +35,7 @@ html.dark {
   --editorial-soft: var(--hero-soft);
   --editorial-rule: var(--hero-rule);
   color-scheme: dark;
+  --editorial-job-panel: var(--hero-soft);
 }
 
 html.dark details.cv-job > summary.cv-job-summary {
@@ -160,6 +162,30 @@ html.dark #education .description:after {
 @media screen {
   html { scrollbar-color: oklch(0.62 0.04 200) var(--editorial-canvas); }
   body { background: var(--editorial-canvas); color: var(--editorial-ink); line-height: 1.65; }
+  main a { color: var(--editorial-accent); }
+  a.cv-nav-pill, .cv-nav-lang a, .cv-nav-lang .current { color: var(--editorial-accent); }
+  .project-group-intro, .project-subgroup-intro,
+  .project-nuget-note, .project-embed-note, .project-lens-list-note,
+  .skill-group-body--certs .cert-validity { color: var(--editorial-muted); }
+  .project-lens-list-link { color: var(--editorial-accent); }
+  .project-lens-list-link:hover, .project-lens-list-link:focus-visible { color: var(--editorial-ink); outline-color: var(--editorial-accent); }
+  .github-profile-stats .github-stat strong { color: var(--editorial-ink); }
+  .github-profile-stats, .github-profile-stats .github-stat-contrib strong,
+  .item-interests, .item-skills { color: var(--editorial-muted); }
+  .cv-live-widget > summary strong { color: var(--editorial-ink); }
+  details.project-preview, details.project-nuget {
+    background: var(--editorial-paper);
+    border-color: var(--editorial-rule);
+    color: var(--editorial-ink);
+  }
+  details.project-preview > summary.project-preview-summary,
+  details.project-preview[open] > summary.project-preview-summary,
+  details.project-nuget > summary.project-nuget-summary,
+  details.project-nuget[open] > summary.project-nuget-summary {
+    background: var(--editorial-soft);
+    color: var(--editorial-ink);
+    border-color: var(--editorial-rule);
+  }
   #particles-js { display: block; position: fixed; inset: 0; width: 100%; height: 100vh; background: transparent; pointer-events: none; z-index: 0; }
   #particles-js canvas { display: block; }
   main.container { position: relative; z-index: 1; }
@@ -676,7 +702,7 @@ html.dark .certification-cluster .list-group { border-color: var(--editorial-rul
     border-color: var(--editorial-rule);
     border-top-color: transparent;
     border-radius: 0 0 var(--radius-md) var(--radius-md);
-    background: oklch(0.978 0.008 190);
+    background: var(--editorial-job-panel);
   }
   /* Continue left rail into the open panel */
   details.cv-job[open] > .cv-job-body::before {
@@ -765,7 +791,7 @@ html.dark .certification-cluster .list-group { border-color: var(--editorial-rul
   }
   .cv-job-body .job-skills-group {
     display: grid;
-    grid-template-columns: 6.75rem minmax(0, 1fr);
+    grid-template-columns: max-content minmax(0, 1fr);
     gap: 8px 12px;
     align-items: start;
   }
@@ -1204,5 +1230,103 @@ html.dark .certification-cluster .list-group { border-color: var(--editorial-rul
     .cv-nav-pill, .cv-job, .project-directory-link, .btn { border: 1px solid ButtonText; }
     :is(a,button,summary,input,select):focus-visible { outline: 3px solid Highlight; box-shadow: none; }
     .butter-word, #photo img { animation: none !important; filter: none !important; color: inherit !important; text-shadow: none !important; }
+  }
+}
+
+/* Closed widget panels stay closed: html.dark sets display:grid, which beat [hidden] and showed
+   empty Spotify and Stats boxes whose images had not been requested yet. */
+.cv-live-widgets-panel[hidden],
+.clustrmaps-panel[hidden] { display: none !important; }
+
+/* Widget toggles read like the other section headings: sentence case, heading ink, site font. */
+@media screen {
+  .clustrmaps-section-title {
+    font-family: inherit;
+    text-transform: none;
+    color: var(--editorial-ink);
+  }
+  .clustrmaps-section-title .ico { color: var(--editorial-accent); }
+  html.dark .clustrmaps-section-title { color: var(--editorial-ink); }
+}
+
+/* Claude Academy badges match the other credential pills in dark mode. */
+html.dark .certification-badge { background: oklch(0.36 0.04 245) !important; }
+html.dark .certification-badge strong { color: oklch(0.97 0.01 210) !important; }
+html.dark .certification-badge span, html.dark .certification-badge small { color: oklch(0.85 0.02 230) !important; }
+
+/* Long organisation names wrap beside the logo instead of dropping under it (cv-main.css sets flex-wrap). */
+@media screen {
+  .cv-job-summary .where { flex-wrap: nowrap; align-items: flex-start; }
+  .cv-job-summary .where .job-org-logo { margin-top: 1px; }
+  .cv-job-summary .where a { white-space: normal; overflow: visible; text-overflow: clip; }
+}
+
+/* Featured project actions and shared surface polish. Keep the light theme airy and
+   give dark mode its own elevated surfaces instead of inverting the light palette. */
+@media screen {
+  :root {
+    --editorial-card-shadow: 0 14px 32px oklch(0.25 0.04 240 / .08);
+    --editorial-card-hover: color-mix(in srgb, var(--editorial-accent) 6%, var(--editorial-paper));
+    --editorial-button-ink: var(--editorial-paper);
+  }
+
+  html.dark {
+    --editorial-card-shadow: 0 18px 40px oklch(0.04 0.02 248 / .32);
+    --editorial-card-hover: oklch(0.275 0.04 248);
+    --editorial-button-ink: oklch(0.13 0.025 248);
+  }
+
+  .project-card {
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .project-card:hover {
+    border-bottom-color: color-mix(in srgb, var(--editorial-accent) 68%, var(--editorial-rule));
+  }
+
+  .project-card--featured:hover,
+  .project-card--uml:hover {
+    background: var(--editorial-card-hover);
+    box-shadow: var(--editorial-card-shadow);
+    transform: translateY(-2px);
+  }
+
+  .project-card--uml .project-card-copy { min-width: 0; }
+  .project-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+  .project-action {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--editorial-rule);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--editorial-ink) !important;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none !important;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+  .project-action:hover,
+  .project-action:focus-visible { border-color: var(--editorial-accent); background: var(--editorial-soft); color: var(--editorial-accent) !important; transform: translateY(-1px); }
+  .project-action--primary { border-color: var(--editorial-accent); background: var(--editorial-accent); color: var(--editorial-button-ink) !important; }
+  .project-action--primary:hover,
+  .project-action--primary:focus-visible { background: color-mix(in srgb, var(--editorial-accent) 82%, var(--editorial-ink)); color: var(--editorial-button-ink) !important; }
+
+  html.dark .project-card--uml { background: linear-gradient(135deg, oklch(0.23 0.055 181), oklch(0.205 0.03 248) 62%); }
+  html.dark .project-card--uml:hover { background: linear-gradient(135deg, oklch(0.29 0.065 181), oklch(0.255 0.035 248) 62%); }
+  html.dark .project-action { background: oklch(0.23 0.03 248); border-color: oklch(0.48 0.04 230); }
+  html.dark .project-action--primary { background: var(--editorial-accent); border-color: var(--editorial-accent); }
+
+  @media (max-width: 560px) {
+    .project-actions { align-items: stretch; }
+    .project-action { flex: 1 1 100%; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card, .project-action { transition: none; }
+    .project-card--featured:hover, .project-card--uml:hover, .project-action:hover { transform: none; }
   }
 }
