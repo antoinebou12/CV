@@ -12,10 +12,7 @@ The project uses five GitHub Actions workflows:
    - PDF text smoke test (`verify_cv_pdf_text.py`)
    - Commits PDFs back to the repository
 
-2. **GitHub Pages Deployment** (`.github/workflows/deploy.yml`)
-   - Deploys the static site and Hugo blog to GitHub Pages
-   - `verify_deploy_build.py`, `verify_meta_descriptions.py`, **advisory** Lychee on `_site` (`fail: false` + step summary)
-   - Triggers on push to `main`/`master`
+2. Website publication runs locally; see [local publishing](local-publishing.md).
 
 3. **Link check** (`.github/workflows/link-check.yml`)
    - Runs Lychee on Hugo content, docs, static HTML, CSS, linktree, letters, papers (PR, push, weekly schedule); **advisory** (`fail: false`) with a step summary report
@@ -58,21 +55,9 @@ python build_cv.py --all --rebuild --verbose --ci
 python scripts/verify/verify_cv_pdf_text.py --lang all
 ```
 
-## GitHub Pages Deployment Workflow
+## Website publication
 
-### Workflow Steps (quality gates before upload)
-
-1. Checkout, Python 3.14, `pip install -r requirements-ci.txt`, sitemap unit tests
-2. Hugo + Node 24 Tailwind build
-3. Resume/AEO artifacts (`render_resume_md.py`, `generate_aeo_content.py`, `generate_person_jsonld.py`)
-4. Assemble `_site` (static HTML, `css/`, `papers/`, CV PDFs, Hugo `blog/`)
-5. Agent-ready promote + sitemap merge
-6. **`verify_deploy_build.py`** (blocking)
-7. **`verify_meta_descriptions.py`** (blocking)
-8. **Lychee on `_site`** (advisory — `fail: false`; broken links are logged in the job summary but do not block upload)
-9. Upload artifact and deploy
-
-PR/push link checks in **link-check.yml** and **compile-cv.yml** are also advisory (`fail: false`). Reports use `scripts/ci/write_advisory_summary.sh` (visible under the workflow run **Summary** tab).
+Run `scripts/deploy/publish_site.py` locally. The CV and blog publish together from `main/docs`; no repository deploy Action is used. See [local publishing](local-publishing.md).
 
 ## Quality Workflow
 

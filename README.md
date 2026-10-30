@@ -86,7 +86,7 @@ CV/
 
 ### Hugo blog (Paper)
 
-The site under `hugo/` is built with [Hugo](https://gohugo.io/) extended (see `.github/workflows/deploy.yml` for the pinned version). GitHub Pages deployment builds theme CSS with npm in `hugo/themes/paper`, then runs `hugo --gc --minify` with a `baseURL` that matches your public URL (repository variable `HUGO_BASE_URL` or default `https://antoineboucher.info/<repo>/blog/`).
+The CV hero and Hugo blog are built locally and published together from `docs/` on `main`. Use `scripts/deploy/publish_site.py`; no repository deployment Action is needed. See [local publishing](docs/development/local-publishing.md) for prerequisites and commands.
 
 **Local development**
 
