@@ -40,6 +40,8 @@
 {{- $relatedArticles := index (hugo.Data.repository_article_index.repositories | default dict) $note.repo | default slice -}}
 <div class="repo-note" data-repo-shell>
   <div class="repo-shell-layout">
+    <details class="repo-sidenav-disclosure" open>
+    <summary>{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</summary>
     <nav class="repo-sidenav" aria-label="{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}">
       <p class="repo-sidenav-label">{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</p>
       <a href="#overview" class="active">{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</a>
@@ -55,6 +57,7 @@
       <a href="#reader-guide">{{ if $fr }}Référence{{ else }}Reference{{ end }}</a>
       <a href="#project-references">{{ if $fr }}Liens{{ else }}Links{{ end }}</a>
     </nav>
+    </details>
 
     <div class="repo-shell-main">
       <header class="repo-hero">

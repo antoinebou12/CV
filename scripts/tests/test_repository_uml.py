@@ -76,6 +76,12 @@ def test_c4_sources_skip_plain_uml_styling():
     assert "skinparam" in uml.wrap("actor a", "usecase")
 
 
+def test_compose_services_are_not_repeated_as_external_systems():
+    source = uml.c4_container_uml("demo", DOSSIER, False)
+    assert 'Container(C1, "kroki"' in source
+    assert 'System_Ext(E0, "Kroki")' not in source
+
+
 def test_deployment_uses_compose_services_and_base_images():
     source = uml.deployment_uml("demo", DOSSIER, False)
     assert 'node "Docker Compose" as H {' in source
@@ -145,6 +151,6 @@ def test_c4_compose_entry_is_the_project_service_and_transports_are_not_systems(
                    services=dict(DOSSIER["services"], containers=["kroki", "demo", "redis"]))
     source = uml.c4_container_uml("demo", dossier, False)
     assert 'Rel(P_http, C1, "Uses")' in source
-    assert 'Rel(C1, E0, "Calls")' in source
+    assert 'System_Ext(E0, "Kroki")' not in source
     assert "WebSocket" not in source
     assert 'Rel(C0, C1' not in source and 'Rel(C1, C2' not in source

@@ -2170,3 +2170,19 @@ html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
 .repo-doc .repo-dossier-part h4 { margin-top: 1.5rem; margin-bottom: .75rem; }
 .repo-doc .repo-dossier-part .repo-diagram-details { margin-block: 1rem; }
 .repo-doc .repo-dependency-badges a { min-height: 2rem; color: var(--text); }
+.repo-doc .repo-sidenav-disclosure { min-width: 0; align-self: start; }
+.repo-doc .repo-sidenav-disclosure > summary { display: none; }
+.repo-doc .repo-sidenav-disclosure .repo-sidenav { position: static; }
+.repo-doc .repo-shell-layout:not(#\#):not(#\#):not(#\#) { padding-top: .5rem !important; margin-top: 0 !important; }
+.repo-doc .repo-hero-panel:not(#\#):not(#\#):not(#\#) { padding-top: 1rem !important; }
+@media (min-width: 761px) {
+  .repo-doc .repo-sidenav-disclosure { position: sticky; top: 5.5rem; }
+}
+.repo-doc .repo-breadcrumbs { margin-bottom: 1rem; }
+.repo-doc .repo-modules-table th,
+.repo-doc .repo-modules-table td { padding-block: .75rem; line-height: 1.5; }
+@media (max-width: 760px) {
+  .repo-doc .repo-sidenav-disclosure { margin-bottom: 1rem; border-block: 1px solid var(--line); }
+  .repo-doc .repo-sidenav-disclosure > summary { display: list-item; padding: .85rem 1rem; color: var(--text); cursor: pointer; font: 600 .9rem/1.5 system-ui, sans-serif; }
+  .repo-doc .repo-sidenav-disclosure .repo-sidenav { padding-block: .75rem; }
+}

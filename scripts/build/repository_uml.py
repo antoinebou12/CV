@@ -171,6 +171,11 @@ def c4_container_uml(repo, d, fr):
     containers = []  # (id, label, technology, kind)
     compose = d["services"].get("containers") or []
     if compose:
+        def service_key(value):
+            return re.sub(r'[^a-z0-9]', '', value.lower().removesuffix(' server'))
+        internal = {service_key(name) for name in compose}
+        externals = [name for name in externals if service_key(name) not in internal]
+    if compose:
         containers = [(f"C{n}", name, "Docker", "container") for n, name in enumerate(compose[:8])]
     else:
         # A source layer is not a deployable container. Only known entry points

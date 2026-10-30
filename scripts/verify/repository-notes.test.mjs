@@ -37,7 +37,7 @@ test('diagram JavaScript parses and uses strict rendering with SVG labels', () =
   assert.doesNotThrow(() => new AsyncFunction(script));
   assert.match(script, /securityLevel: 'strict'/);
   assert.match(script, /htmlLabels: false/);
-  assert.match(script, /requestAnimationFrame\(\(\) => fit\(\)\)/);
+  assert.match(script, /requestAnimationFrame\(\(\) => resize\(natural\)\)/);
   assert.match(script, /requestFullscreen/);
   assert.match(script, /'Fullscreen'/);
   assert.match(read('hugo/assets/repository-notes.css'), /\.edgeLabel \.labelBkg/);

@@ -44,6 +44,16 @@
     });
   });
   const shell = document.querySelector('[data-repo-shell]');
+  const pageNavigation = shell?.querySelector('.repo-sidenav-disclosure');
+  if (pageNavigation) {
+    const compact = matchMedia('(max-width: 760px)');
+    const adaptNavigation = () => { pageNavigation.open = !compact.matches; };
+    adaptNavigation();
+    compact.addEventListener('change', adaptNavigation);
+    pageNavigation.addEventListener('click', event => {
+      if (compact.matches && event.target.closest('a')) pageNavigation.open = false;
+    });
+  }
   if (shell) {
     const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
     if (installTabs.length) {
@@ -289,7 +299,8 @@
     block.figure = figure;
     block.painted = true;
     if (block.imageFallback) block.imageFallback.hidden = true;
-    requestAnimationFrame(() => fit());
+    // Preserve readable labels on first open; Fit remains an explicit overview.
+    requestAnimationFrame(() => resize(natural));
     if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
   }
   function blockReady(block) {
