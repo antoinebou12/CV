@@ -33,10 +33,10 @@
     </div>
     {{- end -}}
     {{ with .GetTerms "tags" }}<nav class="article-topic-badges" aria-label="{{ if eq $.Lang "fr" }}Sujets{{ else }}Topics{{ end }}">{{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</nav>{{ end }}
+    {{ partial "repository-article-guides.html" $page }}
     {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
-  {{ if not $isRepoNote }}{{ partial "repository-article-guides.html" $page }}{{ end }}
 
   {{- if and (not $isRepoNote) (ne .Params.show_hero false) -}}
   {{- with partial "featured-image-resource.html" $page -}}

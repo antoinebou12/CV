@@ -9,6 +9,7 @@ tags: [Mitsuba, Video]
 post_kind: article
 mermaid: true
 images: ["images/roughconductor.png"]
+show_hero: false
 ---
 
 MistubaVideo turns simulation exports into images and video with Mitsuba 3. Its batch renderer handles OBJ sequences; the `mitsuba-video` helper replays recorded body poses and surface fields such as wear.
@@ -21,11 +22,15 @@ A simulation computes motion and changes to surfaces. The renderer reads those o
 
 `python main.py multi --folder exports` renders an OBJ sequence. Camera views, resolution and samples per pixel control the output; FFmpeg assembles the images into video or GIF. The field renderer adds per-frame transforms and textures.
 
-![A rough-conductor material rendered with Mitsuba.](images/roughconductor.png)
-
-*Existing material illustration from the project report. It illustrates shading, without representing a wear-simulation result.*
+{{< figure src="images/roughconductor.png" alt="A rough-conductor material rendered with Mitsuba." caption="Existing material illustration from the project report. It illustrates shading, without representing a wear-simulation result." >}}
 
 ## The render helper
+
+| Stage | Data |
+| --- | --- |
+| Input | Meshes, materials, recorded poses and surface fields |
+| Processing | Source adapter, material blend and Mitsuba rendering |
+| Output | Rendered frames, area CSV, settings and MP4 |
 
 The `mitsuba-video` package accepts a versioned manifest or a TextureFriction recording through a source adapter. A manifest describes bodies, meshes, materials, poses and field images. `ManifestWriter` lets another simulator export this format.
 
@@ -63,15 +68,15 @@ Outputs include beauty images, composite frames, a field-area CSV and `render_co
 
 Keep display settings with the render when comparing videos: changing the heatmap range can make the same field look different.
 
-![Mitsuba spotlight illustration from the project report.](images/spotlight.png)
-
-*Existing lighting illustration from the report. Scene lighting and the recorded surface field are separate inputs.*
+{{< figure src="images/spotlight.png" alt="Mitsuba spotlight illustration from the project report." caption="Existing lighting illustration from the report. Scene lighting and the recorded surface field are separate inputs." >}}
 
 ## Sources and tests
 
 The package documents pytest tests for transforms, material blending, OBJ and MTL readers, and the manifest schema and writer. A measured coverage percentage is not supplied here.
 
 [Render-helper documentation](https://github.com/ETSim/MistubaVideo/tree/main/packages/mitsuba_video).
+
+Implementation: [source interface](https://github.com/ETSim/MistubaVideo/blob/main/packages/mitsuba_video/src/mitsuba_video/source.py), [material blending](https://github.com/ETSim/MistubaVideo/blob/main/packages/mitsuba_video/src/mitsuba_video/blend.py).
 
 The [project documentation]({{< ref "/projects/notes/mistubavideo/index.md" >}}) provides the source link and terminology.
 

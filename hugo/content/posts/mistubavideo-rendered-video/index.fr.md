@@ -9,6 +9,7 @@ tags: [Mitsuba, Vidéo]
 post_kind: article
 mermaid: true
 images: ["images/roughconductor.png"]
+show_hero: false
 ---
 
 MistubaVideo transforme les sorties de simulation en images et vidéos avec Mitsuba 3. Son moteur par lots traite des séquences OBJ. Le module `mitsuba-video` rejoue les poses des corps et les champs de surface, comme l’usure.
@@ -21,11 +22,15 @@ La simulation calcule le mouvement et les changements de surface. Le rendu montr
 
 `python main.py multi --folder exports` traite une séquence OBJ. Les vues, la résolution et les échantillons par pixel règlent le rendu; FFmpeg assemble les images en vidéo ou en GIF. Le rendu de champs ajoute les transformations et textures de chaque image.
 
-![Un matériau conducteur rugueux rendu avec Mitsuba.](images/roughconductor.png)
-
-*Illustration de matériau déjà présente dans le rapport. Elle montre l’ombrage, sans représenter un résultat de simulation d’usure.*
+{{< figure src="images/roughconductor.png" alt="Un matériau conducteur rugueux rendu avec Mitsuba." caption="Illustration de matériau déjà présente dans le rapport. Elle montre l’ombrage, sans représenter un résultat de simulation d’usure." >}}
 
 ## Le module de rendu
+
+| Étape | Données |
+| --- | --- |
+| Entrée | Maillages, matériaux, poses enregistrées et champs de surface |
+| Traitement | Adaptateur de source, mélange des matériaux et rendu Mitsuba |
+| Sortie | Images, CSV de surface, paramètres et MP4 |
 
 Le paquet `mitsuba-video` lit un manifeste versionné ou un enregistrement TextureFriction grâce à un adaptateur de source. Le manifeste décrit les corps, maillages, matériaux, poses et images de champs. `ManifestWriter` permet à un autre simulateur de produire ce format.
 
@@ -63,15 +68,15 @@ Les sorties comprennent les images de la scène, les images composites, un CSV d
 
 Conservez les paramètres d’affichage pour comparer des vidéos : changer l’échelle de la carte de chaleur peut donner une apparence différente au même champ.
 
-![Illustration d’un éclairage ponctuel Mitsuba issue du rapport.](images/spotlight.png)
-
-*Illustration d’éclairage déjà présente dans le rapport. L’éclairage et le champ de surface enregistré sont deux entrées distinctes.*
+{{< figure src="images/spotlight.png" alt="Illustration d’un éclairage ponctuel Mitsuba issue du rapport." caption="Illustration d’éclairage déjà présente dans le rapport. L’éclairage et le champ de surface enregistré sont deux entrées distinctes." >}}
 
 ## Sources et tests
 
 Le paquet documente des tests pytest pour les transformations, le mélange des matériaux, les lecteurs OBJ et MTL, ainsi que le schéma et le générateur de manifestes. Aucun pourcentage mesuré de couverture n’est fourni ici.
 
 [Documentation du module de rendu](https://github.com/ETSim/MistubaVideo/tree/main/packages/mitsuba_video).
+
+Implémentation : [interface de source](https://github.com/ETSim/MistubaVideo/blob/main/packages/mitsuba_video/src/mitsuba_video/source.py), [mélange des matériaux](https://github.com/ETSim/MistubaVideo/blob/main/packages/mitsuba_video/src/mitsuba_video/blend.py).
 
 La [documentation du projet]({{< ref "/projects/notes/mistubavideo/index.fr.md" >}}) regroupe le lien source et la terminologie.
 

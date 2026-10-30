@@ -23,8 +23,7 @@
   {{- end -}}
 {{- end -}}
 {{- with $matches -}}
-<aside class="repo-article-guides" aria-labelledby="repository-guides-heading">
-  <p id="repository-guides-heading">{{ if $fr }}Documentation du projet{{ else }}Project documentation{{ end }}</p>
+<aside class="repo-article-guides" aria-label="{{ if $fr }}Documentation du projet{{ else }}Project documentation{{ end }}">
   <ul class="repo-guide-files" role="list">{{ range . }}<li><a href="{{ .url }}">{{ if $fr }}Documentation de {{ else }}{{ end }}{{ .name }}{{ if not $fr }} documentation{{ end }} <span aria-hidden="true">→</span></a></li>{{ end }}</ul>
 </aside>
 {{- end -}}

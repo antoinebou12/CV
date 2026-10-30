@@ -129,7 +129,7 @@
       sections.forEach((section) => observer.observe(section));
     }
   }
-  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source)')) {
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source), .journal-article pre')) {
     if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
     pre.dataset.copyReady = '1';
     const control = document.createElement('button');
@@ -149,9 +149,15 @@
   }
   const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
     const original = block.parentElement;
+    const sourceDisclosure = document.createElement('details');
+    sourceDisclosure.className = 'article-diagram-loading';
+    const summary = document.createElement('summary');
+    summary.textContent = frPage ? 'Chargement du diagramme · Voir la source' : 'Loading diagram · View source';
+    original.replaceWith(sourceDisclosure);
+    sourceDisclosure.append(summary, original);
     return {
       source: block.textContent,
-      original,
+      original: sourceDisclosure,
       lazyHost: original.closest('[data-mermaid-lazy]'),
       imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
       figure: null,
@@ -409,6 +415,11 @@
             } catch (error) { console.warn('Diagram source remains available:', error); }
           }
         }
+      } catch (error) {
+        document.querySelectorAll('.article-diagram-loading > summary').forEach(summary => {
+          summary.textContent = frPage ? 'Diagramme indisponible · Voir la source' : 'Diagram unavailable · View source';
+        });
+        console.warn('Diagram renderer unavailable:', error);
       } finally { rendering = false; }
     }
     document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
