@@ -91,7 +91,7 @@ EXTRA_NAMES = re.compile(
     r"openapi[\w.\-]*\.(?:ya?ml|json)|swagger[\w.\-]*\.(?:ya?ml|json)|SECURITY\.md|"
     r"pytest\.ini|tox\.ini|setup\.cfg|(?:jest|vitest|playwright|cypress)\.config\.\w+|"
     r"phpunit\.xml(?:\.dist)?|vercel\.json|netlify\.toml|fly\.toml|wrangler\.toml|"
-    r"dependabot\.ya?ml|renovate\.json|codecov\.ya?ml)$"
+    r"dependabot\.ya?ml|renovate\.json|codecov\.ya?ml|coverage(?:-summary)?\.json|coverage\.xml|lcov\.info)$"
 )
 WORKFLOW = re.compile(r"^\.github/workflows/[\w.\-]+\.ya?ml$")
 
@@ -175,6 +175,11 @@ DATABASES = [
     (r"json\.dump\(|JSON\.stringify\(.*writeFile|fs\.writeFileSync", "JSON files", "files"),
 ]
 TEST_FRAMEWORKS = [
+    (r"(?:from\s+|require\()['\"]node:test['\"]", "Node.js test runner"),
+    (r"from ['\"]mocha['\"]|require\(['\"]mocha['\"]", "Mocha"),
+    (r"from ['\"]chai['\"]|require\(['\"]chai['\"]", "Chai"),
+    (r"jasmine\.(?:createSpy|any|clock)", "Jasmine"),
+    (r"\btesting\.T\b|\*testing\.B\b", "Go testing"),
     (r"^\s*import pytest|^\s*from pytest|@pytest\.", "pytest"),
     (r"^\s*import unittest|unittest\.TestCase", "unittest"),
     (r"from ['\"]vitest['\"]", "Vitest"),
@@ -1206,6 +1211,40 @@ def without_expressions(text):
     return re.sub(r"\s*\(?[^()]*\$\{\{.*?\}\}[^()]*\)?", "", text).strip(" -:")
 
 
+def coverage_reports(analysis, texts):
+    """Read measured line totals; configuration thresholds are never results."""
+    reports = []
+    for path, text in texts.items():
+        covered = total = None
+        try:
+            if PurePosixPath(path).name in {"coverage.json", "coverage-summary.json"}:
+                data = json.loads(text)
+                if "totals" in data:  # coverage.py
+                    total = data["totals"].get("num_statements")
+                    covered = data["totals"].get("covered_lines")
+                elif "total" in data:  # Istanbul
+                    total = data["total"].get("lines", {}).get("total")
+                    covered = data["total"].get("lines", {}).get("covered")
+            elif PurePosixPath(path).name == "coverage.xml":
+                root = re.search(r'<coverage\s[^>]+>', text)
+                if root:
+                    found = dict(re.findall(r'(lines-valid|lines-covered)=["\'](\d+)["\']', root[0]))
+                    total = int(found.get("lines-valid", 0))
+                    covered = int(found.get("lines-covered", 0))
+            elif PurePosixPath(path).name == "lcov.info":
+                totals = re.findall(r'^LF:(\d+)$', text, re.M)
+                hits = re.findall(r'^LH:(\d+)$', text, re.M)
+                if totals and len(totals) == len(hits):
+                    total, covered = sum(map(int, totals)), sum(map(int, hits))
+            if (type(total) in (int, float) and type(covered) in (int, float)
+                    and total > 0 and 0 <= covered <= total):
+                reports.append({"percent": round(100 * covered / total, 1),
+                                "covered": covered, "total": total, **evidence(analysis, path)})
+        except (ValueError, TypeError, AttributeError):
+            continue
+    return reports
+
+
 def build_tests(analysis, texts, paths):
     test_paths = [p for p in paths if is_test(p) and is_source(p)]
     source_paths = [p for p in paths if is_source(p) and not is_test(p) and layer_of(p) not in {"hosting"}]
@@ -1244,11 +1283,12 @@ def build_tests(analysis, texts, paths):
         "source_files": len(source_paths),
         "cases": cases,
         "kinds": [{"key": k, "label": TEST_KINDS[k], "files": n} for k, n in kinds.most_common()],
-        "frameworks": frameworks[:8],
+        "frameworks": frameworks,
         "directories": [{"path": d, "files": n, "url": analysis["tree_url"] + "/" + quote(d)} for d, n in dirs.most_common(6)],
         "workflows": workflows[:8],
         "coverage_config": [evidence(analysis, p) for p in coverage[:3]],
-        "coverage_tools": tools[:5],
+        "coverage_tools": tools,
+        "coverage_reports": coverage_reports(analysis, texts),
     }
 
 

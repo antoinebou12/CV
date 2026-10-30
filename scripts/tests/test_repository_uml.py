@@ -66,9 +66,9 @@ def test_c4_container_uses_compose_services_or_layers():
     assert 'ContainerDb(DB0, "SQLite", "")' in from_compose
     layered = dict(DOSSIER, services=dict(DOSSIER["services"], containers=[]))
     source = uml.c4_container_uml("demo", layered, False)
-    assert 'Container(API, "Entry points and API", "Python")' in source
-    assert 'Container(CORE, "Core logic", "Python")' in source
-    assert 'Rel(API, CORE, "Calls")' in source
+    assert 'Container(APP, "demo", "Python")' in source
+    assert 'Container(CORE' not in source
+    assert 'Rel(API, CORE' not in source
 
 
 def test_c4_sources_skip_plain_uml_styling():
@@ -120,6 +120,24 @@ def test_sanitize_rejects_non_svg():
 
 def test_labels_cannot_break_plantuml_syntax():
     assert uml.q('a"b{c}|d;e') == "a'b'c''d'e"
+
+
+def test_component_hierarchy_has_layers_and_languages_without_inferred_calls():
+    source = uml.c4_component_uml("demo", DOSSIER, False)
+    assert 'Boundary(L0, "interface", "layer")' in source
+    assert 'Component(M0_0, "interface", "Python", "4 files")' in source
+    assert 'Rel(' not in source
+
+
+def test_code_groups_same_named_types_by_file_and_deduplicates_declarations():
+    first = {"name": "Model", "file": "src/model.py", "fields": ["id"], "methods": ["save"]}
+    other = {"name": "Model", "file": "api/model.py", "fields": ["name"]}
+    dossier = dict(DOSSIER, logic={"types": [first, other]}, entities={"items": [first]})
+    source = uml.c4_code_uml("demo", dossier, False)
+    assert source.count('class "Model"') == 2
+    assert 'package "src/model.py"' in source
+    assert 'save()' in source
+    assert '-->' not in source
 
 
 def test_c4_compose_entry_is_the_project_service_and_transports_are_not_systems():

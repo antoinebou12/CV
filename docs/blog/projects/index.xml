@@ -10,8 +10,10 @@
 &lt;li&gt;&lt;a href="https://github.com/AlgoETS/BatchBacktesting"&gt;Repository&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://algoets.github.io/BatchBacktesting/"&gt;Published example&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>MistubaVideo</title><link>https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/</guid><description>&lt;h1 id="mistubavideo"&gt;MistubaVideo&lt;/h1&gt;
-&lt;p&gt;MistubaVideo is an ETSim repository for video-related work with Mitsuba. Consult the &lt;a href="https://github.com/ETSim/MistubaVideo"&gt;source repository&lt;/a&gt; for implementation details.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://antoineboucher.info/CV/blog/posts/mistubavideo-rendered-video/"&gt;Read the project introduction&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>TrueMapData: height maps for metrology and graphics</title><link>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</guid><description>&lt;h1 id="truemapdata"&gt;TrueMapData&lt;/h1&gt;
+&lt;p&gt;MistubaVideo renders simulation exports with Mitsuba 3. The batch command processes OBJ sequences, while the &lt;code&gt;mitsuba-video&lt;/code&gt; helper reads recorded body poses and surface fields through manifest and TextureFriction source adapters.&lt;/p&gt;
+&lt;h2 id="simulation-to-video"&gt;Simulation to video&lt;/h2&gt;
+&lt;p&gt;The helper applies poses, blends material appearances from the recorded field, and renders each frame. Optional heatmaps, a UV-atlas panel and a covered-area chart help inspect the surface changes. FFmpeg assembles the result into video.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;inspect&lt;/code&gt; to check input data, &lt;code&gt;preview&lt;/code&gt; to check the camera, and &lt;code&gt;render&lt;/code&gt; to produce a sequence. &lt;code&gt;encode&lt;/code&gt; can assemble existing frames again. The output records settings and timings in &lt;code&gt;render_config.json&lt;/code&gt; and field-area measurements in CSV.&lt;/p&gt;</description></item><item><title>TrueMapData: height maps for metrology and graphics</title><link>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</link><pubDate>Sat, 24 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/truemapdata/</guid><description>&lt;h1 id="truemapdata"&gt;TrueMapData&lt;/h1&gt;
 &lt;p&gt;TrueMapData is a Python library and &lt;code&gt;tmd-process&lt;/code&gt; CLI for TrueMap and GelSight height maps. The repository covers binary I/O, filters and transforms, derived maps, defect detection, sequences, compression, visualisation and mesh export.&lt;/p&gt;
 &lt;p&gt;The toolkit also includes tribology and wear-oriented commands, with optional roughness support through Surfalize. The &lt;a href="https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/"&gt;companion article&lt;/a&gt; explains where the data pipeline meets surface metrology and graphics.&lt;/p&gt;
 &lt;ul&gt;
@@ -46,7 +48,66 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;.dotfiles: A shell environment in scripts&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;These dotfiles collect the shell and editor setup I used across machines. The interesting part is the installer: it turns a set of personal preferences into operations on packages, configuration files and upstream projects.&lt;/p&gt;</description></item><item><title>another-install-script: A menu for homelab installation</title><link>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;These dotfiles collect the shell and editor setup I used across machines. The installer manages packages, configuration files and upstream projects.&lt;/p&gt;
+ &lt;div class="repo-status-row" aria-label="Repository status"&gt;
+ &lt;span class="repo-badge kind"&gt;Configuration and automation&lt;/span&gt;
+ 
+ 
+ 
+ 
+ 
+ 
+ &lt;/div&gt;
+ &lt;ul class="repo-meta-chips" role="list"&gt;
+ &lt;li class="repo-chip"&gt;
+ &lt;svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"&gt;&lt;path fill="currentColor" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1Z"/&gt;&lt;/svg&gt;
+ &lt;span&gt;Updated &lt;time datetime="2026-10-23"&gt;2026-10-23&lt;/time&gt;&lt;/span&gt;
+ &lt;/li&gt;
+ 
+ &lt;li class="repo-chip"&gt;
+ &lt;a href="https://github.com/antoinebou12/.dotfiles/stargazers"&gt;
+ &lt;svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"&gt;&lt;path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.1l-3.8 2 0.7-4.3-3.1-3 4.3-.6L8 1.3Z"/&gt;&lt;/svg&gt;
+ &lt;span&gt;2&lt;/span&gt;
+ &lt;/a&gt;
+ &lt;/li&gt;
+ 
+ 
+ &lt;li class="repo-chip"&gt;
+ &lt;span class="repo-lang-dot" aria-hidden="true"&gt;&lt;/span&gt;
+ &lt;span&gt;Shell · 100%&lt;/span&gt;
+ &lt;/li&gt;
+ 
+ 
+ &lt;li class="repo-chip"&gt;&lt;span&gt;MIT&lt;/span&gt;&lt;/li&gt;
+ 
+ &lt;/ul&gt;
+ &lt;div class="repo-tech-badges" aria-label="Verified technologies"&gt;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ &lt;/div&gt;
+ &lt;div class="repo-actions"&gt;
+ &lt;a class="btn primary" href="https://github.com/antoinebou12/.dotfiles"&gt;
+ &lt;svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"&gt;&lt;path fill="currentColor" d="M8 1a7 7 0 0 0-2.2 13.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1 0-.1 0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 0 0 8 1Z"/&gt;&lt;/svg&gt;
+ View source
+ &lt;/a&gt;
+ &lt;a class="btn ghost" href="https://github.com/antoinebou12/.dotfiles#readme"&gt;
+ &lt;svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"&gt;&lt;path fill="currentColor" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v11a.5.5 0 0 1-.8.4L8 11.1l-4.2 2.8a.5.5 0 0 1-.8-.4v-11ZM4.5 2a.5.5 0 0 0-.5.5V10l3.7-2.5a.5.5 0 0 1 .6 0L12 10V2.5a.5.5 0 0 0-.5-.5h-7Z"/&gt;&lt;/svg&gt;
+ README
+ &lt;/a&gt;
+ 
+ &lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/header&gt;
+
+ &lt;details class="repo-language-disclosure" id="languages-panel"&gt;
+ &lt;summary&gt;&lt;span&gt;Repository languages&lt;/span&gt;&lt;span class="repo-language-primary"&gt;Shell 100%&lt;/span&gt;&lt;span class="repo-count"&gt;1&lt;/span&gt;&lt;/summary&gt;
+ &lt;div class="repo-language-content"&gt;
+ &lt;p class="repo-lede-sm"&gt;Shares calculated from GitHub Linguist bytes.&lt;/p&gt;</description></item><item><title>another-install-script: A menu for homelab installation</title><link>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/another-install-script/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -181,7 +242,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Artemis-Switch: A streamed frame from host to screen&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;Artemis-Switch is a fork in the Moonlight streaming family. The host runs the game; the client receives compressed video and audio while sending controller input back. Rendering a frame is only one part of that round trip.&lt;/p&gt;</description></item><item><title>AudioTranscript: From WAV chunks to transcription</title><link>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;Artemis-Switch is a fork in the Moonlight streaming family. The host runs the game. The client receives compressed video and audio, renders frames and sends controller input back.&lt;/p&gt;</description></item><item><title>AudioTranscript: From WAV chunks to transcription</title><link>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -343,7 +404,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;CV: One repository, several publishing paths&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;This website combines hand-edited bilingual CV pages, structured resume data, generated About pages, LaTeX PDFs and a Hugo blog. The build brings those outputs into one static deployment without requiring a public application backend.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin: Routing text to diagram backends</title><link>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;This website combines bilingual CV pages, structured resume data, LaTeX PDFs and a Hugo blog. A local script builds and validates both the CV and blog, then publishes them together from docs/ on main.&lt;/p&gt;</description></item><item><title>D2COpenAIPlugin: Routing text to diagram backends</title><link>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -640,7 +701,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;hydra: An Electron application across process boundaries&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and Python RPC component. Those boundaries explain why the project has several toolchains rather than one frontend build.&lt;/p&gt;</description></item><item><title>ipc-toolkit: Collision queries as a library boundary</title><link>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and a Python RPC component, each with its own toolchain.&lt;/p&gt;</description></item><item><title>ipc-toolkit: Collision queries as a library boundary</title><link>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -748,7 +809,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;linkshare: A Rails application for shared links&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;linkshare is an archived Rails learning project for publishing links, commenting and voting. Its routes reveal a conventional server-rendered application with account management and an administrative interface.&lt;/p&gt;</description></item><item><title>LLM2SVG: Dataset analysis before model claims</title><link>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;linkshare is an archived Rails learning project for sharing links, commenting and voting. It renders pages on the server and includes account management and an administrative interface.&lt;/p&gt;</description></item><item><title>LLM2SVG: Dataset analysis before model claims</title><link>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/llm2svg/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -856,7 +917,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;MediaBoxDockerCompose: A media stack connected by volumes and networks&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;MediaBoxDockerCompose brings several homelab services together in Docker Compose. Its architecture lives mainly in service definitions, shared filesystem paths and network reachability, rather than in one application’s source code.&lt;/p&gt;</description></item><item><title>nova-backtest: Historical candles into a strategy simulation</title><link>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;MediaBoxDockerCompose brings several homelab services together in Docker Compose. Service definitions, shared filesystem paths and network connections describe how they work together.&lt;/p&gt;</description></item><item><title>nova-backtest: Historical candles into a strategy simulation</title><link>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;
@@ -1072,7 +1133,7 @@
 &lt;/span&gt;
 
  &lt;h1 id="single-post-title" class="repo-doc-title"&gt;Serilog.Sinks.SentrySDK: Adapting log events to Sentry&lt;/h1&gt;
- &lt;p class="repo-hero-lede"&gt;Serilog.Sinks.SentrySDK bridges a .NET logging pipeline and the Sentry SDK. The application emits structured log events; a sink adapts that information for Sentry rather than asking every call site to invoke the SDK directly.&lt;/p&gt;</description></item><item><title>sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces</title><link>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
+ &lt;p class="repo-hero-lede"&gt;Serilog.Sinks.SentrySDK connects a .NET logging pipeline to the Sentry SDK. Its sink converts structured log events for Sentry, so application call sites can keep using Serilog.&lt;/p&gt;</description></item><item><title>sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces</title><link>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</link><pubDate>Fri, 23 Oct 2026 12:00:00 -0400</pubDate><guid>https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/</guid><description>&lt;div class="repo-note" data-repo-shell&gt;
  &lt;div class="repo-shell-layout"&gt;
  &lt;nav class="repo-sidenav" aria-label="On this page"&gt;
  &lt;p class="repo-sidenav-label"&gt;On this page&lt;/p&gt;

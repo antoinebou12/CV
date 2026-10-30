@@ -18,6 +18,19 @@ ANALYSIS = {
 }
 
 
+def test_measured_coverage_ignores_thresholds_and_invalid_totals():
+    texts = {
+        "coverage-summary.json": '{"total":{"lines":{"total":20,"covered":15}}}',
+        "coverage.xml": '<coverage lines-valid="10" lines-covered="9">',
+        "lcov.info": 'LF:10\nLH:5\nLF:10\nLH:10\n',
+        "pyproject.toml": 'fail_under = 95',
+        "bad/coverage.json": '{"totals":{"num_statements":5,"covered_lines":8}}',
+    }
+    reports = dossier.coverage_reports(ANALYSIS, texts)
+    assert [r["percent"] for r in reports] == [75, 90, 75]
+    assert all(r["url"].startswith(ANALYSIS["source_url"]) for r in reports)
+
+
 @pytest.mark.parametrize(
     ("path", "layer"),
     [

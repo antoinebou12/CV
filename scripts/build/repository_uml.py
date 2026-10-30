@@ -149,7 +149,7 @@ def c4_people_and_systems(d, fr):
 def c4_context_uml(repo, d, fr):
     """C4 level 1: the people who use the project and the outside systems it depends on."""
     people, externals, stores = c4_people_and_systems(d, fr)
-    if len(people) + len(externals) + len(stores) < 2:
+    if not (people or externals or stores or d.get("files_scanned")):
         return None
     intro = q((d.get("_intro") or ["", ""])[1 if fr else 0].split(". ")[0], 70)
     lines = ["!include <C4/C4_Context>", "LAYOUT_LEFT_RIGHT()"]
@@ -173,17 +173,14 @@ def c4_container_uml(repo, d, fr):
     if compose:
         containers = [(f"C{n}", name, "Docker", "container") for n, name in enumerate(compose[:8])]
     else:
-        if "presentation" in present:
-            containers.append(("UI", "Interface utilisateur" if fr else "User interface", layer_tech(d, {"presentation"}), "container"))
-        if "interface" in present:
-            containers.append(("API", "Points d’entrée et API" if fr else "Entry points and API", layer_tech(d, {"interface"}), "container"))
-        if present & {"application", "domain", "core"}:
-            containers.append(("CORE", "Logique principale" if fr else "Core logic", layer_tech(d, {"application", "domain", "core"}), "container"))
+        # A source layer is not a deployable container. Only known entry points
+        # or hosting evidence support a single application boundary here.
+        if not (callers(d["public"], fr) or d["public"].get("entry_points") or d["services"].get("hosting")):
+            return None
+        containers.append(("APP", repo, layer_tech(d, present), "container"))
     for n, store in enumerate(stores):
         containers.append((f"DB{n}", store, "", "db"))
-    if len([c for c in containers if c[3] == "container"]) < 2 and not (containers and (externals or stores)):
-        return None
-    if len(containers) < 2:
+    if not containers:
         return None
     lines = ["!include <C4/C4_Container>", "LAYOUT_LEFT_RIGHT()"]
     lines += [f'Person(P_{key}, "{label}")' for key, label in people]
@@ -202,12 +199,68 @@ def c4_container_uml(repo, d, fr):
         entry = last = own or (ids[0] if ids else containers[0][0])
     else:
         entry = ids[0] if ids else containers[0][0]
-        lines += [f'Rel({a}, {b}, "{call}")' for a, b in zip(ids, ids[1:])]
         last = ids[-1] if ids else entry
     lines += [f'Rel(P_{key}, {entry}, "{use}")' for key, _ in people]
     lines += [f'Rel({last}, {cid}, "{rw}")' for cid, _, _, kind in containers if kind == "db"]
     lines += [f'Rel({last}, E{n}, "{call}")' for n in range(len(externals))]
     return "\n".join(lines)
+
+
+def c4_component_uml(repo, d, fr):
+    """Source modules grouped by classified layer, without inferred call edges."""
+    layers = [layer for layer in d.get("layers", []) if layer.get("modules")]
+    if not layers:
+        return None
+    i = int(fr)
+    lines = ['!include <C4/C4_Component>', 'LAYOUT_TOP_DOWN()',
+             f'System_Boundary(SYS, "{q(repo)}") {{']
+    for n, layer in enumerate(layers):
+        label = layer.get("label", [layer["key"]] * 2)[i]
+        lines.append(f'Boundary(L{n}, "{q(label)}", "layer") {{')
+        for m, module in enumerate(layer["modules"]):
+            tech = ", ".join(dict.fromkeys(EXT_LANG.get(e, e) for e in module.get("extensions", [])))
+            count = module.get("files", 0)
+            lines.append(f'Component(M{n}_{m}, "{q(module.get("name", layer["key"]), 60)}", "{q(tech)}", "{count} {"fichiers" if fr else "files"}")')
+        if layer.get("more_modules"):
+            lines.append(f'Component(M{n}_more, "+{layer["more_modules"]} modules", "", "")')
+        lines.append('}')
+    lines.append('}')
+    return '\n'.join(lines)
+
+
+def c4_code_uml(repo, d, fr):
+    """C4 level 4 uses UML declarations grouped by actual source file."""
+    items = []
+    seen = set()
+    for item in d.get("logic", {}).get("types", []) + d.get("entities", {}).get("items", []):
+        key = (item.get("file"), item.get("name"))
+        if all(key) and key not in seen:
+            seen.add(key)
+            items.append(item)
+    functions = [item for item in d.get("logic", {}).get("files", []) if item.get("functions")]
+    if not items and not functions:
+        return None
+    files = {}
+    for item in items:
+        files.setdefault(item["file"], []).append(item)
+    lines = ['top to bottom direction', 'hide empty members', f'package "{q(repo)}" {{']
+    for n, (path, declarations) in enumerate(files.items()):
+        lines.append(f'package "{q(path, 90)}" as F{n} {{')
+        for m, item in enumerate(declarations):
+            lines.append(f'class "{q(item["name"], 60)}" as T{n}_{m} {{')
+            for field in item.get("fields", []):
+                lines.append('  ' + q(field, 65))
+            for method in item.get("methods", []):
+                lines.append('  ' + q(method, 65) + '()')
+            lines.append('}')
+        lines.append('}')
+    for n, item in enumerate(functions):
+        lines.append(f'object "{q(item["file"], 90)}" as FN{n} {{')
+        for function in item["functions"]:
+            lines.append('  ' + q(function, 65) + '()')
+        lines.append('}')
+    lines.append('}')
+    return '\n'.join(lines)
 
 
 PLATFORMS = {
@@ -290,11 +343,17 @@ DIAGRAMS = [
      ["Use cases", "Cas d’utilisation"],
      ["Each actor is a kind of caller, linked to what it can ask the project to do.", "Chaque acteur est un type d’appelant, relié à ce qu’il peut demander au projet."]),
     ("c4context", "c4plantuml", c4_context_uml,
-     ["System context (C4)", "Contexte du système (C4)"],
+     ["1 · System context", "1 · Contexte du système"],
      ["The widest C4 view: who uses the project and which outside systems and data stores it relies on.", "La vue C4 la plus large : qui utilise le projet et sur quels systèmes et stockages externes il s’appuie."]),
     ("c4container", "c4plantuml", c4_container_uml,
-     ["Containers (C4)", "Conteneurs (C4)"],
+     ["2 · Containers", "2 · Conteneurs"],
      ["One level closer: the parts that run separately inside the project, their main language and how calls flow between them.", "Un niveau plus près : les parties qui s’exécutent séparément dans le projet, leur langage principal et le chemin des appels entre elles."]),
+    ("c4component", "c4plantuml", c4_component_uml,
+     ["3 · Components and layers", "3 · Composants et couches"],
+     ["Modules grouped by source-layer classification. Boundaries show organization, not runtime isolation or call relationships.", "Modules regroupés par couche du code. Les limites indiquent l’organisation, sans affirmer une isolation à l’exécution ni des appels."]),
+    ("c4code", "class", c4_code_uml,
+     ["4 · Code", "4 · Code"],
+     ["Selected declarations, fields and methods grouped by source file. No inheritance or call edges are inferred.", "Déclarations, champs et méthodes sélectionnés, regroupés par fichier source. Aucun héritage ni appel n’est déduit."]),
     ("deployment", "deployment", deployment_uml,
      ["Deployment", "Déploiement"],
      ["The outer node is where the code runs. Each base image points to what it builds, solid arrows lead to databases and dashed ones to outside services.", "Le nœud extérieur est l’endroit où le code s’exécute. Chaque image de base pointe vers ce qu’elle construit, les flèches pleines mènent aux bases de données et les pointillées aux services externes."]),

@@ -21,7 +21,7 @@
 {{- $containers := cond (gt (len ($profile.services | default slice)) 0) slice ($dep.containers | default slice) -}}
 {{- $sections := slice
   (dict "id" "layers" "label" (slice "Layers and modules" "Couches et modules") "on" (gt (len .layers) 0))
-  (dict "id" "c4" "label" (slice "C4 model" "Modèle C4") "on" (or $uml.c4context $uml.c4container) "optional" true)
+  (dict "id" "c4" "label" (slice "C4 model" "Modèle C4") "on" true "optional" true)
   (dict "id" "flow" "label" (slice "Data flow" "Flux de données") "on" (and .flow .flow.sequence) "optional" true)
   (dict "id" "public" "label" (slice "Public interface" "Interface publique") "on" (or $pub.routes $pub.mcp $pub.cli $pub.entry_points $pub.exports $pub.headers))
   (dict "id" "private" "label" (slice "Private interface" "Interface privée") "on" (or $priv.counts $priv.internal_dirs $priv.private_modules))
@@ -75,12 +75,17 @@
   </section>
   {{ end }}
 
-  {{ if or $uml.c4context $uml.c4container }}
+  {{ if true }}
   <section class="repo-dossier-part" id="dossier-c4" aria-labelledby="dossier-c4-h">
     <h3 id="dossier-c4-h">{{ if $fr }}Modèle C4{{ else }}C4 model{{ end }}</h3>
-    <p class="repo-evidence-label">{{ if $fr }}Deux niveaux de zoom du modèle C4, tirés des appelants, intégrations, stockages et couches trouvés dans le code.{{ else }}Two C4 zoom levels, drawn from the callers, integrations, stores and layers found in the code.{{ end }}</p>
-    {{ with $uml.c4context }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" true) }}{{ end }}
-    {{ with $uml.c4container }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
+    <p class="repo-evidence-label">{{ if $fr }}Du contexte du système aux déclarations du code. Chaque niveau conserve les limites des sources disponibles.{{ else }}From system context to code declarations. Each level reflects the available source evidence.{{ end }}</p>
+    {{ range $n, $key := slice "c4context" "c4container" "c4component" "c4code" }}
+      {{ with index $uml $key }}
+        {{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" (eq $n 0)) }}
+      {{ else }}
+        <p class="repo-evidence-label">{{ if $fr }}Niveau{{ else }}Level{{ end }} {{ add $n 1 }}: {{ if $fr }}les sources disponibles ne permettent pas de tracer cette vue.{{ else }}the available sources do not support this view.{{ end }}</p>
+      {{ end }}
+    {{ end }}
   </section>
   {{ end }}
 
@@ -294,8 +299,8 @@
     <details class="repo-structure-details">
       <summary><strong>{{ .ecosystem }}</strong> <code>{{ .file }}</code> <span class="repo-evidence-label">{{ with .runtime_total }}{{ . }} {{ if $fr }}à l’exécution{{ else }}runtime{{ end }}{{ end }}{{ if and .runtime_total .dev_total }}, {{ end }}{{ with .dev_total }}{{ . }} dev{{ end }}</span></summary>
       {{ with .toolchain }}<p>{{ range . }}<span class="tag status">{{ . }}</span> {{ end }}</p>{{ end }}
-      {{ with .runtime }}<p class="repo-dossier-sublabel">{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</p><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
-      {{ with .dev }}<p class="repo-dossier-sublabel">{{ if $fr }}Développement{{ else }}Development{{ end }}</p><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}</p>{{ end }}
+      {{ with .runtime }}<p class="repo-dossier-sublabel">{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</p><p class="repo-dependency-badges">{{ range . }}<a class="repo-badge tool" href="{{ $m.url }}"><span>{{ .name }}</span>{{ with .version }} <code>{{ . }}</code>{{ end }}</a> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
+      {{ with .dev }}<p class="repo-dossier-sublabel">{{ if $fr }}Développement{{ else }}Development{{ end }}</p><p class="repo-dependency-badges">{{ range . }}<a class="repo-badge tool" href="{{ $m.url }}"><span>{{ .name }}</span>{{ with .version }} <code>{{ . }}</code>{{ end }}</a> {{ end }}</p>{{ end }}
       <p><a href="{{ .url }}">{{ if $fr }}Ouvrir le manifeste{{ else }}Open the manifest{{ end }}</a></p>
     </details>
     {{ end }}
@@ -388,6 +393,12 @@
     <h4>{{ if $fr }}Couverture de code{{ else }}Code coverage{{ end }}</h4>
     <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ .name }}</a></li>{{ end }}</ul>
     {{ end }}
+    {{ with $tst.coverage_reports }}
+    <p class="repo-dependency-badges">{{ range . }}<a class="repo-badge tool" href="{{ .url }}">{{ .percent }}% {{ if $fr }}des lignes{{ else }}of lines{{ end }} <span>({{ .covered }}/{{ .total }})</span></a>{{ end }}</p>
+    <p class="repo-evidence-label">{{ if $fr }}Résultats enregistrés dans les rapports du commit analysé.{{ else }}Results recorded in reports at the analyzed commit.{{ end }}</p>
+    {{ else }}
+    <p class="repo-evidence-label">{{ if $fr }}Aucun rapport chiffré de couverture dans les sources analysées.{{ else }}No measured coverage report in the analyzed sources.{{ end }}</p>
+    {{ end }}
     {{ with $tst.directories }}
     <h4>{{ if $fr }}Où sont les tests{{ else }}Where the tests are{{ end }}</h4>
     <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .path }}</code></a> <span class="repo-evidence-label">{{ .files }}</span> {{ end }}</p>
@@ -404,7 +415,7 @@
   {{ range $sections }}{{ if and (not .on) (not .optional) }}{{ $missing = $missing | append (index .label $i) }}{{ end }}{{ end }}
   {{ with $missing }}
   {{ if gt (len .) 6 }}
-  <p class="repo-dossier-missing">{{ if $fr }}Le dépôt est petit: l’analyse n’a rien trouvé pour les autres sections.{{ else }}This is a small repository, and the scan found nothing for the other sections.{{ end }}</p>
+  <p class="repo-dossier-missing">{{ if $fr }}Les sources disponibles ne documentent pas les autres sections.{{ else }}The available sources do not document the remaining sections.{{ end }}</p>
   {{ else }}
   <p class="repo-dossier-missing">{{ if $fr }}Rien trouvé pour: {{ else }}Nothing found for: {{ end }}{{ delimit . ", " }}.</p>
   {{ end }}

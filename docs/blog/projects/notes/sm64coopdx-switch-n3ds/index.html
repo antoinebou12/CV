@@ -1,4 +1,4 @@
-<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>sm64coopdx-switch-N3DS: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main-notes-bundle.min.dfb9f6d5f4acbf47d5396c7d0a6b9361d5dc141ed3246a09033b1c92e8e7fafe.css integrity="sha256-37n21fSsv0fVOWx9CmuTYdXcFB7TJGoJAzsckujn+v4="><link rel=stylesheet href=/CV/blog/main-notes-bundle.min.dfb9f6d5f4acbf47d5396c7d0a6b9361d5dc141ed3246a09033b1c92e8e7fafe.css integrity="sha256-37n21fSsv0fVOWx9CmuTYdXcFB7TJGoJAzsckujn+v4="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.55628fa179319b745c4348221153f9de4eb5c5084a6662ed478e8bd576748576.css integrity="sha256-VWKPoXkxm3RcQ0giEVP53k61xQhKZmLtR46L1XZ0hXY="><link rel=stylesheet href=/CV/blog/projects-editorial.min.5277e01a5ebffb50fcfd642d717ffc8c6cd7e599a2aa07dde60a883e1e38000d.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta itemprop=description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="3199"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta property="og:description" content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta name=twitter:description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en-us dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>sm64coopdx-switch-N3DS: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta name=author content="Antoine Boucher"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel=stylesheet><link rel=preload as=style href=/CV/blog/main-notes-bundle.min.dfb9f6d5f4acbf47d5396c7d0a6b9361d5dc141ed3246a09033b1c92e8e7fafe.css integrity="sha256-37n21fSsv0fVOWx9CmuTYdXcFB7TJGoJAzsckujn+v4="><link rel=stylesheet href=/CV/blog/main-notes-bundle.min.dfb9f6d5f4acbf47d5396c7d0a6b9361d5dc141ed3246a09033b1c92e8e7fafe.css integrity="sha256-37n21fSsv0fVOWx9CmuTYdXcFB7TJGoJAzsckujn+v4="><link rel=stylesheet href=/CV/blog/projects-directory.min.58fc119b4bd061fce62c7c42b7f2edc6b8d5769ad339d9a8e00ee1c9ca7fda3c.css integrity="sha256-WPwRm0vQYfzmLHxCt/LtxrjVdprTOdmo4A7hycp/2jw="><link rel=stylesheet href=/CV/blog/repository-notes.min.414c228de4bf0c390fde72c32096ba69c9548c4d5ca37b2391a52818606ed075.css integrity="sha256-QUwijeS/DDkP3nLDIJa6aclUjE1co3sjkaUoGGBu0HU="><link rel=stylesheet href=/CV/blog/projects-editorial.min.5277e01a5ebffb50fcfd642d717ffc8c6cd7e599a2aa07dde60a883e1e38000d.css><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta itemprop=description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta itemprop=datePublished content="2026-10-23T12:00:00-04:00"><meta itemprop=dateModified content="2026-10-23T12:00:00-04:00"><meta itemprop=wordCount content="4073"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta property="og:description" content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-10-23T12:00:00-04:00"><meta property="article:modified_time" content="2026-10-23T12:00:00-04:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces"><meta name=twitter:description content="This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The…"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><a class=site-skip-link href=#main-content>Skip to content</a><header class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"><div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5"><a class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45" href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a></div><button type=button class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu"></button><div id=site-nav-panel class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"><div class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"><nav class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class=opacity-40>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/>FR</a></nav><nav class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2" aria-label="Site sections"><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/posts/>Posts</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors lg:bg-black/8 lg:dark:bg-white/14" href=/CV/blog/projects/ aria-current=page>Projects</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/tags/conference/>Conference</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/recipes/>Recipes</a><a class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors" href=/CV/blog/search/>Search</a></nav><nav class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert" aria-label="Social links"><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./github.svg) href=https://github.com/antoinebou12 target=_blank rel=me>github</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./linkedin.svg) href=https://linkedin.com/in/antoineboucher12 target=_blank rel=me>linkedin</a><a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style=--url:url(./rss.svg) href=https://antoineboucher.info/CV/blog/index.xml target=_blank rel=alternate>rss</a></nav></div></div><div class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"><a class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]" href=https://antoineboucher.info/CV/index-en.html>CV home</a>
 <button type=button class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]" aria-label="Toggle dark mode" aria-pressed=false>
 <svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
 <svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><div class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex" aria-label=Language><span class=opacity-85 aria-current=true>EN</span><span class="opacity-40 px-2" aria-hidden=true>|</span><a class="underline-offset-4 hover:underline" href=https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/>FR</a></div></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=t=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&btnDark.setAttribute("aria-pressed",e?"true":"false")},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class=repo-note data-repo-shell><div class=repo-shell-layout><nav class=repo-sidenav aria-label="On this page"><p class=repo-sidenav-label>On this page</p><a href=#overview class=active>Overview</a>
@@ -12,7 +12,8 @@
 <span class="repo-badge fork">Fork</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg>
 <span>Updated <time datetime=2026-10-23>2026-10-23</time></span></li><li class=repo-chip><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/stargazers><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m8 1.3 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.3z"/></svg>
 <span>3</span></a></li><li class=repo-chip><span class=repo-lang-dot aria-hidden=true></span>
-<span>C · 82.89%</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"><span class="tag status">Upstream credited</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
+<span>C · 82.89%</span></li></ul><div class=repo-tech-badges aria-label="Verified technologies"><a class="tag tool" href=#dossier-tests>unittest</a>
+<span class="tag status">Upstream credited</span></div><div class=repo-actions><a class="btn primary" href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>
 View source
 </a><a class="btn ghost" href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>
 README</a></div></div></header><details class=repo-language-disclosure id=languages-panel><summary><span>Repository languages</span><span class=repo-language-primary>C 82.89%</span><span class=repo-count>13</span></summary><div class=repo-language-content><p class=repo-lede-sm>Shares calculated from GitHub Linguist bytes.</p><div class=repo-language-track role=img aria-label="C 82.89%. C++ 10.86%. Lua 4%. Python 1.44%."><span style=width:82.89% title="C 82.89%"></span><span style=width:10.86% title="C++ 10.86%"></span><span style=width:4% title="Lua 4%"></span><span style=width:1.44% title="Python 1.44%"></span></div><table class=repo-lang-table><thead><tr><th scope=col>Language</th><th scope=col>%</th><th scope=col>Bytes</th></tr></thead><tbody><tr><td><span class="repo-lang-dot i0" aria-hidden=true></span>C</td><td><span class=repo-lang-bar style=--p:82.89%><span>82.89%</span></span></td><td class=num>26,541,138</td></tr><tr><td><span class="repo-lang-dot i1" aria-hidden=true></span>C++</td><td><span class=repo-lang-bar style=--p:10.86%><span>10.86%</span></span></td><td class=num>3,478,712</td></tr><tr><td><span class="repo-lang-dot i2" aria-hidden=true></span>Lua</td><td><span class=repo-lang-bar style=--p:4%><span>4%</span></span></td><td class=num>1,281,479</td></tr><tr><td><span class="repo-lang-dot i3" aria-hidden=true></span>Python</td><td><span class=repo-lang-bar style=--p:1.44%><span>1.44%</span></span></td><td class=num>460,864</td></tr><tr><td><span class="repo-lang-dot i4" aria-hidden=true></span>Assembly</td><td><span class=repo-lang-bar style=--p:0.49%><span>0.49%</span></span></td><td class=num>156,333</td></tr><tr><td><span class="repo-lang-dot i5" aria-hidden=true></span>Shell</td><td><span class=repo-lang-bar style=--p:0.13%><span>0.13%</span></span></td><td class=num>42,404</td></tr></tbody></table><details class=repo-language-more><summary>7 more languages</summary><table class=repo-lang-table><tbody><tr><td>Pawn</td><td>0.11%</td><td class=num>34,727</td></tr><tr><td>Go Template</td><td>0.04%</td><td class=num>11,678</td></tr><tr><td>Makefile</td><td>0.03%</td><td class=num>9,211</td></tr><tr><td>Dockerfile</td><td>0%</td><td class=num>1,534</td></tr><tr><td>Linker Script</td><td>0%</td><td class=num>257</td></tr><tr><td>PHP</td><td>0%</td><td class=num>200</td></tr><tr><td>BitBake</td><td>0%</td><td class=num>59</td></tr></tbody></table></details><p class="repo-snapshot repo-link-badges"><a class=repo-link-badge href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-.8-1-.6-.4.1-.4.1-.4.7.1 1.1.7 1.1.7.6 1.1 1.7.8 2.1.6.1-.5.3-.8.5-1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.4.7-1.9-.1-.2-.3-.9.1-1.9.0.0.6-.2 2 .7a6.8 6.8.0 013.6.0c1.4-.9 2-.7 2-.7.4 1 .2 1.7.1 1.9.5.5.7 1.1.7 1.9.0 2.8-1.7 3.4-3.3 3.6.3.2.5.7.5 1.4v2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>GitHub</a><a class=repo-link-badge href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS#readme><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11z"/></svg>README</a><a class=repo-link-badge href=https://api.github.com/repos/antoinebou12/sm64coopdx-switch-N3DS/languages><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M2 13h12v1H2zM3 8h2v4H3zm4-4h2v8H7zm4 2h2v6h-2z"/></svg>Language statistics</a></p></div></details><section class="doc repo-overview" aria-labelledby=overview id=overview><h2>Overview</h2><div class=repo-overview-grid><article class=repo-overview-card aria-labelledby=overview-why><h3 id=overview-why>Why it exists</h3><p>Low-level C systems port optimizing multi-threaded networking and memory layout for embedded handheld consoles.</p></article><article class=repo-overview-card aria-labelledby=overview-use><h3 id=overview-use>Best fit</h3><p>Co-op multiplayer emulation and custom embedded gaming on Switch & N3DS.</p></article></div><div class=repo-related-writing aria-labelledby=overview-writing><h3 id=overview-writing>Related articles & deep dives</h3><div class=repo-related-cards role=list><a class=repo-related-post-card href=/CV/blog/posts/handheld-streaming-homebrew/><div class=repo-related-post-header><span class=repo-post-badge>Deep-dive article</span>
@@ -150,7 +151,7 @@ class node_rom_assets,node_actor_models,node_level_content,node_player toneIndig
   L_infrastructure ~~~ L_core
   L_core ~~~ L_tests
   L_core ~~~ L_hosting
-</code></pre></div></details><div class=tablewrap><table class="repo-permission-table repo-modules-table"><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/game/behaviors><code>game/behaviors</code></a></th><td>Domain and business rules</td><td class=num>226</td><td class=num>13</td><td>.c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/assets/anims><code>assets/anims</code></a></th><td>Presentation</td><td class=num>193</td><td class=num>0</td><td>.c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/djui><code>pc/djui</code></a></th><td>Core source</td><td class=num>140</td><td class=num>47</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/game><code>game</code></a></th><td>Domain and business rules</td><td class=num>113</td><td class=num>101</td><td>.h .c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/rr><code>levels/rr</code></a></th><td>Core source</td><td class=num>99</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/ttm><code>levels/ttm</code></a></th><td>Core source</td><td class=num>93</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/lll><code>levels/lll</code></a></th><td>Core source</td><td class=num>90</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/wf><code>levels/wf</code></a></th><td>Core source</td><td class=num>90</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/castle_inside><code>levels/castle_inside</code></a></th><td>Domain and business rules</td><td class=num>89</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/docs/lua><code>docs/lua</code></a></th><td>Core source</td><td class=num>85</td><td class=num>0</td><td>.c .lua .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bitfs><code>levels/bitfs</code></a></th><td>Core source</td><td class=num>84</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bits><code>levels/bits</code></a></th><td>Core source</td><td class=num>84</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/network><code>pc/network</code></a></th><td>Data and infrastructure</td><td class=num>79</td><td class=num>20</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bbh><code>levels/bbh</code></a></th><td>Domain and business rules</td><td class=num>73</td><td class=num>0</td><td>.c .h</td></tr></tbody></table></div><p class=repo-evidence-label>222 smaller modules are not shown.</p></section><section class=repo-dossier-part id=dossier-c4 aria-labelledby=dossier-c4-h><h3 id=dossier-c4-h>C4 model</h3><p class=repo-evidence-label>Two C4 zoom levels, drawn from the callers, integrations, stores and layers found in the code.</p><details class="repo-diagram-details repo-uml-details" open><summary><span class="repo-badge tool">UML</span> <span>System context (C4)</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/a867a6abab12c32d.svg data-uml-name=c4context.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/a867a6abab12c32d.svg alt="System context (C4)" loading=lazy decoding=async></div><p class=repo-evidence-label>The widest C4 view: who uses the project and which outside systems and data stores it relies on. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
+</code></pre></div></details><div class=tablewrap><table class="repo-permission-table repo-modules-table"><caption class=sr-only>Modules and their main layer</caption><thead><tr><th scope=col>Module</th><th scope=col>Layer</th><th scope=col>Files</th><th scope=col>Types</th><th scope=col>Extensions</th></tr></thead><tbody><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/game/behaviors><code>game/behaviors</code></a></th><td>Domain and business rules</td><td class=num>226</td><td class=num>13</td><td>.c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/assets/anims><code>assets/anims</code></a></th><td>Presentation</td><td class=num>193</td><td class=num>0</td><td>.c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/djui><code>pc/djui</code></a></th><td>Core source</td><td class=num>140</td><td class=num>47</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/game><code>game</code></a></th><td>Domain and business rules</td><td class=num>113</td><td class=num>101</td><td>.h .c</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/rr><code>levels/rr</code></a></th><td>Core source</td><td class=num>99</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/ttm><code>levels/ttm</code></a></th><td>Core source</td><td class=num>93</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/lll><code>levels/lll</code></a></th><td>Core source</td><td class=num>90</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/wf><code>levels/wf</code></a></th><td>Core source</td><td class=num>90</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/castle_inside><code>levels/castle_inside</code></a></th><td>Domain and business rules</td><td class=num>89</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/docs/lua><code>docs/lua</code></a></th><td>Core source</td><td class=num>85</td><td class=num>0</td><td>.c .lua .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bitfs><code>levels/bitfs</code></a></th><td>Core source</td><td class=num>84</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bits><code>levels/bits</code></a></th><td>Core source</td><td class=num>84</td><td class=num>0</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/network><code>pc/network</code></a></th><td>Data and infrastructure</td><td class=num>79</td><td class=num>20</td><td>.c .h</td></tr><tr><th scope=row><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/levels/bbh><code>levels/bbh</code></a></th><td>Domain and business rules</td><td class=num>73</td><td class=num>0</td><td>.c .h</td></tr></tbody></table></div><p class=repo-evidence-label>222 smaller modules are not shown.</p></section><section class=repo-dossier-part id=dossier-c4 aria-labelledby=dossier-c4-h><h3 id=dossier-c4-h>C4 model</h3><p class=repo-evidence-label>From system context to code declarations. Each level reflects the available source evidence.</p><details class="repo-diagram-details repo-uml-details" open><summary><span class="repo-badge tool">UML</span> <span>1 · System context</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/a867a6abab12c32d.svg data-uml-name=c4context.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/a867a6abab12c32d.svg alt="1 · System context" loading=lazy decoding=async></div><p class=repo-evidence-label>The widest C4 view: who uses the project and which outside systems and data stores it relies on. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
 !include &lt;C4/C4_Context&gt;
 LAYOUT_LEFT_RIGHT()
 Person(P_cli, &#34;CLI user&#34;)
@@ -159,7 +160,7 @@ System_Ext(E0, &#34;Open data portal (CKAN)&#34;)
 Rel(P_cli, SYS, &#34;Uses&#34;)
 Rel(SYS, E0, &#34;Calls&#34;)
 @enduml
-</code></pre></details></details><details class="repo-diagram-details repo-uml-details"><summary><span class="repo-badge tool">UML</span> <span>Containers (C4)</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/2a6187c3afff9ac7.svg data-uml-name=c4container.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/2a6187c3afff9ac7.svg alt="Containers (C4)" loading=lazy decoding=async></div><p class=repo-evidence-label>One level closer: the parts that run separately inside the project, their main language and how calls flow between them. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
+</code></pre></details></details><details class="repo-diagram-details repo-uml-details"><summary><span class="repo-badge tool">UML</span> <span>2 · Containers</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/2a6187c3afff9ac7.svg data-uml-name=c4container.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/2a6187c3afff9ac7.svg alt="2 · Containers" loading=lazy decoding=async></div><p class=repo-evidence-label>One level closer: the parts that run separately inside the project, their main language and how calls flow between them. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
 !include &lt;C4/C4_Container&gt;
 LAYOUT_LEFT_RIGHT()
 Person(P_cli, &#34;CLI user&#34;)
@@ -173,6 +174,351 @@ System_Boundary(SYS, &#34;sm64coopdx-switch-N3DS&#34;) {
 System_Ext(E0, &#34;Open data portal (CKAN)&#34;)
 Rel(P_cli, C0, &#34;Uses&#34;)
 Rel(C0, E0, &#34;Calls&#34;)
+@enduml
+</code></pre></details></details><details class="repo-diagram-details repo-uml-details"><summary><span class="repo-badge tool">UML</span> <span>3 · Components and layers</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/7d4ab37fa50e8ebd.svg data-uml-name=c4component.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/7d4ab37fa50e8ebd.svg alt="3 · Components and layers" loading=lazy decoding=async></div><p class=repo-evidence-label>Modules grouped by source-layer classification. Boundaries show organization, not runtime isolation or call relationships. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
+!include &lt;C4/C4_Component&gt;
+LAYOUT_TOP_DOWN()
+System_Boundary(SYS, &#34;sm64coopdx-switch-N3DS&#34;) {
+Boundary(L0, &#34;Presentation&#34;, &#34;layer&#34;) {
+Component(M0_0, &#34;assets/anims&#34;, &#34;C&#34;, &#34;193 files&#34;)
+}
+Boundary(L1, &#34;Entry points and API&#34;, &#34;layer&#34;) {
+Component(M1_0, &#34;tools&#34;, &#34;Python, C, .sh&#34;, &#34;49 files&#34;)
+Component(M1_1, &#34;bin&#34;, &#34;C&#34;, &#34;28 files&#34;)
+Component(M1_2, &#34;tools/switch&#34;, &#34;Python, C, .sh&#34;, &#34;16 files&#34;)
+Component(M1_3, &#34;tools/sdk-tools&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;14 files&#34;)
+Component(M1_4, &#34;docs/lua&#34;, &#34;.lua&#34;, &#34;12 files&#34;)
+Component(M1_5, &#34;tools/new3ds&#34;, &#34;.sh, Python, C/C&#43;&#43;&#34;, &#34;10 files&#34;)
+Component(M1_6, &#34;tools/ido5.3_recomp&#34;, &#34;C/C&#43;&#43;, C, C&#43;&#43;&#34;, &#34;6 files&#34;)
+Component(M1_7, &#34;tools/n64graphics_ci_dir&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;6 files&#34;)
+Component(M1_more, &#34;&#43;15 modules&#34;, &#34;&#34;, &#34;&#34;)
+}
+Boundary(L2, &#34;Application services&#34;, &#34;layer&#34;) {
+Component(M2_0, &#34;engine&#34;, &#34;C/C&#43;&#43;, C, C&#43;&#43;&#34;, &#34;18 files&#34;)
+Component(M2_1, &#34;pc/gfx&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;2 files&#34;)
+}
+Boundary(L3, &#34;Domain and business rules&#34;, &#34;layer&#34;) {
+Component(M3_0, &#34;game/behaviors&#34;, &#34;C&#34;, &#34;226 files&#34;)
+Component(M3_1, &#34;game&#34;, &#34;C/C&#43;&#43;, C&#34;, &#34;113 files&#34;)
+Component(M3_2, &#34;levels/castle_inside&#34;, &#34;C&#34;, &#34;58 files&#34;)
+Component(M3_3, &#34;levels/bbh&#34;, &#34;C&#34;, &#34;47 files&#34;)
+Component(M3_4, &#34;levels/hmc&#34;, &#34;C&#34;, &#34;39 files&#34;)
+Component(M3_5, &#34;levels/lll&#34;, &#34;C&#34;, &#34;35 files&#34;)
+Component(M3_6, &#34;levels/rr&#34;, &#34;C&#34;, &#34;35 files&#34;)
+Component(M3_7, &#34;levels/bits&#34;, &#34;C&#34;, &#34;32 files&#34;)
+Component(M3_more, &#34;&#43;166 modules&#34;, &#34;&#34;, &#34;&#34;)
+}
+Boundary(L4, &#34;Data and infrastructure&#34;, &#34;layer&#34;) {
+Component(M4_0, &#34;pc/network&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;79 files&#34;)
+Component(M4_1, &#34;data&#34;, &#34;C&#43;&#43;, C/C&#43;&#43;, C&#34;, &#34;55 files&#34;)
+Component(M4_2, &#34;pc/platform&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;47 files&#34;)
+Component(M4_3, &#34;src&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;19 files&#34;)
+Component(M4_4, &#34;lua/include&#34;, &#34;C/C&#43;&#43;, C&#43;&#43;&#34;, &#34;5 files&#34;)
+Component(M4_5, &#34;pc/mods&#34;, &#34;C/C&#43;&#43;, C, C&#43;&#43;&#34;, &#34;4 files&#34;)
+Component(M4_6, &#34;docs/lua&#34;, &#34;C, .lua&#34;, &#34;2 files&#34;)
+Component(M4_7, &#34;pc/djui&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;2 files&#34;)
+Component(M4_more, &#34;&#43;4 modules&#34;, &#34;&#34;, &#34;&#34;)
+}
+Boundary(L5, &#34;Core source&#34;, &#34;layer&#34;) {
+Component(M5_0, &#34;pc/djui&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;135 files&#34;)
+Component(M5_1, &#34;levels/ttm&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;67 files&#34;)
+Component(M5_2, &#34;levels/wf&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;67 files&#34;)
+Component(M5_3, &#34;actors&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;66 files&#34;)
+Component(M5_4, &#34;docs/lua&#34;, &#34;C, .lua, C/C&#43;&#43;&#34;, &#34;64 files&#34;)
+Component(M5_5, &#34;levels/rr&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;64 files&#34;)
+Component(M5_6, &#34;levels/lll&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;55 files&#34;)
+Component(M5_7, &#34;levels/bitfs&#34;, &#34;C, C/C&#43;&#43;&#34;, &#34;53 files&#34;)
+Component(M5_more, &#34;&#43;198 modules&#34;, &#34;&#34;, &#34;&#34;)
+}
+Boundary(L6, &#34;Tests&#34;, &#34;layer&#34;) {
+Component(M6_0, &#34;tools&#34;, &#34;Python, C, C&#43;&#43;&#34;, &#34;11 files&#34;)
+}
+Boundary(L7, &#34;Build, CI and hosting&#34;, &#34;layer&#34;) {
+Component(M7_0, &#34;.github&#34;, &#34;.yml, .md, .yaml&#34;, &#34;8 files&#34;)
+Component(M7_1, &#34;scripts&#34;, &#34;.sh&#34;, &#34;5 files&#34;)
+Component(M7_2, &#34;tools&#34;, &#34;Makefile&#34;, &#34;5 files&#34;)
+Component(M7_3, &#34;(root)&#34;, &#34;Dockerfile, Makefile&#34;, &#34;2 files&#34;)
+Component(M7_4, &#34;docker&#34;, &#34;Dockerfile&#34;, &#34;2 files&#34;)
+}
+}
+@enduml
+</code></pre></details></details><details class="repo-diagram-details repo-uml-details"><summary><span class="repo-badge tool">UML</span> <span>4 · Code</span></summary><div class=repo-uml data-uml-svg=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/85ba062bb7d92bb8.svg data-uml-name=c4code.svg><img src=/CV/blog/repository-docs/sm64coopdx-switch-n3ds/uml/85ba062bb7d92bb8.svg alt="4 · Code" loading=lazy decoding=async></div><p class=repo-evidence-label>Selected declarations, fields and methods grouped by source file. No inheritance or call edges are inferred. Rendered with <a href=https://github.com/antoinebou12/uml-mcp>uml-mcp</a>.</p><details class=repo-uml-source><summary>PlantUML source</summary><pre><code>@startuml
+skinparam backgroundColor transparent
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam ArrowColor #4e6070
+skinparam ArrowFontColor #3d4f5f
+skinparam titleFontSize 14
+skinparam actorBorderColor #006a62
+skinparam actorBackgroundColor #e9f3f4
+skinparam usecaseBorderColor #006a62
+skinparam usecaseBackgroundColor #e9f3f4
+skinparam componentBorderColor #006a62
+skinparam componentBackgroundColor #e9f3f4
+skinparam interfaceBorderColor #006a62
+skinparam interfaceBackgroundColor #ffffff
+skinparam nodeBorderColor #4e6070
+skinparam nodeBackgroundColor #f4f8fb
+skinparam databaseBorderColor #006a62
+skinparam databaseBackgroundColor #ffffff
+skinparam cloudBorderColor #4e6070
+skinparam cloudBackgroundColor #f0f5fa
+skinparam artifactBorderColor #006a62
+skinparam artifactBackgroundColor #ffffff
+skinparam rectangleBorderColor #b0c2d3
+skinparam activityBorderColor #006a62
+skinparam activityBackgroundColor #e9f3f4
+skinparam partitionBorderColor #b0c2d3
+skinparam stereotypeCBackgroundColor #ffffff
+top to bottom direction
+hide empty members
+package &#34;sm64coopdx-switch-N3DS&#34; {
+package &#34;tools/audiofile/audiofile.cpp&#34; as F0 {
+class &#34;_AFfilehandle&#34; as T0_0 {
+  copyTracksFromSetup()
+  copyInstrumentsFromSetup()
+  copyMiscellaneousFromSetup()
+  getVersion()
+  readInit()
+  writeInit()
+}
+class &#34;AIFFFile&#34; as T0_1 {
+  recognizeAIFF()
+  recognizeAIFFC()
+  completeSetup()
+  getVersion()
+  readInit()
+  writeInit()
+}
+class &#34;WAVEFile&#34; as T0_2 {
+  recognize()
+  completeSetup()
+  readInit()
+  writeInit()
+  update()
+  isInstrumentParameterValid()
+}
+class &#34;Module&#34; as T0_3 {
+  setSink()
+  setSource()
+  inChunk()
+  setInChunk()
+  outChunk()
+  setOutChunk()
+}
+class &#34;ModuleState&#34; as T0_4 {
+  isDirty()
+  setDirty()
+  setup()
+  reset()
+  sync()
+  numModules()
+}
+}
+package &#34;src/pc/utils/json.hpp&#34; as F1 {
+class &#34;binary_writer&#34; as T1_0 {
+  write_bson()
+  write_cbor()
+  write_msgpack()
+  write_ubjson()
+  calc_bson_entry_header_size()
+  write_bson_entry_header()
+}
+class &#34;binary_reader&#34; as T1_1 {
+  parse_bson_internal()
+  get_bson_cstr()
+  parse_bson_element_internal()
+  parse_bson_element_list()
+  parse_bson_array()
+  parse_cbor_internal()
+}
+class &#34;json_sax_dom_callback_parser&#34; as T1_2 {
+  null()
+  boolean()
+  number_integer()
+  number_unsigned()
+  number_float()
+  string()
+}
+}
+package &#34;tools/asm_processor/asm-processor.py&#34; as F2 {
+class &#34;Section&#34; as T2_0 {
+  from_parts()
+  lookup_str()
+  add_str()
+  is_rel()
+  header_to_bin()
+  late_init()
+}
+}
+package &#34;data/dynos.cpp.h&#34; as F3 {
+class &#34;String&#34; as T3_0 {
+  Add()
+  Remove()
+  RemoveAll()
+  Clear()
+  Find()
+  FindLast()
+}
+}
+package &#34;tools/switch/coopnet_identity.py&#34; as F4 {
+class &#34;NroAssetInfo&#34; as T4_0 {
+  nro_size
+  aset_offset
+  icon_offset
+  icon_size
+  icon_sha256
+}
+}
+package &#34;include/types.h&#34; as F5 {
+class &#34;AnimInfo&#34; as T5_0 {
+  curAnim
+  prevAnimPtr
+  animID
+  prevAnimID
+  animFrame
+  prevAnimFrame
+  prevAnimFrameTimestamp
+  animFrameAccelAssist
+}
+class &#34;Animation&#34; as T5_1 {
+  flags
+  animYTransDivisor
+  startFrame
+  loopStart
+  loopEnd
+  unusedBoneCount
+  values
+  index
+}
+class &#34;AnimationTable&#34; as T5_2 {
+  count
+  anims
+  _guard1
+  prev
+  next
+  parent
+  children
+  georef
+}
+class &#34;Controller&#34; as T5_3 {
+  port
+  stickX
+  stickY
+  stickMag
+  rawStickX
+  rawStickY
+  extStickX
+  extStickY
+}
+}
+package &#34;src/game/hardcoded.h&#34; as F6 {
+class &#34;BehaviorDialogs&#34; as T6_0 {
+  BobombBuddyBob1Dialog
+  BobombBuddyBob2Dialog
+  BobombBuddyOther1Dialog
+  BobombBuddyOther2Dialog
+  Bowser1DefeatedDialog
+  Bowser1Dialog
+  Bowser2DefeatedDialog
+  Bowser2Dialog
+}
+class &#34;BehaviorTrajectories&#34; as T6_1 {
+  KoopaBobTrajectory
+  KoopaThiTrajectory
+  UnagiTrajectory
+  Unagi2Trajectory
+  SnowmanHeadTrajectory
+  RacingPenguinTrajectory
+  BowlingBallBobTrajectory
+  BowlingBallBob2Trajectory
+}
+class &#34;BehaviorValues&#34; as T6_2 {
+  KoopaBobAgility
+  KoopaCatchupAgility
+  KoopaThiAgility
+  RacingPenguinBigHeight
+  RacingPenguinBigRadius
+  RacingPenguinHeight
+  RacingPenguinRadius
+  ToadStar1Requirement
+}
+}
+package &#34;src/game/ingame_menu.c&#34; as F7 {
+class &#34;CachedChar&#34; as T7_0 {
+  sDialogOffsetPos
+  sDialogRotationPos
+  sDialogZoomPos
+  sDialogOffset
+  sDialogOffsetPrev
+  sDialogScale
+  sDialogScalePrev
+  sDialogRotation
+}
+}
+package &#34;src/game/camera.h&#34; as F8 {
+class &#34;CameraTrigger&#34; as T8_0 {
+  area
+  event
+  centerX
+  centerY
+  centerZ
+  boundsX
+  boundsY
+  boundsZ
+}
+}
+package &#34;src/game/object_helpers.h&#34; as F9 {
+class &#34;ChainSegment&#34; as T9_0 {
+  posX
+  posY
+  posZ
+  pitch
+  yaw
+  roll
+  flags
+  model
+}
+}
+package &#34;src/game/characters.h&#34; as F10 {
+class &#34;Character&#34; as T10_0 {
+  type
+  name
+  hudHead
+  hudHeadTexture
+  cameraHudHead
+  modelId
+  capModelId
+  capMetalModelId
+}
+}
+package &#34;src/game/level_update.h&#34; as F11 {
+class &#34;CreditsEntry&#34; as T11_0 {
+  gCurrCreditsEntry
+  gMarioStates
+  gMarioState
+  sCurrPlayMode
+  sTransitionTimer
+  gChangeLevel
+  gChangeActNum
+  gDelayedInitSound
+}
+}
+package &#34;src/game/game_init.h&#34; as F12 {
+class &#34;DemoInput&#34; as T12_0 {
+  timer
+  rawStickX
+  rawStickY
+  buttonMask
+  gControllers
+  gControllerStatuses
+  gControllerPads
+  gGameVblankQueue
+}
+}
+}
 @enduml
 </code></pre></details></details></section><section class=repo-dossier-part id=dossier-flow aria-labelledby=dossier-flow-h><h3 id=dossier-flow-h>Data flow</h3><p class=repo-evidence-label>The calls from the <a href=https://gitdiagram.com/antoinebou12/sm64coopdx-switch-N3DS>GitDiagram</a> graph, in the order you meet them from the entry points. GitDiagram generates the graph with AI; the file paths it cites were checked against the repository tree.</p><details class=repo-diagram-details data-mermaid-lazy open><summary><span class="repo-badge tool">Mermaid</span> <span>Sequence diagram</span></summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>sequenceDiagram
   autonumber
@@ -340,7 +686,7 @@ N0 ..&gt; E0
 cloud &#34;Open data portal (CKAN)&#34; as E1
 N0 ..&gt; E1
 @enduml
-</code></pre></details></details><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Dockerfile title=Dockerfile>Docker image ×3</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker-compose.new3ds.yml title=docker-compose.new3ds.yml>Docker Compose stack ×2</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Makefile title=Makefile>Native build (Make) ×6</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-coop.yaml title=.github/workflows/build-coop.yaml>CI deploy workflow</a></li></ul><h4>Delivery pipelines</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-new3ds-coopnet.yml>Build New 3DS CoopNet</a> <span class=repo-evidence-label>runs on workflow_dispatch</span></dt><dd>Upload CoopNet dependency artifacts</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-new3ds.yml>Build New 3DS Port</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload New 3DS shell artifacts · Upload full-game artifacts</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-coopnet-full.yml>Switch CoopNet Full NRO</a> <span class=repo-evidence-label>runs on push, workflow_dispatch</span></dt><dd>Upload CoopNet NRO</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-coopnet.yml>Switch CoopNet Port CI</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload portability diagnostics</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-game.yml>Switch CI</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload portability diagnostics · Upload full-build diagnostics</dd></div></dl><h4>Compose services</h4><p class=repo-inline-code><code>new3ds-shell</code> <code>new3ds-integration</code> <code>new3ds-full-3dsx</code> <code>switch-portability</code> <code>switch-full-nro</code></p><h4>Docker base images</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Dockerfile#L1><code>ubuntu:jammy</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker/new3ds/Dockerfile#L2><code>devkitpro/devkitarm:latest</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker/switch/Dockerfile#L2><code>devkitpro/devkita64:latest</code></a></p></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Security</h3><h4>Environment variables <span class=repo-count>3</span></h4><p class=repo-evidence-label>The page lists names without their values and underlines the ones that look like secrets.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L535><code>LINENOISE_ASSUME_TTY</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L614><code>LINENOISE_COLS</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L520><code>TERM</code></a></p><aside class="repo-admonition warn"><p class=repo-admonition-title>Worth a manual check</p><ul><li>eval(), 1 files · <a class=repo-evidence-link href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/autogen/convert_constants.py#L110><code>autogen/convert_constants.py:110</code></a></li><li>unbounded C string call, 30 files · <a class=repo-evidence-link href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/include/libc/stdio.h#L4><code>include/libc/stdio.h:4</code></a></li></ul></aside></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Testing</h3><dl class=repo-dossier-stats><div><dt>Test files</dt><dd>11</dd></div><div><dt>Source files</dt><dd>3646</dd></div><div><dt>Test cases, about</dt><dd>33</dd></div><div><dt>Unit tests</dt><dd>11</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/switch/tests/run_tests.py title=tools/switch/tests/run_tests.py>unittest</a></li></ul><h4>Where the tests are</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/switch/tests><code>tools/switch/tests</code></a> <span class=repo-evidence-label>10</span> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/new3ds/tests><code>tools/new3ds/tests</code></a> <span class=repo-evidence-label>1</span></p></section><p class=repo-dossier-missing>Nothing found for: Stack and dependencies, Monitoring.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>938 declared types, with 12 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
+</code></pre></details></details><h4>Where it runs</h4><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Dockerfile title=Dockerfile>Docker image ×3</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker-compose.new3ds.yml title=docker-compose.new3ds.yml>Docker Compose stack ×2</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Makefile title=Makefile>Native build (Make) ×6</a></li><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-coop.yaml title=.github/workflows/build-coop.yaml>CI deploy workflow</a></li></ul><h4>Delivery pipelines</h4><dl class="repo-deflist compact"><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-new3ds-coopnet.yml>Build New 3DS CoopNet</a> <span class=repo-evidence-label>runs on workflow_dispatch</span></dt><dd>Upload CoopNet dependency artifacts</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-new3ds.yml>Build New 3DS Port</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload New 3DS shell artifacts · Upload full-game artifacts</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-coopnet-full.yml>Switch CoopNet Full NRO</a> <span class=repo-evidence-label>runs on push, workflow_dispatch</span></dt><dd>Upload CoopNet NRO</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-coopnet.yml>Switch CoopNet Port CI</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload portability diagnostics</dd></div><div><dt><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/.github/workflows/build-switch-game.yml>Switch CI</a> <span class=repo-evidence-label>runs on push, pull_request, workflow_dispatch</span></dt><dd>Upload portability diagnostics · Upload full-build diagnostics</dd></div></dl><h4>Compose services</h4><p class=repo-inline-code><code>new3ds-shell</code> <code>new3ds-integration</code> <code>new3ds-full-3dsx</code> <code>switch-portability</code> <code>switch-full-nro</code></p><h4>Docker base images</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/Dockerfile#L1><code>ubuntu:jammy</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker/new3ds/Dockerfile#L2><code>devkitpro/devkitarm:latest</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/docker/switch/Dockerfile#L2><code>devkitpro/devkita64:latest</code></a></p></section><section class=repo-dossier-part id=dossier-security aria-labelledby=dossier-security-h><h3 id=dossier-security-h>Security</h3><h4>Environment variables <span class=repo-count>3</span></h4><p class=repo-evidence-label>The page lists names without their values and underlines the ones that look like secrets.</p><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L535><code>LINENOISE_ASSUME_TTY</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L614><code>LINENOISE_COLS</code></a> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/src/pc/linenoise/linenoise.c#L520><code>TERM</code></a></p><aside class="repo-admonition warn"><p class=repo-admonition-title>Worth a manual check</p><ul><li>eval(), 1 files · <a class=repo-evidence-link href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/autogen/convert_constants.py#L110><code>autogen/convert_constants.py:110</code></a></li><li>unbounded C string call, 30 files · <a class=repo-evidence-link href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/include/libc/stdio.h#L4><code>include/libc/stdio.h:4</code></a></li></ul></aside></section><section class=repo-dossier-part id=dossier-tests aria-labelledby=dossier-tests-h><h3 id=dossier-tests-h>Testing</h3><dl class=repo-dossier-stats><div><dt>Test files</dt><dd>11</dd></div><div><dt>Source files</dt><dd>3646</dd></div><div><dt>Test cases, about</dt><dd>33</dd></div><div><dt>Unit tests</dt><dd>11</dd></div></dl><ul class=repo-chip-list role=list><li><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/switch/tests/run_tests.py title=tools/switch/tests/run_tests.py>unittest</a></li></ul><p class=repo-evidence-label>No measured coverage report in the analyzed sources.</p><h4>Where the tests are</h4><p class=repo-inline-code><a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/switch/tests><code>tools/switch/tests</code></a> <span class=repo-evidence-label>10</span> <a href=https://github.com/antoinebou12/sm64coopdx-switch-N3DS/tree/567fd71a962d44e006461f3085a3a7ca3a063eb4/tools/new3ds/tests><code>tools/new3ds/tests</code></a> <span class=repo-evidence-label>1</span></p></section><p class=repo-dossier-missing>Nothing found for: Stack and dependencies, Monitoring.</p></section><div class=repo-auto-docs><section class=repo-code-structure aria-labelledby=code-structure><h2 id=code-structure>Types and file structure</h2><p class=repo-section-intro>938 declared types, with 12 in the base-relationship overview.</p><details class=repo-diagram-details data-mermaid-lazy><summary>Type diagram</summary><div class=repo-progressive-diagram data-mermaid-fallback><pre class=repo-mermaid-source><code class=language-mermaid>classDiagram
 direction TB
 class td46db2c67d89[&#34;SwitchMainThreadContext&#34;] {
   &lt;&lt;struct&gt;&gt;

@@ -96,6 +96,13 @@
           </ul>
           <div class="repo-tech-badges" aria-label="{{ if $fr }}Technologies vérifiées{{ else }}Verified technologies{{ end }}">
             {{ range $profile.badges }}<span class="tag tool" title="{{ .title }}">{{ .label }}</span>{{ end }}
+            {{ with index hugo.Data.repository_dossiers.repositories $note.repo }}
+              {{ $ecosystems := slice }}
+              {{ range .stack.manifests }}
+                {{ if not (in $ecosystems .ecosystem) }}<a class="tag tool" href="#dossier-stack">{{ .ecosystem }}</a>{{ $ecosystems = $ecosystems | append .ecosystem }}{{ end }}
+              {{ end }}
+              {{ range .tests.frameworks }}<a class="tag tool" href="#dossier-tests">{{ .name }}</a>{{ end }}
+            {{ end }}
             {{ if $note.fork }}<span class="tag status">{{ if $fr }}Crédit amont{{ else }}Upstream credited{{ end }}</span>{{ end }}
           </div>
           <div class="repo-actions">
