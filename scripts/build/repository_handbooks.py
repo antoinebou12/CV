@@ -161,6 +161,8 @@ def excerpt(lines):
         line.strip()
         for line in text.splitlines()
         if line.strip()
+        # A bare "#" renders as an empty heading once the excerpt goes through Markdown.
+        and not re.fullmatch(r"#+", line.strip())
         and not re.search(
             r"https?://|token\s*[=:]|password\s*[=:]|secret\s*[=:]|yourusername",
             line,
@@ -169,6 +171,15 @@ def excerpt(lines):
     ]
     text = "\n".join(safe).replace("**", "").replace("`", "")
     return text[:900].rsplit(" ", 1)[0] + "…" if len(text) > 900 else text
+
+
+def unique_title(title, path, seen):
+    """Return the heading, or "heading (FILE.md)" when an earlier document already used it."""
+    for candidate in (title, f"{title} ({PurePosixPath(path).name})", f"{title} ({path})"):
+        if candidate.lower() not in seen:
+            seen.add(candidate.lower())
+            return candidate
+    return f"{title} ({path})"
 
 
 def doc_candidate(entry):
@@ -258,6 +269,10 @@ def build(note, offline):
     )
     chapters = {key: [] for key in CATEGORIES}
     documents, failures = [], []
+    # The same paragraph often sits in README and CONTRIBUTING or docs/; keep its first copy only.
+    seen_text = set()
+    # Different documents reuse headings ("Contributing", "Installation"); later ones name their file.
+    seen_titles = set()
     for entry in candidates[:24]:
         try:
             text = fetch_blob(note["repo"], commit, entry, offline)
@@ -278,10 +293,13 @@ def build(note, offline):
                     and len(chapters[key]) < 5
                 ):
                     preview = excerpt(section["lines"])
-                    if preview:
+                    normalized = re.sub(r"\W+", " ", preview).strip().lower()
+                    if preview and re.search(r"\w", preview) and normalized not in seen_text:
+                        seen_text.add(normalized)
                         chapters[key].append(
                             {
-                                "title": section["heading"],
+                                # Headings are shown as plain text, so drop inline Markdown markers.
+                                "title": unique_title(re.sub(r"\*\*|__|`", "", section["heading"]).strip(), entry["path"], seen_titles),
                                 "text": preview,
                                 "url": base
                                 + quote(entry["path"])

@@ -1324,19 +1324,21 @@ html.dark .repo-infra-spotlight-header {
   gap: .55rem;
   font-weight: 650;
 }
-.diagram-interactive .post-diagram svg .nodeLabel,
-.diagram-interactive .post-diagram svg .edgeLabel,
-.diagram-interactive .post-diagram svg text {
+/* Mermaid labels follow the theme. UML figures (PlantUML, C4) keep their own text colours,
+   such as white on C4's blue boxes; dark mode inverts them as a whole instead. */
+.diagram-interactive .post-diagram:not(.uml-diagram) svg .nodeLabel,
+.diagram-interactive .post-diagram:not(.uml-diagram) svg .edgeLabel,
+.diagram-interactive .post-diagram:not(.uml-diagram) svg text {
   fill: var(--text) !important;
 }
-html.dark .diagram-interactive .post-diagram svg .nodeLabel,
-html.dark .diagram-interactive .post-diagram svg .edgeLabel,
-html.dark .diagram-interactive .post-diagram svg text {
+html.dark .diagram-interactive .post-diagram:not(.uml-diagram) svg .nodeLabel,
+html.dark .diagram-interactive .post-diagram:not(.uml-diagram) svg .edgeLabel,
+html.dark .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
   fill: #edf4fb !important;
 }
-html:not(.dark) .diagram-interactive .post-diagram svg .nodeLabel,
-html:not(.dark) .diagram-interactive .post-diagram svg .edgeLabel,
-html:not(.dark) .diagram-interactive .post-diagram svg text {
+html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg .nodeLabel,
+html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg .edgeLabel,
+html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
   fill: #192a3c !important;
 }
 
@@ -2123,6 +2125,8 @@ html:not(.dark) .diagram-interactive .post-diagram svg text {
 @media (max-width: 600px) {
   .repo-note .repo-modules-table :is(th, td):nth-child(5) { display: none; }
 }
+/* Keep repository paths legible; the surrounding tablewrap handles long paths. */
+.repo-note .repo-modules-table th[scope="row"] code { white-space: nowrap; }
 /* The copy script adds an absolutely positioned button to every note <pre>. */
 .repo-note pre { position: relative; }
 /* Typography adds top margin to <dt> and indents <dd>; definition cards set their own rhythm. */
@@ -2130,8 +2134,7 @@ html:not(.dark) .diagram-interactive .post-diagram svg text {
 .repo-note .repo-deflist dd:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { padding-inline-start: 0; }
 /* Inside .tablewrap (which scrolls) the table stays a real table so rows span the frame. */
 .repo-note .tablewrap .repo-permission-table:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { display: table; overflow: visible; }
-/* UML SVGs keep PlantUML's dark ink; the Mermaid label colour would be inverted twice in dark mode. */
-.diagram-interactive .post-diagram.uml-diagram svg text,
-html.dark .diagram-interactive .post-diagram.uml-diagram svg text { fill: #192a3c !important; }
 /* Note headings carry an !important margin, so the manifest heading is inset with padding. */
 .repo-note .repo-manifest-tasks > h3 { padding-inline: 1rem; }
+/* Dependency list labels inside each manifest panel (labels, not headings, so they do not repeat in the outline). */
+.repo-note .repo-dossier-sublabel { margin: .75rem 0 .3rem; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }

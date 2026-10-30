@@ -13,29 +13,34 @@
 {{- $int := .integrations -}}
 {{- $sec := .security -}}
 {{- $tst := .tests -}}
+{{- $dep := .deployment | default dict -}}
+{{- $mon := .monitoring | default dict -}}
+{{- $uml := dict -}}
+{{- range index (hugo.Data.repository_uml.repositories | default dict) $note.repo -}}{{- $uml = merge $uml (dict .key .) -}}{{- end -}}
 {{- /* Compose services already have their own table in the Deployment section. */ -}}
-{{- $containers := cond (gt (len ($profile.services | default slice)) 0) slice ($svc.containers | default slice) -}}
+{{- $containers := cond (gt (len ($profile.services | default slice)) 0) slice ($dep.containers | default slice) -}}
 {{- $sections := slice
   (dict "id" "layers" "label" (slice "Layers and modules" "Couches et modules") "on" (gt (len .layers) 0))
+  (dict "id" "c4" "label" (slice "C4 model" "Modèle C4") "on" (or $uml.c4context $uml.c4container) "optional" true)
   (dict "id" "flow" "label" (slice "Data flow" "Flux de données") "on" (and .flow .flow.sequence) "optional" true)
   (dict "id" "public" "label" (slice "Public interface" "Interface publique") "on" (or $pub.routes $pub.mcp $pub.cli $pub.entry_points $pub.exports $pub.headers))
   (dict "id" "private" "label" (slice "Private interface" "Interface privée") "on" (or $priv.counts $priv.internal_dirs $priv.private_modules))
-  (dict "id" "services" "label" (slice "Services and hosting" "Services et hébergement") "on" (or $svc.roles $svc.hosting $containers $svc.base_images))
+  (dict "id" "services" "label" (slice "Services" "Services") "on" (gt (len ($svc.roles | default slice)) 0))
   (dict "id" "entities" "label" (slice "Entities" "Entités") "on" (gt (len .entities.items) 0))
   (dict "id" "logic" "label" (slice "Business logic" "Logique métier") "on" (or .logic.types .logic.files))
   (dict "id" "database" "label" (slice "Database" "Base de données") "on" (or $db.engines $db.tables $db.containers (gt $db.migrations 0)))
   (dict "id" "integrations" "label" (slice "External integrations" "Intégrations externes") "on" (or $int.services $int.http_clients $int.hosts))
   (dict "id" "stack" "label" (slice "Stack and dependencies" "Stack et dépendances") "on" (gt (len .stack.manifests) 0))
+  (dict "id" "deployment" "label" (slice "Deployment" "Déploiement") "on" (or $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets))
+  (dict "id" "monitoring" "label" (slice "Monitoring" "Supervision") "on" (or $mon.signals $mon.health_routes $mon.health_checks))
   (dict "id" "security" "label" (slice "Security" "Sécurité") "on" (or $sec.controls $sec.env_vars $sec.supply_chain $sec.review))
-  (dict "id" "tests" "label" (slice "Tests" "Tests") "on" (or (gt $tst.files 0) $tst.frameworks $tst.workflows))
+  (dict "id" "tests" "label" (slice "Testing" "Tests automatisés") "on" (or (gt $tst.files 0) $tst.frameworks $tst.workflows))
 -}}
 {{- $entityKinds := dict "orm" (slice "ORM model" "Modèle ORM") "schema" (slice "Validated schema" "Schéma validé") "dataclass" (slice "Dataclass" "Dataclass") "record" (slice "Record or interface" "Enregistrement ou interface") "enum" (slice "Enumeration" "Énumération") "struct" (slice "Data struct" "Structure de données") -}}
 {{- $kinds := dict "ai" "IA" "rendering" "rendu" "platform" "plateforme" "cloud" "nuage" "observability" "observabilité" "payments" "paiements" "messaging" "messagerie" "data" "données" "transport" "transport" "sql" "SQL" "orm" "ORM" "document" "document" "key-value" "clé-valeur" "local" "local" "files" "fichiers" "auth" "authentification" "validation" "validation" "web" "web" "secrets" "secrets" "tool" "outil" "resource" "ressource" "prompt" "prompt" "entry file" "fichier d’entrée" "console script" "script console" "bin" "bin" "package export" "export du paquet" -}}
 {{- $kind := cond $fr $kinds dict -}}
 {{- $layerNames := dict "presentation" (slice "Presentation" "Présentation") "interface" (slice "Entry points and API" "Points d’entrée et API") "application" (slice "Application services" "Services applicatifs") "domain" (slice "Domain and business rules" "Domaine et règles métier") "infrastructure" (slice "Data and infrastructure" "Données et infrastructure") "core" (slice "Core source" "Source principale") "tests" (slice "Tests" "Tests") "hosting" (slice "Build, CI and hosting" "Build, CI et hébergement") -}}
 {{- $files := cond $fr (slice "fichier" "fichiers") (slice "file" "files") -}}
-{{- $uml := dict -}}
-{{- range index (hugo.Data.repository_uml.repositories | default dict) $note.repo -}}{{- $uml = merge $uml (dict .key .) -}}{{- end -}}
 <section class="doc repo-dossier" aria-labelledby="dossier" id="dossier-section">
   <h2 id="dossier">{{ if $fr }}Dossier technique{{ else }}Technical dossier{{ end }}</h2>
   <p class="repo-lede-sm">{{ if $fr }}Établi à partir du code au commit{{ else }}Built from the source at commit{{ end }} <a href="{{ .tree_url }}"><code>{{ substr .commit 0 7 }}</code></a> ({{ .files_scanned }} {{ index $files 1 }}). {{ if $fr }}Chaque élément vient d’une correspondance de motif dans le code: ouvrez le fichier lié avant de vous y fier.{{ else }}Each item comes from a pattern match in the code, so open the linked file before relying on it.{{ end }}</p>
@@ -67,6 +72,15 @@
     </div>
     {{ if gt $d.modules.total (len .) }}<p class="repo-evidence-label">{{ if $fr }}{{ sub $d.modules.total (len .) }} modules plus petits ne sont pas affichés.{{ else }}{{ sub $d.modules.total (len .) }} smaller modules are not shown.{{ end }}</p>{{ end }}
     {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $uml.c4context $uml.c4container }}
+  <section class="repo-dossier-part" id="dossier-c4" aria-labelledby="dossier-c4-h">
+    <h3 id="dossier-c4-h">{{ if $fr }}Modèle C4{{ else }}C4 model{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Deux niveaux de zoom du modèle C4, tirés des appelants, intégrations, stockages et couches trouvés dans le code.{{ else }}Two C4 zoom levels, drawn from the callers, integrations, stores and layers found in the code.{{ end }}</p>
+    {{ with $uml.c4context }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" true) }}{{ end }}
+    {{ with $uml.c4container }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
   </section>
   {{ end }}
 
@@ -169,11 +183,9 @@
   </section>
   {{ end }}
 
-  {{ if or $svc.roles $svc.hosting $containers $svc.base_images }}
+  {{ with $svc.roles }}
   <section class="repo-dossier-part" id="dossier-services" aria-labelledby="dossier-services-h">
-    <h3 id="dossier-services-h">{{ if $fr }}Services et hébergement{{ else }}Services and hosting{{ end }}</h3>
-    {{ with $uml.deployment }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
-    {{ with $svc.roles }}
+    <h3 id="dossier-services-h">Services</h3>
     <div class="repo-dossier-grid">
       {{ range . }}
       <article class="repo-dossier-card">
@@ -182,19 +194,6 @@
       </article>
       {{ end }}
     </div>
-    {{ end }}
-    {{ with $svc.hosting }}
-    <h4>{{ if $fr }}Où il s’exécute{{ else }}Where it runs{{ end }}</h4>
-    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}{{ if gt .count 1 }} ×{{ .count }}{{ end }}</a></li>{{ end }}</ul>
-    {{ end }}
-    {{ with $containers }}
-    <h4>{{ if $fr }}Services Compose{{ else }}Compose services{{ end }}</h4>
-    <p class="repo-inline-code">{{ range . }}<code>{{ . }}</code> {{ end }}</p>
-    {{ end }}
-    {{ with $svc.base_images }}
-    <h4>{{ if $fr }}Images Docker de base{{ else }}Docker base images{{ end }}</h4>
-    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .image }}</code></a> {{ end }}</p>
-    {{ end }}
   </section>
   {{ end }}
 
@@ -264,9 +263,7 @@
   {{ if or $int.services $int.http_clients $int.hosts }}
   <section class="repo-dossier-part" id="dossier-integrations" aria-labelledby="dossier-integrations-h">
     <h3 id="dossier-integrations-h">{{ if $fr }}Intégrations externes{{ else }}External integrations{{ end }}</h3>
-    {{ with $uml.component }}
-    {{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" true) }}
-    {{ else }}{{ with index ($d.context_mermaid | default (slice "" "")) $i }}
+    {{ if not $uml.c4context }}{{ with index ($d.context_mermaid | default (slice "" "")) $i }}
     <details class="repo-diagram-details" data-mermaid-lazy open>
       <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Contexte du système{{ else }}System context{{ end }}</span></summary>
       <div class="repo-progressive-diagram" data-mermaid-fallback>
@@ -276,7 +273,7 @@
     </details>
     {{ end }}{{ end }}
     {{ with $int.services }}
-    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} <span class="kind">{{ index $kind .kind | default .kind }}</span></a></li>{{ end }}</ul>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} {{ $k := index $kind .kind | default .kind }}{{ if not (in (lower (index .label $i)) (lower $k)) }}<span class="kind">{{ $k }}</span>{{ end }}</a></li>{{ end }}</ul>
     {{ end }}
     {{ with $int.http_clients }}
     <h4>{{ if $fr }}Clients HTTP{{ else }}HTTP clients{{ end }}</h4>
@@ -297,10 +294,55 @@
     <details class="repo-structure-details">
       <summary><strong>{{ .ecosystem }}</strong> <code>{{ .file }}</code> <span class="repo-evidence-label">{{ with .runtime_total }}{{ . }} {{ if $fr }}à l’exécution{{ else }}runtime{{ end }}{{ end }}{{ if and .runtime_total .dev_total }}, {{ end }}{{ with .dev_total }}{{ . }} dev{{ end }}</span></summary>
       {{ with .toolchain }}<p>{{ range . }}<span class="tag status">{{ . }}</span> {{ end }}</p>{{ end }}
-      {{ with .runtime }}<h4>{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</h4><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
-      {{ with .dev }}<h4>{{ if $fr }}Développement{{ else }}Development{{ end }}</h4><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}</p>{{ end }}
+      {{ with .runtime }}<p class="repo-dossier-sublabel">{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</p><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
+      {{ with .dev }}<p class="repo-dossier-sublabel">{{ if $fr }}Développement{{ else }}Development{{ end }}</p><p class="repo-inline-code">{{ range . }}<code>{{ .name }}{{ with .version }} {{ . }}{{ end }}</code> {{ end }}</p>{{ end }}
       <p><a href="{{ .url }}">{{ if $fr }}Ouvrir le manifeste{{ else }}Open the manifest{{ end }}</a></p>
     </details>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets }}
+  <section class="repo-dossier-part" id="dossier-deployment" aria-labelledby="dossier-deployment-h">
+    <h3 id="dossier-deployment-h">{{ if $fr }}Déploiement{{ else }}Deployment{{ end }}</h3>
+    {{ with $uml.deployment }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
+    {{ with $dep.hosting }}
+    <h4>{{ if $fr }}Où il s’exécute{{ else }}Where it runs{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}{{ if gt .count 1 }} ×{{ .count }}{{ end }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $dep.targets }}
+    <h4>{{ if $fr }}Publié vers{{ else }}Published to{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $dep.pipelines }}
+    <h4>{{ if $fr }}Pipelines de livraison{{ else }}Delivery pipelines{{ end }}</h4>
+    <dl class="repo-deflist compact">{{ range . }}<div><dt><a href="{{ .url }}">{{ .name }}</a>{{ with .triggers }} <span class="repo-evidence-label">{{ if $fr }}déclenché par{{ else }}runs on{{ end }} {{ delimit . ", " }}</span>{{ end }}{{ with .environments }} <span class="repo-ops-badge">{{ delimit . ", " }}</span>{{ end }}</dt><dd>{{ delimit .steps " · " }}</dd></div>{{ end }}</dl>
+    {{ end }}
+    {{ with $containers }}
+    <h4>{{ if $fr }}Services Compose{{ else }}Compose services{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<code>{{ . }}</code> {{ end }}</p>
+    {{ end }}
+    {{ with $dep.base_images }}
+    <h4>{{ if $fr }}Images Docker de base{{ else }}Docker base images{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .image }}</code></a> {{ end }}</p>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if or $mon.signals $mon.health_routes $mon.health_checks }}
+  <section class="repo-dossier-part" id="dossier-monitoring" aria-labelledby="dossier-monitoring-h">
+    <h3 id="dossier-monitoring-h">{{ if $fr }}Supervision{{ else }}Monitoring{{ end }}</h3>
+    <p class="repo-evidence-label">{{ if $fr }}Ce que le code consigne, mesure et expose pour savoir s’il fonctionne.{{ else }}What the code logs, measures and exposes to tell whether it is working.{{ end }}</p>
+    {{ with $mon.signals }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $mon.health_routes }}
+    <h4>{{ if $fr }}Routes de santé et de métriques{{ else }}Health and metrics routes{{ end }}</h4>
+    <p class="repo-inline-code">{{ range . }}<a href="{{ .url }}"><code>{{ .method }} {{ .path }}</code></a> {{ end }}</p>
+    {{ end }}
+    {{ with $mon.health_checks }}
+    <h4>{{ if $fr }}Vérifications de santé des conteneurs{{ else }}Container health checks{{ end }}</h4>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}:{{ .line }}">{{ .label }}</a></li>{{ end }}</ul>
     {{ end }}
   </section>
   {{ end }}
@@ -310,7 +352,7 @@
     <h3 id="dossier-security-h">{{ if $fr }}Sécurité{{ else }}Security{{ end }}</h3>
     {{ with $sec.controls }}
     <h4>{{ if $fr }}Contrôles{{ else }}Controls{{ end }}</h4>
-    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} <span class="kind">{{ index $kind .kind | default .kind }}</span></a></li>{{ end }}</ul>
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .evidence.url }}" title="{{ .evidence.file }}">{{ index .label $i }} {{ $k := index $kind .kind | default .kind }}{{ if not (in (lower (index .label $i)) (lower $k)) }}<span class="kind">{{ $k }}</span>{{ end }}</a></li>{{ end }}</ul>
     {{ end }}
     {{ with $sec.supply_chain }}
     <h4>{{ if $fr }}Chaîne d’approvisionnement{{ else }}Supply chain{{ end }}</h4>
@@ -332,13 +374,18 @@
 
   {{ if or (gt $tst.files 0) $tst.frameworks $tst.workflows }}
   <section class="repo-dossier-part" id="dossier-tests" aria-labelledby="dossier-tests-h">
-    <h3 id="dossier-tests-h">Tests</h3>
+    <h3 id="dossier-tests-h">{{ if $fr }}Tests automatisés{{ else }}Testing{{ end }}</h3>
     <dl class="repo-dossier-stats">
       <div><dt>{{ if $fr }}Fichiers de test{{ else }}Test files{{ end }}</dt><dd>{{ $tst.files }}</dd></div>
       <div><dt>{{ if $fr }}Fichiers source{{ else }}Source files{{ end }}</dt><dd>{{ $tst.source_files }}</dd></div>
-      <div><dt>{{ if $fr }}Cas de test, environ{{ else }}Test cases, about{{ end }}</dt><dd>{{ $tst.cases }}</dd></div>
+      {{ with $tst.cases }}<div><dt>{{ if $fr }}Cas de test, environ{{ else }}Test cases, about{{ end }}</dt><dd>{{ . }}</dd></div>{{ end }}
+      {{ range $tst.kinds }}<div><dt>{{ if $fr }}Tests {{ lower (index .label 1) }}{{ else }}{{ index .label 0 }} tests{{ end }}</dt><dd>{{ .files }}</dd></div>{{ end }}
     </dl>
     {{ with $tst.frameworks }}
+    <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ .name }}</a></li>{{ end }}</ul>
+    {{ end }}
+    {{ with $tst.coverage_tools }}
+    <h4>{{ if $fr }}Couverture de code{{ else }}Code coverage{{ end }}</h4>
     <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ .name }}</a></li>{{ end }}</ul>
     {{ end }}
     {{ with $tst.directories }}

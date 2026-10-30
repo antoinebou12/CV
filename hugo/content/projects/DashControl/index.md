@@ -47,7 +47,7 @@ Preview look 0.1.2
 - [ ] Terminal ssh web
 - [ ] Tests
 
-### TODO
+### Planned work
 
 - [ ] Documentation
 - [ ] User Auth (OAUTH2 Github)

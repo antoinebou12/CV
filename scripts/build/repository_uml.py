@@ -66,7 +66,9 @@ def q(text, limit=40):
 
 
 def wrap(body, kind):
-    return f"@startuml\n{STYLE}\n{body.strip()}\n@enduml\n"
+    # C4-PlantUML brings its own styling; the skin parameters are for plain UML diagrams.
+    style = "" if kind == "c4plantuml" else STYLE + "\n"
+    return f"@startuml\n{style}{body.strip()}\n@enduml\n"
 
 
 def callers(public, fr):
@@ -117,29 +119,94 @@ def usecase_uml(repo, d, fr):
     return "\n".join(lines)
 
 
-def component_uml(repo, d, fr):
+EXT_LANG = {".py": "Python", ".ts": "TypeScript", ".tsx": "React", ".jsx": "React", ".vue": "Vue", ".js": "JavaScript",
+            ".rs": "Rust", ".cs": "C#", ".java": "Java", ".kt": "Kotlin", ".php": "PHP", ".rb": "Ruby", ".go": "Go",
+            ".cpp": "C++", ".hpp": "C++", ".cc": "C++", ".h": "C/C++", ".c": "C", ".html": "HTML", ".swift": "Swift",
+            ".blade.php": "Blade", ".ino": "Arduino"}
+
+
+def layer_tech(d, keys):
+    """Main language of the modules in the given layers, from their file extensions."""
+    counts = {}
+    for layer in d["layers"]:
+        if layer["key"] in keys:
+            for module in layer["modules"]:
+                for ext in module["extensions"][:1]:
+                    if ext in EXT_LANG:
+                        counts[EXT_LANG[ext]] = counts.get(EXT_LANG[ext], 0) + module["files"]
+    return max(counts, key=counts.get) if counts else ""
+
+
+def c4_people_and_systems(d, fr):
     i = 1 if fr else 0
-    inner = []
-    if d.get("flow") and d["flow"].get("groups"):
-        inner = [g["label"] for g in d["flow"]["groups"]][:6]
-    else:
-        inner = [m["name"] for m in d["modules"]["items"] if m["name"] != "(root)"][:5]
-    provided = [label for _, label in callers(d["public"], fr)]
-    required = [s["label"][i] for s in d["integrations"]["services"][:6]]
-    stores = [e["label"][i] for e in d["database"]["engines"][:3]]
-    if len(provided) + len(required) + len(stores) < 2 or not inner:
+    people = callers(d["public"], fr)
+    # Transports (WebSocket, Wi-Fi client, console network stack) are how systems talk, not systems.
+    externals = [s["label"][i] for s in d["integrations"]["services"] if s.get("kind") != "transport"][:6]
+    stores = [e["label"][i] for e in d["database"]["engines"] if e["kind"] in {"sql", "document", "key-value", "orm"}][:3]
+    return people, externals, stores
+
+
+def c4_context_uml(repo, d, fr):
+    """C4 level 1: the people who use the project and the outside systems it depends on."""
+    people, externals, stores = c4_people_and_systems(d, fr)
+    if len(people) + len(externals) + len(stores) < 2:
         return None
-    lines = ["left to right direction"]
-    lines += [f'interface "{q(p, 24)}" as P{n}' for n, p in enumerate(provided)]
-    lines.append(f'component "{q(repo)}" as SYS {{')
-    lines += [f'  component "{q(c, 30)}" as C{n}' for n, c in enumerate(inner)]
+    intro = q((d.get("_intro") or ["", ""])[1 if fr else 0].split(". ")[0], 70)
+    lines = ["!include <C4/C4_Context>", "LAYOUT_LEFT_RIGHT()"]
+    lines += [f'Person(P_{key}, "{label}")' for key, label in people]
+    lines.append(f'System(SYS, "{q(repo)}", "{intro}")')
+    lines += [f'System_Ext(E{n}, "{q(e, 30)}")' for n, e in enumerate(externals)]
+    lines += [f'SystemDb(D{n}, "{q(s, 30)}")' for n, s in enumerate(stores)]
+    use = "Utilise" if fr else "Uses"
+    lines += [f'Rel(P_{key}, SYS, "{use}")' for key, _ in people]
+    lines += [f'Rel(SYS, E{n}, "{"Appelle" if fr else "Calls"}")' for n in range(len(externals))]
+    lines += [f'Rel(SYS, D{n}, "{"Lit et écrit" if fr else "Reads and writes"}")' for n in range(len(stores))]
+    return "\n".join(lines)
+
+
+def c4_container_uml(repo, d, fr):
+    """C4 level 2: deployable parts inside the project boundary and how they connect."""
+    people, externals, stores = c4_people_and_systems(d, fr)
+    present = {layer["key"] for layer in d["layers"]}
+    containers = []  # (id, label, technology, kind)
+    compose = d["services"].get("containers") or []
+    if compose:
+        containers = [(f"C{n}", name, "Docker", "container") for n, name in enumerate(compose[:8])]
+    else:
+        if "presentation" in present:
+            containers.append(("UI", "Interface utilisateur" if fr else "User interface", layer_tech(d, {"presentation"}), "container"))
+        if "interface" in present:
+            containers.append(("API", "Points d’entrée et API" if fr else "Entry points and API", layer_tech(d, {"interface"}), "container"))
+        if present & {"application", "domain", "core"}:
+            containers.append(("CORE", "Logique principale" if fr else "Core logic", layer_tech(d, {"application", "domain", "core"}), "container"))
+    for n, store in enumerate(stores):
+        containers.append((f"DB{n}", store, "", "db"))
+    if len([c for c in containers if c[3] == "container"]) < 2 and not (containers and (externals or stores)):
+        return None
+    if len(containers) < 2:
+        return None
+    lines = ["!include <C4/C4_Container>", "LAYOUT_LEFT_RIGHT()"]
+    lines += [f'Person(P_{key}, "{label}")' for key, label in people]
+    lines.append(f'System_Boundary(SYS, "{q(repo)}") {{')
+    for cid, label, tech, kind in containers:
+        macro = "ContainerDb" if kind == "db" else "Container"
+        lines.append(f'  {macro}({cid}, "{q(label, 30)}", "{q(tech, 20)}")')
     lines.append("}")
-    lines += [f"P{n} - SYS" for n in range(len(provided))]
-    lines += [f'component "{q(r, 30)}" as R{n} <<external>>' for n, r in enumerate(required)]
-    lines += [f'database "{q(s, 30)}" as S{n}' for n, s in enumerate(stores)]
-    uses = "utilise" if fr else "uses"
-    lines += [f"SYS ..> R{n} : {uses}" for n in range(len(required))]
-    lines += [f"SYS ..> S{n}" for n in range(len(stores))]
+    lines += [f'System_Ext(E{n}, "{q(e, 30)}")' for n, e in enumerate(externals)]
+    ids = [c[0] for c in containers if c[3] == "container"]
+    use, call, rw = ("Utilise", "Appelle", "Lit et écrit") if fr else ("Uses", "Calls", "Reads and writes")
+    if compose:
+        # The service named after the project is the one people call and that calls out;
+        # the other Compose services are its companions, so no chain is invented between them.
+        own = next((c[0] for c in containers if c[3] == "container" and re.sub(r"\W", "", c[1].lower()) in re.sub(r"\W", "", repo.lower())), None)
+        entry = last = own or (ids[0] if ids else containers[0][0])
+    else:
+        entry = ids[0] if ids else containers[0][0]
+        lines += [f'Rel({a}, {b}, "{call}")' for a, b in zip(ids, ids[1:])]
+        last = ids[-1] if ids else entry
+    lines += [f'Rel(P_{key}, {entry}, "{use}")' for key, _ in people]
+    lines += [f'Rel({last}, {cid}, "{rw}")' for cid, _, _, kind in containers if kind == "db"]
+    lines += [f'Rel({last}, E{n}, "{call}")' for n in range(len(externals))]
     return "\n".join(lines)
 
 
@@ -222,9 +289,12 @@ DIAGRAMS = [
     ("usecase", "usecase", usecase_uml,
      ["Use cases", "Cas d’utilisation"],
      ["Each actor is a kind of caller, linked to what it can ask the project to do.", "Chaque acteur est un type d’appelant, relié à ce qu’il peut demander au projet."]),
-    ("component", "component", component_uml,
-     ["Components and interfaces", "Composants et interfaces"],
-     ["The project offers the interfaces drawn as circles and depends on the external components and databases its dashed arrows reach.", "Le projet offre les interfaces dessinées en cercle et dépend des composants externes et bases de données que ses flèches pointillées atteignent."]),
+    ("c4context", "c4plantuml", c4_context_uml,
+     ["System context (C4)", "Contexte du système (C4)"],
+     ["The widest C4 view: who uses the project and which outside systems and data stores it relies on.", "La vue C4 la plus large : qui utilise le projet et sur quels systèmes et stockages externes il s’appuie."]),
+    ("c4container", "c4plantuml", c4_container_uml,
+     ["Containers (C4)", "Conteneurs (C4)"],
+     ["One level closer: the parts that run separately inside the project, their main language and how calls flow between them.", "Un niveau plus près : les parties qui s’exécutent séparément dans le projet, leur langage principal et le chemin des appels entre elles."]),
     ("deployment", "deployment", deployment_uml,
      ["Deployment", "Déploiement"],
      ["The outer node is where the code runs. Each base image points to what it builds, solid arrows lead to databases and dashed ones to outside services.", "Le nœud extérieur est l’endroit où le code s’exécute. Chaque image de base pointe vers ce qu’elle construit, les flèches pleines mènent aux bases de données et les pointillées aux services externes."]),
@@ -273,7 +343,9 @@ def main():
     parser.add_argument("--offline", action="store_true", help="Use stored SVG files only")
     args = parser.parse_args()
     dossiers = json.loads(DOSSIERS.read_text(encoding="utf-8"))["repositories"]
-    slugs = {n["repo"]: n["slug"] for n in json.loads(NOTES.read_text(encoding="utf-8"))["notes"]}
+    notes = json.loads(NOTES.read_text(encoding="utf-8"))["notes"]
+    slugs = {n["repo"]: n["slug"] for n in notes}
+    intros = {n["repo"]: n["intro"] for n in notes}
     output = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"schema_version": 1, "repositories": {}}
     failures = 0
     for repo, d in dossiers.items():
@@ -283,7 +355,8 @@ def main():
         folder = STATIC / "repository-docs" / slug / "uml"
         entries, keep = [], set()
         for key, kind, build, title, note in DIAGRAMS:
-            sources = [build(repo, d, False), build(repo, d, True)]
+            context = dict(d, _intro=intros.get(repo))  # the C4 context box describes the system
+            sources = [build(repo, context, False), build(repo, context, True)]
             if not all(sources):
                 continue
             item = {"key": key, "title": title, "note": note, "svg": [], "source": []}

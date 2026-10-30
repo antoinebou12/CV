@@ -36,19 +36,19 @@
   {{- if eq .Section "posts" -}}
     {{- $rawKind := .Params.post_kind | default "article" -}}
     {{- $kind := cond (eq $rawKind "conference-recap") "conference" $rawKind -}}
-    {{- $fallback := "images/post-kind-article.png" -}}
+    {{- $fallback := "images/post-kind-article.webp" -}}
     {{- if eq $kind "tutorial" -}}
-      {{- $fallback = "images/post-kind-tutorial.png" -}}
+      {{- $fallback = "images/post-kind-tutorial.webp" -}}
     {{- else if eq $kind "conference" -}}
-      {{- $fallback = "images/post-kind-conference.png" -}}
+      {{- $fallback = "images/post-kind-conference.webp" -}}
     {{- end -}}
     {{- $thumb = $fallback | relURL -}}
   {{- else if eq .Section "projects" -}}
-    {{- $thumb = "images/post-kind-project.png" | relURL -}}
+    {{- $thumb = "images/post-kind-project.webp" | relURL -}}
   {{- else if eq .Section "recipes" -}}
-    {{- $thumb = "images/post-kind-recipe.png" | relURL -}}
+    {{- $thumb = "images/post-kind-recipe.webp" | relURL -}}
   {{- else -}}
-    {{- $thumb = "images/post-kind-article.png" | relURL -}}
+    {{- $thumb = "images/post-kind-article.webp" | relURL -}}
   {{- end -}}
 {{- end -}}
 {{- end -}}

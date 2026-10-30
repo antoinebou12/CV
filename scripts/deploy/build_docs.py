@@ -32,7 +32,7 @@ def main():
             shutil.copy2(ROOT / f"data/resume.{language}.json", site / name)
             (site / f"cv-{language}").mkdir()
             shutil.copy2(ROOT / f"cv-{language}/resume.pdf", site / f"cv-{language}/resume.pdf")
-        for extension in ("*.png", "*.jpg", "*.jpeg", "*.ico", "*.webmanifest"):
+        for extension in ("*.png", "*.jpg", "*.jpeg", "*.webp", "*.ico", "*.webmanifest"):
             for source in ROOT.glob(extension):
                 shutil.copy2(source, site / source.name)
         for name in ("css", "js", "linktree", "papers", "images"):

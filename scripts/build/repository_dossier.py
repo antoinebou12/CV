@@ -268,6 +268,19 @@ LOGIC_HINT = re.compile(r"(?i)(service|engine|strategy|calculator|validator|proc
 
 
 NAME_FR = {
+    "Python logging": "Journalisation Python",
+    "Node logging": "Journalisation Node",
+    ".NET logging": "Journalisation .NET",
+    "JVM / Android logging": "Journalisation JVM / Android",
+    "C++ logging": "Journalisation C++",
+    "Rust logging": "Journalisation Rust",
+    "Error reporting service": "Service de signalement d’erreurs",
+    "Metrics endpoint": "Point de métriques",
+    "Distributed tracing": "Traçage distribué",
+    "Grafana dashboards": "Tableaux de bord Grafana",
+    "Uptime monitoring": "Surveillance de disponibilité",
+    "Web analytics": "Analytique web",
+    "Alerting": "Alertes",
     "Market and news data APIs": "API de données de marché et d’actualités",
     "Open data portal (CKAN)": "Portail de données ouvertes (CKAN)",
     "Wi-Fi HTTP client (ESP32)": "Client HTTP Wi-Fi (ESP32)",
@@ -826,11 +839,38 @@ def entity_mermaid(items):
     return "\n".join(lines) + "\n"
 
 
+CONSTRUCTORS = {"__init__", "__new__", "constructor", "new", "init", "initialize"}
+
+
+def behaviour(t):
+    """Methods that say what a type does: constructors and destructors repeat the type name."""
+    return [m for m in t["methods"] if m not in CONSTRUCTORS and m.lstrip("~") != t["name"]]
+
+
+GENERATED = re.compile(r"(?:^|/)(?:pkg|__generated__|generated|gen)/|\.(?:g|generated|pb|min)\.\w+$|_pb2\.py$")
+
+
+def generated(t):
+    """Code emitted by tools (wasm-pack pkg/, protobuf, *.g.cs) describes the tool, not the project."""
+    return bool(GENERATED.search(t["file"])) or "__destroy_into_raw" in t["methods"]
+
+
+def unique(items, key):
+    """Drop repeats: a type defined twice (two files, two platforms) would print the same row twice."""
+    seen, kept = set(), []
+    for item in items:
+        k = key(item)
+        if k not in seen:
+            seen.add(k)
+            kept.append(item)
+    return kept
+
+
 def build_entities(analysis, texts, types):
     order = {"orm": 0, "schema": 1, "dataclass": 2, "record": 3, "enum": 4, "struct": 5}
     found = []
     for t in types:
-        if is_test(t["file"]) or t["file"] not in texts:
+        if is_test(t["file"]) or generated(t) or t["file"] not in texts:
             continue
         lines = texts[t["file"]].splitlines()
         kind = entity_kind(t, lines)
@@ -839,6 +879,7 @@ def build_entities(analysis, texts, types):
         pairs = entity_fields(t, lines)
         found.append({"name": t["name"], "kind": kind, "fields": [n for n, _ in pairs], "field_types": pairs, **evidence(analysis, t["file"], t["line"])})
     found.sort(key=lambda e: (order[e["kind"]], -len(e["fields"]), layer_of(e["file"]) != "domain", e["name"]))
+    found = unique(found, lambda e: (e["name"], tuple(e["fields"])))
     counts = Counter(e["kind"] for e in found)
     items = found[:LIMIT]
     diagram = entity_mermaid(items)
@@ -850,17 +891,19 @@ def build_entities(analysis, texts, types):
 def build_services(analysis, texts, types, paths):
     roles = {}
     for t in types:
-        if is_test(t["file"]):
+        if is_test(t["file"]) or generated(t):
             continue
         match = SERVICE_SUFFIX.search(t["name"])
         if not match:
             continue
         suffix = match[1]
         role = ROLE.get(suffix, L("Service", "Service"))
+        methods = behaviour(t)
         roles.setdefault(role[0], {"label": role, "items": []})["items"].append(
-            {"name": t["name"], "methods": t["methods"][:5], "method_count": len(t["methods"]), **evidence(analysis, t["file"], t["line"])}
+            {"name": t["name"], "methods": methods[:5], "method_count": len(methods), **evidence(analysis, t["file"], t["line"])}
         )
     for group in roles.values():
+        group["items"] = unique(group["items"], lambda x: (x["name"], tuple(x["methods"])))
         group["total"] = len(group["items"])
         group["items"] = sorted(group["items"], key=lambda x: -x["method_count"])[:8]
     hosting = []
@@ -886,9 +929,9 @@ def build_services(analysis, texts, types, paths):
         hits = [p for p in paths if re.search(pattern, p)]
         if hits:
             hosting.append({"label": [en, fr], "count": len(hits), **evidence(analysis, hits[0])})
-    for path, text in texts.items():
-        if WORKFLOW.match(path) and re.search(r"pages|deploy|vercel|docker/build-push|gh-pages|publish|release", text, re.I):
-            hosting.append({"label": ["CI deploy workflow", "Workflow de déploiement CI"], "count": 1, **evidence(analysis, path)})
+    deploys = [path for path, text in texts.items() if WORKFLOW.match(path) and re.search(r"pages|deploy|vercel|docker/build-push|gh-pages|publish|release", text, re.I)]
+    if deploys:
+        hosting.append({"label": ["CI deploy workflow", "Workflow de déploiement CI"], "count": len(deploys), **evidence(analysis, deploys[0])})
     containers = []
     for path, text in texts.items():
         if re.search(r"(?:^|/)(?:docker-)?compose[\w.\-]*\.ya?ml$", path, re.I):
@@ -912,16 +955,19 @@ def build_services(analysis, texts, types, paths):
 def build_logic(analysis, texts, types, entity_names):
     ranked = []
     for t in types:
-        if is_test(t["file"]) or t["name"] in entity_names or layer_of(t["file"]) in {"presentation", "hosting", "tests"}:
+        if is_test(t["file"]) or generated(t) or t["name"] in entity_names or layer_of(t["file"]) in {"presentation", "hosting", "tests"}:
             continue
-        score = len(t["methods"]) + (6 if LOGIC_HINT.search(t["name"] + " " + t["file"]) else 0) + (4 if layer_of(t["file"]) in {"domain", "application"} else 0)
-        if len(t["methods"]) < 2:
+        methods = behaviour(t)
+        score = len(methods) + (6 if LOGIC_HINT.search(t["name"] + " " + t["file"]) else 0) + (4 if layer_of(t["file"]) in {"domain", "application"} else 0)
+        if len(methods) < 2:
             continue
-        ranked.append((score, t))
+        ranked.append((score, t, methods))
     ranked.sort(key=lambda x: (-x[0], x[1]["name"]))
+    # Identical method lists (copies of one class) are listed once.
+    ranked = unique(unique(ranked, lambda x: tuple(x[2])), lambda x: x[1]["name"])
     items = [
-        {"name": t["name"], "kind": t["kind"], "layer": layer_of(t["file"]), "methods": t["methods"][:6], "method_count": len(t["methods"]), **evidence(analysis, t["file"], t["line"])}
-        for _, t in ranked[:10]
+        {"name": t["name"], "kind": t["kind"], "layer": layer_of(t["file"]), "methods": methods[:6], "method_count": len(methods), **evidence(analysis, t["file"], t["line"])}
+        for _, t, methods in ranked[:10]
     ]
     files = []
     if not items:
@@ -1141,7 +1187,7 @@ def workflow_jobs(text):
             current["needs"] = [n.strip(" '\"") for n in needs[1].split(",") if n.strip(" '\"")]
         title = re.match(r"^    name:\s*['\"]?(.+?)['\"]?\s*$", raw)
         if title:
-            current["title"] = title[1]
+            current["title"] = without_expressions(title[1]) or current["name"]
         step = re.match(r"^\s+- (name|uses|run):\s*['\"]?(.+?)['\"]?\s*$", raw)
         if step and len(current["steps"]) < 10:
             label = step[2]
@@ -1149,9 +1195,15 @@ def workflow_jobs(text):
                 label = label.split("@")[0]
             elif step[1] == "run":
                 label = label.lstrip("|> ").strip() or "run"
+            label = without_expressions(label)
             if label:
                 current["steps"].append(label[:48])
     return jobs[:6]
+
+
+def without_expressions(text):
+    # GitHub expressions such as ${{ matrix.suffix }} only make sense inside the workflow.
+    return re.sub(r"\s*\(?[^()]*\$\{\{.*?\}\}[^()]*\)?", "", text).strip(" -:")
 
 
 def build_tests(analysis, texts, paths):
@@ -1181,14 +1233,137 @@ def build_tests(analysis, texts, paths):
                 workflows.append({"name": name[1] if name else PurePosixPath(path).stem, "runs": list(dict.fromkeys(runs))[:6], "jobs": workflow_jobs(text), **evidence(analysis, path)})
     workflows.sort(key=lambda w: -len(w["runs"]))
     coverage = [p for p in paths if re.search(r"(?:^|/)(?:codecov\.ya?ml|\.coveragerc|\.nycrc|jest\.config\.|vitest\.config\.)", p)]
+    kinds = Counter(test_kind(p, texts.get(p, "")) for p in test_paths)
+    tools = []
+    for pattern, name in COVERAGE_TOOLS:
+        hit = next(((p, t) for p, t in texts.items() if re.search(pattern, t)), None)
+        if hit:
+            tools.append({"name": name, **evidence(analysis, hit[0], line_of(hit[1], re.search(pattern, hit[1]).start()))})
     return {
         "files": len(test_paths),
         "source_files": len(source_paths),
         "cases": cases,
+        "kinds": [{"key": k, "label": TEST_KINDS[k], "files": n} for k, n in kinds.most_common()],
         "frameworks": frameworks[:8],
         "directories": [{"path": d, "files": n, "url": analysis["tree_url"] + "/" + quote(d)} for d, n in dirs.most_common(6)],
         "workflows": workflows[:8],
         "coverage_config": [evidence(analysis, p) for p in coverage[:3]],
+        "coverage_tools": tools[:5],
+    }
+
+
+TEST_KINDS = {
+    "unit": L("Unit", "Unitaires"),
+    "integration": L("Integration", "Intégration"),
+    "e2e": L("End-to-end", "De bout en bout"),
+    "benchmark": L("Benchmark", "Performance"),
+}
+COVERAGE_TOOLS = [
+    (r"pytest-cov|--cov\b|coverage run|coverage\.py", "coverage.py"),
+    (r"\bc8\b|\bnyc\b|--coverage\b|coverageThreshold|@vitest/coverage", "JS coverage (c8/nyc/vitest)"),
+    (r"jacoco", "JaCoCo"),
+    (r"coverlet|XPlat Code Coverage", "Coverlet"),
+    (r"codecov/codecov-action|codecov\.io", "Codecov"),
+    (r"cargo[- ]tarpaulin|cargo llvm-cov|grcov", "Rust coverage"),
+    (r"gcovr|lcov --capture|geninfo|-fprofile-arcs", "gcov/lcov"),
+]
+
+
+def test_kind(path, text):
+    """Classify a test file by its path, then by the tools it imports."""
+    lower = path.lower()
+    if re.search(r"bench", lower):
+        return "benchmark"
+    if re.search(r"(?:^|/)(?:e2e|end-to-end|playwright|cypress|selenium)(?:/|[._-])", lower) or re.search(r"@playwright/test|cypress|selenium|webdriver|page\.goto\(", text):
+        return "e2e"
+    if re.search(r"integration|(?:^|/)it(?:/|[._-])|functional|(?:^|/)api[_-]?tests?/", lower) or re.search(r"TestClient\(|testcontainers|supertest|WebApplicationFactory|@SpringBootTest|RefreshDatabase", text):
+        return "integration"
+    return "unit"
+
+
+MONITORING = [
+    (r"^\s*import logging|getLogger\(|\bloguru\b|structlog", "Python logging", "logging"),
+    (r"\bwinston\b|\bpino\b|\bbunyan\b|log4js", "Node logging", "logging"),
+    (r"\bSerilog\b|\bNLog\b|ILogger<", ".NET logging", "logging"),
+    (r"org\.slf4j|log4j|java\.util\.logging|Timber\.|android\.util\.Log", "JVM / Android logging", "logging"),
+    (r"\bspdlog\b|\bglog\b|PLOG_|easylogging", "C++ logging", "logging"),
+    (r"\btracing::|env_logger|\blog::(?:info|warn|error)!", "Rust logging", "logging"),
+    (r"sentry_sdk|@sentry/|SentrySdk|using Sentry|sentry-native", "Sentry", "errors"),
+    (r"\bbugsnag\b|\brollbar\b", "Error reporting service", "errors"),
+    (r"prometheus_client|prom-client|micrometer|\bstatsd\b|/metrics[\"']", "Metrics endpoint", "metrics"),
+    (r"opentelemetry|\bjaeger\b|\bzipkin\b", "Distributed tracing", "tracing"),
+    (r"grafana", "Grafana dashboards", "dashboards"),
+    (r"uptime-kuma|uptimerobot|healthchecks\.io", "Uptime monitoring", "uptime"),
+    (r"static\.cloudflareinsights\.com|googletagmanager|gtag\(|plausible\.io|umami", "Web analytics", "analytics"),
+    (r"alertmanager|pagerduty|opsgenie", "Alerting", "alerting"),
+]
+
+
+def build_monitoring(analysis, texts, routes):
+    """Logging, error tracking, metrics, tracing, health checks and dashboards found in the code."""
+    signals = scan_patterns(analysis, {p: t for p, t in texts.items() if not is_test(p) and not p.lower().endswith(".md")}, MONITORING)
+    health = [r for r in routes if re.search(r"(?i)(?:^|/)(?:health|healthz|ready|readyz|live|livez|status|ping|metrics)(?:/|$)", r["path"])]
+    checks = []
+    for path, text in texts.items():
+        name = PurePosixPath(path).name.lower()
+        if name.startswith("dockerfile") or re.search(r"compose[\w.-]*\.ya?ml$", name):
+            for match in re.finditer(r"^\s*(HEALTHCHECK\b.*|healthcheck:)", text, re.MULTILINE | re.IGNORECASE):
+                checks.append({"label": "Docker HEALTHCHECK" if match[1].upper().startswith("HEALTHCHECK") else "Compose healthcheck", **evidence(analysis, path, line_of(text, match.start()))})
+    return {"signals": signals, "health_routes": health[:8], "health_checks": checks[:6]}
+
+
+DEPLOY_STEPS = re.compile(r"(?i)deploy|publish|release|push|upload|pages|vercel|wrangler|helm|kubectl|terraform|gh-pages|pypi|npm publish|nuget push|docker/build-push")
+PUBLISH_TARGETS = [
+    (r"actions/deploy-pages|peaceiris/actions-gh-pages|gh-pages", "GitHub Pages", "GitHub Pages"),
+    (r"docker/build-push-action|docker push|ghcr\.io", "Container registry", "Registre de conteneurs"),
+    (r"pypa/gh-action-pypi-publish|twine upload|uv publish|poetry publish", "PyPI", "PyPI"),
+    (r"npm publish|JS-DevTools/npm-publish", "npm", "npm"),
+    (r"nuget push|dotnet nuget push", "NuGet", "NuGet"),
+    (r"vercel(?:-action| deploy|/action| --prod| build| pull)|amondnet/vercel|VERCEL_TOKEN", "Vercel", "Vercel"),
+    (r"wrangler (?:deploy|publish)|cloudflare/wrangler-action|pages deploy", "Cloudflare", "Cloudflare"),
+    (r"softprops/action-gh-release|gh release create|goreleaser|release-please|semantic-release", "GitHub Releases", "Versions GitHub"),
+    (r"helm upgrade|kubectl apply|azure/k8s-deploy", "Kubernetes", "Kubernetes"),
+    (r"terraform apply", "Terraform", "Terraform"),
+]
+
+
+def workflow_triggers(text):
+    block = re.search(r"^on:\s*(.*)$((?:\n[ \t]+.*)*)", text, re.MULTILINE)
+    if not block:
+        return []
+    inline = re.findall(r"[\w-]+", block[1]) if block[1].strip() else []
+    nested = re.findall(r"^  ([\w-]+):", block[2], re.MULTILINE)
+    return list(dict.fromkeys(inline + nested))[:6]
+
+
+def build_deployment(analysis, texts, services):
+    """Where the code runs and how it gets there: hosting files, images, deploy pipelines, publish targets."""
+    pipelines, targets = [], {}
+    for path, text in sorted(texts.items()):
+        if not WORKFLOW.match(path):
+            continue
+        for pattern, en, fr in PUBLISH_TARGETS:
+            match = re.search(pattern, text)
+            if match and en not in targets:
+                targets[en] = {"label": [en, fr], **evidence(analysis, path, line_of(text, match.start()))}
+        jobs = workflow_jobs(text)
+        steps = [s for job in jobs for s in job["steps"] if DEPLOY_STEPS.search(s)]
+        if steps:
+            name = re.search(r"^name:\s*['\"]?(.+?)['\"]?\s*$", text, re.MULTILINE)
+            environments = re.findall(r"^\s+environment:\s*(?:\n\s+name:\s*)?['\"]?([\w-]+)", text, re.MULTILINE)
+            pipelines.append({
+                "name": name[1] if name else PurePosixPath(path).stem,
+                "triggers": workflow_triggers(text),
+                "environments": list(dict.fromkeys(environments))[:4],
+                "steps": list(dict.fromkeys(steps))[:6],
+                **evidence(analysis, path),
+            })
+    return {
+        "hosting": services["hosting"],
+        "containers": services["containers"],
+        "base_images": services["base_images"],
+        "pipelines": pipelines[:5],
+        "targets": list(targets.values()),
     }
 
 
@@ -1337,6 +1512,8 @@ def build_stack(analysis, texts):
         except (ValueError, tomllib.TOMLDecodeError, AttributeError, TypeError):
             continue
     # Languages and Docker base images already appear in the language panel and Services section.
+    # Manifests that declare exactly the same packages (a library and its sample, say) are shown once.
+    manifests = unique(manifests, lambda m: (m["ecosystem"], tuple(d["name"] for d in m["runtime"]), tuple(d["name"] for d in m["dev"])))
     return {"manifests": manifests[:10], "manifest_total": len(manifests)}
 
 
@@ -1379,6 +1556,8 @@ def dossier(note, offline):
         "stack": build_stack(analysis, texts),
         "security": build_security(analysis, texts, paths),
         "tests": build_tests(analysis, texts, paths),
+        "monitoring": build_monitoring(analysis, texts, public["routes"]),
+        "deployment": build_deployment(analysis, texts, services),
     }
     return result
 

@@ -17,6 +17,8 @@
 | `e2e/expanded.spec.ts` | CV and blog pages with every disclosure open, colour contrast, expertise domains and subcategories |
 | `e2e/projects.spec.ts` | Every project note: spacing, overflow, contrast, copy buttons; `E2E_PROJECTS=a,b` limits the run, `E2E_PROJECT_SHOTS=0` skips screenshots |
 | `e2e/cv-assets.spec.ts` | Local logos and stats widgets on the CV, widget prefetch |
+| `e2e/hero.spec.ts` | CV hero and blog home: load timing, CLS, weight, images, structure, screenshots |
+| `e2e/content.spec.ts` | Every sitemap page: repetition, residue, empty or duplicate headings, duplicate titles |
 
 ## Commands
 
@@ -37,6 +39,8 @@ Reports: e2e-report and e2e-results. Each run replaces these; copy them before r
 `node scripts/run-local-e2e.mjs` builds, serves and runs the suite in one step (default port 8891). Run production checks from PowerShell: Git Bash rewrites `E2E_PREFIX=/CV` into a Windows path.
 
 Set E2E_PORT when 8765 is occupied, and set E2E_URL to the same port. E2E_CHANNEL can select an installed Chrome or Edge channel. On this Windows machine, the installed Chromium cache is at C:/Users/antoi/AppData/Local/ms-playwright; set PLAYWRIGHT_BROWSERS_PATH to that directory if the sandbox resolves a different cache. Browser and server processes must have access to the same network environment.
+
+Analyse any run with `node scripts/analyze-results.mjs e2e-results/<run> report.md`.
 
 ## What the runs found and fixed (2026-10-27/28)
 

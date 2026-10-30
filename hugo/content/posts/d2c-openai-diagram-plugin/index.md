@@ -1,4 +1,5 @@
 ---
+card_image: "images/card.webp"
 post_kind: article
 project_docs: d2copenaiplugin
 story_kind: introduction

@@ -56,12 +56,12 @@
     {{ with $image }}
     <figure class="repo-static-diagram" data-mermaid-image-fallback>
       <img src="{{ .path | relURL }}" loading="lazy" decoding="async" alt="{{ if $fr }}Vue statique de l’architecture de {{ $note.repo }}{{ else }}Static architecture view for {{ $note.repo }}{{ end }}">
-      <figcaption>{{ if $fr }}Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.{{ else }}Static preview. The interactive diagram replaces it after Mermaid loads.{{ end }}</figcaption>
+      {{ if not $preferCompose }}<figcaption>{{ if $fr }}Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.{{ else }}Static preview. The interactive diagram replaces it after Mermaid loads.{{ end }}</figcaption>{{ end }}
     </figure>
     {{ end }}
     <pre class="repo-mermaid-source"><code class="language-mermaid">{{ $source }}</code></pre>
   </div>
-  {{ with $summary }}<div class="repo-system-summary"><p>{{ index .description $i }}</p><dl><div><dt>{{ if $fr }}Composants{{ else }}Components{{ end }}</dt><dd>{{ .components }}</dd></div><div><dt>{{ if $fr }}Connexions{{ else }}Connections{{ end }}</dt><dd>{{ .connections }}</dd></div><div><dt>{{ if $fr }}Liens appuyés par le code ou le README{{ else }}Links supported by code or README{{ end }}</dt><dd>{{ .evidenced }}/{{ .connections }}</dd></div></dl></div>{{ end }}
+  {{ with and (not $preferCompose) $summary }}<div class="repo-system-summary"><p>{{ index .description $i }}</p><dl><div><dt>{{ if $fr }}Composants{{ else }}Components{{ end }}</dt><dd>{{ .components }}</dd></div><div><dt>{{ if $fr }}Connexions{{ else }}Connections{{ end }}</dt><dd>{{ .connections }}</dd></div><div><dt>{{ if $fr }}Liens appuyés par le code ou le README{{ else }}Links supported by code or README{{ end }}</dt><dd>{{ .evidenced }}/{{ .connections }}</dd></div></dl></div>{{ end }}
   <details class="repo-diagram-text">
     <summary>{{ if $fr }}Version texte du diagramme{{ else }}Text version of the diagram{{ end }}</summary>
     {{ if $preferCompose }}

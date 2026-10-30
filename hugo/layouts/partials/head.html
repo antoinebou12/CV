@@ -8,7 +8,7 @@
 
   <!-- title -->
   <title>
-    {{- if not .IsHome -}}{{- if .Params.repository_note -}}{{ .Params.repository_note }}: architecture{{ else }}{{ .Title }}{{ end }} - {{ end -}}{{- site.Title -}}
+    {{- if not .IsHome -}}{{- if .Params.repository_note -}}{{ .Params.repository_note }}: architecture{{ else if eq .Kind "term" }}{{ if eq .Lang "fr" }}Étiquette : {{ else }}Tag: {{ end }}{{ .Title }}{{ else }}{{ .Title }}{{ end }} - {{ end -}}{{- site.Title -}}
   </title>
 
   <!-- meta -->

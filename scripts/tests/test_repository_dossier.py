@@ -213,3 +213,68 @@ def test_gitdiagram_shapes_lose_their_brackets():
     )
     flow = dossier.parse_gitdiagram(analysis, [])
     assert [(s["from"], s["to"]) for s in flow["steps"]] == [("Login page", "User model"), ("User model", "User persistence")]
+
+
+def test_monitoring_finds_logging_errors_and_health_checks():
+    texts = {
+        "app.py": "import logging\nimport sentry_sdk\nlog = logging.getLogger(__name__)\n",
+        "Dockerfile": "FROM python:3.13\nHEALTHCHECK CMD curl -f http://localhost/health\n",
+    }
+    routes = [{"method": "GET", "path": "/health"}, {"method": "GET", "path": "/users"}]
+    result = dossier.build_monitoring(ANALYSIS, texts, routes)
+    assert {s["name"] for s in result["signals"]} == {"Python logging", "Sentry"}
+    assert [r["path"] for r in result["health_routes"]] == ["/health"]
+    assert result["health_checks"][0]["label"] == "Docker HEALTHCHECK"
+
+
+def test_deployment_reads_pipelines_triggers_and_targets():
+    workflow = (
+        "name: Release\non:\n  push:\n    tags: ['v*']\n  workflow_dispatch:\njobs:\n  publish:\n"
+        "    environment: production\n    steps:\n      - uses: actions/checkout@v4\n"
+        "      - name: Publish to PyPI\n        uses: pypa/gh-action-pypi-publish@release/v1\n"
+    )
+    services = {"hosting": [], "containers": [], "base_images": []}
+    result = dossier.build_deployment(ANALYSIS, {".github/workflows/release.yml": workflow}, services)
+    pipeline = result["pipelines"][0]
+    assert pipeline["name"] == "Release"
+    assert pipeline["triggers"] == ["push", "workflow_dispatch"]
+    assert pipeline["environments"] == ["production"]
+    assert pipeline["steps"] == ["Publish to PyPI"]
+    assert [t["label"][0] for t in result["targets"]] == ["PyPI"]
+
+
+@pytest.mark.parametrize(
+    ("path", "text", "kind"),
+    [
+        ("tests/test_math.py", "def test_add(): pass", "unit"),
+        ("tests/integration/test_api.py", "", "integration"),
+        ("tests/test_routes.py", "client = TestClient(app)", "integration"),
+        ("e2e/login.spec.ts", "", "e2e"),
+        ("tests/ui.spec.ts", "import { test } from '@playwright/test'", "e2e"),
+        ("benches/parse.rs", "", "benchmark"),
+    ],
+)
+def test_test_files_are_classified_by_kind(path, text, kind):
+    assert dossier.test_kind(path, text) == kind
+
+
+def test_constructors_are_left_out_of_method_lists():
+    t = {"name": "Client", "methods": ["__init__", "Client", "~Client", "send", "close"]}
+    assert dossier.behaviour(t) == ["send", "close"]
+
+
+def test_generated_code_and_workflow_expressions_are_left_out():
+    assert dossier.generated({"file": "demo/pkg/mathlib.js", "methods": []})
+    assert dossier.generated({"file": "src/lib.js", "methods": ["__wrap", "__destroy_into_raw"]})
+    assert not dossier.generated({"file": "src/graph.rs", "methods": ["from_edges"]})
+    jobs = dossier.workflow_jobs("jobs:\n  push:\n    steps:\n      - name: Push to NuGet.org (suffix ${{ matrix.suffix }})\n")
+    assert jobs[0]["steps"] == ["Push to NuGet.org"]
+    jobs = dossier.workflow_jobs("jobs:\n  build:\n    name: Host tests (${{ matrix.compiler }})\n")
+    assert jobs[0]["title"] == "Host tests"
+    assert dossier.workflow_jobs("jobs:\n  build:\n    name: ${{ matrix.name }}\n")[0]["title"] == "build"
+
+
+def test_deploy_workflows_share_one_hosting_chip():
+    texts = {f".github/workflows/{n}.yml": "jobs:\n  go:\n    steps:\n      - run: gh release create\n" for n in ("ci", "release")}
+    hosting = dossier.build_services(ANALYSIS, texts, [], list(texts))["hosting"]
+    assert [(h["label"][0], h["count"]) for h in hosting] == [("CI deploy workflow", 2)]

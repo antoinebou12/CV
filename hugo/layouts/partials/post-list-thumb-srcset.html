@@ -1,0 +1,19 @@
+{{- /* srcset for a post card image: a 480 px and a 960 px rendition of the same resource that
+       post-list-thumb-url.html picks, so phones do not download the desktop size.
+       Returns "" for GIF/SVG and for posts without a processable image. */ -}}
+{{- $res := false -}}
+{{- if not .Params.cover_none -}}
+  {{- with .Params.card_image -}}{{- with $.Resources.GetMatch . -}}{{- $res = . -}}{{- end -}}{{- end -}}
+  {{- if not $res -}}{{- with partial "featured-image-resource.html" . -}}{{- $res = . -}}{{- end -}}{{- end -}}
+{{- end -}}
+{{- $out := "" -}}
+{{- with $res -}}
+  {{- if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) -}}
+    {{- $small := .Fit "480x270 q80" -}}
+    {{- $large := .Fit "960x540 q85" -}}
+    {{- if lt $small.Width $large.Width -}}
+      {{- $out = printf "%s %dw, %s %dw" $small.RelPermalink $small.Width $large.RelPermalink $large.Width -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

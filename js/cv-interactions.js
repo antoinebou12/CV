@@ -12,7 +12,9 @@
     ? { light: 'Passer en thème clair', dark: 'Passer en thème sombre', control: 'Thème clair ou sombre' }
     : { light: 'Switch to light theme', dark: 'Switch to dark theme', control: 'Light or dark theme' };
   const themeKey = 'cv-theme';
-  const themeButton = document.createElement('button');
+  // The pages ship both nav buttons in their HTML so the nav does not grow (and shift the page) once
+  // this deferred script runs; the buttons are only created here for pages that lack them.
+  const themeButton = document.querySelector('.cv-site-nav .cv-theme-toggle') || document.createElement('button');
   themeButton.type = 'button';
   themeButton.className = 'cv-nav-pill cv-theme-toggle';
   themeButton.setAttribute('aria-label', themeLabels.control);
@@ -31,13 +33,13 @@
   });
   syncThemeButton();
 
-  const button = document.createElement('button');
+  const button = document.querySelector('.cv-site-nav .cv-motion-toggle') || document.createElement('button');
   button.type = 'button';
   button.className = 'cv-nav-pill cv-motion-toggle';
   button.setAttribute('aria-label', labels.control);
   const langNav = document.querySelector('.cv-site-nav .cv-nav-lang');
-  langNav?.before(themeButton);
-  langNav?.before(button);
+  if (!themeButton.isConnected) langNav?.before(themeButton);
+  if (!button.isConnected) langNav?.before(button);
 
   function particleSystem() {
     return window.pJSDom?.find(item => item.pJS.canvas.el.closest('#particles-js'))?.pJS;

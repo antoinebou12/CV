@@ -182,7 +182,7 @@
               "file": "README.md"
             },
             {
-              "title": "Contributing",
+              "title": "Contributing (CONTRIBUTING.md)",
               "text": "When contributing to this repository, please first discuss the change you wish to make via issue,\nemail, or any other method with the owners of this repository before making a change.\nPlease note we have a code of conduct, please follow it in all your interactions with the project.",
               "url": "https://github.com/antoinebou12/another-install-script/blob/6e1e193260504106593f6b92bb799aacafdf0e2b/.github/CONTRIBUTING.md#L1",
               "file": ".github/CONTRIBUTING.md"
@@ -254,23 +254,7 @@
       "license": "GPL-3.0",
       "stars": 2,
       "recorded": "2026-10-24",
-      "chapters": [
-        {
-          "id": "operations",
-          "title": [
-            "Operations and troubleshooting",
-            "Exploitation et dépannage"
-          ],
-          "entries": [
-            {
-              "title": "Deployment",
-              "text": "---",
-              "url": "https://github.com/antoinebou12/antoinebou12/blob/c519c6b47b35d3d391167aa43b6cf6cafe7d0435/README.md#L30",
-              "file": "README.md"
-            }
-          ]
-        }
-      ],
+      "chapters": [],
       "documents": [
         {
           "path": "README.md",
@@ -521,12 +505,6 @@
               "text": "- Docker\n- Docker Compose\n- Node.js\n- NPM\n- PHP 8.1.2\n- Composer",
               "url": "https://github.com/antoinebou12/AuthLaravel/blob/2ec4e5d4367341fa789c0027d17ecd43ba80cf01/README.md#L13",
               "file": "README.md"
-            },
-            {
-              "title": "Requirements",
-              "text": "-   Docker\n-   Docker Compose\n-   Node.js\n-   NPM\n-   PHP 8.1.2\n-   Composer",
-              "url": "https://github.com/antoinebou12/AuthLaravel/blob/2ec4e5d4367341fa789c0027d17ecd43ba80cf01/AuthLaravel/README.md#L9",
-              "file": "AuthLaravel/README.md"
             }
           ]
         }
@@ -901,7 +879,7 @@
               "file": "e2e/README.md"
             },
             {
-              "title": "E2E tests (Playwright)",
+              "title": "E2E tests (Playwright) (README.md)",
               "text": "From repo root:",
               "url": "https://github.com/antoinebou12/Dimension/blob/5281d0932aa99ea0d2c43e64c388b9256c75b126/render/demo/README.md#L53",
               "file": "render/demo/README.md"
@@ -1299,7 +1277,7 @@
               "file": "docs/README.md"
             },
             {
-              "title": "Prerequisites",
+              "title": "Prerequisites (README.md)",
               "text": "Before starting, ensure you have:\n- Python 3.8+ - For the build script\n- Docker - For LaTeX compilation (recommended)\n- Git - For version control\n- Text Editor - For editing files (VS Code, Vim, etc.)\nOptional but recommended:\n- LaTeX Distribution - For local LaTeX compilation (alternative to Docker)\n- Node.js - For alternative HTTP server",
               "url": "https://github.com/antoinebou12/CV/blob/2fdf469a3056498868554d59661713206d435b7b/docs/setup/README.md#L12",
               "file": "docs/setup/README.md"
@@ -1365,7 +1343,7 @@
               "file": "docs/README.md"
             },
             {
-              "title": "Deployment Issues",
+              "title": "Deployment Issues (README.md)",
               "text": "Problem: GitHub Pages not updating\n- Solution: Check GitHub Actions workflow status\n- Solution: Verify Pages is enabled in repository settings\n- Solution: Check workflow logs for errors\nProblem: Docker container won't start\n- Solution: Check container logs: docker-compose logs\n- Solution: Verify ports are not in use\n- Solution: Check Docker daemon is running\nProblem: Kubernetes pods not running\n- Solution: Check pod status: kubectl get pods -n cv-stack\n- Solution: View logs: kubectl logs  -n cv-stack\n- Solution: Verify ingress is configured correctly",
               "url": "https://github.com/antoinebou12/CV/blob/2fdf469a3056498868554d59661713206d435b7b/docs/README.md#L146",
               "file": "docs/README.md"
@@ -1550,7 +1528,7 @@
               "file": "CONTRIBUTING.md"
             },
             {
-              "title": "Lockfile and `requirements.txt`",
+              "title": "Lockfile and requirements.txt",
               "text": "uv.lock is the runtime source of truth for CI, Vercel, and release validation. Deploy/install paths export from the lockfile at runtime.\nKeep requirements.txt updated for users that still install with pip:\nRun this after changing runtime dependencies in pyproject.toml / uv.lock, then commit the updated requirements.txt.\nTransitive pins: Some packages are pinned only in [tool.uv] override-dependencies in pyproject.toml (they are not direct Poetry deps). Dependabot is configured for the uv ecosystem so PRs target uv.lock consistently. After merging a dependency PR, re-export requirements.txt if the lockfile changed so CI’s “export matches requirements.txt” step stays green.",
               "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/CONTRIBUTING.md#L115",
               "file": "CONTRIBUTING.md"
@@ -1583,12 +1561,6 @@
               "file": "CONTRIBUTING.md"
             },
             {
-              "title": "MCP Client Configuration Examples",
-              "text": "#",
-              "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L1",
-              "file": "config/README.md"
-            },
-            {
               "title": "Client matrix",
               "text": "| Client | Hosted HTTP | Local stdio | Guide |\n| --- | --- | --- | --- |\n| Cursor | cursor_http.json · .cursor/mcp.json | cursor_config.json | docs/integrations/cursor.md |\n| Claude Desktop | claude_desktop_http.json | claude_desktop_config.json | docs/integrations/claude_desktop.md |\n| VS Code / GitHub Copilot | vscode_mcp.json · .vscode/mcp.json | vscode_mcp_stdio.json | docs/integrations/vscode_copilot.md |\n| OpenAI Codex | codex_config.toml · .codex/config.toml | codex_stdio.toml | docs/integrations/openai_codex.md |\n| Open WebUI + Ollama | openwebui_mcp.json | Optional via mcpo | docs/integrations/ollama.md |\n| Continue + Ollama | continue_config.yaml | See comments in that file | docs/integrations/ollama.md |",
               "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/config/README.md#L22",
@@ -1601,9 +1573,15 @@
               "file": "config/README.md"
             },
             {
-              "title": "2. Setup wizard (`uml-mcp setup`)",
+              "title": "2. Setup wizard (uml-mcp setup)",
               "text": "The wizard asks for:\n- a profile (local, docker or enterprise)\n- which features to turn on (each one is explained, with whether it applies live or needs a restart)\n- a Kroki server\n- which MCP clients to register\nIt then runs, with a progress bar:\n1. validate the configuration\n2. write ~/.config/uml-mcp/config.yaml (mode 0600, with a backup of any previous file)\n3. register the clients\n4. run a health check\n| Feature key | What it does | Applies |\n| --- | --- | --- |\n| memory_only | Keep diagrams in memory; return URLs/bytes, no files | restart |\n| diagram_fallback | Retry with PlantUML server or mermaid.ink when Kroki fails | restart |\n| audit | MXCP-style audit trail of every call (redacted) | live |\n| json_logs | One JSON object per log line | live |\n| metrics_endpoint | Prometheus /metrics | restart |\n| otel | OpenTelemetry traces (needs uml-mcp[otel]) | live |\n| rate_limit |…",
               "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L36",
+              "file": "docs/installation.md"
+            },
+            {
+              "title": "3. Web setup and the console",
+              "text": "the admin console. The terminal prints a one-time setup token,\nwhich the browser link carries in its URL fragment. The console needs the token\nto save settings, register clients or stop the server. Only loopback clients can\nreach it.\nThe Setup page walks through the same steps as the wizard: profile → features →\nclients → YAML review → Save. Change anything later on the Settings page.",
+              "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/installation.md#L75",
               "file": "docs/installation.md"
             }
           ]
@@ -1634,7 +1612,7 @@
               "file": "docs/configuration.md"
             },
             {
-              "title": "Troubleshooting",
+              "title": "Troubleshooting (install.md)",
               "text": "| Symptom | Cause and fix |\n| --- | --- |\n| 404 on /admin of a server | Auth is off and admin.allow_local_without_auth is not true, or the request didn't come from loopback |\n| Buttons are disabled, \"Enter the setup token\" | Use the link printed by uml-mcp admin, or paste the token into the key icon in the top bar |\n| docker is not installed / the Docker daemon is not running | Install Docker Desktop or Engine, start it, then run uml-mcp kroki up again |\n| port is already allocated | Another service uses 8001: uml-mcp kroki up --port 8002 --use |\n| A companion shows HTTP 500 right after start | It is still starting. Run uml-mcp kroki status again after a few seconds; up already waits up to 5 minutes |\n| KROKI_SERVER is set by the environment (409) | An environment variable wins over uml-mcp.yaml. Change or unset it where the server is started |\n| Rendering works in the playground but…",
               "url": "https://github.com/antoinebou12/uml-mcp/blob/ebaeac6eb6737639cd1fd5e92967408309a9a64d/docs/admin/install.md#L125",
               "file": "docs/admin/install.md"
@@ -1835,7 +1813,7 @@
               "file": "README.md"
             },
             {
-              "title": "Installation",
+              "title": "Installation (PACKAGE_README.md)",
               "text": "Core sink:\nASP.NET Core companion (user/request context in logs):\nAlternate ids (single TFM per package): Serilog.Sinks.SentrySDK.6, Serilog.Sinks.SentrySDK.10, and matching AspNetCore ids — see Available packages.\nThis stack references the Sentry NuGet package (6.3.2), the same major line as Sentry for .NET. For DSN, SendDefaultPii, and debug options, see the Quick Start. Initialize as early as possible so startup failures are reported. This sink calls SentrySdk.Init when you configure WriteTo.Sentry with a DSN; avoid a second SentrySdk.Init in the same process unless you deliberately use one initialization path.\nSet a valid Sentry DSN in appsettings.json or in code. Without a DSN, the sink throws when the DSN argument is empty. Demos show JSON and programmatic configuration.",
               "url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L32",
               "file": "src/PACKAGE_README.md"
@@ -1847,7 +1825,7 @@
               "file": "src/PACKAGE_README.md"
             },
             {
-              "title": "Installation",
+              "title": "Installation (PACKAGE_README_NET6.md)",
               "text": "This stack references Sentry (6.3.2). See the Sentry .NET Quick Start. This sink calls SentrySdk.Init when you configure WriteTo.Sentry with a DSN; avoid duplicate in-process initialization.",
               "url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README_NET6.md#L20",
               "file": "src/PACKAGE_README_NET6.md"
@@ -1880,7 +1858,7 @@
               "file": "CONTRIBUTING.md"
             },
             {
-              "title": "Serilog.Sinks.SentrySDK",
+              "title": "Serilog.Sinks.SentrySDK (PACKAGE_README.md)",
               "text": "A Serilog sink for Sentry that simplifies error and log management in your applications. It builds on the Sentry .NET SDK and official Serilog integration.\nBased on serilog-contrib/serilog-sinks-sentry",
               "url": "https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/d0b5c252b942f61f097feccef10ac2d2b43aad7b/src/PACKAGE_README.md#L1",
               "file": "src/PACKAGE_README.md"
@@ -2035,7 +2013,7 @@
               "file": "README.md"
             },
             {
-              "title": "Environment variables",
+              "title": "Environment variables (CONTRIBUTING.md)",
               "text": "| Variable | Where | Description |\n| -------- | ----- | ----------- |\nCreate a .env file locally when you need non-default Kroki URLs or other local-only settings. Never commit secrets; .env is gitignored.",
               "url": "https://github.com/antoinebou12/kroki-playground/blob/8def712a64de0f9badb65f2e1a3bb855aeb25523/CONTRIBUTING.md#L21",
               "file": "CONTRIBUTING.md"
@@ -2071,7 +2049,7 @@
               "file": "README.md"
             },
             {
-              "title": "Contributing",
+              "title": "Contributing (CONTRIBUTING.md)",
               "text": "Thank you for helping improve Kroki Playground. This document describes how to set up the project, what to run before opening a pull request, and how we use issues and linking.",
               "url": "https://github.com/antoinebou12/kroki-playground/blob/8def712a64de0f9badb65f2e1a3bb855aeb25523/CONTRIBUTING.md#L1",
               "file": "CONTRIBUTING.md"
@@ -2189,21 +2167,6 @@
               "title": "API",
               "text": "POST /generate_diagram\nJSON body:\n| Field   | Type   | Required | Description |\n|---------|--------|----------|-------------|\n| lang  | string | yes      | e.g. plantuml, mermaid, d2, or a Kroki type allowed by the server |\n| type  | string | yes      | e.g. class, sequence, activity (used for validation / logging) |\n| code  | string | yes      | Diagram source (max length enforced in app.py) |\n| theme | string | no       | PlantUML / Mermaid theming where applicable |\nExample (PlantUML) with curl (bash / Git Bash):\nExample with PowerShell:\n---",
               "url": "https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L86",
-              "file": "README.md"
-            }
-          ]
-        },
-        {
-          "id": "operations",
-          "title": [
-            "Operations and troubleshooting",
-            "Exploitation et dépannage"
-          ],
-          "entries": [
-            {
-              "title": "Deployment (Vercel)",
-              "text": "---",
-              "url": "https://github.com/antoinebou12/D2COpenAIPlugin/blob/7d15ee155d5f392b1d90192dc2e21ec479a6291a/README.md#L125",
               "file": "README.md"
             }
           ]
@@ -3058,13 +3021,7 @@
               "file": "README.md"
             },
             {
-              "title": "Prerequisites",
-              "text": "Hardware: ESP32 FireBeetle board (v1.0), Adafruit 7-segment display (I2C backpack), breadboard, and jumper wires.\nSoftware: Git, PlatformIO or Arduino IDE, and necessary ESP32 libraries.",
-              "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L15",
-              "file": "readme.md"
-            },
-            {
-              "title": "Software Installation",
+              "title": "Software Installation (readme.md)",
               "text": "1. Clone the repository to your local machine.\n2. Open the project with your preferred IDE or editor that supports PlatformIO or the Arduino IDE.\n3. Install the necessary libraries mentioned in the platformio.ini file or the Arduino project.\n4. Upload the code to your ESP32 FireBeetle board.",
               "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L25",
               "file": "readme.md"
@@ -3091,13 +3048,13 @@
               "file": "README.md"
             },
             {
-              "title": "Hardware Setup",
+              "title": "Hardware Setup (readme.md)",
               "text": "1. Connect the 7-segment display to the ESP32 according to the provided wiring diagram.\n2. Ensure a stable power supply for the ESP32 board.",
               "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L20",
               "file": "readme.md"
             },
             {
-              "title": "Usage",
+              "title": "Usage (readme.md)",
               "text": "After uploading the code to your ESP32 board:\n1. Connect the ESP32 to a power source.\n2. The ESP32 starts a web server accessible within your local network.\n3. Find the ESP32's IP address from your serial monitor and visit the provided IP using a web browser.\n4. Use the web interface to update the 7-segment display's content.",
               "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L37",
               "file": "readme.md"
@@ -3118,7 +3075,7 @@
               "file": "README.md"
             },
             {
-              "title": "Contributing",
+              "title": "Contributing (readme.md)",
               "text": "Contributions to improve the project are welcome. Please feel free to fork the repository and submit pull requests.",
               "url": "https://github.com/antoinebou12/ESP32-7SEG/blob/6cac20eed8dc6293d011a0c8a8341654e0870b80/readme.md#L46",
               "file": "readme.md"
@@ -3894,7 +3851,7 @@
               "file": "README.md"
             },
             {
-              "title": "Usage",
+              "title": "Usage (getting-started.md)",
               "text": "First, you need to create an account on MarketWatch and then create a virtual game.\nOnce you have created a game, you will be able to get the game's id from its URL, which will be used throughout the library.",
               "url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/docs/getting-started.md#L11",
               "file": "docs/getting-started.md"
@@ -3913,12 +3870,6 @@
               "text": "Contributions are welcome. Please open an issue or submit a pull request.",
               "url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/README.md#L169",
               "file": "README.md"
-            },
-            {
-              "title": "Contributing",
-              "text": "Contributions are welcome. Please open an issue or submit a pull request.",
-              "url": "https://github.com/antoinebou12/marketwatch/blob/9a8bd76c464501f249aff141f1e105e7345155c6/CONTRIBUTING.md#L1",
-              "file": "CONTRIBUTING.md"
             }
           ]
         }
@@ -4302,13 +4253,13 @@
               "file": "README.md"
             },
             {
-              "title": "Prerequisites",
+              "title": "Prerequisites (README.md)",
               "text": "1. You must have a Renpho account. If you don't have one, you can create one here.\n2. You must have a Renpho scale. If you don't have one, you can purchase one here.\n3. You must have the Renpho app installed on your mobile device. You can download it here for Android and here for iOS.\n4. You must have Home Assistant installed and running.\n5. You must have the Home Assistant Community Store (HACS) installed and running.\n6. Visual Studio Code is recommended for editing the files.",
               "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L23",
               "file": "docs/README.md"
             },
             {
-              "title": "Installation",
+              "title": "Installation (README.md)",
               "text": "1. Copy this folder to /custom_components/hass_renpho/.\n2. Add the necessary configuration to your configuration.yaml file.",
               "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L212",
               "file": "docs/README.md"
@@ -4329,7 +4280,7 @@
               "file": "README.md"
             },
             {
-              "title": "Configuration",
+              "title": "Configuration (README.md)",
               "text": "Add the following entry in your configuration.yaml:\nThen add the sensor platform:",
               "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L217",
               "file": "docs/README.md"
@@ -4341,15 +4292,15 @@
               "file": "docs/README.md"
             },
             {
-              "title": "Parameters",
-              "text": "None",
-              "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L260",
+              "title": "Parameters (README.md)",
+              "text": "- metric (str): The specific metric to retrieve (e.g., 'weight', 'bmi').",
+              "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L288",
               "file": "docs/README.md"
             },
             {
-              "title": "Parameters",
-              "text": "None",
-              "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L274",
+              "title": "Parameters (docs/README.md)",
+              "text": "- metric (str): The metric to fetch (e.g., 'bodyfat', 'water').\n- user_id (str, optional): The user ID for whom the metric should be fetched. Defaults to the object's user_id if not provided.",
+              "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L303",
               "file": "docs/README.md"
             }
           ]
@@ -4374,7 +4325,7 @@
               "file": "docs/README.md"
             },
             {
-              "title": "API Documentation",
+              "title": "API Documentation (README.md)",
               "text": "Endpoint: /api/v3/users/sign_in.json\nMethod: POST\nParameters:\n- app_id: Application identifier.\n- secure_flag: Indicates secure login.\n- email: User's email address.\n- password: User's password.",
               "url": "https://github.com/antoinebou12/hass_renpho/blob/b38c9dfa5416e5c1d09619d963b7bfaac238494b/docs/README.md#L651",
               "file": "docs/README.md"
@@ -4608,12 +4559,6 @@
               "text": "To install the latest release, you can use pip:\nIf you wish to install the current development code, you can compile the library from scratch. Either clone the repo manually or use git+ with pip:",
               "url": "https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/python/README.md#L12",
               "file": "python/README.md"
-            },
-            {
-              "title": "Installation",
-              "text": "To install the latest release, you can use pip:\nIf you wish to install the current development code, you can compile the library from scratch. Either clone the repo manually or use git+ with pip:",
-              "url": "https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L25",
-              "file": "docs/PYPI_README.md"
             }
           ]
         },
@@ -4631,13 +4576,7 @@
               "file": "README.md"
             },
             {
-              "title": "Contributing",
-              "text": "This project is open to contributors! Contributions can come in the form of feature requests, bug fixes, documentation, tutorials, and the like. We highly recommend filing an Issue first before submitting a Pull Request.\nSimply fork this repository and make a Pull Request! We would appreciate:\n* Implementation of new features\n* Bug Reports\n* Documentation\n* Testing",
-              "url": "https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/PYPI_README.md#L44",
-              "file": "docs/PYPI_README.md"
-            },
-            {
-              "title": "Contributing",
+              "title": "Contributing (CONTRIBUTING.md)",
               "text": "Contributions are welcome, and they are greatly appreciated! Every\nlittle bit helps, and credit will always be given.",
               "url": "https://github.com/antoinebou12/ipc-toolkit/blob/4d9e47e9f5b2afd46be99234d127d12e3c7a74cd/docs/CONTRIBUTING.md#L1",
               "file": "docs/CONTRIBUTING.md"
@@ -4974,7 +4913,7 @@
               "file": "README.md"
             },
             {
-              "title": "`npm test`",
+              "title": "npm test",
               "text": "Launches the test runner in the interactive watch mode.",
               "url": "https://github.com/antoinebou12/Maestro/blob/6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783/maestro-app/README.md#L15",
               "file": "maestro-app/README.md"
@@ -5393,7 +5332,7 @@
           ],
           "entries": [
             {
-              "title": "4. **UPDATE**",
+              "title": "4. UPDATE",
               "text": "Met à jour des données existantes dans une table.",
               "url": "https://github.com/antoinebou12/TCH099/blob/a7323c88b2ae6c12d89ef685c6a4cf4325218afc/db/README.md#L47",
               "file": "db/README.md"

@@ -19,6 +19,10 @@ DOSSIER = {
     },
     "flow": {"groups": [{"label": "Runtime"}, {"label": "Rendering"}]},
     "modules": {"items": [{"name": "core"}]},
+    "layers": [
+        {"key": "interface", "modules": [{"files": 4, "extensions": [".py"]}]},
+        {"key": "core", "modules": [{"files": 9, "extensions": [".py"]}]},
+    ],
     "integrations": {"services": [{"label": ["Kroki", "Kroki"]}]},
     "database": {"engines": [{"label": ["SQLite", "SQLite"], "kind": "sql"}]},
     "services": {"hosting": [{"label": ["Docker image", "Image Docker"]}], "containers": ["api", "kroki"], "base_images": [{"image": "python:3.13-slim"}]},
@@ -46,12 +50,30 @@ def test_usecase_links_actors_to_route_groups_tools_and_commands():
     assert "A_mcp --> U2" in source
 
 
-def test_component_offers_interfaces_and_depends_on_externals():
-    source = uml.component_uml("demo", DOSSIER, True)
-    assert 'interface "Client HTTP" as P0' in source
-    assert 'component "Runtime" as C0' in source
-    assert "SYS ..> R0 : utilise" in source
-    assert 'database "SQLite" as S0' in source
+def test_c4_context_shows_people_system_and_externals():
+    source = uml.c4_context_uml("demo", dict(DOSSIER, _intro=["Demo renders diagrams. More text.", "Demo dessine."]), False)
+    assert "!include <C4/C4_Context>" in source
+    assert 'Person(P_http, "HTTP client")' in source
+    assert 'System(SYS, "demo", "Demo renders diagrams")' in source
+    assert 'System_Ext(E0, "Kroki")' in source and 'SystemDb(D0, "SQLite")' in source
+    assert 'Rel(SYS, D0, "Reads and writes")' in source
+
+
+def test_c4_container_uses_compose_services_or_layers():
+    from_compose = uml.c4_container_uml("demo", DOSSIER, True)
+    assert 'System_Boundary(SYS, "demo") {' in from_compose
+    assert 'Container(C0, "api", "Docker")' in from_compose
+    assert 'ContainerDb(DB0, "SQLite", "")' in from_compose
+    layered = dict(DOSSIER, services=dict(DOSSIER["services"], containers=[]))
+    source = uml.c4_container_uml("demo", layered, False)
+    assert 'Container(API, "Entry points and API", "Python")' in source
+    assert 'Container(CORE, "Core logic", "Python")' in source
+    assert 'Rel(API, CORE, "Calls")' in source
+
+
+def test_c4_sources_skip_plain_uml_styling():
+    assert "skinparam" not in uml.wrap("Person(a, \"A\")", "c4plantuml")
+    assert "skinparam" in uml.wrap("actor a", "usecase")
 
 
 def test_deployment_uses_compose_services_and_base_images():
@@ -71,12 +93,12 @@ def test_activity_forks_parallel_jobs_then_runs_dependants():
 def test_diagrams_are_skipped_without_evidence():
     empty = {
         "public": {"routes": [], "mcp": [], "cli": [], "cli_total": 0, "entry_points": []},
-        "flow": None, "modules": {"items": []},
+        "flow": None, "modules": {"items": []}, "layers": [],
         "integrations": {"services": []}, "database": {"engines": []},
         "services": {"hosting": [], "containers": [], "base_images": []},
         "tests": {"workflows": []},
     }
-    assert [build("x", empty, False) for _, _, build, _, _ in uml.DIAGRAMS] == [None, None, None, None]
+    assert [build("x", empty, False) for _, _, build, _, _ in uml.DIAGRAMS] == [None] * len(uml.DIAGRAMS)
 
 
 def test_sanitize_strips_executable_markup():
@@ -98,3 +120,13 @@ def test_sanitize_rejects_non_svg():
 
 def test_labels_cannot_break_plantuml_syntax():
     assert uml.q('a"b{c}|d;e') == "a'b'c''d'e"
+
+
+def test_c4_compose_entry_is_the_project_service_and_transports_are_not_systems():
+    dossier = dict(DOSSIER, integrations={"services": [{"label": ["Kroki", "Kroki"], "kind": "rendering"}, {"label": ["WebSocket", "WebSocket"], "kind": "transport"}]},
+                   services=dict(DOSSIER["services"], containers=["kroki", "demo", "redis"]))
+    source = uml.c4_container_uml("demo", dossier, False)
+    assert 'Rel(P_http, C1, "Uses")' in source
+    assert 'Rel(C1, E0, "Calls")' in source
+    assert "WebSocket" not in source
+    assert 'Rel(C0, C1' not in source and 'Rel(C1, C2' not in source

@@ -43,7 +43,7 @@
         >{{- i18n "postListFeatured" -}}</span
       >
       {{- end -}}
-      {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.png") -}}
+      {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.webp") -}}
       {{- if $p.Params.cover_code -}}
       <div class="post-code-cover" aria-hidden="true"><span>{{ $p.Params.cover_label }}</span><strong>{{ $p.Params.cover_code }}</strong><code>.blend → S3 / MinIO</code></div>
       {{- else if not $p.Params.cover_none -}}
@@ -53,6 +53,7 @@
         <div class="{{ if $isProject }}aspect-[16/10]{{ else }}aspect-[4/3]{{ end }} w-full">
           <img
             src="{{ $mediaURL }}"
+            {{- with partial "post-list-thumb-srcset.html" $p }} srcset="{{ . }}" sizes="(max-width: 767px) 92vw, (max-width: 1200px) 46vw, 560px"{{ end }}
             alt=""
             width="720"
             height="540"
