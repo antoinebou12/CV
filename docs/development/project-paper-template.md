@@ -23,3 +23,9 @@ retain their pinned revisions when available.
 layouts. It checks sequential headings, matching contents entries, anchor targets,
 reference counts and page overflow. Focused screenshots cover numbered contents
 and reference entries; the existing viewer tests cover disclosure behavior and zoom.
+
+The contents use a fixed number column and a wrapping, left-aligned label column.
+Desktop shows one heading; mobile keeps the disclosure heading. Counts displayed
+beside section titles are omitted from contents labels. `project-polish.spec.ts`
+checks sidebar width, label alignment and badge styling at 390, 768 and 1440 pixels
+in both themes, with screenshots of CV and ChitUI.

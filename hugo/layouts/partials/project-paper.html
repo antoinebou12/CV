@@ -4,7 +4,7 @@
 {{- range findRE `(?s)<h[23]\b[^>]*>.*?</h[23]>` $html -}}
   {{- $heading := . -}}
   {{- $level := substr . 2 1 -}}
-  {{- $title := . | plainify | htmlUnescape | strings.TrimSpace -}}
+  {{- $title := . | replaceRE `(?s)<span[^>]*class="[^"]*repo-count[^"]*"[^>]*>.*?</span>` "" | plainify | htmlUnescape | strings.TrimSpace -}}
   {{- if $title -}}
     {{- $number := "" -}}
     {{- if eq $level "2" -}}
