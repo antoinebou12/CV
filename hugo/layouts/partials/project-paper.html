@@ -1,0 +1,36 @@
+{{- /* Number the rendered document, including headings emitted by shortcodes. */ -}}
+{{- $html := .html | string -}}
+{{- $section := 0 -}}{{- $subsection := 0 -}}{{- $links := slice -}}
+{{- range findRE `(?s)<h[23]\b[^>]*>.*?</h[23]>` $html -}}
+  {{- $heading := . -}}
+  {{- $level := substr . 2 1 -}}
+  {{- $title := . | plainify | htmlUnescape | strings.TrimSpace -}}
+  {{- if $title -}}
+    {{- $number := "" -}}
+    {{- if eq $level "2" -}}
+      {{- $section = add $section 1 -}}{{- $subsection = 0 -}}
+      {{- $number = printf "%d" $section -}}
+    {{- else -}}
+      {{- $subsection = add $subsection 1 -}}
+      {{- $number = printf "%d.%d" $section $subsection -}}
+    {{- end -}}
+    {{- $id := "" -}}
+    {{- with findRE `id="[^"]+"` $heading 1 -}}{{- $id = index . 0 | strings.TrimPrefix `id="` | strings.TrimSuffix `"` -}}{{- end -}}
+    {{- if not $id -}}
+      {{- $id = printf "project-section-%s" (replace $number "." "-") -}}
+      {{- $heading = replaceRE `^<h([23])` (printf `<h${1} id="%s"` $id) $heading -}}
+    {{- end -}}
+    {{- $replacement := replaceRE `^(<h[23][^>]*>)` (printf `${1}<span class="project-section-number">%s.</span> ` $number) $heading -}}
+    {{- $html = replace $html . $replacement 1 -}}
+    {{- if eq $level "2" -}}{{- $links = $links | append (dict "id" $id "title" $title "number" $number) -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $navigation := partial "project-paper-contents.html" (dict "links" $links "page" .page) -}}
+{{- if strings.Contains $html `class="repo-sidenav"` -}}
+  {{- $html = replaceRE `(?s)<nav class="repo-sidenav"[^>]*>.*?</nav>` $navigation $html -}}
+{{- else -}}
+  {{- with findRE `(?s)<h1\b[^>]*>.*?</h1>` $html 1 -}}
+    {{- $html = replace $html (index . 0) (printf `%s<details class="project-paper-contents"><summary>%s</summary>%s</details>` (index . 0) (cond (eq $.page.Lang "fr") "Table des matières" "Table of contents") $navigation) 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($html | safeHTML) -}}

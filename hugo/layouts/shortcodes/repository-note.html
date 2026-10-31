@@ -41,7 +41,7 @@
 <div class="repo-note" data-repo-shell>
   <div class="repo-shell-layout">
     <details class="repo-sidenav-disclosure" open>
-    <summary>{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</summary>
+    <summary>{{ if $fr }}Table des matières{{ else }}Table of contents{{ end }}</summary>
     <nav class="repo-sidenav" aria-label="{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}">
       <p class="repo-sidenav-label">{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</p>
       <a href="#overview" class="active">{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</a>
@@ -374,21 +374,7 @@
         </ul>
       </section>
       {{ partial "documentation-glossary.html" (dict "page" .Page "context" (printf "%s %s %s %s %s %s" $note.repo $note.intro $note.parts $note.nodes $note.trace $analysis.languages)) }}
-      <section class="doc repo-project-references" aria-labelledby="project-references-heading" id="project-references">
-        <h2 id="project-references-heading">{{ if $fr }}Sources et actualités du projet{{ else }}Sources and project updates{{ end }}</h2>
-        <ul class="repo-reference-list">
-          <li><a href="{{ $note.url }}">GitHub</a><span>{{ if $fr }}Dépôt source{{ else }}Source repository{{ end }}</span></li>
-          <li><a href="{{ $note.url }}#readme">README</a><span>{{ if $fr }}Documentation du dépôt{{ else }}Repository documentation{{ end }}</span></li>
-          {{ range $relatedArticles }}
-            {{ if and (eq .lang $.Page.Lang) (strings.HasPrefix .path "posts/") }}
-              {{ $dir := strings.TrimSuffix "/index.fr.md" (strings.TrimSuffix "/index.md" .path) }}
-              {{ with site.GetPage $dir }}
-              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ if $fr }}{{ .Date | time.Format ":date_medium" }} · Récit du projet{{ else }}{{ .Date | time.Format ":date_medium" }} · Project story{{ end }}</span></li>
-              {{ end }}
-            {{ end }}
-          {{ end }}
-        </ul>
-      </section>
+      {{ partial "project-paper-references.html" .Page }}
     </div>
 
     <aside class="repo-context">

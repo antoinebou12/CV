@@ -79,7 +79,7 @@
   <div class="{{ if $isRepoNote }}repo-doc-surface{{ else }}single-post-surface single-post-body not-prose mb-10{{ end }} min-w-0">
     <div class="{{ if $isRepoNote }}repo-doc-prose{{ else }}single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert{{ end }}">
       {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 1) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}</summary>{{ .TableOfContents | replaceRE "<ul>" "<ol>" | replaceRE "</ul>" "</ol>" | safeHTML }}</details>{{ end }}
-      <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- $page.Content -}}{{ if and (eq .Section "projects") (not (in .RawContent "{{< repository-note")) }}{{ partial "documentation-glossary.html" (dict "page" . "context" .RawContent) }}{{ end }}</section>
+      <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- if $isRepoNote -}}{{- $projectHTML := $page.Content | string -}}{{- if not (in .RawContent "{{< repository-note") -}}{{- $projectHTML = printf "%s%s%s" $projectHTML (partial "documentation-glossary.html" (dict "page" . "context" .RawContent)) (partial "project-paper-references.html" .) -}}{{- end -}}{{ partial "project-paper.html" (dict "html" $projectHTML "page" .) }}{{- else -}}{{- $page.Content -}}{{- end -}}</section>
     </div>
   </div>
 

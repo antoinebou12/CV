@@ -1,0 +1,4 @@
+<nav class="repo-sidenav" aria-label="{{ if eq .page.Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}">
+  <p class="repo-sidenav-label">{{ if eq .page.Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}</p>
+  <ol role="list">{{ range .links }}<li><a href="#{{ .id }}"><span class="project-toc-number">{{ .number }}.</span> <span>{{ .title }}</span></a></li>{{ end }}</ol>
+</nav>

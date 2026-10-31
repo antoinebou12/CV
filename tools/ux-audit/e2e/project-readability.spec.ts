@@ -10,7 +10,7 @@ for (const theme of ['light', 'dark'] as const) {
     await expect(navigation).not.toHaveAttribute('open');
     await navigation.locator(':scope > summary').click();
     await expect(navigation).toHaveAttribute('open', '');
-    await navigation.locator('a[href="#overview"]').click();
+    await navigation.locator('a').first().click();
     await expect(navigation).not.toHaveAttribute('open');
     await page.evaluate(() => scrollTo(0, 0));
     await page.screenshot({ path: info.outputPath('mobile-navigation.png') });

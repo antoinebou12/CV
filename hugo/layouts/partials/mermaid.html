@@ -118,13 +118,13 @@
     }
     const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
     const sections = navLinks
-      .map((link) => document.getElementById(link.hash.slice(1)))
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
       .filter(Boolean);
     if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!current) return;
-        navLinks.forEach((link) => link.classList.toggle('active', link.hash === `#${current.target.id}`));
+        navLinks.forEach((link) => link.classList.toggle('active', decodeURIComponent(link.hash) === `#${current.target.id}`));
       }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
       sections.forEach((section) => observer.observe(section));
     }

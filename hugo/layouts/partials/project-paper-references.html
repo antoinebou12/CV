@@ -1,0 +1,10 @@
+{{- $sources := index hugo.Data.project_sources (replace .File.Path "\\" "/") -}}
+<section class="doc repo-project-references project-paper-references" id="project-references" aria-labelledby="project-bibliography-heading">
+  <h2 id="project-bibliography-heading">{{ if eq .Lang "fr" }}Références{{ else }}References{{ end }}</h2>
+  <ol class="project-reference-entries">
+    {{ range $n, $source := $sources }}
+    <li id="project-source-{{ add $n 1 }}">{{ if .author }}{{ strings.TrimSuffix "." .author }}. ({{ with .date }}{{ . }}{{ else }}{{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}{{ end }}). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}).{{ end }} <span>[{{ .type }}]</span> {{ .publisher }}.</li>
+    {{ end }}
+  </ol>
+  <p class="repo-evidence-label">{{ if eq .Lang "fr" }}« s. d. » indique qu’aucune date de publication n’a été vérifiée. Les liens des fichiers conservent la révision inspectée lorsqu’elle est disponible.{{ else }}“n.d.” indicates that no publication date has been verified. File links retain the inspected revision where available.{{ end }}</p>
+</section>
