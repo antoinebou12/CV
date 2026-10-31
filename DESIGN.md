@@ -193,3 +193,12 @@ numbered contents, and native disclosures remain available.
 Repository snapshot cards use existing language, component, and document counts.
 Language meters show GitHub Linguist byte percentages, alongside the exact table;
 they do not indicate test coverage or project progress.
+
+## Article composition
+
+Articles use one centered reading column (up to 960px). Titles, body content and
+references share its left edge. References follow the article instead of floating
+beside its first paragraph. Technical diagram figures have a neutral image surface,
+a bounded image height and a caption inside the frame. Inline code wraps on phones;
+code blocks scroll within their container. Mobile comparison tables stay within the
+reading column and keep their accessible header labels.
