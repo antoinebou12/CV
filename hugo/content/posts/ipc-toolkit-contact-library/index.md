@@ -15,6 +15,9 @@ The useful boundary in IPC Toolkit is clear: it provides contact routines, while
 
 <!--more-->
 
+{{< figure src="images/architecture.png" alt="Project architecture" caption="Project architecture overview. Open the image to inspect the details." >}}
+
+
 The toolkit includes barrier functions and derivatives, adaptive barrier stiffness, broad- and narrow-phase continuous collision detection, distance derivatives for edges and triangles, distance barrier potentials, and smooth or lagged dissipative friction potentials.
 
 That list also describes the limit. IPC Toolkit is not a complete physics engine and does not include a simulation loop or solver. The upstream project points to PolyFEM and Rigid IPC as full simulation implementations that use it.

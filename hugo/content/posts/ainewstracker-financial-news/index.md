@@ -7,8 +7,10 @@ description: "Following financial news from collection to analysis and historica
 translationKey: ainewstracker-financial-news
 tags: [Python, AI, Finance]
 post_kind: article
-cover_none: true
-mermaid: true
+images: ["images/ainewstracker.svg"]
+image_alt: "AINewsTracker"
+show_hero: true
+mermaid: false
 lastmod: 2026-10-26T12:00:00-04:00
 ---
 
@@ -20,20 +22,20 @@ The project is a FastAPI service with separate routes for news, articles, compan
 
 ## From a feed to an article
 
-The main path begins in `app/routers/news.py`. A news route dispatches work to `app/core/services/news.py`, which retrieves feed content and builds article records. Text analysis lives in `app/core/services/metrics.py`; the article repository then writes the result to MongoDB.
+A news request starts a collection job. The news service retrieves feed content and creates article records. The metrics service analyses the text, and the article repository stores the result in MongoDB.
 
-```mermaid
-flowchart LR
-  User["API client"] --> API["FastAPI<br/>app/main.py"]
-  API --> Routes["News routes<br/>app/routers/news.py"]
-  Routes --> Fetcher["News service<br/>app/core/services/news.py"]
-  Sources["Financial news sources"] --> Fetcher
-  Fetcher --> Metrics["Text metrics<br/>app/core/services/metrics.py"]
-  Fetcher --> Repo["Article repository<br/>app/core/repo/article.py"]
-  Repo --> Mongo[("MongoDB")]
-```
+| Responsibility | Source file |
+| --- | --- |
+| Receive the request | `app/routers/news.py` |
+| Collect news | `app/core/services/news.py` |
+| Analyse the text | `app/core/services/metrics.py` |
+| Store articles | `app/core/repo/article.py` |
 
 Routes describe the API surface, models define stored data, services perform the news work, and repositories isolate database access. `app/main.py` also configures Redis caching.
+
+{{< figure src="images/article-processing.svg" alt="AINewsTracker article processing flow" caption="AlgoETS. (n.d.). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
+
+[Original processing diagram](https://github.com/AlgoETS/AINewsTracker/blob/main/docs/diagrams/out/article_processing_flow.svg).
 
 ## Keep the source attached to the analysis
 
@@ -62,7 +64,7 @@ A useful review separates the data stages:
 | Strategy input | Which observations were available at the point being tested |
 | Backtest output | The chosen period, assumptions and the strategy’s reported result |
 
-This is how I would evaluate an experiment built on the service. It is not a report of measured prediction accuracy or trading returns.
+This review checks the data available to the strategy, its assumptions and its reported result. The article presents no measured prediction accuracy or trading returns.
 
 ## Read the architecture
 

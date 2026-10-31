@@ -1,0 +1,4 @@
+{{- $state := newScratch -}}
+{{- $state.Set "count" 0 -}}{{- $state.Set "subcount" 0 -}}{{- $state.Set "map" dict -}}
+{{- partial "article-section-walk.html" (dict "headings" .Fragments.Headings "state" $state) -}}
+{{- return ($state.Get "map") -}}

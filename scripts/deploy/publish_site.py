@@ -30,6 +30,7 @@ def main():
         run(git, "fetch", "origin", "main")
         run(git, "merge-base", "--is-ancestor", "origin/main", "HEAD")
     # Publish with the checked-in theme CSS expected by our template overrides.
+    run(sys.executable, "scripts/build/article_sources.py")
     run(sys.executable, "scripts/deploy/build_docs.py", "--date", args.date)
     if args.publish:
         run(git, "add", "--", "docs")

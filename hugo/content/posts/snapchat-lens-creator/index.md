@@ -1,6 +1,8 @@
 ---
 post_kind: article
-cover_none: true
+images: ["images/featured.png"]
+image_alt: "Snapchat Lens Insights: earlier usage screenshot"
+image_caption: "Earlier Lens Insights screenshot. The updated totals are reported in the article below."
 title: "Snapchat Lens Creator"
 date: 2022-09-06T10:00:00-04:00
 lastmod: 2026-10-24T14:00:00-04:00

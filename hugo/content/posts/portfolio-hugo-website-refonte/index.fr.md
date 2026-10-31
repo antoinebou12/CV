@@ -20,6 +20,9 @@ La première version réunissait le CV et quelques articles sous Hugo. Cette ref
 
 <!--more-->
 
+{{< figure src="images/featured.png" alt="Architecture du projet" caption="Vue d’architecture du projet. Cliquer sur l’image pour examiner les détails." >}}
+
+
 ## Une identité commune, de la place pour le contenu
 
 Le fond bleu ardoise et la surface claire relient maintenant le CV au blog. Le vert sarcelle indique les liens, les filtres sélectionnés et les actions utiles. Fraunces porte les grands titres. Le texte et les commandes utilisent une typographie plus discrète. La palette, les espacements et les règles de mouvement sont décrits dans [DESIGN.md](https://github.com/antoinebou12/CV/blob/main/DESIGN.md).

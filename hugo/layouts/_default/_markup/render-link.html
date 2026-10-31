@@ -1,0 +1,7 @@
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- if and (eq .Page.Section "posts") .Page.File -}}
+  {{- $url := .Destination -}}
+  {{- range $n, $source := index hugo.Data.article_sources (replace .Page.File.Path "\\" "/") -}}
+    {{- if eq .url $url -}}<sup class="article-citation"><a href="#source-{{ add $n 1 }}" aria-label="{{ if eq $.Page.Lang "fr" }}Référence{{ else }}Reference{{ end }} {{ add $n 1 }}">[{{ add $n 1 }}]</a></sup>{{- end -}}
+  {{- end -}}
+{{- end -}}

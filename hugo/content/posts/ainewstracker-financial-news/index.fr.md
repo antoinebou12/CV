@@ -7,8 +7,10 @@ description: "Suivre les actualités financières de leur collecte à l’analys
 translationKey: ainewstracker-financial-news
 tags: [Python, IA, Finance]
 post_kind: article
-cover_none: true
-mermaid: true
+images: ["images/ainewstracker.svg"]
+image_alt: "AINewsTracker"
+show_hero: true
+mermaid: false
 lastmod: 2026-10-26T12:00:00-04:00
 ---
 
@@ -20,18 +22,18 @@ Le projet est un service FastAPI avec des routes distinctes pour les actualités
 
 ## Du flux à l’article
 
-Le parcours principal commence dans `app/routers/news.py`. Une route transmet le travail à `app/core/services/news.py`, qui récupère le contenu des flux et construit les articles. L’analyse de texte se trouve dans `app/core/services/metrics.py`; le dépôt d’articles enregistre ensuite le résultat dans MongoDB.
+Une requête lance la collecte. Le service d’actualités récupère le contenu des flux et crée les articles. Le service de mesures analyse le texte, puis le dépôt d’articles enregistre le résultat dans MongoDB.
 
-```mermaid
-flowchart LR
-  User["Client API"] --> API["FastAPI<br/>app/main.py"]
-  API --> Routes["Routes d’actualités<br/>app/routers/news.py"]
-  Routes --> Fetcher["Service d’actualités<br/>app/core/services/news.py"]
-  Sources["Sources financières"] --> Fetcher
-  Fetcher --> Metrics["Mesures de texte<br/>app/core/services/metrics.py"]
-  Fetcher --> Repo["Dépôt d’articles<br/>app/core/repo/article.py"]
-  Repo --> Mongo[("MongoDB")]
-```
+| Responsabilité | Fichier source |
+| --- | --- |
+| Recevoir la requête | `app/routers/news.py` |
+| Collecter les actualités | `app/core/services/news.py` |
+| Analyser le texte | `app/core/services/metrics.py` |
+| Stocker les articles | `app/core/repo/article.py` |
+
+{{< figure src="images/article-processing.svg" alt="Traitement des articles dans AINewsTracker" caption="AlgoETS. (n.d.). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
+
+[Diagramme de traitement original](https://github.com/AlgoETS/AINewsTracker/blob/main/docs/diagrams/out/article_processing_flow.svg).
 
 Les routes définissent l’interface HTTP, les modèles décrivent les données, les services traitent les actualités et les dépôts isolent l’accès à la base. `app/main.py` configure aussi le cache Redis.
 

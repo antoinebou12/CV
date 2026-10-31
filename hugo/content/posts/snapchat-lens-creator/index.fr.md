@@ -1,6 +1,8 @@
 ---
 post_kind: article
-cover_none: true
+images: ["images/featured.png"]
+image_alt: "Lens Insights : ancienne capture des statistiques"
+image_caption: "Ancienne capture Lens Insights. Les totaux actualisés figurent dans l’article ci-dessous."
 title: "Créateur de Lenses Snapchat"
 date: 2022-09-06T10:00:00-04:00
 lastmod: 2026-10-24T14:00:00-04:00

@@ -1,0 +1,12 @@
+{{- range .headings -}}
+  {{- if eq .Level 2 -}}
+    {{- $.state.Add "count" 1 -}}
+    {{- $.state.Set "subcount" 0 -}}
+    {{- $.state.SetInMap "map" .ID ($.state.Get "count") -}}
+  {{- end -}}
+  {{- if and (eq .Level 3) (gt ($.state.Get "count") 0) -}}
+    {{- $.state.Add "subcount" 1 -}}
+    {{- $.state.SetInMap "map" .ID (printf "%d.%d" ($.state.Get "count") ($.state.Get "subcount")) -}}
+  {{- end -}}
+  {{- with .Headings -}}{{- partial "article-section-walk.html" (dict "headings" . "state" $.state) -}}{{- end -}}
+{{- end -}}

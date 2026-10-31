@@ -1,0 +1,13 @@
+{{- $sourceKey := replace .File.Path "\\" "/" -}}
+{{- $sources := index hugo.Data.article_sources $sourceKey -}}
+<section class="article-references" aria-labelledby="article-references-heading">
+  <h2 id="article-references-heading">{{ if eq .Lang "fr" }}Références{{ else }}References{{ end }}</h2>
+  {{ with $sources }}
+  <ol>{{ range $n, $source := . }}
+    <li id="source-{{ add $n 1 }}">{{ if .author }}<span>{{ .author }}.</span> ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}).{{ end }} <span class="reference-type">[{{ .type }}]</span> <span>{{ .publisher }}.</span></li>
+  {{ end }}</ol>
+  <p class="reference-note">{{ if eq $.Lang "fr" }}« s. d. » indique qu’aucune date de publication n’a été vérifiée. Les références conservent les liens de l’article ou de son dossier source.{{ else }}“n.d.” indicates that no publication date has been verified. References retain links from the article or its source bundle.{{ end }}</p>
+  {{ else }}
+  <p>{{ if eq .Lang "fr" }}Notes personnelles et médias du projet. Aucun lien vers une publication externe n’est fourni dans cet article.{{ else }}Personal notes and project media. This article supplies no link to an external publication.{{ end }}</p>
+  {{ end }}
+</section>

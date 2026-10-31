@@ -18,6 +18,9 @@ Dimension est mon workspace Rust pour mes expériences en mathématiques et en i
 
 <!--more-->
 
+{{< figure src="images/renderer-architecture.png" alt="Architecture du projet" caption="Vue d’architecture du projet. Cliquer sur l’image pour examiner les détails." >}}
+
+
 ## Architecture
 
 ```mermaid

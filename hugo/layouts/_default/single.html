@@ -78,10 +78,12 @@
 
   <div class="{{ if $isRepoNote }}repo-doc-surface{{ else }}single-post-surface single-post-body not-prose mb-10{{ end }} min-w-0">
     <div class="{{ if $isRepoNote }}repo-doc-prose{{ else }}single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert{{ end }}">
-      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 3) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Dans cet article{{ else }}In this article{{ end }}</summary>{{ .TableOfContents }}</details>{{ end }}
+      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 1) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}</summary>{{ .TableOfContents | replaceRE "<ul>" "<ol>" | replaceRE "</ul>" "</ol>" | safeHTML }}</details>{{ end }}
       <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- $page.Content -}}{{ if and (eq .Section "projects") (not (in .RawContent "{{< repository-note")) }}{{ partial "documentation-glossary.html" (dict "page" . "context" .RawContent) }}{{ end }}</section>
     </div>
   </div>
+
+  {{ if eq .Section "posts" }}{{ partial "article-references.html" . }}{{ end }}
 
   <!-- Post Tags -->
   {{- if and $isRepoNote .Params.tags -}}

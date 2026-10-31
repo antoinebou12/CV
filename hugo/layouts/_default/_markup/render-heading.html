@@ -1,0 +1,1 @@
+<h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ if and (eq .Page.Section "posts") (or (eq .Level 2) (eq .Level 3)) }}{{ $numbers := partialCached "article-section-map.html" .Page .Page.File.Path }}{{ with index $numbers .Anchor }}<span class="article-section-number">{{ . }}.</span> {{ end }}{{ end }}{{ .Text | safeHTML }}</h{{ .Level }}>

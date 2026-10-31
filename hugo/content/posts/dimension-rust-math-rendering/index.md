@@ -18,6 +18,9 @@ Dimension is my Rust workspace for mathematics and graphics experiments. The use
 
 <!--more-->
 
+{{< figure src="images/renderer-architecture.png" alt="Project architecture" caption="Project architecture overview. Open the image to inspect the details." >}}
+
+
 ## Architecture
 
 ```mermaid

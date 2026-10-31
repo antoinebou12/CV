@@ -20,6 +20,9 @@ The first version put the CV and a few posts online with Hugo. This rebuild give
 
 <!--more-->
 
+{{< figure src="images/featured.png" alt="Project architecture" caption="Project architecture overview. Open the image to inspect the details." >}}
+
+
 ## A shared canvas, with room for the content
 
 The slate-blue background and pale paper surface now connect the CV to the blog. Teal marks links, selected filters and useful actions. Fraunces carries the main titles; body text and controls use more restrained type. The palette, spacing and motion rules are recorded in [DESIGN.md](https://github.com/antoinebou12/CV/blob/main/DESIGN.md).

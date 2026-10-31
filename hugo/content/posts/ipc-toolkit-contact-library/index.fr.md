@@ -15,6 +15,9 @@ La frontière d’IPC Toolkit est simple : la bibliothèque fournit les routines
 
 <!--more-->
 
+{{< figure src="images/architecture.png" alt="Architecture du projet" caption="Vue d’architecture du projet. Cliquer sur l’image pour examiner les détails." >}}
+
+
 Le toolkit contient des fonctions barrière et leurs dérivées, une raideur barrière adaptative, la détection continue de collisions en phases large et étroite, les dérivées de distance pour arêtes et triangles, des potentiels de barrière et des potentiels de friction dissipative lisse ou retardée.
 
 Cette liste précise aussi la limite : IPC Toolkit n’est pas un moteur physique complet et ne fournit ni boucle de simulation ni solveur. Le projet amont cite PolyFEM et Rigid IPC comme implémentations complètes qui l’utilisent.
