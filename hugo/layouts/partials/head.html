@@ -62,6 +62,12 @@
   <script defer src="{{ $particlesVendor.RelPermalink }}"></script>
   {{ $motion := resources.Get "background-motion.js" | minify | fingerprint }}
   <script defer src="{{ $motion.RelPermalink }}"></script>
+  {{ if and .IsPage (or (eq .Section "posts") (eq .Section "projects")) }}
+  {{ $readerCSS := resources.Get "reader-tools.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $readerCSS.RelPermalink }}" />
+  {{ $readerJS := resources.Get "reader-tools.js" | minify | fingerprint }}
+  <script defer src="{{ $readerJS.RelPermalink }}"></script>
+  {{ end }}
   {{- $dark_icon := "theme.png" -}}
   <!---->
   {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}

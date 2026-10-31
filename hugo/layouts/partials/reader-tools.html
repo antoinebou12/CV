@@ -1,0 +1,29 @@
+{{- $fr := eq .Lang "fr" -}}
+<div id="reader-tools" class="reader-ui" hidden data-copied="{{ if $fr }}Lien copié{{ else }}Link copied{{ end }}" data-failed="{{ if $fr }}Copie indisponible. Copiez l’adresse du navigateur.{{ else }}Copy unavailable. Copy the address from your browser.{{ end }}" data-empty="{{ if $fr }}Aucune section trouvée. Essayez un autre mot.{{ else }}No matching sections. Try another word.{{ end }}" data-results="{{ if $fr }}résultats{{ else }}results{{ end }}">
+  <div class="reader-progress" aria-hidden="true"><span></span></div>
+  <div class="reader-launch" aria-label="{{ if $fr }}Outils de lecture{{ else }}Reading tools{{ end }}">
+    <div class="reader-split">
+      <button type="button" data-reader-search aria-haspopup="dialog"><span aria-hidden="true">⌕</span> {{ if $fr }}Explorer cette page{{ else }}Explore this page{{ end }} <kbd>/</kbd></button>
+      <button type="button" data-reader-copy aria-describedby="reader-copy-tip" aria-label="{{ if $fr }}Copier le lien de cette page{{ else }}Copy page link{{ end }}">↗</button>
+      <span id="reader-copy-tip" class="reader-tooltip" role="tooltip">{{ if $fr }}Copier le lien{{ else }}Copy link{{ end }}</span>
+    </div>
+  </div>
+  <button class="reader-fab" popovertarget="reader-actions" aria-label="{{ if $fr }}Outils de la page{{ else }}Page tools{{ end }}"><span aria-hidden="true">☷</span><span>{{ if $fr }}Outils{{ else }}Page tools{{ end }}</span></button>
+  <div id="reader-actions" popover aria-label="{{ if $fr }}Actions de la page{{ else }}Page actions{{ end }}">
+    <strong>{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</strong>
+    <button type="button" data-reader-search>{{ if $fr }}Rechercher une section{{ else }}Find a section{{ end }} <kbd>/</kbd></button>
+    <button type="button" data-reader-copy>{{ if $fr }}Copier le lien{{ else }}Copy page link{{ end }}</button>
+    <button type="button" data-reader-top>{{ if $fr }}Retour en haut{{ else }}Back to top{{ end }} <span aria-hidden="true">↑</span></button>
+    <hr>
+    <label><input type="checkbox" id="reader-expand"> {{ if $fr }}Développer les sections de texte{{ else }}Expand text sections{{ end }}</label>
+    <p>{{ if $fr }}Les diagrammes restent à la demande.{{ else }}Diagrams load when opened.{{ end }}</p>
+  </div>
+  <dialog id="reader-search" aria-labelledby="reader-search-title">
+    <header><div><small>{{ if $fr }}NAVIGATION RAPIDE{{ else }}QUICK NAVIGATION{{ end }}</small><h2 id="reader-search-title">{{ if $fr }}Explorer cette page{{ else }}Explore this page{{ end }}</h2></div><button type="button" data-reader-close aria-label="{{ if $fr }}Fermer{{ else }}Close{{ end }}">×</button></header>
+    <label for="reader-query">{{ if $fr }}Rechercher un titre ou un diagramme{{ else }}Find a heading or diagram{{ end }}</label>
+    <div class="reader-search-field"><input type="search" id="reader-query" autocomplete="off" placeholder="{{ if $fr }}Architecture, tests, références…{{ else }}Architecture, tests, references…{{ end }}"><button type="button" data-reader-clear>{{ if $fr }}Effacer{{ else }}Clear{{ end }}</button></div>
+    <div class="reader-segments" role="group" aria-label="{{ if $fr }}Filtrer les résultats{{ else }}Filter results{{ end }}"><button type="button" data-reader-filter="all" aria-pressed="true">{{ if $fr }}Tout{{ else }}All{{ end }}</button><button type="button" data-reader-filter="section" aria-pressed="false">{{ if $fr }}Sections{{ else }}Sections{{ end }}</button><button type="button" data-reader-filter="diagram" aria-pressed="false">{{ if $fr }}Diagrammes{{ else }}Diagrams{{ end }}</button></div>
+    <p id="reader-result-count" role="status"></p><ul id="reader-results"></ul>
+  </dialog>
+  <div id="reader-feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+</div>

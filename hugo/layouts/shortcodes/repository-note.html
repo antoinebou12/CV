@@ -102,9 +102,9 @@
             {{ with index hugo.Data.repository_dossiers.repositories $note.repo }}
               {{ $ecosystems := slice }}
               {{ range .stack.manifests }}
-                {{ if not (in $ecosystems .ecosystem) }}<a class="tag tool" href="#dossier-stack">{{ .ecosystem }}</a>{{ $ecosystems = $ecosystems | append .ecosystem }}{{ end }}
+                {{ if not (in $ecosystems .ecosystem) }}<a class="tag tool stack" title="{{ if $fr }}Manifeste de dépendances{{ else }}Dependency manifest{{ end }}" href="#dossier-stack">{{ .ecosystem }}</a>{{ $ecosystems = $ecosystems | append .ecosystem }}{{ end }}
               {{ end }}
-              {{ range .tests.frameworks }}<a class="tag tool" href="#dossier-tests">{{ .name }}</a>{{ end }}
+              {{ range .tests.frameworks }}<a class="tag tool testing" title="{{ if $fr }}Framework de test détecté dans le code{{ else }}Test framework found in the code{{ end }}" href="#dossier-tests">{{ .name }}</a>{{ end }}
             {{ end }}
             {{ if $note.fork }}<span class="tag status">{{ if $fr }}Crédit amont{{ else }}Upstream credited{{ end }}</span>{{ end }}
           </div>
@@ -124,6 +124,11 @@
         </div>
       </header>
 
+      <dl class="repo-snapshot-cards" aria-label="{{ if $fr }}Le dépôt en bref{{ else }}Repository at a glance{{ end }}">
+        <div><dt>{{ if $fr }}Langages{{ else }}Languages{{ end }}</dt><dd>{{ len $analysis.languages }}</dd><a href="#languages-panel">{{ if $fr }}Répartition du code{{ else }}Code breakdown{{ end }} <span aria-hidden="true">↗</span></a></div>
+        <div><dt>{{ if $fr }}Composants documentés{{ else }}Documented components{{ end }}</dt><dd>{{ len $note.parts }}</dd><a href="#features">{{ if $fr }}Explorer les modules{{ else }}Explore modules{{ end }} <span aria-hidden="true">↗</span></a></div>
+        <div><dt>{{ if $fr }}Documents source{{ else }}Source documents{{ end }}</dt><dd>{{ len $guide.documents }}</dd><a href="#reader-guide">{{ if $fr }}Lire les instructions{{ else }}Read the instructions{{ end }} <span aria-hidden="true">↗</span></a></div>
+      </dl>
       <details class="repo-language-disclosure" id="languages-panel">
         <summary><span>{{ if $fr }}Langages du dépôt{{ else }}Repository languages{{ end }}</span>{{ with index $analysis.languages 0 }}<span class="repo-language-primary">{{ .name }} {{ .percent }}%</span>{{ end }}{{ with $analysis.languages }}<span class="repo-count">{{ len . }}</span>{{ end }}</summary>
         <div class="repo-language-content">
@@ -133,6 +138,9 @@
         {{- range $analysis.languages -}}{{- if ge .percent 0.5 -}}{{- $aria = printf "%s%s %s%%. " $aria .name (string .percent) -}}{{- end -}}{{- end -}}
         <div class="repo-language-track" role="img" aria-label="{{ $aria | strings.TrimSpace }}">
           {{ range $analysis.languages }}{{ if ge .percent 0.5 }}<span style="width: {{ .percent }}%" title="{{ .name }} {{ .percent }}%"></span>{{ end }}{{ end }}
+        </div>
+        <div class="repo-language-cards">
+          {{ range first 4 $analysis.languages }}<div class="repo-language-card"><div><strong>{{ .name }}</strong><span>{{ .percent }}%</span></div><meter min="0" max="100" value="{{ .percent }}" aria-label="{{ .name }}">{{ .percent }}%</meter><small>{{ .bytes | lang.FormatNumber 0 }} {{ if $fr }}octets{{ else }}bytes{{ end }}</small></div>{{ end }}
         </div>
         <table class="repo-lang-table">
           <thead>

@@ -54,6 +54,7 @@
       {{- block "main" . -}}{{- end -}}
     </main>
 
+    {{ if and .IsPage (or (eq .Section "posts") (eq .Section "projects")) }}{{ partial "reader-tools.html" . }}{{ end }}
     <button id="background-motion" type="button" hidden data-pause="{{ if eq .Lang "fr" }}Suspendre le fond animé{{ else }}Pause background{{ end }}" data-resume="{{ if eq .Lang "fr" }}Animer le fond{{ else }}Animate background{{ end }}" aria-pressed="false"></button>
     {{- partial "footer.html" . -}}
     {{- partial "site-tag-chip-paint.html" . -}}

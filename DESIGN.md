@@ -174,3 +174,22 @@ Slide previews use local images exported from the original presentation, with a 
 - Do not invent language percentages, ports, or permission claims.
 - Do not use color alone to distinguish languages, services, or permissions.
 - Do not put Liquid Glass on CV content-layer date badges; use the filled capsule pattern above.
+
+## Reading controls for projects and posts
+
+Project notes and posts share a progressive reading toolbar (`reader-tools.html`,
+`reader-tools.css`, `reader-tools.js`). The inline split control opens page search
+or copies the current URL. The floating Page tools button opens a native popover
+with section search, copy, back-to-top, and a checkbox for expanding text panels.
+The search dialog filters headings and diagrams locally, with All / Sections /
+Diagrams scopes, an empty state, Escape dismissal, and keyboard focus return.
+Press `/` outside a text field to open it. On phones, it uses a bottom sheet.
+
+Copy actions report success or an actionable error in a polite status message.
+The top reading indicator is decorative and does not announce every scroll event.
+Diagrams remain lazy. Without the script, the original content, source links,
+numbered contents, and native disclosures remain available.
+
+Repository snapshot cards use existing language, component, and document counts.
+Language meters show GitHub Linguist byte percentages, alongside the exact table;
+they do not indicate test coverage or project progress.
