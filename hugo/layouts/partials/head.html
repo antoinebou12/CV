@@ -56,10 +56,12 @@
   {{ $projectTheme := resources.Get "projects-editorial.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $projectTheme.RelPermalink }}" />
   {{ end }}
-  {{ if and (eq .Section "projects") (eq .Kind "section") }}
-  {{ $projectParticles := resources.Get "project-particles.js" | minify | fingerprint }}
-  <script defer src="{{ $projectParticles.RelPermalink }}" integrity="{{ $projectParticles.Data.Integrity }}"></script>
-  {{ end }}
+  {{ $wide := resources.Get "desktop-layout.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $wide.RelPermalink }}" />
+  {{ $particlesVendor := resources.Get "vendor/particles.min.js" | fingerprint }}
+  <script defer src="{{ $particlesVendor.RelPermalink }}"></script>
+  {{ $motion := resources.Get "background-motion.js" | minify | fingerprint }}
+  <script defer src="{{ $motion.RelPermalink }}"></script>
   {{- $dark_icon := "theme.png" -}}
   <!---->
   {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}

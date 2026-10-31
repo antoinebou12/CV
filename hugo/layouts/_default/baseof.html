@@ -43,9 +43,7 @@
   <body
     class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"
   >
-    {{- if and (eq .Section "projects") (eq .Kind "section") -}}
     <div id="project-particles" aria-hidden="true"></div>
-    {{- end -}}
     <a class="site-skip-link" href="#main-content">{{ if eq .Lang "fr" }}Aller au contenu{{ else }}Skip to content{{ end }}</a>
     {{- partial "header.html" . -}}
 
@@ -56,6 +54,7 @@
       {{- block "main" . -}}{{- end -}}
     </main>
 
+    <button id="background-motion" type="button" hidden data-pause="{{ if eq .Lang "fr" }}Suspendre le fond animé{{ else }}Pause background{{ end }}" data-resume="{{ if eq .Lang "fr" }}Animer le fond{{ else }}Animate background{{ end }}" aria-pressed="false"></button>
     {{- partial "footer.html" . -}}
     {{- partial "site-tag-chip-paint.html" . -}}
     {{- partial "cloudflare-analytics.html" . -}}

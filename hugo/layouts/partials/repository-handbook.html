@@ -26,6 +26,9 @@
   <h2 id="repository-references">{{ if $fr }}Références du dépôt{{ else }}Repository references{{ end }}</h2>
   {{ if $guide.chapters }}
   <p class="repo-evidence-label">{{ if $fr }}Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.{{ else }}Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.{{ end }}</p>
+  {{ else }}
+  <p>{{ if $fr }}Le dépôt ne fournit pas de guide détaillé pour ces étapes. Commencez par le README et les fichiers commentés ci-dessus.{{ else }}The repository does not provide a detailed guide for these steps. Start with its README and the source walkthrough above.{{ end }}</p>
+  {{ end }}
   <div class="repo-guide-chapters">
     {{ range $guide.chapters }}
     <details class="repo-guide-chapter">
@@ -40,14 +43,11 @@
       {{ end }}
     </details>
     {{ end }}
-  </div>
-  {{ else }}
-  <p>{{ if $fr }}Le dépôt ne fournit pas de guide détaillé pour ces étapes. Commencez par le README et les fichiers commentés ci-dessus.{{ else }}The repository does not provide a detailed guide for these steps. Start with its README and the source walkthrough above.{{ end }}</p>
-  {{ end }}
   <details class="repo-guide-chapter">
     <summary>{{ if $fr }}Documentation source{{ else }}Source documentation{{ end }}</summary>
     <ul class="repo-guide-files" role="list">{{ range $guide.documents }}<li><a href="{{ .url }}"><code>{{ .path }}</code></a></li>{{ end }}</ul>
     <p class="repo-evidence-label">{{ if $fr }}{{ len $guide.documents }} documents lus parmi {{ $guide.coverage.available }} candidats.{{ else }}{{ len $guide.documents }} documents read from {{ $guide.coverage.available }} candidates.{{ end }}{{ if $guide.coverage.failures }} {{ if $fr }}Certaines lectures ont échoué.{{ else }}Some reads failed.{{ end }}{{ end }}</p>
   </details>
+  </div>
 </section>
 {{- end -}}

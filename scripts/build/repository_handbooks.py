@@ -170,7 +170,20 @@ def excerpt(lines):
         )
     ]
     text = "\n".join(safe).replace("**", "").replace("`", "")
-    return text[:900].rsplit(" ", 1)[0] + "…" if len(text) > 900 else text
+    if len(text) <= 900:
+        return text
+    selected = []
+    size = 0
+    for line in text.splitlines():
+        if size + len(line) > 900:
+            if not selected and not line.startswith("|"):
+                selected.append(line[:900].rsplit(" ", 1)[0] + "…")
+            break
+        selected.append(line)
+        size += len(line) + 1
+    if len(selected) >= 2 and re.match(r"^\|[ :|\-]+$", selected[-1]):
+        selected = selected[:-2]
+    return "\n".join(selected)
 
 
 def unique_title(title, path, seen):

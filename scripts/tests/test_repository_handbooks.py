@@ -107,3 +107,11 @@ def test_every_repository_has_bilingual_guidance_and_matching_diagram_evidence()
                 / f"architecture-{locale}.mmd"
             )
             assert path.read_text(encoding="utf-8") == source
+
+def test_excerpt_never_splits_a_markdown_table_row():
+    rows = ['| Parameter | Description | Default |', '| --- | --- | --- |']
+    rows += [f'| value.{i} | ' + 'description ' * 8 + '| true |' for i in range(30)]
+    value = docs.excerpt(rows)
+    assert len(value) <= 900
+    assert all(line.endswith('|') and line.count('|') == 4 for line in value.splitlines())
+    assert '…' not in value

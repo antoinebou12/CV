@@ -1,0 +1,34 @@
+/* Shared responsive canvas: diagrams and catalogs use the available desktop space. */
+#project-particles { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.28; }
+#project-particles canvas { display:block; width:100%; height:100%; }
+.blog-site .site-header, .blog-site .site-main, .blog-site .site-footer { position:relative; z-index:1; }
+#background-motion { position:relative; z-index:1; display:block; margin:1.5rem auto; padding:.65rem 1rem; border:1px solid var(--journal-border, #68818b); border-radius:999px; background:var(--journal-page); color:var(--journal-text); font:inherit; cursor:pointer; }
+#background-motion[hidden] { display:none; }
+#background-motion:focus-visible { outline:3px solid #43bfb4; outline-offset:4px; }
+.repo-doc .repo-source-markdown th:not(#\#):not(#\#):not(#\#),
+.repo-doc .repo-source-markdown td:not(#\#):not(#\#):not(#\#) { padding:.85rem 1rem!important; line-height:1.6!important; vertical-align:top; overflow-wrap:anywhere; }
+.repo-doc .repo-source-markdown { overflow-x:auto; padding:1.25rem!important; }
+.repo-doc .repo-trace { margin:1.5rem 0!important; padding:1.25rem!important; border:1px solid var(--border)!important; border-radius:14px; }
+.repo-doc .repo-trace > summary { padding:.5rem 0!important; cursor:pointer; }
+.repo-doc .repo-trace[open] > summary { margin-bottom:1rem!important; }
+.repo-doc .repo-trace > p { margin:.75rem 0!important; line-height:1.75!important; }
+@media (min-width:1100px) {
+ .blog-site .site-main:not(#\#):not(#\#):not(#\#), .blog-site .site-header:not(#\#):not(#\#):not(#\#), .blog-site .site-footer:not(#\#):not(#\#):not(#\#) { width:calc(100% - 64px)!important; max-width:2240px!important; }
+ .blog-site .site-main { padding:clamp(28px,3vw,64px)!important; }
+ .repo-doc .repo-shell-layout { width:100%!important; max-width:none!important; grid-template-columns:15rem minmax(0,1fr)!important; column-gap:clamp(2rem,4vw,5rem)!important; padding-left:0!important; padding-right:0!important; }
+ .repo-doc .repo-shell-main { width:100%!important; max-width:none!important; }
+ .repo-doc .repo-breadcrumbs { max-width:none!important; }
+ .repo-doc .repo-hero-lede, .repo-doc .repo-trace > p { max-width:78ch; }
+ .journal-article { display:grid!important; grid-template-columns:minmax(0,1fr) 18rem; gap:2rem 4rem; align-items:start; max-width:1600px; margin-inline:auto; }
+ .journal-article > .article-heading { grid-column:1 / -1; width:100%!important; max-width:none!important; margin:0!important; }
+ .journal-article > .article-heading h1 { max-width:26ch; }
+ .journal-article > figure { grid-column:1; width:100%!important; max-width:none!important; margin:0!important; }
+ .journal-article > .single-post-surface { grid-column:1; width:100%!important; max-width:none!important; margin:0!important; }
+ .journal-article .single-post-prose, .journal-article .single-post-content { max-width:none!important; }
+ .journal-article .single-post-content > p, .journal-article .single-post-content > ul, .journal-article .single-post-content > ol { max-width:78ch; }
+ .journal-article > .article-references { grid-column:2; grid-row:2 / span 2; max-width:none!important; width:100%; margin:0!important; padding:1.5rem!important; border:1px solid var(--journal-border, #68818b); border-radius:16px; overflow-wrap:anywhere; }
+ .journal-article > .single-post-nav { grid-column:1 / -1; }
+}
+@media (min-width:1440px) { .blog-site .post-card-grid { grid-template-columns:repeat(3,minmax(0,1fr))!important; } }
+@media (min-width:1900px) { .blog-site .post-card-grid { grid-template-columns:repeat(4,minmax(0,1fr))!important; } }
+@media (prefers-reduced-motion:reduce) { #project-particles { display:none!important; } }
