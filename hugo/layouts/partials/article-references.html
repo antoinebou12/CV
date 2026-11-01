@@ -1,12 +1,13 @@
 {{- $sourceKey := replace .File.Path "\\" "/" -}}
+{{- $articleDate := .Date -}}
 {{- $sources := index hugo.Data.article_sources $sourceKey -}}
 <section class="article-references" aria-labelledby="article-references-heading">
   <h2 id="article-references-heading">{{ if eq .Lang "fr" }}Références{{ else }}References{{ end }}</h2>
   {{ with $sources }}
   <ol>{{ range $n, $source := . }}
-    <li id="source-{{ add $n 1 }}">{{ if .author }}<span>{{ .author }}.</span> ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}).{{ end }} <span class="reference-type">[{{ .type }}]</span> <span>{{ .publisher }}.</span></li>
+    <li id="source-{{ add $n 1 }}">{{ if .author }}<span>{{ .author }}.</span> (<time datetime="{{ $articleDate.Format "2006-01-02" }}">{{ $articleDate | time.Format ":date_long" }}</time>). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. (<time datetime="{{ $articleDate.Format "2006-01-02" }}">{{ $articleDate | time.Format ":date_long" }}</time>).{{ end }} <span class="reference-type">[{{ .type }}]</span> <span>{{ .publisher }}.</span></li>
   {{ end }}</ol>
-  <p class="reference-note">{{ if eq $.Lang "fr" }}« s. d. » signifie qu’aucune date de publication n’est indiquée.{{ else }}“n.d.” means no publication date is recorded.{{ end }}</p>
+  <p class="reference-note">{{ if eq $.Lang "fr" }}Les références utilisent la date de publication de cet article.{{ else }}References use this article’s publication date.{{ end }}</p>
   {{ else }}
   <p>{{ if eq .Lang "fr" }}Notes personnelles et médias du projet. Aucun lien vers une publication externe n’est fourni dans cet article.{{ else }}Personal notes and project media. This article supplies no link to an external publication.{{ end }}</p>
   {{ end }}

@@ -22,6 +22,9 @@ for (const theme of ['light', 'dark'] as const) {
       expect(numbers, file).toEqual(numbers.map((_, n) => `${n + 1}.`));
       await expect(page.locator('.article-references'), file).toHaveCount(1);
       expect(await page.locator('.article-references li').count(), file).toBe(sources[file].length);
+      const articleDate = await page.locator('.article-meta time').getAttribute('datetime');
+      for (const date of await page.locator('.article-references li time').all()) await expect(date, file).toHaveAttribute('datetime', articleDate!);
+      await expect(page.locator('.article-references'), file).not.toContainText(/n\.d\.|s\. d\./);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), file).toBe(true);
     }
   });
