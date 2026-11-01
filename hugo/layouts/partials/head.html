@@ -68,6 +68,8 @@
   {{ $readerJS := resources.Get "reader-tools.js" | minify | fingerprint }}
   <script defer src="{{ $readerJS.RelPermalink }}"></script>
   {{ end }}
+  {{ $webmcp := resources.Get "site-webmcp.js" | minify | fingerprint }}
+  <script defer src="{{ $webmcp.RelPermalink }}" integrity="{{ $webmcp.Data.Integrity }}"></script>
   {{- $dark_icon := "theme.png" -}}
   <!---->
   {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}

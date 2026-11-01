@@ -101,3 +101,11 @@ home = ["HTML", "RSS", "JSON"]
 
 [markup.goldmark.renderer]
 unsafe = true
+
+# Share the browser tools with the static CV without duplicating their source.
+[[module.mounts]]
+source = "assets"
+target = "assets"
+[[module.mounts]]
+source = "../js/site-webmcp.js"
+target = "assets/site-webmcp.js"
