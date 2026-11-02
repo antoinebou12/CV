@@ -238,12 +238,14 @@ html.dark .expertise-sub:hover {
 
 .expertise-pill {
   display: inline-flex;
+  flex-wrap: wrap;
+  min-width: 0;
   align-items: center;
   gap: 2px;
   max-width: 100%;
   padding: 0;
   border: 1px solid var(--editorial-rule);
-  border-radius: 999px;
+  border-radius: 16px;
   background: var(--editorial-paper);
 }
 
@@ -253,6 +255,8 @@ html.dark .expertise-sub:hover {
 
 .expertise-pill-main {
   display: inline-flex;
+  flex-shrink: 0;
+  white-space: nowrap;
   align-items: center;
   gap: 7px;
   padding: 6px 10px;
@@ -307,6 +311,10 @@ html.dark .expertise-sub:hover {
 
 .expertise-evidence {
   position: relative;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  max-width: 100%;
   display: inline-flex;
   align-items: center;
   min-height: 28px;
@@ -435,7 +443,7 @@ html.dark .expertise-evidence-popover {
   }
 }
 
-@container (max-width: 28rem) {
+@container (max-width: 520px) {
   .expertise-body {
     grid-template-columns: 1fr;
   }
