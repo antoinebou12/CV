@@ -216,3 +216,14 @@ The existing Pause control, reduced-motion preference, forced colors and print m
 disable these accents. Changing the preference cancels in-flight reveals and resets
 the hero immediately. Scroll work is batched into one animation-frame callback;
 there is no continuous scroll animation loop. Hugo templates are unaffected.
+
+## Motion HTML navigation
+
+The CV uses the self-hosted Motion 14.9.0 UMD bundle with SRI. Its MIT license is
+kept beside the bundle. No React runtime or remote animation CDN is required.
+Motion drives spring hover/press feedback, the native Options popover entrance,
+and once-only section reveals; scroll tracking retains the bounded hero effects.
+Navigation is grouped into small capsules, with theme and animation controls in
+Options instead of a full-width opaque overlay. French has matching section links.
+The native popover and links remain usable if Motion fails to load. Reduced motion,
+Pause, forced colors and print cancel motion and restore neutral transforms.

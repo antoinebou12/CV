@@ -22,14 +22,16 @@ for (const width of [390, 1440]) for (const lang of ['en', 'fr']) test(`CV scrol
   expect(values.particles).toBe(0);
   expect(await page.evaluate(() => (window as any).pJSDom.find((item: any) => item.pJS.canvas.el.closest('#particles-js')).pJS.particles.move.enable)).toBe(false);
   expect(values.navTop).toBe(0);
-  const sizes = await page.locator('.cv-site-nav :is(a.cv-nav-pill,button)').evaluateAll(items => items.map(e => e.getBoundingClientRect().height));
+  const sizes = await page.locator('.cv-site-nav :is(a.cv-nav-pill,button):visible').evaluateAll(items => items.map(e => e.getBoundingClientRect().height));
   expect(Math.min(...sizes)).toBeGreaterThanOrEqual(44);
   await page.screenshot({ path: info.outputPath('compact-nav.png') });
+  await page.locator('.cv-settings-toggle').click();
   await page.locator('.cv-motion-toggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'paused');
   await expect(page.locator('#text-header h1')).toHaveCSS('opacity', '1');
   await expect(page.locator('#photo')).toHaveCSS('translate', 'none');
   await expect(page.locator('.cv-site-nav')).not.toHaveClass(/is-scroll-compact/);
+  await page.locator('.cv-settings-toggle').click();
   await page.locator('.cv-motion-toggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'playing');
   await page.evaluate(() => scrollTo(0, 0));
@@ -46,17 +48,17 @@ for (const mode of ['reduce', 'paused', 'forced'] as const) test(`CV scroll moti
   await expect(page.locator('#text-header h1')).toHaveCSS('opacity', '1');
   await expect(page.locator('#photo')).toHaveCSS('translate', 'none');
   await expect(page.locator('.cv-site-nav')).not.toHaveClass(/is-scroll-compact/);
-  expect(await page.locator('details.cv-section').evaluateAll(items => items.flatMap(e => e.getAnimations()).filter(a => a.id === 'cv-section-reveal').length)).toBe(0);
+  expect(await page.locator('details.cv-section').evaluateAll(items => items.flatMap(e => e.getAnimations()).filter(a => a.playState === 'running').length)).toBe(0);
 });
 test('reveal is once only and never hides focused content', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto(`${prefix}/index-en.html`);
   await page.locator('details.cv-section').last().scrollIntoViewIfNeeded();
   await expect(page.locator('details.cv-section').last()).toHaveAttribute('data-scroll-revealed', 'true');
-  await expect.poll(() => page.locator('details.cv-section').last().evaluate(e => e.getAnimations().filter(a => a.id === 'cv-section-reveal').length)).toBe(0);
+  await expect.poll(() => page.locator('details.cv-section').last().evaluate(e => e.getAnimations().filter(a => a.playState === 'running').length)).toBe(0);
   await page.evaluate(() => scrollTo(0, 0));
   await page.locator('details.cv-section').last().scrollIntoViewIfNeeded();
-  expect(await page.locator('details.cv-section').last().evaluate(e => e.getAnimations().filter(a => a.id === 'cv-section-reveal').length)).toBe(0);
+  expect(await page.locator('details.cv-section').last().evaluate(e => e.getAnimations().filter(a => a.playState === 'running').length)).toBe(0);
 });
 
 test('changing reduced motion while scrolling restores the hero', async ({ page }) => {

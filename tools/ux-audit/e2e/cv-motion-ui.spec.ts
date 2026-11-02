@@ -1,0 +1,57 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+const prefix = process.env.E2E_PREFIX || '';
+for (const width of [320,390,1440]) for (const lang of ['en','fr']) test(`Motion HTML navigation ${width} ${lang}`, async ({ page }, info) => {
+  await page.setViewportSize({ width, height:900 });
+  await page.emulateMedia({ reducedMotion:'no-preference' });
+  await page.addInitScript(language => localStorage.setItem('cv-theme', language === 'fr' ? 'dark' : 'light'), lang);
+  const errors: string[]=[];
+  page.on('pageerror', e=>errors.push(e.message));
+  await page.goto(`${prefix}/index-${lang}.html`);
+  await expect(page.locator('.cv-site-nav')).toHaveAttribute('data-motion-ui','motion');
+  expect(await page.evaluate(()=>typeof (window as any).Motion.animate)).toBe('function');
+  expect(await page.locator('.cv-site-nav').evaluate(e=>e.getBoundingClientRect().height)).toBeLessThanOrEqual(74);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.locator('.cv-nav-section[href="#projects"]').click();
+  await expect.poll(()=>page.evaluate(()=>document.querySelector('#projects').getBoundingClientRect().top-document.querySelector('.cv-site-nav').getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
+  await page.screenshot({path:info.outputPath('compact-navigation.png')});
+  await page.locator('.cv-settings-toggle').click();
+  await expect(page.locator('#cv-settings')).toBeVisible();
+  await expect(page.locator('#cv-settings')).toHaveCSS('opacity','1');
+  await page.screenshot({path:info.outputPath('settings-popover.png')});
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#cv-settings')).toBeHidden();
+  await expect(page.locator('.cv-settings-toggle')).toBeFocused();
+  await page.locator('.cv-settings-toggle').click();
+  await page.locator('.cv-motion-toggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion','paused');
+  await expect(page.locator('#cv-settings')).toBeHidden();
+  await page.locator('.cv-settings-toggle').click();
+  await page.locator('.cv-motion-toggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion','playing');
+  expect(errors).toEqual([]);
+});
+test('Motion spring gestures and reduced-motion cancellation',async({page})=>{
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto(`${prefix}/index-en.html`);
+  const button=page.locator('.hero-actions .btn');
+  await button.hover();
+  await expect.poll(()=>button.evaluate(e=>getComputedStyle(e).transform)).not.toBe('none');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await expect(button).toHaveCSS('transform','none');
+});
+test('settings accessibility',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto(`${prefix}/index-en.html`);
+  await page.locator('.cv-settings-toggle').click();
+  const audit=await new AxeBuilder({page}).include('.cv-site-nav').withTags(['wcag2a','wcag2aa']).analyze();
+  expect(audit.violations).toEqual([]);
+});
+test('HTML navigation works when Motion is unavailable',async({page})=>{
+  await page.route('**/motion-14.9.0.js',route=>route.abort());
+  await page.goto(`${prefix}/index-en.html`);
+  await page.locator('.cv-settings-toggle').click();
+  await expect(page.locator('#cv-settings')).toBeVisible();
+  await page.locator('.cv-motion-toggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion','paused');
+});

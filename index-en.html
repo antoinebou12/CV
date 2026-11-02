@@ -43,7 +43,7 @@
 <link href="css/cv-site-nav.css?v=20261020" rel="stylesheet"/>
 <link href="css/cv-main.css" rel="stylesheet"/>
 <link href="css/cv-aeo.css" rel="stylesheet"/>
-<link href="css/cv-editorial.css?v=20261102-scroll" rel="stylesheet"/>
+<link href="css/cv-editorial.css?v=20261102-motion-ui" rel="stylesheet"/>
 <link href="css/cv-expertise.css?v=20261102-badges" rel="stylesheet"/>
 <link href="css/cv-print.css" media="print" rel="stylesheet"/>
 </head>
@@ -63,14 +63,21 @@
   </script>
 <a class="skip-link" href="#main">Skip to main content</a>
 <nav aria-label="Site and language" class="cv-site-nav">
+<div class="cv-nav-links">
 <a class="cv-nav-pill cv-nav-section" href="#work">Work</a>
-    <a class="cv-nav-pill cv-nav-section" href="#projects">Projects</a>
-    
-    <a class="cv-nav-pill cv-nav-blog" href="blog/">Blog</a>
-<button aria-label="Light or dark theme" class="cv-nav-pill cv-theme-toggle" type="button">Dark</button>
-<button aria-label="Pause background motion" class="cv-nav-pill cv-motion-toggle" type="button">Pause motion</button>
+<a class="cv-nav-pill cv-nav-section" href="#projects">Projects</a>
+<a class="cv-nav-pill cv-nav-blog" href="blog/">Blog</a>
+</div>
+<div class="cv-nav-tools">
 <div aria-label="Language" class="cv-nav-pill cv-nav-lang">
-<a class="current" href="index-en.html">EN</a><span aria-hidden="true" class="sep"> | </span><a href="index-fr.html">FR</a>
+<a class="current" href="index-en.html" lang="en">EN</a><a href="index-fr.html" lang="fr">FR</a>
+</div>
+<button class="cv-nav-pill cv-settings-toggle" type="button" popovertarget="cv-settings" aria-label="Options"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg><span>Options</span></button>
+</div>
+<div id="cv-settings" popover="auto" aria-label="Options">
+<p class="cv-settings-label">Options</p>
+<button aria-label="Light or dark theme" class="cv-nav-pill cv-theme-toggle" type="button">Dark</button>
+<button aria-label="Pause animations" class="cv-nav-pill cv-motion-toggle" type="button">Pause motion</button>
 </div>
 </nav>
 <div id="particles-js"></div>
@@ -1952,7 +1959,8 @@
 <!-- CV_LAST_UPDATED:END -->
 </main>
 <script crossorigin="anonymous" defer="" integrity="sha384-d+UOwmNNIC7V4izkTAKSXzWhjC2GxiS9PTykO1XdOPC3nc2z65UOS7SP6QdKPA70" src="js/vendor/particles.min.js"></script>
-<script defer="" src="js/cv-interactions.js?v=20261102-scroll"></script>
+<script crossorigin="anonymous" defer src="js/vendor/motion-14.9.0.js" integrity="sha384-mzhnnVPTOvuHjQX0cuFH5wg2l5YcbPcpPqOoHFowMkg6VYQBWwZKGH+EAVZsi6zJ"></script>
+<script defer="" src="js/cv-interactions.js?v=20261102-motion-ui"></script>
 <script>
     (function () {
       function hideBrokenWidget(img) {

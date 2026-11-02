@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="css/cv-site-nav.css?v=20261020">
   <link rel="stylesheet" href="css/cv-main.css">
   <link rel="stylesheet" href="css/cv-aeo.css">
-  <link rel="stylesheet" href="css/cv-editorial.css?v=20261102-scroll">
+  <link rel="stylesheet" href="css/cv-editorial.css?v=20261102-motion-ui">
   <link rel="stylesheet" href="css/cv-expertise.css?v=20261102-badges">
   <link rel="stylesheet" href="css/cv-print.css" media="print">
 
@@ -67,14 +67,24 @@
     })();
   </script>
   <a class="skip-link" href="#main">Aller au contenu principal</a>
-  <nav class="cv-site-nav" aria-label="Site et langue">
-    <a class="cv-nav-pill cv-nav-blog" href="blog/">Blog</a>
-    <button aria-label="Thème clair ou sombre" class="cv-nav-pill cv-theme-toggle" type="button">Sombre</button>
-    <button aria-label="Pause des animations de fond" class="cv-nav-pill cv-motion-toggle" type="button">Mettre en pause</button>
-    <div class="cv-nav-pill cv-nav-lang" aria-label="Langue">
-      <a href="index-en.html">EN</a><span class="sep" aria-hidden="true"> | </span><a href="index-fr.html" class="current">FR</a>
-    </div>
-  </nav>
+  <nav aria-label="Site et langue" class="cv-site-nav">
+<div class="cv-nav-links">
+<a class="cv-nav-pill cv-nav-section" href="#work">Expérience</a>
+<a class="cv-nav-pill cv-nav-section" href="#projects">Projets</a>
+<a class="cv-nav-pill cv-nav-blog" href="blog/">Blog</a>
+</div>
+<div class="cv-nav-tools">
+<div aria-label="Langue" class="cv-nav-pill cv-nav-lang">
+<a href="index-en.html" lang="en">EN</a><a class="current" href="index-fr.html" lang="fr">FR</a>
+</div>
+<button class="cv-nav-pill cv-settings-toggle" type="button" popovertarget="cv-settings" aria-label="Options"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg><span>Options</span></button>
+</div>
+<div id="cv-settings" popover="auto" aria-label="Options">
+<p class="cv-settings-label">Options</p>
+<button aria-label="Thème clair ou sombre" class="cv-nav-pill cv-theme-toggle" type="button">Sombre</button>
+<button aria-label="Mettre les animations en pause" class="cv-nav-pill cv-motion-toggle" type="button">Mettre en pause</button>
+</div>
+</nav>
   <div id="particles-js"></div>
   <main id="main" class="container">
     <div class="row">
@@ -108,7 +118,7 @@
           </div>
         </details>
         <!-- EXPÉRIENCE PROFESSIONNELLE -->
-        <details class="box cv-section" open>
+        <details class="box cv-section" id="work" open>
           <summary class="cv-section-summary"><h2 class="cv-section-heading"><i class="fas fa-suitcase ico"></i> Expérience professionnelle</h2></summary>
           <div class="cv-section-body">
 		  <p class="section-intro">Rôles récents en plateformes cloud, enseignement, cybersécurité et solutions numériques.</p>
@@ -896,7 +906,7 @@
           </div>
         </details>
         <!-- PROJETS -->
-        <details class="box cv-section" open>
+        <details class="box cv-section" id="projects" open>
           <summary class="cv-section-summary"><h2 class="cv-section-heading"><i class="fas fa-code-branch ico"></i> Projets sélectionnés</h2></summary>
           <div class="cv-section-body">
           <p class="section-intro">Mes outils, mes expériences en infographie et mes contributions à des projets partagés.</p>
@@ -2122,7 +2132,8 @@
 <!-- CV_LAST_UPDATED:END -->
   </main>
   <script src="js/vendor/particles.min.js" integrity="sha384-d+UOwmNNIC7V4izkTAKSXzWhjC2GxiS9PTykO1XdOPC3nc2z65UOS7SP6QdKPA70" crossorigin="anonymous" defer></script>
-  <script src="js/cv-interactions.js?v=20261102-scroll" defer></script>
+  <script crossorigin="anonymous" defer src="js/vendor/motion-14.9.0.js" integrity="sha384-mzhnnVPTOvuHjQX0cuFH5wg2l5YcbPcpPqOoHFowMkg6VYQBWwZKGH+EAVZsi6zJ"></script>
+<script src="js/cv-interactions.js?v=20261102-motion-ui" defer></script>
   <script>
     (function () {
       function hideBrokenWidget(img) {

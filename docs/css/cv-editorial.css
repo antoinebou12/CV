@@ -1334,7 +1334,7 @@ html.dark .certification-badge span, html.dark .certification-badge small { colo
 /* Scroll accents use independent translate so existing portrait animations compose. */
 @media screen {
   .cv-site-nav { position:sticky; top:0; isolation:isolate; }
-  .cv-site-nav::before { content:""; position:absolute; inset:8px -12px; border-radius:12px; background:var(--editorial-canvas); box-shadow:0 6px 20px #0002; opacity:0; z-index:-1; pointer-events:none; }
+  .cv-site-nav::before { display:none; }
   .cv-site-nav.is-scroll-compact { gap:6px; }
   .cv-site-nav.is-scroll-compact::before { opacity:.97; }
   .cv-site-nav.is-scroll-compact .cv-nav-pill:not(.cv-nav-lang) { padding:8px 12px; min-height:44px; }
@@ -1350,4 +1350,40 @@ html.dark .certification-badge span, html.dark .certification-badge small { colo
 
 @media screen {
   :is(#work,#projects,details.cv-section,.cv-section h2,.cv-section h3) { scroll-margin-top:calc(var(--cv-scroll-nav-height,100px) + 16px); }
+}
+
+/* Compact HTML navigation groups; the center stays clear over the page. */
+@media screen {
+  .cv-site-nav { min-height:72px; padding:10px 0; gap:12px; justify-content:space-between; flex-wrap:nowrap; }
+  .cv-nav-links, .cv-nav-tools { display:flex; align-items:center; gap:6px; min-width:0; }
+  .cv-nav-links, .cv-nav-lang, .cv-settings-toggle { border:1px solid var(--editorial-rule); border-radius:999px; background:var(--editorial-paper); box-shadow:0 3px 12px #0001; }
+  .cv-nav-links { padding:3px; gap:2px; }
+  .cv-site-nav .cv-nav-pill { margin:0; box-shadow:none; border-radius:999px; font:600 13px/1.3 var(--editorial-body); }
+  .cv-site-nav .cv-nav-links .cv-nav-pill, .cv-site-nav.is-scroll-compact .cv-nav-links .cv-nav-pill { min-height:44px; padding:8px 13px; background:transparent; }
+  .cv-site-nav .cv-nav-links .cv-nav-pill:hover, .cv-site-nav .cv-nav-links .cv-nav-pill:focus-visible { background:var(--editorial-soft); text-decoration:none; }
+  .cv-site-nav .cv-nav-lang { gap:2px; padding:3px; }
+  .cv-site-nav .cv-nav-lang a { min-height:44px; min-width:36px; padding:6px 8px; border-radius:999px; font-size:12px; }
+  .cv-site-nav .cv-nav-lang .current { background:var(--editorial-soft); }
+  .cv-site-nav .cv-settings-toggle, .cv-site-nav.is-scroll-compact .cv-settings-toggle { display:inline-flex; gap:7px; align-items:center; justify-content:center; min-height:52px; padding:8px 13px; }
+  .cv-site-nav.is-scroll-compact { gap:12px; }
+  .cv-site-nav::before { display:none!important; }
+  #cv-settings { position:fixed; inset:76px max(16px,calc((100vw - 1170px)/2)) auto auto; width:min(260px,calc(100vw - 32px)); margin:0; padding:10px; color:var(--editorial-ink); background:var(--editorial-paper); border:1px solid var(--editorial-rule); border-radius:18px; box-shadow:0 12px 32px #0003; transform-origin:top right; }
+  #cv-settings:popover-open { display:grid; gap:6px; }
+  .cv-settings-label { margin:4px 10px 8px; color:var(--editorial-muted); font:600 11px/1.4 var(--editorial-body); text-transform:uppercase; letter-spacing:.08em; }
+  .cv-site-nav #cv-settings .cv-nav-pill { width:100%; min-height:44px; padding:10px 12px; justify-content:flex-start; text-align:left; border:0; background:var(--editorial-soft); font-size:13px; }
+  .cv-site-nav #cv-settings .cv-motion-toggle::before { flex-shrink:0; }
+  .cv-site-nav[data-motion-ui] .cv-nav-pill { transition:none; }
+  @media(max-width:600px) {
+    .cv-site-nav { width:calc(100% - 24px); gap:6px; }
+    .cv-nav-tools { gap:6px; }
+    .cv-site-nav .cv-nav-links .cv-nav-pill, .cv-site-nav.is-scroll-compact .cv-nav-links .cv-nav-pill { padding-inline:9px; font-size:12px; }
+    .cv-site-nav .cv-nav-lang a { min-width:30px; padding-inline:6px; }
+    .cv-site-nav .cv-settings-toggle, .cv-site-nav.is-scroll-compact .cv-settings-toggle { min-width:44px; min-height:44px; padding:8px; }
+    .cv-settings-toggle span { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  }
+  @media(prefers-reduced-motion:reduce) { .cv-site-nav .cv-nav-pill, #cv-settings { transform:none!important; } }
+}
+@media screen and (max-width:360px) {
+  .cv-job-summary .year, .cv-job-summary .year-range { max-width:100%; white-space:normal; }
+  .contact-item a[href^="mailto:"] { overflow-wrap:anywhere; white-space:normal; }
 }

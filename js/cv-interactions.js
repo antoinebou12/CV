@@ -804,7 +804,8 @@
     particleVisibility(progress < 1);
   }
   function schedule() { if (!frame && !document.hidden) frame = requestAnimationFrame(update); }
-  addEventListener('scroll', schedule, { passive: true });
+  if (window.Motion?.scroll) window.Motion.scroll(schedule);
+  else addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule, { passive: true });
   document.addEventListener('visibilitychange', schedule);
   for (const media of [reduced, forced, printing]) media.addEventListener('change', update);
@@ -823,16 +824,73 @@
         observer.unobserve(section);
         section.dataset.scrollRevealed = 'true';
         if (!enabled() || section.getBoundingClientRect().top < 100 || !section.animate) return;
-        const animation = section.animate([
-          { opacity: .94, translate: '0 8px' },
-          { opacity: 1, translate: '0 0' }
-        ], { duration: 320, easing: 'cubic-bezier(.2,.7,.3,1)' });
+        const animation = window.Motion?.animate
+          ? window.Motion.animate(section, { opacity: [.94, 1], y: [8, 0] }, { duration: .32, ease: [.2, .7, .3, 1] })
+          : section.animate([{ opacity: .94, translate: '0 8px' }, { opacity: 1, translate: '0 0' }], { duration: 320, easing: 'cubic-bezier(.2,.7,.3,1)' });
         animation.id = 'cv-section-reveal';
         running.set(section, animation);
-        animation.finished.then(() => running.delete(section), () => running.delete(section));
+        Promise.resolve(animation.finished || animation).then(() => running.delete(section), () => running.delete(section));
       });
     }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
     document.querySelectorAll('details.cv-section').forEach(section => observer.observe(section));
   }
   update();
+})();
+
+/* Motion 14: small spring gestures and the native settings popover. */
+(() => {
+  const motion = window.Motion;
+  const nav = document.querySelector('.cv-site-nav');
+  const settings = document.getElementById('cv-settings');
+  if (!nav || !settings) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const forced = matchMedia('(forced-colors: active)');
+  const printing = matchMedia('print');
+  const allowed = () => motion?.animate && !reduced.matches && !forced.matches && !printing.matches && document.documentElement.dataset.motion !== 'paused';
+  const running = new Map();
+  const buttons = [...document.querySelectorAll('.cv-nav-links .cv-nav-pill, .cv-settings-toggle, .hero-actions .btn, #cv-settings button')];
+  function spring(node, values) {
+    if (!allowed()) return;
+    running.get(node)?.stop();
+    const animation = motion.animate(node, values, { type:'spring', stiffness:420, damping:32, mass:.6 });
+    running.set(node, animation);
+  }
+  function reset() {
+    if (allowed()) return;
+    running.forEach(animation => animation.cancel());
+    running.clear();
+    [...buttons, settings].forEach(node => { node.style.removeProperty('transform'); node.style.removeProperty('opacity'); });
+  }
+  if (motion?.animate) {
+    nav.dataset.motionUi = 'motion';
+    motion.hover(buttons, node => {
+      spring(node, { y:-1.5, scale:1.015 });
+      return () => spring(node, { y:0, scale:1 });
+    });
+    motion.press(buttons, node => {
+      spring(node, { y:0, scale:.97 });
+      return () => spring(node, { y:0, scale:1 });
+    });
+    buttons.forEach(node => {
+      node.addEventListener('focus', () => spring(node, { y:-1, scale:1.01 }));
+      node.addEventListener('blur', () => spring(node, { y:0, scale:1 }));
+    });
+    if (allowed()) {
+      const photo = document.getElementById('photo');
+      if (photo) {
+        const animation = motion.animate(photo, { scale:[.985,1] }, { type:'spring', stiffness:150, damping:24 });
+        running.set(photo, animation);
+        buttons.push(photo);
+      }
+    }
+  }
+  settings.addEventListener('toggle', event => {
+    if (event.newState === 'open' && allowed()) {
+      const animation = motion.animate(settings, { opacity:[.94,1], y:[6,0], scale:[.985,1] }, { duration:.18, ease:[.2,.7,.3,1] });
+      running.set(settings, animation);
+    }
+  });
+  settings.querySelectorAll('button').forEach(button => button.addEventListener('click', () => settings.hidePopover()));
+  for (const media of [reduced,forced,printing]) media.addEventListener('change', reset);
+  new MutationObserver(reset).observe(document.documentElement, { attributes:true, attributeFilter:['data-motion'] });
 })();
