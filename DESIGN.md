@@ -202,3 +202,17 @@ beside its first paragraph. Technical diagram figures have a neutral image surfa
 a bounded image height and a caption inside the frame. Inline code wraps on phones;
 code blocks scroll within their container. Mobile comparison tables stay within the
 reading column and keep their accessible header labels.
+
+## CV scroll accents
+
+The shared CV script adds up to 12px of portrait parallax and a title opacity of
+0.88 or higher as the hero leaves the viewport. Particles fade out and stop drawing
+below the hero. Section panels reveal once with an 8px movement over 320ms; their
+text is always visible and native disclosures remain usable. The sticky navigation
+retains 44px targets and reserves clearance for section anchors. Its compact state
+changes the visual treatment without reducing the navigation's minimum height.
+
+The existing Pause control, reduced-motion preference, forced colors and print mode
+disable these accents. Changing the preference cancels in-flight reveals and resets
+the hero immediately. Scroll work is batched into one animation-frame callback;
+there is no continuous scroll animation loop. Hugo templates are unaffected.

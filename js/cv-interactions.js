@@ -4,8 +4,8 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const french = document.documentElement.lang.startsWith('fr');
   const labels = french
-    ? { pause: 'Mettre en pause', resume: 'Animer le fond', reduced: 'Animations réduites', control: 'Pause des animations de fond' }
-    : { pause: 'Pause motion', resume: 'Animate background', reduced: 'Reduced motion', control: 'Pause background motion' };
+    ? { pause: 'Mettre en pause', resume: 'Reprendre', reduced: 'Animations réduites', control: 'Mettre les animations en pause' }
+    : { pause: 'Pause motion', resume: 'Resume motion', reduced: 'Reduced motion', control: 'Pause animations' };
   let paused = false;
   try { paused = localStorage.getItem('cv-motion-paused') === 'true'; } catch (_) { /* Storage is optional. */ }
   const themeLabels = french
@@ -66,7 +66,7 @@
     button.textContent = reduced.matches ? labels.reduced : (paused ? labels.resume : labels.pause);
     button.setAttribute('aria-pressed', String(stopped));
     button.disabled = reduced.matches;
-    const active = !stopped && !document.hidden;
+    const active = !stopped && !document.hidden && document.documentElement.dataset.heroParticles !== 'hidden';
     if (active) createParticles();
     const particles = particleSystem();
     if (!particles) return;
@@ -82,6 +82,7 @@
   });
   reduced.addEventListener('change', syncMotion);
   document.addEventListener('visibilitychange', syncMotion);
+  document.addEventListener('cv-scroll-particles', syncMotion);
   syncMotion();
 
   /* Typewriter: authored reveal; full text stays in aria-label for AT. */
@@ -761,4 +762,77 @@
   const later = () => idle(() => sections.forEach(warm), { timeout: 4000 });
   if (document.readyState === 'complete') later();
   else window.addEventListener('load', later, { once: true });
+})();
+
+
+/* Small scroll accents. Content stays visible, including before initialization. */
+(() => {
+  const hero = document.getElementById('photo-header');
+  const nav = document.querySelector('.cv-site-nav');
+  if (!hero || !nav) return;
+  const html = document.documentElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const forced = matchMedia('(forced-colors: active)');
+  const printing = matchMedia('print');
+  const running = new Map();
+  let frame = 0;
+  const enabled = () => !reduced.matches && !forced.matches && !printing.matches && html.dataset.motion !== 'paused';
+  function particleVisibility(visible) {
+    const state = visible ? 'visible' : 'hidden';
+    if (html.dataset.heroParticles !== state) {
+      html.dataset.heroParticles = state;
+      document.dispatchEvent(new Event('cv-scroll-particles'));
+    }
+  }
+  function update() {
+    frame = 0;
+    if (!enabled()) {
+      for (const property of ['--cv-scroll-photo', '--cv-scroll-title', '--cv-scroll-particles']) html.style.removeProperty(property);
+      nav.classList.remove('is-scroll-compact');
+      particleVisibility(true);
+      running.forEach(animation => animation.cancel());
+      running.clear();
+      return;
+    }
+    const box = hero.getBoundingClientRect();
+    const heroBottom = box.bottom + scrollY;
+    const progress = Math.min(1, Math.max(0, scrollY / Math.max(1, heroBottom)));
+    html.style.setProperty('--cv-scroll-photo', `${(-12 * progress).toFixed(2)}px`);
+    html.style.setProperty('--cv-scroll-title', (1 - .12 * progress).toFixed(3));
+    html.style.setProperty('--cv-scroll-particles', (1 - progress).toFixed(3));
+    nav.classList.toggle('is-scroll-compact', scrollY > Math.max(heroBottom, innerHeight * .7));
+    particleVisibility(progress < 1);
+  }
+  function schedule() { if (!frame && !document.hidden) frame = requestAnimationFrame(update); }
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule, { passive: true });
+  document.addEventListener('visibilitychange', schedule);
+  for (const media of [reduced, forced, printing]) media.addEventListener('change', update);
+  new MutationObserver(update).observe(html, { attributes: true, attributeFilter: ['data-motion'] });
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(schedule).observe(hero);
+    new ResizeObserver(() => {
+      html.style.setProperty('--cv-scroll-nav-height', `${nav.getBoundingClientRect().height}px`);
+    }).observe(nav);
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const section = entry.target;
+        observer.unobserve(section);
+        section.dataset.scrollRevealed = 'true';
+        if (!enabled() || section.getBoundingClientRect().top < 100 || !section.animate) return;
+        const animation = section.animate([
+          { opacity: .94, translate: '0 8px' },
+          { opacity: 1, translate: '0 0' }
+        ], { duration: 320, easing: 'cubic-bezier(.2,.7,.3,1)' });
+        animation.id = 'cv-section-reveal';
+        running.set(section, animation);
+        animation.finished.then(() => running.delete(section), () => running.delete(section));
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
+    document.querySelectorAll('details.cv-section').forEach(section => observer.observe(section));
+  }
+  update();
 })();

@@ -1330,3 +1330,24 @@ html.dark .certification-badge span, html.dark .certification-badge small { colo
     .project-card--featured:hover, .project-card--uml:hover, .project-action:hover { transform: none; }
   }
 }
+
+/* Scroll accents use independent translate so existing portrait animations compose. */
+@media screen {
+  .cv-site-nav { position:sticky; top:0; isolation:isolate; }
+  .cv-site-nav::before { content:""; position:absolute; inset:8px -12px; border-radius:12px; background:var(--editorial-canvas); box-shadow:0 6px 20px #0002; opacity:0; z-index:-1; pointer-events:none; }
+  .cv-site-nav.is-scroll-compact { gap:6px; }
+  .cv-site-nav.is-scroll-compact::before { opacity:.97; }
+  .cv-site-nav.is-scroll-compact .cv-nav-pill:not(.cv-nav-lang) { padding:8px 12px; min-height:44px; }
+  @media (prefers-reduced-motion:no-preference) and (forced-colors:none) {
+    html:not([data-motion='paused']) #photo { translate:0 var(--cv-scroll-photo,0px); }
+    html:not([data-motion='paused']) #text-header h1 { opacity:var(--cv-scroll-title,1); }
+    html:not([data-motion='paused']) #particles-js { opacity:var(--cv-scroll-particles,1); }
+    html:not([data-motion='paused']) .cv-site-nav::before { transition:opacity 180ms ease-out; }
+    html:not([data-motion='paused']) .cv-site-nav .cv-nav-pill { transition:padding 180ms ease-out, background-color 180ms ease-out; }
+  }
+  @media (forced-colors:active) { .cv-site-nav::before { display:none; } }
+}
+
+@media screen {
+  :is(#work,#projects,details.cv-section,.cv-section h2,.cv-section h3) { scroll-margin-top:calc(var(--cv-scroll-nav-height,100px) + 16px); }
+}
