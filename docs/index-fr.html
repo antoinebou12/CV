@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="css/cv-site-nav.css?v=20261020">
   <link rel="stylesheet" href="css/cv-main.css">
   <link rel="stylesheet" href="css/cv-aeo.css">
-  <link rel="stylesheet" href="css/cv-editorial.css?v=20261102-motion-ui">
+  <link rel="stylesheet" href="css/cv-editorial.css?v=20261102-booking">
   <link rel="stylesheet" href="css/cv-expertise.css?v=20261102-badges">
   <link rel="stylesheet" href="css/cv-print.css" media="print">
 
@@ -1395,8 +1395,8 @@
           <summary class="cv-section-summary"><h2 class="cv-section-heading"><i class="fas fa-bullseye ico"></i> Contact</h2></summary>
           <div class="cv-section-body">
           <div class="contact-cta">
-            <p class="contact-cta-lead">Ouvert aux postes en ingénierie logicielle et aux mandats courts. Je réponds en général sous 24 h.</p>
-            <a href="https://cal.com/antoine-boucher-dev/30min" class="btn btn-default call-cta-btn" target="_blank" rel="noopener noreferrer">
+            <a class="contact-cta-lead" data-booking-open href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer" aria-haspopup="dialog">Ouvert aux postes en ingénierie logicielle et aux mandats courts. Je réponds en général sous 24 h.</a>
+            <a href="https://cal.com/antoine-boucher-dev/30min" class="btn btn-default call-cta-btn" data-booking-open aria-haspopup="dialog" target="_blank" rel="noopener noreferrer">
               <span class="call-cta-icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
               Appel d'intro (30 min)
             </a>
@@ -2133,7 +2133,7 @@
   </main>
   <script src="js/vendor/particles.min.js" integrity="sha384-d+UOwmNNIC7V4izkTAKSXzWhjC2GxiS9PTykO1XdOPC3nc2z65UOS7SP6QdKPA70" crossorigin="anonymous" defer></script>
   <script crossorigin="anonymous" defer src="js/vendor/motion-14.9.0.js" integrity="sha384-mzhnnVPTOvuHjQX0cuFH5wg2l5YcbPcpPqOoHFowMkg6VYQBWwZKGH+EAVZsi6zJ"></script>
-<script src="js/cv-interactions.js?v=20261102-motion-ui" defer></script>
+<script src="js/cv-interactions.js?v=20261102-booking" defer></script>
   <script>
     (function () {
       function hideBrokenWidget(img) {
@@ -2249,5 +2249,12 @@
 })();
 </script>
 <script defer src="js/site-webmcp.js"></script>
+<dialog id="cv-booking-dialog" aria-labelledby="cv-booking-title" aria-describedby="cv-booking-description">
+<div class="cv-booking-confetti" aria-hidden="true"></div>
+<header class="cv-booking-header"><div><h2 id="cv-booking-title">Discutons de votre projet</h2><p id="cv-booking-description">Choisissez un créneau pour un appel de 30 minutes.</p></div><button class="cv-booking-close" type="button" aria-label="Fermer" autofocus>×</button></header>
+<p class="cv-booking-loading" role="status" data-slow="Le calendrier prend du temps à charger. Vous pouvez ouvrir la page de réservation directement.">Chargement du calendrier…</p>
+<iframe class="cv-booking-frame" data-src="https://cal.com/antoine-boucher-dev/30min?embed=true" title="Réserver un appel de 30 minutes avec Antoine Boucher" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<footer class="cv-booking-footer"><a href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer">Ouvrir la réservation dans un nouvel onglet ↗</a><a href="mailto:antoine@antoineboucher.info">Envoyer un courriel</a></footer>
+</dialog>
 </body>
 </html>

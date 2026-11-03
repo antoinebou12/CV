@@ -43,7 +43,7 @@
 <link href="css/cv-site-nav.css?v=20261020" rel="stylesheet"/>
 <link href="css/cv-main.css" rel="stylesheet"/>
 <link href="css/cv-aeo.css" rel="stylesheet"/>
-<link href="css/cv-editorial.css?v=20261102-motion-ui" rel="stylesheet"/>
+<link href="css/cv-editorial.css?v=20261102-booking" rel="stylesheet"/>
 <link href="css/cv-expertise.css?v=20261102-badges" rel="stylesheet"/>
 <link href="css/cv-print.css" media="print" rel="stylesheet"/>
 </head>
@@ -1260,8 +1260,8 @@
 <summary class="cv-section-summary"><h2 class="cv-section-heading"><i class="fas fa-bullseye ico"></i> Contact</h2></summary>
 <div class="cv-section-body">
 <div class="contact-cta">
-<p class="contact-cta-lead">Open to software engineering roles and short consulting. I usually reply within 24 hours.</p>
-<a class="btn btn-default call-cta-btn" href="https://cal.com/antoine-boucher-dev/30min" rel="noopener noreferrer" target="_blank">
+<a class="contact-cta-lead" data-booking-open href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer" aria-haspopup="dialog">Open to software engineering roles and short consulting. I usually reply within 24 hours.</a>
+<a class="btn btn-default call-cta-btn" data-booking-open aria-haspopup="dialog" href="https://cal.com/antoine-boucher-dev/30min" rel="noopener noreferrer" target="_blank">
 <span aria-hidden="true" class="call-cta-icon"><i class="fas fa-calendar-alt"></i></span>
               30-min intro call
             </a>
@@ -1960,7 +1960,7 @@
 </main>
 <script crossorigin="anonymous" defer="" integrity="sha384-d+UOwmNNIC7V4izkTAKSXzWhjC2GxiS9PTykO1XdOPC3nc2z65UOS7SP6QdKPA70" src="js/vendor/particles.min.js"></script>
 <script crossorigin="anonymous" defer src="js/vendor/motion-14.9.0.js" integrity="sha384-mzhnnVPTOvuHjQX0cuFH5wg2l5YcbPcpPqOoHFowMkg6VYQBWwZKGH+EAVZsi6zJ"></script>
-<script defer="" src="js/cv-interactions.js?v=20261102-motion-ui"></script>
+<script defer="" src="js/cv-interactions.js?v=20261102-booking"></script>
 <script>
     (function () {
       function hideBrokenWidget(img) {
@@ -2079,5 +2079,12 @@
 })();
 </script>
 <script defer src="js/site-webmcp.js"></script>
+<dialog id="cv-booking-dialog" aria-labelledby="cv-booking-title" aria-describedby="cv-booking-description">
+<div class="cv-booking-confetti" aria-hidden="true"></div>
+<header class="cv-booking-header"><div><h2 id="cv-booking-title">Let’s talk about your project</h2><p id="cv-booking-description">Choose a time for a 30-minute introduction.</p></div><button class="cv-booking-close" type="button" aria-label="Close" autofocus>×</button></header>
+<p class="cv-booking-loading" role="status" data-slow="The calendar is taking a while. You can open the booking page directly.">Loading calendar…</p>
+<iframe class="cv-booking-frame" data-src="https://cal.com/antoine-boucher-dev/30min?embed=true" title="Book a 30-minute call with Antoine Boucher" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<footer class="cv-booking-footer"><a href="https://cal.com/antoine-boucher-dev/30min" target="_blank" rel="noopener noreferrer">Open booking in a new tab ↗</a><a href="mailto:antoine@antoineboucher.info">Send an email</a></footer>
+</dialog>
 </body>
 </html>

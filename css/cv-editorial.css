@@ -1356,13 +1356,13 @@ html.dark .certification-badge span, html.dark .certification-badge small { colo
 @media screen {
   .cv-site-nav { min-height:72px; padding:10px 0; gap:12px; justify-content:space-between; flex-wrap:nowrap; }
   .cv-nav-links, .cv-nav-tools { display:flex; align-items:center; gap:6px; min-width:0; }
-  .cv-nav-links, .cv-nav-lang, .cv-settings-toggle { border:1px solid var(--editorial-rule); border-radius:999px; background:var(--editorial-paper); box-shadow:0 3px 12px #0001; }
+  .cv-nav-links, .cv-nav-lang, .cv-settings-toggle { border:1px solid var(--editorial-rule); border-radius:12px; background:var(--editorial-paper); box-shadow:0 3px 12px #0001; }
   .cv-nav-links { padding:3px; gap:2px; }
-  .cv-site-nav .cv-nav-pill { margin:0; box-shadow:none; border-radius:999px; font:600 13px/1.3 var(--editorial-body); }
+  .cv-site-nav .cv-nav-pill { margin:0; box-shadow:none; border-radius:8px; font:600 13px/1.3 var(--editorial-body); }
   .cv-site-nav .cv-nav-links .cv-nav-pill, .cv-site-nav.is-scroll-compact .cv-nav-links .cv-nav-pill { min-height:44px; padding:8px 13px; background:transparent; }
   .cv-site-nav .cv-nav-links .cv-nav-pill:hover, .cv-site-nav .cv-nav-links .cv-nav-pill:focus-visible { background:var(--editorial-soft); text-decoration:none; }
   .cv-site-nav .cv-nav-lang { gap:2px; padding:3px; }
-  .cv-site-nav .cv-nav-lang a { min-height:44px; min-width:36px; padding:6px 8px; border-radius:999px; font-size:12px; }
+  .cv-site-nav .cv-nav-lang a { min-height:44px; min-width:36px; padding:6px 8px; border-radius:8px; font-size:12px; }
   .cv-site-nav .cv-nav-lang .current { background:var(--editorial-soft); }
   .cv-site-nav .cv-settings-toggle, .cv-site-nav.is-scroll-compact .cv-settings-toggle { display:inline-flex; gap:7px; align-items:center; justify-content:center; min-height:52px; padding:8px 13px; }
   .cv-site-nav.is-scroll-compact { gap:12px; }
@@ -1387,3 +1387,32 @@ html.dark .certification-badge span, html.dark .certification-badge small { colo
   .cv-job-summary .year, .cv-job-summary .year-range { max-width:100%; white-space:normal; }
   .contact-item a[href^="mailto:"] { overflow-wrap:anywhere; white-space:normal; }
 }
+
+/* Contact booking is requested explicitly; no third-party frame loads beforehand. */
+.contact-cta .contact-cta-lead { display:block; color:inherit; text-decoration:none; }
+.contact-cta .contact-cta-lead:hover { text-decoration:underline; text-underline-offset:3px; }
+.contact-cta [data-booking-open]:focus-visible { outline:3px solid var(--editorial-accent); outline-offset:4px; }
+#cv-booking-dialog { position:fixed; inset:0; margin:auto; width:min(960px,calc(100vw - 32px)); max-width:calc(100vw - 32px); max-height:90dvh; padding:0; border:1px solid var(--editorial-rule); border-radius:12px; background:var(--editorial-paper); color:var(--editorial-ink); overflow:auto; box-shadow:0 24px 80px #0005; }
+#cv-booking-dialog[open] { display:flex; flex-direction:column; }
+#cv-booking-dialog::backdrop { background:#07121c99; backdrop-filter:blur(5px); }
+.cv-booking-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:22px 24px 16px; flex-shrink:0; }
+.cv-booking-header h2 { margin:0 0 6px; padding:0; border:0; color:var(--editorial-ink); font:650 22px/1.35 var(--editorial-body); }
+.cv-booking-header p { margin:0; color:var(--editorial-muted); font:400 14px/1.6 var(--editorial-body); }
+.cv-booking-close { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; border:1px solid var(--editorial-rule); border-radius:8px; background:var(--editorial-soft); color:var(--editorial-ink); font:400 24px/1 system-ui,sans-serif; cursor:pointer; }
+.cv-booking-close:focus-visible, .cv-booking-footer a:focus-visible { outline:3px solid var(--editorial-accent); outline-offset:3px; }
+.cv-booking-loading { padding:0 24px; margin:0 0 12px; color:var(--editorial-muted); font:400 13px/1.6 var(--editorial-body); }
+.cv-booking-loading[hidden] { display:none!important; }
+.cv-booking-frame { display:block; width:100%; height:clamp(360px,60dvh,620px); min-height:300px; border:0; background:#fff; flex-shrink:0; }
+.cv-booking-footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; padding:16px 24px; border-top:1px solid var(--editorial-rule); flex-shrink:0; }
+.cv-booking-footer a { color:var(--editorial-accent); font:600 13px/1.6 var(--editorial-body); }
+.cv-booking-confetti { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:2; }
+.cv-booking-confetti span { position:absolute; left:50%; top:72px; display:block; width:7px; height:12px; border-radius:2px; }
+html:has(#cv-booking-dialog[open]) { overflow:hidden; }
+@media(max-width:600px) {
+ .cv-booking-header { padding:18px 16px 14px; }
+ .cv-booking-header h2 { font-size:19px; }
+ .cv-booking-loading { padding-inline:16px; }
+ .cv-booking-footer { padding:14px 16px; }
+ .cv-booking-frame { height:55dvh; }
+}
+@media print { #cv-booking-dialog { display:none!important; } }

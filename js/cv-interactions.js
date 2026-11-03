@@ -894,3 +894,70 @@
   for (const media of [reduced,forced,printing]) media.addEventListener('change', reset);
   new MutationObserver(reset).observe(document.documentElement, { attributes:true, attributeFilter:['data-motion'] });
 })();
+
+/* Booking modal: the real calendar is loaded only after a visitor chooses it. */
+(() => {
+  const dialog = document.getElementById('cv-booking-dialog');
+  const triggers = [...document.querySelectorAll('[data-booking-open]')];
+  if (!dialog || !triggers.length || !dialog.showModal) return;
+  const frame = dialog.querySelector('iframe');
+  const status = dialog.querySelector('.cv-booking-loading');
+  const confetti = dialog.querySelector('.cv-booking-confetti');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const forced = matchMedia('(forced-colors: active)');
+  const loadingText = status.textContent;
+  const animations = new Set();
+  let opener;
+  let timeout;
+  const enabled = () => window.Motion?.animate && !reduced.matches && !forced.matches && document.documentElement.dataset.motion !== 'paused';
+  function clearConfetti() {
+    animations.forEach(animation => animation.cancel());
+    animations.clear();
+    confetti.replaceChildren();
+  }
+  function celebrate() {
+    clearConfetti();
+    if (!enabled()) return;
+    const colors = ['#54c8b8','#70a6df','#d9ad66','#a798da'];
+    for (let i = 0; i < 28; i++) {
+      const particle = document.createElement('span');
+      particle.style.background = colors[i % colors.length];
+      confetti.append(particle);
+      const spread = (i - 13.5) * 14;
+      const animation = window.Motion.animate(particle, {
+        x:[0,spread], y:[0,-70 - (i % 5) * 14,220 + (i % 4) * 28],
+        rotate:[0,(i % 2 ? 1 : -1) * (150 + i * 11)], opacity:[1,1,0]
+      }, { duration:1.15, delay:(i % 4) * .025, ease:'easeOut' });
+      animations.add(animation);
+      Promise.resolve(animation.finished || animation).then(() => { animations.delete(animation); particle.remove(); }, () => particle.remove());
+    }
+  }
+  triggers.forEach(trigger => trigger.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button > 0) return;
+    event.preventDefault();
+    opener = trigger;
+    if (dialog.open) return;
+    dialog.showModal();
+    status.textContent = loadingText;
+    status.hidden = false;
+    frame.src = frame.dataset.src;
+    timeout = setTimeout(() => { if (dialog.open && !status.hidden) status.textContent = status.dataset.slow; }, 12000);
+    celebrate();
+  }));
+  frame.addEventListener('load', () => { if (dialog.open && frame.hasAttribute('src')) { status.hidden = true; clearTimeout(timeout); } });
+  dialog.querySelector('.cv-booking-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    const box = dialog.getBoundingClientRect();
+    if (event.target === dialog && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    clearTimeout(timeout);
+    clearConfetti();
+    frame.removeAttribute('src');
+    opener?.focus({ preventScroll:true });
+  });
+  const sync = () => { if (!enabled()) clearConfetti(); };
+  reduced.addEventListener('change', sync);
+  forced.addEventListener('change', sync);
+  new MutationObserver(sync).observe(document.documentElement, { attributes:true, attributeFilter:['data-motion'] });
+})();

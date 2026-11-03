@@ -227,3 +227,12 @@ Navigation is grouped into small capsules, with theme and animation controls in
 Options instead of a full-width opaque overlay. French has matching section links.
 The native popover and links remain usable if Motion fails to load. Reduced motion,
 Pause, forced colors and print cancel motion and restore neutral transforms.
+
+## Contact booking modal
+
+The availability message and intro-call link open a native dialog with a Cal.com
+iframe. The iframe has no source until a visitor clicks; closing the dialog clears
+it and restores focus. A direct booking link and email remain available below it.
+A single 28-piece Motion confetti burst runs on opening and cleans itself up;
+Pause, reduced motion and forced colors disable it. Navigation groups now use
+12px corners, with 8px corners on language controls and inner buttons.
