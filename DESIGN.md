@@ -236,3 +236,31 @@ it and restores focus. A direct booking link and email remain available below it
 A single 28-piece Motion confetti burst runs on opening and cleans itself up;
 Pause, reduced motion and forced colors disable it. Navigation groups now use
 12px corners, with 8px corners on language controls and inner buttons.
+
+
+## CV interaction feedback
+
+The CV uses a sliding skill-category indicator and short layout transitions when
+filters change. Filter state updates immediately. Native disclosures animate
+between their measured heights and remain usable from the keyboard.
+
+Project previews open a native dialog with the card's existing image, description
+and source links. Project actions wrap with a 12px gap. The email row has a
+32px copy control (44px for touch pointers), a temporary checkmark and a polite status message.
+Work and Projects track the current section through a background highlight.
+Widget placeholders clear when images load or fail, with a short fade on success.
+
+Pause, reduced motion, forced colors and print disable these animations. Native
+controls and content remain usable when the Motion library is unavailable.
+
+
+Project groups and contribution subgroups start collapsed. Their native summaries
+show item counts. Local search opens matching groups and restores the previous
+open state when cleared. Featured cards use an accent border and a soft surface;
+secondary cards use a plain surface with the same padding and action spacing.
+Images stack above copy when the list is narrower than 600px.
+
+Skill subcategories use smaller rectangular segments, distinct from the domain
+pills. Credential rows use local Credly artwork and the QcES program logo, with
+source URLs recorded in images/certifications/sources.json. Claude course rows use
+the local Anthropic provider mark. Verification links and credential IDs remain.

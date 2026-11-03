@@ -673,19 +673,18 @@
   };
 
   domainButtons.forEach(btn => {
-    btn.addEventListener('click', () => setDomain(btn.dataset.domain));
+    btn.addEventListener('click', () => window.cvAnimateLayout ? window.cvAnimateLayout(root, () => setDomain(btn.dataset.domain)) : setDomain(btn.dataset.domain));
   });
   panels.forEach(panel => {
     updateSubRail(panel);
     panel.querySelectorAll('.expertise-sub').forEach(btn => {
       btn.addEventListener('click', () => {
-        setSub(panel, btn.dataset.sub);
-        if (search) search.value = '';
-        applySearch();
+        const change = () => { setSub(panel, btn.dataset.sub); if (search) search.value = ''; applySearch(); };
+        if (window.cvAnimateLayout) window.cvAnimateLayout(root, change); else change();
       });
     });
   });
-  search?.addEventListener('input', applySearch);
+  search?.addEventListener('input', () => window.cvAnimateLayout ? window.cvAnimateLayout(root, applySearch) : applySearch());
   setDomain(activeDomain);
 })();
 
