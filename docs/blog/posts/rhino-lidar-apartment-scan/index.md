@@ -41,11 +41,11 @@ Narrow spaces show **drift** fastest. I walked the hall twice: once forward, onc
 
 Furniture stayed in place on purpose. Beds and dressers become lumpy geometry; that is fine if you only need clearance paths, not a showroom model. If you need clean walls for renovation planning, empty the room first — we learned that the hard way on the closet door swing.
 
-![Scan workflow on iPhone — mesh building while walking the room](./images/Screenshot-from-2024-01-02-22-41-35.png)
+![Scan workflow on iPhone — mesh building while walking the room](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/Screenshot-from-2024-01-02-22-41-35.png)
 
 The live mesh is the quality gate: grey holes mean “walk that patch again,” not “export and hope.”
 
-![Reviewing the captured mesh in Rhino — checking coverage before trusting a dimension](./images/Screenshot-from-2024-01-02-22-42-01.png)
+![Reviewing the captured mesh in Rhino — checking coverage before trusting a dimension](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/Screenshot-from-2024-01-02-22-42-01.png)
 
 Rhino on phone is where I rotated the capture and eyeballed whether two walls are actually parallel — faster than sending a raw mesh to desktop for a yes/no layout question.
 
@@ -53,9 +53,9 @@ Rhino on phone is where I rotated the capture and eyeballed whether two walls ar
 
 These are export stills — useful when explaining the scan to someone who will not open the app.
 
-![Room capture — wide angle of meshed living space](./images/1781a950-9e10-4bcd-b142-1711d9e73881.jpg)
+![Room capture — wide angle of meshed living space](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/1781a950-9e10-4bcd-b142-1711d9e73881.jpg)
 
-![Additional view — alternate angle to spot holes in coverage](./images/f33bc6af-8bf5-4f68-b9f0-6c1572258bff.jpg)
+![Additional view — alternate angle to spot holes in coverage](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/f33bc6af-8bf5-4f68-b9f0-6c1572258bff.jpg)
 
 ## When it paid off
 

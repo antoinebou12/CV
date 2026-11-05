@@ -27,7 +27,7 @@ Résultats locaux dans `output/` — pas versionnés par défaut.
 
 Comparer **médiane** et extrêmes avant de dire « MACD bat EMA ».
 
-![Sortie graphique](images/img-001.png)
+![Sortie graphique](https://antoineboucher.info/CV/blog/posts/multiple-indicators-backtesting/images/img-001.png)
 
 ## Bilan
 

@@ -21,7 +21,7 @@ Screening massif : CSV + graphiques optionnels sous `output/`. Pas un gestionnai
 | BTCBUSD | +293 % | Vol crypto |
 | BTTBUSD | -99 % | Liquidité non modélisée |
 
-![Graphique exemple](images/img-001.png)
+![Graphique exemple](https://antoineboucher.info/CV/blog/posts/experimentation-indicateurs-backtesting/images/img-001.png)
 
 Code détaillé : [GitHub BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting) et [Medium FR](https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc).
 

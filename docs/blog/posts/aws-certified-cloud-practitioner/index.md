@@ -18,23 +18,23 @@ Resources I used:
 
 1.  **Ultimate AWS Certified Cloud Practitioner CLF-C02** (Udemy — Paid)
 
-![](images/img-001.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-001.png)
 
 2. **AWS Cloud Quest: Cloud Practitioner** (AWS Skill Builder —Free)
 
-![](images/img-002.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-002.png)
 
 3\. **AWS Escape Room: Exam Prep for AWS Certified Cloud Practitioner** (CLF-C02) (AWS Skill Builder — Paid Free Trial)
 
-![](images/img-003.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-003.png)
 
 4\. **Free Practice Exam** ([https://www.w3schools.com/aws/aws\_cloudessentials\_awscert.php](https://www.w3schools.com/aws/aws_cloudessentials_awscert.php))
 
-![](images/img-004.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-004.png)
 
 5\. **Exam Prep Enhanced Course: AWS Certified Cloud Practitioner** (CLF-C02 — English) (AWS Skill Builder — Paid Free Trial)
 
-![](images/img-005.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-005.png)
 
 ### AWS Skill Builder
 
@@ -75,15 +75,15 @@ Useful tip: if English is not your primary language, AWS lets you request a 50% 
 
 1.  AWS Certification: Before scheduling your exam, go to exam accommodations
 
-![](images/img-006.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-006.png)
 
-![](images/img-007.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-007.png)
 
 2\. **ID Verification**: Have a valid ID ready — required for both in-person and online exams.
 
 3\. **Schedule Your Exam with the Extension**: Once approved, book with the extra time included. The buffer helps when you’re parsing longer scenario stems in a second language.
 
-![](images/img-008.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-008.png)
 
 ## Preparing for the Online Proctored Exam
 
@@ -98,14 +98,14 @@ If you take the exam online:
 
 After you pass, AWS issues a digital badge through Credly:
 
-![](images/img-009.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-009.png)
 
 1.  Wait for Notification: After passing, wait 2–3 days for the Credly email that the badge is ready.
 2.  Create a Credly Account: Same email address as your AWS Certification account.
 3.  Accept Your Badge: Follow the email instructions and add the badge to Credly.
 4.  Share Your Badge: Add it to LinkedIn, your resume, or anywhere else you list credentials.
 
-![](images/img-010.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-010.png)
 
 ### When to use this sprint plan
 

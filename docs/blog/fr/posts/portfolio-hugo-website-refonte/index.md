@@ -10,7 +10,7 @@
 - Tags: Hugo, Portfolio, Paper, MCP
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)La première version réunissait le CV et quelques articles sous Hugo. Cette refonte donne au CV, au blog et aux notes de dépôt une identité visuelle commune, avec une mise en page adaptée à chaque lecture. Elle fait suite à [Créer un portfolio avec Hugo (semaine 1)](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-week-1/).
 
-![Architecture du projet](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/images/featured.png)
+![Architecture du projet](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/images/featured.png)
 
 ## Une identité commune, de la place pour le contenu
 
@@ -54,7 +54,7 @@ flowchart TB
   Build --> Pages["Site statique publié"]
 ```
 
-La [source du premier schéma](./images/site-refonte-flow.mmd) conserve la vue du thème et des outils éditoriaux utilisés pendant la refonte.
+La [source du premier schéma](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/images/site-refonte-flow.mmd) conserve la vue du thème et des outils éditoriaux utilisés pendant la refonte.
 
 ## Des skills pour les règles récurrentes
 

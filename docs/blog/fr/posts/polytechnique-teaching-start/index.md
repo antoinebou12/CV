@@ -10,7 +10,7 @@
 - Tags: Enseignement, Polytechnique Montréal, DevSecOps
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)J'ai commencé comme chargé de travaux pratiques à [Polytechnique Montréal](https://www.polymtl.ca/), dans le cours DevSecOps (LOG 8100).
 
-![Séance invitée avec Arctiq en LOG 8100](https://antoineboucher.info/CV/blog/fr/posts/polytechnique-teaching-start/images/arctiq-guest-session.png)
+![Séance invitée avec Arctiq en LOG 8100](https://antoineboucher.info/CV/blog/posts/polytechnique-teaching-start/images/arctiq-guest-session.png)
 
 ## Ce que couvre le rôle
 

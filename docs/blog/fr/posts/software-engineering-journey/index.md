@@ -12,9 +12,9 @@
 
 ## L’arc (en un coup d’œil)
 
-Schéma du parcours ([source Mermaid](./images/career-journey-flow.mmd)) :
+Schéma du parcours ([source Mermaid](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/career-journey-flow.mmd)) :
 
-![Parcours — des jeux Flash et du makerspace au collège jusqu’au backend et à la plateforme aujourd’hui](./images/career-journey-flow.svg)
+![Parcours — des jeux Flash et du makerspace au collège jusqu’au backend et à la plateforme aujourd’hui](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/career-journey-flow.svg)
 
 *Couleurs :* vert personnel · bleu école · violet club · gris coop · ardoise emploi temps plein · orange contrat · rose enseignement · ambre aujourd’hui.
 
@@ -40,7 +40,7 @@ Cette année-là, je me suis vraiment orienté vers le **développement web** : 
 
 Mon **stage Algolux** : cinq semaines en photographie computationnelle — outils Python, analyse couleur RAW, flux de capture, piles Ansible pour valider l’ISP. J’ai encore l’affiche de recherche de cette période ; c’est le pont entre « j’aime le code » et « j’aime les systèmes qui touchent le monde physique ».
 
-![Affiche de recherche — optimisation de la qualité d’image par l’IA, stage Algolux, Collégial Sainte-Anne](./images/algolux-research-poster.png)
+![Affiche de recherche — optimisation de la qualité d’image par l’IA, stage Algolux, Collégial Sainte-Anne](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/algolux-research-poster.png)
 
 Trace concrète sur le site : https://antoineboucher.info/CV/blog/fr/projects/rawanalyser/ (clipping et calibration RAW, lignée Algolux). Le labo, c’était tableurs, caméras et scripts — pas une page produit brillante — mais la même boucle qu’aujourd’hui : **mesurer, automatiser, documenter**.
 
@@ -50,11 +50,11 @@ L’**École de technologie supérieure (ÉTS)** est l’endroit où les projets
 
 **Cheminement technologique (2017–2018)** — projet final **hydroglisseur** : jupe bleue, ventilateur de sustentation, pièces imprimées en 3D, bois, mousse et débogage tenace. Le genre de montage qui enseigne l’intégration avant les microservices.
 
-![Prototype hydroglisseur à l’ÉTS — ventilateur, plateau en bois et jupe gonflable bleue dans l’atelier](./images/ets-hydroglisseur-prototype.png)
+![Prototype hydroglisseur à l’ÉTS — ventilateur, plateau en bois et jupe gonflable bleue dans l’atelier](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/ets-hydroglisseur-prototype.png)
 
 **Baccalauréat (2018–2023)** — cours et clubs. J’ai aidé à faire vivre **[AlgoÉTS](https://algoets.etsmtl.ca/)** (trading algorithmique) ; nous animions des ateliers comme **Python 101 — science des données** pour les membres qui voulaient passer de « j’utilise Python » à « je fais confiance à mon pandas ».
 
-![AlgoÉTS Python 101 — atelier science des données sur l’écran d’une salle de classe](./images/algoets-python-101.png)
+![AlgoÉTS Python 101 — atelier science des données sur l’écran d’une salle de classe](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/algoets-python-101.png)
 
 Ce club se relie à l’open source que je maintiens encore : la bibliothèque https://antoineboucher.info/CV/blog/fr/projects/marketwatch/ pour le jeu boursier sur MarketWatch. Même réflexe — **automatiser la partie ennuyeuse pour laisser les décisions aux humains**.
 

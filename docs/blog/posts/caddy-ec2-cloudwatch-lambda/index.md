@@ -30,9 +30,9 @@ Homelab taught me to like Caddy’s **Caddyfile** ergonomics. AWS taught me to l
 - Instance: `t2.micro` free tier or **`t4g.nano`** when you want ARM cheap always-on (~$0.10/day in the original notes).
 - Security group: **22, 80, 443**.
 
-![EC2 launch settings](images/img-001.png)
+![EC2 launch settings](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-001.png)
 
-![Security group rules](images/img-002.png)
+![Security group rules](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-002.png)
 
 Install:
 
@@ -111,9 +111,9 @@ fields @timestamp, @message
 | sort count desc
 ```
 
-![Insights results](images/img-004.png)
+![Insights results](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-004.png)
 
-![Query output detail](images/img-005.png)
+![Query output detail](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-005.png)
 
 ## Cost and ops notes
 

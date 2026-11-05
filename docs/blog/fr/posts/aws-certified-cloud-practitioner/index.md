@@ -18,23 +18,23 @@ Ressources utilisées :
 
 1. **Ultimate AWS Certified Cloud Practitioner CLF-C02** (Udemy — payant)
 
-![](images/img-001.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-001.png)
 
 2. **AWS Cloud Quest: Cloud Practitioner** (AWS Skill Builder — gratuit)
 
-![](images/img-002.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-002.png)
 
 3. **AWS Escape Room: Exam Prep for AWS Certified Cloud Practitioner** (CLF-C02) (AWS Skill Builder — essai gratuit payant)
 
-![](images/img-003.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-003.png)
 
 4. **Examen blanc gratuit** ([https://www.w3schools.com/aws/aws_cloudessentials_awscert.php](https://www.w3schools.com/aws/aws_cloudessentials_awscert.php))
 
-![](images/img-004.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-004.png)
 
 5. **Exam Prep Enhanced Course: AWS Certified Cloud Practitioner** (CLF-C02 — anglais) (AWS Skill Builder — essai gratuit payant)
 
-![](images/img-005.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-005.png)
 
 ### AWS Skill Builder
 
@@ -75,15 +75,15 @@ Astuce utile : si l’**anglais n’est pas votre langue première**, AWS permet
 
 1. **Certifications AWS :** avant de planifier, rubrique **exam accommodations**
 
-![](images/img-006.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-006.png)
 
-![](images/img-007.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-007.png)
 
 2. **Pièce d’identité** valide — requise en présentiel comme en ligne.
 
 3. **Planifier avec l’extension** une fois approuvée — le buffer aide quand on lit des énoncés longs dans une seconde langue.
 
-![](images/img-008.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-008.png)
 
 ## Examen surveillé en ligne
 
@@ -96,14 +96,14 @@ Astuce utile : si l’**anglais n’est pas votre langue première**, AWS permet
 
 Après réussite, AWS délivre un badge via **Credly** :
 
-![](images/img-009.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-009.png)
 
 1. Attendre **2–3 jours** l’e-mail Credly.  
 2. Créer un compte Credly avec la **même adresse** que la certification AWS.  
 3. **Accepter** le badge.  
 4. **Partager** sur LinkedIn, CV, ou ailleurs où vous listez vos credentials.
 
-![](images/img-010.png)
+![](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/images/img-010.png)
 
 ### Bilan
 

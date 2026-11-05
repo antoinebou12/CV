@@ -14,7 +14,7 @@
 
 Instance nano/micro, ports 22/80/443, install yum depuis dépôt Caddy. `Caddyfile` avec snippets `log_site` et `reverse_proxy`. `sudo caddy reload`.
 
-![EC2](images/img-001.png) ![SG](images/img-002.png)
+![EC2](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-001.png) ![SG](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-002.png)
 
 ## Étape 2 — CloudWatch
 
@@ -30,7 +30,7 @@ fields @message
 | stats count_distinct(remote_ip) as unique_ip by remote_ip
 ```
 
-![Résultats](images/img-004.png)
+![Résultats](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/images/img-004.png)
 
 ## Bilan
 

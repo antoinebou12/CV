@@ -8,7 +8,7 @@
 - Published: 2022-09-06
 - Updated: 2026-05-22
 - Tags: Live Chat, Chatbot, Customer Support, Open Source, 3CX, Chatwoot
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Chatwoot agent inbox — unified conversations view (screenshot from the open-source project, 2024 UI refresh)](./images/chatwoot-inbox.png)
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Chatwoot agent inbox — unified conversations view (screenshot from the open-source project, 2024 UI refresh)](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/chatwoot-inbox.png)
 
 I wrote these notes while helping a bilingual storefront team choose **live chat**, a **bot**, and something agents could actually work from. The four products below are **not** interchangeable: one is a phone system with chat bolted on, one is marketing automation, one is managed bot-to-human handoff, and one is an open-source helpdesk you can host yourself. **Pricing and channels change often**—use this as a map, then confirm on each vendor’s site.
 
@@ -25,18 +25,18 @@ Before you compare feature matrices, ask what you are really buying:
 - **Bot opens, human finishes** → managed CX SaaS.
 - **Shared inbox you can run on your own metal** → open-source desk.
 
-Decision flow ([Mermaid source](./images/platform-picker-flow.mmd)):
+Decision flow ([Mermaid source](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/platform-picker-flow.mmd)):
 
-![Which live-chat platform fits your goal — decision flowchart for 3CX, ManyChat, Kommunicate, and Chatwoot](./images/platform-picker-flow.svg)
+![Which live-chat platform fits your goal — decision flowchart for 3CX, ManyChat, Kommunicate, and Chatwoot](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/platform-picker-flow.svg)
 
 | | | |
 |:---:|:---:|:---:|
-| ![3CX logo](./images/logo-3cx.svg) | **ManyChat** · [manychat.com](https://manychat.com) | **Kommunicate** · [kommunicate.io](https://www.kommunicate.io) |
-| | ![Chatwoot logo](./images/logo-chatwoot-brand.svg) | |
+| ![3CX logo](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-3cx.svg) | **ManyChat** · [manychat.com](https://manychat.com) | **Kommunicate** · [kommunicate.io](https://www.kommunicate.io) |
+| | ![Chatwoot logo](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-chatwoot-brand.svg) | |
 
 ## 3CX — phones first, chat in the same queue
 
-![3CX — business communications and PBX logo](./images/logo-3cx.svg)
+![3CX — business communications and PBX logo](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-3cx.svg)
 
 [3CX](https://www.3cx.com) is **UCaaS / PBX** at heart: extensions, meetings, call routing. The **website live chat** and **Talk** widgets live in that world. If you already standardize on 3CX for voice, adding chat can mean **one vendor, one agent desk, one set of queues** instead of bolting a separate inbox on the side.
 
@@ -63,7 +63,7 @@ Useful when you want **Dialogflow-style wiring** and a polished agent UI without
 
 ## Chatwoot — shared inbox, cloud or your Docker host
 
-![Chatwoot — open-source customer engagement logo](./images/logo-chatwoot-brand.svg)
+![Chatwoot — open-source customer engagement logo](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-chatwoot-brand.svg)
 
 [Chatwoot](https://www.chatwoot.com) is an **AGPL** customer-engagement suite. Run **Chatwoot Cloud** or **self-host** (Docker and operator guides in their developer docs).
 
@@ -73,7 +73,7 @@ Conceptually it is **“shared inbox + omnichannel threads”**, closer to Inter
 - **Teams, labels, automation**, and history aimed at support and sales follow-up.
 - **APIs and webhooks** when you outgrow the default UI.
 
-![Chatwoot dashboard inbox list — light theme, 2024 design refresh (screenshot via Chatwoot GitHub)](./images/chatwoot-inbox.png)
+![Chatwoot dashboard inbox list — light theme, 2024 design refresh (screenshot via Chatwoot GitHub)](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/chatwoot-inbox.png)
 
 **Trade-offs:** self-hosting buys control and can cut per-seat SaaS cost, but you own **backups, upgrades, and security**. Voice and some enterprise CRM integrations may lag proprietary suites—verify your must-haves on their roadmap.
 

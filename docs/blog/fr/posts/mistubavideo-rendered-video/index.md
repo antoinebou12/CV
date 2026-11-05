@@ -16,7 +16,7 @@ La simulation calcule le mouvement et les changements de surface. Le rendu montr
 
 `python main.py multi --folder exports` traite une séquence OBJ. Les vues, la résolution et les échantillons par pixel règlent le rendu; FFmpeg assemble les images en vidéo ou en GIF. Le rendu de champs ajoute les transformations et textures de chaque image.
 
-![Un matériau conducteur rugueux rendu avec Mitsuba.](https://antoineboucher.info/CV/blog/fr/posts/mistubavideo-rendered-video/images/roughconductor.png)
+![Un matériau conducteur rugueux rendu avec Mitsuba.](https://antoineboucher.info/CV/blog/posts/mistubavideo-rendered-video/images/roughconductor.png)
 
 ## Le module de rendu
 
@@ -62,7 +62,7 @@ Les sorties comprennent les images de la scène, les images composites, un CSV d
 
 Conservez les paramètres d’affichage pour comparer des vidéos : changer l’échelle de la carte de chaleur peut donner une apparence différente au même champ.
 
-![Illustration d’un éclairage ponctuel Mitsuba issue du rapport.](https://antoineboucher.info/CV/blog/fr/posts/mistubavideo-rendered-video/images/spotlight.png)
+![Illustration d’un éclairage ponctuel Mitsuba issue du rapport.](https://antoineboucher.info/CV/blog/posts/mistubavideo-rendered-video/images/spotlight.png)
 
 ## Sources et tests
 

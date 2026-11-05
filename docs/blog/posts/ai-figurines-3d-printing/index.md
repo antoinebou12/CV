@@ -8,7 +8,7 @@
 - Published: 2026-05-22
 - Updated: 2026-10-27
 - Tags: 3D Printing, AI, Hunyuan3D, ComfyUI, Chibi
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)A clear 2D toy image gives the image-to-3D model a useful starting point. Follow the steps with the [slide deck](./make-figurines-using-ai-for-3d-printing.pptx) and [ComfyUI workflow](./workflows/image_omnigen2_image_edit.json).
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)A clear 2D toy image gives the image-to-3D model a useful starting point. Follow the steps with the [slide deck](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/make-figurines-using-ai-for-3d-printing.pptx) and [ComfyUI workflow](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/workflows/image_omnigen2_image_edit.json).
 
 ## Pipeline (in order)
 
@@ -17,9 +17,9 @@
 3. **Mesh** — Hunyuan3D v2 (local ComfyUI or hosted tools).
 4. **Print** — orient, supports, resin slice; fix islands with **[UVtools](https://github.com/sn4k3/UVtools)** if needed.
 
-![Photo to Object — photo, AI toy image, 3D model, resin print](./images/photo-to-object-pipeline.png)
+![Photo to Object — photo, AI toy image, 3D model, resin print](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/photo-to-object-pipeline.png)
 
-Pipeline sequence ([Mermaid source](./images/figurine-pipeline-sequence.mmd)):
+Pipeline sequence ([Mermaid source](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/figurine-pipeline-sequence.mmd)):
 
 ```mermaid
 sequenceDiagram
@@ -53,7 +53,7 @@ sequenceDiagram
 
 > Convert this image into a toy-style plastic figure. Keep features but simplify and smoothen as if molded in plastic.
 
-![Before / after](./images/slide03-upload-before.png) ![Toy result](./images/slide03-upload-after.png)
+![Before / after](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide03-upload-before.png) ![Toy result](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide03-upload-after.png)
 
 **Chibi prompt** (same idea, bigger head):
 
@@ -61,11 +61,11 @@ sequenceDiagram
 
 Gallery (ChatGPT):
 
-![Bernese puppy](./images/gallery/chibi-bernese-puppy-snow.png) ![Golden retriever](./images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](./images/gallery/chibi-cowboy-no-name.png) ![Pool](./images/gallery/chibi-pool-tube-cigar.png) ![Spider](./images/gallery/chibi-spider-toy.png)
+![Bernese puppy](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-bernese-puppy-snow.png) ![Golden retriever](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-cowboy-no-name.png) ![Pool](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-pool-tube-cigar.png) ![Spider](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-spider-toy.png)
 
 ## Step 2 — ComfyUI (one graph)
 
-**Download:** [image_omnigen2_image_edit.json](./workflows/image_omnigen2_image_edit.json) — *Load* in ComfyUI (OmniGen2 chibi edit + Hunyuan3D v2 mesh). Put your photo in `input/` as **`reference-photo.jpg`** (or edit the `LoadImage` node).
+**Download:** [image_omnigen2_image_edit.json](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/workflows/image_omnigen2_image_edit.json) — *Load* in ComfyUI (OmniGen2 chibi edit + Hunyuan3D v2 mesh). Put your photo in `input/` as **`reference-photo.jpg`** (or edit the `LoadImage` node).
 
 | Stage | What it does |
 |-------|----------------|
@@ -76,7 +76,7 @@ Full positive/negative prompts and seeds are in the JSON. Needs OmniGen2 + Hunyu
 
 ## Step 3 — Image to 3D (hosted)
 
-![Convert to 3D with Hunyuan3D and Rodin](./images/slide05-hunyuan-rodin.png)
+![Convert to 3D with Hunyuan3D and Rodin](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide05-hunyuan-rodin.png)
 
 Single-image mesh tools — clarity of the toy PNG matters more than the brand.
 
@@ -90,13 +90,13 @@ Single-image mesh tools — clarity of the toy PNG matters more than the brand.
 | **Tripo3D** | [studio.tripo3d.ai](https://studio.tripo3d.ai/) | Browser studio workflow. |
 | **Sparc3D** | [lizhihao6.github.io/Sparc3D](https://lizhihao6.github.io/Sparc3D/) | Structured sparse-view reconstruction. |
 
-![Tripo3D studio](./images/slide06-tripo3d.png)
+![Tripo3D studio](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide06-tripo3d.png)
 
-![Hyper3D](./images/slide07-hyper3d.png)
+![Hyper3D](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide07-hyper3d.png)
 
-![Sparc3D](./images/slide08-sparc3d.png)
+![Sparc3D](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide08-sparc3d.png)
 
-![Meshy AI](./images/slide09-meshy.png)
+![Meshy AI](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide09-meshy.png)
 
 **Hi3DGen** ([CHI 2024](https://doi.org/10.1145/3641520.3665304), [demo](https://huggingface.co/spaces/Stable-X/Hi3DGen)) — strong when the 2D silhouette is already clean.
 
@@ -104,37 +104,37 @@ Single-image mesh tools — clarity of the toy PNG matters more than the brand.
 
 Sample **GLB** files from Hunyuan3D, RodinHD, Hyper3D, and Hi3DGen are not stored in this repo (each was 20–75 MB). Use the generator previews in the tool UIs, or export from your own ComfyUI run (`mesh/ComfyUI*.glb`).
 
-![Mesh preview in generator UI](./images/slide11-preview.gif)
+![Mesh preview in generator UI](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide11-preview.gif)
 
 ## Step 4 — Mesh settings
 
-![Generator settings (animated)](./images/slide10-settings.gif)
+![Generator settings (animated)](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide10-settings.gif)
 
-![Mesh preview (animated)](./images/slide11-preview.gif)
+![Mesh preview (animated)](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide11-preview.gif)
 
-![Settings detail](./images/slide12-settings-detail.png)
+![Settings detail](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide12-settings-detail.png)
 
-![Settings panel](./images/slide12-settings-panel.png)
+![Settings panel](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide12-settings-panel.png)
 
 Tune **face count**, **symmetry**, and **remesh** in the generator UI before export.
 
 ## Step 5 — Resin print
 
-![Resin print setup](./images/slide13-print-1.png)
+![Resin print setup](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide13-print-1.png)
 
-![Printed figurine on build plate](./images/slide13-print-2.png)
+![Printed figurine on build plate](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide13-print-2.png)
 
 Resin for small parts. Tilt overhangs toward the plate; light supports on hair and capes.
 
-![Islands in slicer](./images/slide14-islands.png)
+![Islands in slicer](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide14-islands.png)
 
 Check floating islands with the slicer or **[UVtools](https://github.com/sn4k3/UVtools)** before printing.
 
 ## Printed results
 
-![Finished figurine 1](./images/slide15-result-1.jpeg)
+![Finished figurine 1](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide15-result-1.jpeg)
 
-![Finished figurine 2](./images/slide15-result-2.jpeg)
+![Finished figurine 2](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide15-result-2.jpeg)
 
 ## When to use this pipeline
 

@@ -22,9 +22,9 @@ Le modèle peut encore inventer de la syntaxe ; le plugin **route** vers le bon 
 
 ## Démo
 
-![Capture du plugin dans ChatGPT](./images/1692387139389.jpeg)
+![Capture du plugin dans ChatGPT](https://antoineboucher.info/CV/blog/posts/d2c-openai-diagram-plugin/images/1692387139389.jpeg)
 
-![Animation de démo](./images/1682544541386.gif)
+![Animation de démo](https://antoineboucher.info/CV/blog/posts/d2c-openai-diagram-plugin/images/1682544541386.gif)
 
 ## Formats
 

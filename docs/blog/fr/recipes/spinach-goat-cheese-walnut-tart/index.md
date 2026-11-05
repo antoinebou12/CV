@@ -8,7 +8,7 @@
 - Publié: 2024-01-05
 - Mis à jour: 2024-01-05
 - Tags: Végétarien, Pâtisserie Salée
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Tarte salée épinards et chèvre](images/featured.jpg)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Tarte salée épinards et chèvre](https://antoineboucher.info/CV/blog/recipes/spinach-goat-cheese-walnut-tart/images/featured.jpg)
 
 *Photo : [Unsplash](https://unsplash.com/photos/1546833999-b9f581a1996d)*
 

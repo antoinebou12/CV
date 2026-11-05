@@ -14,7 +14,7 @@
 
 [Artemis-Switch](https://github.com/antoinebou12/Artemis-Switch) is my fork of [XITRIX/Moonlight-Switch](https://github.com/XITRIX/Moonlight-Switch), wired for **Apollo** (Sunshine) hosts instead of classic NVIDIA GameStream. I stream Steam Big Picture from my desktop (`AntoinePC`) and use the in-app overlay for quick host shortcuts and a live performance panel.
 
-![Artemis quick menu — host shortcuts and keyboard presets while streaming Steam Big Picture](./images/artemis-quick-menu.png)
+![Artemis quick menu — host shortcuts and keyboard presets while streaming Steam Big Picture](https://antoineboucher.info/CV/blog/posts/handheld-streaming-homebrew/images/artemis-quick-menu.png)
 
 The **Quick** tab exposes window-management shortcuts (`Win+Shift+Left` / `Right`), keyboard presets, and Apollo host scripts without leaving the stream. Handy when the host is a Windows box and the Switch is just the display.
 

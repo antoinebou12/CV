@@ -23,7 +23,7 @@ Repo : [AlgoETS/MarkokChainMonteCarlo](https://github.com/AlgoETS/MarkokChainMon
 
 Couper au **2023-01-01**, estimer rendements log sur train, simuler chemins.
 
-![Séries train et hold-out](images/img-001.png)
+![Séries train et hold-out](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-001.png)
 
 ## Cœur de simulation
 
@@ -31,7 +31,7 @@ Rendements log → drift/vol → chocs gaussiens → `exp(...)`.
 
 Code complet : [Medium](https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b).
 
-![Bande de percentiles](images/img-005.png)
+![Bande de percentiles](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-005.png)
 
 ## Limites
 

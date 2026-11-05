@@ -10,7 +10,7 @@
 - Tags: Claude, Anthropic, API, Certification
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Anthropic a délivré **Claude Academy : Building with the Claude API** en octobre 2026. J'ai publié l'attestation au moment où elle est arrivée.
 
-![Visualisation abstraite liée aux systèmes d’IA](https://antoineboucher.info/CV/blog/fr/posts/claude-academy-claude-api/images/claude-api-hero.jpg)
+![Visualisation abstraite liée aux systèmes d’IA](https://antoineboucher.info/CV/blog/posts/claude-academy-claude-api/images/claude-api-hero.jpg)
 
 ## Les trois attestations Claude Academy
 

@@ -10,7 +10,7 @@
 - Tags: Rust, Graphics, Linear Algebra, Wgpu
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Dimension est mon workspace Rust pour mes expériences en mathématiques et en infographie. Le point de départ est `mathlib` : la bibliothèque expose le stockage matriciel, des solveurs numériques et les transformations utilisées côté CPU par le module de rendu.
 
-![Architecture du projet](https://antoineboucher.info/CV/blog/fr/posts/dimension-rust-math-rendering/images/renderer-architecture.png)
+![Architecture du projet](https://antoineboucher.info/CV/blog/posts/dimension-rust-math-rendering/images/renderer-architecture.png)
 
 ## Architecture
 

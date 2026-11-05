@@ -14,9 +14,9 @@
 
 Trade shows are exhausting and good for one thing: **sampling reality** — what packaging looks like on a shelf, which pitches sound human, which booths are empty despite loud branding. I wanted both the vendor view (kiosk) and the visitor view (what I would actually reorder).
 
-![On the floor — first day energy, badge and aisle traffic](./images/antoine1.jpeg)
+![On the floor — first day energy, badge and aisle traffic](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/antoine1.jpeg)
 
-![Second day — quieter moments between rushes](./images/antoine2.jpeg)
+![Second day — quieter moments between rushes](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/antoine2.jpeg)
 
 ## Olive kiosk economics
 
@@ -41,7 +41,7 @@ The number is small; the useful part was talking with people who **stopped on pu
 
 The expo is loud and generous with samples. **Gen V** lettuces were the produce highlight: crisp enough that you notice after a day of crackers and dips — a reminder that fresh produce can still win in a hall of packaged goods. If you are scouting suppliers, ask for **MOQ and shelf life** on the spot — the answers separate hobby brands from ones that can survive a grocery reset.
 
-![Fresh produce at the expo — Gen V display](./images/genV.jpg)
+![Fresh produce at the expo — Gen V display](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/genV.jpg)
 
 The photo is the booth at peak hours — greens under bright hall lights, which is the real packaging test (not Instagram studio light).
 
@@ -49,15 +49,15 @@ The photo is the booth at peak hours — greens under bright hall lights, which 
 
 **BKind** looked polished and priced like it — interesting if you track natural cosmetics, not my cart that weekend. I still took a photo because the display design was cleaner than most rows: vertical rhythm, readable ingredients panel, no visual shouting. If you are learning merchandising, compare this booth to the discount end caps two aisles over.
 
-![BKind display — shelf layout and packaging](./images/bkind-products.jpg)
+![BKind display — shelf layout and packaging](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/bkind-products.jpg)
 
 Next door, **Mate Libre** made the neighbour kiosk the best part of the row. I drink maté anyway; their **matéina** line was the find I texted friends about.
 
-![Mate Libre kiosk — neighbour traffic spillover](./images/matelibre.jpeg)
+![Mate Libre kiosk — neighbour traffic spillover](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/matelibre.jpeg)
 
 **Wise** smoothie mixes (green and red) are going into my rushed-morning rotation — add liquid, blend, leave. Not revolutionary, but **frictionless** beats aspirational kitchen gear.
 
-![Wise smoothie mixes — green and red SKUs](./images/wise-smoothies.jpg)
+![Wise smoothie mixes — green and red SKUs](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/wise-smoothies.jpg)
 
 ## Photo credits and etiquette
 

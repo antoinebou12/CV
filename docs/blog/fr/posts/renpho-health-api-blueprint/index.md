@@ -18,7 +18,7 @@ Une balance **Renpho** bio-impédance sort plus que le poids — IMC, BMR, âge 
 
 Le suivi perso, pour moi, a commencé quand beaucoup parlaient du **« Blueprint »** de Bryan Johnson — auto-quantification poussée. Je ne vends aucun protocole : l’idée était **des tendances**, mêmes conditions, pas de panique sur une pesée. La photo ci-dessous, c’est l’ambiance, pas un conseil médical.
 
-![Tableau d’inspiration suivi personnel — habitudes, pas endorsement produit](./images/blueprint.jpg)
+![Tableau d’inspiration suivi personnel — habitudes, pas endorsement produit](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/blueprint.jpg)
 
 ## D’où vient hass_renpho
 
@@ -104,9 +104,9 @@ Contrat **instable** — taxe hobby à chaque update Renpho.
 
 ## Tableaux Lovelace
 
-![Lovelace Home Assistant — historique poids, jauges composition, entités Renpho](./images/lovelace-metrics.png)
+![Lovelace Home Assistant — historique poids, jauges composition, entités Renpho](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/lovelace-metrics.png)
 
-![Lovelace Home Assistant — tours de taille et objectifs corps depuis le compte cloud](./images/lovelace-girth.png)
+![Lovelace Home Assistant — tours de taille et objectifs corps depuis le compte cloud](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/lovelace-girth.png)
 
 ## Contexte hors HA
 

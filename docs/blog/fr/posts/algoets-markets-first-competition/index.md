@@ -10,7 +10,7 @@
 - Tags: AlgoÉTS, MarkÉTS, Trading, ÉTS, Formation
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Pendant ma présidence d'[AlgoÉTS](https://github.com/AlgoETS), le club a tenu sa première compétition de paper trading à l'échelle de l'ÉTS sur **MarkÉTS**. Les chiffres ci-dessous viennent du bilan du club mis en avant sur mon profil LinkedIn.
 
-![Public lors d’un événement AlgoÉTS](https://antoineboucher.info/CV/blog/fr/posts/algoets-markets-first-competition/images/evening-audience.png)
+![Public lors d’un événement AlgoÉTS](https://antoineboucher.info/CV/blog/posts/algoets-markets-first-competition/images/evening-audience.png)
 
 Sur près de quatre mois :
 

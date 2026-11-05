@@ -8,7 +8,7 @@
 - Published: 2024-11-09
 - Updated: 2026-05-22
 - Tags: Conference, GraphQuon, ÉTS, SIGGRAPH, Computer Graphics, NVIDIA
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![GraphQuon 2024 auditorium at ÉTS — red carpet, white chairs, projection screen and ÉTS podium](./images/ets-auditorium-stage.png)
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![GraphQuon 2024 auditorium at ÉTS — red carpet, white chairs, projection screen and ÉTS podium](https://antoineboucher.info/CV/blog/posts/graphquon-2024-ets/images/ets-auditorium-stage.png)
 
 **GraphQuon** (formerly MOTOGRAPH) is the annual Quebec–Ontario pre-SIGGRAPH workshop for East-Canadian computer graphics labs. The **2024** edition ran **9–10 November 2024** at **École de technologie supérieure (ÉTS)** in Montréal. I helped **build and host the conference website** at [graphquon.github.io](https://graphquon.github.io/) so schedules, registration, and past editions stayed in one place.
 
@@ -46,7 +46,7 @@ Full timetables live on [graphquon.github.io](https://graphquon.github.io/). A f
 
 The room itself matched the workshop vibe: ÉTS auditorium, red carpet, simple stage, and a lot of white chairs filled between sessions.
 
-![Networking at GraphQuon 2024 — ÉTS hoodie and conference badges, thumbs up between talks](./images/ets-networking-thumbs-up.png)
+![Networking at GraphQuon 2024 — ÉTS hoodie and conference badges, thumbs up between talks](https://antoineboucher.info/CV/blog/posts/graphquon-2024-ets/images/ets-networking-thumbs-up.png)
 
 ## Hallway highlight: Masha Shugrina (NVIDIA)
 

@@ -33,15 +33,15 @@ Pièce par pièce, marche lente pendant la mise à jour du maillage. Pas de tré
 - **Couloir / placard** — espaces étroits, dérive visible vite.
 - **Chambre** — meubles laissés volontairement pour voir le bruit.
 
-![Workflow de scan sur iPhone](./images/Screenshot-from-2024-01-02-22-41-35.png)
+![Workflow de scan sur iPhone](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/Screenshot-from-2024-01-02-22-41-35.png)
 
-![Revue du maillage dans Rhino](./images/Screenshot-from-2024-01-02-22-42-01.png)
+![Revue du maillage dans Rhino](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/Screenshot-from-2024-01-02-22-42-01.png)
 
 ## Captures
 
-![Capture pièce — vue large](./images/1781a950-9e10-4bcd-b142-1711d9e73881.jpg)
+![Capture pièce — vue large](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/1781a950-9e10-4bcd-b142-1711d9e73881.jpg)
 
-![Autre angle — trous de couverture](./images/f33bc6af-8bf5-4f68-b9f0-6c1572258bff.jpg)
+![Autre angle — trous de couverture](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/images/f33bc6af-8bf5-4f68-b9f0-6c1572258bff.jpg)
 
 ## Bilan
 

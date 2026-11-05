@@ -10,7 +10,7 @@
 - Tags: ChatGPT, UML, GPT Store, Diagrammes
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)L'outil de diagrammes a atteint **25k utilisations** sur le GPT Store. À l'école, l'UML est la langue du quotidien pour partager une idée, et j'ai fait l'outil pour arrêter de déplacer des boîtes et des flèches dans Lucidchart.
 
-![Diagramme UML généré via MCP dans le chat](https://antoineboucher.info/CV/blog/fr/posts/gpt-store-diagram-tool/images/uml-mcp-chat.png)
+![Diagramme UML généré via MCP dans le chat](https://antoineboucher.info/CV/blog/posts/gpt-store-diagram-tool/images/uml-mcp-chat.png)
 
 J'aimerais que quelqu'un d'autre fasse avancer l'application, et je peux transmettre ce que j'en ai appris. Le texte public sur ce plugin est [plugin D2C pour OpenAI](https://antoineboucher.info/CV/blog/fr/posts/d2c-openai-diagram-plugin/). Le dépôt est [D2COpenAIPlugin](https://github.com/antoinebou12/D2COpenAIPlugin).
 

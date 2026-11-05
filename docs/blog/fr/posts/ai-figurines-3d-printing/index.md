@@ -8,7 +8,7 @@
 - Publié: 2026-05-22
 - Mis à jour: 2026-10-27
 - Tags: Impression 3D, IA, Hunyuan3D, ComfyUI, Chibi
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Une image de jouet en 2D bien définie donne au modèle image→3D un point de départ utile. Suivez les étapes avec les [diapositives](./make-figurines-using-ai-for-3d-printing.pptx) et le [workflow ComfyUI](./workflows/image_omnigen2_image_edit.json).
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Une image de jouet en 2D bien définie donne au modèle image→3D un point de départ utile. Suivez les étapes avec les [diapositives](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/make-figurines-using-ai-for-3d-printing.pptx) et le [workflow ComfyUI](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/workflows/image_omnigen2_image_edit.json).
 
 ## Pipeline (ordre)
 
@@ -17,9 +17,9 @@
 3. **Maillage** — Hunyuan3D v2 (ComfyUI local ou outils en ligne).
 4. **Impression** — orientation, supports, résine ; îlots avec **[UVtools](https://github.com/sn4k3/UVtools)** si besoin.
 
-![Photo vers objet — photo, image IA jouet, modèle 3D, impression résine](./images/photo-to-object-pipeline.png)
+![Photo vers objet — photo, image IA jouet, modèle 3D, impression résine](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/photo-to-object-pipeline.png)
 
-Diagramme de séquence ([source Mermaid](./images/figurine-pipeline-sequence.mmd)) :
+Diagramme de séquence ([source Mermaid](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/figurine-pipeline-sequence.mmd)) :
 
 ```mermaid
 sequenceDiagram
@@ -51,15 +51,15 @@ sequenceDiagram
 
 > Convert this image into a toy-style plastic figure. Keep features but simplify and smoothen as if molded in plastic.
 
-![Avant / après](./images/slide03-upload-before.png) ![Résultat](./images/slide03-upload-after.png)
+![Avant / après](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide03-upload-before.png) ![Résultat](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide03-upload-after.png)
 
 **Prompt chibi :** figurine vinyle chibi, plastique lisse, fond blanc, un personnage, pose stable sur socle.
 
-![Bernois](./images/gallery/chibi-bernese-puppy-snow.png) ![Golden](./images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](./images/gallery/chibi-cowboy-no-name.png) ![Piscine](./images/gallery/chibi-pool-tube-cigar.png) ![Araignée](./images/gallery/chibi-spider-toy.png)
+![Bernois](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-bernese-puppy-snow.png) ![Golden](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-golden-retriever-puppy.png) ![Cowboy](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-cowboy-no-name.png) ![Piscine](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-pool-tube-cigar.png) ![Araignée](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/gallery/chibi-spider-toy.png)
 
 ## Étape 2 — ComfyUI (un graphe)
 
-**Télécharger :** [image_omnigen2_image_edit.json](./workflows/image_omnigen2_image_edit.json) — *Load* dans ComfyUI (OmniGen2 + Hunyuan3D v2). Photo dans `input/` : **`reference-photo.jpg`**.
+**Télécharger :** [image_omnigen2_image_edit.json](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/workflows/image_omnigen2_image_edit.json) — *Load* dans ComfyUI (OmniGen2 + Hunyuan3D v2). Photo dans `input/` : **`reference-photo.jpg`**.
 
 | Étape | Rôle |
 |-------|------|
@@ -70,7 +70,7 @@ Prompts et graines dans le JSON. Nœuds Hunyuan3D-2 ([GitHub](https://github.com
 
 ## Étape 3 — Image vers 3D (hébergé)
 
-![Hunyuan3D et Rodin](./images/slide05-hunyuan-rodin.png)
+![Hunyuan3D et Rodin](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide05-hunyuan-rodin.png)
 
 La clarté du PNG jouet compte plus que la marque du générateur.
 
@@ -84,13 +84,13 @@ La clarté du PNG jouet compte plus que la marque du générateur.
 | **Tripo3D** | [studio.tripo3d.ai](https://studio.tripo3d.ai/) | Studio navigateur |
 | **Sparc3D** | [lizhihao6.github.io/Sparc3D](https://lizhihao6.github.io/Sparc3D/) | Reconstruction multi-vues |
 
-![Tripo3D](./images/slide06-tripo3d.png)
+![Tripo3D](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide06-tripo3d.png)
 
-![Hyper3D](./images/slide07-hyper3d.png)
+![Hyper3D](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide07-hyper3d.png)
 
-![Sparc3D](./images/slide08-sparc3d.png)
+![Sparc3D](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide08-sparc3d.png)
 
-![Meshy](./images/slide09-meshy.png)
+![Meshy](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide09-meshy.png)
 
 ## Quand utiliser quoi
 
@@ -111,31 +111,31 @@ La clarté du PNG jouet compte plus que la marque du générateur.
 
 Les **GLB** d’exemple (Hunyuan3D, RodinHD, Hyper3D, Hi3DGen) ne sont pas versionnés ici (20–75 Mo chacun). Utilisez l’aperçu des outils ou exportez depuis ComfyUI (`mesh/ComfyUI*.glb`).
 
-![Aperçu maillage dans l’UI](./images/slide11-preview.gif)
+![Aperçu maillage dans l’UI](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide11-preview.gif)
 
 ## Étape 4 — Réglages maillage
 
-![Réglages (animé)](./images/slide10-settings.gif)
+![Réglages (animé)](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide10-settings.gif)
 
 Ajuster faces, symétrie et remaillage avant export GLB/OBJ.
 
 ## Étape 5 — Impression résine
 
-![Préparation impression](./images/slide13-print-1.png)
+![Préparation impression](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide13-print-1.png)
 
-![Plateau](./images/slide13-print-2.png)
+![Plateau](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide13-print-2.png)
 
 Résine pour petites pièces ; incliner les porte-à-faux vers le plateau.
 
-![Îlots](./images/slide14-islands.png)
+![Îlots](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide14-islands.png)
 
 Vérifier les îlots avec le slicer ou **[UVtools](https://github.com/sn4k3/UVtools)**.
 
 ## Résultats
 
-![Figurine 1](./images/slide15-result-1.jpeg)
+![Figurine 1](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide15-result-1.jpeg)
 
-![Figurine 2](./images/slide15-result-2.jpeg)
+![Figurine 2](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/images/slide15-result-2.jpeg)
 
 ## Références
 

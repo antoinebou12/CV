@@ -26,13 +26,13 @@ Les équipes étudiantes se demandaient si Copilot était de la triche, toléré
 
 ## Photos
 
-![Session GitHub Copilot à Cédille — vue de la salle](./images/1695948465024.jpeg)
+![Session GitHub Copilot à Cédille — vue de la salle](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948465024.jpeg)
 
-![Session — présentation](./images/1695948465037.jpeg)
+![Session — présentation](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948465037.jpeg)
 
 Questions du public : confidentialité, licence du code généré, mode hors ligne (non).
 
-![Session — public](./images/1695948466072.jpeg)
+![Session — public](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948466072.jpeg)
 
 Merci à **Thierry Madkaud** et **Eldrick Wega**, et aux participant·e·s.
 

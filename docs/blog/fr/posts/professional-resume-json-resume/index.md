@@ -8,7 +8,7 @@
 - Publié: 2022-09-10
 - Mis à jour: 2026-05-22
 - Tags: JSON Resume, Npm, Career, HTML
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![JSON Resume — aperçu de thèmes (Elegant, Paper, Kendall, Flat, etc.)](images/json-resume-themes.png)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![JSON Resume — aperçu de thèmes (Elegant, Paper, Kendall, Flat, etc.)](https://antoineboucher.info/CV/blog/posts/professional-resume-json-resume/images/json-resume-themes.png)
 
 La plupart des parcours passent par le web. **JSON Resume** permet de garder un `resume.json` structuré et de le rendre en HTML, PDF ou données intégrées à votre site. du même article.
 

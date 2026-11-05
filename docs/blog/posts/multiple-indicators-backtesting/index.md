@@ -54,7 +54,7 @@ Tune `num_threads` to your machine and API rate limits.
 - Trend rules in collapsing sectors.
 - Stablecoins or broken pairs treated like normal tickers.
 
-![Summary chart from batch output](images/img-001.png)
+![Summary chart from batch output](https://antoineboucher.info/CV/blog/posts/multiple-indicators-backtesting/images/img-001.png)
 
 Before narrating “MACD beats EMA,” compare **median return**, not only top decile.
 

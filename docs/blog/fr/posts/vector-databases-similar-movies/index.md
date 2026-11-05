@@ -14,17 +14,17 @@
 
 Les trois animations ci-dessous proviennent du README du projet. Elles montrent les interfaces et les étapes enregistrées, pas des mesures de latence actuelles.
 
-![Démonstration animée de l’interface Gradio de recherche de films](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/demo-gradio.gif)
+![Démonstration animée de l’interface Gradio de recherche de films](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/demo-gradio.gif)
 
-![Interface Gradio Movie Similarity Search avec Matrix comme requête](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/gradio-movie-search.png)
+![Interface Gradio Movie Similarity Search avec Matrix comme requête](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/gradio-movie-search.png)
 
-![Démonstration animée de génération des embeddings](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/demo-embeddings.gif)
+![Démonstration animée de génération des embeddings](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/demo-embeddings.gif)
 
-![Embeddings de films visualisés avec t-SNE, colorés par cluster](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/tsne-embeddings.png)
+![Embeddings de films visualisés avec t-SNE, colorés par cluster](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/tsne-embeddings.png)
 
-![Démonstration animée de recherche de films avec Qdrant](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/demo-qdrant.gif)
+![Démonstration animée de recherche de films avec Qdrant](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/demo-qdrant.gif)
 
-![Graphe de Superman et films similaires avec nœuds genres et casting](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/images/superman-graph.jpg)
+![Graphe de Superman et films similaires avec nœuds genres et casting](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/superman-graph.jpg)
 
 ## Ce que les notebooks construisent réellement
 

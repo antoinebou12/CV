@@ -18,7 +18,7 @@ A **Renpho** scale with bio-impedance spits out more than weight — BMI, BMR, b
 
 Personal tracking, for me, started around the same time people were talking about Bryan Johnson’s **“Blueprint”** push for self-quantification. I am not selling a protocol — the point was simpler: **trends over time**, same conditions, don’t panic on one morning spike. The photo below is mood board energy, not medical advice.
 
-![Self-quantification mood board — inspiration for tracking habits, not a product endorsement](./images/blueprint.jpg)
+![Self-quantification mood board — inspiration for tracking habits, not a product endorsement](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/blueprint.jpg)
 
 ## Where hass_renpho came from
 
@@ -112,11 +112,11 @@ Treat anything you extract as an **unstable contract** — store updates break c
 
 Two views I actually use: vitals + history, then girth/goals when Renpho syncs them.
 
-![Home Assistant Lovelace — Renpho weight history, body-composition gauges, and supporting entity rows](./images/lovelace-metrics.png)
+![Home Assistant Lovelace — Renpho weight history, body-composition gauges, and supporting entity rows](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/lovelace-metrics.png)
 
 Weight trend at the top, composition gauges in the middle, “extra” metrics as entities you can hide if they noise you out.
 
-![Home Assistant Lovelace — Renpho girth measurements and body goals from the cloud account](./images/lovelace-girth.png)
+![Home Assistant Lovelace — Renpho girth measurements and body goals from the cloud account](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/images/lovelace-girth.png)
 
 Girth and goals only matter if your Renpho profile has them; otherwise this panel stays empty and that is fine.
 

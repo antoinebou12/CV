@@ -29,7 +29,7 @@ Ordres de grandeur :
 - **Profondeur entaille** ~3/4 largeur deck
 - **Angle** ~15–20° vers le bas
 
-![Modèle CAO](./images/skate-rack-cad-model.jpeg)
+![Modèle CAO](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-cad-model.jpeg)
 
 ## Détour métal (énergie cours d’atelier)
 
@@ -37,7 +37,7 @@ Avant la version contreplaqué, j’ai soudé un **cadre tubulaire orange** en a
 
 Le prototype métal m’a donné confiance ; le rack du quotidien est venu après, en panneaux, pas en tube.
 
-![Cadre métallique tubulaire orange en atelier — montants et traverses soudés avant le build contreplaqué](./images/skate-rack-metal-frame-shop.jpeg)
+![Cadre métallique tubulaire orange en atelier — montants et traverses soudés avant le build contreplaqué](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-metal-frame-shop.jpeg)
 
 Photo typique cours d’atelier : néons, béton, et une géométrie utile qui n’a pas survécu au déménagement dans la chambre.
 
@@ -54,21 +54,21 @@ Quand le métal est resté au garage, j’ai été à **Home Depot** pour du mat
 
 Mèche spade, circulaire, lime — répéter.
 
-![Entailles sur établi](./images/skate-rack-slot-cutting-workshop.jpeg)
+![Entailles sur établi](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-slot-cutting-workshop.jpeg)
 
 ## Montage
 
 Essai à sec, teinture au froid, **chat QA**.
 
-![Montage contreplaqué](./images/skate-rack-plywood-assembly.jpeg)
+![Montage contreplaqué](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-plywood-assembly.jpeg)
 
-![Chat inspecteur](./images/skate-rack-build-quality-inspector.jpeg)
+![Chat inspecteur](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-build-quality-inspector.jpeg)
 
 ## Fini
 
 Snowboard en haut, skates en slots.
 
-![Rack fini chargé](./images/skate-rack-finished-loaded.jpeg)
+![Rack fini chargé](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-finished-loaded.jpeg)
 
 ## Prochaine fois
 

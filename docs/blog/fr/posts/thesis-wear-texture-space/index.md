@@ -20,11 +20,11 @@ Le mémoire boucle ce circuit : la résolution mécanique du contact alimente l'
 
 Les contacts épars sont regroupés en patchs locaux, projetés vers des atlas matériau, et reconstruits en vitesse tangentielle, traction effective et dissipation frictionnelle sur une grille GPU. Ces champs pilotent l'accumulation du glissement, de la direction dominante et de l'usure — puis la mise à jour progressive des cartes **sans remaillage global**.
 
-Source : [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (même chaîne que [GraphQuon 2025](https://antoineboucher.info/CV/blog/fr/posts/graphquon-2025-university-of-toronto/)). L'implémentation interactive **TextureFriction** impose un ordre d'exécution plus strict : passes FBO pré-résolution → solveur PGS ou AVBD → vitesse/traction post-résolution → dépôt glissement/usure/direction → rendu.
+Source : [`wear-pipeline-flow.mmd`](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/wear-pipeline-flow.mmd) (même chaîne que [GraphQuon 2025](https://antoineboucher.info/CV/blog/fr/posts/graphquon-2025-university-of-toronto/)). L'implémentation interactive **TextureFriction** impose un ordre d'exécution plus strict : passes FBO pré-résolution → solveur PGS ou AVBD → vitesse/traction post-résolution → dépôt glissement/usure/direction → rendu.
 
-![Masque de contact réel — du contact simulé à la grille de patch](./images/real-contact-mask.svg)
+![Masque de contact réel — du contact simulé à la grille de patch](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/real-contact-mask.svg)
 
-![Reconstruction de traction sur le patch (WLS) — champ local avant dépôt texture](./images/traction-reconstruction-wls.svg)
+![Reconstruction de traction sur le patch (WLS) — champ local avant dépôt texture](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/traction-reconstruction-wls.svg)
 
 ## Trois contributions
 

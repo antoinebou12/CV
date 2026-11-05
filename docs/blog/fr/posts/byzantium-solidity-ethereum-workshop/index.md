@@ -8,7 +8,7 @@
 - Publié: 2024-03-11
 - Mis à jour: 2026-10-24
 - Tags: Byzantium, Solidity, Ethereum, Conference, Education, OpenZeppelin, ERC-20
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Diapositive d’ouverture — Workshop sur Solidity (Ethereum), salle ÉTS](./images/workshop-title-slide.png)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Diapositive d’ouverture — Workshop sur Solidity (Ethereum), salle ÉTS](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/workshop-title-slide.png)
 
 Retour sur notre tout premier workshop sur Ethereum.
 
@@ -47,7 +47,7 @@ contract MyToken is ERC20 {
 
 Tu choisis **nom** et **symbole**, les **décimales** (souvent 18), et tu **émet** une réserve initiale au déployeur (`msg.sender`). OpenZeppelin, c’est la bibliothèque partagée de la communauté pour les standards — même logique que l’**ERC-721** pour les NFT, mais ici on est resté sur un jeton fongible.
 
-![Démo live — éditeur et contrat projetés en salle](./images/demo-mytoken-vscode.png)
+![Démo live — éditeur et contrat projetés en salle](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/demo-mytoken-vscode.png)
 
 ## Ce qui est sorti des questions (pédagogie live)
 
@@ -63,9 +63,9 @@ Tu choisis **nom** et **symbole**, les **décimales** (souvent 18), et tu **éme
 
 Tables, prises et laptops ouverts — propice au **pair programming** quand Remix ou MetaMask demandait une confirmation de plus.
 
-![Quelques participant·e·s après l’atelier](./images/group-chalkboard.png)
+![Quelques participant·e·s après l’atelier](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/group-chalkboard.png)
 
-![Salle pendant la présentation](./images/audience-wide.png)
+![Salle pendant la présentation](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/audience-wide.png)
 
 Byzantium annonçait d’**autres ateliers** sur d’autres types de tokens et du Solidity plus avancé. Celui-ci était la rampe d’accès.
 

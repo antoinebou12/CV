@@ -8,7 +8,7 @@
 - Publié: 2025-11-15
 - Mis à jour: 2026-05-22
 - Tags: Conference, GraphQuon, Université De Toronto, SIGGRAPH, Infographie, Friction, ÉTS
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Badge GraphQuon 2025 — Antoine Boucher, École de technologie supérieure, skyline de Toronto](./images/graphquon-name-badge.png)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Badge GraphQuon 2025 — Antoine Boucher, École de technologie supérieure, skyline de Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/graphquon-name-badge.png)
 
 **GraphQuon** est l’atelier annuel Québec–Ontario pré-SIGGRAPH. L’édition **2025** s’est tenue les **15 et 16 novembre 2025** à l’**Université de Toronto** ([page de la série](https://www.dgp.toronto.edu/graphquon/)). J’y ai **présenté** avec **Sheldon Andrews** (ÉTS) : **Where to Wear?** — comment le contact frictionnel écrit l’histoire d’une surface, et comment en faire un retour utile en infographie et en génie.
 
@@ -18,17 +18,17 @@ Titre : **Where to Wear?** (sous-titre sur la première diapo : *Every surface h
 
 L’idée est simple à dire et exigeante à simuler : le **temps**, le **contact** et la **dissipation d’énergie** modifient l’apparence et le comportement d’une surface — des traces d’usure dans des salles de bain d’école d’ingénierie aux rayures sur outils, matériaux de jeu et préhenseurs robotiques. Les diapos vont de la motivation à la mécanique (usure d’Archard, lois énergétiques), puis à un **pipeline orienté rendu** (masque de contact, volumes orthographiques, champs de vitesse et de traction tangentiels, intégration en texture), et à des pistes de validation (**capture GelSight**, interpolation d’atlas de matériaux).
 
-![Diapo d’ouverture — Where to Wear? Antoine Boucher et Sheldon Andrews, ÉTS](./images/slide-01.png)
+![Diapo d’ouverture — Where to Wear? Antoine Boucher et Sheldon Andrews, ÉTS](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/slide-01.png)
 
 ### Pipeline (en un coup d’œil)
 
-Pipeline d’usure ([source Mermaid](./images/wear-pipeline-flow.mmd)) :
+Pipeline d’usure ([source Mermaid](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/wear-pipeline-flow.mmd)) :
 
-![Pipeline de simulation d’usure — contact, vitesse, traction, texture, atlas](./images/wear-pipeline-flow.svg)
+![Pipeline de simulation d’usure — contact, vitesse, traction, texture, atlas](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/wear-pipeline-flow.svg)
 
-![Diapo pipeline — des entrées de contact à l’usure en texture](./images/slide-15.png)
+![Diapo pipeline — des entrées de contact à l’usure en texture](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/slide-15.png)
 
-![Diapo exemple](./images/slide-22.png)
+![Diapo exemple](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/slide-22.png)
 
 ### Pourquoi GraphQuon
 
@@ -40,7 +40,7 @@ Ce fil de recherche rejoint mon travail à l’**ÉTS** sur la **fabrication et 
 
 | Format | Fichier | Notes |
 |--------|---------|--------|
-| **PowerPoint** | [graphquon-final.pptx](./graphquon-final.pptx) | Présentation éditable d’origine (~116 Mo). Téléchargement ci-dessous. |
+| **PowerPoint** | [graphquon-final.pptx](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/graphquon-final.pptx) | Présentation éditable d’origine (~116 Mo). Téléchargement ci-dessous. |
 
 **PowerPoint (.pptx)** — présentation complète avec actifs embarqués :
 
@@ -48,17 +48,17 @@ Ce fil de recherche rejoint mon travail à l’**ÉTS** sur la **fabrication et 
 
 Quelques photos du séjour — badge, architecture près du campus, et promenades en centre-ville entre les sessions.
 
-![Centre-ville de Toronto la nuit — Tour CN et immeuble Bell Media](./images/toronto-cn-tower-night.png)
+![Centre-ville de Toronto la nuit — Tour CN et immeuble Bell Media](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/toronto-cn-tower-night.png)
 
-![Sharp Centre for Design (OCAD) la nuit — bâtiment « table » sur pilotis colorés](./images/ocad-sharp-centre-night.png)
+![Sharp Centre for Design (OCAD) la nuit — bâtiment « table » sur pilotis colorés](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/ocad-sharp-centre-night.png)
 
-![Place Yonge–Dundas la nuit — écrans publicitaires et trottoir mouillé](./images/yonge-dundas-square-night.png)
+![Place Yonge–Dundas la nuit — écrans publicitaires et trottoir mouillé](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/yonge-dundas-square-night.png)
 
-![Murale musique — secteur Yonge Street](./images/toronto-music-mural.png)
+![Murale musique — secteur Yonge Street](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/toronto-music-mural.png)
 
-![Rencontre informelle avec d’autres participant·es](./images/graphquon-social-gathering.png)
+![Rencontre informelle avec d’autres participant·es](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/graphquon-social-gathering.png)
 
-![Bord de l’eau en Ontario — maisons reliées par une passerelle au crépuscule](./images/ontario-waterfront-bridge.png)
+![Bord de l’eau en Ontario — maisons reliées par une passerelle au crépuscule](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/ontario-waterfront-bridge.png)
 
 ## Liens
 

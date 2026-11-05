@@ -30,21 +30,21 @@ Before the Lucidchart diagrams, the lab was literally **closets and shelves** �
 
 **Wall stack** — switch, modem, router, **enterprise server (2010-era)**, and UPS, labeled while I was still learning what plugged into what:
 
-![Home lab network stack labeled — switch, modem, router, server, UPS](./images/homelab-wall-stack-labeled.jpeg)
+![Home lab network stack labeled — switch, modem, router, server, UPS](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/homelab-wall-stack-labeled.jpeg)
 
 **Dell PowerEdge R710** — dual **Xeon X5667** (~3 GHz quad-core), **24 GB RAM**, running headless beside acoustic foam. The handwritten tape on the bezel was my inventory system:
 
-![Dell PowerEdge R710 homelab server with Xeon X5667 and 24 GB RAM](./images/dell-poweredge-r710-homelab.jpeg)
+![Dell PowerEdge R710 homelab server with Xeon X5667 and 24 GB RAM](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/dell-poweredge-r710-homelab.jpeg)
 
 **Closet shelf build** — rack server horizontal, yellow switch, monitor for local installs, and enough blue patch cables to teach patience:
 
-![Homelab server closet — rack server, switch, monitor, and cabling](./images/homelab-closet-server-setup.jpeg)
+![Homelab server closet — rack server, switch, monitor, and cabling](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/homelab-closet-server-setup.jpeg)
 
 Virtualization matters when you snapshot before trying something dumb. A dedicated hypervisor host beat bare-metal churn.
 
 The Lucidchart diagram was the “explain to a roommate” version — which subnet, which box, what is allowed from the internet.
 
-![Network diagram (Lucidchart)](./images/lucidchart.jpeg)
+![Network diagram (Lucidchart)](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/lucidchart.jpeg)
 
 ## Remote access and edge
 
@@ -56,7 +56,7 @@ The Lucidchart diagram was the “explain to a roommate” version — which sub
 
 New apartment, more VLAN curiosity, **Proxmox** VMs for club projects. **Lucidchart** for the wall diagram; **C4**-style views when explaining the stack to someone else.
 
-![C4-style view](./images/c4.jpeg)
+![C4-style view](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/c4.jpeg)
 
 Later I moved public sites toward **static hosting** (S3/GitHub Pages) to cut always-on cost — the lab stayed for private services.
 

@@ -28,9 +28,9 @@ Les slides UI = le « cerveau ops » : quoi tourne, quoi attend, et si les GPU s
 - **Utilisation** — l’écart *alloué* vs *utilisé* est là où l’argent fuit ; le tableau de bord vise les propriétaires de plateforme.
 - **Deuxième vue** — découpe **cluster** vs **équipe/projet** (utile pour défendre des quotas).
 
-![Tableau de bord Run:ai](./images/dashboard.jpeg)
+![Tableau de bord Run:ai](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/dashboard.jpeg)
 
-![Tableau de bord — autre vue](./images/dashboard1.jpeg)
+![Tableau de bord — autre vue](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/dashboard1.jpeg)
 
 **Bilan perso :** si je ne peux pas répondre « qui tient le GPU ? » en moins d’une minute, ce n’est pas une plateforme d’inférence — c’est un serveur partagé déguisé.
 
@@ -44,7 +44,7 @@ Patterns évoqués :
 - Règles de scale sur **profondeur de file**, **SLO de latence** ou plages horaires.
 - Politiques cluster côté plateforme ; artefacts modèle côté équipes ML.
 
-![CLI Run:ai](./images/cli.jpeg)
+![CLI Run:ai](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/cli.jpeg)
 
 ## Modèles — packaging et multi-instance
 
@@ -52,9 +52,9 @@ Vue **centrée modèle** : un service logique, N réplicas. C’est la différen
 
 Le slide **multi-instance** = scale **horizontal** quand le trafic monte — dupliquer les workers, répartir sur les nœuds, garder la planification sensible à la **mémoire GPU** (gros LLM vs petit modèle CV).
 
-![Vue modèle](./images/model.jpeg)
+![Vue modèle](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/model.jpeg)
 
-![Scaling multi-instance](./images/multi.jpeg)
+![Scaling multi-instance](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/multi.jpeg)
 
 Questions notées :
 
@@ -69,7 +69,7 @@ Questions notées :
 - L’inférence veut souvent **socle stable + burst** ; l’entraînement veut de **longs blocs**.
 - Une bonne plateforme montre la **position dans la file** et une estimation de départ — pas seulement un échec après six heures.
 
-![Gestion des workloads](./images/managing.jpeg)
+![Gestion des workloads](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/managing.jpeg)
 
 ## Infrastructure — serveurs et facture
 
@@ -79,7 +79,7 @@ Vue **serveurs / cluster** : nœuds Kubernetes, types d’instances, santé. Sur
 - **Cluster autoscaler** vs remplissage d’abord par le **scheduler** Run:ai.
 - **Spot** pour le batch tolérant aux pannes vs **on-demand** pour l’inférence sensible à la latence.
 
-![Vue serveurs / cluster](./images/servers.jpeg)
+![Vue serveurs / cluster](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/servers.jpeg)
 
 ## Démo et défis (le slide honnête)
 
@@ -94,9 +94,9 @@ La **démo** enchaînait déploiement ou scale d’inférence, mouvement du tabl
 | **Attribution des coûts** | Finance par produit ; labels et quotas dès le jour 1 |
 | **Colle MLOps** | Registry, monitoring et scheduler = trois outils |
 
-![Démo](./images/demo.jpeg)
+![Démo](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/demo.jpeg)
 
-![Défis](./images/challenges.jpeg)
+![Défis](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/challenges.jpeg)
 
 ## Ce que j’en retirerais aujourd’hui
 

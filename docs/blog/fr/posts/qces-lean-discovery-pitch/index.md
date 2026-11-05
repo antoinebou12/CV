@@ -8,7 +8,7 @@
 - Publié: 2026-04-13
 - Mis à jour: 2026-05-22
 - Tags: QcES, Entrepreneurship, BMC, Lean Startup, Pitch, Education
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Logo du programme QcES](images/qces-logo.png)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Logo du programme QcES](https://antoineboucher.info/CV/blog/posts/qces-lean-discovery-pitch/images/qces-logo.png)
 
 J’ai suivi **QcES** (cohorte printemps 2024) en parallèle d’un parcours de découverte lean : canevas d’affaires, entrevues, pitch court, et le reste. Ce texte est ma synthèse personnelle—pas un document officiel du programme. **[Version anglaise](https://antoineboucher.info/CV/blog/fr/posts/qces-lean-discovery-pitch/)** sur le même sujet.
 

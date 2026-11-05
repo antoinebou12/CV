@@ -23,7 +23,7 @@ Une requête lance la collecte. Le service d’actualités récupère le contenu
 | Analyser le texte | `app/core/services/metrics.py` |
 | Stocker les articles | `app/core/repo/article.py` |
 
-![Traitement des articles dans AINewsTracker](https://antoineboucher.info/CV/blog/fr/posts/ainewstracker-financial-news/images/article-processing.svg)
+![Traitement des articles dans AINewsTracker](https://antoineboucher.info/CV/blog/posts/ainewstracker-financial-news/images/article-processing.svg)
 
 [Diagramme de traitement original](https://github.com/AlgoETS/AINewsTracker/blob/main/docs/diagrams/out/article_processing_flow.svg).
 

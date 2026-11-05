@@ -54,7 +54,7 @@ flowchart TB
   Build --> Pages["Published static site"]
 ```
 
-The earlier [stack diagram source](./images/site-refonte-flow.mmd) records the theme and editorial tools used during the rebuild.
+The earlier [stack diagram source](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/images/site-refonte-flow.mmd) records the theme and editorial tools used during the rebuild.
 
 ## Skills make editing rules explicit
 

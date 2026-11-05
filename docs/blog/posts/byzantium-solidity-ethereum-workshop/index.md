@@ -8,7 +8,7 @@
 - Published: 2024-03-11
 - Updated: 2026-10-24
 - Tags: Byzantium, Solidity, Ethereum, Conference, Education, OpenZeppelin, ERC-20
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Byzantium workshop opening slide — Solidity on Ethereum, ÉTS classroom](./images/workshop-title-slide.png)
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Byzantium workshop opening slide — Solidity on Ethereum, ÉTS classroom](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/workshop-title-slide.png)
 
 A quick recap of Byzantium’s **first Ethereum workshop**.
 
@@ -47,7 +47,7 @@ contract MyToken is ERC20 {
 
 You pick **name** and **symbol**, set **decimals** (often 18), and **mint** an initial supply to `msg.sender` (the deployer). OpenZeppelin is the community’s shared library for standards — the same idea as **ERC-721** for NFTs, but here we stayed on fungible tokens.
 
-![Live demo — editor and contract projected in the room](./images/demo-mytoken-vscode.png)
+![Live demo — editor and contract projected in the room](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/demo-mytoken-vscode.png)
 
 ## Concepts that came up in Q&A
 
@@ -63,9 +63,9 @@ You pick **name** and **symbol**, set **decimals** (often 18), and **mint** an i
 
 Tables, power strips, and laptops open — good for pairing when Remix threw a curveball or MetaMask asked for another confirmation.
 
-![Participants after the workshop](./images/group-chalkboard.png)
+![Participants after the workshop](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/group-chalkboard.png)
 
-![Room during the presentation](./images/audience-wide.png)
+![Room during the presentation](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/audience-wide.png)
 
 Byzantium framed **follow-up workshops** around other token types and deeper Solidity patterns. This one was the on-ramp.
 

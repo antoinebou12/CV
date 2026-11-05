@@ -48,7 +48,7 @@ From an EMA batch (illustrative):
 
 **Top and bottom lists are diagnostics**, not buy/sell lists. Always open the per-ticker chart ([example AAPL chart](https://algoets.github.io/BatchBacktesting/output/charts/EMA/AAPL-2018-04-04-2023-04-03.html)) before storytelling.
 
-![Example chart output from batch run](images/img-001.png)
+![Example chart output from batch run](https://antoineboucher.info/CV/blog/posts/experimentation-indicateurs-backtesting/images/img-001.png)
 
 ## What the Medium import left out on purpose
 

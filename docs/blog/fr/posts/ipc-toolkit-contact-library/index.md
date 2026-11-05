@@ -14,7 +14,7 @@
 
 La simulation transmet la géométrie de collision et le mouvement des sommets à la bibliothèque. Le schéma suit cette requête : sélection des candidats en phase large, détection continue de collisions (CCD) en phase étroite, puis retour du résultat à l’application.
 
-![Parcours d’une requête de contact depuis la simulation, à travers les phases large et étroite de détection continue de collisions, jusqu’au résultat](https://antoineboucher.info/CV/blog/fr/posts/ipc-toolkit-contact-library/images/architecture.png)
+![Parcours d’une requête de contact depuis la simulation, à travers les phases large et étroite de détection continue de collisions, jusqu’au résultat](https://antoineboucher.info/CV/blog/posts/ipc-toolkit-contact-library/images/architecture.png)
 
 ## Les calculs disponibles
 

@@ -14,9 +14,9 @@
 
 Les salons épuisent mais servent à **goûter le réel** : packaging en situation, pitches crédibles ou non, stands vides malgré le bruit. Je voulais la vue **vendeur** (kiosque) et **visiteur** (ce que je commanderais vraiment).
 
-![Sur le plancher — jour 1](./images/antoine1.jpeg)
+![Sur le plancher — jour 1](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/antoine1.jpeg)
 
-![Jour 2 — entre deux affluences](./images/antoine2.jpeg)
+![Jour 2 — entre deux affluences](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/antoine2.jpeg)
 
 ## Économie du kiosque olives
 
@@ -34,21 +34,21 @@ Le chiffre est modeste ; l’intérêt = gens qui **s’arrêtent volontairement
 
 Laitues **Gen V** : croquantes après une journée de craquelins — la produce gagne encore dans une hall de produits transformés.
 
-![Fruits et légumes — Gen V](./images/genV.jpg)
+![Fruits et légumes — Gen V](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/genV.jpg)
 
 ## Stands
 
 **BKind** — beau stand, prix premium, pas mon panier ce jour-là ; photo pour la mise en scène.
 
-![Produits BKind](./images/bkind-products.jpg)
+![Produits BKind](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/bkind-products.jpg)
 
 **Mate Libre** voisin : meilleure partie de la rangée ; ligne **matéina** = trouvaille partagée aux amis.
 
-![Kiosque Mate Libre](./images/matelibre.jpeg)
+![Kiosque Mate Libre](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/matelibre.jpeg)
 
 **Wise** (vert / rouge) pour matins pressés — liquide, mixer, partir.
 
-![Mélanges Wise](./images/wise-smoothies.jpg)
+![Mélanges Wise](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/images/wise-smoothies.jpg)
 
 ## Crédits photo
 

@@ -20,11 +20,11 @@ The thesis closes that loop: mechanical contact resolution feeds **texture-space
 
 Sparse contacts are grouped into local patches, projected into material atlases, and reconstructed as tangential velocity, effective traction, and frictional dissipation on a GPU patch grid. Those fields drive accumulation of sliding distance, dominant direction, and wear — then progressive map updates **without global remeshing**.
 
-Source: [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (same chain as [GraphQuon 2025](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/)). The interactive implementation in **TextureFriction** adds a stricter runtime order: pre-solve FBO passes → PGS or AVBD solve → post-solve velocity/traction → sliding/wear/direction deposit → rendering.
+Source: [`wear-pipeline-flow.mmd`](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/wear-pipeline-flow.mmd) (same chain as [GraphQuon 2025](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/)). The interactive implementation in **TextureFriction** adds a stricter runtime order: pre-solve FBO passes → PGS or AVBD solve → post-solve velocity/traction → sliding/wear/direction deposit → rendering.
 
-![Real contact mask — from simulated contact to patch grid](./images/real-contact-mask.svg)
+![Real contact mask — from simulated contact to patch grid](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/real-contact-mask.svg)
 
-![Traction reconstruction on the patch (WLS) — local field before texture deposit](./images/traction-reconstruction-wls.svg)
+![Traction reconstruction on the patch (WLS) — local field before texture deposit](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/images/traction-reconstruction-wls.svg)
 
 ## Three contributions
 

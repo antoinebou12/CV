@@ -16,13 +16,13 @@ I was touching data platforms on coursework and side projects — enough SQL to 
 
 ## Overview materials
 
-![Conference materials — governance and platform positioning](./images/governed.jpeg)
+![Conference materials — governance and platform positioning](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/governed.jpeg)
 
 The opening deck framed Snowflake as **governed sharing** first, raw speed second. That ordering matters when your org’s fear is “we cannot expose that table,” not “we need another cluster.”
 
 ## What stuck from customer stories
 
-![Event menu — literal breakfast before databases](./images/menu.jpeg)
+![Event menu — literal breakfast before databases](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/menu.jpeg)
 
 ### Global healthcare operations
 
@@ -34,9 +34,9 @@ One healthcare customer ran secure operations across **three continents** — pa
 | **Latency budgets** | Clinical ops cannot wait for overnight batch only |
 | **Sharing contracts** | Legal and technical share objects move together |
 
-![Data sharing slide — partner access pattern](./images/sharethrough.jpeg)
+![Data sharing slide — partner access pattern](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/sharethrough.jpeg)
 
-![Architecture diagram — regions and shared datasets](./images/architecture.jpeg)
+![Architecture diagram — regions and shared datasets](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/architecture.jpeg)
 
 That is the pitch for a cloud warehouse when compliance and replication actually work in production — not a slide, a running system.
 
@@ -44,9 +44,9 @@ That is the pitch for a cloud warehouse when compliance and replication actually
 
 Another team needed to land **very large** datasets and explore them without knowing every question upfront.
 
-![About us — team context](./images/aboutus.jpeg)
+![About us — team context](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/aboutus.jpeg)
 
-![Customer story — scale and ad hoc analysis](./images/customer.jpeg)
+![Customer story — scale and ad hoc analysis](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/customer.jpeg)
 
 Snowflake as a single consolidation and transform layer sped up troubleshooting and made **lineage** easier to explain to auditors and internal users. The unstated win: analysts stop emailing CSV attachments.
 
@@ -54,7 +54,7 @@ Snowflake as a single consolidation and transform layer sped up troubleshooting 
 
 **Clean rooms** came up for due diligence: two companies compare overlapping datasets without dumping everything into one bucket.
 
-![Security and governance — clean room framing](./images/security.jpeg)
+![Security and governance — clean room framing](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/security.jpeg)
 
 Privacy-preserving collaboration is a product story, not only a compliance checkbox — especially for M&A style questions where both sides distrust each other’s IT.
 

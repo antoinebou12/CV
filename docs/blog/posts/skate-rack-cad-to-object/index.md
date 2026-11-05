@@ -29,7 +29,7 @@ Rough intent (not build drawings):
 - **Slot depth** ~3/4 deck width — catch without binding on grip
 - **Slot angle** ~15–20° down — gravity holds board; longboards were tight
 
-![CAD model of vertical six-slot skateboard rack](./images/skate-rack-cad-model.jpeg)
+![CAD model of vertical six-slot skateboard rack](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-cad-model.jpeg)
 
 The CAD render is optimistic — no sawdust, no cat, perfect orthogonality.
 
@@ -39,7 +39,7 @@ Before the plywood version landed, I welded a **tubular orange frame** in a scho
 
 That prototype was the confidence boost; the rack I actually live with came later from sheet goods, not tube stock.
 
-![Orange tubular metal rack frame in a workshop — welded uprights and cross members before the plywood build](./images/skate-rack-metal-frame-shop.jpeg)
+![Orange tubular metal rack frame in a workshop — welded uprights and cross members before the plywood build](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-metal-frame-shop.jpeg)
 
 The photo is pure shop-class energy: fluorescent lights, concrete floor, and a frame that taught me the geometry without surviving the move indoors.
 
@@ -56,21 +56,21 @@ Once the metal idea stayed in the garage, I went to **Home Depot** for buildable
 
 Diagonal notch with rounded bottom: **spade bit** at end, **circular saw** on straights, **file** burrs. Clamps, dust, repeat.
 
-![Plywood side panel with diagonal slots cut on a workbench](./images/skate-rack-slot-cutting-workshop.jpeg)
+![Plywood side panel with diagonal slots cut on a workbench](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-slot-cutting-workshop.jpeg)
 
 ## Assembly and inspection
 
 Dry-fit, stain in cold December garage, **cat QA** on every flat surface.
 
-![Plywood skate rack frame during assembly](./images/skate-rack-plywood-assembly.jpeg)
+![Plywood skate rack frame during assembly](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-plywood-assembly.jpeg)
 
-![Cat sitting on a shelf of the unfinished skate rack](./images/skate-rack-build-quality-inspector.jpeg)
+![Cat sitting on a shelf of the unfinished skate rack](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-build-quality-inspector.jpeg)
 
 ## Finished rack
 
 Snowboard on top (Union bindings), skates in slots, spare on floor.
 
-![Finished wooden skate and snowboard rack with boards loaded](./images/skate-rack-finished-loaded.jpeg)
+![Finished wooden skate and snowboard rack with boards loaded](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/images/skate-rack-finished-loaded.jpeg)
 
 ## Next time
 

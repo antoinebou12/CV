@@ -8,7 +8,7 @@
 - Published: 2022-09-10
 - Updated: 2026-05-22
 - Tags: JSON Resume, Npm, Career, HTML
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![JSON Resume — sample themes (Elegant, Paper, Kendall, Flat, and others)](images/json-resume-themes.png)
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![JSON Resume — sample themes (Elegant, Paper, Kendall, Flat, and others)](https://antoineboucher.info/CV/blog/posts/professional-resume-json-resume/images/json-resume-themes.png)
 
 Most hiring flows start online. **JSON Resume** lets you keep one structured `resume.json` and render it as HTML, PDF, or data inside your own site. covers the same walkthrough.
 

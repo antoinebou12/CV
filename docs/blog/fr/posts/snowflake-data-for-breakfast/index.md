@@ -16,11 +16,11 @@ Assez de SQL pour être dangereux, pas assez d’histoires de prod. Format petit
 
 ## Matériel d’ouverture
 
-![Supports — gouvernance et positionnement](./images/governed.jpeg)
+![Supports — gouvernance et positionnement](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/governed.jpeg)
 
 Snowflake cadré comme **partage gouverné** d’abord, vitesse brute ensuite — pertinent quand la peur est « on ne peut pas exposer cette table ».
 
-![Menu événement](./images/menu.jpeg)
+![Menu événement](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/menu.jpeg)
 
 ### Santé mondiale
 
@@ -32,17 +32,17 @@ Client santé sur **trois continents** — partage partenaire sans sacrifier SLA
 | **Budgets latence** | Pas seulement du batch nocturne |
 | **Contrats de partage** | Juridique + objets techniques |
 
-![Partage de données](./images/sharethrough.jpeg)
+![Partage de données](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/sharethrough.jpeg)
 
-![Architecture multi-régions](./images/architecture.jpeg)
+![Architecture multi-régions](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/architecture.jpeg)
 
 ### Fiscalité à grande échelle
 
 Gros volumes, questions ad hoc sans script fixe à l’avance.
 
-![À propos](./images/aboutus.jpeg)
+![À propos](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/aboutus.jpeg)
 
-![Histoire client](./images/customer.jpeg)
+![Histoire client](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/customer.jpeg)
 
 Couche unique de consolidation = dépannage plus rapide, **lignée** expliquable aux auditeurs ; moins de CSV par courriel.
 
@@ -50,7 +50,7 @@ Couche unique de consolidation = dépannage plus rapide, **lignée** expliquable
 
 Due diligence : comparer des données qui se chevauchent sans tout fusionner.
 
-![Sécurité et gouvernance](./images/security.jpeg)
+![Sécurité et gouvernance](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/images/security.jpeg)
 
 Collaboration préservant la vie privée — pas qu’une case conformité.
 

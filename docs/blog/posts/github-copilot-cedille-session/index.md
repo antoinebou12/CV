@@ -40,15 +40,15 @@ The **`/createNotebook`** demo was the crowd reaction moment. You point Chat at 
 
 Room was full — mix of software, data, and curious management folks.
 
-![GitHub Copilot session at Cédille — room view](./images/1695948465024.jpeg)
+![GitHub Copilot session at Cédille — room view](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948465024.jpeg)
 
 Wide shot of the room — ÉTS students up front, laptops open. The energy was “show me something I can try Monday,” not passive keynote mode.
 
-![Copilot session — presentation](./images/1695948465037.jpeg)
+![Copilot session — presentation](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948465037.jpeg)
 
 Presenters walked through **Chat** flows on a real repo, not slideware only. The memorable beat was refactoring a messy function in-place: accept suggestion, run tests mentally, tweak. That rhythm is what I still recommend to juniors — Copilot as a fast draft, not an oracle.
 
-![Copilot session — audience](./images/1695948466072.jpeg)
+![Copilot session — audience](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/images/1695948466072.jpeg)
 
 Audience questions were practical: **privacy** (what leaves the machine), **license** on generated code (still your responsibility to comply with project policy), and whether Copilot works offline (it does not — plan demos with Wi‑Fi).
 

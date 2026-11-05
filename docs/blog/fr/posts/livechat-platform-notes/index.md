@@ -8,7 +8,7 @@
 - Publié: 2022-09-06
 - Mis à jour: 2026-05-22
 - Tags: Live Chat, Chatbot, Customer Support, Open Source, 3CX, Chatwoot
-- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](./images/chatwoot-inbox.png)
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Boîte de réception Chatwoot — vue unifiée des conversations (capture du projet open source, interface 2024)](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/chatwoot-inbox.png)
 
 J’ai rédigé ces notes en aidant une équipe de boutique bilingue à choisir un **chat en direct**, un **bot** et un outil que les agents pourraient vraiment utiliser. Les quatre produits ci-dessous ne sont **pas** interchangeables : l’un est une téléphonie avec du chat, l’un fait de l’automatisation marketing, l’un gère le passage bot → humain en SaaS, et le dernier est un helpdesk open source auto-hébergeable. **Tarifs et canaux changent souvent** — servez-vous de ce texte comme carte, puis validez chez chaque éditeur.
 
@@ -21,18 +21,18 @@ Avant la matrice de fonctionnalités, clarifiez ce que vous achetez vraiment :
 - **Le bot ouvre, l’humain finit** → SaaS CX géré.
 - **Boîte partagée sur votre propre infra** → desk open source.
 
-Schéma de décision ([source Mermaid](./images/platform-picker-flow.mmd)) :
+Schéma de décision ([source Mermaid](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/platform-picker-flow.mmd)) :
 
-![Quelle plateforme de chat selon votre objectif — arbre de décision 3CX, ManyChat, Kommunicate, Chatwoot](./images/platform-picker-flow.svg)
+![Quelle plateforme de chat selon votre objectif — arbre de décision 3CX, ManyChat, Kommunicate, Chatwoot](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/platform-picker-flow.svg)
 
 | | | |
 |:---:|:---:|:---:|
-| ![Logo 3CX](./images/logo-3cx.svg) | **ManyChat** · [manychat.com](https://manychat.com) | **Kommunicate** · [kommunicate.io](https://www.kommunicate.io) |
-| | ![Logo Chatwoot](./images/logo-chatwoot-brand.svg) | |
+| ![Logo 3CX](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-3cx.svg) | **ManyChat** · [manychat.com](https://manychat.com) | **Kommunicate** · [kommunicate.io](https://www.kommunicate.io) |
+| | ![Logo Chatwoot](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-chatwoot-brand.svg) | |
 
 ## 3CX — la téléphonie d’abord, le chat dans la même file
 
-![Logo 3CX — communications d’entreprise et PBX](./images/logo-3cx.svg)
+![Logo 3CX — communications d’entreprise et PBX](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-3cx.svg)
 
 [3CX](https://www.3cx.com), c’est d’abord de l’**UCaaS / PBX** : postes, réunions, routage d’appels. Le **chat web** et les widgets **Talk** vivent dans cet écosystème. Si la voix passe déjà par 3CX, ajouter le chat peut donner **un fournisseur, un poste agent, un ensemble de files** au lieu d’empiler une inbox séparée.
 
@@ -59,7 +59,7 @@ Utile pour du câblage **type Dialogflow** et une interface agent soignée sans 
 
 ## Chatwoot — inbox partagée, cloud ou Docker maison
 
-![Logo Chatwoot — engagement client open source](./images/logo-chatwoot-brand.svg)
+![Logo Chatwoot — engagement client open source](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/logo-chatwoot-brand.svg)
 
 [Chatwoot](https://www.chatwoot.com) est une suite **AGPL**. **Chatwoot Cloud** ou **auto-hébergement** (Docker, guides opérateur dans la doc développeur).
 
@@ -69,7 +69,7 @@ C’est plutôt **« boîte partagée + fils omnicanaux »**, proche d’Interco
 - **Équipes, étiquettes, automatisations** et historique pour support et suivi commercial.
 - **API et webhooks** quand l’UI par défaut ne suffit plus.
 
-![Liste inbox Chatwoot — thème clair, rafraîchissement UI 2024 (capture via GitHub Chatwoot)](./images/chatwoot-inbox.png)
+![Liste inbox Chatwoot — thème clair, rafraîchissement UI 2024 (capture via GitHub Chatwoot)](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/images/chatwoot-inbox.png)
 
 **Compromis :** l’auto-hébergement donne la maîtrise et peut réduire le coût par siège, mais vous assumez **sauvegardes, mises à jour et sécurité**. Voix et certaines intégrations CRM enterprise peuvent arriver après les grandes suites propriétaires — vérifiez vos must-have sur leur feuille de route.
 

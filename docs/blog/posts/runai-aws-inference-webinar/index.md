@@ -28,9 +28,9 @@ The UI slides were the “ops brain”: what is running, what is queued, and whe
 - **Utilization** — the gap between *allocated* and *used* GPU time is where cost leaks; the dashboard is meant to make that visible to platform owners, not only to the ML engineer who submitted the job.
 - **Second view** — alternate layout emphasized **cluster-level** vs **project/team-level** slices (useful when arguing for quotas).
 
-![Run:ai dashboard — jobs and resources](./images/dashboard.jpeg)
+![Run:ai dashboard — jobs and resources](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/dashboard.jpeg)
 
-![Run:ai dashboard — alternate view](./images/dashboard1.jpeg)
+![Run:ai dashboard — alternate view](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/dashboard1.jpeg)
 
 **Takeaway for me:** if I cannot answer “who is holding the GPU right now?” in under a minute, I do not have a production inference platform—I have a shared SSH host with extra steps.
 
@@ -44,7 +44,7 @@ Typical patterns the slides pointed at:
 - Autoscaling rules tie to **queue depth**, **latency SLOs**, or schedule (scale down nights/weekends).
 - Platform team keeps **cluster policies** in repo; researchers keep model artifacts in their own repos.
 
-![Run:ai CLI](./images/cli.jpeg)
+![Run:ai CLI](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/cli.jpeg)
 
 ## Models — packaging and multi-instance scaling
 
@@ -52,9 +52,9 @@ Typical patterns the slides pointed at:
 
 The **multi-instance** slide was about **horizontal scale** when request rate grows—duplicate inference workers, spread across nodes, keep scheduling aware of GPU memory headroom (large LLM weights vs smaller CV models).
 
-![Model view](./images/model.jpeg)
+![Model view](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/model.jpeg)
 
-![Multi-instance scaling](./images/multi.jpeg)
+![Multi-instance scaling](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/multi.jpeg)
 
 Questions I wrote in the margin:
 
@@ -69,7 +69,7 @@ Questions I wrote in the margin:
 - Inference often wants **steady baseline + burst**; training wants **long blocks**. Without policy, training wins on duration and inference wins on escalation to leadership.
 - Good platforms expose **queue position** and estimated start—not only failure after six hours pending.
 
-![Managing workloads](./images/managing.jpeg)
+![Managing workloads](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/managing.jpeg)
 
 ## Infrastructure — servers and what you pay for
 
@@ -79,7 +79,7 @@ Questions I wrote in the margin:
 - **Cluster autoscaler** adding nodes vs Run:ai **scheduling** filling existing capacity first.
 - **Spot** for fault-tolerant batch vs **on-demand** for latency-sensitive inference.
 
-![Server / cluster view](./images/servers.jpeg)
+![Server / cluster view](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/servers.jpeg)
 
 ## Demo and challenges (the honest slide)
 
@@ -94,9 +94,9 @@ The **demo** tied the story together: deploy or scale an inference workload, wat
 | **Cost attribution** | Finance asks per product; labels and quotas must exist early |
 | **MLOps glue** | Model registry, monitoring, and scheduler are three different tools |
 
-![Demo](./images/demo.jpeg)
+![Demo](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/demo.jpeg)
 
-![Challenges](./images/challenges.jpeg)
+![Challenges](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/images/challenges.jpeg)
 
 ## What I would do differently after this session
 

@@ -30,7 +30,7 @@ Le chemin est un exemple à remplacer par une capture. Le code lit ensemble la g
 
 Les commandes proposent une carte de chaleur 2D, une surface 3D, des profils par ligne ou colonne, des contours et des comparaisons entre fichiers. Matplotlib produit des figures statiques. Plotly peut enregistrer une vue HTML interactive. Le support optionnel de Polyscope ouvre une fenêtre d’inspection 3D.
 
-![Profil X du README de TrueMapData](https://antoineboucher.info/CV/blog/fr/posts/truemapdata-height-maps/images/profile-example.png)
+![Profil X du README de TrueMapData](https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/images/profile-example.png)
 
 ```shell
 pip install "truemapdata[viz]"

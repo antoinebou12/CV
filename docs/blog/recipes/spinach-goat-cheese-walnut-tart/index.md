@@ -8,7 +8,7 @@
 - Published: 2024-01-05
 - Updated: 2024-01-05
 - Tags: Vegetarian, Baking
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Spinach and goat cheese savory tart](images/featured.jpg)
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Spinach and goat cheese savory tart](https://antoineboucher.info/CV/blog/recipes/spinach-goat-cheese-walnut-tart/images/featured.jpg)
 
 *Photo: [Unsplash](https://unsplash.com/photos/1546833999-b9f581a1996d)*
 

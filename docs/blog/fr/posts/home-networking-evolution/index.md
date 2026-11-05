@@ -28,19 +28,19 @@ Avant les schémas Lucidchart, le lab tenait dans des **placards et étagères**
 
 **Pile murale** — switch, modem, routeur, **serveur entreprise (génération ~2010)**, onduleur, étiquetée pendant que j’apprenais encore qui branchait quoi :
 
-![Pile réseau homelab étiquetée — switch, modem, routeur, serveur, UPS](./images/homelab-wall-stack-labeled.jpeg)
+![Pile réseau homelab étiquetée — switch, modem, routeur, serveur, UPS](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/homelab-wall-stack-labeled.jpeg)
 
 **Dell PowerEdge R710** — deux **Xeon X5667** (quad ~3 GHz), **24 Go RAM**, à côté de mousse acoustique. Le ruban adhésif sur le bezel, c’était mon inventaire :
 
-![Serveur homelab Dell PowerEdge R710 — Xeon X5667, 24 Go RAM](./images/dell-poweredge-r710-homelab.jpeg)
+![Serveur homelab Dell PowerEdge R710 — Xeon X5667, 24 Go RAM](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/dell-poweredge-r710-homelab.jpeg)
 
 **Placard** — serveur rack à l’horizontale, switch jaune, écran pour les installs locales, et assez de câbles bleus pour apprendre la patience :
 
-![Placard serveur homelab — rack, switch, écran et câblage](./images/homelab-closet-server-setup.jpeg)
+![Placard serveur homelab — rack, switch, écran et câblage](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/homelab-closet-server-setup.jpeg)
 
 La virtualisation compte quand tu snapshots avant une idée douteuse. Un hôte dédié bat le tout bare-metal.
 
-![Schéma réseau (Lucidchart)](./images/lucidchart.jpeg)
+![Schéma réseau (Lucidchart)](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/lucidchart.jpeg)
 
 ## Accès distant et bordure
 
@@ -52,7 +52,7 @@ La virtualisation compte quand tu snapshots avant une idée douteuse. Un hôte d
 
 Nouvel appartement, plus de curiosité VLAN, VMs **Proxmox** pour des projets de club. **Lucidchart** pour le schéma mural ; vue type **C4** pour expliquer la pile.
 
-![Vue type C4](./images/c4.jpeg)
+![Vue type C4](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/c4.jpeg)
 
 Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le always-on — le lab est resté pour le privé.
 

@@ -30,7 +30,7 @@ Pull full history for `AAPL`, split at **2023-01-01**:
 - **Train** — estimate mean/variance of log returns.
 - **Hold-out** — compare simulated bands to realized closes.
 
-![Train vs hold-out price series](images/img-001.png)
+![Train vs hold-out price series](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-001.png)
 
 ## The simulation core
 
@@ -54,7 +54,7 @@ Full implementation and plotting loops: [Medium original](https://medium.com/@an
 - **5th–95th band** — risk-style interval for “where might price land.”
 - **Hold-out dot** — did reality sit inside the band at the aligned horizon?
 
-![Percentile band and simulated paths](images/img-005.png)
+![Percentile band and simulated paths](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-005.png)
 
 Terminal distribution gives **quantile prices** and simple return percentiles vs last train close — useful for “how wrong is the model?” not “buy signal.”
 

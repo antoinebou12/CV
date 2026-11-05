@@ -10,7 +10,7 @@
 - Tags: La Caisse, Stage, SharePoint, TypeScript, .NET
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)J'ai rejoint [La Caisse](https://www.lacaisse.com/) comme stagiaire développeur au sein des Solutions numériques et analytiques, en développement et en automatisation de processus d'affaires.
 
-![Affiche Mois de la finance — La Caisse](https://antoineboucher.info/CV/blog/fr/posts/joining-la-caisse/images/finance-month-flyer.png)
+![Affiche Mois de la finance — La Caisse](https://antoineboucher.info/CV/blog/posts/joining-la-caisse/images/finance-month-flyer.png)
 
 ## Ce que couvre le rôle
 

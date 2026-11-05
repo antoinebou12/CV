@@ -46,7 +46,7 @@ Sequence diagrams are a type of UML diagram that show how parts of a system exch
 
 The figure below is a concrete example: a user request flows through a **React** frontend and **FastAPI** backend, with **Redis** as a cache and **MongoDB** as the system of record. The source listings that follow include both a **cache hit** and a **cache miss** branch.
 
-![Frontend-Backend Communication with Caching](images/frontend-backend-caching.jpeg)
+![Frontend-Backend Communication with Caching](https://antoineboucher.info/CV/blog/posts/chatgpt-airprm-sequence-diagrams/images/frontend-backend-caching.jpeg)
 
 ## PlantUML (cache hit and cache miss)
 

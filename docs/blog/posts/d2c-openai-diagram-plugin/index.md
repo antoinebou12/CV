@@ -28,11 +28,11 @@ The model still hallucinates syntax sometimes; the plugin’s job is to **route*
 
 Static capture of the plugin surface in ChatGPT:
 
-![Plugin screenshot — diagram output in the ChatGPT thread](./images/1692387139389.jpeg)
+![Plugin screenshot — diagram output in the ChatGPT thread](https://antoineboucher.info/CV/blog/posts/d2c-openai-diagram-plugin/images/1692387139389.jpeg)
 
 Animated walkthrough:
 
-![Demo animation — generating UML from chat](./images/1682544541386.gif)
+![Demo animation — generating UML from chat](https://antoineboucher.info/CV/blog/posts/d2c-openai-diagram-plugin/images/1682544541386.gif)
 
 ## What it supports
 

@@ -12,11 +12,11 @@
 
 ## The arc (one glance)
 
-Career flow ([Mermaid source](./images/career-journey-flow.mmd)):
+Career flow ([Mermaid source](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/career-journey-flow.mmd)):
 
-![Career journey from Flash games and college makerspace to backend platform work today](./images/career-journey-flow.svg)
+![Career journey from Flash games and college makerspace to backend platform work today](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/career-journey-flow.svg)
 
-*Figure: milestones from browser games and makerspace demos through ÉTS capstones, co-ops, and today’s platform/backend focus. Rendered from [`career-journey-flow.mmd`](./images/career-journey-flow.mmd).*
+*Figure: milestones from browser games and makerspace demos through ÉTS capstones, co-ops, and today’s platform/backend focus. Rendered from [`career-journey-flow.mmd`](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/career-journey-flow.mmd).*
 
 *Color key:* green personal · blue school · purple club · gray co-op · slate full-time job · orange contract · pink teaching · amber today.
 
@@ -46,7 +46,7 @@ That year I leaned into **web development** for real: less “scene in a game en
 
 My **Algolux** internship was five weeks inside computational photography: Python tools, RAW color analysis, capture workflows, Ansible stacks for ISP validation. I still have the research poster from that period—it is the bridge between “I like code” and “I like systems that touch the physical world.”
 
-![Research poster — AI for image quality optimization, Algolux internship, Collégial Sainte-Anne](./images/algolux-research-poster.png)
+![Research poster — AI for image quality optimization, Algolux internship, Collégial Sainte-Anne](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/algolux-research-poster.png)
 
 Concrete leftovers on this site: https://antoineboucher.info/CV/blog/projects/rawanalyser/ (RAW clipping and calibration helpers, Algolux-era lineage). Lab work was spreadsheets, cameras, and scripts—not shiny product pages—but it trained the same loop I use today: **measure, automate, document**.
 
@@ -56,11 +56,11 @@ Concrete leftovers on this site: https://antoineboucher.info/CV/blog/projects/ra
 
 **Technological path (2017–2018)** — capstone **hydroglisseur** (hovercraft): blue skirt, lift fan, 3D-printed parts, wood and foam and stubborn debugging. The kind of build that teaches integration before microservices.
 
-![ÉTS hydroglisseur prototype — lift fan, wooden deck, and blue inflatable skirt on the workshop floor](./images/ets-hydroglisseur-prototype.png)
+![ÉTS hydroglisseur prototype — lift fan, wooden deck, and blue inflatable skirt on the workshop floor](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/ets-hydroglisseur-prototype.png)
 
 **Bachelor (2018–2023)** — coursework plus clubs. I helped run **[AlgoÉTS](https://algoets.etsmtl.ca/)** (algorithmic trading); we ran workshops like **Python 101 for data science** for members who wanted to move from “I use Python” to “I trust my pandas.”
 
-![AlgoÉTS Python 101 — Science des données session on a classroom display](./images/algoets-python-101.png)
+![AlgoÉTS Python 101 — Science des données session on a classroom display](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/images/algoets-python-101.png)
 
 That club work connects to open source I still maintain: the https://antoineboucher.info/CV/blog/projects/marketwatch/ Python library for the stock-market game. Same itch—**automate the boring path so humans can focus on decisions**.
 

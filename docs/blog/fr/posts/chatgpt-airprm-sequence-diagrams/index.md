@@ -46,7 +46,7 @@ Les diagrammes de séquence UML montrent les **messages** échangés dans le tem
 
 L’illustration ci-dessous : une requête utilisateur traverse un front **React** et un back **FastAPI**, avec **Redis** comme cache et **MongoDB** comme source de vérité. Les extraits de code incluent une branche **cache hit** et une **cache miss**.
 
-![Communication front-back avec cache](images/frontend-backend-caching.jpeg)
+![Communication front-back avec cache](https://antoineboucher.info/CV/blog/posts/chatgpt-airprm-sequence-diagrams/images/frontend-backend-caching.jpeg)
 
 ## PlantUML (hit et miss)
 
