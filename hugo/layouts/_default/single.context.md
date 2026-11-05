@@ -26,14 +26,19 @@
 {{- else }}
 {{- /* Article body: resolve ref/relref shortcodes to URLs, turn figures into images, drop other shortcodes. */ -}}
 {{- $raw := .RawContent -}}
+{{- /* Bundle files are published once, under the English page: relative links point there. */ -}}
+{{- $owner := . -}}
+{{- range .AllTranslations }}{{ if eq .Lang "en" }}{{ $owner = . }}{{ end }}{{ end -}}
 {{- range findRE `\{\{<\s*(?:rel)?ref\s+"[^"]+"\s*>\}\}` $raw -}}
   {{- $target := replaceRE `\{\{<\s*(?:rel)?ref\s+"([^"]+)"\s*>\}\}` "$1" . -}}
   {{- $url := "" -}}
   {{- with $.GetPage $target }}{{ $url = .Permalink }}{{ else }}{{ with site.GetPage $target }}{{ $url = .Permalink }}{{ end }}{{ end -}}
   {{- $raw = replace $raw . $url -}}
 {{- end -}}
-{{- $raw = replaceRE `\{\{<\s*figure\s+[^>]*?src="([^"]+)"[^>]*?alt="([^"]*)"[^>]*>\}\}` (printf "![$2](%s$1)" .Permalink) $raw -}}
-{{- $raw = replaceRE `\{\{<\s*figure\s+[^>]*?src="([^"]+)"[^>]*>\}\}` (printf "![]($1)" ) $raw -}}
+{{- $raw = replaceRE `\{\{<\s*figure\s+[^>]*?src="([^"]+)"[^>]*?alt="([^"]*)"[^>]*>\}\}` (printf "![$2](%s$1)" $owner.Permalink) $raw -}}
+{{- $raw = replaceRE `\{\{<\s*figure\s+[^>]*?src="([^"]+)"[^>]*>\}\}` (printf "![](%s$1)" $owner.Permalink) $raw -}}
+{{- $raw = replaceRE `\]\(\./` (printf "](%s" $owner.Permalink) $raw -}}
+{{- $raw = replaceRE `\]\(((?:images|slides|models|workflows|files|assets)/)` (printf "](%s$1" $owner.Permalink) $raw -}}
 {{- $raw = replaceRE `(?s)\{\{<[^>]*?>\}\}` "" $raw -}}
 {{- $raw = replaceRE `(?s)\{\{%[^%]*?%\}\}` "" $raw -}}
 {{- $raw = replace $raw "<!--more-->" "" -}}

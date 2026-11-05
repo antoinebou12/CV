@@ -22,7 +22,7 @@ function* htmlFiles(dir) {
   for (const name of readdirSync(dir)) {
     const full = join(dir, name);
     if (statSync(full).isDirectory()) yield* htmlFiles(full);
-    else if (name.endsWith('.html')) yield full;
+    else if (name.endsWith('.html') || name.endsWith('.md')) yield full;
   }
 }
 
@@ -52,8 +52,11 @@ test('every local link and asset reference in the built blog resolves to a file'
     const rel = '/' + posix.relative(site, file).split('\\').join('/');
     const pageUrl = posix.join(prefix || '/', rel);
     const html = readFileSync(file, 'utf8');
-    for (const match of html.matchAll(attr)) {
-      const raw = match[1] ?? match[2] ?? match[3] ?? '';
+    // Markdown twins are read by agents at their own URL: every site link in them must resolve too.
+    const refs = file.endsWith('.md')
+      ? [...html.matchAll(/\]\(((?:https?:\/\/|\/|\.\/)[^)\s]+)\)/g)].map(m => [m[1]])
+      : [...html.matchAll(attr)].map(m => [m[1] ?? m[2] ?? m[3] ?? '']);
+    for (const [raw] of refs) {
       const sitePath = target(pageUrl, raw);
       if (sitePath === null) continue;
       checked += 1;
