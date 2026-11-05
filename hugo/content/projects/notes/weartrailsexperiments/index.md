@@ -22,8 +22,8 @@ There are two parts.
 
 - `js/contacts.js` samples contact points and their centre;
 - `js/bounding-box/` fits the contact patch with AABB, PCA-based OBB, rotating-calipers OMBB, KDOP-8 or a hybrid method;
-- `js/pip/` renders eight picture-in-picture views: top, bottom and intersection masks, tangential velocity, instant traction (τ = μ σ<sub>n</sub>), accumulated sliding distance, local sliding direction and local wear;
-- `js/managers/flow-accumulation-manager.js` accumulates wear as K × traction × velocity on the ground, keeps the dominant sliding direction and encodes both as HSVA or RGBA;
+- `js/pip/` renders eight picture-in-picture views: top, bottom and intersection masks, tangential velocity, instant traction (τ = μ σ<sub>n</sub>), accumulated sliding distance, local sliding distance with direction vectors, and local wear;
+- `js/managers/flow-accumulation-manager.js` accumulates wear as K × traction × velocity on the ground, keeps a time-smoothed sliding direction and encodes both as HSVA or RGBA;
 - `js/managers/ground-variant-manager.js` loads a GLB ground with material variants and blends them with the wear map, rotating textures along the flow direction;
 - `js/shaders/wear-map-shader.js` colours the sliding-distance map with optional logarithmic scaling.
 
@@ -44,7 +44,7 @@ Click **Start**, adjust the controls in the left panel and watch the PiP views. 
 ## Repository guide {#reader-guide}
 
 - `docs/index.html` is the main application page with its control panel.
-- `docs/js/main-clean-complete.js` is the entry module. `docs/js/main.js` is an earlier, larger version.
+- `docs/js/main-clean-complete.js` is the entry module. `docs/js/main.js` is an alternative entry module that `index.html` does not load.
 - `docs/js/bodies/` creates the physics bodies, `docs/js/body-manager.js` handles their lifecycle.
 - `docs/js/bounding-box/` holds the contact-patch fitting algorithms.
 - `docs/js/pip/` holds the eight picture-in-picture renderers.
@@ -57,7 +57,7 @@ Click **Start**, adjust the controls in the left panel and watch the PiP views. 
 - Rigid and soft bodies on Ammo.js physics, including custom GLB models.
 - Five contact-patch fitting methods, with velocity-based OBB alignment.
 - Live views of contact masks, tangential velocity, traction, sliding distance and wear.
-- Persistent wear and direction accumulation on the ground, cleared only on demand.
+- Persistent wear accumulation on the ground, cleared only on demand, with a time-smoothed sliding direction.
 - GLB material-variant blending driven by accumulated wear.
 - PNG export of stamps, wear and flow maps.
 
@@ -66,7 +66,7 @@ Click **Start**, adjust the controls in the left panel and watch the PiP views. 
 - These are research prototypes: the wear model is a visual heuristic in canvas buffers, not a calibrated tribology model.
 - `docs/README.md` describes an older layout (`stamp/`, `field-flow/`, six PiP views) that no longer matches the files, and the top-level README is one sentence.
 - Libraries are loaded from CDNs, including Ammo.js from a moving branch (`@HEAD` or `@main`) in several pages, so results can change without a code change.
-- The experiments use three.js 0.160 while the application uses 0.158.
+- Most experiments use three.js 0.160 while the application uses 0.158.
 - The README notes that the OBB angle can jitter at low speed and that custom GLB models should be convex.
 - There are no tests or build step.
 
