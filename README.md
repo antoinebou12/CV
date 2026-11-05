@@ -1,296 +1,141 @@
-# CV/Resume Website
+# Antoine Boucher — CV, blog and project documentation
 
-A comprehensive, multilingual CV/resume website with automated LaTeX compilation, Docker support, and multiple deployment options.
+Source for [antoineboucher.info/CV](https://antoineboucher.info/CV/): a bilingual (EN/FR) résumé as static HTML, LaTeX PDFs and machine-readable JSON, plus a Hugo blog with articles and a documentation page for every public repository.
 
-## 🚀 Features
+[![Quality](https://github.com/antoinebou12/CV/actions/workflows/quality.yml/badge.svg)](https://github.com/antoinebou12/CV/actions/workflows/quality.yml)
+[![Lighthouse](https://github.com/antoinebou12/CV/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/antoinebou12/CV/actions/workflows/lighthouse.yml)
+[![CV PDFs](https://github.com/antoinebou12/CV/actions/workflows/compile-cv.yml/badge.svg)](https://github.com/antoinebou12/CV/actions/workflows/compile-cv.yml)
 
-- **Multilingual Support**: English and French versions of both HTML and PDF CVs
-- **Automated Builds**: Python-based build script with Docker for LaTeX compilation
-- **Multiple Deployment Options**: GitHub Pages and Docker
-- **Modern Stack**: HTML5, LaTeX (XeLaTeX), Docker, GitHub Actions
-- **Linktree Integration**: Social links page included
-- **CI/CD**: Automated compilation and deployment via GitHub Actions
+## What is published
 
-## 📋 Quick Start
+| Surface | URL | Source |
+| --- | --- | --- |
+| CV (HTML, EN default) | `/CV/index-en.html`, `/CV/index-fr.html` | `index-en.html`, `index-fr.html` (canonical), `index.html` synced from EN |
+| CV (PDF) | `/CV/cv-en/resume.pdf`, `/CV/cv-fr/resume.pdf` | `cv-en/`, `cv-fr/` (LaTeX, Russell class) |
+| Machine-readable résumé | `/CV/resume.json`, `/CV/resume.md` (+ `-fr`) | `data/resume.en.json`, `data/resume.fr.json` |
+| Blog and project pages | `/CV/blog/`, `/CV/blog/fr/` | `hugo/` (Paper theme + custom layouts) |
+| Markdown twin of every blog page | append `index.md` to any blog URL | `hugo/layouts/_default/*.context.md` |
+| Agent discovery | `/CV/llms.txt`, `/CV/robots.txt`, `/CV/sitemap.xml` | `hugo/static/`, `scripts/deploy/merge_root_sitemap.py` |
 
-### Prerequisites
+## How the pieces fit
 
-- Python 3.8+ (for build script)
-- Docker (for LaTeX compilation)
-- Git
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd CV
-   ```
-
-2. **Install Python dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Build CV PDFs**
-   ```bash
-   # Build English CV
-   python build_cv.py build --language en
-
-   # Build French CV
-   python build_cv.py build --language fr
-
-   # Build both
-   python build_cv.py build --all
-   ```
-
-4. **View locally**
-   ```bash
-   # Simple HTTP server
-   python -m http.server 8000
-   # Then visit http://localhost:8000
-   ```
-
-## 📁 Project Structure
-
-```
-CV/
-├── index-en.html          # English HTML resume
-├── index-fr.html          # French HTML resume
-├── index.html             # Default redirect
-├── build_cv.py            # CV build script
-├── requirements.txt       # Python dependencies
-├── Dockerfile.cv          # LaTeX compilation Docker image
-├── docker-compose.yml     # Docker Compose configuration
-├── cv-en/                 # English LaTeX CV source
-│   ├── resume.tex        # Main CV file
-│   ├── latex/            # CV sections
-│   │   ├── summary.tex
-│   │   ├── experience.tex
-│   │   ├── education.tex
-│   │   ├── projects.tex
-│   │   ├── skills.tex
-│   │   └── ...
-│   ├── fonts/            # Custom fonts
-│   └── resume.pdf        # Compiled PDF (generated)
-├── cv-fr/                 # French LaTeX CV source (same structure)
-├── linktree/              # Linktree website
-├── papers/                # Publications and papers
-├── configs/               # Configuration files (nginx, traefik, etc.)
-├── hugo/                  # Hugo blog (Paper theme): posts, projects, recipes, search
-├── docs/                  # Documentation
-└── .github/              # GitHub Actions workflows
+```mermaid
+flowchart LR
+  subgraph Sources
+    yaml["data/cv.yaml<br/>data/resume.*.json<br/>data/aeo.yaml"]
+    tex["cv-en/, cv-fr/<br/>LaTeX sections"]
+    html["index-en.html<br/>index-fr.html"]
+    content["hugo/content/<br/>posts, projects, recipes"]
+    repodata["hugo/data/repository_*.json<br/>(generated from GitHub)"]
+  end
+  subgraph Generators["scripts/build"]
+    gencv["generate_cv.py → skills.tex"]
+    aeo["generate_aeo_content.py<br/>sync_index_html.py"]
+    md["render_resume_md.py → resume.md"]
+    repodocs["repository_docs.py · repository_handbooks.py<br/>repository_dossier.py · repository_uml.py"]
+  end
+  subgraph Build
+    latex["build_cv.py (Docker XeLaTeX)"]
+    hugo["hugo --gc --minify<br/>(HUGO_ENV=production)"]
+  end
+  site["docs/ on main<br/>GitHub Pages: /CV/"]
+  yaml --> gencv --> tex --> latex --> site
+  yaml --> aeo --> html --> site
+  yaml --> md --> site
+  repodata --> hugo
+  content --> hugo --> site
+  repodocs --> repodata
 ```
 
-## 🛠️ Usage
+The CV hero and the blog share one visual spine: tokens in `design/tokens.json` are synced into `css/design-tokens.css` and `hugo/assets/design-tokens.css` by `scripts/build/sync_design_tokens.py`. Fonts are self-hosted in `css/fonts/` (`scripts/build/fetch_fonts.py`).
 
-### Hugo blog (Paper)
+## Quick start
 
-The CV hero and Hugo blog are built locally and published together from `docs/` on `main`. Use `scripts/deploy/publish_site.py`; no repository deployment Action is needed. See [local publishing](docs/development/local-publishing.md) for prerequisites and commands.
-
-**Local development**
+Prerequisites: Python 3.13+, Node 22+, Hugo extended 0.160.1, Docker (LaTeX only), Git with submodules (`git submodule update --init --recursive` for the Paper theme).
 
 ```bash
-cd hugo/themes/paper
-npm ci
-npm run build:css
-cd ../..
-hugo server -D
+pip install -r requirements-ci.txt
 ```
 
-Templates in `hugo/layouts` can be formatted with Prettier (Go template parser): install dependencies from `hugo/package.json` (`npm install` in `hugo/`), then `npm run format:templates`.
-
-**CSS pruning note:** The Paper theme uses Tailwind v4 with `@source` pointing at your layouts; a committed `hugo_stats.json` and `[build.buildStats]` are not required unless you later add a PostCSS PurgeCSS pipeline (then enable `[build.buildStats]` per [Hugo build stats](https://gohugo.io/configuration/build/#configure-build-stats)).
-
-**Not used here:** Netlify-specific `netlify.toml`, Mergify rules, or a published theme `theme.toml` (those apply to other hosting or theme publishing workflows).
-
-### Building CVs
-
-The `build_cv.py` script provides a convenient way to compile LaTeX CVs using Docker:
+Build the blog and preview it with the CV:
 
 ```bash
-# Basic usage
-python build_cv.py build --language en
+cd hugo && hugo server -D
+```
 
-# Build both languages
+Build the CV PDFs (Docker image with XeLaTeX):
+
+```bash
 python build_cv.py build --all
-
-# Build in parallel (faster)
-python build_cv.py build --all --parallel
-
-# Custom output location
-python build_cv.py build --language en --output ./output/cv.pdf
-
-# Clean auxiliary files after build
-python build_cv.py build --language en --clean
-
-# Verbose output
-python build_cv.py build --language en --verbose
-
-# CI mode (plain text output)
-python build_cv.py build --all --ci
 ```
 
-### Available Options
-
-- `--language, -l`: Language to build (`en` or `fr`)
-- `--all`: Build both English and French CVs
-- `--output, -o`: Custom output path for PDF
-- `--rebuild`: Force rebuild Docker image
-- `--clean`: Clean auxiliary files after compilation
-- `--verbose, -v`: Verbose output
-- `--move-to-root`: Move PDF to root as `cv-{lang}.pdf`
-- `--parallel`: Build both languages in parallel (when using `--all`)
-- `--ci`: CI/Pipeline mode (plain text output)
-- `--fail-on-warnings`: Fail build if LaTeX warnings are detected
-- `--show-warnings`: Always show LaTeX warnings summary
-
-### Editing CVs
-
-#### HTML Resumes
-
-Edit the HTML files directly:
-- `index-en.html` - English version
-- `index-fr.html` - French version
-
-#### LaTeX CVs
-
-Edit the modular LaTeX files:
-- `cv-en/resume.tex` - Main English CV file
-- `cv-fr/resume.tex` - Main French CV file
-- `cv-{lang}/latex/*.tex` - Individual sections
-
-After editing, rebuild:
-```bash
-python build_cv.py build --language en
-```
-
-## 🚢 Deployment
-
-### GitHub Pages (Recommended)
-
-Automated deployment via GitHub Actions. Simply push to the main branch:
+Build the whole production site into a staging copy and validate it (writes `docs/`):
 
 ```bash
-git add .
-git commit -m "Update CV"
-git push
+python scripts/deploy/publish_site.py
 ```
 
-The GitHub Actions workflow will:
-1. Compile LaTeX CVs to PDF
-2. Deploy HTML files to GitHub Pages
+Publishing is a local step: `python scripts/deploy/publish_site.py --publish` commits `docs/` and pushes `main`. GitHub Pages serves `main` from `/docs`. See [docs/development/local-publishing.md](docs/development/local-publishing.md).
 
-See [GitHub Pages Deployment Guide](docs/deployment/github-pages.md) for details.
+## Repository map
 
-### Docker
-
-Deploy using Docker Compose:
-
-```bash
-docker-compose up -d
+```text
+CV/
+├── index-en.html, index-fr.html   # Canonical CV pages (index.html is synced from EN)
+├── css/, js/, images/             # CV styles, interactions, logos, self-hosted fonts (css/fonts)
+├── cv-en/, cv-fr/                 # LaTeX CV (resume.tex + latex/*.tex, fonts/, russell.cls)
+├── letters/                       # Cover letters (LaTeX, EN/FR)
+├── data/                          # cv.yaml, resume.*.json, aeo.yaml, schemas
+├── design/tokens.json             # Shared design tokens (CV + blog)
+├── hugo/                          # Blog: content/, layouts/, assets/, data/, i18n/, static/
+│   ├── content/posts/             # Articles (bilingual page bundles, translationKey)
+│   ├── content/projects/notes/    # One documentation page per public repository
+│   ├── data/repository_*.json     # Source-backed facts extracted from each repository
+│   └── layouts/                   # Templates, partials, shortcodes, Markdown output formats
+├── scripts/                       # build/, html/, verify/, deploy/, ci/, tests/ (see scripts/README.md)
+├── tools/ux-audit/                # Playwright suites (e2e/, tests/, unit/) and helpers
+├── docs/                          # Published site (GitHub Pages) + development documentation
+├── .github/workflows/             # quality, lighthouse, compile-cv, link-check, repository-documentation
+├── build_cv.py                    # LaTeX build driver (Docker)
+└── lighthouserc.json              # Lighthouse CI thresholds and audited URLs
 ```
 
-See [Docker Deployment Guide](docs/deployment/docker.md) for details.
+## Project documentation pages
 
-## 📚 Documentation
+Each public repository gets a bilingual page under `hugo/content/projects/notes/<slug>/` rendered by the `repository-note` shortcode from data in `hugo/data/`:
 
-Comprehensive documentation is available in the `docs/` directory:
+| File | Content |
+| --- | --- |
+| `repository_notes.json` | Introduction, components, architecture nodes and edges, limits, source files |
+| `repository_analysis.json` | GitHub Linguist bytes, installation commands, types, manifests |
+| `repository_handbooks.json` | README chapters and documents |
+| `repository_profiles.json` | Technology badges, Compose services, Docker commands, workflow steps |
+| `repository_api_guides.json` | Endpoints and access rules found in handlers |
+| `repository_dossiers.json`, `repository_uml.json` | Dependency manifests, tests, coverage, C4-style diagrams |
 
-- **[Setup Guide](docs/setup/README.md)** - Installation and local development setup
-- **[Development Guide](docs/development/README.md)** - Development workflows and best practices
-- **[Deployment Guide](docs/deployment/README.md)** - Deployment options and instructions
-- **[Infrastructure Guide](docs/infrastructure/README.md)** - Docker and Nginx configuration
-- **[Hugo blog (Paper theme)](docs/development/hugo-navigation.md)** - Menus, i18n, `baseURL`, mobile menu, dark mode
+The page order is fixed (title, badges, languages, overview, getting started, README excerpts, features, architecture, workflow, API, deployment, algorithm, structure, limits, sources). Rules for editing these pages live in `.cursor/skills/project-docs/SKILL.md` and `PRODUCT.md`; facts not present in the data files are not added by hand. Refresh the data with the *Repository documentation* workflow or `python scripts/build/repository_docs.py` and friends (see `docs/development/repository-articles.md`).
 
-## 🔧 Development
+## Checks
 
-### Local Development
+| Check | Command | Where it runs |
+| --- | --- | --- |
+| CV data schema, EN/FR parity, generated LaTeX | `python scripts/verify/validate_cv_data.py`, `check_en_fr_parity.py`, `scripts/build/generate_cv.py --check` | `quality.yml` |
+| Spelling (advisory), html-validate | `python scripts/ci/spellcheck.py`, `npx html-validate …` | `quality.yml` |
+| Project note structure | `CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs` | `quality.yml` |
+| Frontend behaviour (Playwright) | `cd tools/ux-audit && node scripts/run-local-e2e.mjs e2e/enhancements.spec.ts` | `quality.yml` |
+| Lighthouse (CV + blog pages) | `lighthouserc.json` | `lighthouse.yml` |
+| Links | Lychee, advisory | `link-check.yml`, `compile-cv.yml` |
+| Deploy artifact | `python scripts/verify/verify_deploy_build.py` | `publish_site.py` |
 
-1. **Set up environment** (see [Local Development Guide](docs/setup/local-development.md))
-2. **Make changes** to HTML or LaTeX files
-3. **Test locally** using a local HTTP server
-4. **Rebuild PDFs** if LaTeX files changed
-5. **Commit and push** changes
+Windows helpers: `scripts/ci/run-tests.ps1`, `scripts/ci/test-pipeline-local.ps1`, `scripts/ci/run-act.ps1`.
 
-### GitHub Actions
+## Documentation
 
-The project includes automated workflows:
-- **CV Compilation**: Automatically compiles LaTeX CVs on changes
-- **GitHub Pages Deployment**: Automatically deploys website
+- [docs/development/](docs/development/README.md) — CV compilation, GitHub Actions, Hugo navigation, local publishing, AEO tracker, project architecture views, repository articles, editorial design
+- [docs/setup/](docs/setup/README.md), [docs/deployment/](docs/deployment/README.md), [docs/infrastructure/](docs/infrastructure/README.md)
+- [DESIGN.md](DESIGN.md) — documentation shell tokens; [PRODUCT.md](PRODUCT.md) — purpose and rules of the project pages; [AGENTS.md](AGENTS.md) — conventions for automated edits
+- [scripts/README.md](scripts/README.md) — script folders and common commands
 
-See [GitHub Actions Guide](docs/development/github-actions.md) for details.
+## License
 
-## 🎨 Customization
-
-### Adding New Sections
-
-1. Create a new `.tex` file in `cv-{lang}/latex/`
-2. Add content to the file
-3. Include it in `resume.tex`:
-   ```latex
-   \input{latex/new-section.tex}
-   ```
-
-### Changing Styles
-
-- **LaTeX**: Edit `cv-{lang}/resume.tex` or the `russell.cls` class file
-- **HTML**: Edit the `<style>` section in `index-{lang}.html`
-
-### Adding Languages
-
-1. Copy `cv-en/` to `cv-{new-lang}/`
-2. Translate all `.tex` files
-3. Update `build_cv.py` to support the new language
-4. Create `index-{new-lang}.html`
-
-## 🐛 Troubleshooting
-
-### LaTeX Compilation Issues
-
-- **Missing fonts**: Ensure fonts are in `cv-{lang}/fonts/`
-- **Package errors**: Check LaTeX log file (`cv-{lang}/resume.log`)
-- **Build failures**: Use `--verbose` flag for detailed output
-
-### Docker Issues
-
-- **Docker not running**: Start Docker daemon
-- **Permission errors**: Check Docker permissions
-- **Build timeouts**: Increase timeout in `build_cv.py`
-
-### Deployment Issues
-
-- **GitHub Pages not updating**: Check GitHub Actions workflow status
-- **Docker container issues**: Check logs with `docker-compose logs`
-
-See [Troubleshooting Guide](docs/README.md#troubleshooting) for more details.
-
-## 📄 License
-
-See [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- **Portfolio**: [antoineboucher.info](https://antoineboucher.info)
-- **GitHub**: [github.com/antoinebou12](https://github.com/antoinebou12)
-- **LinkedIn**: [linkedin.com/in/antoineboucher12](https://linkedin.com/in/antoineboucher12)
-
-## 🤝 Contributing
-
-This is a personal CV/resume project. For suggestions or improvements, please open an issue or submit a pull request.
-
-## 📝 Changelog
-
-### Recent Updates
-
-- ✅ CV index: Conferences section with Graphquon logos (2024 + 2025); moved out of certifications list
-- ✅ Added Graphquon 2024 and 2025 conference entries
-- ✅ Updated Snapchat Lens statistics (13.97M plays, 20.38M views; blog post refreshed May 2026)
-- ✅ Added DasherControl project
-- ✅ Updated hass-renpho with dates
-- ✅ Improved build script with parallel compilation support
-- ✅ Enhanced documentation structure
-
----
-
-**Built with ❤️ using LaTeX, Docker, and modern web technologies**
+MIT — see [LICENSE](LICENSE). Fonts (Fraunces, Open Sans) are distributed under the SIL Open Font License.
