@@ -2283,3 +2283,8 @@ html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
 .repo-doc .repo-guide-chapters.is-tabbed > details.repo-guide-chapter { display: none !important; }
 .repo-doc .repo-guide-chapters.is-tabbed > details.repo-guide-chapter.is-active-tab { display: block !important; }
 .repo-doc .repo-guide-chapters.is-tabbed > details.repo-guide-chapter.is-active-tab > summary { display: none !important; }
+
+/* Hand-written project notes (no shortcode) share the inline-code treatment of generated notes. */
+.repo-doc .repo-doc-content code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::before,
+.repo-doc .repo-doc-content code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::after { content: none !important; }
+.repo-doc .repo-doc-content :not(pre) > code:not(#\#):not(#\#):not(#\#):not(#\#) { padding: .1rem .4rem !important; border-radius: 5px !important; background: var(--panel2) !important; color: var(--text) !important; font-size: .88em !important; font-weight: 500 !important; }
