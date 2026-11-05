@@ -46,7 +46,7 @@
   const shell = document.querySelector('[data-repo-shell]');
   const pageNavigation = shell?.querySelector('.repo-sidenav-disclosure');
   if (pageNavigation) {
-    const compact = matchMedia('(max-width: 760px)');
+    const compact = matchMedia('(max-width: 1099px)');
     // The disclosure ships open for the desktop rail; on phones CSS hides its list until this
     // first pass closes it, so the main column does not jump (layout shift) when it collapses.
     const adaptNavigation = () => { pageNavigation.open = !compact.matches; pageNavigation.dataset.navAdapted = 'true'; };
