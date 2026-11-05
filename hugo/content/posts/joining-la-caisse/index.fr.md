@@ -15,15 +15,28 @@ tags:
   - .NET
 ---
 
-J'ai rejoint [La Caisse](https://www.lacaisse.com/) comme stagiaire en développement et en automatisation de processus d'affaires.
+J'ai rejoint [La Caisse](https://www.lacaisse.com/) comme stagiaire développeur au sein des Solutions numériques et analytiques, en développement et en automatisation de processus d'affaires.
 
 <!--more-->
 
 {{< figure src="images/finance-month-flyer.png" alt="Affiche Mois de la finance — La Caisse" caption="Point de contact campus avec La Caisse." loading="lazy" >}}
 
+## Ce que couvre le rôle
 
-Le travail se fait avec une équipe transversale : SharePoint, TypeScript, C#, .NET et des API, plus l'intégration et la migration depuis SnapLogic. C'est le mélange de logiciel, d'intégration et de besoins de conception que je cherchais.
+L'entrée du CV (depuis août 2026) résume le travail en trois lignes :
 
-Mohamed ilias, David Faucher et Mathieu Boisvert m'ont accueilli dans l'équipe. Les bureaux montrent aussi beaucoup d'art québécois, ce qui donne au lieu une identité à part.
+- Automatiser des processus d'affaires avec SharePoint, TypeScript, C# et .NET.
+- Contribuer aux intégrations par API et aux travaux de migration depuis SnapLogic.
+- Préciser les besoins de développement et d'intégration avec une équipe transversale, à partir des besoins d'affaires.
 
-Source : [activité LinkedIn](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/).
+C'est le mélange de logiciel, d'intégration de systèmes et d'analyse des besoins que je cherchais : la même forme que les rôles plateforme et backend précédents, appliquée à un environnement institutionnel.
+
+## Ce que j'apporte des rôles précédents
+
+- La discipline plateforme et CI/CD du [travail IMC2 sur les plateformes infonuagiques sécurisées](https://antoineboucher.info/CV/index-fr.html#work) (pipelines GitLab, GKE, Terraform).
+- Les habitudes d'enseignement et de documentation de [Polytechnique]({{< ref "/posts/polytechnique-teaching-start/index.md" >}}) et de l'ÉTS : installations reproductibles et passations claires.
+- .NET et la gestion structurée des erreurs chez [IONODES]({{< ref "/posts/serilog-sentrysdk-structured-errors/index.md" >}}), où Serilog et Sentry alimentaient le diagnostic en production.
+
+Mohamed Ilias, David Faucher et Mathieu Boisvert m'ont accueilli dans l'équipe. Les bureaux montrent aussi beaucoup d'art québécois, ce qui donne au lieu une identité à part.
+
+Source : [activité LinkedIn](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/) et l'entrée du CV.

@@ -15,15 +15,28 @@ tags:
   - .NET
 ---
 
-I joined [La Caisse](https://www.lacaisse.com/) as an intern in development and business-process automation.
+I joined [La Caisse](https://www.lacaisse.com/) as a Software Developer Intern in the Digital and Analytics Solutions group, working on development and business-process automation.
 
 <!--more-->
 
 {{< figure src="images/finance-month-flyer.png" alt="La Caisse finance-month flyer" caption="Campus touchpoint with La Caisse." loading="lazy" >}}
 
+## What the role covers
 
-The work sits with a cross-functional team: SharePoint, TypeScript, C#, .NET, and APIs, plus integration and migration off SnapLogic. It is the same mix of software, system integration, and design requirements I wanted.
+The CV entry (from August 2026) describes the work in three lines:
 
-Mohamed ilias, David Faucher, and Mathieu Boisvert welcomed me onto the team. The offices also carry a lot of Quebec art, which gives the place a character of its own.
+- Develop business-process automation with SharePoint, TypeScript, C# and .NET.
+- Contribute to API integrations and to the migration work away from SnapLogic.
+- Work with a cross-functional team to turn business needs into application and integration requirements.
 
-Source: [LinkedIn activity](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/).
+It is the mix of software, system integration and requirements work I was looking for: the same shape as the platform and backend roles before it, applied to an institutional environment.
+
+## What I bring from earlier roles
+
+- Platform and CI/CD discipline from the [IMC2 secure cloud work](https://antoineboucher.info/CV/index-en.html#work) (GitLab pipelines, GKE, Terraform).
+- Teaching and documentation habits from [Polytechnique]({{< ref "/posts/polytechnique-teaching-start/index.md" >}}) and ÉTS: reproducible setups and clear hand-offs.
+- .NET and structured error handling from [IONODES]({{< ref "/posts/serilog-sentrysdk-structured-errors/index.md" >}}), where Serilog and Sentry fed production diagnostics.
+
+Mohamed Ilias, David Faucher and Mathieu Boisvert welcomed me onto the team. The offices also carry a lot of Quebec art, which gives the place a character of its own.
+
+Source: [LinkedIn activity](https://www.linkedin.com/in/antoineboucher12/recent-activity/all/) and the CV work entry.
