@@ -615,6 +615,10 @@ html.dark .certification-cluster .list-group { border-color: var(--editorial-rul
     justify-self: auto;
     align-self: auto;
   }
+  /* The badge is absolutely positioned on the right, so the employer and role lines reserve its width
+     (long French titles were running underneath the capsule). */
+  .cv-job-summary .where,
+  .cv-job-summary .profession { padding-right: 200px; }
   #education .year,
   #awards .year {
     position: relative;
@@ -1189,6 +1193,8 @@ html.dark .certification-cluster .list-group { border-color: var(--editorial-rul
     }
     details.cv-job.cv-job--current > summary.cv-job-summary { padding-left: 18px; }
     .cv-job-summary .profession { padding-left: var(--job-logo-indent); }
+    .cv-job-summary .where,
+    .cv-job-summary .profession { padding-right: 0; }
     .cv-job-summary .year {
       position: static;
       top: auto;

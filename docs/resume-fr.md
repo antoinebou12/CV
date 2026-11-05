@@ -16,7 +16,7 @@ Ingénieur plateforme et infographie : livraison en TypeScript, .NET, Java/Kotli
 
 ## Expérience
 
-### Stagiaire, Développeur(-euse) — Solutions numériques et analytiques @ La Caisse (Caisse de dépôt et placement du Québec)
+### Stagiaire, Développeur Solutions numériques et analytiques @ La Caisse (Caisse de dépôt et placement du Québec)
 
 2026-08 — aujourd'hui | Montréal, QC
 - Automatiser des processus d’affaires avec SharePoint, TypeScript, C# et .NET
