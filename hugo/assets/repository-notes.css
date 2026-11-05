@@ -2268,3 +2268,8 @@ html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
 @media (max-width: 760px) {
   html.js .repo-sidenav-disclosure[open]:not([data-nav-adapted]):not(#\#):not(#\#):not(#\#):not(#\#) > .repo-sidenav { display: none !important; }
 }
+
+/* Command cards: title left, copy control right. The three-column grid is for the comments terminal (dots). */
+.terminal-head:not(:has(.terminal-dots)) { grid-template-columns: minmax(0, 1fr) auto !important; }
+.repo-note .terminal .copy { min-width: 0 !important; padding: .35rem .7rem !important; border-radius: 8px !important; }
+.repo-note .terminal-body { padding: 1rem 1.15rem !important; font-size: .86rem !important; line-height: 1.7 !important; }

@@ -57,3 +57,26 @@
  .journal-article .single-post-content:has(.article-diagram-figure) td:first-child:not(#\#):not(#\#):not(#\#) { font-weight:650!important; border:0!important; padding-bottom:0!important; }
  .journal-article .single-post-content:has(.article-diagram-figure) td:last-child:not(#\#):not(#\#):not(#\#) { padding-top:.25rem!important; }
 }
+
+/* Desktop spacing pass: wide screens get more columns and a bounded reading area instead of stretched lines. */
+@media (min-width:1280px) {
+ .blog-site .site-main { padding:clamp(32px,3.2vw,72px) clamp(32px,4vw,88px)!important; }
+ .blog-site .journal-intro { margin-bottom:36px!important; }
+ .blog-site .post-list-filters { margin-bottom:36px!important; }
+ .blog-site .post-kind-stack { gap:56px!important; }
+ .blog-site .post-card-grid { gap:32px!important; }
+ .repo-directory .repo-directory-grid { gap:24px!important; }
+ .repo-directory .repo-directory-group { margin:40px 0!important; }
+}
+@media (min-width:1600px) {
+ .repo-directory .repo-directory-grid { grid-template-columns:repeat(3,minmax(0,1fr))!important; }
+ .blog-site .journal-article.has-toc-rail:not(#\#):not(#\#):not(#\#) { max-width:1360px!important; column-gap:clamp(3rem,5vw,6rem)!important; }
+ .journal-article .single-post-content > :is(p,ul,ol):not(#\#):not(#\#):not(#\#) { max-width:78ch!important; }
+ .repo-doc .repo-shell-layout { max-width:1560px!important; margin-inline:auto!important; grid-template-columns:17rem minmax(0,1fr)!important; column-gap:clamp(3rem,5vw,6rem)!important; }
+}
+/* Project notes: one vertical rhythm between numbered sections. */
+@media (min-width:1100px) {
+ .repo-doc .repo-shell-main > :is(section.doc, aside.doc):not(#\#):not(#\#):not(#\#) { margin-top:3.5rem!important; }
+ .repo-doc .repo-shell-main > :is(section.doc, aside.doc):not(#\#):not(#\#):not(#\#) > h2 { margin-bottom:1.25rem!important; }
+ .repo-doc .repo-shell-main > .repo-overview:not(#\#):not(#\#):not(#\#) { margin-top:2.5rem!important; }
+}
