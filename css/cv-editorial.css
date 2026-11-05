@@ -234,7 +234,8 @@ html.dark #education .description:after {
   details.cv-section > summary { min-height: 52px; border-bottom: 1px solid var(--editorial-rule); color: var(--editorial-accent); padding: 0 0 12px; }
   details.cv-section > summary h2.cv-section-heading { color: var(--editorial-ink); font-family: var(--editorial-body); font-size: 21px; font-weight: 700; letter-spacing: -.025em; text-transform: none; }
   .cv-section-heading .ico { color: var(--editorial-accent); font-size: .65em; margin-right: 5px; vertical-align: 2px; }
-  .cv-section-body { padding-top: 18px; }
+  .cv-section-body { padding-top: 18px; display: flow-root; } /* contains floated contact rows so the next section summary is not shrunk beside them */
+  details.cv-section > summary { clear: both; }
   .section-intro { color: var(--editorial-muted); line-height: 1.7; }
   #education .edu-org {
     display: flex;
