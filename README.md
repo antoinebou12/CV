@@ -15,7 +15,8 @@ Source for [antoineboucher.info/CV](https://antoineboucher.info/CV/): a bilingua
 | Machine-readable résumé | `/CV/resume.json`, `/CV/resume.md` (+ `-fr`) | `data/resume.en.json`, `data/resume.fr.json` |
 | Blog and project pages | `/CV/blog/`, `/CV/blog/fr/` | `hugo/` (Paper theme + custom layouts) |
 | Markdown twin of every blog page | append `index.md` to any blog URL | `hugo/layouts/_default/*.context.md` |
-| Agent discovery | `/CV/llms.txt`, `/CV/robots.txt`, `/CV/sitemap.xml` | `hugo/static/`, `scripts/deploy/merge_root_sitemap.py` |
+| Agent discovery | `/CV/llms.txt`, `/CV/llms-full.txt`, `/CV/robots.txt`, `/CV/sitemap.xml` | `hugo/layouts/index.llms*.txt`, `hugo/layouts/_default/sitemap.xml`, `scripts/deploy/merge_root_sitemap.py` |
+| GitHub stars by theme | `/CV/blog/stars/` (once generated) | `scripts/build/fetch_github_stars.py` → `hugo/data/github_stars.json` |
 
 ## How the pieces fit
 
@@ -114,6 +115,10 @@ Each public repository gets a bilingual page under `hugo/content/projects/notes/
 | `repository_dossiers.json`, `repository_uml.json` | Dependency manifests, tests, coverage, C4-style diagrams |
 
 The page order is fixed (title, badges, languages, overview, getting started, README excerpts, features, architecture, workflow, API, deployment, algorithm, structure, limits, sources). Rules for editing these pages live in `.cursor/skills/project-docs/SKILL.md` and `PRODUCT.md`; facts not present in the data files are not added by hand. Refresh the data with the *Repository documentation* workflow or `python scripts/build/repository_docs.py` and friends (see `docs/development/repository-articles.md`).
+
+## Stars page
+
+`python scripts/build/fetch_github_stars.py` reads the account's starred repositories through an authenticated `gh` session, groups them by theme (topics, language, description keywords) and writes `hugo/data/github_stars.json` plus the `hugo/content/stars/` section. The header pill and the llms.txt entry appear only when that data exists; rerun the script to refresh.
 
 ## Checks
 
