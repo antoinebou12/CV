@@ -7,6 +7,7 @@ import test from 'node:test';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const read = path => readFileSync(resolve(root, path), 'utf8');
 const inventory = JSON.parse(read('hugo/data/github_inventory.json'));
+const orgRepositories = JSON.parse(read('hugo/data/project_org_repositories.json')).repositories;
 const { notes, reviewed } = JSON.parse(read('hugo/data/repository_notes.json'));
 const analysis = JSON.parse(read('hugo/data/repository_analysis.json'));
 const handbooks = JSON.parse(read('hugo/data/repository_handbooks.json')).repositories;
@@ -254,8 +255,8 @@ test('adaptive sections: Compose topology and algorithm when profile data exists
 test('directory cards link to all local notes, with separate GitHub links', () => {
   for (const lang of ['en', 'fr']) {
     const html = readFileSync(resolve(site, lang === 'fr' ? 'fr' : '', 'projects/index.html'), 'utf8');
-    assert.equal((html.match(/class=["']?repo-read-note["' >]/g) || []).length, notes.length);
-    for (const note of notes) {
+    assert.equal((html.match(/class=["']?repo-read-note["' >]/g) || []).length, notes.length + orgRepositories.length);
+    for (const note of [...notes, ...orgRepositories.map(repo => ({ ...repo, repo: repo.name }))]) {
       assert.ok(html.includes(`/projects/notes/${note.slug}/`), note.repo);
       assert.ok(html.includes(note.url), note.repo);
     }

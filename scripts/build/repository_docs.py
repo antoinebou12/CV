@@ -556,6 +556,10 @@ def manifest_info(path, text):
 
 
 def repo_articles(notes):
+    # Organisation repositories with hand-written notes (AlgoETS, ETSim) are indexed too,
+    # so the catalog and note pages can link their companion articles.
+    org = load(ROOT / "hugo/data/project_org_repositories.json", {"repositories": []})
+    notes = list(notes) + [{"repo": r["name"], "slug": r["slug"]} for r in org["repositories"]]
     names = {note["repo"].lower(): note["repo"] for note in notes}
     slugs = {note["slug"]: note["repo"] for note in notes}
     aliases = {
@@ -570,7 +574,7 @@ def repo_articles(notes):
         refs = {
             match.lower().removesuffix(".git")
             for match in re.findall(
-                r"https://github\.com/antoinebou12/([\w.\-]+)", text
+                r"https://github\.com/(?:antoinebou12|AlgoETS|ETSim)/([\w.\-]+)", text
             )
         }
         explicit = re.search(r'^repository_note:\s*"([^"]+)"', text, re.MULTILINE)

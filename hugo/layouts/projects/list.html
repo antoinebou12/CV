@@ -2,6 +2,8 @@
 {{ $fr := eq .Lang "fr" }}
 {{ $i := cond $fr 1 0 }}
 {{ $snapshot := hugo.Data.github_inventory }}
+{{/* Organisation repositories (AlgoETS, ETSim) with hand-written notes sit beside the account inventory. */}}
+{{ $allRepos := $snapshot.repositories | append (hugo.Data.project_org_repositories.repositories | default slice) }}
 {{ $stylesData := hugo.Data.repository_styles }}
 {{ $domainsData := hugo.Data.competence_domains }}
 <article class="repo-directory not-prose">
@@ -9,7 +11,7 @@
     <p class="journal-eyebrow">{{ if $fr }}Carnet de projets{{ else }}Project notebook{{ end }}</p>
     <h1>{{ .Title }}</h1>
     <p class="repo-directory-lead">{{ if $fr }}Code et documentation de mes projets en infographie, développement et infrastructure personnelle.{{ else }}Code and documentation for my graphics, developer-tool, and homelab projects.{{ end }}</p>
-    <p class="repo-directory-count">{{ len $snapshot.repositories }} {{ if $fr }}dépôts publics · Page modifiée le{{ else }}public repositories · Page updated{{ end }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time></p>
+    <p class="repo-directory-count">{{ len $allRepos }} {{ if $fr }}dépôts publics · Page modifiée le{{ else }}public repositories · Page updated{{ end }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time></p>
   </header>
   {{ $other := cond $fr "Autre" "Other" }}
   <section class="repo-explorer" data-repo-explorer aria-labelledby="repo-explorer-heading">
@@ -18,7 +20,7 @@
     <div class="repo-explorer-toolbar" role="search">
       <label class="repo-sr" for="repo-search">{{ if $fr }}Rechercher{{ else }}Search{{ end }}</label>
       <input id="repo-search" class="repo-explorer-search" type="search" data-repo-search placeholder="{{ if $fr }}Nom, langage, style, description…{{ else }}Name, language, style, description…{{ end }}" autocomplete="off" enterkeyhint="search">
-      <p class="repo-explorer-live" data-repo-live aria-live="polite"><span data-repo-count>{{ len $snapshot.repositories }}</span> {{ if $fr }}projets affichés{{ else }}projects shown{{ end }}</p>
+      <p class="repo-explorer-live" data-repo-live aria-live="polite"><span data-repo-count>{{ len $allRepos }}</span> {{ if $fr }}projets affichés{{ else }}projects shown{{ end }}</p>
     </div>
     <div class="repo-filter-block repo-filter-block--origin">
       <p class="repo-filter-label" id="repo-origin-label">{{ if $fr }}Type de dépôt{{ else }}Repository type{{ end }}</p>
@@ -63,7 +65,7 @@
   {{- range $repoName, $articles := hugo.Data.repository_article_index.repositories -}}{{- range $articles -}}{{- $postRepos.Add .path 1 -}}{{- end -}}{{- end -}}
   {{ range $group := $stylesData.styles }}
     {{ $repos := slice }}
-    {{ range $snapshot.repositories }}
+    {{ range $allRepos }}
       {{ $types := index $stylesData.repositories .name | default (slice "scripts") }}
       {{ if eq (index $types 0) $group.id }}{{ $repos = $repos | append . }}{{ end }}
     {{ end }}
@@ -73,7 +75,10 @@
       <ul class="repo-directory-grid" role="list" data-reveal-group>
         {{ range sort $repos "stars" "desc" }}
         {{ $lang := .language | default $other }}
-        {{ $note := index (where hugo.Data.repository_notes.notes "repo" .name) 0 }}
+        {{ $repo := . }}
+        {{ $note := dict }}
+        {{ range first 1 (where hugo.Data.repository_notes.notes "repo" .name) }}{{ $note = . }}{{ end }}
+        {{ if not $note.slug }}{{ with site.GetPage (printf "/projects/notes/%s" $repo.slug) }}{{ $note = dict "slug" $repo.slug "intro" (slice .Description .Description) }}{{ end }}{{ end }}
         {{ $article := site.GetPage (printf "/projects/notes/%s" $note.slug) }}
         {{ if not $article }}{{ errorf "Missing project article for %s (%s)" .name $.Lang }}{{ end }}
         {{ $analysis := index (hugo.Data.repository_analysis.repositories | default dict) .name }}
