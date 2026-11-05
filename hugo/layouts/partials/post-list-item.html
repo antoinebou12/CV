@@ -88,24 +88,22 @@
       </div>
     </a>
     {{- if gt (len $terms) 0 -}}
-    <details class="post-list-card-tags-details border-t border-black/10 px-5 pb-5 pt-3 sm:px-6 sm:pb-6 dark:border-white/10" open>
-      <summary
-        class="post-list-card-tags-summary cursor-pointer list-none text-xs font-semibold uppercase tracking-wide text-black/65 outline-none hover:text-black/90 dark:text-white/60 dark:hover:text-white/90 [&::-webkit-details-marker]:hidden"
-      >
-        {{- i18n "postListTagsToggleWithCount" (dict "Count" (len $terms)) -}}
-      </summary>
-      <div class="post-list-card-tags mt-3 flex flex-wrap gap-2">
-        {{- range $terms -}}
+    <footer class="post-list-card-footer">
+      <nav class="post-list-card-tags" aria-label="{{ if eq $p.Lang "fr" }}Étiquettes{{ else }}Tags{{ end }}">
+        {{- range first 3 $terms -}}
         <a
           href="{{ .RelPermalink }}"
-          class="post-list-tag-chip site-search-tag-chip inline-flex min-h-9 max-w-full items-center rounded-lg border px-2.5 py-1 text-[11px] font-semibold leading-tight no-underline transition-opacity hover:opacity-90 focus-visible:z-[2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500/80{{ if eq $kind "tutorial" }} post-list-tag-chip--tutorial-solid{{ end }}"
+          class="post-list-tag-chip site-search-tag-chip{{ if eq $kind "tutorial" }} post-list-tag-chip--tutorial-solid{{ end }}"
           data-tag-name="{{ .Title | htmlUnescape }}"
           {{- if eq $kind "tutorial" }} data-skip-tag-paint="true"{{ end -}}
           >{{- .Title -}}</a
         >
         {{- end -}}
-      </div>
-    </details>
+        {{- if gt (len $terms) 3 -}}
+        <a class="post-list-tag-more" href="{{ $p.RelPermalink }}#article-tags" aria-label="{{ if eq $p.Lang "fr" }}{{ sub (len $terms) 3 }} autres étiquettes{{ else }}{{ sub (len $terms) 3 }} more tags{{ end }}">+{{ sub (len $terms) 3 }}</a>
+        {{- end -}}
+      </nav>
+    </footer>
     {{- end -}}
   </div>
 </article>

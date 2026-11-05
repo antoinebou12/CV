@@ -108,10 +108,29 @@ isPlainText = true
 rel = "alternate"
 notAlternative = false
 
+# llms.txt (index for answer engines) and llms-full.txt (every project brief) are generated from
+# the same data as the pages (layouts/index.llms.txt, layouts/index.llms-full.txt).
+[outputFormats.LLMS]
+mediaType = "text/plain"
+baseName = "llms"
+isPlainText = true
+notAlternative = true
+
+[outputFormats.LLMSFull]
+mediaType = "text/plain"
+baseName = "llms-full"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["HTML", "RSS", "JSON"]
+home = ["HTML", "RSS", "JSON", "LLMS", "LLMSFull"]
 page = ["HTML", "Context"]
 section = ["HTML", "RSS", "Context"]
+
+# Sitemap: priorities are hints; tag pages with a single entry are left out by layouts/_default/sitemap.xml.
+[sitemap]
+changefreq = "monthly"
+priority = 0.6
 
 [markup.goldmark.renderer]
 unsafe = true

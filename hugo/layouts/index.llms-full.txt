@@ -1,0 +1,15 @@
+{{- /* llms-full.txt: every project brief (same Markdown as each note's index.md), one after the other. */ -}}
+{{- $fr := eq .Lang "fr" -}}
+# Antoine Boucher — {{ if $fr }}fiches de projet{{ else }}project briefs{{ end }}
+
+{{ if $fr }}Une fiche par dépôt public, générée depuis les fichiers de données du site. Index court : {{ else }}One brief per public repository, generated from the site data files. Short index: {{ end }}{{ "llms.txt" | absURL }}
+
+{{ range sort (where site.RegularPages "Params.repository_note" "!=" nil) "Params.repository_note" }}
+---
+
+# {{ .Title | plainify }}
+
+- {{ if $fr }}Page HTML{{ else }}HTML page{{ end }}: {{ .Permalink }}
+- Markdown: {{ .Permalink }}index.md
+{{ partial "context/project-brief.md" . }}
+{{ end }}

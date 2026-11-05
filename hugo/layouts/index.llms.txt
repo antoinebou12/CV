@@ -1,0 +1,47 @@
+{{- /* llms.txt: a curated, machine-friendly index of the site (https://llmstxt.org). Generated from the
+       same content and data as the pages, so it never drifts from them. */ -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $cv := cond $fr "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" -}}
+# Antoine Boucher
+
+> {{ if $fr }}Ingénieur logiciel à Montréal : plateforme (Kubernetes, GitLab CI/CD, Terraform), infographie interactive (C++/OpenGL, Blender, Rust/wgpu), outillage MCP (uml-mcp) et enseignement DevSecOps. Ce fichier indexe le CV, les articles et une fiche de documentation par dépôt public ; chaque page du blog existe aussi en Markdown en ajoutant `index.md` à son adresse.{{ else }}Software engineer in Montréal: platform work (Kubernetes, GitLab CI/CD, Terraform), interactive graphics (C++/OpenGL, Blender, Rust/wgpu), MCP tooling (uml-mcp) and DevSecOps teaching. This file indexes the CV, the articles and one documentation page per public repository; every blog page also exists as Markdown by appending `index.md` to its URL.{{ end }}
+
+{{ if $fr }}Langue de ce fichier : français. Version anglaise : {{ (site.GetPage "/").Translations | len | print "" }}https://antoineboucher.info/CV/llms.txt{{ else }}Language of this file: English. French version: {{ with .Translations }}{{ (index . 0).Permalink }}llms.txt{{ end }}{{ end }}
+{{ if $fr }}Dernière génération{{ else }}Generated{{ end }}: {{ now.Format "2006-01-02" }}
+
+## {{ if $fr }}Identité et CV{{ else }}Identity and CV{{ end }}
+
+- [{{ if $fr }}CV (HTML, français){{ else }}CV (HTML, English, default){{ end }}]({{ $cv }}): {{ if $fr }}expérience, projets, compétences, certifications{{ else }}experience, projects, skills, certifications{{ end }}
+- [{{ if $fr }}CV (HTML, anglais){{ else }}CV (HTML, French){{ end }}]({{ cond $fr "https://antoineboucher.info/CV/index-en.html" "https://antoineboucher.info/CV/index-fr.html" }})
+- [{{ if $fr }}CV en Markdown{{ else }}Résumé as Markdown{{ end }}](https://antoineboucher.info/CV/{{ if $fr }}resume-fr.md{{ else }}resume.md{{ end }})
+- [JSON Resume](https://antoineboucher.info/CV/{{ if $fr }}resume-fr.json{{ else }}resume.json{{ end }}): {{ if $fr }}schéma jsonresume.org{{ else }}jsonresume.org schema{{ end }}
+- [PDF](https://antoineboucher.info/CV/{{ if $fr }}cv-fr{{ else }}cv-en{{ end }}/resume.pdf)
+- [GitHub](https://github.com/{{ site.Params.github }}) · [LinkedIn](https://www.linkedin.com/in/{{ site.Params.linkedin }}) · [{{ if $fr }}Prendre rendez-vous{{ else }}Book a call{{ end }}](https://cal.com/antoine-boucher-dev/30min)
+
+## {{ if $fr }}Projets documentés depuis la source{{ else }}Projects documented from the source{{ end }}
+
+{{ with site.GetPage "/projects" }}[{{ if $fr }}Catalogue{{ else }}Catalog{{ end }}]({{ .Permalink }}) · [{{ if $fr }}Catalogue en Markdown{{ else }}Catalog as Markdown{{ end }}]({{ .Permalink }}index.md). {{ end }}{{ if $fr }}Chaque fiche : langages (octets GitHub Linguist), commandes de démarrage du README, composants, arêtes d’architecture, API et fichiers à lire.{{ else }}Each brief: languages (GitHub Linguist bytes), README start commands, components, architecture edges, API routes and files to read.{{ end }}
+
+{{ range sort (where site.RegularPages "Params.repository_note" "!=" nil) "Params.repository_note" }}- [{{ .Params.repository_note }}]({{ .Permalink }}index.md): {{ with index (where (hugo.Data.repository_notes.notes | default slice) "repo" .Params.repository_note) 0 }}{{ index .intro $i }}{{ else }}{{ .Description | plainify }}{{ end }}
+{{ end }}
+## {{ if $fr }}Articles{{ else }}Articles{{ end }}
+
+{{ with site.GetPage "/posts" }}[{{ if $fr }}Tous les articles{{ else }}All articles{{ end }}]({{ .Permalink }}) · [Markdown]({{ .Permalink }}index.md){{ end }}
+
+{{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}- [{{ .Title | plainify }}]({{ .Permalink }}index.md) ({{ .Date.Format "2006-01" }}): {{ .Description | plainify }}
+{{ end }}
+## {{ if $fr }}Autres sections{{ else }}Other sections{{ end }}
+
+{{ with site.GetPage "/recipes" }}- [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify }}
+{{ end }}{{ with site.GetPage "/stars" }}{{ if hugo.Data.github_stars }}- [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify }}
+{{ end }}{{ end }}{{ with site.GetPage "/search" }}- [{{ .Title }}]({{ .Permalink }}): {{ if $fr }}recherche et navigation par étiquette{{ else }}search and tag browsing{{ end }}
+{{ end }}- [{{ if $fr }}Flux RSS{{ else }}RSS feed{{ end }}]({{ "index.xml" | absURL }})
+- [{{ if $fr }}Index de recherche (JSON){{ else }}Search index (JSON){{ end }}]({{ "index.json" | absURL }})
+
+## {{ if $fr }}Pour les agents{{ else }}For agents{{ end }}
+
+- [llms-full.txt]({{ "llms-full.txt" | absURL }}): {{ if $fr }}toutes les fiches de projet dans un seul fichier{{ else }}every project brief in one file{{ end }}
+- [Sitemap](https://antoineboucher.info/CV/sitemap.xml) · [robots.txt](https://antoineboucher.info/CV/robots.txt)
+- [{{ if $fr }}Carte des vues Markdown{{ else }}Markdown map{{ end }}](https://antoineboucher.info/CV/.well-known/markdown-map.json) · [{{ if $fr }}Catalogue d’API{{ else }}API catalog{{ end }}](https://antoineboucher.info/CV/.well-known/api-catalog) · [{{ if $fr }}Compétences d’agent{{ else }}Agent skills{{ end }}](https://antoineboucher.info/CV/.well-known/agent-skills/index.json)
+- {{ if $fr }}Politique : indexation de recherche autorisée ; entraînement de modèles non autorisé (voir robots.txt, Content-Signal).{{ else }}Policy: search indexing allowed; model training not allowed (see robots.txt, Content-Signal).{{ end }}

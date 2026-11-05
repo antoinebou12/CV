@@ -22,3 +22,18 @@
 @media print {
   [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* Loading feedback ------------------------------------------------------------ */
+.nav-progress { position: fixed; inset: 0 0 auto 0; z-index: 90; height: 3px; pointer-events: none; opacity: 0; transition: opacity 200ms ease-out; }
+.nav-progress > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--hero-accent, #227c74), #4cc7f0); box-shadow: 0 0 10px rgb(76 199 240 / 55%); transition: width 300ms cubic-bezier(.22, 1, .36, 1); }
+html.is-navigating .nav-progress { opacity: 1; }
+html.is-navigating .nav-progress > span { width: 82%; transition-duration: 1600ms; }
+html.nav-progress-done .nav-progress > span { width: 100%; transition-duration: 180ms; }
+@media (prefers-reduced-motion: no-preference) {
+  .article-diagram-loading > summary::before, [data-demo-frame].is-loading::before { content: ''; display: inline-block; width: 14px; height: 14px; margin-right: .5rem; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; vertical-align: -2px; animation: load-spin 800ms linear infinite; }
+  [data-demo-frame].is-loading { position: relative; background: linear-gradient(90deg, rgb(0 0 0 / 4%) 25%, rgb(0 0 0 / 9%) 37%, rgb(0 0 0 / 4%) 63%) 0 0 / 400% 100%; animation: load-shimmer 1.4s ease infinite; }
+  [data-demo-frame].is-loading::before { position: absolute; left: 50%; top: 50%; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-width: 3px; color: var(--accent, #227c74); }
+  @keyframes load-spin { to { transform: rotate(1turn); } }
+  @keyframes load-shimmer { to { background-position: -400% 0; } }
+}
+@media (prefers-reduced-motion: reduce) { .nav-progress { display: none; } }

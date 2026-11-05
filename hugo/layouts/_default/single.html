@@ -32,7 +32,7 @@
       {{- end -}}
     </div>
     {{- end -}}
-    {{ with .GetTerms "tags" }}<nav class="article-topic-badges" aria-label="{{ if eq $.Lang "fr" }}Sujets{{ else }}Topics{{ end }}">{{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</nav>{{ end }}
+    {{ with .GetTerms "tags" }}<nav class="article-topic-badges" id="article-tags" aria-label="{{ if eq $.Lang "fr" }}Sujets{{ else }}Topics{{ end }}">{{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</nav>{{ end }}
     {{ partial "repository-article-guides.html" $page }}
     {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
