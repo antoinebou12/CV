@@ -1,120 +1,105 @@
-<header
-  class="site-header sticky top-0 z-50 flex h-[4.5rem] w-full items-center gap-x-3 sm:gap-x-4 whitespace-nowrap bg-white/70 shadow-sm backdrop-blur-md transition-all dark:bg-black/60"
->
-  <div class="relative z-50 flex shrink-0 items-center pe-3 sm:pe-5">
-    <a
-      class="inline-flex items-center rounded-sm py-1.5 -my-1.5 text-2xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-orange-500/45"
-      href="{{ site.Home.Permalink }}"
-      >{{ site.Title }}</a
-    >
-  </div>
+{{- /*
+  Site chrome shared by every blog page. The layout mirrors the CV hero navigation:
+  grouped pills on the slate canvas, an EN | FR group, and one Options popover that
+  holds theme, background motion and profile links. Keep the hooks `.btn-menu`,
+  `#site-nav-panel`, `.site-nav-main`, `.btn-dark` and `#background-motion`: the
+  Playwright suites and background-motion.js rely on them.
+*/ -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $cvHome := cond $fr "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" -}}
+<header class="site-header" data-site-header>
+  <a class="site-brand" href="{{ site.Home.Permalink }}">{{ site.Title }}</a>
 
-  <button
-    type="button"
-    class="btn-menu appearance-none border-0 bg-transparent p-0 relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
-    aria-label="{{ i18n "navMenuOpen" }}"
-    aria-expanded="false"
-    aria-controls="site-nav-panel"
-    data-menu-open="{{ i18n "navMenuOpen" }}"
-    data-menu-close="{{ i18n "navMenuClose" }}"
-  ></button>
-
-  {{- $bg_color := $.Scratch.Get "bg_color" -}}
-
-  <div
-    id="site-nav-panel"
-    class="nav-wrapper fixed inset-0 top-0 z-40 pointer-events-none select-none lg:static lg:h-auto lg:min-w-0 lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:pointer-events-auto"
-  >
-    <div
-      class="nav-drawer ms-auto flex h-full w-[min(22rem,86vw)] flex-col bg-(--bg) px-6 pb-8 pt-[5.25rem] shadow-2xl duration-200 lg:ms-0 lg:h-auto lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:bg-transparent! lg:px-0 lg:pb-0 lg:pt-0 lg:shadow-none lg:transition-none"
-    >
-      <nav
-        class="site-lang-switch mb-5 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm font-semibold lg:hidden"
-        aria-label="{{ i18n "langCvNav" }}"
-      >
-        {{- $sorted := sort .AllTranslations "Lang" -}}
-        {{- range $i, $p := $sorted -}}
-          {{- if gt $i 0 -}}
-            <span class="opacity-40">|</span>
-          {{- end -}}
-          {{- if eq $p.Lang $.Lang -}}
-            <span class="opacity-85" aria-current="true">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</span>
-          {{- else -}}
-            <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</a>
-          {{- end -}}
-        {{- end -}}
-      </nav>
-      {{- with site.Menus.main -}}
-      <nav
-        class="site-nav-main lg:flex lg:flex-row lg:items-center lg:gap-2"
-        aria-label="{{ i18n "navMainSections" }}"
-      >
-        {{- range . -}}
-        <a
-          class="block text-start text-xl leading-[5rem] lg:text-sm lg:font-semibold lg:px-4 lg:py-2 lg:rounded-full lg:hover:bg-black/5 lg:dark:hover:bg-white/10 lg:transition-colors{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} lg:bg-black/8 lg:dark:bg-white/14{{ end }}"
-          href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"
-          {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}
-          >{{- .Name -}}</a
-        >
-        {{- end -}}
-      </nav>
-      {{- end -}}
-
-      {{- with $.Scratch.Get "social_list" -}}
-      <nav
-        class="mt-8 flex justify-start space-x-8 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert"
-        aria-label="{{ i18n "navSocial" }}"
-      >
-        {{- range . -}}
-        <a
-          class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
-          style="--url: url(./{{- . -}}.svg)"
-          href="{{- if eq . `rss` -}}{{- `index.xml` | absURL -}}{{- else if eq . `mastodon` -}}{{- index site.Params . -}}{{- else -}}{{- if eq . `threads` -}}https://threads.net/{{- else if eq . `bluesky` -}}https://bsky.app/profile/{{- else -}}https://{{- . -}}.com/{{- end -}}{{- if eq . `linkedin` -}}in/{{- end -}}{{- index site.Params . -}}{{- end -}}"
-          target="_blank"
-          rel="{{- if eq . `rss` -}}alternate{{- else -}}me{{- end -}}"
-        >
-          {{- . -}}
-        </a>
-        {{- end -}}
-      </nav>
-      {{- end -}}
-    </div>
-  </div>
-
-  <div
-    class="header-util-cluster relative z-50 flex shrink-0 items-center gap-x-3"
-  >
-    {{- $cvHome := cond (eq .Lang "fr") "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" -}}
-    <a
-      class="hidden sm:inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--spine-focus,#227c74)]"
-      href="{{ $cvHome }}"
-      >{{ i18n "navCvHome" }}</a
-    >
+  <div class="site-header-tools">
     <button
       type="button"
-      class="btn-dark appearance-none border-0 bg-transparent p-0 text-[0px] h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
-      aria-label="{{ i18n "navThemeToggle" }}"
-      aria-pressed="false"
+      class="site-pill site-options-toggle"
+      popovertarget="site-settings"
+      aria-label="{{ i18n "navOptions" }}"
+      aria-haspopup="dialog"
+      aria-expanded="false"
     >
-      <svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5 0 0 1 10.8 3.5 8.5 8.5 0 1 0 20.5 13.2Z"/></svg>
-      <svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg>
+      <span>{{ i18n "navOptions" }}</span>
     </button>
-    <div
-      class="site-lang-switch hidden items-center gap-2.5 text-sm font-semibold tracking-wide text-(--fg) lg:flex"
-      aria-label="{{ i18n "langCvNav" }}"
+    <button
+      type="button"
+      class="btn-menu site-pill"
+      aria-label="{{ i18n "navMenuOpen" }}"
+      aria-expanded="false"
+      aria-controls="site-nav-panel"
+      data-menu-open="{{ i18n "navMenuOpen" }}"
+      data-menu-close="{{ i18n "navMenuClose" }}"
     >
-      {{- $sorted := sort .AllTranslations "Lang" -}}
-      {{- range $i, $p := $sorted -}}
-        {{- if gt $i 0 -}}
-          <span class="opacity-40 px-2" aria-hidden="true">|</span>
+      <span class="site-menu-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </div>
+
+  <div id="site-nav-panel" class="nav-wrapper">
+    <div class="nav-drawer">
+      {{- with site.Menus.main -}}
+      <nav class="site-nav-main site-nav-group" aria-label="{{ i18n "navMainSections" }}">
+        {{- range . -}}
+        {{- $current := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
+        <a class="site-pill" href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"{{ if $current }} aria-current="page"{{ end }}>{{- .Name -}}</a>
         {{- end -}}
-        {{- if eq $p.Lang $.Lang -}}
-          <span class="opacity-85" aria-current="true">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</span>
-        {{- else -}}
-          <a class="underline-offset-4 hover:underline" href="{{ $p.Permalink }}">{{ with $p.Language.LanguageName }}{{ . }}{{ else }}{{ $p.Lang | upper }}{{ end }}</a>
-        {{- end -}}
+        <a class="site-pill site-pill-cv" href="{{ $cvHome }}">{{ i18n "navCvHome" }}</a>
+      </nav>
       {{- end -}}
+      <nav class="site-lang-switch site-nav-group" aria-label="{{ i18n "langCvNav" }}">
+        {{- range sort .AllTranslations "Lang" -}}
+          {{- $label := .Language.LanguageName | default (.Lang | upper) -}}
+          {{- if eq .Lang $.Lang -}}
+          <span class="site-pill is-current" aria-current="true" lang="{{ .Lang }}">{{ $label }}</span>
+          {{- else -}}
+          <a class="site-pill" href="{{ .Permalink }}" lang="{{ .Lang }}" hreflang="{{ .Lang }}">{{ $label }}</a>
+          {{- end -}}
+        {{- end -}}
+      </nav>
     </div>
+  </div>
+
+  <div id="site-settings" popover="auto" class="site-settings" aria-label="{{ i18n "navOptions" }}">
+    <p class="site-settings-label">{{ i18n "navOptions" }}</p>
+    <button
+      type="button"
+      class="btn-dark site-opt"
+      aria-pressed="false"
+      data-label-dark="{{ i18n "navThemeDark" }}"
+      data-label-light="{{ i18n "navThemeLight" }}"
+    >
+      <svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5 0 0 1 10.8 3.5 8.5 8.5 0 1 0 20.5 13.2Z"/></svg>
+      <svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      <span data-theme-label>{{ i18n "navThemeDark" }}</span>
+    </button>
+    <button
+      id="background-motion"
+      type="button"
+      class="site-opt"
+      hidden
+      data-pause="{{ if $fr }}Suspendre le fond animé{{ else }}Pause background{{ end }}"
+      data-resume="{{ if $fr }}Animer le fond{{ else }}Animate background{{ end }}"
+      aria-pressed="false"
+    ></button>
+    {{- with $.Scratch.Get "social_list" -}}
+    <hr>
+    <p class="site-settings-label">{{ i18n "navProfiles" }}</p>
+    <nav class="site-profiles" aria-label="{{ i18n "navSocial" }}">
+      {{- range . -}}
+      {{- $href := "" -}}
+      {{- if eq . "rss" }}{{ $href = `index.xml` | absURL }}
+      {{- else if eq . "mastodon" }}{{ $href = index site.Params . }}
+      {{- else if eq . "threads" }}{{ $href = printf "https://threads.net/%s" (index site.Params .) }}
+      {{- else if eq . "bluesky" }}{{ $href = printf "https://bsky.app/profile/%s" (index site.Params .) }}
+      {{- else if eq . "linkedin" }}{{ $href = printf "https://linkedin.com/in/%s" (index site.Params .) }}
+      {{- else }}{{ $href = printf "https://%s.com/%s" . (index site.Params .) }}{{ end -}}
+      <a class="site-opt" href="{{ $href }}" rel="{{ if eq . `rss` }}alternate{{ else }}me noopener{{ end }}"{{ if ne . "rss" }} target="_blank"{{ end }}>
+        <span class="site-social-icon" style="--url: url(./{{ . }}.svg)" aria-hidden="true"></span>
+        <span>{{ if eq . "rss" }}RSS{{ else if eq . "github" }}GitHub{{ else if eq . "linkedin" }}LinkedIn{{ else }}{{ . | title }}{{ end }}</span>
+      </a>
+      {{- end -}}
+    </nav>
+    {{- end -}}
   </div>
 
   <script>
@@ -123,6 +108,31 @@
     setTimeout(() => {
       htmlClass.remove('not-ready');
     }, 10);
+
+    // options popover: native Popover API with a hidden-attribute fallback
+    const optionsToggle = document.querySelector('.site-options-toggle');
+    const settings = document.getElementById('site-settings');
+    if (optionsToggle && settings) {
+      const supportsPopover = 'popover' in HTMLElement.prototype;
+      if (!supportsPopover) {
+        settings.hidden = true;
+        optionsToggle.removeAttribute('popovertarget');
+        optionsToggle.addEventListener('click', () => {
+          settings.hidden = !settings.hidden;
+          optionsToggle.setAttribute('aria-expanded', String(!settings.hidden));
+        });
+        document.addEventListener('click', (event) => {
+          if (!settings.hidden && !settings.contains(event.target) && !optionsToggle.contains(event.target)) {
+            settings.hidden = true;
+            optionsToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      } else {
+        settings.addEventListener('toggle', (event) => {
+          optionsToggle.setAttribute('aria-expanded', String(event.newState === 'open'));
+        });
+      }
+    }
 
     // mobile menu
     const btnMenu = document.querySelector('.btn-menu');
@@ -177,7 +187,7 @@
       }
 
       const lgUpMq = window.matchMedia('(min-width: 1024px)');
-      const handleLgUpChange = (event) => {
+      const handleLgUpChange = () => {
         setMenuOpen(false);
       };
 
@@ -191,14 +201,16 @@
 
     // dark theme
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = '{{- $bg_color -}}'.replace(/"/g, '');
+    const lightBg = '{{- $.Scratch.Get "bg_color" -}}'.replace(/"/g, '');
     const btnDark = document.querySelector('.btn-dark');
+    const themeLabel = btnDark?.querySelector('[data-theme-label]');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? "rgb(0 0 0 / 85%)" : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
       localStorage.setItem('dark', isDark);
       if (btnDark) {
         btnDark.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        if (themeLabel) themeLabel.textContent = isDark ? btnDark.dataset.labelLight : btnDark.dataset.labelDark;
       }
     };
 

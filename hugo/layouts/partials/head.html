@@ -39,7 +39,8 @@
   {{- $custom := resources.Get "custom.css" -}}
   <!---->
   {{- $editorial := resources.Get "editorial.css" -}}
-  {{- $css := slice $tokens $main $custom $editorial | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
+  {{- $chrome := resources.Get "site-chrome.css" -}}
+  {{- $css := slice $tokens $main $custom $editorial $chrome | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
   <link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   {{- if eq .Section "projects" -}}

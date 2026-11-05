@@ -1,0 +1,88 @@
+/* Site chrome (every declaration is !important: the theme preflight carries two-ID specificity): header, navigation pills and the Options popover.
+   Mirrors the CV hero navigation (css/cv-editorial.css): grouped pills on the slate canvas,
+   paper panels with a hairline rule, 44px targets, accent text. Tokens come from
+   design-tokens.css (hero-*) so both surfaces move together. */
+.blog-site { --chrome-canvas: var(--hero-canvas, oklch(0.398 0.047 248)); --chrome-paper: var(--hero-paper, oklch(0.985 0.006 190)); --chrome-soft: var(--hero-soft, oklch(0.956 0.012 190)); --chrome-rule: var(--hero-rule, oklch(0.85 0.017 210)); --chrome-ink: var(--hero-ink, oklch(0.31 0.035 240)); --chrome-muted: var(--hero-muted, oklch(0.40 0.028 240)); --chrome-accent: var(--hero-accent, oklch(0.445 0.073 181)); --chrome-on-canvas: #ffffff; --chrome-shadow: 0 3px 12px rgb(0 0 0 / 6%); }
+html.dark .blog-site { --chrome-canvas: oklch(0.25 0.03 240); --chrome-paper: oklch(0.31 0.035 240); --chrome-soft: oklch(0.37 0.035 240); --chrome-rule: oklch(0.49 0.035 240); --chrome-ink: oklch(0.97 0.008 210); --chrome-muted: oklch(0.82 0.02 230); --chrome-accent: oklch(0.83 0.08 180); --chrome-shadow: 0 6px 20px rgb(0 0 0 / 35%); }
+
+/* Header band ------------------------------------------------------------- */
+.blog-site .site-header { position: relative !important; z-index: 40 !important; display: flex !important; flex-wrap: nowrap !important; align-items: center !important; justify-content: space-between !important; gap: 12px !important; width: min(100%, 1170px) !important; min-height: 72px !important; height: auto !important; margin: 0 auto !important; padding: 12px 16px !important; background: var(--chrome-canvas) !important; color: var(--chrome-on-canvas) !important; box-shadow: none !important; backdrop-filter: none !important; white-space: normal !important; }
+@media (min-width: 640px) { .blog-site .site-header { padding: 14px 24px !important; } }
+.blog-site .site-brand { display: inline-flex !important; align-items: center !important; min-height: 44px !important; margin: 0 !important; padding: 4px 2px !important; border-radius: 8px !important; color: var(--chrome-on-canvas) !important; font: 700 1.15rem/1.2 var(--type-display, 'Fraunces', Georgia, serif) !important; letter-spacing: -.01em !important; text-decoration: none !important; white-space: nowrap !important; }
+.blog-site .site-header-tools { position: relative !important; z-index: 50 !important; display: flex !important; align-items: center !important; gap: 8px !important; margin-left: auto !important; }
+
+/* Pill groups and pills --------------------------------------------------- */
+.blog-site .site-nav-group { display: flex !important; align-items: center !important; gap: 2px !important; margin: 0 !important; padding: 3px !important; border: 1px solid var(--chrome-rule) !important; border-radius: 12px !important; background: var(--chrome-paper) !important; box-shadow: var(--chrome-shadow) !important; }
+.blog-site .site-pill { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 7px !important; min-height: 44px !important; margin: 0 !important; padding: 8px 13px !important; border: 0 !important; border-radius: 8px !important; background: transparent !important; color: var(--chrome-accent) !important; font: 600 13px/1.3 var(--type-body, 'Open Sans', system-ui, sans-serif) !important; text-decoration: none !important; cursor: pointer !important; transition: background-color var(--motion-duration-fast, 180ms) var(--motion-ease-out, ease-out) !important; }
+.blog-site .site-pill:hover, .blog-site .site-pill:focus-visible { background: var(--chrome-soft) !important; text-decoration: none !important; }
+.blog-site .site-pill[aria-current] { background: var(--chrome-soft) !important; color: var(--chrome-ink) !important; font-weight: 700 !important; }
+.blog-site .site-pill.is-current { cursor: default !important; }
+.blog-site .site-lang-switch .site-pill { min-width: 44px !important; padding: 6px 10px !important; font-size: 12px !important; letter-spacing: .04em !important; }
+.blog-site .site-pill-cv { color: var(--chrome-ink) !important; }
+.blog-site .site-pill-cv::before { content: '' !important; width: 7px !important; height: 7px !important; border-radius: 50% !important; background: var(--chrome-accent) !important; }
+.blog-site .site-options-toggle, .blog-site .btn-menu { border: 1px solid var(--chrome-rule) !important; background: var(--chrome-paper) !important; color: var(--chrome-ink) !important; border-radius: 12px !important; min-height: 52px !important; box-shadow: var(--chrome-shadow) !important; }
+.blog-site .site-options-toggle:hover, .blog-site .btn-menu:hover { background: var(--chrome-soft) !important; }
+.blog-site .site-header :is(a, button):focus-visible { outline: 2px solid #fff !important; outline-offset: 2px !important; box-shadow: 0 0 0 4px var(--chrome-ink) !important; }
+
+/* Hamburger (mobile only): the theme draws its own bars with pseudo-elements; we draw ours. */
+.blog-site .btn-menu::before, .blog-site .btn-menu::after { content: none !important; display: none !important; }
+.blog-site .btn-menu { display: inline-flex !important; width: 52px !important; padding: 0 !important; }
+.site-menu-bars { display: grid !important; gap: 5px !important; width: 20px !important; }
+.site-menu-bars i { display: block !important; height: 2px !important; border-radius: 2px !important; background: currentColor !important; transition: transform .2s ease, opacity .2s ease !important; }
+html.open .blog-site .site-header > div:first-child { visibility: visible !important; }
+html.open .site-menu-bars i:nth-child(1) { transform: translateY(7px) rotate(45deg) !important; }
+html.open .site-menu-bars i:nth-child(2) { opacity: 0 !important; }
+html.open .site-menu-bars i:nth-child(3) { transform: translateY(-7px) rotate(-45deg) !important; }
+
+/* Navigation panel: drawer on phones, inline groups on desktop -------------- */
+@media (max-width: 1023.98px) {
+  .blog-site .nav-wrapper { position: fixed !important; inset: 0 !important; z-index: 45 !important; pointer-events: none !important; opacity: 0 !important; visibility: hidden !important; background: transparent !important; transition: opacity .2s ease, visibility .2s ease, background-color .2s ease !important; }
+  html.open .blog-site .nav-wrapper { pointer-events: auto !important; opacity: 1 !important; visibility: visible !important; background: rgb(0 0 0 / 46%) !important; backdrop-filter: blur(2px) !important; }
+  .blog-site .nav-drawer { transform: translateX(104%) !important; transition: transform .24s ease !important; overflow-y: auto !important; }
+  html.open .blog-site .nav-drawer { transform: translateX(0) !important; }
+  .blog-site .nav-drawer { display: flex !important; flex-direction: column !important; gap: 16px !important; width: min(22rem, 86vw) !important; height: 100% !important; margin-left: auto !important; padding: calc(88px + env(safe-area-inset-top)) 20px 32px !important; background: var(--chrome-paper) !important; color: var(--chrome-ink) !important; box-shadow: -12px 0 40px rgb(0 0 0 / 25%) !important; }
+  .blog-site .nav-drawer .site-nav-group { flex-direction: column !important; align-items: stretch !important; box-shadow: none !important; }
+  .blog-site .nav-drawer .site-pill { justify-content: flex-start !important; min-height: 48px !important; font-size: 1rem !important; }
+  .blog-site .nav-drawer .site-lang-switch { flex-direction: row !important; }
+  .blog-site .nav-drawer .site-lang-switch .site-pill { flex: 1 !important; justify-content: center !important; }
+  .blog-site .site-options-toggle span { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip-path: inset(50%) !important; white-space: nowrap !important; }
+  .blog-site .site-options-toggle { width: 52px !important; padding: 0 !important; }
+}
+@media (min-width: 1024px) {
+  .blog-site .btn-menu { display: none !important; }
+  .blog-site .nav-wrapper { position: static !important; display: flex !important; flex: 1 !important; min-width: 0 !important; justify-content: flex-end !important; pointer-events: auto !important; opacity: 1 !important; visibility: visible !important; }
+  .blog-site .nav-drawer { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 10px !important; width: auto !important; height: auto !important; padding: 0 !important; background: transparent !important; transform: none !important; box-shadow: none !important; }
+  .blog-site .site-header-tools { order: 3 !important; margin-left: 0 !important; }
+  .blog-site .site-nav-main { flex-wrap: wrap !important; justify-content: flex-end !important; }
+}
+
+/* Options popover ----------------------------------------------------------- */
+.blog-site .site-settings { position: fixed !important; inset: 76px max(16px, calc((100vw - 1170px) / 2)) auto auto !important; width: min(280px, calc(100vw - 32px)) !important; margin: 0 !important; padding: 10px !important; border: 1px solid var(--chrome-rule) !important; border-radius: 18px !important; background: var(--chrome-paper) !important; color: var(--chrome-ink) !important; box-shadow: 0 12px 32px rgb(0 0 0 / 20%) !important; font-family: var(--type-body, 'Open Sans', system-ui, sans-serif) !important; }
+.blog-site .site-settings:popover-open, .blog-site .site-settings:not([hidden]):not([popover]) { display: grid !important; gap: 6px !important; }
+.blog-site .site-settings[popover]:not(:popover-open) { display: none !important; }
+.blog-site .site-settings::backdrop { background: transparent !important; }
+.blog-site .site-settings-label { margin: 4px 10px 6px !important; color: var(--chrome-muted) !important; font: 600 11px/1.4 var(--type-body, system-ui, sans-serif) !important; letter-spacing: .08em !important; text-transform: uppercase !important; }
+.blog-site .site-settings hr { margin: 6px 4px !important; border: 0 !important; border-top: 1px solid var(--chrome-rule) !important; }
+.blog-site .site-opt { display: flex !important; align-items: center !important; gap: 10px !important; width: 100% !important; min-height: 44px !important; margin: 0 !important; padding: 10px 12px !important; border: 0 !important; border-radius: 8px !important; background: var(--chrome-soft) !important; color: var(--chrome-ink) !important; font: 600 13px/1.4 var(--type-body, 'Open Sans', system-ui, sans-serif) !important; text-align: left !important; text-decoration: none !important; cursor: pointer !important; }
+.blog-site .site-opt:hover, .blog-site .site-opt:focus-visible { background: color-mix(in oklab, var(--chrome-accent) 14%, var(--chrome-soft)) !important; }
+.blog-site .site-opt[hidden] { display: none !important; }
+.blog-site .site-opt .theme-icon { flex-shrink: 0 !important; }
+.blog-site .btn-dark .theme-sun { display: none !important; }
+html.dark .blog-site .btn-dark .theme-sun { display: inline !important; }
+html.dark .blog-site .btn-dark .theme-moon { display: none !important; }
+.blog-site #background-motion::before { content: '' !important; flex-shrink: 0 !important; width: 7px !important; height: 7px !important; border-radius: 50% !important; background: var(--chrome-accent) !important; }
+.blog-site #background-motion[aria-pressed="false"]::before { background: var(--chrome-muted) !important; }
+.blog-site .site-profiles { display: grid !important; gap: 6px !important; }
+.site-social-icon { display: inline-block !important; flex-shrink: 0 !important; width: 18px !important; height: 18px !important; background: var(--url) center / contain no-repeat !important; }
+html.dark .site-social-icon { filter: invert(1) !important; }
+
+/* Footer shares the canvas and the brand type */
+.blog-site .site-footer { width: min(100%, 1170px) !important; max-width: none !important; margin: 0 auto !important; padding: 24px !important; color: #e0e7ec !important; opacity: 1 !important; font-family: var(--type-body, 'Open Sans', system-ui, sans-serif) !important; }
+.blog-site .site-footer a { color: inherit !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-site .site-pill, .site-menu-bars i { transition: none !important; }
+}
+@media (forced-colors: active) {
+  .blog-site .site-nav-group, .blog-site .site-options-toggle, .blog-site .btn-menu, .blog-site .site-settings { border: 1px solid ButtonText !important; }
+}
