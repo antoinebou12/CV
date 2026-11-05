@@ -67,7 +67,7 @@
     {{ end }}
     {{ if $repos }}
     <details class="repo-directory-group" data-project-type="{{ $group.id }}" open>
-      <summary><h2>{{ index $group.label $i }}</h2><svg class="repo-group-chevron" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
+      <summary><h2>{{ index $group.label $i }} <span class="repo-group-count">{{ len $repos }}</span></h2><span class="repo-group-secondary">{{ if $fr }}Correspondances secondaires{{ else }}Secondary matches{{ end }}</span><svg class="repo-group-chevron" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
       <ul class="repo-directory-grid" role="list" data-reveal-group>
         {{ range sort $repos "stars" "desc" }}
         {{ $lang := .language | default $other }}
@@ -97,7 +97,16 @@
             {{ with site.GetPage $dir }}{{ $posts = $posts | append . }}{{ end }}
           {{ end }}
         {{ end }}
+        {{ $image := index (hugo.Data.repository_diagram_images.repositories | default dict) .name | default dict }}
+        {{ $thumb := index $image (cond $fr "overview_fr" "overview_en") }}
+        {{ $postImage := false }}
+        {{ range first 1 $posts }}{{ with partial "featured-image-resource.html" . }}{{ if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) }}{{ $postImage = .Fit "720x405 webp q82" }}{{ end }}{{ end }}{{ end }}
         <li class="repo-directory-card" data-reveal data-origin="{{ if .fork }}fork{{ else }}original{{ end }}" data-language="{{ $lang }}" data-styles="{{ delimit $repoStyles " " }}" data-domains="{{ delimit $repoDomains " " }}" data-name="{{ .name }}" data-stars="{{ .stars }}" data-pushed="{{ .pushed }}" data-search="{{ $search | lower }}">
+          {{ if $postImage }}
+          <a class="repo-card-media repo-card-media--photo" href="{{ $article.RelPermalink }}" tabindex="-1" aria-hidden="true"><img src="{{ $postImage.RelPermalink }}" width="{{ $postImage.Width }}" height="{{ $postImage.Height }}" alt="" loading="lazy" decoding="async"></a>
+          {{ else if $thumb }}
+          <a class="repo-card-media repo-card-media--diagram" href="{{ $article.RelPermalink }}" tabindex="-1" aria-hidden="true"><img src="{{ $thumb.path | relURL }}"{{ with $thumb.width }} width="{{ . }}"{{ end }}{{ with $thumb.height }} height="{{ . }}"{{ end }} alt="" loading="lazy" decoding="async"></a>
+          {{ end }}
           <div class="repo-card-heading">
             {{ partial "repo-mark.html" (dict "name" .name "language" $lang) }}
             <h3><a href="{{ $article.RelPermalink }}">{{ .name }}</a></h3>
@@ -141,109 +150,5 @@
   </div>
   <p class="repo-directory-footnote">{{ if $fr }}Chaque dépôt apparaît sous son type de projet principal. Les filtres incluent aussi ses types secondaires. Les forks conservent le crédit du projet d’origine.{{ else }}Each repository appears under its primary project type. Filters also include secondary types. Forks retain credit to their upstream projects.{{ end }}</p>
 </article>
-<script>
-  const explorer = document.querySelector('[data-repo-explorer]');
-  if (explorer) {
-    const cards = [...document.querySelectorAll('.repo-directory-card')];
-    const groups = [...document.querySelectorAll('[data-repo-groups] .repo-directory-group')];
-    const search = explorer.querySelector('[data-repo-search]');
-    const sort = explorer.querySelector('[data-repo-sort]');
-    const empty = explorer.querySelector('[data-repo-empty]');
-    const count = explorer.querySelector('[data-repo-count]');
-    let style = '';
-    let domain = '';
-    let origin = '';
-    function apply() {
-      const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      for (const card of cards) {
-        const hay = card.dataset.search || '';
-        const styles = (card.dataset.styles || '').split(/\s+/).filter(Boolean);
-        const domains = (card.dataset.domains || '').split(/\s+/).filter(Boolean);
-        const styleOk = !style || styles.includes(style);
-        const domainOk = !domain || domains.includes(domain);
-        const originOk = !origin || card.dataset.origin === origin;
-        const show = styleOk && domainOk && originOk && (!query || hay.includes(query));
-        card.hidden = !show;
-        if (show) visible += 1;
-      }
-      for (const group of groups) {
-        const shown = [...group.querySelectorAll('.repo-directory-card')].filter(card => !card.hidden).length;
-        group.hidden = shown === 0;
-        const groupCount = group.querySelector('.repo-group-count');
-        if (groupCount) groupCount.textContent = String(shown);
-      }
-      empty.hidden = visible !== 0;
-      count.textContent = String(visible);
-    }
-    function sortCards() {
-      for (const list of document.querySelectorAll('.repo-directory-grid')) {
-        const items = [...list.children];
-        items.sort((a, b) => {
-          if (sort.value === 'name') return a.dataset.name.localeCompare(b.dataset.name);
-          if (sort.value === 'activity') return (b.dataset.pushed || '').localeCompare(a.dataset.pushed || '');
-          return Number(b.dataset.stars || 0) - Number(a.dataset.stars || 0);
-        });
-        for (const item of items) list.append(item);
-      }
-    }
-    function pressGroup(selector, active) {
-      for (const button of explorer.querySelectorAll(selector)) {
-        button.setAttribute('aria-pressed', button === active ? 'true' : 'false');
-      }
-    }
-    search.addEventListener('input', apply);
-    sort.addEventListener('change', () => { sortCards(); apply(); });
-    explorer.querySelector('[data-repo-reset]').addEventListener('click', () => {
-      search.value = '';
-      style = '';
-      domain = '';
-      origin = '';
-      sort.value = 'stars';
-      pressGroup('[data-repo-style]', explorer.querySelector('[data-repo-style=""]'));
-      pressGroup('[data-repo-domain]', explorer.querySelector('[data-repo-domain=""]'));
-      pressGroup('[data-repo-origin]', explorer.querySelector('[data-repo-origin=""]'));
-      sortCards();
-      apply();
-      search.focus();
-    });
-    function bindFilterGroup(selector, onPick) {
-      const buttons = [...explorer.querySelectorAll(selector)];
-      for (const button of buttons) {
-        button.addEventListener('click', () => onPick(button));
-        button.addEventListener('keydown', (event) => {
-          const idx = buttons.indexOf(button);
-          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-            event.preventDefault();
-            buttons[Math.min(buttons.length - 1, idx + 1)].focus();
-          } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-            event.preventDefault();
-            buttons[Math.max(0, idx - 1)].focus();
-          } else if (event.key === 'Home') {
-            event.preventDefault();
-            buttons[0].focus();
-          } else if (event.key === 'End') {
-            event.preventDefault();
-            buttons[buttons.length - 1].focus();
-          }
-        });
-      }
-    }
-    bindFilterGroup('[data-repo-origin]', (button) => {
-      origin = button.dataset.repoOrigin;
-      pressGroup('[data-repo-origin]', button);
-      apply();
-    });
-    bindFilterGroup('[data-repo-style]', (button) => {
-      style = button.dataset.repoStyle;
-      pressGroup('[data-repo-style]', button);
-      apply();
-    });
-    bindFilterGroup('[data-repo-domain]', (button) => {
-      domain = button.dataset.repoDomain;
-      pressGroup('[data-repo-domain]', button);
-      apply();
-    });
-  }
-</script>
+{{ partial "repo-explorer-script.html" . }}
 {{ end }}

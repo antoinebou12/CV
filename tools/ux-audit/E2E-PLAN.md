@@ -19,6 +19,8 @@
 | `e2e/cv-assets.spec.ts` | Local logos and stats widgets on the CV, widget prefetch |
 | `e2e/hero.spec.ts` | CV hero and blog home: load timing, CLS, weight, images, structure, screenshots |
 | `e2e/content.spec.ts` | Every sitemap page: repetition, residue, empty or duplicate headings, duplicate titles |
+| `e2e/enhancements.spec.ts` | SEO tags and JSON-LD, header options, dynamic tables, reduced-motion reveals, article side rail, open diagrams, Markdown twins, axe WCAG AA |
+| `e2e/cv-pdf.spec.ts` | LaTeX CV PDFs rendered with pdf.js: page count, headings, link annotations (`E2E_PDF_LINKS=1` to HEAD-check), ink inside margins, page images attached |
 
 ## Commands
 

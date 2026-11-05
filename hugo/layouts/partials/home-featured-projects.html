@@ -1,0 +1,42 @@
+{{- /* Three flagship repositories on the home page, chosen by GitHub stars from the public
+       inventory; copy comes from the project notes (source-backed), never typed here. */ -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $repos := where hugo.Data.github_inventory.repositories "fork" false -}}
+{{- $top := first 3 (sort $repos "stars" "desc") -}}
+{{- with $top }}
+<section class="home-featured not-prose" aria-labelledby="home-featured-title">
+  <div class="home-featured-head">
+    <div>
+      <p class="journal-eyebrow">{{ if $fr }}Projets phares{{ else }}Selected projects{{ end }}</p>
+      <h2 id="home-featured-title">{{ if $fr }}Code ouvert, documenté depuis la source.{{ else }}Open source, documented from the source.{{ end }}</h2>
+    </div>
+    {{ with site.GetPage "/projects" }}<a class="home-featured-all" href="{{ .RelPermalink }}">{{ if $fr }}Tous les projets{{ else }}All projects{{ end }} <span aria-hidden="true">→</span></a>{{ end }}
+  </div>
+  <ul class="home-featured-grid" role="list" data-reveal-group>
+    {{- range . }}
+    {{- $note := index (where hugo.Data.repository_notes.notes "repo" .name) 0 -}}
+    {{- $article := site.GetPage (printf "/projects/notes/%s" $note.slug) -}}
+    {{- $badges := index (hugo.Data.repository_styles.technology_badges | default dict) .name | default slice -}}
+    <li class="home-featured-card" data-reveal>
+      <div class="home-featured-top">
+        {{ partial "repo-mark.html" (dict "name" .name "language" .language) }}
+        <span class="home-featured-stars" aria-label="{{ .stars }} {{ if $fr }}étoiles GitHub{{ else }}GitHub stars{{ end }}">
+          <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m10 2 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8Z"/></svg>{{ .stars }}
+        </span>
+      </div>
+      <h3>{{ with $article }}<a href="{{ .RelPermalink }}">{{ $.Scratch.Set "n" $note.repo }}{{ $note.repo }}</a>{{ else }}{{ .name }}{{ end }}</h3>
+      <p>{{ index $note.intro $i }}</p>
+      <div class="home-featured-tags">
+        {{ with .language }}<span>{{ . }}</span>{{ end }}
+        {{ range first 3 $badges }}<span>{{ . }}</span>{{ end }}
+      </div>
+      <div class="home-featured-links">
+        {{ with $article }}<a href="{{ .RelPermalink }}">{{ if $fr }}Documentation{{ else }}Documentation{{ end }}</a>{{ end }}
+        <a href="{{ .url }}" rel="noopener">GitHub</a>
+      </div>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{ end -}}

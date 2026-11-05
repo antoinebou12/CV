@@ -1,0 +1,21 @@
+{{- /* Live demo panel. The frame loads only when the reader asks (no third-party request on page load),
+       with an open-in-new-tab link beside it in case the host refuses framing. URLs come from the
+       repository README (hugo/data/project_demos.json). */ -}}
+{{- $fr := eq .page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $demo := index (hugo.Data.project_demos.repositories | default dict) .note.repo -}}
+{{- with $demo }}
+<section class="doc repo-demo" aria-labelledby="live-demo" id="live-demo" data-reveal>
+  <h2 id="live-demo-title">{{ if $fr }}Essayer{{ else }}Try it{{ end }}</h2>
+  <span id="live-demo" class="repo-section-anchor" aria-hidden="true"></span>
+  <p class="repo-lede-sm">{{ if $fr }}Adresse publiée dans le README du dépôt. La page s’ouvre dans un cadre isolé, seulement quand vous le demandez.{{ else }}Address published in the repository README. The page opens in a sandboxed frame, only when you ask.{{ end }}</p>
+  <div class="repo-demo-panel" data-demo data-demo-src="{{ .url }}" data-demo-title="{{ index .label $i }}">
+    <div class="repo-demo-actions">
+      {{ if .embed }}<button type="button" class="btn primary" data-demo-load>{{ index .label $i }}</button>{{ end }}
+      <a class="btn ghost" href="{{ .url }}" rel="noopener" target="_blank">{{ if $fr }}Ouvrir dans un nouvel onglet{{ else }}Open in a new tab{{ end }} <span aria-hidden="true">↗</span></a>
+      <code class="repo-demo-url">{{ .url }}</code>
+    </div>
+    {{ if .embed }}<div class="repo-demo-frame" data-demo-frame hidden></div>{{ end }}
+  </div>
+</section>
+{{- end -}}

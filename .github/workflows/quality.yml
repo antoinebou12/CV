@@ -149,6 +149,10 @@ jobs:
         working-directory: tools/ux-audit
         run: node scripts/run-local-e2e.mjs e2e/enhancements.spec.ts
 
+      - name: LaTeX CV PDFs (pages, text, links, margins)
+        working-directory: tools/ux-audit
+        run: npx playwright test --config playwright.e2e.config.ts e2e/cv-pdf.spec.ts
+
       - name: Upload report
         if: failure()
         uses: actions/upload-artifact@v7

@@ -43,6 +43,7 @@
         {{- $current := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) -}}
         <a class="site-pill" href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"{{ if $current }} aria-current="page"{{ end }}>{{- .Name -}}</a>
         {{- end -}}
+        {{- with site.GetPage "/stars" }}{{ if hugo.Data.github_stars }}<a class="site-pill" href="{{ .RelPermalink }}"{{ if eq . $ }} aria-current="page"{{ end }}>{{ if $fr }}Étoiles{{ else }}Stars{{ end }}</a>{{ end }}{{ end -}}
         <a class="site-pill site-pill-cv" href="{{ $cvHome }}">{{ i18n "navCvHome" }}</a>
       </nav>
       {{- end -}}

@@ -387,3 +387,21 @@
     transform: none !important;
   }
 }
+
+/* Stars directory reuses the project catalog; owner prefix and theme counts are the only additions. */
+.stars-directory .stars-owner { color: var(--muted) !important; font-weight: 500 !important; }
+.stars-directory .stars-theme-count { margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--panel) !important; color: var(--muted) !important; font-size: 11px; }
+.stars-directory .repo-style-filters button[aria-pressed="true"] .stars-theme-count { color: var(--accent) !important; }
+
+/* Card visuals: article photo or the generated overview diagram. */
+.repo-directory .repo-card-media { display: block !important; margin: -22px -22px 16px !important; border-bottom: 1px solid var(--line) !important; border-radius: 6px 6px 0 0 !important; overflow: hidden !important; background: var(--panel2) !important; }
+.repo-directory .repo-card-media img { display: block !important; width: 100% !important; height: 150px !important; object-fit: cover !important; object-position: center top !important; margin: 0 !important; }
+.repo-directory .repo-card-media--diagram { background: #fff !important; }
+.repo-directory .repo-card-media--diagram img { object-fit: contain !important; padding: 10px 14px !important; box-sizing: border-box !important; }
+html.dark .repo-directory .repo-card-media--diagram { background: #f3f6f9 !important; }
+
+/* Filter focus: the chosen type leads, other groups show as secondary matches. */
+.repo-directory .repo-group-count { display: inline-flex !important; align-items: center !important; margin-left: 8px !important; padding: 1px 8px !important; border-radius: 999px !important; background: var(--panel2) !important; color: var(--muted) !important; font: 600 11px/1.6 system-ui, sans-serif !important; vertical-align: middle; }
+.repo-directory .repo-group-secondary { display: none !important; margin-left: auto !important; margin-right: 12px !important; color: var(--muted) !important; font: 600 11px/1.4 system-ui, sans-serif !important; letter-spacing: .08em; text-transform: uppercase; }
+.repo-directory .repo-directory-group.is-secondary-match > summary .repo-group-secondary { display: inline !important; }
+.repo-directory .repo-directory-group.is-secondary-match > summary h2 { color: var(--muted) !important; }

@@ -45,6 +45,7 @@
     <nav class="repo-sidenav" aria-label="{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}">
       <p class="repo-sidenav-label">{{ if $fr }}Sur cette page{{ else }}On this page{{ end }}</p>
       <a href="#overview" class="active">{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</a>
+      {{ if index (hugo.Data.project_demos.repositories | default dict) $note.repo }}<a href="#live-demo">{{ if $fr }}Essayer{{ else }}Try it{{ end }}</a>{{ end }}
       <a href="#glossary">{{ if $fr }}Glossaire{{ else }}Glossary{{ end }}</a>
       <a href="#architecture">{{ if $fr }}Architecture{{ else }}Architecture{{ end }}</a>
       {{ if index (hugo.Data.repository_dossiers.repositories | default dict) $note.repo }}<a href="#dossier">{{ if $fr }}Dossier technique{{ else }}Technical dossier{{ end }}</a>{{ end }}
@@ -129,6 +130,26 @@
           </div>
         </div>
       </header>
+      {{- /* Hero visual: the featured image of the related article when one exists (local, source-backed). */ -}}
+      {{- $heroPost := false -}}
+      {{- range $relatedArticles -}}
+        {{- if and (not $heroPost) (eq .lang $.Page.Lang) (strings.HasPrefix .path "posts/") -}}
+          {{- $dir := strings.TrimSuffix "/index.fr.md" (strings.TrimSuffix "/index.md" .path) -}}
+          {{- with site.GetPage $dir }}{{ $heroPost = . }}{{ end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- with $heroPost -}}
+        {{- with partial "featured-image-resource.html" . -}}
+          {{- if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) -}}
+            {{- $big := .Fit "1400x560 webp q82" -}}
+            {{- $small := .Fit "800x320 webp q80" -}}
+      <figure class="repo-hero-media" data-reveal>
+        <a href="{{ $heroPost.RelPermalink }}"><img src="{{ $big.RelPermalink }}" srcset="{{ $small.RelPermalink }} {{ $small.Width }}w, {{ $big.RelPermalink }} {{ $big.Width }}w" sizes="(max-width: 1100px) calc(100vw - 48px), 1100px" width="{{ $big.Width }}" height="{{ $big.Height }}" alt="{{ $heroPost.Params.image_alt | default $heroPost.Title | plainify }}" loading="lazy" decoding="async"></a>
+        <figcaption>{{ if $fr }}Illustration de l’article{{ else }}From the article{{ end }} <a href="{{ $heroPost.RelPermalink }}">{{ $heroPost.Title }}</a></figcaption>
+      </figure>
+          {{- end -}}
+        {{- end -}}
+      {{- end }}
 
       <dl class="repo-snapshot-cards" aria-label="{{ if $fr }}Le dépôt en bref{{ else }}Repository at a glance{{ end }}">
         <div><dt>{{ if $fr }}Langages{{ else }}Languages{{ end }}</dt><dd><span class="repo-snapshot-value">{{ len $analysis.languages }}</span><a href="#languages-panel">{{ if $fr }}Répartition du code{{ else }}Code breakdown{{ end }} <span aria-hidden="true">↗</span></a></dd></div>
@@ -232,6 +253,8 @@
         </div>
         {{ end }}
       </section>
+
+      {{ partial "repository-demo.html" (dict "note" $note "page" .Page) }}
 
       <span id="first-steps" class="repo-section-anchor" aria-hidden="true"></span>
       <section class="doc repo-auto-docs" data-reveal aria-labelledby="installation" id="installation">
