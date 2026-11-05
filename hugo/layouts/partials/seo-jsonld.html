@@ -1,14 +1,25 @@
+{{- /*
+  Structured data for the blog.
+  Home: Organization + WebSite (SearchAction).
+  Every other page: BreadcrumbList.
+  Posts and recipes: BlogPosting / Article; project notes: TechArticle about a SoftwareSourceCode.
+  The Person node reuses the @id published by the static CV so both surfaces describe one entity.
+*/ -}}
+{{- $personId := "https://antoineboucher.info/CV/index-en.html#person" -}}
+{{- $same := slice -}}
+{{- with site.Params.github }}{{ $same = $same | append (printf "https://github.com/%s" .) }}{{ end -}}
+{{- with site.Params.linkedin }}{{ $same = $same | append (printf "https://www.linkedin.com/in/%s" .) }}{{ end -}}
+{{- $person := dict "@type" "Person" "@id" $personId "name" (site.Params.name | default site.Title) "url" "https://antoineboucher.info/CV/index-en.html" -}}
+{{- if gt (len $same) 0 }}{{ $person = merge $person (dict "sameAs" $same) }}{{ end -}}
 {{- if .IsHome -}}
-  {{- $same := slice -}}
-  {{- with site.Params.github }}{{ $same = $same | append (printf "https://github.com/%s" .) }}{{ end -}}
-  {{- with site.Params.linkedin }}{{ $same = $same | append (printf "https://www.linkedin.com/in/%s" .) }}{{ end -}}
   {{- $org := dict "@context" "https://schema.org" "@type" "Organization" "name" site.Title "url" site.Home.Permalink -}}
   {{- if gt (len $same) 0 }}{{ $org = merge $org (dict "sameAs" $same) }}{{ end -}}
   <script type="application/ld+json">
 {{ $org | jsonify | safeHTML }}
   </script>
-  {{- $siteNode := dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink -}}
+  {{- $siteNode := dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "inLanguage" .Lang -}}
   {{- with site.Params.description }}{{ $siteNode = merge $siteNode (dict "description" .) }}{{ end -}}
+  {{- $siteNode = merge $siteNode (dict "author" $person) -}}
   {{- with site.GetPage "search" -}}
     {{- $target := printf "%s?q={search_term_string}" .Permalink -}}
     {{- $siteNode = merge $siteNode (dict "potentialAction" (dict "@type" "SearchAction" "target" $target "query-input" "required name=search_term_string")) -}}
@@ -16,4 +27,85 @@
   <script type="application/ld+json">
 {{ $siteNode | jsonify | safeHTML }}
   </script>
+{{- else -}}
+  {{- /* Breadcrumbs: Home › Section › Page (project notes add the Projects level). */ -}}
+  {{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink) -}}
+  {{- $position := 2 -}}
+  {{- if .Params.repository_note -}}
+    {{- with site.GetPage "/projects" -}}
+      {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $position "name" .Title "item" .Permalink) -}}
+      {{- $position = add $position 1 -}}
+    {{- end -}}
+  {{- else if and .IsPage .Section (ne .Section "page") -}}
+    {{- with site.GetPage (printf "/%s" .Section) -}}
+      {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $position "name" .Title "item" .Permalink) -}}
+      {{- $position = add $position 1 -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $position "name" (.Title | plainify) "item" .Permalink) -}}
+  <script type="application/ld+json">
+{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify | safeHTML }}
+  </script>
+  {{- if .IsPage -}}
+    {{- $seoDesc := partialCached "seo-metadata-description.html" . .RelPermalink -}}
+    {{- $type := "Article" -}}
+    {{- if eq .Section "posts" }}{{ $type = "BlogPosting" }}{{ end -}}
+    {{- if .Params.repository_note }}{{ $type = "TechArticle" }}{{ end -}}
+    {{- $node := dict
+        "@context" "https://schema.org"
+        "@type" $type
+        "@id" (printf "%s#article" .Permalink)
+        "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+        "headline" (.Title | plainify)
+        "url" .Permalink
+        "inLanguage" .Lang
+        "isAccessibleForFree" true
+        "author" $person
+        "publisher" $person
+    -}}
+    {{- with $seoDesc }}{{ $node = merge $node (dict "description" (. | plainify)) }}{{ end -}}
+    {{- with .Date }}{{ $node = merge $node (dict "datePublished" (.Format "2006-01-02T15:04:05-07:00")) }}{{ end -}}
+    {{- with .Lastmod }}{{ $node = merge $node (dict "dateModified" (.Format "2006-01-02T15:04:05-07:00")) }}{{ end -}}
+    {{- with .GetTerms "tags" -}}
+      {{- $keywords := slice -}}
+      {{- range . }}{{ $keywords = $keywords | append (.Title | plainify) }}{{ end -}}
+      {{- $node = merge $node (dict "keywords" (delimit $keywords ", ")) -}}
+    {{- end -}}
+    {{- with .WordCount }}{{ $node = merge $node (dict "wordCount" .) }}{{ end -}}
+    {{- $images := slice -}}
+    {{- with partial "_funcs/get-page-images" . -}}
+      {{- range first 3 . }}{{ $images = $images | append .Permalink }}{{ end -}}
+    {{- end -}}
+    {{- if gt (len $images) 0 }}{{ $node = merge $node (dict "image" $images) }}{{ end -}}
+    {{- /* Translations of the same article. */ -}}
+    {{- if .IsTranslated -}}
+      {{- $works := slice -}}
+      {{- range .Translations }}{{ $works = $works | append (dict "@type" $type "@id" (printf "%s#article" .Permalink) "url" .Permalink "inLanguage" .Lang) }}{{ end -}}
+      {{- $node = merge $node (dict "workTranslation" $works) -}}
+    {{- end -}}
+    {{- /* Project notes describe one public repository. */ -}}
+    {{- with .Params.repository_note -}}
+      {{- $repo := . -}}
+      {{- $note := index (where (hugo.Data.repository_notes.notes | default slice) "repo" $repo) 0 -}}
+      {{- $analysis := index (hugo.Data.repository_analysis.repositories | default dict) $repo | default dict -}}
+      {{- $guide := index (hugo.Data.repository_handbooks.repositories | default dict) $repo | default dict -}}
+      {{- $codeUrl := printf "https://github.com/%s/%s" (site.Params.github | default "antoinebou12") $repo -}}
+      {{- with $note }}{{ with .url }}{{ $codeUrl = . }}{{ end }}{{ end -}}
+      {{- $code := dict "@type" "SoftwareSourceCode" "name" $repo "codeRepository" $codeUrl "url" $codeUrl "author" $person -}}
+      {{- with $analysis.languages -}}
+        {{- $langs := slice -}}
+        {{- range first 3 . }}{{ $langs = $langs | append .name }}{{ end -}}
+        {{- $code = merge $code (dict "programmingLanguage" $langs) -}}
+      {{- end -}}
+      {{- with $guide.license }}{{ $code = merge $code (dict "license" .) }}{{ end -}}
+      {{- with $analysis.commit }}{{ $code = merge $code (dict "version" (substr . 0 12)) }}{{ end -}}
+      {{- $node = merge $node (dict "about" $code) -}}
+    {{- end -}}
+    {{- if eq .Section "recipes" -}}
+      {{- $node = merge $node (dict "@type" "Article" "articleSection" "Recipes") -}}
+    {{- end -}}
+  <script type="application/ld+json">
+{{ $node | jsonify | safeHTML }}
+  </script>
+  {{- end -}}
 {{- end -}}

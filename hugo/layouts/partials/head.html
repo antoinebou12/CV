@@ -150,4 +150,12 @@
 
   <!-- canonical: always emit (auditors and SEO); production-only tags stay in the block above -->
   <link rel="canonical" href="{{- .Permalink -}}" />
+  <!-- hreflang: every translation of this page, English as the default for unmatched locales -->
+  {{- if .IsTranslated -}}
+  {{- range .AllTranslations }}
+  <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}" />
+  {{- end -}}
+  {{- $default := index (where .AllTranslations "Lang" "en") 0 | default . }}
+  <link rel="alternate" hreflang="x-default" href="{{ $default.Permalink }}" />
+  {{- end }}
 </head>
