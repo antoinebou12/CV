@@ -50,7 +50,7 @@ Source: [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (same chain 
 
 | Repo | Role |
 |------|------|
-| [**WearPaper**](https://github.com/ETSim/WearPaper) | LaTeX thesis sources, ACM article, Beamer defense slides, and canonical bibliography. |
+| **WearPaper** (not public) | LaTeX thesis sources, ACM article, Beamer defense slides, and canonical bibliography. |
 | **TextureFriction** (local, `E:\master\TextureFriction`) | Qt6 + OpenGL 4.3+ simulator: PGS/AVBD contact, cluster FBO passes, GPU deposition into sliding/wear/direction atlases. Build: `just build`, run: `just run-build`. See `docs/architecture/14-thesis-pipeline-and-rationale.md` in the repo. |
 
 WearPaper is the **paper trail**; TextureFriction is where the loop runs at interactive rates.
@@ -65,7 +65,7 @@ In tested scenarios, **written texels** track cumulative wear more closely than 
 
 ## Research materials
 
-The manuscript sources, article, and defense slides live in [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper).
+The manuscript sources, article, and defense slides live in **WearPaper**, which is not public.
 
 ## Related
 

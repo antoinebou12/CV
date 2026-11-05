@@ -50,7 +50,7 @@ Source : [`wear-pipeline-flow.mmd`](./images/wear-pipeline-flow.mmd) (même cha�
 
 | Dépôt | Rôle |
 |-------|------|
-| [**WearPaper**](https://github.com/ETSim/WearPaper) | Sources LaTeX du mémoire, article ACM, diapositives Beamer de soutenance et bibliographie de référence. |
+| **WearPaper** (non public) | Sources LaTeX du mémoire, article ACM, diapositives Beamer de soutenance et bibliographie de référence. |
 | **TextureFriction** (local, `E:\master\TextureFriction`) | Simulateur Qt6 + OpenGL 4.3+ : contact PGS/AVBD, passes FBO par cluster, dépôt GPU dans les atlas glissement/usure/direction. Build : `just build`, exécution : `just run-build`. |
 
 WearPaper est la **trace écrite** ; TextureFriction est la boucle interactive.
@@ -65,7 +65,7 @@ Dans les scénarios testés, les **texels écrits** suivent mieux l'usure cumul�
 
 ## Documents de recherche
 
-Les sources du manuscrit, l'article et les diapositives de soutenance sont dans [**ETSim/WearPaper**](https://github.com/ETSim/WearPaper).
+Les sources du manuscrit, l'article et les diapositives de soutenance sont dans **WearPaper**, qui n'est pas public.
 
 ## Voir aussi
 

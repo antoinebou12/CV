@@ -34,4 +34,3 @@ Follow the README for Python dependencies and Cursor MCP configuration.
 ## Related
 
 - [D2COpenAIPlugin]({{< ref "/projects/D2COpenAIPlugin" >}}) — earlier ChatGPT plugin path
-- [PlantUMLAPI]({{< ref "/projects/PlantUMLAPI" >}}) — Python PlantUML client predecessor

@@ -91,6 +91,7 @@
       {{- $guide := index (hugo.Data.repository_handbooks.repositories | default dict) $repo | default dict -}}
       {{- $codeUrl := printf "https://github.com/%s/%s" (site.Params.github | default "antoinebou12") $repo -}}
       {{- with $note }}{{ with .url }}{{ $codeUrl = . }}{{ end }}{{ end -}}
+      {{- range where (hugo.Data.project_org_repositories.repositories | default slice) "name" $repo }}{{ $codeUrl = .url }}{{ end -}}
       {{- $code := dict "@type" "SoftwareSourceCode" "name" $repo "codeRepository" $codeUrl "url" $codeUrl "author" $person -}}
       {{- with $analysis.languages -}}
         {{- $langs := slice -}}

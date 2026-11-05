@@ -11,6 +11,7 @@
 {{- $api := index (hugo.Data.repository_api_guides.repositories | default dict) $repo }}
 {{- $url := printf "https://github.com/%s/%s" (site.Params.github | default "antoinebou12") $repo }}
 {{- with $note }}{{ with .url }}{{ $url = . }}{{ end }}{{ end }}
+{{- range where (hugo.Data.project_org_repositories.repositories | default slice) "name" $repo }}{{ $url = .url }}{{ end }}
 - {{ if $fr }}Dépôt{{ else }}Repository{{ end }}: {{ $url }}
 {{- with $guide.license }}
 - {{ if $fr }}Licence{{ else }}License{{ end }}: {{ . }}

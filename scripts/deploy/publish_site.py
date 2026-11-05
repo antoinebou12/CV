@@ -44,6 +44,8 @@ def main():
     # Publish with the checked-in theme CSS expected by our template overrides.
     run(sys.executable, "scripts/build/article_sources.py")
     run(sys.executable, "scripts/deploy/build_docs.py", "--date", args.date)
+    # Never publish a link to a repository that is not public.
+    run(sys.executable, "scripts/verify/check_public_repos.py", "--site", str(ROOT / "docs"))
     if shutil.which("node"):
         # The same project-note checks CI runs, against the output about to be published.
         subprocess.run(["node", "--test", "scripts/verify/repository-notes.test.mjs"], cwd=ROOT, check=True,
