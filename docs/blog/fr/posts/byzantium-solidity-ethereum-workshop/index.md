@@ -7,7 +7,7 @@
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/index.md
 - Publié: 2024-03-11
 - Mis à jour: 2026-10-24
-- Tags: Byzantium, Solidity, Ethereum, Conference, Education, OpenZeppelin, ERC-20
+- Tags: Byzantium, Solidity, Ethereum, Conférences, Education, OpenZeppelin, ERC-20
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Diapositive d’ouverture — Workshop sur Solidity (Ethereum), salle ÉTS](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/images/workshop-title-slide.png)
 
 Retour sur notre tout premier workshop sur Ethereum.

@@ -7,7 +7,7 @@
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/index.md
 - Publié: 2022-09-06
 - Mis à jour: 2026-05-22
-- Tags: Run:ai, AWS, Machine Learning, Inference, Kubernetes, Conference
+- Tags: Run:ai, AWS, Machine Learning, Inference, Kubernetes, Conférences
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)J’ai suivi un **webinaire Run:ai** (Amériques) sur l’**inférence ML** et son **autoscaling sur AWS**. À l’époque j’étais plongé dans des projets GPU/containers, mais l’inférence en prod ressemblait encore à « quelqu’un a SSH sur une machine ». La session a été utile parce qu’elle cadrait l’inférence comme un problème de **capacité et d’ordonnancement** — pas seulement d’export de modèle.
 
 ## Pourquoi j’ai regardé

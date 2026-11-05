@@ -7,7 +7,7 @@
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/index.md
 - Publié: 2022-09-06
 - Mis à jour: 2026-05-22
-- Tags: GitHub Copilot, Conference, Cédille, Arctiq, AI
+- Tags: GitHub Copilot, Conférences, Cédille, Arctiq, AI
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)**Cédille** (club conseil à l’ÉTS) a accueilli **GitHub** et **Arctiq** pour une session **Copilot** et les outils IA autour du dev moderne — automne 2022, quand « pair programmer IA » faisait encore sourire en amphithéâtre.
 
 ## Pourquoi cette session

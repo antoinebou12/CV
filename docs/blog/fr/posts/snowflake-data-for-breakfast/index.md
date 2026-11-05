@@ -7,7 +7,7 @@
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/index.md
 - Publié: 2022-09-06
 - Mis à jour: 2026-05-22
-- Tags: Conference, Snowflake, Data Analytics
+- Tags: Conférences, Snowflake, Data Analytics
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)**Snowflake Data-for-Breakfast** : matinée sur l’entrepôt cloud, le partage, la gouvernance et des histoires clients qui rendent l’architecture concrète. J’y suis allé pour l’exploitation réelle, pas les goodies. Keynote **Infostrux**.
 
 ## Pourquoi

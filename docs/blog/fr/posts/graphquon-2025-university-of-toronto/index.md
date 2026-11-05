@@ -7,7 +7,7 @@
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/index.md
 - Publié: 2025-11-15
 - Mis à jour: 2026-05-22
-- Tags: Conference, GraphQuon, Université De Toronto, SIGGRAPH, Infographie, Friction, ÉTS
+- Tags: Conférences, GraphQuon, Université De Toronto, SIGGRAPH, Infographie, Friction, ÉTS
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![Badge GraphQuon 2025 — Antoine Boucher, École de technologie supérieure, skyline de Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/images/graphquon-name-badge.png)
 
 **GraphQuon** est l’atelier annuel Québec–Ontario pré-SIGGRAPH. L’édition **2025** s’est tenue les **15 et 16 novembre 2025** à l’**Université de Toronto** ([page de la série](https://www.dgp.toronto.edu/graphquon/)). J’y ai **présenté** avec **Sheldon Andrews** (ÉTS) : **Where to Wear?** — comment le contact frictionnel écrit l’histoire d’une surface, et comment en faire un retour utile en infographie et en génie.
