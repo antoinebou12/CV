@@ -37,19 +37,15 @@ The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, lan
 
 ## GitHub Actions Workflows
 
-The project uses two main workflows:
+Continuous integration checks the sources; publication is a local step (`scripts/deploy/publish_site.py --publish` builds `docs/` and pushes `main`).
 
-### 1. CV Compilation Workflow
-- **Trigger**: Changes to `cv-en/**` or `cv-fr/**` files
-- **Action**: Compiles LaTeX to PDF
-- **Output**: Commits `cv.pdf` to repository
+- **Quality** (`quality.yml`): spellcheck (advisory), html-validate, CV data schema and EN/FR parity, generated LaTeX and design tokens in sync, project note structure tests, Playwright frontend checks
+- **Lighthouse CI** (`lighthouse.yml`): CV pages and blog pages, warn thresholds in `lighthouserc.json`
+- **CV compilation** (`compile-cv.yml`): LaTeX PDFs via Docker, committed back to the repository
+- **Link check** (`link-check.yml`): Lychee, advisory
+- **Repository documentation** (`repository-documentation.yml`): extraction tests; manual refresh of the project data files
 
-### 2. GitHub Pages Deployment
-- **Trigger**: Push to `main`/`master` branch
-- **Action**: Deploys website to GitHub Pages
-- **Output**: Live website at `https://<username>.github.io/<repo>`
-
-See [GitHub Actions](./github-actions.md) for detailed documentation.
+See [GitHub Actions](./github-actions.md) and [local publishing](./local-publishing.md).
 
 ## File Structure
 

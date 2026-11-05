@@ -4,7 +4,7 @@ Documentation for GitHub Actions workflows used in this project.
 
 ## Overview
 
-The project uses five GitHub Actions workflows:
+The project uses six GitHub Actions workflows (publication itself runs locally):
 
 1. **CV Compilation** (`.github/workflows/compile-cv.yml`)
    - Validates `data/cv.yaml` → LaTeX (`generate_cv.py --check`)
@@ -20,10 +20,15 @@ The project uses five GitHub Actions workflows:
 4. **Quality checks** (`.github/workflows/quality.yml`)
    - Locale spellcheck: **codespell** (English paths) and **aspell-fr** (French paths) via `scripts/ci/spellcheck.py` — **advisory** in CI (`continue-on-error` + step summary; pre-commit still runs spellcheck locally)
    - `html-validate` on static HTML entry pages
-   - `validate_cv_data.py`, `check_en_fr_parity.py`, `generate_cv.py --check`
+   - `validate_cv_data.py`, `check_en_fr_parity.py`, `generate_cv.py --check`, `sync_design_tokens.py --check`, AEO regeneration diff
+   - `project-docs-structure`: Hugo build + `scripts/verify/repository-notes.test.mjs` (section anchors, diagrams, bilingual notes)
+   - `frontend-e2e`: Playwright (`tools/ux-audit/e2e/enhancements.spec.ts`) against a local build with `HUGO_ENV=production` — hreflang and JSON-LD, header options popover, sortable tables, reduced-motion reveals, article side rail, open project diagrams, Markdown context twins, axe WCAG 2.1 AA on four pages
 
 5. **Lighthouse CI** (`.github/workflows/lighthouse.yml`)
-   - Builds minimal `_site`, runs Lighthouse on `/CV/index-en.html` and `/CV/index-fr.html` (warn thresholds in `lighthouserc.json`)
+   - Builds `_site/CV` with the CV pages and the Hugo blog, runs Lighthouse on the CV pages, the blog home, lists, a post and a project note in both languages (warn thresholds in `lighthouserc.json`)
+
+6. **Repository documentation** (`.github/workflows/repository-documentation.yml`)
+   - Tests the extraction scripts on pull requests; on manual dispatch refreshes `hugo/data/repository_*.json` and uploads the result as an artifact (no automatic commit)
 
 ## CV Compilation Workflow
 
