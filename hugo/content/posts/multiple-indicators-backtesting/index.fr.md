@@ -13,6 +13,9 @@ tags:
   - Backtesting
   - Crypto
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
+cover_label: "Backtesting"
+cover_code: "indicateurs"
+cover_note: "plusieurs titres, une stratégie"
 ---
 
 Même moteur **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** que l’[expérience indicateurs]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}}), accent sur **beaucoup de tickers** actions + crypto.

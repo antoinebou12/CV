@@ -13,6 +13,9 @@ tags:
   - Backtesting
   - Crypto
 canonicalURL: "https://medium.com/@antoine.boucher012/multiple-technical-indicators-backtesting-on-multiple-tickers-using-python-a5c933d3f1bf"
+cover_label: "Backtesting"
+cover_code: "indicators"
+cover_note: "many tickers, one strategy"
 ---
 
 Same **[BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting)** engine as the [earlier indicator experiment]({{< ref "/posts/experimentation-indicateurs-backtesting/index.md" >}}), but emphasized at **portfolio scale**: many tickers, two strategies, equities plus crypto, aggregate winners and losers.

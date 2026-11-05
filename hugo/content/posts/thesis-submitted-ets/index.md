@@ -12,6 +12,9 @@ tags:
   - ÉTS
   - Computer Graphics
   - Simulation
+cover_label: "ÉTS · 2026"
+cover_code: "Thesis"
+cover_note: "real-time surface wear"
 ---
 
 I submitted my master's thesis at ÉTS. The work is real-time simulation of surface wear, at the meeting point of physical simulation, contact, and graphics rendering.

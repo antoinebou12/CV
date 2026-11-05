@@ -11,6 +11,9 @@ images:
 translationKey: sm64coopdx-switch-new3ds-port
 mermaid: true
 tags: ["Nintendo Switch","Nintendo 3DS","C","Graphics","Homebrew"]
+cover_label: "Switch · New 3DS port"
+cover_code: "sm64coopdx"
+cover_note: "shared game code, small platform layer"
 ---
 
 {{< repo_snapshot "antoinebou12/sm64coopdx-switch-N3DS" >}}

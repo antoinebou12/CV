@@ -45,7 +45,7 @@
       {{- end -}}
       {{- $mediaURL := or $thumbURL (relURL "images/post-kind-article.webp") -}}
       {{- if $p.Params.cover_code -}}
-      <div class="post-code-cover" aria-hidden="true"><span>{{ $p.Params.cover_label }}</span><strong>{{ $p.Params.cover_code }}</strong><code>.blend → S3 / MinIO</code></div>
+      <div class="post-code-cover" aria-hidden="true"><span>{{ $p.Params.cover_label }}</span><strong>{{ $p.Params.cover_code }}</strong>{{ with $p.Params.cover_note }}<code>{{ . }}</code>{{ end }}</div>
       {{- else if not $p.Params.cover_none -}}
       <div
         class="post-list-card-media relative w-full shrink-0 overflow-hidden bg-gradient-to-b from-black/[0.07] to-black/[0.12] dark:from-white/[0.08] dark:to-white/[0.12]"

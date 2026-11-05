@@ -13,6 +13,7 @@ repository_diagram: true
 cover_label: "Blender / stockage objet"
 cover_code: "bloc"
 tags: ["Blender", "Python", "S3", "MinIO", "Open source"]
+cover_note: ".blend → S3 / MinIO"
 ---
 
 Mon dépôt [`bloc`](https://github.com/antoinebou12/bloc) est un fork de [MrKuros/Blender-Cloud-Storage](https://github.com/MrKuros/Blender-Cloud-Storage). Il conserve le crédit de l’auteur d’origine et explore un panneau Blender pour parcourir des ressources dans AWS S3 et MinIO.

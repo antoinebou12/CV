@@ -12,6 +12,9 @@ tags:
   - ÉTS
   - Infographie
   - Simulation
+cover_label: "ÉTS · 2026"
+cover_code: "Mémoire"
+cover_note: "usure de surface en temps réel"
 ---
 
 J'ai déposé mon mémoire de maîtrise à l'ÉTS. Le travail porte sur la simulation en temps réel de l'usure de surface, à la rencontre de la simulation physique, du contact et du rendu graphique.
