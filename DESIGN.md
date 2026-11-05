@@ -128,7 +128,8 @@ Hero: title first, then status chips, tech badges, last-updated metadata, Source
 4. Add a project image only when it is an actual repository asset with a recorded source path and meaningful alt text. Do not add stock imagery or inferred diagrams.
 5. Preserve GitHub, README, documentation and blog links. Add a reference entry only when its target is verified.
 6. Hand-written notes (Markdown without the `repository-note` shortcode) get the same shell from `hugo/layouts/partials/project-paper-shell.html`: the opening before the first `##` becomes the hero (title, introduction, badges, updated date), actions come from the repository and project-site links in `project_sources.json`, and the numbered contents fill the side rail. A plain row of links in the opening is replaced by those actions. Their Markdown code fences use the dark terminal surface so Chroma's inline colours keep their contrast.
-7. Build with `hugo --minify` and run `node --test scripts/verify/repository-notes.test.mjs` with `CV_NOTES_SITE=hugo/public`. Check both light and dark themes and the 760px navigation breakpoint before shipping.
+7. Every project page has a Use cases section after the overview, drawn from `hugo/data/project_use_cases.json` by `hugo/layouts/partials/repository-use-cases.html`: a one-line summary (also the catalog card text), an inline SVG use-case diagram (people left, external systems right, note colour tokens), the use cases as cards, one numbered scenario and the files read. See `docs/development/project-use-cases.md`. Only public repositories appear; `scripts/verify/check_public_repos.py` blocks publishing otherwise.
+8. Build with `hugo --minify` and run `node --test scripts/verify/repository-notes.test.mjs` with `CV_NOTES_SITE=hugo/public`. Check both light and dark themes and the 760px navigation breakpoint before shipping.
 
 ### CV date badges (Experience / Education)
 

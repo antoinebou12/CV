@@ -79,7 +79,7 @@
   {{- with $data.scenario }}
   <h3>{{ if $fr }}Scénario : {{ else }}Scenario: {{ end }}{{ index .title $i }}</h3>
   <ol class="repo-scenario">
-    {{- range .steps }}<li>{{ index . $i | markdownify }}</li>{{ end }}
+    {{- range .steps }}<li>{{ index . $i }}</li>{{ end }}
   </ol>
   {{- end }}
   {{- with $data.evidence }}

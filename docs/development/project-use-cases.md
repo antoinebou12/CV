@@ -14,7 +14,7 @@ The catalog card shows the one-line summary, and the Markdown brief (`…/index.
 | `summary` | `[English, French]`, at most 140 characters each |
 | `actors` | 1–3 items: `id`, `kind` (`person` drawn left, `system` drawn right), `label` `[en, fr]` ≤ 24 characters |
 | `use_cases` | 3–6 items: `id`, `actors` (actor ids), `label` `[en, fr]` ≤ 32 characters, optional `detail` `[en, fr]`, `evidence` paths |
-| `scenario` | `title` `[en, fr]` and 3–6 `steps`, each `[en, fr]` (Markdown allowed) |
+| `scenario` | `title` `[en, fr]` and 3–6 `steps`, each `[en, fr]` (plain text, so commands such as `--install` keep their dashes) |
 | `evidence` | repository-relative paths that were read |
 
 Facts come from the repository's README and source; nothing is inferred from the name.

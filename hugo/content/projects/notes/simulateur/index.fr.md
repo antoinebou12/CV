@@ -46,10 +46,10 @@ python3 run.py --install
 python3 run.py --start-simulation 1
 ```
 
-`--install` crée un superadmin `admin`/`admin` et remplit la base. Pour créer un autre superadmin :
+`--install` crée un superadmin de développement local avec l’identifiant d’exemple du README (`admin`/`admin`) et remplit la base ; changez-le avant d’exposer l’application. Pour créer un autre superadmin avec vos propres valeurs :
 
 ```shell
-python3 manage.py createsuperadmin --username=admin --password=admin --email=admin@admin.com
+python3 manage.py createsuperadmin --username=<nom> --password=<mot-de-passe> --email=<courriel>
 ```
 
 Les tests Django de `simulation/tests/` se lancent avec `python3 manage.py test`. Les pages Swagger et ReDoc sont servies à `/swagger/` et `/redoc/`.
