@@ -26,6 +26,14 @@ updates `docs/`, commits that folder, and pushes to `main` without force. Existi
 development documentation in `docs/` is preserved. Untracked source files are
 not included in the commit: commit any new source files before publishing.
 
+Inside the directories the build generates (`blog/`, `css/`, `js/`, `images/`,
+`.well-known/`, ...), files the new build no longer produces are deleted, so
+superseded CSS bundles, renamed pages and removed images stop being served.
+Hand-written folders such as `docs/development/` are never touched. After the
+build, the script runs `scripts/verify/repository-notes.test.mjs` against
+`docs/blog` when Node.js is installed, stops early if the Paper theme submodule
+is missing, and warns when the local Hugo version differs from the one CI uses.
+
 GitHub Pages settings must use **Deploy from a branch**, **main**, **/docs**.
 GitHub still processes the branch publication on its servers; an account-level
 Pages or Actions restriction can prevent publication even when the local build

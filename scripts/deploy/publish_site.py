@@ -1,5 +1,7 @@
 """Build the CV and blog locally; optionally commit docs and push to main."""
 import argparse
+import os
+import re
 from datetime import datetime
 from pathlib import Path
 import shutil
@@ -24,6 +26,16 @@ def main():
     git = str(Path("C:/Program Files/Git/cmd/git.exe")) if sys.platform == "win32" else "git"
     if not shutil.which("hugo"):
         parser.error("Install Hugo extended before building.")
+    theme = ROOT / "hugo/themes/paper"
+    if not theme.is_dir() or not any(theme.iterdir()):
+        # Without the theme, Hugo fails later with an unrelated-looking resources.Concat error.
+        parser.error("The Paper theme submodule is missing: run "
+                     "'git submodule update --init hugo/themes/paper'.")
+    expected = re.search(r'hugo-version:\s*"([^"]+)"',
+                         (ROOT / ".github/workflows/quality.yml").read_text(encoding="utf-8"))
+    installed = run("hugo", "version", capture=True)
+    if expected and f"v{expected[1]}" not in installed:
+        print(f"Warning: CI builds with Hugo {expected[1]}; local {installed.split()[0]} may render differently.")
     if args.publish:
         if run(git, "status", "--porcelain", "--untracked-files=no", capture=True).strip():
             parser.error("Commit tracked source changes before publishing.")
@@ -32,6 +44,12 @@ def main():
     # Publish with the checked-in theme CSS expected by our template overrides.
     run(sys.executable, "scripts/build/article_sources.py")
     run(sys.executable, "scripts/deploy/build_docs.py", "--date", args.date)
+    if shutil.which("node"):
+        # The same project-note checks CI runs, against the output about to be published.
+        subprocess.run(["node", "--test", "scripts/verify/repository-notes.test.mjs"], cwd=ROOT, check=True,
+                       env={**os.environ, "CV_NOTES_SITE": str(ROOT / "docs/blog")})
+    else:
+        print("Warning: Node.js not found; skipped scripts/verify/repository-notes.test.mjs.")
     if args.publish:
         run(git, "add", "--", "docs")
         changed = run(git, "diff", "--cached", "--name-only", capture=True).strip()

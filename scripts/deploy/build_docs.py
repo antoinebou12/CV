@@ -80,8 +80,29 @@ def main():
                                      else line for line in robots.read_text(encoding="utf-8").splitlines()) + "\n", encoding="utf-8")
         (site / ".nojekyll").touch()
         run(sys.executable, "scripts/verify/verify_deploy_build.py", "--site-dir", str(site), "--repo-root", str(ROOT))
+        removed = prune_generated(site)
         shutil.copytree(site, DEST, dirs_exist_ok=True)
-        print(f"Production website built in {DEST}; existing documentation preserved.")
+        print(f"Production website built in {DEST}; removed {removed} stale generated files; "
+              "existing documentation preserved.")
+
+
+def prune_generated(site):
+    """Delete files under the generated directories (blog/, css/, .well-known/, ...) that this
+    build no longer produces, so superseded bundles, renamed pages and deleted images stop
+    being served. Directories the build does not create, such as docs/development/, are untouched."""
+    removed = 0
+    for directory in (path for path in site.iterdir() if path.is_dir()):
+        published = DEST / directory.name
+        if not published.is_dir():
+            continue
+        for old in sorted(published.rglob("*"), reverse=True):
+            relative = old.relative_to(DEST)
+            if old.is_file() and not (site / relative).exists():
+                old.unlink()
+                removed += 1
+            elif old.is_dir() and not any(old.iterdir()):
+                old.rmdir()
+    return removed
 
 
 if __name__ == "__main__":
