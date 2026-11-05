@@ -34,15 +34,21 @@
       if (on) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
     }
   };
-  if ('IntersectionObserver' in window) {
-    const visible = new Map();
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) visible.set(entry.target, entry.isIntersecting);
-      const first = headings.find(({ target }) => visible.get(target));
-      if (first) setCurrent(first.target.id);
-    }, { rootMargin: '-72px 0px -60% 0px', threshold: [0, 1] });
-    headings.forEach(({ target }) => observer.observe(target));
-  }
+  // Position-based spy: the current section is the last heading above the reading line
+  // (35% down the viewport); at the end of the page the last section wins.
+  let frame = 0;
+  const spy = () => {
+    frame = 0;
+    const line = innerHeight * 0.35;
+    let current = headings[0];
+    for (const item of headings) if (item.target.getBoundingClientRect().top <= line) current = item;
+    if (scrollY + innerHeight >= document.documentElement.scrollHeight - 2) current = headings[headings.length - 1];
+    setCurrent(current.target.id);
+  };
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(spy); };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  spy();
   for (const { link, target } of headings) {
     link.addEventListener('click', () => {
       setCurrent(target.id);

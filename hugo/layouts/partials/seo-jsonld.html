@@ -15,7 +15,7 @@
   {{- $org := dict "@context" "https://schema.org" "@type" "Organization" "name" site.Title "url" site.Home.Permalink -}}
   {{- if gt (len $same) 0 }}{{ $org = merge $org (dict "sameAs" $same) }}{{ end -}}
   <script type="application/ld+json">
-{{ $org | jsonify | safeHTML }}
+{{ $org | jsonify | safeJS }}
   </script>
   {{- $siteNode := dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "inLanguage" .Lang -}}
   {{- with site.Params.description }}{{ $siteNode = merge $siteNode (dict "description" .) }}{{ end -}}
@@ -25,7 +25,7 @@
     {{- $siteNode = merge $siteNode (dict "potentialAction" (dict "@type" "SearchAction" "target" $target "query-input" "required name=search_term_string")) -}}
   {{- end -}}
   <script type="application/ld+json">
-{{ $siteNode | jsonify | safeHTML }}
+{{ $siteNode | jsonify | safeJS }}
   </script>
 {{- else -}}
   {{- /* Breadcrumbs: Home › Section › Page (project notes add the Projects level). */ -}}
@@ -44,7 +44,7 @@
   {{- end -}}
   {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $position "name" (.Title | plainify) "item" .Permalink) -}}
   <script type="application/ld+json">
-{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify | safeHTML }}
+{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify | safeJS }}
   </script>
   {{- if .IsPage -}}
     {{- $seoDesc := partialCached "seo-metadata-description.html" . .RelPermalink -}}
@@ -105,7 +105,7 @@
       {{- $node = merge $node (dict "@type" "Article" "articleSection" "Recipes") -}}
     {{- end -}}
   <script type="application/ld+json">
-{{ $node | jsonify | safeHTML }}
+{{ $node | jsonify | safeJS }}
   </script>
   {{- end -}}
 {{- end -}}

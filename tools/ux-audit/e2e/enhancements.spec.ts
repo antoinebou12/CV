@@ -118,7 +118,7 @@ test.describe('Motion and reading tools', () => {
     expect(await rail.evaluate(e => getComputedStyle(e).position)).toBe('sticky');
     const last = rail.locator('a').last();
     const id = (await last.getAttribute('href'))!.slice(1);
-    await page.locator(`#${CSS.escape(decodeURIComponent(id))}`).scrollIntoViewIfNeeded();
+    await page.locator(`[id="${decodeURIComponent(id)}"]`).evaluate(node => node.scrollIntoView({ block: 'start' }));
     await expect(last).toHaveAttribute('aria-current', 'true');
   });
   test('phones keep the table of contents as a collapsed disclosure', async ({ page }) => {
@@ -138,6 +138,8 @@ test.describe('Motion and reading tools', () => {
 
 test('home, catalog and a project note pass WCAG 2.1 AA checks', async ({ page }, info) => {
   const violations: Record<string, unknown[]> = {};
+  // Reveal transitions are skipped so axe measures final colours, not mid-animation opacity.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const path of ['/blog/', '/blog/projects/', '/blog/projects/notes/uml-mcp/', '/blog/posts/uml-mcp/']) {
     await page.goto(route(path));
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).disableRules(['region']).analyze();
