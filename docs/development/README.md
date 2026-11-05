@@ -47,6 +47,13 @@ Continuous integration checks the sources; publication is a local step (`scripts
 
 See [GitHub Actions](./github-actions.md) and [local publishing](./local-publishing.md).
 
+### Frontend checks and audits
+
+- `tools/ux-audit/e2e/enhancements.spec.ts` — SEO tags, header, tables, motion, reading tools, Markdown twins, axe
+- `tools/ux-audit/e2e/cv-pdf.spec.ts` — LaTeX PDFs rendered with pdf.js (pages, headings, links, margins)
+- `docs/ux-review/ui-audit-2026-11.md` — UI audit report (visual hierarchy, style, accessibility, navigation, usability) with priority fixes
+- `scripts/build/fetch_github_stars.py` — builds the Stars page data from the account's starred repositories (needs an authenticated `gh`)
+
 ## File Structure
 
 ```
