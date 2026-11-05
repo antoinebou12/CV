@@ -723,3 +723,12 @@ html:not(.dark) .blog-site .terminal {
 .blog-site .not-found-link--primary:hover { color: #fff !important; filter: brightness(1.08) !important; }
 .blog-site .not-found-hint { margin: 0 !important; color: var(--text-muted) !important; font-size: .95rem !important; }
 .blog-site .not-found-hint a { color: var(--brand-accent) !important; }
+
+/* Tag pages: short lede and a quiet meta row instead of a paragraph of counts. */
+.blog-site .journal-intro--tag .journal-intro-aside { align-self: end !important; padding-left: 24px !important; border-left: 2px solid var(--brand-accent) !important; max-width: 44ch !important; }
+.blog-site .journal-lede { margin: 0 0 14px !important; color: var(--text-strong) !important; font-size: 1.05rem !important; line-height: 1.6 !important; text-wrap: pretty; }
+.blog-site .journal-meta { display: flex !important; flex-wrap: wrap !important; align-items: baseline !important; gap: 6px 18px !important; margin: 0 !important; color: var(--text-muted) !important; font: 600 .74rem/1.4 var(--type-body, system-ui, sans-serif) !important; letter-spacing: .12em !important; text-transform: uppercase !important; }
+.blog-site .journal-meta a { color: var(--brand-accent) !important; text-decoration: none !important; }
+.blog-site .journal-meta a:hover { text-decoration: underline !important; }
+@media (max-width: 1099px) { .blog-site .journal-intro--tag .journal-intro-aside { padding-left: 0 !important; border-left: 0 !important; max-width: 56ch !important; } }
+.blog-site .journal-intro--tag .journal-intro-aside--meta-only { padding-left: 0 !important; border-left: 0 !important; }

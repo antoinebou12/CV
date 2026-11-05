@@ -17,7 +17,7 @@ FR = ROOT / "index-fr.html"
 
 COUNTS = [
     ("cv-section", r'<details class="box cv-section"'),
-    ("cv-job", r'<details class="cv-job'),
+    ("cv-job", r'<details[^>]*class="cv-job'),
     ("skill-group", r'class="skill-group"'),
     ("project-card", r'class="project-card'),
     ("credly-badge", r"credly\.com/badges/[a-f0-9-]+"),

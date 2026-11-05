@@ -4,10 +4,17 @@
 {{- if and .Title (eq .Type "tags") -}}
 <header class="journal-intro journal-intro--tag">
   <div>
-    <p class="journal-eyebrow">{{ if eq .Lang "fr" }}Étiquette{{ else }}Tag{{ end }}</p>
+    <p class="journal-eyebrow">{{ with .Params.eyebrow }}{{ . }}{{ else }}{{ if eq .Lang "fr" }}Étiquette{{ else }}Tag{{ end }}{{ end }}</p>
     <h1>{{ .Title }}</h1>
   </div>
-  <p>{{ $n := len .Pages }}{{ if eq .Lang "fr" }}{{ $n }} {{ if eq $n 1 }}page{{ else }}pages{{ end }} portent cette étiquette. {{ with site.GetPage "search" }}<a href="{{ .RelPermalink }}">Parcourir toutes les étiquettes</a>.{{ end }}{{ else }}{{ $n }} {{ if eq $n 1 }}page carries{{ else }}pages carry{{ end }} this tag. {{ with site.GetPage "search" }}<a href="{{ .RelPermalink }}">Browse every tag</a>.{{ end }}{{ end }}</p>
+  <div class="journal-intro-aside{{ if not .Description }} journal-intro-aside--meta-only{{ end }}">
+    {{- with .Description }}<p class="journal-lede">{{ . }}</p>{{ end }}
+    <p class="journal-meta">
+      {{- $n := len .Pages -}}
+      <span>{{ $n }} {{ if eq .Lang "fr" }}{{ if eq $n 1 }}page{{ else }}pages{{ end }}{{ else }}{{ if eq $n 1 }}page{{ else }}pages{{ end }}{{ end }}</span>
+      {{- with site.GetPage "search" }}<a href="{{ .RelPermalink }}">{{ if eq $.Lang "fr" }}Toutes les étiquettes{{ else }}All tags{{ end }} <span aria-hidden="true">→</span></a>{{ end -}}
+    </p>
+  </div>
 </header>
 {{- end -}}
 
