@@ -1,0 +1,27 @@
+# HDR-10bpp-Display-Test
+
+> Test d’affichage HDR 4K sous Linux avec profondeur 10 bits par canal.
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/hdr-10bpp-display-test/
+- Langue: fr
+- Traduction (en): https://antoineboucher.info/CV/blog/projects/hdr-10bpp-display-test/index.md
+- Publié: 2024-01-01
+- Mis à jour: 2024-01-01
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)## HDR-10bpp-Display-Test
+
+Petit projet pour vérifier les capacités **HDR 4K** sur Linux, notamment une profondeur de **10 bits par canal**. Utile pour valider chaîne graphique, pilotes et écran.
+
+### Démarrage
+
+[Dépôt GitHub](https://github.com/antoinebou12/hdr-10bpp-display-test)
+
+#### Prérequis (exemple Debian/Ubuntu)
+
+- Serveur X, Python 3, GTK 3  
+- ImageJ (affichage 10 bits), ImageIO  
+
+```bash
+sudo apt-get install xserver-xorg python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 imagej
+```
+
+Les procédures détaillées et scripts sont décrits en anglais dans le README du dépôt.

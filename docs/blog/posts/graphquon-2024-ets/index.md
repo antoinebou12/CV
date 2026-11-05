@@ -1,0 +1,84 @@
+# GraphQuon 2024 — ÉTS (Montréal)
+
+> GraphQuon 2024 at ÉTS — Quebec–Ontario pre-SIGGRAPH talks, the conference site we shipped, and hallway chats (including NVIDIA diffusion texture painting).
+
+- HTML page: https://antoineboucher.info/CV/blog/posts/graphquon-2024-ets/
+- Language: en
+- Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/graphquon-2024-ets/index.md
+- Published: 2024-11-09
+- Updated: 2026-05-22
+- Tags: Conference, GraphQuon, ÉTS, SIGGRAPH, Computer Graphics, NVIDIA
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)![GraphQuon 2024 auditorium at ÉTS — red carpet, white chairs, projection screen and ÉTS podium](./images/ets-auditorium-stage.png)
+
+**GraphQuon** (formerly MOTOGRAPH) is the annual Quebec–Ontario pre-SIGGRAPH workshop for East-Canadian computer graphics labs. The **2024** edition ran **9–10 November 2024** at **École de technologie supérieure (ÉTS)** in Montréal. I helped **build and host the conference website** at [graphquon.github.io](https://graphquon.github.io/) so schedules, registration, and past editions stayed in one place.
+
+## What GraphQuon is for
+
+From the site’s **About the event** copy: students present prospective SIGGRAPH-bound work to a **friendly, constructively critical** audience and get feedback before the real submission crunch. Faculty groups across Quebec and Ontario rotate hosting; **2024** was ÉTS’s turn.
+
+Questions for organizers: [graphquon@etsmtl.ca](mailto:graphquon@etsmtl.ca).
+
+### Earlier names
+
+| Year | Name | Dates |
+|------|------|--------|
+| 2018 | MOTOGRAPH | Nov 17–18 |
+| 2019 | MOTOGRAPH | Dec 7–8 |
+| 2021 | Tomatograph | Dec 3–4 |
+| 2022 | FOIEGRAPH | Nov 11–12 |
+| 2023 | GRAPHQUON | Dec 2–3 |
+| **2024** | **GRAPHQUON** | **Nov 9–10** @ ÉTS |
+
+## 2024 schedule (highlights)
+
+Full timetables live on [graphquon.github.io](https://graphquon.github.io/). A few anchors I remember from the published program:
+
+**Saturday 9 November**
+
+- Morning talks included **Quoc-Minh Ton-That**, **Melissa Katz** (McGill), and **Ivan Puhachov** (UdeM) among the **honourable mentions**.
+- Midday ÉTS/Sherbrooke block: **Justin Benoist**, **Arthur Delon**, **Joel Pelletier-Guenette**.
+- Afternoon: **Abhishek Madan** (Toronto); **Clara Kim** (Waterloo) won **Best presentation**.
+
+**Sunday 10 November**
+
+- Morning honourable mentions included **Victor Rong**, **Ryusuke Sugimoto**, **Yue Chang**, and **Ege Ciklabakkal**.
+- Late afternoon ÉTS/MILA block: **Alex Hoang-Cao**, **Darsh Kaushik**.
+
+The room itself matched the workshop vibe: ÉTS auditorium, red carpet, simple stage, and a lot of white chairs filled between sessions.
+
+![Networking at GraphQuon 2024 — ÉTS hoodie and conference badges, thumbs up between talks](./images/ets-networking-thumbs-up.png)
+
+## Hallway highlight: Masha Shugrina (NVIDIA)
+
+Between sessions I talked with **Masha Shugrina** (NVIDIA Spatial Intelligence Lab / creative AI tools). Two demos stuck with me:
+
+1. **[Diffusion Texture Painting](https://research.nvidia.com/labs/toronto-ai/DiffusionTexturePainting/)** (SIGGRAPH 2024) — painting on UV-mapped meshes with a diffusion brush so strokes stay seamless and you can blend complex reference textures interactively, not just stamp pixels.
+2. A **Gaussian-splat** style environment scan — a simple scene you could walk around in, the kind of collider/scan setup that makes spatial content feel immediate without a heavy offline pipeline. (NVIDIA’s newer line of work includes [Gaussian splat painting](https://shumash.com/research) research; the booth conversation was about that direction more than a single paper title.)
+
+It was the useful kind of industry chat: concrete tools you could imagine plugging into a lab pipeline, not a slide deck of buzzwords.
+
+## Audience and vibe
+
+Mostly **graphics + vision grad students and faculty** from Quebec and Ontario — people who understand meshes and shaders but still want a friendly room. Talks skewed research-heavy; questions were about evaluation protocols and whether a method would survive a SIGGRAPH reviewer, not startup pitch decks.
+
+## My role vs 2025
+
+For **2024** I was on the **organizing/web** side (site on GitHub Pages, schedule pages, contact blocks). That meant I learned the boring critical path: bios on time, PDF links that do not 404, and a schedule page that works on mobile in a hallway. In **2025** I presented at the Toronto edition — see **[GraphQuon 2025 — University of Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/)** (*Where to Wear?* with Sheldon Andrews). Organizing first made presenting calmer — I already knew where the HDMI adapter lived.
+
+## Tips if you attend next year
+
+- **Bring a question for the presenters** — honourable mentions get sharp feedback when they name what they want (SIGGRAPH track, clarity, eval).
+- **Talk in the hall** — half the value is comparing pipelines with other Quebec/Ontario labs.
+- **Check the site early** — schedules shift; [graphquon.github.io](https://graphquon.github.io/) is the source of truth.
+
+## Related posts
+
+- [GraphQuon 2025 — University of Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/) — presenting *Where to Wear?*
+- [Software engineering journey](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/) — ÉTS thread
+
+## Links
+
+- [GraphQuon 2024 — graphquon.github.io](https://graphquon.github.io/)
+- [GraphQuon 2025 — Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/)
+- [Diffusion Texture Painting (NVIDIA Toronto AI Lab)](https://research.nvidia.com/labs/toronto-ai/DiffusionTexturePainting/)
+- [Masha Shugrina — research page](https://shumash.com/research)

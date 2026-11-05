@@ -1,0 +1,74 @@
+# Évolution réseau — monter un lab à la maison
+
+> Notes homelab — Docker sur vieux matériel, bash, Caddy, WireGuard, Proxmox et schémas du setup.
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/posts/home-networking-evolution/
+- Langue: fr
+- Traduction (en): https://antoineboucher.info/CV/blog/posts/home-networking-evolution/index.md
+- Publié: 2021-09-06
+- Mis à jour: 2026-05-22
+- Tags: Networking, Homelab, Docker, WireGuard, Proxmox, Caddy
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi.
+
+## Pourquoi un lab
+
+Les cours couvraient IP, VPN et routage sur papier. Faire tourner des services à la maison rend les compromis concrets : courant, bruit, sauvegardes, et « qui a SSH quand le routeur lâche ».
+
+## Docker en premier
+
+J’ai aligné des **stacks conteneur gratuites** sur des jobs payés dans le cloud — média, tableaux de bord, petits outils. Docker comme porte d’entrée vers des services composables plutôt qu’un seul serveur « animal ».
+
+## Bash et deux machines
+
+Matériel : un **Dell** pas cher et une machine de 2004. Scripts **bash** pour **Ubuntu**, **CentOS** et **Proxmox** — assez reproductibles pour que les réinstallations après expériences fassent moins mal.
+
+### Rack physique (octobre 2022)
+
+Avant les schémas Lucidchart, le lab tenait dans des **placards et étagères** — nœud de câbles compris. Photos recadrées d’anciennes stories ; c’est le vrai câblage, pas un rendu 3D.
+
+**Pile murale** — switch, modem, routeur, **serveur entreprise (génération ~2010)**, onduleur, étiquetée pendant que j’apprenais encore qui branchait quoi :
+
+![Pile réseau homelab étiquetée — switch, modem, routeur, serveur, UPS](./images/homelab-wall-stack-labeled.jpeg)
+
+**Dell PowerEdge R710** — deux **Xeon X5667** (quad ~3 GHz), **24 Go RAM**, à côté de mousse acoustique. Le ruban adhésif sur le bezel, c’était mon inventaire :
+
+![Serveur homelab Dell PowerEdge R710 — Xeon X5667, 24 Go RAM](./images/dell-poweredge-r710-homelab.jpeg)
+
+**Placard** — serveur rack à l’horizontale, switch jaune, écran pour les installs locales, et assez de câbles bleus pour apprendre la patience :
+
+![Placard serveur homelab — rack, switch, écran et câblage](./images/homelab-closet-server-setup.jpeg)
+
+La virtualisation compte quand tu snapshots avant une idée douteuse. Un hôte dédié bat le tout bare-metal.
+
+![Schéma réseau (Lucidchart)](./images/lucidchart.jpeg)
+
+## Accès distant et bordure
+
+**Caddy** en reverse proxy ; exposition via un frontal **OVH** pour ne pas n’exposer que l’IP résidentielle. Admin à distance et santé des services dans la même histoire que « rendre le service joignable ».
+
+**WireGuard** pour le VPN — pénible la première fois, rapide une fois en place. J’ai contribué à de petits aides-setup pour des ami·e·s.
+
+## Après le déménagement
+
+Nouvel appartement, plus de curiosité VLAN, VMs **Proxmox** pour des projets de club. **Lucidchart** pour le schéma mural ; vue type **C4** pour expliquer la pile.
+
+![Vue type C4](./images/c4.jpeg)
+
+Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le always-on — le lab est resté pour le privé.
+
+## Pannes mémorables
+
+- **Un seul disque, pas de sauvegarde** — un `apt upgrade` raté et un week-end de réinstall.
+- **Ports admin exposés** — admin derrière VPN seulement, appris à la dure.
+- **Bruit thermique** — le R710 m’a fait penser aux courbes ventilateur avant « serveur » = « chambre à côté ».
+
+## Bilan
+
+Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automatiser, documenter la topologie, supposer la panne. Liens actuels : **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur le CV.
+
+## Articles connexes
+
+- [MediaBox homelab — notes sur la stack Docker](https://antoineboucher.info/CV/blog/fr/posts/mediabox-homelab-docker-catalog/) — compose, ports et scripts Proxmox
+- [Renpho + Home Assistant](https://antoineboucher.info/CV/blog/fr/posts/renpho-health-api-blueprint/) — données santé à la maison
+- [Rack à planches — CAO vers bois](https://antoineboucher.info/CV/blog/fr/posts/skate-rack-cad-to-object/) — projets physiques entre les câbles
+- [Caddy sur AWS](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/) — mêmes idées de proxy, autre facture

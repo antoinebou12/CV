@@ -1,0 +1,33 @@
+# RetroArch Web Games
+
+> Lecteur web RetroArch auto-hébergé avec une collection de jeux classiques.
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/retroarch-web-games/
+- Langue: fr
+- Traduction (en): https://antoineboucher.info/CV/blog/projects/retroarch-web-games/index.md
+- Publié: 2024-01-01
+- Mis à jour: 2024-01-01
+- Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)## RetroArch Web Games
+
+[retroarch-web-games](https://github.com/antoinebou12/retroarch-web-games) — RetroArch dans le navigateur via Docker, avec jeux NES, SNES, Mega Drive et Game Boy pré-téléchargés.
+
+### Fonctionnalités
+
+- Jeux fournis avec l’image  
+- Lecteur web auto-hébergé  
+- Déploiement simple avec Docker / Docker Compose  
+
+### Projet connexe
+
+- [FlashGames](https://antoinebou12.github.io/FlashGames/) — Petite collection de jeux Flash historiques préservés pour les navigateurs modernes via Ruffle.
+- Source : [antoinebou12/FlashGames](https://github.com/antoinebou12/FlashGames)
+
+### Utilisation
+
+```bash
+docker-compose up -d
+```
+
+Image Docker : [hub.docker.com/r/antoinebou13/retroarch-web-games](https://hub.docker.com/r/antoinebou13/retroarch-web-games)
+
+Les détails supplémentaires sont en anglais dans le dépôt GitHub.

@@ -1,0 +1,147 @@
+# Kinectron + p5.js — sketch controls and GIF export
+
+> Wire up Kinectron with p5.js, play/stop the sketch, and save output as a GIF (Kinect v2 or Azure Kinect DK).
+
+- HTML page: https://antoineboucher.info/CV/blog/posts/kinectron-p5-sketch-gif/
+- Language: en
+- Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/kinectron-p5-sketch-gif/index.md
+- Published: 2024-03-15
+- Updated: 2026-05-23
+- Tags: Kinect, Kinectron, P5.js, JavaScript, Creative Coding, Tutorial
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)For a creative-coding class I needed **Kinectron** skeleton data inside **p5.js**, with simple **play / stop** controls and a way to export a short **GIF** for demos. Notes below are the skeleton I used (Kinect v2 or Azure Kinect DK, Kinectron server running).
+
+### Prerequisites
+- Basic knowledge of JavaScript and p5.js.
+- Kinectron library installed.
+- p5.js library installed.
+- Have a Kinect v2 or Azure Kinect DK.
+- Have a Kinectron server running.
+- Have a local or online environment that supports JavaScript and p5.js.
+
+### Step 1: Set Up Your Environment
+Ensure you have the p5.js and Kinectron libraries included in your HTML file.
+
+```html
+<html>
+  <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      type="text/javascript"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+    <script
+      src="./client/dist/kinectron-client.js"
+      type="text/javascript"
+    ></script>
+    <script src="sketch.js" type="text/javascript"></script>
+  </head>
+  <body></body>
+</html>
+```
+
+### Step 2: Initialize Variables
+In your `sketch.js` file, start by defining the necessary variables.
+
+```javascript
+// Kinectron setup function
+function Kinectron() {
+  // Define Kinectron joint types
+}
+
+let kinectron = new Kinectron();
+
+const liveData = false;
+let stopButton, playButton, saveGifButton;
+let recorded_skeleton;
+
+function preload() {
+  // Load recorded data if liveData is false
+}
+```
+
+### Step 3: Setup the Canvas and Buttons
+Create the canvas and buttons for controlling the sketch.
+
+```javascript
+function setup() {
+  createCanvas(640, 480);
+  background(0);
+
+  if (liveData) {
+    // Initialize Kinectron for live data
+  } else {
+    // Setup for pre-recorded data and buttons
+  }
+}
+```
+
+### Step 4: Draw Function
+Implement the `draw` function to handle live and recorded data.
+
+```javascript
+function draw() {
+  // Handle live or recorded data
+}
+```
+
+### Step 5: Implement Gesture Checking
+Create functions to check for specific gestures in the Kinectron data.
+
+```javascript
+function checkForGestures(body) {
+  // Check and display each gesture
+}
+
+function isClapping(body) { /* ... */ }
+function isOKSign(body) { /* ... */ }
+// Implement other gesture functions
+```
+
+### Step 6: Create Button Functions
+Define functions for stop, play, and save GIF buttons.
+
+```javascript
+function stopSketch() {
+  noLoop();
+  console.log("Sketch stopped.");
+}
+
+function playSketch() {
+  loop();
+  console.log("Sketch playing.");
+}
+
+function startCreatingGif() {
+  saveGif('mySketch', 5);
+  // Additional code for downloading the GIF
+}
+```
+
+### Step 7: Run Your Sketch
+Run your sketch in a local or online environment that supports JavaScript and p5.js.
+
+## When to use Kinectron + p5
+
+| Use case | Fit |
+|----------|-----|
+| Class demo of skeleton data | Strong |
+| Production body tracking | Prefer vendor SDK + maintained stack |
+| Offline recorded performance | Set `liveData = false` |
+| Mobile browsers | Poor — desktop lab |
+
+## Pitfalls
+
+- **Duplicate p5 script tags** in HTML — load one p5 build only.
+- **Kinectron server not running** — client connects to nothing silently until you check the console.
+- **`saveGif` duration** — long captures freeze older laptops; keep clips under ~5 s for demos.
+
+## Related posts
+
+- [CodePen demos collection](https://antoineboucher.info/CV/blog/posts/codepen-demos-antoinebou13/) — same creative-coding era
+- [Snapchat Lens Creator](https://antoineboucher.info/CV/blog/posts/snapchat-lens-creator/) — another tracked-face pipeline
+
+From there you can swap in your own gesture checks or swap `liveData` for recorded clips — the buttons and `saveGif` hook are the parts I kept reusing across assignments.
