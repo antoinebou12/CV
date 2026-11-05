@@ -2,9 +2,9 @@
 post_kind: article
 title: "Similarité entre films et recherche vectorielle"
 date: 2026-04-13T12:00:00-04:00
-lastmod: 2026-10-20T10:00:00-04:00
+lastmod: 2026-11-05T12:00:00-05:00
 mermaid: true
-description: "Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens, puis RAG LangChain + Ollama."
+description: "Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens derrière une application FastAPI, puis RAG LangChain + Ollama sur le même catalogue."
 translationKey: vector-databases-similar-movies
 images:
   - images/featured.png
@@ -22,7 +22,7 @@ aliases:
   - /posts/rag-movies-pgvector-langchain-ollama/
 ---
 
-Fil conducteur « films similaires » : **embeddings dans PostgreSQL**, même idée dans **Qdrant** avec deux sens du vecteur, puis **récupération + LLM local** sur les mêmes lignes. Récit ici ; notebooks dans [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding).
+J’ai enseigné un fil « trouver des films comme celui-ci » qui n’a pas arrêté de grandir : des **embeddings dans PostgreSQL**, la même idée dans **Qdrant** avec deux sens différents du vecteur, puis **récupération + LLM local** ancrés sur les mêmes lignes. Cette page raconte le parcours ; les notebooks et les animations sont dans [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding) (voir aussi la [page du projet]({{< ref "/projects/notes/similityvectorembedding/index.fr.md" >}})). La partie 2 s’appuie aussi sur le projet FastAPI d’enseignement que j’ai construit pour servir les parcours Qdrant.
 
 <!--more-->
 
@@ -67,19 +67,23 @@ flowchart TD
 Ce schéma remplace une capture d’architecture par une source Mermaid modifiable. Il décrit le parcours dense commun aux notebooks, sans fusionner les espaces vectoriels de modèles différents.
 
 
-## Trois questions différentes
+## La question derrière les trois parties
 
-1. **Langage des synopsis** — « films dans cet esprit ».
-2. **Chevauchement de notes** — « utilisateurs au profil proche ».
-3. **Explication** — « pourquoi ces titres ? » à partir d’une question.
+Un système de recommandation cache souvent trois questions différentes :
 
-Les parties 1–3 y répondent. Mélanger sans nommer le type de vecteur = démos trompeuses.
+1. **Langage des synopsis** — « des films dans l’esprit de cette description ».
+2. **Chevauchement des goûts** — « des utilisateurs qui notent comme vous ».
+3. **Explication** — « pourquoi ces titres ? », à partir du texte que l’utilisateur a écrit.
 
-## Partie 1 — PostgreSQL et pgvector
+Les parties 1 à 3 répondent à ces questions. Les mélanger sans nommer le type de vecteur, c’est comme ça que les démos trompent.
 
-Catalogue depuis [`movies.json`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json) : concaténer champs texte, encoder (MiniLM, GTE…), colonnes `vector` à côté du relationnel.
+## Partie 1 — PostgreSQL, pgvector et SQL transparent
 
-Opérateurs `<=>` (cosinus), `<->` (L2) → kNN en `ORDER BY … LIMIT`.
+### Construire le catalogue
+
+On part d’un JSON de films structuré ([`movies.json`](https://github.com/AlgoETS/SimilityVectorEmbedding/blob/main/movies.json) dans le dépôt du cours). On concatène titre, année, genres, distribution et résumé ; on encode avec Sentence Transformers (MiniLM, GTE, etc.) ; on stocke des colonnes `vector` typées à côté des champs relationnels.
+
+Pourquoi **pgvector** ? Les vecteurs restent à côté d’un SQL qu’on connaît déjà. Les opérateurs de distance (`<=>` cosinus, `<->` L2) transforment le kNN en `ORDER BY … LIMIT`.
 
 ```sql
 SELECT title,
@@ -92,55 +96,123 @@ ORDER BY similarity DESC
 LIMIT 10;
 ```
 
-Plusieurs colonnes `embedding_*` pour comparer les encodeurs. Graphiques : [Medium partie 1](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d), notebooks `postgres/`.
+Changez le nom de colonne selon le modèle : le cours garde plusieurs colonnes `embedding_*` pour comparer les voisinages côte à côte.
 
-## Partie 2 — Qdrant et MovieLens
+### Ce que les étudiants apprennent ici
 
-| Collection | Type | Question |
-|------------|------|----------|
-| Films | Dense | « Comme cette formulation » |
-| Profils | Dense | Représentation utilisateur (pipeline seed) |
-| Notes | **Creux** id film → note | « Goûts qui se recoupent » |
+- Normaliser les embeddings pour le cosinus.
+- Comment le choix de l’encodeur déplace le sens de « similaire » (BART, MiniLM, e5-large).
+- Que la transparence du SQL vaut mieux qu’une API opaque quand on débogue de mauvais voisins.
 
-Dense : texte → MiniLM → recherche films. Creux : vecteur de notes → voisins → agrégation — filtrage collaboratif sans réseau de neurones dans le notebook.
+Graphiques et distributions complets : [Medium, partie 1](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d) et notebooks `postgres/` du dépôt.
 
-Projet FastAPI `movie_recommendation` dans le dépôt cours. Entrée : `qdrant/0.simple.ipynb`.
+## Partie 2 — Qdrant, MovieLens, dense et creux
 
-## Partie 3 — RAG LangChain + Ollama
+Même « similarité dans l’espace vectoriel », **sens** différent. On commence par le notebook `qdrant/0.simple.ipynb`, puis on passe au projet FastAPI d’enseignement, qui charge MovieLens 100K (1 682 films, 943 utilisateurs) et MovieLens 1M (3 883 films, 6 040 utilisateurs) dans Qdrant, avec trois collections par jeu de données :
+
+| Collection | Type de vecteur | Ce qui est encodé | Question |
+|------------|-----------------|-------------------|----------|
+| `<dataset>_movies` | Dense, 384 dimensions, cosinus | 1M : titre + genres. 100K : titre + date de sortie | « Des titres qui ressemblent à cette requête » |
+| `<dataset>_ratings` | **Creux**, nommé `ratings` : id film → note normalisée | Un point par utilisateur | « Des utilisateurs aux goûts qui se recoupent » |
+| `<dataset>_users` | Dense, 384 dimensions | Genre, âge et profession en texte. 1M garde quatre vecteurs nommés (un par attribut plus un combiné) | « Des utilisateurs au profil semblable » |
+
+Deux détails changent la lecture des résultats :
+
+- **Les vecteurs de films MovieLens ne contiennent pas de synopsis.** Ils encodent le titre et les genres (1M) ou le titre et la date de sortie (100K). La recherche dense est donc plus proche d’une correspondance titre et genre que du « langage des synopsis ». Seul le petit chargeur du `movies.json` français encode synopsis, distribution, réalisateur et scénaristes.
+- **Les notes sont centrées avant de devenir des valeurs creuses.** Le chargeur 1M les transforme en scores z (on soustrait la moyenne, on divise par l’écart type). Le chargeur 100K ramène l’échelle 1–5 entre −1 et 1. Un film détesté devient une valeur négative plutôt qu’une petite valeur positive.
+
+### Comment l’encodeur est branché
+
+Le projet charge `sentence-transformers/all-MiniLM-L6-v2` avec `transformers` de Hugging Face et fait la moyenne de la dernière couche cachée, ce qui donne 384 dimensions. Ce n’est pas la configuration MiniLM-L12 des notebooks PostgreSQL : les vecteurs des deux parties ne sont pas interchangeables. Avant l’encodage, le texte passe en minuscules, la ponctuation est retirée et les mots vides anglais de NLTK sont supprimés. Une requête doit suivre le même prétraitement, sinon son vecteur s’éloigne de ceux qui sont stockés.
+
+### Filtrage collaboratif avec une recherche creuse
+
+Le parcours par notes n’entraîne aucun modèle. Il transforme vos notes en requête creuse, demande à Qdrant les 20 utilisateurs les plus proches, puis additionne leurs notes pour les films que vous n’avez pas notés :
+
+```python
+query = rest.NamedSparseVector(name="ratings", vector=to_vector(user_ratings))
+results = client.search(collection_name=f"{dataset}_ratings",
+                        query_vector=query, with_vectors=True, limit=20)
+
+movie_scores = defaultdict(float)
+for user in results:
+    ratings = user.vector["ratings"]
+    for movie_id, rating in zip(ratings.indices, ratings.values):
+        if movie_id not in user_ratings:
+            movie_scores[movie_id] += rating
+
+top_5 = sorted(movie_scores.items(), key=lambda x: x[1], reverse=True)[:5]
+```
+
+Les cinq identifiants sont ensuite convertis en titres en parcourant la collection `_movies`. Comme les notes stockées sont centrées, un voisin qui a détesté un film fait baisser son score.
+
+### L’application web autour
+
+L’application FastAPI affiche une seule page Jinja2. On choisit un jeu de données (MovieLens 100K ou 1M) et un mode :
+
+- **By Ratings** : une autocomplétion (alimentée par un point d’accès `/movie_names` qui parcourt la collection de films) construit une liste de paires `titre:note`. Le serveur convertit les titres en identifiants et lance la recherche creuse ci-dessus.
+- **By Title/Genre** : le texte libre est prétraité, encodé avec MiniLM et envoyé à une recherche dense sur `<dataset>_movies`. Les cinq premiers résultats reviennent avec leurs genres et leurs scores.
+
+`/recommendations` exige une session. On se connecte avec un compte local ou par OAuth GitHub ou Google, et les choix sont enregistrés dans MongoDB. Docker Compose démarre l’application avec Qdrant, MongoDB et Redis. Le client Qdrant passe de préférence par gRPC.
+
+### Les pièges trouvés en relisant le code
+
+- **La requête et les notes stockées n’ont pas la même échelle.** Le formulaire envoie des notes brutes de 1 à 5, alors que les vecteurs stockés sont centrés. Une note d’une étoile reste positive dans la requête : elle attire vers les utilisateurs qui ont *aimé* ce film. La correction : appliquer à la requête la même normalisation que le chargeur.
+- **La table titre → identifiant vient d’un seul parcours de 10 000 points**, refait à chaque requête. Ça couvre les deux catalogues MovieLens, mais un catalogue plus gros serait tronqué sans avertissement.
+- **Certaines pièces sont de l’échafaudage, pas encore des fonctionnalités.** Le client Redis est créé, mais rien n’est mis en cache. Les jeux de données IMDb peuvent être chargés dans MongoDB, mais aucune route n’appelle la fonction d’enrichissement. Les recommandations par profil démographique (les vecteurs nommés de `_users`) n’existent que dans la démo du chargeur 1M, pas dans l’API. Les tests importent encore une fonction qui n’existe plus.
+
+Rien de tout ça ne casse la leçon : les parcours dense et creux répondent à des questions différentes, et le code rend la différence visible.
+
+## Partie 3 — RAG avec LangChain + Ollama
+
+On réutilise les lignes pgvector comme **preuves** :
 
 ```mermaid
 flowchart LR
-  Q[Question] --> E[Embedding]
-  E --> SQL[kNN SQL]
-  SQL --> Rows[Films]
-  Rows --> LLM[Ollama]
+  Q[Question] --> E[Embedding de la question]
+  E --> SQL[kNN en SQL]
+  SQL --> Rows[Meilleurs films]
+  Rows --> LLM[Ollama via LangChain]
   LLM --> A[Réponse ancrée]
 ```
 
-Notebook `postgres/3.LLMS.ipynb` — échecs utiles : type `vector` inconnu pour LangChain, SQL invalide généré, timeouts Ollama.
+Chaîne : `HuggingFaceEmbeddings` → tri SQL par `<=>` sur `embedding_MiniLM` → prompt qui contient le schéma et les lignes récupérées → `Ollama(model="llama2:13b-chat")`.
+
+La sortie enregistrée du notebook est instructive parce qu’elle échoue poliment :
+
+- LangChain avertit sur le type de colonne `vector` qu’il ne connaît pas.
+- Le LLM génère parfois du SQL qui n’est pas du pgvector valide.
+- Les gros modèles tombent en **timeout** sous la charge.
+
+Le RAG, ce n’est pas « encoder et oublier » : il faut de la validation, des modèles plus petits ou une récupération hybride.
+
+Notebook : `postgres/3.LLMS.ipynb`.
 
 ## Quand éviter cette pile
 
-| Cas | Mieux |
-|-----|--------|
-| Utilisateur sans notes | Métadonnées denses seulement |
-| CF à très grande échelle | Stack CF dédiée |
-| Latence ms stricte | Vector DB managée + tuning |
+| Situation | Meilleure voie |
+|-----------|----------------|
+| Utilisateur sans aucune note | Métadonnées denses seulement |
+| Filtrage collaboratif creux à l’échelle du milliard | Pile de filtrage collaboratif dédiée, pas un Qdrant de démo |
+| Recommandations à partir des synopsis sur MovieLens | Ajouter d’abord le texte des synopsis : ici, les vecteurs MovieLens n’encodent que titres et genres ou dates |
+| Latence sous 10 ms à très fort débit | Base vectorielle gérée + réglages |
+| Besoin légal de citations exactes | RAG + vérification des citations, pas un LLM brut |
 
 ## Bilan
 
-**Embed → stocker → voisins** trois fois, trois sens. Partie 3 = humilité sur la génération SQL.
+**Encoder → stocker → plus proches voisins**, trois fois, avec trois sens de « voisin ». La partie 3 apprend l’humilité : un générateur s’éloigne du SQL exécutable si on ne le contraint pas.
 
 ## Articles liés
 
-- [Snowflake Data-for-Breakfast]({{< ref "/posts/snowflake-data-for-breakfast/index.fr.md" >}})
-- [Expérimentation indicateurs]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}})
+- [Snowflake Data-for-Breakfast]({{< ref "/posts/snowflake-data-for-breakfast/index.fr.md" >}}) — raconter un entrepôt de données
+- [Expérimentation avec des indicateurs techniques]({{< ref "/posts/experimentation-indicateurs-backtesting/index.fr.md" >}}) — un autre fil AlgoETS
 
 ## Références
 
 - [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding)
-- [pgvector](https://github.com/pgvector/pgvector) · [Qdrant](https://qdrant.tech/documentation/)
+- [Medium — partie 1](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d)
+- [pgvector](https://github.com/pgvector/pgvector) · [Documentation Qdrant](https://qdrant.tech/documentation/)
 
 ---
 
-*Publié d’abord sur [Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d) ; page fusionnée parties 1–3.*
+*Publié d’abord sur [Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d) ; cette page fusionne les parties 1 à 3.*
