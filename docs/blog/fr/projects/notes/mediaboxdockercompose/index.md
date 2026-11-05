@@ -21,6 +21,25 @@ MediaBoxDockerCompose rassemble des services homelab avec Docker Compose. Les d�
 
 **Cas d’usage:** Serveur multimédia privé conteneurisé avec accès distant chiffré et routage sécurisé.
 
+## Cas d’utilisation
+
+Pile Docker Compose pour un serveur multimédia maison : téléchargements automatisés, Plex/Jellyfin, outils d’admin et proxy Caddy.
+
+- **Démarrer la pile multimédia** (Admin du homelab, Hôte Docker): docker-compose.yml définit une vingtaine de conteneurs qui lisent PUID, PGID, TZ et ROOT dans .env ; docker-compose up -d les lance tous.
+- **Automatiser le téléchargement** (Admin du homelab, Hôte Docker): Sonarr, Radarr, Lidarr et Bazarr gèrent séries, films, musique et sous-titres, alimentés par Jackett, Prowlarr ou NZBHydra2 et confiés à Deluge ou NZBGet, le tout sous ${ROOT}.
+- **Regarder ou demander un titre** (Spectateur, Hôte Docker): Plex (port 32400) et Jellyfin (port 8096) diffusent la bibliothèque ; Ombi et Jellyseerr reçoivent les demandes et Tautulli suit l’activité de Plex.
+- **Surveiller et parcourir l’hôte** (Admin du homelab, Hôte Docker): Netdata (port 19999) affiche les métriques, FileBrowser donne accès aux fichiers et Dashmachine (port 5000) sert de page d’accueil configurée par dashmachine/config.ini.
+- **Publier via Caddy** (Admin du homelab): caddy/Caddyfile relie des sous-domaines comme sonarr.{$DOMAIN} aux ports locaux, avec journaux, limite de débit, liste d’IP permises et authentification de base tirée de caddy/.env.
+- **Ajouter des services en option** (Admin du homelab, Hôte Docker): Des fichiers compose distincts sous extra/ ajoutent un partage Samba, un serveur d’accès WireGuard et Portainer ; whisper/docker-compose.yml lance un service Whisper ASR sur le port 9000.
+
+### Scénario : Monter un serveur séries et films sur une machine
+
+1. Installer Docker et Docker Compose, puis cloner le dépôt.
+2. Modifier .env : régler TZ, PUID, PGID, ROOT (par exemple /media/MediaBox) et PLEX_CLAIM.
+3. Lancer docker-compose up -d à la racine du dépôt.
+4. Ouvrir Prowlarr sur le port 9696 et Sonarr sur le port 8989 pour relier indexeurs et client de téléchargement.
+5. Pointer Plex (port 32400) ou Jellyfin (port 8096) vers les dossiers terminés sous ROOT, puis regarder.
+
 ## Technologies vérifiées
 
 - Docker Compose — docker-compose.yml multi-service stack

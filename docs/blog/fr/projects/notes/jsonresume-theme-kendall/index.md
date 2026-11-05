@@ -21,6 +21,24 @@ Ce fork du thème Kendall JSON Resume transforme un CV structuré en HTML. Le mo
 
 **Cas d’usage:** Génération automatique de CV à partir de fichiers JSON structurés.
 
+## Cas d’utilisation
+
+Un thème JSON Resume qui transforme resume.json en page HTML Bootstrap avec Mustache et des icônes FontAwesome.
+
+- **Rendre resume.json en HTML** (Auteur du CV, resume-cli): index.js exporte render(), qui prépare l’objet CV puis remplit resume.template avec Mustache, en intégrant style.css et print.css.
+- **Prévisualiser en local** (Auteur du CV, resume-cli): Le README lance resume serve --theme . depuis le dossier du thème et ouvre l’aperçu sur http://localhost:4000.
+- **Afficher photo ou Gravatar** (Auteur du CV, Gravatar): Si basics.image est absent, render() construit une URL Gravatar à partir de basics.email avec le paquet gravatar.
+- **Associer profils et icônes** (Auteur du CV): Chaque réseau de basics.profiles reçoit une classe FontAwesome, avec des cas particuliers comme stackoverflow, gitlab et keybase.
+- **Imprimer une copie propre** (Auteur du CV): print.css est injecté comme style media="print" ; il masque la photo et retire les URL affichées après les liens.
+
+### Scénario : Prévisualiser un CV avec le thème Kendall
+
+1. Installer l’outil avec npm install -g resume-cli.
+2. Créer et remplir resume.json avec resume init.
+3. Lancer npm install dans le dossier du thème pour obtenir mustache, lodash et gravatar.
+4. Lancer resume serve --theme . et ouvrir http://localhost:4000.
+5. Vérifier que seules les sections remplies (work, education, skills…) apparaissent, puis imprimer depuis le navigateur.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

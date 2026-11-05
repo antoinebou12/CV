@@ -21,6 +21,24 @@ DasherControl réunit des liens et des applications intégrées dans des espaces
 
 **Cas d’usage:** Tableau de bord centralisé pour services conteneurisés en homelab, signets et gestion d'espaces de travail.
 
+## Cas d’utilisation
+
+Tableau de bord Rust (Rocket) et Vue pour homelab : espaces de travail en grille d’applets et contrôle Docker de base.
+
+- **Se connecter au tableau** (Admin du homelab, PostgreSQL): cargo run --bin create_admin crée le premier compte ; POST /tenants/api/login vérifie le hachage bcrypt et renvoie un JWT utilisé par les routes protégées.
+- **Disposer des applets en grille** (Admin du homelab): GridLayoutMain.vue place des applets comme IFrame, Shortcut, Editor, Canvas, Terminal et DockerManager sur une grille redimensionnable.
+- **Changer d’espace de travail** (Admin du homelab, PostgreSQL): Les routes /workspaces/api créent, mettent à jour, listent et suppriment les espaces de travail et leurs applets, stockés dans PostgreSQL via Diesel.
+- **Piloter les conteneurs Docker** (Admin du homelab, Moteur Docker): /containers/api/docker_list liste les conteneurs via shiplift, et /containers/api/stop/<id> et restart/<id> agissent sur un conteneur si un jeton valide est fourni.
+- **Ouvrir un terminal SSH web** (Admin du homelab): src/bin/start_websocket.rs relie un WebSocket à une session ssh2 pour l’applet Terminal ; le README indique que le terminal web est en cours.
+
+### Scénario : Installer le tableau de bord sur un serveur Ubuntu
+
+1. Construire l’interface avec cd frontend && npm install && npm run build.
+2. Définir DATABASE_URL dans Rocket.toml et .env, puis lancer diesel migration run.
+3. Lancer cargo run --bin create_admin, puis cargo run pour démarrer le serveur Rocket.
+4. Se connecter, ajouter des applets IFrame pour des services comme Sonarr ou Jellyfin et enregistrer l’espace.
+5. Ouvrir l’applet DockerManager pour lister les conteneurs et en redémarrer un.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

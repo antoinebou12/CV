@@ -20,6 +20,25 @@ nxsand is a falling-sand simulation for Switch with a desktop development target
 
 **Best fit:** Interactive physics simulations on handheld console touchscreens.
 
+## Use cases
+
+Falling-sand sandbox for Nintendo Switch homebrew, simulated on the GPU with OpenGL ES 3.0, with desktop builds.
+
+- **Paint materials on the grid** (Player, GPU (OpenGL ES 3.0)): Touch, Joy-Con or mouse input becomes brush strokes (source/sim/brush_stroke.cpp) written into the grid by shaders/paint.frag; the X button opens the material ring (source/ui/material_wheel.cpp).
+- **Watch materials react** (Player, GPU (OpenGL ES 3.0)): A Margolus cellular automaton runs on ping-pong GL_R8UI textures in shaders/sim.frag or sim.comp, with reactions such as lava plus water giving stone in shaders/sim_common.glsl and the sim_rules_body.glsl it includes.
+- **Save and load worlds** (Player): source/save/save.cpp stores up to three slots as JSON with base64 grids in sdmc:/switch/nxsand/ (./nxsand_save/ on desktop); Y or F5 quick-saves.
+- **Tune performance settings** (Player, GPU (OpenGL ES 3.0)): settings.json and the Engine menu set sim resolution, substeps, active tiles, fragment or compute backend and the Battery Saver, Balanced or Quality presets.
+- **Import a Powder Toy stamp** (Homebrew developer): nx::importTptStampJson in source/save/tpt_stamp_import.cpp maps The Powder Toy element IDs to NXSand materials and scales the stamp into the grid.
+- **Build and test the NRO** (Homebrew developer): make builds build/NXSand.nro with devkitPro; make desktop and make test build the SDL2 desktop version and the CPU reference tests in tests/; CI does the same in .github/workflows/native-nro.yml.
+
+### Scenario: Build NXSand and play a first world
+
+1. Install devkitPro, then run dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz.
+2. Run make at the repository root to get build/NXSand.nro.
+3. Copy it to sdmc:/switch/NXSand.nro and launch it from the Homebrew Menu.
+4. Press X to pick Lava, paint with A, then switch to Water and pour it on the lava to see stone and smoke form.
+5. Press Y to quick-save the world into sdmc:/switch/nxsand/.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

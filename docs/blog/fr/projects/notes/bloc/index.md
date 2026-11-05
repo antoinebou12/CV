@@ -21,6 +21,24 @@ Mon fork bloc propose un parcours Blender autour du stockage S3 et MinIO. Il con
 
 **Cas d’usage:** Synchronisation cloud d'assets 3D, sauvegardes et flux de rendu distribués.
 
+## Cas d’utilisation
+
+Extension Blender qui liste, envoie, télécharge et importe des fichiers de compartiments MinIO ou AWS S3 dans un panneau latéral.
+
+- **Ajouter une connexion** (Utilisateur Blender): Dans les préférences de l’extension, chaque CloudConnection contient le type (MinIO ou AWS S3), le point d’accès ou la région, les clés et le nom du compartiment ; plusieurs connexions peuvent être listées.
+- **Parcourir et chercher** (Utilisateur Blender, Compartiment MinIO/S3): Refresh File List appelle list_objects (MinIO) ou list_objects_v2 (boto3) et dessine une arborescence dans l’onglet Cloud de la vue 3D ; le champ Search filtre les noms par sous-chaîne.
+- **Envoyer le .blend courant** (Utilisateur Blender, Compartiment MinIO/S3): Upload Current File envoie le .blend enregistré sous son nom de fichier. Le README parle d’envoyer aussi textures et dépendances, mais addon.py n’envoie que le .blend.
+- **Importer un maillage** (Utilisateur Blender, Compartiment MinIO/S3): Download enregistre un objet dans le dossier temporaire du système ; Load to Scene le télécharge puis appelle l’importateur STL, OBJ, USD ou PLY de Blender.
+- **Supprimer un fichier distant** (Utilisateur Blender, Compartiment MinIO/S3): Delete appelle remove_object (MinIO) ou delete_object (S3) puis rafraîchit la liste.
+
+### Scénario : Importer un scan d’un compartiment MinIO dans Blender
+
+1. Installer l’extension dans Edit > Preferences > Add-ons ; au premier chargement, elle installe boto3, minio et rapidfuzz avec pip.
+2. Dans les préférences, ajouter une connexion MinIO avec URL, clés et nom du compartiment.
+3. Ouvrir l’onglet Cloud dans la barre latérale de la vue 3D et cliquer sur Refresh File List.
+4. Taper une partie du nom dans Search pour filtrer la liste.
+5. Cliquer sur Load to Scene sur un fichier .obj ou .stl pour l’importer.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

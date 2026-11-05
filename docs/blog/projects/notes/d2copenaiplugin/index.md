@@ -21,6 +21,24 @@ D2COpenAIPlugin is a FastAPI diagram service with a plugin manifest and an OpenA
 
 **Best fit:** ChatGPT Plus GPT Store integration for software architects.
 
+## Use cases
+
+FastAPI ChatGPT-plugin backend that turns PlantUML, Mermaid, D2 or Kroki source into diagram links.
+
+- **Get a PlantUML image link** (ChatGPT plugin client, Diagram renderers): POST /generate_diagram with lang plantuml encodes the code for the public PlantUML server (theme blueprint by default) and returns url, content and playground.
+- **Open Mermaid in Live Editor** (ChatGPT plugin client, Diagram renderers): For lang mermaid, mermaid/mermaid.py builds an encoded editor state (theme dark by default) and returns Mermaid Live Editor links.
+- **Render D2 or Kroki types** (ChatGPT plugin client, Diagram renderers): D2 aliases and every language in KROKI_LANGUAGE_SUPPORT go through generate_kroki_diagram in kroki/kroki.py and return an SVG link.
+- **Serve the plugin manifest** (ChatGPT plugin client): app.py serves /.well-known/ai-plugin.json, /openapi.yaml, /openapi.json, /logo.png and /.well-known/privacy.txt so a ChatGPT client can load the plugin.
+- **Run and test locally** (Developer): uvicorn app:app serves the API on port 5003 with docs at /; test_app.py covers the endpoints in CI, and vercel.json routes every path to app.py.
+
+### Scenario: Connect the plugin to ChatGPT on localhost
+
+1. Create a virtualenv, run pip install -r requirements-dev.txt and python -m pytest.
+2. Start the API with uvicorn app:app --host 127.0.0.1 --port 5003.
+3. In ChatGPT, choose Develop your own plugin and enter localhost:5003 to load /.well-known/ai-plugin.json.
+4. Ask for a sequence diagram; ChatGPT calls POST /generate_diagram with lang plantuml.
+5. The API returns the image URL and a playground link that ChatGPT shows to the user.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

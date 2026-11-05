@@ -1,0 +1,492 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>MarkokChainMonteCarlo: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation."><meta name=author content="Antoine Boucher"><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/fraunces-latin.woff2><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/open-sans-latin.woff2><link rel=preload as=style href=/CV/blog/main-notes-bundle.min.b048df44e6ae28213b09f1bda47d1e7e67752b14a7b04a414b10fea1b6422177.css integrity="sha256-sEjfROauKCE7CfG9pH0efmd1KxSnsEpBSxD+obZCIXc="><link rel=stylesheet href=/CV/blog/main-notes-bundle.min.b048df44e6ae28213b09f1bda47d1e7e67752b14a7b04a414b10fea1b6422177.css integrity="sha256-sEjfROauKCE7CfG9pH0efmd1KxSnsEpBSxD+obZCIXc="><link rel=stylesheet href=/CV/blog/projects-directory.min.6deafb0f1522cf374a9678f520f04d18e1baecc86835457bd85ac2be80ea4c5c.css integrity="sha256-ber7DxUizzdKlnj1IPBNGOG67MhoNUV72FrCvoDqTFw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7e71060df86436aa01bd86e4ba6ba767365b0d14c1dab261219efdd2fa5a23e0.css integrity="sha256-fnEGDfhkNqoBvYbkumunZzZbDRTB2rJhIZ790vpaI+A="><link rel=stylesheet href=/CV/blog/projects-editorial.min.61c7a3d4ca0ade75a1676a09a0207f045bc359947e3746abe90c1e7d0dd94cbc.css><link rel=stylesheet href=/CV/blog/desktop-layout.min.5b480add88292f1bc462411a5b8e2d4ae109d6a09dd2f2025f8df3b9d6c145ab.css><script defer src=/CV/blog/vendor/particles.min.faee7815a5fd27e938d1e01c8392b66332024908eb118048f608eee671371df6.js></script><script defer src=/CV/blog/background-motion.min.0fbdc9113d9f68bf7fc13ad53c612ccd01aeef50b32a257ba22d6243d197961d.js></script><script>document.documentElement.classList.add("js")</script><script defer src=/CV/blog/motion.min.42bfadd556223443557e203cec063a8b27923398b0d348219234a928d4b8bf05.js integrity="sha256-Qr+t1VYiNENVfiA87AY6iyeSM5iw00ghkjSpKNS4vwU="></script><link rel=stylesheet href=/CV/blog/reader-tools.min.321f1207657dab09af203d8ac61b96573fb5d834eef8fcf618662fa6d1b38c30.css><script defer src=/CV/blog/reader-tools.min.907705eb89277f9c514dc7088551ad6d91248b59ae6ca66a89bc0c4b02994059.js></script><link rel=stylesheet href=/CV/blog/dynamic-tables.min.2cdf474f5ccfec841329707d6f25ac70f13e8ab592d2d95c3241382fb33ed74e.css><script defer src=/CV/blog/dynamic-tables.min.f1f265f7d3f3d511b699be49de7bdf2cdfdc433118894a60d05b1602fb1a8e56.js integrity="sha256-8fJl99Pz1RG2mb5J3nvfLN/cQzEYiUpg0FsWAvsajlY="></script><script defer src=/CV/blog/site-webmcp.min.028878ee259bc889c7e272c6e4ebfca1bf1e62746fcefc932d571b3cb5e9f0c7.js integrity="sha256-Aoh47iWbyInH4nLG5Ov8ob8eYnRvzvyTLVcbPLXp8Mc="></script><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov"><meta itemprop=description content="Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation."><meta itemprop=datePublished content="2026-11-05T12:00:00-05:00"><meta itemprop=dateModified content="2026-11-05T12:00:00-05:00"><meta itemprop=wordCount content="651"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/","name":"Antoine Boucher","position":1},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/projects/","name":"Projets ouverts","position":2},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/","name":"MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov","position":3}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@id":"https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/#article","@type":"TechArticle","about":{"@type":"SoftwareSourceCode","author":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"codeRepository":"https://github.com/AlgoETS/MarkokChainMonteCarlo","name":"MarkokChainMonteCarlo","url":"https://github.com/AlgoETS/MarkokChainMonteCarlo"},"author":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"dateModified":"2026-11-05T12:00:00-05:00","datePublished":"2026-11-05T12:00:00-05:00","description":"Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation.","headline":"MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov","image":["https://antoineboucher.info/CV/blog/images/post-kind-article.png"],"inLanguage":"fr","isAccessibleForFree":true,"mainEntityOfPage":{"@id":"https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/","@type":"WebPage"},"publisher":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"url":"https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/","wordCount":651,"workTranslation":[{"@id":"https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/#article","@type":"TechArticle","inLanguage":"en","url":"https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/"}]}</script><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov"><meta property="og:description" content="Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation."><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-11-05T12:00:00-05:00"><meta property="article:modified_time" content="2026-11-05T12:00:00-05:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov"><meta name=twitter:description content="Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation."><link rel=alternate type=text/markdown href=https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/index.md title="Antoine Boucher"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/><link rel=alternate hreflang=en href=https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/><link rel=alternate hreflang=fr href=https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/><link rel=alternate hreflang=x-default href=https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><div id=project-particles aria-hidden=true></div><a class=site-skip-link href=#main-content>Aller au contenu</a><header class=site-header data-site-header><a class=site-brand href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a><div class=site-header-tools><button type=button class="site-pill site-options-toggle" popovertarget=site-settings aria-label=Options aria-haspopup=dialog aria-expanded=false>
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg>
+<span>Options</span>
+</button>
+<button type=button class="btn-menu site-pill" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu">
+<span class=site-menu-bars aria-hidden=true><i></i><i></i><i></i></span></button></div><div id=site-nav-panel class=nav-wrapper><div class=nav-drawer><nav class="site-nav-main site-nav-group" aria-label="Sections du site"><a class=site-pill href=/CV/blog/fr/posts/>Articles</a><a class=site-pill href=/CV/blog/fr/projects/ aria-current=page>Projets</a><a class=site-pill href=/CV/blog/fr/tags/conference/>Conférences</a><a class=site-pill href=/CV/blog/fr/recipes/>Recettes</a><a class=site-pill href=/CV/blog/fr/search/>Recherche</a></nav><nav class="site-cv-link site-nav-group" aria-label=CV><a class="site-pill site-pill-cv" href=https://antoineboucher.info/CV/index-fr.html>CV</a></nav><nav class="site-lang-switch site-nav-group" aria-label=Langue><a class=site-pill href=https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/ lang=en hreflang=en>EN</a><span class="site-pill is-current" aria-current=true lang=fr>FR</span></nav></div></div><div id=site-settings popover=auto class=site-settings aria-label=Options><p class=site-settings-label>Options</p><button type=button class="btn-dark site-opt" aria-pressed=false data-label-dark="Thème sombre" data-label-light="Thème clair">
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+<span data-theme-label>Thème sombre</span>
+</button>
+<button id=background-motion type=button class=site-opt hidden data-pause="Suspendre le fond animé" data-resume="Animer le fond" aria-pressed=false></button><hr><p class=site-settings-label>Profils</p><nav class=site-profiles aria-label="Liens sociaux"><a class=site-opt href=https://github.com/antoinebou12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./github.svg) aria-hidden=true></span>
+<span>GitHub</span>
+</a><a class=site-opt href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./linkedin.svg) aria-hidden=true></span>
+<span>LinkedIn</span>
+</a><a class=site-opt href=https://antoineboucher.info/CV/blog/index.xml rel=alternate><span class=site-social-icon style=--url:url(./rss.svg) aria-hidden=true></span>
+<span>RSS</span></a></nav></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const optionsToggle=document.querySelector(".site-options-toggle"),settings=document.getElementById("site-settings");if(optionsToggle&&settings){const e="popover"in HTMLElement.prototype;e?settings.addEventListener("toggle",e=>{optionsToggle.setAttribute("aria-expanded",String(e.newState==="open"))}):(settings.hidden=!0,optionsToggle.removeAttribute("popovertarget"),optionsToggle.addEventListener("click",()=>{settings.hidden=!settings.hidden,optionsToggle.setAttribute("aria-expanded",String(!settings.hidden))}),document.addEventListener("click",e=>{!settings.hidden&&!settings.contains(e.target)&&!optionsToggle.contains(e.target)&&(settings.hidden=!0,optionsToggle.setAttribute("aria-expanded","false"))}))}const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=()=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),themeLabel=btnDark?.querySelector("[data-theme-label]"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&(btnDark.setAttribute("aria-pressed",e?"true":"false"),themeLabel&&(themeLabel.textContent=e?btnDark.dataset.labelLight:btnDark.dataset.labelDark))},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label="Fil d’Ariane"><a class="article-back repo-doc-back" href=/CV/blog/fr/projects/><span aria-hidden=true>←</span> Projets</a><span aria-hidden=true>/</span><span aria-current=page>MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class="repo-note repo-note--prose" data-repo-shell><div class=repo-shell-layout><details class=repo-sidenav-disclosure open><summary>Table des matières</summary><nav class=repo-sidenav aria-label="Table des matières"><p class=repo-sidenav-label>Table des matières</p><ol role=list><li><a href=#overview><span class=project-toc-number>1.</span> <span>Aperçu</span></a></li><li><a href=#project-section-2><span class=project-toc-number>2.</span> <span>Cas d’utilisation</span></a></li><li><a href=#installation><span class=project-toc-number>3.</span> <span>Démarrage</span></a></li><li><a href=#reader-guide><span class=project-toc-number>4.</span> <span>Guide du dépôt</span></a></li><li><a href=#features><span class=project-toc-number>5.</span> <span>Fonctionnalités</span></a></li><li><a href=#limits><span class=project-toc-number>6.</span> <span>Limites</span></a></li><li><a href=#sources><span class=project-toc-number>7.</span> <span>Sources</span></a></li><li><a href=#glossary-heading><span class=project-toc-number>8.</span> <span>Glossaire</span></a></li><li><a href=#project-bibliography-heading><span class=project-toc-number>9.</span> <span>Références</span></a></li></ol></nav></details><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><h1 id=single-post-title class=repo-doc-title>MarkokChainMonteCarlo</h1><p class=repo-hero-lede>MarkokChainMonteCarlo est un dépôt de recherche d’AlgoÉTS qui backteste des stratégies d’investissement à l’aide de simulations stochastiques de prix. Ses carnets estiment des trajectoires du cours d’Apple (AAPL) avec un modèle Monte Carlo et une chaîne de Markov sur des tranches de prix, puis utilisent ces simulations dans une stratégie backtesting.py comparée à l’achat-conservation. La partie Monte Carlo est expliquée pas à pas dans <a href=https://antoineboucher.info/CV/blog/fr/posts/predicting-stock-prices-monte-carlo/>Prévoir des cours boursiers avec des simulations Monte Carlo</a>.</p><div class=repo-status-row><span class="repo-badge kind">Carnets</span><span class="repo-badge algorithm">Monte Carlo</span></div><div class=repo-tech-badges><span class="tag tool">Python</span><span class="tag tool">Jupyter</span><span class="tag tool">backtesting.py</span><span class="tag tool">pandas</span><span class="tag tool">NumPy</span><span class="tag tool">SciPy</span><span class="tag tool">httpx</span><span class="tag tool">scikit-learn</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg><span>Mis à jour <time datetime=2026-11-05>2026-11-05</time></span></li></ul><div class=repo-actions><a class="btn primary" href=https://github.com/AlgoETS/MarkokChainMonteCarlo><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>Code source</a><a class="btn ghost" href=https://github.com/AlgoETS/MarkokChainMonteCarlo#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>README</a><a class="btn ghost" href=https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/index.md type=text/markdown title="Fiche Markdown de ce projet (contexte pour agents)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2 3.5A1.5 1.5.0 013.5 2h9A1.5 1.5.0 0114 3.5v9A1.5 1.5.0 0112.5 14h-9A1.5 1.5.0 012 12.5v-9zM4 5v6h1.5V8L7 10l1.5-2v3H10V5H8.5L7 7 5.5 5H4zm7 0v3.5H9.5l2 2.5 2-2.5H12V5h-1z"/></svg>Markdown</a></div></div></header><div class=repo-prose-body><h2 id=overview><span class=project-section-number>1.</span> Aperçu</h2><p><code>mcmc.ipynb</code> et <code>backtest.ipynb</code> commencent de la même façon : une fonction httpx télécharge l’historique quotidien complet d’AAPL chez Financial Modeling Prep, puis les données sont coupées au 2023-01-01 en une partie d’entraînement et une partie de validation. <code>monte_carlo_simulation</code> estime la dérive et la volatilité à partir des rendements logarithmiques et fait évoluer le prix avec des chocs aléatoires ; <code>mcmc.ipynb</code> ajoute des variantes à volatilité glissante, à chocs extrêmes occasionnels et à dérive stochastique facultative, et trace des projections sur 364 jours avec 1 000 ou 10 000 trajectoires. La chaîne de Markov découpe les clôtures d’entraînement en tranches de 10 $ entre 0 et 200, compte les passages d’une tranche à l’autre avec <code>pandas.crosstab</code> et tire une suite d’états avec <code>markov_chain_simulation</code>. Le carnet se termine par une régression linéaire sur l’indice des jours.</p><p><code>backtest.ipynb</code> définit <code>MCMCStrategy</code> : la stratégie simule trajectoires et états de Markov au début du backtest, achète quand le dernier état simulé vaut 0 et sort sur un stop de 5 % ou quand la clôture atteint un prix cible tiré d’une trajectoire simulée. <code>BuyAndHoldStrategy</code> sert de référence. Les deux tournent avec 10 000 en encaisse, une commission de 0,2 % et des ordres exclusifs, sur les deux périodes. <code>proto.ipynb</code> est le premier prototype sur des prix générés aléatoirement, et <code>output/MCMCStrategy.html</code> est un graphique backtesting.py enregistré.</p><section class="doc repo-use-cases" id=use-cases><h2 id=project-section-2><span class=project-section-number>2.</span> Cas d’utilisation</h2><p class=repo-lede-sm>Carnets qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert.</p><figure class=repo-usecase-figure><svg class="repo-usecase-svg" viewBox="0 0 720 386" role="img" aria-labelledby="use-case-title-markokchainmontecarlo"><title id="use-case-title-markokchainmontecarlo">Diagramme de cas d’utilisation de MarkokChainMonteCarlo : Séparer les prix en 2023; Simuler des trajectoires; Simuler une chaîne de Markov; Backtester MCMCStrategy; Ajuster une tendance linéaire</title><rect class="uc-boundary" x="160" y="12" width="400" height="362" rx="12"/><text class="uc-system" x="360" y="38" text-anchor="middle">MarkokChainMonteCarlo</text><line class="uc-link" x1="100" y1="181" x2="210" y2="84"/><line class="uc-link" x1="592" y1="193" x2="510" y2="84"/><ellipse class="uc-case" cx="360" cy="84" rx="150" ry="22"/><text class="uc-case-label" x="360" y="88.5" text-anchor="middle">Séparer les prix en 2023</text><line class="uc-link" x1="100" y1="181" x2="210" y2="146"/><ellipse class="uc-case" cx="360" cy="146" rx="150" ry="22"/><text class="uc-case-label" x="360" y="150.5" text-anchor="middle">Simuler des trajectoires</text><line class="uc-link" x1="100" y1="181" x2="210" y2="208"/><ellipse class="uc-case" cx="360" cy="208" rx="150" ry="22"/><text class="uc-case-label" x="360" y="212.5" text-anchor="middle">Simuler une chaîne de Markov</text><line class="uc-link" x1="100" y1="181" x2="210" y2="270"/><ellipse class="uc-case" cx="360" cy="270" rx="150" ry="22"/><text class="uc-case-label" x="360" y="274.5" text-anchor="middle">Backtester MCMCStrategy</text><line class="uc-link" x1="100" y1="181" x2="210" y2="332"/><ellipse class="uc-case" cx="360" cy="332" rx="150" ry="22"/><text class="uc-case-label" x="360" y="336.5" text-anchor="middle">Ajuster une tendance linéaire</text><g class="uc-person"><circle cx="82" cy="159" r="9"/><path d="M82 168v27M67 178H97M82 195 70 213m12-18 12 18"/></g><text class="uc-actor-label" x="82" y="231" text-anchor="middle">Chercheur quantitatif</text><rect class="uc-system-actor" x="592" y="173" width="92" height="40" rx="6"/><text class="uc-stereotype" x="638" y="197" text-anchor="middle">«système»</text><text class="uc-actor-label" x="638" y="231" text-anchor="middle">API de marché FMP</text></svg><figcaption>Acteurs à gauche (personnes) et à droite (systèmes externes) ; chaque ovale est un cas d’utilisation appuyé par les fichiers cités ci-dessous.</figcaption></figure><dl class=repo-usecase-list><div><dt>Séparer les prix en 2023</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Chercheur quantitatif</span><span class="repo-usecase-actor repo-usecase-actor--system">API de marché FMP</span></span><p>mcmc.ipynb et backtest.ipynb téléchargent l’historique complet d’AAPL avec get_historical_price_full_stock et le coupent au 2023-01-01 en prices_before_january_2023 et prices_after_january_2023.</p></dd></div><div><dt>Simuler des trajectoires</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Chercheur quantitatif</span></span><p>monte_carlo_simulation tire des chocs quotidiens à partir de la dérive et de la volatilité des rendements logarithmiques ; mcmc.ipynb ajoute des variantes à volatilité glissante et à chocs extrêmes, sur 364 jours et 1 000 ou 10 000 trajectoires.</p></dd></div><div><dt>Simuler une chaîne de Markov</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Chercheur quantitatif</span></span><p>Les clôtures d’entraînement sont réparties en tranches de 10 $ de 0 à 200 ; pandas.crosstab construit la matrice de transition normalisée et markov_chain_simulation tire une suite de tranches.</p></dd></div><div><dt>Backtester MCMCStrategy</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Chercheur quantitatif</span></span><p>backtest.ipynb exécute MCMCStrategy (stop de 5 %, prise de profit tirée d’une trajectoire simulée) et BuyAndHoldStrategy avec backtesting.py : 10 000 en encaisse, commission de 0,2 %, ordres exclusifs, sur les deux périodes.</p></dd></div><div><dt>Ajuster une tendance linéaire</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Chercheur quantitatif</span></span><p>La section Linear Regression de mcmc.ipynb ajuste une LinearRegression scikit-learn sur l’indice des jours des deux périodes avec un train_test_split 80/20.</p></dd></div></dl><h3 id=project-section-2-1><span class=project-section-number>2.1.</span> Scénario : Comparer MCMCStrategy et l’achat-conservation sur AAPL</h3><ol class=repo-scenario><li>Installer les paquets de la commande pip du README et mettre sa propre clé dans la cellule FMP_API_KEY.</li><li>Ouvrir backtest.ipynb et télécharger l’historique d’AAPL avec get_historical_price_full_stock.</li><li>Couper les données au 2023-01-01 et construire la matrice de transition des tranches de prix sur la première partie.</li><li>Créer les objets Backtest de MCMCStrategy et BuyAndHoldStrategy sur les deux périodes et appeler run().</li><li>Tracer le résultat ; output/MCMCStrategy.html est un graphique backtesting.py enregistré pour MCMCStrategy.</li></ol><p class=repo-usecase-sources><span>Fichiers consultés</span><code>README.md</code><code>requirements.txt</code><code>mcmc.ipynb</code><code>backtest.ipynb</code><code>proto.ipynb</code><code>output/MCMCStrategy.html</code></p></section><h2 id=installation><span class=project-section-number>3.</span> Démarrage</h2><p>Le README installe les bibliothèques avec :</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install panda lxml bs4 httpx backtesting yfinance pandas_ta scipy rich TA-Lib
+</span></span></code></pre></div><p><code>requirements.txt</code> fige un ensemble plus restreint (<code>backtesting</code>, <code>httpx</code>, <code>numpy</code>, <code>pandas</code>, <code>pandas-ta</code>). Les carnets utilisent aussi Matplotlib et scikit-learn. Mettez votre propre clé Financial Modeling Prep dans la cellule <code>FMP_API_KEY</code>, puis ouvrez les carnets :</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>jupyter notebook backtest.ipynb
+</span></span></code></pre></div><h2 id=reader-guide><span class=project-section-number>4.</span> Guide du dépôt</h2><ul><li><code>mcmc.ipynb</code> couvre la séparation des données, les variantes Monte Carlo, la chaîne de Markov, les graphiques et la régression linéaire.</li><li><code>backtest.ipynb</code> reprend les simulations et exécute <code>MCMCStrategy</code> et <code>BuyAndHoldStrategy</code>.</li><li><code>proto.ipynb</code> est le prototype sur des prix synthétiques.</li><li><code>output/MCMCStrategy.html</code> est un graphique de backtest enregistré.</li><li><code>images/</code> contient les illustrations du README.</li><li><code>Algo Markov Chain Monte Carlo (MCMC)_.pdf</code> est un document PDF conservé avec le code.</li></ul><h2 id=features><span class=project-section-number>5.</span> Fonctionnalités</h2><ul><li>historique quotidien d’AAPL depuis Financial Modeling Prep, coupé au 2023-01-01 ;</li><li>trajectoires de prix Monte Carlo, avec variantes à volatilité glissante et à chocs extrêmes ;</li><li>chaîne de Markov sur des tranches de 10 $ avec matrice de transition empirique ;</li><li>stratégie backtesting.py fondée sur les états simulés et des prix cibles simulés ;</li><li>référence d’achat-conservation sur les mêmes périodes ;</li><li>tendance linéaire ajustée sur l’indice des jours.</li></ul><h2 id=limits><span class=project-section-number>6.</span> Limites</h2><ul><li>Malgré le nom, le code ne contient aucun échantillonneur de Monte Carlo par chaînes de Markov (comme Metropolis–Hastings) : les carnets combinent une simulation Monte Carlo directe et une chaîne de Markov distincte.</li><li><code>MCMCStrategy</code> simule une seule fois, au début du backtest, sur toute la série et lit le dernier élément d’une liste d’états fixe : sa condition d’entrée ne change donc pas d’une barre à l’autre. La chaîne part en outre d’un état 0 codé en dur.</li><li>La matrice de transition ne couvre que les clôtures de 0 à 200, avec une seule tranche ouverte au-dessus.</li><li>Une clé d’API FMP est écrite dans les carnets ; remplacez-la par la vôtre.</li><li>La commande d’installation du README contient <code>panda</code> au lieu de <code>pandas</code>, et <code>requirements.txt</code> ne liste pas tous les imports.</li><li>Les carnets ne conservent pas les résultats des backtests, et ces résultats dépendent de tirages aléatoires sans graine fixe (sauf dans <code>proto.ipynb</code>).</li></ul><h2 id=sources><span class=project-section-number>7.</span> Sources</h2><ul><li><a href=https://github.com/AlgoETS/MarkokChainMonteCarlo>Dépôt GitHub</a></li><li><a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/README.md>README</a></li><li><a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/mcmc.ipynb><code>mcmc.ipynb</code></a></li><li><a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/backtest.ipynb><code>backtest.ipynb</code></a></li><li><a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/proto.ipynb><code>proto.ipynb</code></a></li></ul><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading><span class=project-section-number>8.</span> Glossaire</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Chercher un terme</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="Aucun terme trouvé. Essayez un autre mot." data-count=termes></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Dépôt</summary><p>Les fichiers source, la configuration et l’historique versionné d’un projet.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>Le document d’entrée du dépôt, qui présente généralement son rôle et son installation.</p></details><details id=term-dependency data-glossary-entry><summary>Dépendance</summary><p>Une bibliothèque, un outil ou un service nécessaire à la compilation ou à l’exécution d’un composant.</p></details><details id=term-api data-glossary-entry><summary>API</summary><p>Une interface par laquelle des composants logiciels échangent des requêtes et des résultats. Une API n’utilise pas nécessairement HTTP.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>Un protocole de requête et réponse utilisé par les navigateurs et services web. Une requête comprend une méthode, un chemin, des en-têtes et parfois un corps.</p></details><details id=term-port data-glossary-entry><summary>Port publié</summary><p>Un port de l’hôte associé au port d’un service dans un conteneur. Sa publication peut rendre le service accessible hors du réseau des conteneurs.</p></details><details id=term-cli data-glossary-entry><summary>Interface en ligne de commande</summary><p>Une interface textuelle où les commandes et arguments choisissent les opérations. Les codes de retour permettent aux scripts de détecter un succès ou un échec.</p></details></div></section><script src=/CV/blog/documentation-reader.min.b63e89bc86d3c21598073be5a762be8d5eb6cec2fd8ccfb4bad7f83e4cbd602c.js integrity="sha256-tj6JvIbTwhWYBzvlp2K+jV62zsL9jM+0utf4Pky9YCw=" defer></script><section class="doc repo-project-references project-paper-references" id=project-references aria-labelledby=project-bibliography-heading><h2 id=project-bibliography-heading><span class=project-section-number>9.</span> Références</h2><ol class=project-reference-entries><li id=project-source-1>AlgoETS. (s. d.). <a href=https://github.com/AlgoETS/MarkokChainMonteCarlo><cite>MarkokChainMonteCarlo</cite></a>. <span>[Software repository]</span> github.com.</li><li id=project-source-2>AlgoETS. (s. d.). <a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/README.md><cite>README</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-3>AlgoETS. (s. d.). <a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/mcmc.ipynb><cite>mcmc.ipynb</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-4>AlgoETS. (s. d.). <a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/backtest.ipynb><cite>backtest.ipynb</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-5>AlgoETS. (s. d.). <a href=https://github.com/AlgoETS/MarkokChainMonteCarlo/blob/main/proto.ipynb><cite>proto.ipynb</cite></a>. <span>[Source file or documentation]</span> github.com.</li></ol><p class=repo-evidence-label>« s. d. » indique qu’aucune date de publication n’a été vérifiée. Les liens des fichiers conservent la révision inspectée lorsqu’elle est disponible.</p></section></div></div></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  const pageNavigation = shell?.querySelector('.repo-sidenav-disclosure');
+  if (pageNavigation) {
+    const compact = matchMedia('(max-width: 1099px)');
+    
+    
+    const adaptNavigation = () => { pageNavigation.open = !compact.matches; pageNavigation.dataset.navAdapted = 'true'; };
+    adaptNavigation();
+    compact.addEventListener('change', adaptNavigation);
+    pageNavigation.addEventListener('click', event => {
+      if (compact.matches && event.target.closest('a')) pageNavigation.open = false;
+    });
+  }
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', decodeURIComponent(link.hash) === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source), .journal-article pre')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    const sourceDisclosure = document.createElement('details');
+    sourceDisclosure.className = 'article-diagram-loading';
+    const summary = document.createElement('summary');
+    summary.textContent = frPage ? 'Chargement du diagramme · Voir la source' : 'Loading diagram · View source';
+    original.replaceWith(sourceDisclosure);
+    sourceDisclosure.append(summary, original);
+    return {
+      source: block.textContent,
+      original: sourceDisclosure,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  
+  
+  const nearViewport = new WeakSet();
+  const proximity = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    let due = false;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      nearViewport.add(entry.target);
+      proximity.unobserve(entry.target);
+      due = true;
+    }
+    if (due) void paintDiagrams();
+  }, { rootMargin: '150% 0px' }) : null;
+  function blockReady(block) {
+    if (block.lazyHost && block.lazyHost.open !== true) return false;
+    if (!proximity) return true;
+    
+    if (block.container) return true;
+    if (nearViewport.has(block.original)) return true;
+    proximity.observe(block.original);
+    return false;
+  }
+  
+  
+  const umlBlocks = [...document.querySelectorAll('[data-uml-svg]')].map(host => ({
+    original: host, src: host.dataset.umlSvg, name: host.dataset.umlName || 'uml.svg',
+    lazyHost: host.closest('details'), container: null, zoom: null, painted: false, loading: false,
+  }));
+  let umlCount = 0;
+  async function paintUml() {
+    for (const block of umlBlocks) {
+      if (block.painted || block.loading || (block.lazyHost && !block.lazyHost.open)) continue;
+      block.loading = true;
+      try {
+        const response = await fetch(block.src);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const parsed = new DOMParser().parseFromString(await response.text(), 'image/svg+xml');
+        const svg = parsed.documentElement;
+        if (svg.nodeName !== 'svg') throw new Error('Not an SVG document');
+        svg.querySelectorAll('script, foreignObject').forEach(node => node.remove());
+        const prefix = `uml${++umlCount}-`;
+        for (const element of [svg, ...svg.querySelectorAll('*')]) {
+          for (const attribute of [...element.attributes]) {
+            if (/^on/i.test(attribute.name)) element.removeAttribute(attribute.name);
+            else if (attribute.name === 'id') element.id = prefix + attribute.value;
+            else if (/href$/i.test(attribute.name) && attribute.value.startsWith('#')) element.setAttribute(attribute.name, '#' + prefix + attribute.value.slice(1));
+            else if (attribute.value.includes('url(#')) element.setAttribute(attribute.name, attribute.value.replaceAll('url(#', `url(#${prefix}`));
+          }
+        }
+        
+        const natural = svg.viewBox?.baseVal?.width || parseFloat(svg.getAttribute('width')) || 800;
+        for (const name of ['style', 'width', 'height']) svg.removeAttribute(name);
+        svg.style.width = '100%';
+        
+        svg.style.setProperty('max-width', natural + 'px', 'important');
+        svg.style.height = 'auto';
+        const figure = document.createElement('figure');
+        figure.append(document.importNode(svg, true));
+        makeInteractive(block, figure, block.name);
+        figure.classList.add('uml-diagram');
+      } catch (error) {
+        console.warn('UML image remains available:', error);
+      } finally {
+        block.loading = false;
+      }
+    }
+  }
+  umlBlocks.forEach(block => block.lazyHost?.addEventListener('toggle', () => { if (block.lazyHost.open) void paintUml(); }));
+  void paintUml();
+  let paintDiagrams = async () => {};
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    paintDiagrams = async function paintDiagramsNow() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } catch (error) {
+        document.querySelectorAll('.article-diagram-loading > summary').forEach(summary => {
+          summary.textContent = frPage ? 'Diagramme indisponible · Voir la source' : 'Diagram unavailable · View source';
+        });
+        console.warn('Diagram renderer unavailable:', error);
+      } finally { rendering = false; }
+    };
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><div id=reader-tools class=reader-ui hidden data-copied="Lien copié" data-failed="Copie indisponible. Copiez l’adresse du navigateur." data-empty="Aucune section trouvée. Essayez un autre mot." data-results=résultats><div class=reader-progress aria-hidden=true><span></span></div><div class=reader-launch aria-label="Outils de lecture"><div class=reader-split><button type=button data-reader-search aria-haspopup=dialog><span aria-hidden=true>⌕</span> Explorer cette page <kbd>/</kbd></button>
+<button type=button data-reader-copy aria-describedby=reader-copy-tip aria-label="Copier le lien de cette page">↗</button>
+<span id=reader-copy-tip class=reader-tooltip role=tooltip>Copier le lien</span></div></div><button class=reader-fab popovertarget=reader-actions aria-label="Outils de la page"><span aria-hidden=true>☷</span><span>Outils</span></button><div id=reader-actions popover aria-label="Actions de la page"><strong>Sur cette page</strong>
+<button type=button data-reader-search>Rechercher une section <kbd>/</kbd></button>
+<button type=button data-reader-copy>Copier le lien</button>
+<button type=button data-reader-top>Retour en haut <span aria-hidden=true>↑</span></button><hr><label><input type=checkbox id=reader-expand> Développer les sections de texte</label><p>Les diagrammes restent à la demande.</p></div><dialog id=reader-search aria-labelledby=reader-search-title><header><div><small>NAVIGATION RAPIDE</small><h2 id=reader-search-title>Explorer cette page</h2></div><button type=button data-reader-close aria-label=Fermer>×</button></header><label for=reader-query>Rechercher un titre ou un diagramme</label><div class=reader-search-field><input type=search id=reader-query autocomplete=off placeholder="Architecture, tests, références…"><button type=button data-reader-clear>Effacer</button></div><div class=reader-segments role=group aria-label="Filtrer les résultats"><button type=button data-reader-filter=all aria-pressed=true>Tout</button><button type=button data-reader-filter=section aria-pressed=false>Sections</button><button type=button data-reader-filter=diagram aria-pressed=false>Diagrammes</button></div><p id=reader-result-count role=status></p><ul id=reader-results></ul></dialog><div id=reader-feedback role=status aria-live=polite aria-atomic=true hidden></div></div><footer class=site-footer aria-label="Pied de page"><div class=site-footer-grid><div class=site-footer-brand><a class=site-footer-name href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a><p>Ingénieur logiciel orienté plateforme et infographie ; articles sur Rust, systèmes et performance.</p><p class=site-footer-copy>&copy; 2026 Antoine Boucher · Montréal</p></div><nav class=site-footer-col aria-label=Sections><p class=site-footer-label>Explorer</p><a href=/CV/blog/fr/posts/>Articles</a>
+<a href=/CV/blog/fr/projects/>Projets</a>
+<a href=/CV/blog/fr/tags/conference/>Conférences</a>
+<a href=/CV/blog/fr/recipes/>Recettes</a>
+<a href=/CV/blog/fr/search/>Recherche</a>
+<a href=https://antoineboucher.info/CV/index-fr.html>CV</a></nav><nav class=site-footer-col aria-label=Profils><p class=site-footer-label>Profils</p><a href=https://github.com/antoinebou12 rel="me noopener" target=_blank>GitHub</a><a href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank>LinkedIn</a>
+<a href=https://antoineboucher.info/CV/blog/index.xml rel=alternate type=application/rss+xml>RSS</a>
+<a href=https://cal.com/antoine-boucher-dev/30min rel=noopener target=_blank>Prendre rendez-vous</a></nav><nav class=site-footer-col aria-label="Pour les agents"><p class=site-footer-label>Lecture brute</p><a href=https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/index.md type=text/markdown>Cette page en Markdown</a>
+<a href=/CV/blog/llms.txt>llms.txt</a>
+<a href=/CV/blog/sitemap.xml>Sitemap</a>
+<a href=https://gohugo.io/ rel=noopener target=_blank>Propulsé par Hugo</a></nav></div></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

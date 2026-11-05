@@ -20,6 +20,24 @@ AuthLaravel is an access-control learning project with a Laravel backend and Vue
 
 **Best fit:** Secure boilerplate foundation for Laravel API and web applications.
 
+## Use cases
+
+Laravel 10 and React (Inertia) lab app for ÉTS GTI619 on roles, login throttling and password flows.
+
+- **Register an account** (Registered user): RegisteredUserController stores a new user with email, username, phone and password; the form is resources/js/Pages/Auth/Register.tsx.
+- **Log in with throttling** (Registered user, Administrator): LoginRequest locks an email and IP pair after 5 failed attempts and records login_attempts, browser, OS, IP and last_login on the user row.
+- **Reset a forgotten password** (Registered user, Mailpit (dev mail)): The forgot-password routes send a reset link by email; in the Sail stack, Mailpit catches it and shows it on port 8025.
+- **Change profile and password** (Registered user): PUT /password goes to PasswordController, and /profile lets the user edit, update or delete the account through ProfileController.
+- **View all users as admin** (Administrator): /admin uses the AdminAuthenticated middleware, and /dashboard renders AdminDashboard.tsx with every user’s email, roles and permissions when the role is roles:admin; other roles get the plain dashboard.
+
+### Scenario: Run the lab and test role-based access
+
+1. From AuthLaravel/, run ./vendor/bin/sail up -d to start the app with MariaDB, Redis and Mailpit.
+2. Run ./vendor/bin/sail artisan migrate and db:seed to create the admin, user, residential and business accounts.
+3. Open http://localhost/login and sign in as admin@example.com to see the user table on the dashboard.
+4. Sign in as user@example.com and open /admin; the middleware sends the user back to the dashboard.
+5. Use Forgot password and read the reset email in Mailpit at http://localhost:8025.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

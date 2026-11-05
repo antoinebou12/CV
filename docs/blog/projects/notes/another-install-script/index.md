@@ -21,6 +21,24 @@ another-install-script is a shell entry point for choosing system setup and cont
 
 **Best fit:** One-command server provisioning for homelabs and development VPS.
 
+## Use cases
+
+Whiptail menu in Bash that installs base tools and Docker Compose services on a personal Ubuntu server.
+
+- **Install base server tools** (Server admin): The Installation entry of main_setup_menu (src/menu.sh) shows a checklist: basic packages, Docker, Cockpit, LXDE, Ansible, Dokku, Vagrant and more; src/install.sh runs the selected items.
+- **Deploy selected containers** (Server admin, Docker Engine): Add Container lists the folders under containers/; each <name>.sh runs docker-compose up -d on the docker-compose.yml next to it (for example containers/gogs/).
+- **Open ports for containers** (Server admin, UFW firewall): After containers are added, manage_firewall_ports_allow_list in src/firewall.sh reads their ports from config.yml and allows them; with system.firewall set to yes, ufw denies other incoming traffic but keeps SSH, 2222, HTTP and HTTPS.
+- **Remove installed containers** (Server admin, Docker Engine): remove_container_menu shows the installed containers; each remove_docker_<name> function runs docker-compose down on that service.
+- **Uninstall the setup** (Server admin, Docker Engine, UFW firewall): The Uninstall entry runs uninstall.sh, which loads the src/ modules to undo the setup. The Backup entry currently calls the same script; the backup helpers in src/backup.sh are not wired to the menu.
+
+### Scenario: Provision a new VPS with a few self-hosted services
+
+1. Clone the repository and run sudo bash setup.sh; it opens main_setup_menu because bashmenu is yes in config.yml.
+2. Choose Installation and keep basic and docker checked; selecting docker opens the container list next.
+3. Tick services such as gogs and bookstack; each script runs docker-compose up -d.
+4. Let the firewall step allow the ports listed in config.yml and enable ufw.
+5. Later, use Remove Container to stop a service with docker-compose down.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

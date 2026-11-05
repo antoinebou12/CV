@@ -21,6 +21,24 @@ retroarch-web-games is an archived container setup around a web build of RetroAr
 
 **Best fit:** Zero-friction retro gaming via Docker on desktop, mobile, or smart TVs.
 
+## Use cases
+
+Docker image that self-hosts the RetroArch web player behind nginx, with game folders fetched at build time.
+
+- **Install RetroArch web build** (Self-hoster, Online file sources): setup_retroarch.sh downloads the previous day's emscripten build from buildbot.libretro.com, extracts it into /var/www/html and unpacks the frontend bundle.
+- **Download game sets** (Self-hoster, Online file sources): InternetArchive.py (typer, rich, requests) scrapes the listed archive pages for .zip and .7z files in parallel and saves them under downloads/<system name>.
+- **Sort games by first letter** (Self-hoster): sort_mkdir.sh moves each file into a 0-9 or A-Z subfolder; the Dockerfile runs it for every Nintendo system folder.
+- **Run the container** (Self-hoster): docker-compose up -d builds the image and maps port 8080 to nginx; entrypoint.sh regenerates the .index-xhr file lists before starting nginx.
+- **Play in the browser** (Browser player): The player opens http://localhost:8080, picks a core and loads a game in the RetroArch Web Player page shipped with the nightly build (the repository keeps a copy as index.html, not copied by the Dockerfile).
+- **Publish multi-arch images** (Self-hoster): .github/workflows/retroarch-web-games.yaml builds with Docker Buildx for amd64, arm64 and arm/v7 and pushes antoinebou12/retroarch-web-games to Docker Hub.
+
+### Scenario: Host a retro game player on a home server
+
+1. Clone the repository and check there is room for an image of about 10 GB, as the README warns.
+2. Run docker-compose up -d; the build runs setup_retroarch.sh, InternetArchive.py and sort_mkdir.sh.
+3. When the container starts, entrypoint.sh indexes the cores and bundle, then nginx serves the site.
+4. Open http://localhost:8080 and load a game from the sorted downloads folders.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,24 @@ another-install-script propose un menu shell pour choisir des opérations systè
 
 **Cas d’usage:** Déploiement rapide de serveurs et d'environnements homelab en une commande.
 
+## Cas d’utilisation
+
+Menu whiptail en Bash qui installe des outils de base et des services Docker Compose sur un serveur Ubuntu personnel.
+
+- **Installer les outils de base** (Admin du serveur): L’entrée Installation de main_setup_menu (src/menu.sh) affiche une liste à cocher : paquets de base, Docker, Cockpit, LXDE, Ansible, Dokku, Vagrant, etc. ; src/install.sh exécute les choix.
+- **Déployer des conteneurs** (Admin du serveur, Moteur Docker): Add Container liste les dossiers de containers/ ; chaque <nom>.sh lance docker-compose up -d sur le docker-compose.yml voisin (par exemple containers/gogs/).
+- **Ouvrir les ports au pare-feu** (Admin du serveur, Pare-feu UFW): Après l’ajout de conteneurs, manage_firewall_ports_allow_list (src/firewall.sh) lit leurs ports dans config.yml et les autorise ; si system.firewall vaut yes, ufw refuse le reste du trafic entrant sauf SSH, 2222, HTTP et HTTPS.
+- **Retirer des conteneurs** (Admin du serveur, Moteur Docker): remove_container_menu affiche les conteneurs installés ; chaque fonction remove_docker_<nom> lance docker-compose down sur ce service.
+- **Tout désinstaller** (Admin du serveur, Moteur Docker, Pare-feu UFW): L’entrée Uninstall lance uninstall.sh, qui charge les modules de src/ pour défaire l’installation. L’entrée Backup appelle pour l’instant le même script ; les fonctions de src/backup.sh ne sont pas reliées au menu.
+
+### Scénario : Préparer un VPS avec quelques services auto-hébergés
+
+1. Cloner le dépôt et lancer sudo bash setup.sh ; main_setup_menu s’ouvre car bashmenu vaut yes dans config.yml.
+2. Choisir Installation et garder basic et docker cochés ; le choix de docker ouvre ensuite la liste des conteneurs.
+3. Cocher des services comme gogs et bookstack ; chaque script lance docker-compose up -d.
+4. Laisser l’étape pare-feu autoriser les ports listés dans config.yml et activer ufw.
+5. Plus tard, utiliser Remove Container pour arrêter un service avec docker-compose down.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

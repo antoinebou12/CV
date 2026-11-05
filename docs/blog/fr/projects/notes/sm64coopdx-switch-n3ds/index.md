@@ -20,6 +20,25 @@ Ce fork explore les cibles Switch et New 3DS de sm64coopdx. Le code commun du je
 
 **Cas d’usage:** Jeu multijoueur coopératif portable sur consoles Switch et New 3DS.
 
+## Cas d’utilisation
+
+Portage homebrew non officiel de sm64coopdx (coop en ligne) pour Switch, avec une cible New 3DS en chantier ; ROM non fournie.
+
+- **Installer avec sa propre ROM** (Joueur Switch): docs/SWITCH_INSTALL.md : extraire le ZIP à la racine de la carte SD, ajouter une ROM US sous switch/sm64coopdx/baserom.us.z64 conforme à sm64.us.sha1, puis lancer sm64coopdx.nro en mode application complète.
+- **Rejoindre un salon CoopNet** (Joueur Switch, Salons CoopNet): La version Switch envoie l’empreinte réelle du NRO et liste les salons de l’espace sm64coop-android, comme l’explique docs/switch.md ; le client se trouve sous src/pc/network/coopnet.
+- **Jouer en sans-fil local** (Joueur Switch): src/pc/network/socket/socket_ldn.c ajoute un transport sans fil local et src/pc/djui/djui_panel_ldn_browser.c liste les sessions à proximité.
+- **Saisir un mot de passe** (Joueur Switch, Salons CoopNet): Les mots de passe des salons privés passent par le clavier intégré au jeu (src/pc/djui/djui_panel_switch_text_entry.c) plutôt que par le clavier natif de la Switch.
+- **Compiler et empaqueter le NRO** (Développeur du portage): Dans l’image Docker devkitpro/devkita64, make -f Makefile.switch-sdmc SWITCH_COOPNET=1 switch-nro compile le NRO et switch-dist vérifie l’en-tête et les empreintes puis écrit le ZIP ; build-switch-game.yml exécute en CI des contrôles sans ROM.
+- **Compiler la cible New 3DS** (Développeur du portage): Makefile.new3ds compile une coquille de plateforme et Makefile.new3ds-game le moteur complet avec rendu Citro3D et audio NDSP ; docs/new3ds-port.md précise que le jeu n’est pas encore vérifié sur console.
+
+### Scénario : Jouer en coop en ligne depuis une Switch
+
+1. Extraire le ZIP Switch de sm64coopdx à la racine de la carte SD, ce qui crée switch/sm64coopdx/.
+2. Copier votre propre ROM US dans switch/sm64coopdx/baserom.us.z64.
+3. Maintenir R en lançant un jeu pour ouvrir le menu homebrew en mode application complète, puis lancer SM64CoopDX.
+4. Ouvrir le menu de connexion, choisir un salon CoopNet public et taper son mot de passe sur le clavier du jeu s’il est privé.
+5. En cas d’échec, lire startup.log, coopnet.log et exception.log sous switch/sm64coopdx/logs/.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

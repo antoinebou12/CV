@@ -21,6 +21,24 @@ DasherControl brings homelab links and embedded applications into saved workspac
 
 **Best fit:** Centralized command dashboard for homelab containerized services, bookmarks, and layout management.
 
+## Use cases
+
+Rust (Rocket) and Vue dashboard for a home lab: grid workspaces of applets plus basic Docker container control.
+
+- **Sign in to the dashboard** (Homelab admin, PostgreSQL): cargo run --bin create_admin creates the first account; POST /tenants/api/login checks the bcrypt hash and returns a JWT used by the protected routes.
+- **Arrange applets in a grid** (Homelab admin): GridLayoutMain.vue places applets such as IFrame, Shortcut, Editor, Canvas, Terminal and DockerManager on a resizable grid.
+- **Save and switch workspaces** (Homelab admin, PostgreSQL): The /workspaces/api routes create, update, list and delete workspaces and their applets, stored in PostgreSQL through Diesel.
+- **Stop or restart containers** (Homelab admin, Docker Engine): /containers/api/docker_list lists containers through shiplift, and /containers/api/stop/<id> and restart/<id> act on one container when a valid token is sent.
+- **Open a web SSH terminal** (Homelab admin): src/bin/start_websocket.rs bridges a WebSocket to an ssh2 session for the Terminal applet; the README lists the web terminal as in progress.
+
+### Scenario: Set up the dashboard on an Ubuntu server
+
+1. Build the frontend with cd frontend && npm install && npm run build.
+2. Set DATABASE_URL in Rocket.toml and .env, then run diesel migration run.
+3. Run cargo run --bin create_admin, then cargo run to start the Rocket server.
+4. Sign in, add IFrame applets for services such as Sonarr or Jellyfin and save the workspace.
+5. Open the DockerManager applet to list containers and restart one.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

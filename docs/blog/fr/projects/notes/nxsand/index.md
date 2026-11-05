@@ -20,6 +20,25 @@ nxsand est une simulation de sable sur Switch avec une cible de développement d
 
 **Cas d’usage:** Simulation physique interactive sur écran tactile de console.
 
+## Cas d’utilisation
+
+Bac à sable de particules pour Nintendo Switch (homebrew), simulé sur GPU en OpenGL ES 3.0, avec versions bureau.
+
+- **Peindre des matériaux** (Joueur, GPU (OpenGL ES 3.0)): Le tactile, les Joy-Con ou la souris deviennent des traits de pinceau (source/sim/brush_stroke.cpp) écrits dans la grille par shaders/paint.frag ; le bouton X ouvre la roue des matériaux (source/ui/material_wheel.cpp).
+- **Voir réagir les matériaux** (Joueur, GPU (OpenGL ES 3.0)): Un automate cellulaire de Margolus tourne sur des textures GL_R8UI en alternance dans shaders/sim.frag ou sim.comp ; les réactions, comme lave plus eau qui donne de la pierre, sont dans shaders/sim_common.glsl et le sim_rules_body.glsl qu’il inclut.
+- **Sauver et charger un monde** (Joueur): source/save/save.cpp garde jusqu’à trois emplacements en JSON avec grille en base64 dans sdmc:/switch/nxsand/ (./nxsand_save/ sur bureau) ; Y ou F5 fait une sauvegarde rapide.
+- **Régler les performances** (Joueur, GPU (OpenGL ES 3.0)): settings.json et le menu Engine règlent la résolution, les sous-pas, les tuiles actives, le moteur fragment ou compute et les préréglages Battery Saver, Balanced ou Quality.
+- **Importer un tampon Powder Toy** (Développeur homebrew): nx::importTptStampJson (source/save/tpt_stamp_import.cpp) associe les éléments de The Powder Toy aux matériaux NXSand et met le tampon à l’échelle de la grille.
+- **Compiler et tester le NRO** (Développeur homebrew): make produit build/NXSand.nro avec devkitPro ; make desktop et make test compilent la version bureau SDL2 et les tests de référence CPU de tests/ ; la CI fait de même dans .github/workflows/native-nro.yml.
+
+### Scénario : Compiler NXSand et jouer un premier monde
+
+1. Installer devkitPro, puis lancer dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz.
+2. Lancer make à la racine du dépôt pour obtenir build/NXSand.nro.
+3. Le copier dans sdmc:/switch/NXSand.nro et le lancer depuis le menu homebrew.
+4. Appuyer sur X pour choisir la lave, peindre avec A, puis passer à l’eau et la verser sur la lave pour voir apparaître pierre et fumée.
+5. Appuyer sur Y pour sauvegarder le monde dans sdmc:/switch/nxsand/.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

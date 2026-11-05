@@ -21,6 +21,25 @@ This novatorem fork builds music-status widgets from provider data. A Flask orch
 
 **Best fit:** Live GitHub profile personalization and webhook integration.
 
+## Use cases
+
+Flask service that renders a Spotify or Last.fm now-playing card as an SVG for a GitHub profile README.
+
+- **Show the now-playing card** (Profile owner, Spotify Web API): The catch-all route in api/orchestrator.py fetches the current track, extracts colours from the album art and returns an image/svg+xml card; vercel.json maps /api/spotify to it.
+- **Customize card colours** (Profile owner): Query parameters background_color, border_color, background_type, show_status and compact are validated in api/config.py before rendering the Jinja2 template chosen in api/templates.json.
+- **Use Last.fm as a source** (Profile owner, Last.fm API): When only LAST_FM_API_KEY and LAST_FM_USERNAME are set, or Spotify auth fails, get_now_playing switches to api/lastfm.py, which can pull album art from Deezer.
+- **Open the current song** (Profile owner, Spotify Web API): GET /redirect sends the visitor to the track URL, or to the upstream repository when nothing is playing.
+- **Renew the refresh token** (Profile owner, Spotify Web API): scripts/spotify_local_auth.py captures the OAuth code on http://127.0.0.1:8000/callback and writes a new refresh token, optionally pushing it to Vercel with --update-vercel.
+- **Preview the card locally** (Profile owner): python start.py creates .venv, installs requirements, starts Flask on port 5000 and opens /preview; docker-compose.yml runs the same app with a /health check.
+
+### Scenario: Add a Spotify card to a GitHub profile
+
+1. Create a Spotify app with the redirect URI http://127.0.0.1:8000/callback.
+2. Copy .env.example to .env and fill SPOTIFY_CLIENT_ID and SPOTIFY_SECRET_ID.
+3. Run python scripts/spotify_local_auth.py to obtain SPOTIFY_REFRESH_TOKEN.
+4. Run python start.py and check the card at http://127.0.0.1:5000/preview.
+5. Deploy to Vercel and embed <deployment>/api/spotify as an image linked to /redirect in the profile README.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

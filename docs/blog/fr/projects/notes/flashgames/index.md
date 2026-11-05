@@ -21,6 +21,23 @@ FlashGames conserve de petits jeux Flash dans une collection web. La page choisi
 
 **Cas d’usage:** Préservation numérique de créations historiques.
 
+## Cas d’utilisation
+
+Une page web qui fait rejouer trois jeux Flash de 2010 grâce à l’émulateur Ruffle, sans aucun plugiciel.
+
+- **Choisir un jeu dans la liste** (Joueur): La liste déroulante #swfSelector d’index.html propose Tag, Ricochet Kill et Ballon, chacun avec une courte description.
+- **Jouer à un SWF en ligne** (Joueur, Émulateur Ruffle): loadSWF() crée un lecteur Ruffle avec RufflePlayer.newest() et charge tag.swf, ricochet kill.swf ou jeux.swf dans #swfContainer.
+- **Ouvrir un jeu par l’URL** (Joueur): updateHash() inscrit la clé du jeu dans le fragment d’URL ; les écouteurs load et hashchange rechargent ce jeu, donc un lien #tag l’ouvre directement.
+- **Lancer la collection en local** (Joueur, Émulateur Ruffle): Le README indique de cloner le dépôt et d’ouvrir index.html ; Ruffle vient d’unpkg, donc une connexion réseau reste nécessaire.
+
+### Scénario : Rejouer Ricochet Kill depuis un lien partagé
+
+1. Ouvrir https://antoinebou12.github.io/FlashGames/ (ou index.html depuis un clone).
+2. La page charge le premier jeu, Tag, puisqu’aucun fragment n’est défini.
+3. Choisir Ricochet Kill dans la liste Select a Game ; l’URL devient #ricochet_kill.
+4. Ruffle charge ricochet kill.swf dans la zone de jeu noire et la barre de description se met à jour.
+5. Jouer à la souris, puis copier l’URL pour envoyer quelqu’un directement au même jeu.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

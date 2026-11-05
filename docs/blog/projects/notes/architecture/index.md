@@ -21,6 +21,24 @@ This archived repository stores a home-infrastructure diagram in several formats
 
 **Best fit:** Reading an archived infrastructure snapshot or editing its diagram sources to document a homelab.
 
+## Use cases
+
+C4 PlantUML and draw.io diagrams of a home lab: Cloudflare, an OVH VPS, hypervisors, a NAS and services.
+
+- **View the v1 draw.io diagram** (Reader, Diagram renderers): architecture.drawio.html embeds the draw.io XML in the diagrams.net viewer script, with zoom, layers and lightbox; the README links it as v1.
+- **Render the v2 C4 diagram** (Reader, Diagram renderers): architecture.plantuml includes C4_Deployment, Font Awesome, OSA and Office icon sets; the README v2 link is an encoded render on the PlantUML server.
+- **Trace external access paths** (Reader): The Rel lines show users reaching Cloudflare over HTTPS, Cloudflare forwarding to the OVH VPS, the VPS reaching the home and personal networks over WireGuard, and the admin using Teleport over SSH.
+- **Inventory VMs and containers** (Reader): Deployment nodes list XCP-ng, Proxmox and Windows hosts, a QNAP NAS with a media stack, and VMs such as Talos (Portainer, AI News Tracker, Freqtrade), Home Assistant and Caddy with Prometheus and Grafana, each with CPU, RAM and disk properties.
+- **Edit and re-export the diagram** (Diagram maintainer, Diagram renderers): The maintainer edits architecture.plantuml or architecture.drawio and exports a picture such as home architecture.png.
+
+### Scenario: Follow a web request into the home lab
+
+1. Open architecture.plantuml, or the v2 link in README.md rendered by the PlantUML server.
+2. Start at the User person, who reaches Cloudflare (CDN and reverse proxy) over HTTPS.
+3. Follow Cloudflare to the OVH VPS, which runs Caddy, Teleport and Uptime Kuma.
+4. Follow the WireGuard link from the VPS to the Personal Network and its Proxmox host.
+5. See the Caddy VM route traffic to AI News Tracker, Marketwatch, Portainer, Plex and Jellyfin.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

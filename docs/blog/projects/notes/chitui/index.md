@@ -20,6 +20,24 @@ ChitUI places a browser interface in front of SDCP resin printers. A Python proc
 
 **Best fit:** Headless remote management and real-time print monitoring for SLA 3D printers.
 
+## Use cases
+
+Flask web UI that finds Chitubox SDCP 3.0 resin printers on the LAN, uploads files and starts prints.
+
+- **Discover printers on the LAN** (Printer operator, SDCP resin printer): At start-up, discover_printers in main.py broadcasts M99999 over UDP port 3000, saves the replies and opens a WebSocket to each printer at ws://<ip>:3030/websocket.
+- **Watch printer status** (Printer operator, SDCP resin printer): The browser asks over Socket.IO; main.py sends SDCP commands 0 (status) and 1 (attributes) and relays printer messages to web/js/chitui.js and sdcp.js.
+- **Upload a print file** (Printer operator, SDCP resin printer): POST /upload accepts .ctb, .goo and .prz files, computes an MD5 and sends 1 MB parts to http://<ip>:3030/uploadFile/upload; /progress streams the percentage.
+- **List and delete files** (Printer operator, SDCP resin printer): printer_files sends SDCP command 258 with a storage path; action_delete sends command 259 with the file list.
+- **Start a print** (Printer operator, SDCP resin printer): action_print sends SDCP command 128 with the file name and StartLayer 0.
+
+### Scenario: Send a sliced model to a resin printer from a browser
+
+1. Install requirements.txt in a virtualenv and run python main.py, or use docker run --net=host so UDP broadcast works.
+2. At start-up, ChitUI broadcasts M99999 on UDP port 3000 and connects to each printer’s WebSocket on port 3030.
+3. Open http://127.0.0.1:54780/ to see the discovered printers and their status.
+4. Upload a .ctb file; ChitUI saves it to /tmp and sends it in 1 MB parts with an MD5 check.
+5. Pick the file in the printer’s file list and start the print.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,25 @@ This Maestro fork connects a React upload interface to a Spring backend and exte
 
 **Best fit:** Digitization of physical sheet music for playback and editing.
 
+## Use cases
+
+Web app that turns a scanned music sheet (PDF, PNG, JPG) into a MIDI file, with optional tempo overrides.
+
+- **Upload a music sheet** (Musician): The React form in maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx takes a dropped file and a MIDI file name, then useMaestroClient.ts checks GET /health before posting to /convert.
+- **Set tempos per measure** (Musician): The form keeps a list of tempo, measure and force entries (default 120 at measure 1) and sends it as the JSON field tempos.
+- **Recognize notes with Audiveris** (Audiveris OMR engine): POST /convert in ConvertController.java checks the file (10 MB limit, PDF/JPG/PNG signature) and AudiverisController.java runs Audiveris in batch mode to export a .mxl file.
+- **Convert MusicXML to MIDI** (music21 (Python)): backend/src/main/MxlToMidi.py loads the .mxl with music21, applies dynamics and the requested tempo marks, and writes the .mid file.
+- **Download the MIDI file** (Musician): The backend returns the .mid as an attachment and the frontend saves it with js-file-download; input and output folders are cleaned three seconds later.
+- **Switch English or French** (Musician): LanguageSwitcher.tsx toggles i18next between en-US and fr-CA, using the strings in maestro-app/public/locales/.
+
+### Scenario: Turn a PDF score into a MIDI file locally
+
+1. Copy the Audiveris bin and lib folders into backend/audiveris/dist as backend/README.md explains.
+2. Start both services with docker-compose up -d (backend on port 8080, frontend on port 3000).
+3. Open localhost:3000, drop a PDF score and enter a MIDI file name.
+4. Add a tempo row, for example 90 at measure 1, and submit the form.
+5. The backend runs Audiveris, then MxlToMidi.py, and the browser downloads the .mid file.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

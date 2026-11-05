@@ -21,6 +21,24 @@ donneesqc-mcp is a fork exposing Québec and Montréal open-data operations thro
 
 **Best fit:** Natural language querying of public municipal and provincial datasets across transportation, demographics, and municipal services.
 
+## Use cases
+
+An MCP server that lets AI agents search, query in SQL and map Québec and Montréal open data in conversation.
+
+- **Search open datasets** (Analyst with an agent, CKAN open data portals): search_datasets and search_montreal_datasets call the CKAN APIs of Données Québec and Montréal (DQ_API_URL, MTL_API_URL) through helpers/ckan_api.py.
+- **Run read-only SQL queries** (Analyst with an agent, CKAN open data portals): query_resource_sql and query_montreal_sql send SQL to the CKAN DataStore after validate_sql() rejects anything that is not a SELECT.
+- **Find and query in one call** (Analyst with an agent, CKAN open data portals): find_and_query chains search, resource listing and DataStore query so the agent avoids three round trips.
+- **Explore geospatial layers** (Analyst with an agent, IGO geo services): list_geospatial_layers, get_geospatial_features and get_map_url query the IGO WFS and build WMS GetMap URLs through helpers/geo_api.py.
+- **Geocode, convert coordinates** (Analyst with an agent, IGO geo services): geocode and reverse_geocode use the icherche geocoder (GEOCODER_URL); convert_coordinates switches between EPSG:32198 and EPSG:4326.
+
+### Scenario: Counting public trees per borough in Montréal
+
+1. Start the server with docker compose up -d (or uv sync then uv run python main.py); it listens on port 8000 with streamable HTTP.
+2. Register it in the client, for example claude mcp add --transport http donneesqc http://localhost:8000/mcp.
+3. Ask the agent for public tree data; it calls search_montreal_datasets to find the dataset.
+4. The agent calls query_montreal_data to see the columns of the DataStore resource.
+5. It sends a SELECT … GROUP BY query through query_montreal_sql and answers with the per-borough counts.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

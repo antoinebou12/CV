@@ -20,6 +20,23 @@ This archived extension attempted to add individual-file download controls to re
 
 **Best fit:** Quick single-file extraction without cloning large repositories.
 
+## Use cases
+
+A Chrome extension that adds a download link and file size next to each file in GitHub, GitLab and Bitbucket listings.
+
+- **Add icons to file listings** (Repository visitor, Git hosting site): manifest.json injects inject_github.js, inject_gitlab.js or inject_bitbucket.js on matching pages; each script appends an icon link to every row (td.content, td.tree-item-file-name or tr.iterable-item).
+- **Download a single file** (Repository visitor, Git hosting site): The script rewrites the blob link to its raw URL (raw.githubusercontent.com on GitHub, /raw/ on GitLab), fetches the text and sets a Blob object URL with a download attribute.
+- **Show each file's size** (Repository visitor, Git hosting site): On GitHub, getFileURLDocument() loads the file page with XMLHttpRequest and changeFileSize() copies the Bytes/KB/MB line into a span next to the icon.
+- **Open a folder from its icon** (Repository visitor, Git hosting site): Paths without a file extension are treated as directories, so the icon simply links to the folder page instead of downloading.
+
+### Scenario: Grabbing one config file from a GitHub repository
+
+1. Load the extension in Chrome (Manifest V2, content scripts for github.com, gitlab.com and bitbucket.org).
+2. Open a repository's file list on github.com; inject_github.js waits for document.readyState to be complete.
+3. A small GitHub icon and a size label appear next to each file row.
+4. Click the icon next to the file: the raw content is saved under the file's name.
+5. If icons do not appear, refresh the page as the README advises; the README title also flags the extension as not working.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -20,6 +20,24 @@ linkshare est un projet Rails archivé pour partager des liens, commenter et vot
 
 **Cas d’usage:** Partage social et organisation de liens avec prévisualisation riche.
 
+## Cas d’utilisation
+
+Un site social Ruby on Rails 4.1 où les membres partagent liens ou fichiers, votent, commentent et prévisualisent les pages.
+
+- **Partager un lien ou un fichier** (Membre): LinksController#create enregistre un Link avec titre, URL et description ; le modèle Link monte aussi un FileUploader CarrierWave, et /files/new réutilise le même formulaire.
+- **Prévisualiser une page** (Membre, Embedly): Le fil et la page du lien ajoutent des ancres embedly-card, et application.js appelle embedly('card', …) pour afficher une carte ou une infobulle d’aperçu.
+- **Voter et commenter** (Membre): PUT /links/:id/like et /dislike s’appuient sur acts_as_votable, et les routes imbriquées /links/:link_id/comments rattachent les commentaires au lien.
+- **Chercher liens et membres** (Membre): Link.search et User.search filtrent par titre ou nom avec LIKE ; le fil est paginé à cinq liens par page avec will_paginate, et les fiches membres affichent un témoin de présence.
+- **Gérer le contenu dans /admin** (Administrateur): config/routes.rb monte RailsAdmin sur /admin, et la table users comporte un indicateur admin.
+
+### Scénario : Publier un article et recueillir des réactions
+
+1. Démarrer l’application comme dans le README : rails server -p 8080 -b 0.0.0.0, avec redis-server en marche.
+2. S’inscrire sur /users/sign_up avec un nom et l’avatar obligatoire.
+3. Ouvrir /links/new, coller l’URL de l’article avec un titre et une description, puis valider.
+4. Sur le fil d’accueil, survoler le titre pour voir l’aperçu Embedly avec les votes et commentaires.
+5. D’autres membres aiment le lien avec PUT /links/:id/like et répondent sous /links/:id/comments.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

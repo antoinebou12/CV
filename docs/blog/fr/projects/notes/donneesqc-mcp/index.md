@@ -21,6 +21,24 @@ donneesqc-mcp est un fork qui expose des opérations de données ouvertes du Qu�
 
 **Cas d’usage:** Interrogation en langage naturel des jeux de données municipaux et provinciaux ouverts.
 
+## Cas d’utilisation
+
+Un serveur MCP qui laisse les agents IA chercher, interroger en SQL et cartographier les données ouvertes du Québec.
+
+- **Chercher des jeux de données** (Analyste avec un agent, Portails CKAN ouverts): search_datasets et search_montreal_datasets appellent les API CKAN de Données Québec et de Montréal (DQ_API_URL, MTL_API_URL) via helpers/ckan_api.py.
+- **Lancer du SQL en lecture** (Analyste avec un agent, Portails CKAN ouverts): query_resource_sql et query_montreal_sql envoient du SQL au DataStore CKAN après que validate_sql() a rejeté tout ce qui n’est pas un SELECT.
+- **Chercher et interroger en un** (Analyste avec un agent, Portails CKAN ouverts): find_and_query enchaîne recherche, liste des ressources et requête DataStore pour éviter trois allers-retours à l’agent.
+- **Explorer les couches géo** (Analyste avec un agent, Services géo IGO): list_geospatial_layers, get_geospatial_features et get_map_url interrogent le WFS IGO et construisent des URL WMS GetMap via helpers/geo_api.py.
+- **Géocoder et convertir** (Analyste avec un agent, Services géo IGO): geocode et reverse_geocode utilisent le géocodeur icherche (GEOCODER_URL) ; convert_coordinates passe d’EPSG:32198 à EPSG:4326 et inversement.
+
+### Scénario : Compter les arbres publics par arrondissement à Montréal
+
+1. Démarrer le serveur avec docker compose up -d (ou uv sync puis uv run python main.py) ; il écoute sur le port 8000 en HTTP streamable.
+2. L’inscrire dans le client, par exemple claude mcp add --transport http donneesqc http://localhost:8000/mcp.
+3. Demander à l’agent les données sur les arbres publics ; il appelle search_montreal_datasets pour trouver le jeu.
+4. L’agent appelle query_montreal_data pour voir les colonnes de la ressource DataStore.
+5. Il envoie une requête SELECT … GROUP BY via query_montreal_sql et répond avec le compte par arrondissement.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

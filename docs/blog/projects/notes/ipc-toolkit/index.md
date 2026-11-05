@@ -21,6 +21,25 @@ ipc-toolkit provides geometric building blocks for contact-aware simulation. Thi
 
 **Best fit:** Nonlinear continuous contact mechanics in 3D physics engines.
 
+## Use cases
+
+A C++ library with Python bindings for Incremental Potential Contact: contact barriers, CCD and friction for simulators.
+
+- **Build a collision mesh** (Simulation developer): ipc::CollisionMesh takes vertex, edge and face matrices (Eigen), as in the README quick start.
+- **Find contacts within dhat** (Simulation developer, Host simulator): NormalCollisions::build() uses a broad phase (hash grid, LBVH, sweep and prune…) to collect primitive pairs closer than dhat.
+- **Evaluate barrier, derivatives** (Simulation developer, Host simulator): BarrierPotential returns the energy, gradient and sparse Hessian that the host solver adds to its objective.
+- **Get a collision-free step size** (Simulation developer, Host simulator): compute_collision_free_stepsize() runs continuous collision detection (Tight Inclusion by default, nonlinear and additive variants in src/ipc/ccd) between two vertex states.
+- **Add anisotropic friction** (Simulation developer, Host simulator): FrictionPotential works on TangentialCollisions; smooth_mu.hpp adds elliptical anisotropic friction coefficients (commit Anisotropic friction #210).
+- **Script it from Python** (Simulation developer): pybind11 bindings under python/src expose the same API as ipctk (pip install ipctk), built when IPC_TOOLKIT_BUILD_PYTHON is ON.
+
+### Scenario: Adding contact to one implicit time step
+
+1. Install the bindings with pip install ipctk, or add the library to a CMake project.
+2. Create a CollisionMesh from the vertices, edges and faces of the scene.
+3. Build NormalCollisions with dhat = 1e-3 for the current positions.
+4. Add the BarrierPotential energy, gradient and Hessian to the solver's Newton system.
+5. Before accepting the Newton step, clamp it with compute_collision_free_stepsize so no surfaces cross.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

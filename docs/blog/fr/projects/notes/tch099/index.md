@@ -21,6 +21,24 @@ TCH099 est un projet pédagogique qui combine pages frontend statiques et API PH
 
 **Cas d’usage:** Référence d'architecture conteneurisée pour application et base de données.
 
+## Cas d’utilisation
+
+Application web de démonstration en PHP et MariaDB, avec client Android, pour enseigner le routage, les sessions et Azure.
+
+- **Créer un compte** (Utilisateur web/mobile, Base MariaDB): La page d'inscription ou SignupActivity sur Android envoie les données à /api/signup ; api/signup.php appelle registerUser(), qui ajoute le compte à la table Clients créée par db/1create.sql.
+- **Se connecter (session)** (Utilisateur web/mobile, Base MariaDB): login.html et LoginActivity envoient le nom d'utilisateur et le mot de passe à /api/login ; api/login.php les vérifie avec loginUser() et ouvre une session PHP, que /api/logout ferme.
+- **Afficher une image au hasard** (Utilisateur web/mobile): random-image.html appelle /api/random-image, qui renvoie l'URL d'un chat venant de TheCatAPI ou celle de thispersondoesnotexist.com selon imageType.
+- **Saluer selon la langue** (Utilisateur web/mobile): /api/hello-world/$langue répond par une salutation en français, anglais, espagnol ou allemand ; c'est l'exemple d'API minimal.
+- **Lister les clients (admin)** (Administrateur, Base MariaDB): La route /admin ne sert admin.html que si isAdmin() est vrai ; la page charge /api/clients, qui lit la table Clients lorsque la session a le rôle admin.
+
+### Scénario : Lancer la démo en local jusqu'à la page admin
+
+1. Remplir DB_HOST et les variables MYSQL_* indiquées dans le README, puis lancer docker-compose up -d --build.
+2. Charger le schéma et les données avec python3 db/db.py, ou importer db/1create.sql, 2contraines.sql et 3insert.sql dans phpMyAdmin sur le port 8060.
+3. Ouvrir http://localhost:8001/signup, créer un compte, puis se connecter sur /login.
+4. Avec un compte admin, ouvrir /admin pour voir la table Clients chargée par /api/clients.
+5. Pousser sur main pour que .github/workflows/main_tch099antoine.yml zippe l'application et la déploie sur Azure Web App.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

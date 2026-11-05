@@ -21,6 +21,24 @@ Artemis-Switch is a fork in the Moonlight streaming family. The host runs the ga
 
 **Best fit:** Ultra-low latency PC game streaming directly to Nintendo Switch handheld mode.
 
+## Use cases
+
+Moonlight-Switch fork that streams PC games to a Nintendo Switch, with FSR upscaling, stream profiles and telemetry.
+
+- **Pair and stream from a host** (Switch player, GameStream host PC): GameStreamClient.cpp and MoonlightSession.cpp handle PIN pairing and sessions with Sunshine, Apollo, Vibeshine or Punktfunk; DiscoverManager finds hosts and WakeOnLanManager can wake them.
+- **Tune video presentation** (Switch player): Fit, Fill, Stretch, Zoom/Pan, rotation and full range share one deko3d presentation path, with FSR/EASU upscaling, RCAS sharpening and dithering on top of NVDEC decode.
+- **Save stream profiles** (Switch player, GameStream host PC): Named profiles store FPS (30 to 120), resolution, bitrate, codec and presentation in profile.json; they can be assigned per host, edited and imported or exported (StreamProfileStore.cpp, ProfileEditorDialog.cpp).
+- **Export a benchmark** (Switch player): The Performance page shows bitrate, latency, frame queue, GPU time and Switch clocks; Benchmark start, stop and save write a file through app/src/benchmark/BenchmarkExport.cpp.
+- **Build and test the app** (Developer): With devkitA64 and CMake, the Moonlight.nro target builds the Switch binary, exported by CI as Artemis-Switch.nro; tests/ holds portable unit tests run with ctest, plus Python i18n and release checks.
+
+### Scenario: Stream a PC game to a Switch
+
+1. Copy Artemis-Switch.nro to sdmc:/switch/Artemis-Switch/ and start hbmenu through title redirection.
+2. Open Artemis Switch, select the PC host and finish PIN pairing in the host’s web UI.
+3. Create a stream profile (for example 60 FPS, H.265, Fit with FSR) and assign it to that host.
+4. Launch an app and press - and + together to open the in-stream overlay.
+5. Open Performance to watch bitrate and pipeline latency, then run and save a Benchmark.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,25 @@ marketwatch is an archived Python client for MarketWatch’s virtual trading gam
 
 **Best fit:** Automated trading bot development and portfolio backtesting.
 
+## Use cases
+
+Python client for the MarketWatch stock game: quotes, trades, portfolios and watchlists (login now blocked by captcha).
+
+- **Get a stock price** (Game player, MarketWatch website): MarketWatch.get_price in marketwatch/__init__.py fetches the stock page with httpx and reads the intraday price with BeautifulSoup; the README marks it as working with skip_login=True.
+- **Buy, sell, short or cover** (Game player, MarketWatch website): buy, sell, short and cover build an order payload and submit it to a game; MarketWatchGame in marketwatch/game.py binds the same calls to one game ID.
+- **Read portfolio and orders** (Game player, MarketWatch website): get_portfolio, get_positions, get_pending_orders, get_leaderboard and get_game_settings scrape game pages; cancel_order and cancel_all_orders remove pending orders.
+- **Manage watchlists** (Game player, MarketWatch website): create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist and delete_watchlist_item call the MarketWatch watchlist endpoints.
+- **Serve HTML game cards** (Game player, MarketWatch website): api/app.py is a FastAPI app with HTTP Basic auth that renders Jinja2 templates for /game, /portfolio, /leaderboard, /card and /watchlist.
+- **Trade on an EMA crossover** (GitHub Actions, MarketWatch website): .github/workflows/ema-workflow.yml runs on a five-minute cron, pulls prices with yfinance, computes 20 and 80 period EMAs and buys or sells 100 shares on a crossover.
+
+### Scenario: Check a quote, then trade in a game
+
+1. Install the package with pip install marketwatch.
+2. Create MarketWatch(email, password, skip_login=True) and call get_price("AAPL").
+3. For game calls, log in with real credentials; the README warns this step currently fails on a captcha.
+4. Once logged in, call get_games(), then buy(game_id, "AAPL", 100).
+5. Check the result with get_positions(game_id) and get_pending_orders(game_id).
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,24 @@ SpringBootFilesUploader est un backend Kotlin et Spring qui sépare stockage bin
 
 **Cas d’usage:** Backend ingestion de fichiers à haut débit.
 
+## Cas d’utilisation
+
+API Spring Boot en Kotlin qui range les fichiers téléversés dans MinIO/S3 derrière des rôles JWT, avec des routes Docker et SSH.
+
+- **S'inscrire et obtenir un JWT** (Utilisateur de l'API, MinIO S3 et MongoDB): POST /auth/signup enregistre l'utilisateur dans MongoDB avec son mot de passe haché et ses rôles ; POST /auth/signin renvoie un JwtResponse avec le jeton et les rôles (AuthController.kt, JwtUtils.kt).
+- **Téléverser un document** (Modérateur ou admin, MinIO S3 et MongoDB): POST /files/documents (modérateur ou admin) valide l'extension avec DOC_FILE_EXTENSION_REGEX, écrit le fichier dans le bucket S3 sous files/<uuid>/<nom> et note ses métadonnées dans MongoDB.
+- **Télécharger un fichier stocké** (Utilisateur de l'API, MinIO S3 et MongoDB): GET /files/{id} retrouve la fiche du fichier dans MongoDB, lit l'objet dans S3 et le renvoie en pièce jointe avec son type et sa taille.
+- **Gérer des conteneurs Docker** (Modérateur ou admin): Les routes /containers listent, créent, démarrent, arrêtent, redémarrent et renomment des conteneurs avec docker-java, sur l'hôte Docker défini dans application.yml (tcp://127.0.0.1:2375).
+- **Lancer une commande SSH** (Modérateur ou admin): POST /ssh/cli (admin seulement) ouvre une session Apache SSHD avec l'hôte, le port et les identifiants reçus, puis renvoie la sortie de la commande.
+
+### Scénario : Déposer un PDF puis le récupérer
+
+1. Démarrer MongoDB sur localhost:27017 et MinIO sur localhost:9000, comme le prévoit application.yml, puis lancer ./gradlew bootRun.
+2. Envoyer POST /auth/signup avec un nom d'utilisateur, un courriel, un mot de passe et le rôle « mod ».
+3. Appeler POST /auth/signin et copier le JWT de la réponse.
+4. Envoyer le PDF à POST /files/documents dans le champ multipart « document » avec le jeton Bearer ; la réponse donne fileId et fileName.
+5. Appeler GET /files/{fileId} pour télécharger le PDF, ou parcourir les routes dans Swagger UI à /api-docs.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

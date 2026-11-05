@@ -21,6 +21,24 @@ ESP32-7SEG connects an ESP32 clock display to network configuration and an HTTP 
 
 **Best fit:** Physical computing status dashboards and hardware displays.
 
+## Use cases
+
+ESP32 firmware and an Android app that drive an I2C 7-segment display as a countdown or stopwatch over Wi-Fi.
+
+- **Join the board to Wi-Fi** (Timer operator, ESP32 + 7-seg display): Without saved credentials, wifi.cpp starts an access point named ESPTimer; the / page then serves the setup form, and POST /connect stores the SSID and password in NVS.
+- **Start a countdown or stopwatch** (Timer operator, ESP32 + 7-seg display): POST /timer-action with action, mode, minutes and seconds starts, pauses or stops a FreeRTOS task (COUNTDOWN or STOPWATCH) in display.cpp.
+- **Set the digits directly** (Timer operator, ESP32 + 7-seg display): POST /update-display with minutes and seconds calls updateDisplay() and pushes a displayUpdated message.
+- **Follow updates live** (Android app, ESP32 + 7-seg display): The /ws WebSocket broadcasts timerStarted, timerStopped and displayUpdated JSON; the Android WebSocketClient listens to it.
+- **Control it from Android** (Timer operator, Android app): TimerApiService.kt maps the same endpoints with Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) behind the TimerControl and WiFiConnect fragments.
+
+### Scenario: Setting up a 5-minute countdown on a fresh board
+
+1. Wire the Adafruit I2C backpack to SDA, SCL, VCC and GND, then flash the firmware with pio run -t upload (env firebeetle).
+2. On first boot no credentials are in NVS, so join the ESPTimer access point and open the board's page.
+3. Pick a network from /scan and submit it to /connect; the board saves it and joins the LAN.
+4. Read the new IP in the serial monitor at 115200 baud and open it in a browser or the Android app.
+5. Send action=start, mode=countdown, minutes=5, seconds=0 to /timer-action; the display counts down and /ws reports each update.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

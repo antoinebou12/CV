@@ -21,6 +21,24 @@ uml-skill packages diagram-writing instructions and a small Python helper. It is
 
 **Best fit:** Drop-in diagram generation capabilities for LLM agent frameworks.
 
+## Use cases
+
+Agent skill (diagramming-uml) that guides AI coding agents to write diagram source and render it via uml-mcp or Kroki.
+
+- **Install the skill** (Developer, AI coding agent): The README lists npx @smithery/cli@latest skill add antoinebou12/uml, or copying the folder into .cursor/skills/diagramming-uml/ so the agent loads SKILL.md.
+- **Plan and write diagram code** (AI coding agent): SKILL.md walks the agent through purpose, diagram type, outline and readability rules (about 25 Mermaid or 30 PlantUML nodes, labelled transitions) before it writes source.
+- **Pick a diagram_type** (AI coding agent): references/DIAGRAM-TYPES.md maps intents such as sequence, swimlane, ER or architecture to a Kroki diagram_type and Mermaid or PlantUML form, to be confirmed with uml://types.
+- **Render through uml-mcp** (AI coding agent, uml-mcp / Kroki): When uml-mcp is connected, the skill tells the agent to call validate_uml then generate_uml or generate_uml_batch and to return the Kroki url and playground link.
+- **Build a Kroki URL offline** (Developer, uml-mcp / Kroki): Without MCP, scripts/kroki_url.py compresses the source with zlib, encodes it in base64url and prints a https://kroki.io/<backend>/<format>/... URL.
+
+### Scenario: Get a shareable sequence diagram link
+
+1. Install the skill with npx @smithery/cli@latest skill add antoinebou12/uml.
+2. Ask the agent for a sequence diagram of a checkout flow; the skill activates on the diagram request.
+3. The agent picks sequence or Mermaid sequenceDiagram from the intent table and writes the source.
+4. With uml-mcp connected, it calls validate_uml and generate_uml and replies with the url, the playground link and a copy of the code.
+5. Without uml-mcp, run python scripts/kroki_url.py -t mermaid diagram.mmd to get the link.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

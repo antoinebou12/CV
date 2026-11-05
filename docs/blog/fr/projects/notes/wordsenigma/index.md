@@ -21,6 +21,24 @@ WordsEnigma est un fork avec deux espaces Redwood, web et API. Son modèle relie
 
 **Cas d’usage:** Logique de jeu de lettres algorithmique et heuristiques de résolution.
 
+## Cas d’utilisation
+
+Prototype RedwoodJS d'un Wordle multilingue, avec grille de mots en français, API GraphQL et gestion admin sur PostgreSQL.
+
+- **Deviner un mot de 5 lettres** (Joueur): La page /phil (MotDuJourPhilPage/App.tsx) donne six essais sur une grille 6×5, refuse les mots absents de la liste française de data/fr.ts et colore les lettres et les touches ; la solution est codée en dur (GRAND).
+- **Créer un compte** (Joueur): /signup, /login, /forgot-password et /reset-password passent par dbAuth de Redwood (api/src/functions/auth.ts) sur le modèle User, avec mot de passe haché et sel.
+- **Gérer mots et banques** (Administrateur): Les routes sous /admin, protégées par Private roles="admin", offrent des pages CRUD générées pour utilisateurs, langues, mots, banques de mots, parties, essais, lettres et statistiques via les services GraphQL.
+- **Charger les mots français** (Administrateur, Dictionnaires en ligne): yarn seed lance scripts/seed.ts, qui crée les langues et la banque de mots fr, puis récupère les définitions sur fr.wiktionary.org ou le-dictionnaire.com avec le robot cheerio avant d'insérer les mots.
+- **Suivre parties et séries** (Joueur): Le schéma Prisma enregistre chaque Game avec ses TryRow et Letter, et une ligne Statistic par utilisateur (parties jouées, gagnées, perdues, série, moyenne) ; le modèle existe, mais les pages de jeu ne l'alimentent pas encore.
+
+### Scénario : Lancer la grille française en local
+
+1. Démarrer PostgreSQL avec docker run --name=db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -d postgres, comme dans le README racine.
+2. Dans WordsEnigma/, lancer yarn install, puis yarn rw prisma migrate dev pour appliquer api/db/migrations.
+3. Lancer yarn seed pour charger les langues, la banque fr et les mots.
+4. Démarrer yarn redwood dev et ouvrir http://localhost:8910/phil.
+5. Taper cinq lettres, valider et lire les couleurs jusqu'à trouver le mot ou épuiser les six lignes.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

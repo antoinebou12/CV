@@ -20,6 +20,24 @@ This archived pan-tilt controller connects a desktop interface to a serial-contr
 
 **Best fit:** Automated camera positioning for computer vision experiments.
 
+## Use cases
+
+Python 2 desktop and command-line tools that drive a PTU-46-17.5 pan-tilt unit over a serial port.
+
+- **Initialize the unit on start** (PTU-46-17.5 unit): On start, pantiltcontroller.py opens COM3 at 9600 baud and sends speed, acceleration, reset, home position and pan and tilt limit commands (pxu1500, pnu-1000, tnu-850, txu585).
+- **Move to a pan/tilt position** (Lab operator, PTU-46-17.5 unit): The PyQt5 window in pantiltcontroller.py has Pan and Tilt fields; OK sends pp<value> and tp<value> and shows the unit's reply in a log box.
+- **Jog with arrows or buttons** (Lab operator, PTU-46-17.5 unit): The Control menu (Ctrl+O) opens a dialog whose arrow buttons, and the keyboard arrow keys, move pan or tilt by 5 positions per press.
+- **Return to home position** (Lab operator, PTU-46-17.5 unit): The Reset button sends pp0 and tp0 and sets the stored positions back to zero.
+- **Send raw serial commands** (Lab operator, PTU-46-17.5 unit): PTC-command.py is a prompt that forwards each typed line (for example r, pnu 1000, pp0) to the unit and prints the reply until exit is typed.
+
+### Scenario: Point the pan-tilt unit at a target
+
+1. Connect the PTU-46-17.5 to COM3 (the port is hard-coded) on a Windows PC with Python 2.7, pyserial, PyQt5 and pywin32.
+2. Run python pantiltcontroller.py; the script sets limits and moves the unit to 0,0.
+3. Type 500 in Pan and -200 in Tilt, then click OK.
+4. Open Control, Control and fine-tune with the arrow keys in steps of 5.
+5. Click Reset to bring the unit back to home.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

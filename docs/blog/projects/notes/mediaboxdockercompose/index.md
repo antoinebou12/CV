@@ -21,6 +21,25 @@ MediaBoxDockerCompose brings several homelab services together in Docker Compose
 
 **Best fit:** Automated, isolated private cloud media server with remote access and encrypted traffic routing.
 
+## Use cases
+
+Docker Compose stack for a home media server: download automation, Plex/Jellyfin, admin tools and a Caddy proxy.
+
+- **Start the media stack** (Homelab admin, Docker host): docker-compose.yml defines about twenty containers that share PUID, PGID, TZ and ROOT from .env; docker-compose up -d starts them all.
+- **Automate media downloads** (Homelab admin, Docker host): Sonarr, Radarr, Lidarr and Bazarr handle TV, movies, music and subtitles, fed by Jackett, Prowlarr or NZBHydra2 and sent to Deluge or NZBGet, all under ${ROOT}.
+- **Watch or request media** (Media viewer, Docker host): Plex (port 32400) and Jellyfin (port 8096) serve the library; Ombi and Jellyseerr take requests and Tautulli reports Plex activity.
+- **Monitor and browse the host** (Homelab admin, Docker host): Netdata (port 19999) shows host metrics, FileBrowser gives web file access and Dashmachine (port 5000) is a start page configured by dashmachine/config.ini.
+- **Publish services via Caddy** (Homelab admin): caddy/Caddyfile maps subdomains such as sonarr.{$DOMAIN} to local ports with logging, rate limiting, an IP allowlist and basic auth taken from caddy/.env.
+- **Add optional extras** (Homelab admin, Docker host): Separate compose files under extra/ add Samba shares, a WireGuard access server and Portainer; whisper/docker-compose.yml runs a Whisper ASR web service on port 9000.
+
+### Scenario: Bring up a TV and movie server on one machine
+
+1. Install Docker and Docker Compose, then clone the repository.
+2. Edit .env: set TZ, PUID, PGID, ROOT (for example /media/MediaBox) and PLEX_CLAIM.
+3. Run docker-compose up -d from the repository root.
+4. Open Prowlarr on port 9696 and Sonarr on port 8989 to connect indexers and the download client.
+5. Point Plex (port 32400) or Jellyfin (port 8096) at the completed folders under ROOT and start watching.
+
 ## Verified technologies
 
 - Docker Compose — docker-compose.yml multi-service stack

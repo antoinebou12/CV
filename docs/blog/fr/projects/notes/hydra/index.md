@@ -21,6 +21,25 @@ Ce fork Hydra est un lanceur desktop avec Electron et React. Sa compilation comp
 
 **Cas d’usage:** Lanceur et gestionnaire de jeux open source.
 
+## Cas d’utilisation
+
+Une copie de Hydra Launcher, ludothèque Electron qui télécharge, lance, compte le temps de jeu et synchronise les sauvegardes.
+
+- **Constituer sa ludothèque** (Joueur, API et nuage Hydra): Les gestionnaires IPC de src/main/events/library (add-game-to-library, add-custom-game-to-library, assign-game-to-collection) gèrent la ludothèque locale ; les événements catalogue récupèrent fiches et illustrations.
+- **Télécharger et mettre en file** (Joueur, Torrents et hébergeurs): Les torrents passent par python_rpc/main.py avec libtorrent, tandis que services/hosters gère des hébergeurs directs comme Gofile, Mediafire et Pixeldrain ; les événements torrenting gèrent la file.
+- **Ajouter des sources** (Joueur, Torrents et hébergeurs): Les événements download-sources ajoutent, retirent et synchronisent les listes de sources qui alimentent les options de téléchargement.
+- **Lancer et mesurer le temps** (Joueur): process-watcher.ts compare les processus en cours aux exécutables connus pour noter le temps de jeu ; sous Linux, umu.ts et wine-prefix.ts préparent Proton ou Wine.
+- **Sauvegarder dans le nuage** (Joueur, API et nuage Hydra): Ludusavi.backupGame() exécute le binaire ludusavi fourni pour réunir les sauvegardes, et les services cloud-save les téléversent, les comparent et les restaurent avec Hydra Cloud.
+- **Débloquer des succès** (Joueur, API et nuage Hydra): services/achievements repère et lit les fichiers de succès locaux, les fusionne avec les données distantes et affiche des notifications.
+
+### Scénario : De la fiche du catalogue à la sauvegarde dans le nuage
+
+1. Installer Node.js avec Yarn, Python 3.9+ (pip install -r requirements.txt) et Rust, puis lancer yarn ; postinstall compile hydra-native.
+2. Ouvrir un jeu dans le catalogue et l’ajouter à la ludothèque.
+3. Choisir une option de téléchargement ; le processus RPC Python lance le torrent et la page des téléchargements affiche la progression.
+4. Lancer le jeu ; la surveillance des processus repère l’exécutable et compte le temps de jeu.
+5. Fermer le jeu et synchroniser ; ludusavi copie les fichiers de sauvegarde et le service cloud-save les téléverse.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

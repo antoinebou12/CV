@@ -21,6 +21,25 @@ NX-Activity-Log est un fork d’un visualiseur d’activité homebrew Switch. L�
 
 **Cas d’usage:** Suivi précis et analytique du temps de jeu sur Nintendo Switch.
 
+## Cas d’utilisation
+
+Homebrew Nintendo Switch qui affiche le temps de jeu, les sessions et les lancements par utilisateur, maintenu pour HOS 22.
+
+- **Voir le temps de jeu total** (Joueur Switch, Service PDM (Switch)): L’écran All Activity liste pour chaque jeu le temps total, le nombre de lancements, le premier et le dernier lancement, triés au choix ; les totaux viennent des statistiques PDM du système.
+- **Tracer les sessions récentes** (Joueur Switch, Service PDM (Switch)): PlayData::readPlayDataFromPdm parcourt pdmqryQueryPlayEvent par pages ; RecentActivity et Details tracent un graphique par jour, mois ou année et listent chaque session.
+- **Exporter ou importer** (Joueur Switch): Les réglages lancent ExportJob, qui écrit /switch/NX-Activity-Log/export.json, et ImportJob, qui lit import.json vers importedData.json en associant les comptes par nom.
+- **Personnaliser le thème** (Joueur Switch): CustomTheme et ColourPicker permettent de changer chaque couleur ; un PNG placé à /config/NX-Activity-Log/background.png sert de fond.
+- **Mettre à jour dans l’app** (Joueur Switch, Versions GitHub): UpdateUtils.cpp interroge l’API GitHub pour la dernière version d’antoinebou12/NX-Activity-Log et télécharge son premier fichier avec curl.
+- **Remplacer la page utilisateur** (Joueur Switch): Forwarder/ est un nx-hbloader modifié qui ouvre l’application depuis la page utilisateur ; le README prévient que ce mode est instable depuis HOS 21.
+
+### Scénario : Transférer l’historique vers une nouvelle Switch
+
+1. Copier NX-Activity-Log.nro depuis la page Releases dans /switch/NX-Activity-Log/ et le lancer depuis le menu homebrew.
+2. Choisir un utilisateur, ouvrir les réglages et choisir Export pour écrire export.json.
+3. Copier export.json sur la carte SD de l’autre console sous /switch/NX-Activity-Log/import.json.
+4. Y lancer Import dans les réglages, puis redémarrer l’application.
+5. Vérifier que les sessions importées apparaissent dans Recent Activity et que All Activity affiche les totaux fusionnés.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

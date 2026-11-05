@@ -21,6 +21,26 @@ Artemis-N3DS adapts Moonlight Embedded to the Nintendo 3DS family. It combines h
 
 **Best fit:** Remote desktop and gaming on legacy Nintendo New 3DS hardware.
 
+## Use cases
+
+Moonlight Embedded fork that streams games from a Sunshine PC to a New 3DS, with a bottom-screen helper UI.
+
+- **Install the CIA or 3DSX** (3DS player): dist/INSTALL.md describes installing artemis.cia from the HOME Menu with FBI, or copying artemis.3dsx to sd:/3ds/artemis/ for the Homebrew Launcher; custom firmware is required.
+- **Pair with a host** (3DS player, Sunshine host PC): The player adds a host by LAN IP (host_discovery.cpp can also scan the network) and chooses pair; pair_host in src/n3ds_main.cpp shows a PIN to type into Sunshine and keeps a pair record.
+- **Stream a game or desktop** (3DS player, Sunshine host PC): Video plays on the top screen using the New 3DS hardware H.264 decoder; older 3DS models fall back to software decode at lower frame rates, per the README.
+- **Switch touch input modes** (3DS player, Sunshine host PC): The SELECT hub on the bottom screen switches between gamepad, mouse, keyboard, magnify and mirror handlers in src/input/touch/, plus Fit, Fill, Stretch and zoom display options.
+- **Save performance as CSV** (3DS player): From the Session tab, the performance overlay shows stream telemetry; export_stream_benchmark_csv in src/stream_benchmark.cpp writes benchmark_<time>.csv to the SD card.
+- **Build with devkitPro** (Developer): docker build of the Dockerfile gives a devkitPro image; make inside it produces artemis.3dsx, artemis.cia and artemis.elf. A local devkitPro 3ds-dev setup with bannertool and makerom also works.
+
+### Scenario: Play a PC game on a New 3DS over Wi-Fi
+
+1. Copy artemis.cia to the SD card and install it in FBI with Install and delete CIA.
+2. Open Artemis, press A to add a host and enter the PC’s LAN IP address.
+3. Choose pair and type the PIN shown on the 3DS into Sunshine’s PIN page.
+4. Choose stream and pick an app; the video plays on the top screen.
+5. Press SELECT to switch to Mouse or Magnify, or open the performance overlay and save a CSV.
+6. Quit from the Session tab to end the stream.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

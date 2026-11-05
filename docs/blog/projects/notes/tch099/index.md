@@ -21,6 +21,24 @@ TCH099 is a teaching-oriented web project that combines static frontend pages wi
 
 **Best fit:** Full-stack containerized database application reference.
 
+## Use cases
+
+PHP and MariaDB demo web app with an Android client, used to teach routing, sessions and Azure deployment.
+
+- **Create an account** (Web or mobile user, MariaDB database): The signup page or SignupActivity on Android posts to /api/signup; api/signup.php calls registerUser(), which inserts the account into the Clients table created by db/1create.sql.
+- **Log in with a session** (Web or mobile user, MariaDB database): login.html and LoginActivity post the username and password to /api/login; api/login.php checks them with loginUser() and opens a PHP session, and /api/logout closes it.
+- **Show a random image** (Web or mobile user): random-image.html calls /api/random-image, which returns a cat picture URL from TheCatAPI or a thispersondoesnotexist.com URL depending on imageType.
+- **Get a greeting by language** (Web or mobile user): /api/hello-world/$langue answers with a greeting in French, English, Spanish or German, as a minimal API example.
+- **List clients as admin** (Administrator, MariaDB database): The /admin route serves admin.html only when isAdmin() is true; the page loads /api/clients, which reads the Clients table for a session whose role is admin.
+
+### Scenario: Run the demo locally and reach the admin page
+
+1. Fill the DB_HOST and MYSQL_* variables listed in the README, then run docker-compose up -d --build.
+2. Load the schema and seed data with python3 db/db.py, or import db/1create.sql, 2contraines.sql and 3insert.sql in phpMyAdmin on port 8060.
+3. Open http://localhost:8001/signup, create an account, then log in at /login.
+4. With an admin account, open /admin to see the Clients table loaded from /api/clients.
+5. Push to main to let .github/workflows/main_tch099antoine.yml zip the app and deploy it to the Azure Web App.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

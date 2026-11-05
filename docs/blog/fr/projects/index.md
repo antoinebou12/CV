@@ -8,6 +8,34 @@
 
 Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté à l’URL).
 
+- [WearTrailsExperiments : des traces d’usure pilotées par le contact, dans le navigateur](https://antoineboucher.info/CV/blog/fr/projects/notes/weartrailsexperiments/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/weartrailsexperiments/index.md) · 2026-11-05
+  Expériences three.js et Ammo.js qui transforment contact, traction et glissement de corps rigides en cartes d’usure, de distance glissée et de flux.
+- [WearSurfacesDatasets : des séquences mesurées de surfaces usées](https://antoineboucher.info/CV/blog/fr/projects/notes/wearsurfacesdatasets/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/wearsurfacesdatasets/index.md) · 2026-11-05
+  Cartes GelSight de matériaux usés selon le grain, la charge et la distance, en Parquet et WebDataset, avec outils d’alignement et visionneuse WebGPU.
+- [WearMachine : les fichiers CAO d’un banc d’usure GelSight](https://antoineboucher.info/CV/blog/fr/projects/notes/wearmachine/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/wearmachine/index.md) · 2026-11-05
+  Fichiers STEP, STL, DXF et dessins d’un petit banc d’usure par glissement : rail, poussoir, porte-poids et porte-échantillons GelSight.
+- [WearBlender : des scènes Blender pour les effets d’usure](https://antoineboucher.info/CV/blog/fr/projects/notes/wearblender/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/wearblender/index.md) · 2026-11-05
+  Fichiers Blender d’exemple pour l’usure des arêtes, les rayures, les normal maps pivotées, les flowmaps et l’usure peinte, en shaders et geometry nodes.
+- [TradingViewBuilder : indicateurs et stratégies en Pine Script](https://antoineboucher.info/CV/blog/fr/projects/notes/tradingviewbuilder/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/tradingviewbuilder/index.md) · 2026-11-05
+  TradingViewBuilder rassemble des indicateurs et stratégies Pine Script (EMA, MACD, RSI, Bollinger, RVI …) à coller dans TradingView.
+- [Sport-Arbitrage : calculatrice d’arbitrage pour paris sportifs](https://antoineboucher.info/CV/blog/fr/projects/notes/sport-arbitrage/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/sport-arbitrage/index.md) · 2026-11-05
+  Sport-Arbitrage est une calculatrice d’une page qui compare les cotes de deux sites de paris, repère un arbitrage et calcule mises et profit.
+- [Simulateur : un jeu de simulation boursière en Django](https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/index.md) · 2026-11-05
+  Simulateur est une plateforme Django où des admins scénarisent un marché et où des équipes échangent des actions simulées en direct.
+- [SimilityVectorEmbedding : trouver des films proches par recherche vectorielle](https://antoineboucher.info/CV/blog/fr/projects/notes/similityvectorembedding/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/similityvectorembedding/index.md) · 2026-11-05
+  Carnets Jupyter qui vectorisent un catalogue de films et comparent pgvector, Qdrant, BM25, Neo4j et un LLM local pour trouver des films proches.
+- [Salary : explorer les guides salariaux et les données de salaires au Canada](https://antoineboucher.info/CV/blog/fr/projects/notes/salary/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/salary/index.md) · 2026-11-05
+  Salary extrait des guides salariaux canadiens en PDF et les salaires du Guichet-Emplois avec Python, puis compare la paie par poste, province et région.
+- [PolyFEMBlenderPlugin : des simulations PolyFEM depuis une scène Blender](https://antoineboucher.info/CV/blog/fr/projects/notes/polyfemblenderplugin/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/polyfemblenderplugin/index.md) · 2026-11-05
+  Extension Blender 4.2 qui exporte maillages et réglages physiques en JSON PolyFEM, lance PolyFEM avec Docker et réimporte les résultats.
+- [MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov](https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/index.md) · 2026-11-05
+  Carnets d’AlgoÉTS qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert face à l’achat-conservation.
+- [LegosTracker : catalogue LEGO et historique des prix des ensembles](https://antoineboucher.info/CV/blog/fr/projects/notes/legostracker/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/legostracker/index.md) · 2026-11-05
+  LegosTracker réunit les exports du catalogue Rebrickable, un collecteur Playwright des prix BrickEconomy et des carnets qui modélisent la valeur des sets LEGO.
+- [Kelly_RM : expériences sur le critère de Kelly pour dimensionner les positions](https://antoineboucher.info/CV/blog/fr/projects/notes/kelly-rm/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/kelly-rm/index.md) · 2026-11-05
+  Kelly_RM regroupe des carnets d’AlgoÉTS qui simulent les mises de Kelly et estiment les chances de gain d’un backtest RSI pour en tirer une fraction de Kelly.
+- [BullETS : une bibliothèque Python pour backtester des stratégies](https://antoineboucher.info/CV/blog/fr/projects/notes/bullets/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/bullets/index.md) · 2026-11-05
+  BullETS est une bibliothèque Python d’AlgoÉTS pour écrire des stratégies boursières et les backtester sur les données de Financial Modeling Prep.
 - [Workshop1 : des notebooks pour apprendre Python](https://antoineboucher.info/CV/blog/fr/projects/notes/workshop1/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/workshop1/index.md) · 2026-10-24
   Workshop1 est une série de notebooks d’AlgoETS qui va des bases de Python et des API à pandas, aux graphiques et à un exercice d’EMA.
 - [TrueMapData : des cartes de hauteur pour la métrologie et l’infographie](https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/index.md) · 2026-10-24

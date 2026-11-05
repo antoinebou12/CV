@@ -21,6 +21,24 @@ GreenScreenVideotoAlphaPNGs sépare acquisition vidéo, extraction des images et
 
 **Cas d’usage:** Préparation d'assets d'animation 2D pour la réalité augmentée.
 
+## Cas d’utilisation
+
+Un outil Python qui transforme une vidéo sur fond vert en PNG transparents, GIF ou .mov alpha pour Lens Studio.
+
+- **Télécharger une vidéo par URL** (Créateur de filtres AR, YouTube (yt-dlp)): greenscreen convert accepte une URL YouTube ; convert.py appelle download_video() et download_audio() de download.py, qui s’appuient sur yt-dlp.
+- **Découper la vidéo en images** (Créateur de filtres AR, ffmpeg): frames.py écrit des PNG numérotés (0.png, 1.png…) avec ffmpeg, ou avec OpenCV si l’option --no-ffmpeg est donnée.
+- **Retirer le fond vert** (Créateur de filtres AR): chroma.py calcule une distance YCbCr à la couleur clé (pixel 1,1 par défaut, tolérance 50–130) et écrit des PNG RVBA dans un dossier voisin *_alpha.
+- **Créer un GIF transparent** (Créateur de filtres AR, ffmpeg): greenscreen gif <dossier> utilise par défaut numpngw et l’extension facultative APNGLib, ou une palette ffmpeg avec --fast-ffmpeg ; le GIF est écrit à côté du dossier.
+- **Encoder un .mov avec alpha** (Créateur de filtres AR, ffmpeg): greenscreen video <dossier> --fps 30 encode la séquence en Videogen-<horodatage>.mov avec le codec qtrle ou prores_4444.
+
+### Scénario : D’un clip sur fond vert à une animation Lens Studio
+
+1. Lancer bash install.sh (ou .\install.ps1 sous Windows), puis uv run greenscreen --help.
+2. Lancer uv run greenscreen convert clip.mp4 pour extraire les images dans clip/ et les images détourées dans clip_alpha/.
+3. Les fichiers qui commencent par le nom du clip sont déplacés dans project_clip/, sauf avec --no-project-dir.
+4. Lancer uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg pour obtenir un GIF transparent sans APNGLib.
+5. Dans Lens Studio, passer par Resources → Add New → 2D animation from files et choisir les PNG *_alpha.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

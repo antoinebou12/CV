@@ -20,6 +20,23 @@ This display experiment loads image data into a GTK drawing area through Cairo. 
 
 **Best fit:** Calibration and verification of 4K 10-bit HDR displays on Linux workstations.
 
+## Use cases
+
+Linux scripts to check that an HDR display really shows 10 bits per channel under an X server at depth 30.
+
+- **Start X at depth 30** (Display tester, X server (Xorg)): Xdepth.sh runs startx -- -depth 30 and prints the depth from xwininfo, falling back to depth 24; xorg.conf sets DefaultDepth 30.
+- **Show a 10-bit gray gradient** (Display tester, HDR10 monitor): Viewer.py packs the RGB channels of images/gray_gradient_10.tiff into a cairo FORMAT_RGB30 surface and draws it in a GTK 3 window.
+- **Compare 8-bit and 10-bit** (Display tester, HDR10 monitor): The images/ folder holds gray_gradient_8.tiff next to gray_gradient_10.tiff, so the same gradient can be viewed at both depths to compare banding by eye.
+- **Play a video at 10 bpc** (Display tester, HDR10 monitor): Viewer3.py adds a Typer CLI with --image-path and --video-path; videos are read frame by frame with imageio's ffmpeg reader in a thread at 30 fps.
+
+### Scenario: Checking a new HDR10 monitor on Ubuntu
+
+1. Stop the display manager: sudo systemctl stop lightdm || sudo systemctl stop gdm, then sudo pkill Xorg.
+2. Start X with startx -- -depth 30 (or run Xdepth.sh).
+3. Confirm with xwininfo -root | grep Depth that the root window reports depth 30.
+4. Run python3 Viewer.py to open images/gray_gradient_10.tiff in the viewer window.
+5. Look for banding in the gradient; smooth steps mean the 10-bit path works end to end.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,24 @@ kroki-playground is a Next.js interface for editing text diagrams and previewing
 
 **Best fit:** Rapid prototyping of PlantUML, Mermaid, GraphViz, and C4 architecture diagrams.
 
+## Use cases
+
+A Next.js playground to write diagram source for Kroki, preview the SVG live and share it through the URL.
+
+- **Preview a diagram live** (Diagram author, Kroki server): DiagramGenerator.tsx deflates the source with encodeDiagramPayload() (pako, base64url) and loads <base>/<type>/svg/<encoded> from kroki.io or NEXT_PUBLIC_KROKI_BASE_URL.
+- **Switch between diagram types** (Diagram author): lib/kroki/diagramTypes.ts lists the Kroki route names (plantuml, mermaid, graphviz, d2, vega-lite…) offered in the type picker.
+- **Share or download the result** (Diagram author): The page pushes ?type=…&source=… into the browser history, can copy the Kroki URL to the clipboard and saves the image as diagram.svg.
+- **Render through the REST API** (API client developer, Kroki server): app/api/generate-diagram/route.ts accepts GET or POST with diagramSource, selectedDiagram and outputFormat and returns base64 diagramData; the README and openapi.yaml name the path /api/generateDiagram.
+- **Read the OpenAPI docs** (API client developer): /api-docs renders public/openapi.yaml with swagger-ui-react, and GET /api/openapi serves the specification.
+
+### Scenario: Sketching a sequence diagram and sending it to a teammate
+
+1. Run npm install then npm run dev and open http://localhost:3000.
+2. Choose plantuml in the type list and paste the @startuml … @enduml source.
+3. The SVG preview refreshes from Kroki as the source changes.
+4. Copy the page URL, which now carries ?type=plantuml&source=<encoded>, and send it.
+5. Click download to save diagram.svg for the design document.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

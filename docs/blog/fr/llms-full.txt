@@ -22,6 +22,25 @@ Ces dotfiles regroupent la configuration de shell et d’éditeur que j’utilis
 
 **Cas d’usage:** Reproduction instantanée d&#39;un environnement shell optimisé sur tout système Unix.
 
+## Cas d’utilisation
+
+Scripts Bash qui installent, mettent à jour et retirent un environnement shell Linux : vimrc, Oh My Zsh, tmux, outils.
+
+- **Installer la config vim** (Développeur, Projets en amont): La fonction install_vimrc d’install.sh installe vim et git, clone amix/vimrc dans ~/.vim_runtime et lance son installateur ; edit_vimrc place NERDTree à gauche et affiche les numéros de ligne.
+- **Configurer Oh My Zsh et tmux** (Développeur, Projets en amont): install_oh_my_zsh télécharge l’installateur officiel d’Oh My Zsh avec wget ; edit_oh_my_zsh change le thème et écrit un thème d’invite minimal ; install_tmux écrit un ~/.tmux.conf complet.
+- **Installer des outils de dev** (Développeur, Outil apt/dnf/pacman): bash install.sh &lt;option&gt; lance un installateur (Python, JDK, nvm, .NET, Go, Rust, Docker, kubectl, AWS CLI, Azure CLI, JupyterLab, outils réseau) ; install_package lit /etc/os-release pour choisir apt-get, pacman, dnf, yum ou brew.
+- **Mettre à jour scripts et vimrc** (Développeur, Projets en amont): update.sh définit update_install_script (git pull puis bash install.sh) et update_vimrc (git pull --rebase dans ~/.vim_runtime puis update_plugins.py) ; le fichier ne fait que les définir, il faut donc le sourcer.
+- **Désinstaller avec sauvegarde** (Développeur, Outil apt/dnf/pacman): uninstall.sh copie ~/.vimrc et ~/.tmux.conf en fichiers .backup avant de les supprimer, puis purge JDK, Python, Rust, Go, Jupyter, AWS CLI, Azure CLI et nvm ; lancé avec bash, il appelle chaque fonction l’une après l’autre.
+- **Afficher neofetch au login** (Développeur, Outil apt/dnf/pacman): motd/motd.sh installe neofetch avec apt-get s’il manque et écrit /etc/update-motd.d/10-neofetch pour afficher le résumé du système dans la bannière de connexion.
+
+### Scénario : Préparer une machine Ubuntu neuve
+
+1. Cloner le dépôt et lancer bash install.sh sans option pour afficher la liste de usage().
+2. Lancer bash install.sh install_vimrc pour installer vim et git et cloner amix/vimrc dans ~/.vim_runtime.
+3. Lancer bash install.sh install_oh_my_zsh puis install_tmux pour obtenir zsh et un ~/.tmux.conf prêt.
+4. Lancer bash install.sh install_docker : le script récupère get.docker.com et Docker Compose 1.29.2.
+5. Sur un serveur, lancer motd/motd.sh en root pour voir neofetch à chaque connexion SSH.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -87,6 +106,24 @@ Le script modifie des fichiers personnels et exécute des commandes privilégié
 - Dépôt: https://github.com/AlgoETS/AINewsTracker
 
 
+## Cas d’utilisation
+
+Service FastAPI d&#39;AlgoÉTS qui collecte des nouvelles financières, les note avec FinBERT et les range dans MongoDB.
+
+- **Récupérer des nouvelles** (Analyste quantitatif, Sources de nouvelles): Les routes /news interrogent le flux RSS 8-K de Financial Modeling Prep, GNews ou un flux nommé avec feedparser, téléchargent le texte de chaque article et l&#39;enregistrent ; au-delà de 10, le travail passe en tâche de fond.
+- **Noter le sentiment** (Analyste quantitatif): TextMetrics charge ProsusAI/finbert pour le sentiment, Jean-Baptiste/roberta-ticker pour repérer les tickers et distilbart-cnn-12-6 pour les résumés ; GET /articles/{article_id}/score renvoie la note enregistrée.
+- **Chercher par entreprise** (Analyste quantitatif): /company enregistre les tickers, et /articles/articles_by_company_id/{company_id} ou POST /articles/articles_by_company_ids renvoient les articles liés à une ou plusieurs entreprises.
+- **Charger sociétés et nouvelles** (Analyste quantitatif, Sources de nouvelles): POST /seed/seed_companies et /seed/seed_news lancent CompanySeeder et NewsSeeder en tâche de fond ; NewsSeeder lit les nouvelles boursières de Financial Modeling Prep avec FMP_API_KEY et enregistre les articles dans MongoDB.
+- **Fournir les articles notés** (Service de backtest): GET /v1/articles, protégé par un jeton de service Bearer (AINEWSTRACKER_SERVICE_TOKEN), renvoie les articles filtrés par symboles et période, avec étiquette de sentiment, probabilités et nom du modèle, paginés par curseur.
+
+### Scénario : Collecter et interroger les nouvelles d&#39;Apple en local
+
+1. Copier .env.example en .env, renseigner FMP_API_KEY, puis lancer docker-compose up --build pour démarrer l&#39;API avec MongoDB et Redis.
+2. Ouvrir http://localhost:8000/api/v1/docs et appeler POST /seed/seed_companies.
+3. Appeler POST /seed/seed_news ; NewsSeeder lit les nouvelles boursières de Financial Modeling Prep en tâche de fond et enregistre les articles notés.
+4. Lire les articles avec GET /articles/ et vérifier l&#39;un d&#39;eux avec GET /articles/{article_id}/score.
+5. Depuis un service de backtest, appeler GET /v1/articles?symbols=AAPL avec le jeton de service Bearer.
+
 
 
 ---
@@ -107,6 +144,24 @@ another-install-script propose un menu shell pour choisir des opérations systè
 **Pourquoi il existe:** Installateur shell interactif (TUI) automatisant le déploiement de conteneurs Docker et de configurations serveur.
 
 **Cas d’usage:** Déploiement rapide de serveurs et d&#39;environnements homelab en une commande.
+
+## Cas d’utilisation
+
+Menu whiptail en Bash qui installe des outils de base et des services Docker Compose sur un serveur Ubuntu personnel.
+
+- **Installer les outils de base** (Admin du serveur): L’entrée Installation de main_setup_menu (src/menu.sh) affiche une liste à cocher : paquets de base, Docker, Cockpit, LXDE, Ansible, Dokku, Vagrant, etc. ; src/install.sh exécute les choix.
+- **Déployer des conteneurs** (Admin du serveur, Moteur Docker): Add Container liste les dossiers de containers/ ; chaque &lt;nom&gt;.sh lance docker-compose up -d sur le docker-compose.yml voisin (par exemple containers/gogs/).
+- **Ouvrir les ports au pare-feu** (Admin du serveur, Pare-feu UFW): Après l’ajout de conteneurs, manage_firewall_ports_allow_list (src/firewall.sh) lit leurs ports dans config.yml et les autorise ; si system.firewall vaut yes, ufw refuse le reste du trafic entrant sauf SSH, 2222, HTTP et HTTPS.
+- **Retirer des conteneurs** (Admin du serveur, Moteur Docker): remove_container_menu affiche les conteneurs installés ; chaque fonction remove_docker_&lt;nom&gt; lance docker-compose down sur ce service.
+- **Tout désinstaller** (Admin du serveur, Moteur Docker, Pare-feu UFW): L’entrée Uninstall lance uninstall.sh, qui charge les modules de src/ pour défaire l’installation. L’entrée Backup appelle pour l’instant le même script ; les fonctions de src/backup.sh ne sont pas reliées au menu.
+
+### Scénario : Préparer un VPS avec quelques services auto-hébergés
+
+1. Cloner le dépôt et lancer sudo bash setup.sh ; main_setup_menu s’ouvre car bashmenu vaut yes dans config.yml.
+2. Choisir Installation et garder basic et docker cochés ; le choix de docker ouvre ensuite la liste des conteneurs.
+3. Cocher des services comme gogs et bookstack ; chaque script lance docker-compose up -d.
+4. Laisser l’étape pare-feu autoriser les ports listés dans config.yml et activer ufw.
+5. Plus tard, utiliser Remove Container pour arrêter un service avec docker-compose down.
 
 ## Langages (octets GitHub Linguist)
 
@@ -226,6 +281,25 @@ Ce dépôt contient le README de mon profil GitHub. Il combine du Markdown, des 
 
 **Cas d’usage:** Génération automatique d&#39;assets de profil.
 
+## Cas d’utilisation
+
+README de profil GitHub avec liens, badges, projets épinglés et statistiques, tenu à jour par des Actions planifiées.
+
+- **Lire le profil et les liens** (Visiteur du profil): README.md commence par le titre plateforme et infographie, puis les liens (GitHub, LinkedIn, site, CV, courriel), les badges de certification et les principaux langages et outils.
+- **Parcourir les projets phares** (Visiteur du profil): Une section repliable Featured projects affiche des cartes pour des dépôts comme AINewsTracker, hass_renpho, ipc-toolkit et TrueMapData, ainsi que les organisations DashCTRL, ETSim et UFOKEK.
+- **Régénérer le graphe 3D** (GitHub Actions): github-profile-3d-contrib.yml s’exécute chaque jour à 5 h UTC, génère le calendrier 3D des contributions, ne garde que profile-night-green.svg et le valide dans le dépôt.
+- **Actualiser badges LeetCode** (GitHub Actions): update-readme.yml s’exécute chaque jour à 12 h UTC, récupère les statistiques sur leetcodestats.cyclic.app et réécrit les badges entre les marqueurs LEETCODE_STATS de README.md.
+- **Vérifier les liens** (Propriétaire du profil, GitHub Actions): À chaque push ou pull request vers main ou master, check-links.yml lance lychee sur README.md et docs/**/*.md et écrit un résumé de tâche.
+- **Publier la page Jekyll** (Propriétaire du profil, GitHub Actions): jekyll-pages.yml construit docs/ avec le thème jekyll-theme-primer et le déploie sur GitHub Pages ; docs/index.md renvoie au README du profil.
+
+### Scénario : Modifier le profil et laisser l’automatisation suivre
+
+1. Le propriétaire modifie README.md, par exemple la liste Featured projects, et pousse sur master.
+2. check-links.yml lance lychee sur README.md et le Markdown de docs et signale les liens brisés.
+3. jekyll-pages.yml construit docs/ et déploie le petit site Jekyll sur GitHub Pages.
+4. Chaque jour, github-profile-3d-contrib.yml régénère profile-night-green.svg et le valide.
+5. Un visiteur ouvre la page de profil et voit le README à jour, les cartes de statistiques et le calendrier 3D.
+
 ## Fonctions et composants
 
 - **README et ressources** — README.md est le document visible du profil. Les dossiers images, models et profile-3d-contrib regroupent des ressources associées. GitHub affiche le document, tandis que certains services liés produisent leurs propres images.
@@ -282,6 +356,24 @@ Ce dépôt archivé conserve un diagramme d’infrastructure domestique dans plu
 **Pourquoi il existe:** Schémas d’infrastructure domestique conservés en sources PlantUML et draw.io, avec des exports HTML et image.
 
 **Cas d’usage:** Consulter un instantané d’infrastructure archivé ou modifier ses sources pour documenter un homelab.
+
+## Cas d’utilisation
+
+Diagrammes C4 PlantUML et draw.io d’un homelab : Cloudflare, un VPS OVH, des hyperviseurs, un NAS et leurs services.
+
+- **Voir le schéma draw.io v1** (Lecteur, Moteurs de rendu): architecture.drawio.html intègre le XML draw.io dans le visualiseur diagrams.net, avec zoom, calques et visionneuse ; le README le présente comme la v1.
+- **Générer le diagramme C4 v2** (Lecteur, Moteurs de rendu): architecture.plantuml inclut C4_Deployment et les icônes Font Awesome, OSA et Office ; le lien v2 du README est un rendu encodé sur le serveur PlantUML.
+- **Suivre les accès externes** (Lecteur): Les lignes Rel montrent l’utilisateur qui passe par Cloudflare en HTTPS, Cloudflare qui renvoie vers le VPS OVH, le VPS qui joint les réseaux domestique et personnel par WireGuard, et l’admin qui passe par Teleport en SSH.
+- **Inventorier VM et conteneurs** (Lecteur): Les nœuds listent les hôtes XCP-ng, Proxmox et Windows, un NAS QNAP avec sa pile média, et des VM comme Talos (Portainer, AI News Tracker, Freqtrade), Home Assistant et Caddy avec Prometheus et Grafana, chacun avec CPU, RAM et disque.
+- **Modifier et réexporter** (Mainteneur du schéma, Moteurs de rendu): Le mainteneur modifie architecture.plantuml ou architecture.drawio et exporte une image comme home architecture.png.
+
+### Scénario : Suivre une requête web jusqu’au homelab
+
+1. Ouvrir architecture.plantuml, ou le lien v2 du README.md rendu par le serveur PlantUML.
+2. Partir de la personne User, qui joint Cloudflare (CDN et proxy inverse) en HTTPS.
+3. Suivre Cloudflare jusqu’au VPS OVH, qui exécute Caddy, Teleport et Uptime Kuma.
+4. Suivre le lien WireGuard du VPS vers le Personal Network et son hôte Proxmox.
+5. Voir la VM Caddy router le trafic vers AI News Tracker, Marketwatch, Portainer, Plex et Jellyfin.
 
 ## Langages (octets GitHub Linguist)
 
@@ -346,6 +438,26 @@ Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet ré
 **Pourquoi il existe:** Défi d&#39;ingénierie sous fortes contraintes : streaming 60 FPS sur architecture ARM11 double écran.
 
 **Cas d’usage:** Accès distant et jeu PC sur matériel New 3DS.
+
+## Cas d’utilisation
+
+Fork de Moonlight Embedded qui diffuse les jeux d’un PC Sunshine sur une New 3DS, avec une interface d’aide à l’écran du bas.
+
+- **Installer le CIA ou le 3DSX** (Joueur sur 3DS): dist/INSTALL.md explique comment installer artemis.cia depuis le menu HOME avec FBI, ou copier artemis.3dsx dans sd:/3ds/artemis/ pour le Homebrew Launcher ; un firmware modifié est requis.
+- **Jumeler un hôte** (Joueur sur 3DS, PC hôte Sunshine): Le joueur ajoute un hôte par son IP locale (host_discovery.cpp peut aussi balayer le réseau) et choisit pair ; pair_host dans src/n3ds_main.cpp affiche un NIP à saisir dans Sunshine et garde un enregistrement de jumelage.
+- **Diffuser un jeu ou le bureau** (Joueur sur 3DS, PC hôte Sunshine): La vidéo s’affiche à l’écran du haut avec le décodeur H.264 matériel de la New 3DS ; selon le README, les anciens modèles passent au décodage logiciel, avec moins d’images par seconde.
+- **Changer de mode tactile** (Joueur sur 3DS, PC hôte Sunshine): Le menu SELECT de l’écran du bas passe d’un gestionnaire à l’autre dans src/input/touch/ : manette, souris, clavier, loupe et miroir, avec les affichages Fit, Fill, Stretch et le zoom.
+- **Enregistrer les mesures en CSV** (Joueur sur 3DS): Depuis l’onglet Session, la surcouche de performance affiche la télémétrie ; export_stream_benchmark_csv (src/stream_benchmark.cpp) écrit benchmark_&lt;horodatage&gt;.csv sur la carte SD.
+- **Compiler avec devkitPro** (Développeur): Le Dockerfile donne une image devkitPro ; make y produit artemis.3dsx, artemis.cia et artemis.elf. Une installation locale de devkitPro 3ds-dev avec bannertool et makerom fonctionne aussi.
+
+### Scénario : Jouer à un jeu PC sur New 3DS en Wi-Fi
+
+1. Copier artemis.cia sur la carte SD et l’installer dans FBI avec Install and delete CIA.
+2. Ouvrir Artemis, appuyer sur A pour ajouter un hôte et saisir l’adresse IP locale du PC.
+3. Choisir pair et taper dans la page PIN de Sunshine le NIP affiché sur la 3DS.
+4. Choisir stream puis une application ; la vidéo s’affiche à l’écran du haut.
+5. Appuyer sur SELECT pour passer en mode Souris ou Loupe, ou ouvrir la surcouche de performance et enregistrer un CSV.
+6. Quitter depuis l’onglet Session pour terminer la diffusion.
 
 ## Langages (octets GitHub Linguist)
 
@@ -436,6 +548,24 @@ Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu. L
 **Pourquoi il existe:** Client GameStream C&#43;&#43; accéléré matériellement avec calage d&#39;images NVN pour une fluidité sans saccade.
 
 **Cas d’usage:** Diffusion de jeux PC vers Nintendo Switch en mode portable avec latence minimale.
+
+## Cas d’utilisation
+
+Fork de Moonlight-Switch qui diffuse des jeux PC sur Nintendo Switch, avec mise à l’échelle FSR, profils de flux et télémétrie.
+
+- **Jumeler un hôte et diffuser** (Joueur sur Switch, PC hôte GameStream): GameStreamClient.cpp et MoonlightSession.cpp gèrent le jumelage par NIP et les sessions avec Sunshine, Apollo, Vibeshine ou Punktfunk ; DiscoverManager trouve les hôtes et WakeOnLanManager peut les réveiller.
+- **Régler l’affichage vidéo** (Joueur sur Switch): Fit, Fill, Stretch, zoom et panoramique, rotation et plage complète passent par un seul chemin de présentation deko3d, avec mise à l’échelle FSR/EASU, netteté RCAS et tramage après le décodage NVDEC.
+- **Enregistrer des profils** (Joueur sur Switch, PC hôte GameStream): Les profils nommés enregistrent FPS (30 à 120), résolution, débit, codec et présentation dans profile.json ; on peut les associer à un hôte, les modifier, les importer ou les exporter (StreamProfileStore.cpp, ProfileEditorDialog.cpp).
+- **Exporter un banc d’essai** (Joueur sur Switch): La page Performance affiche débit, latence, file d’images, temps GPU et fréquences de la Switch ; les commandes Benchmark démarrer, arrêter et enregistrer écrivent un fichier via app/src/benchmark/BenchmarkExport.cpp.
+- **Compiler et tester l’appli** (Développeur): Avec devkitA64 et CMake, la cible Moonlight.nro construit le binaire Switch, publié par la CI sous le nom Artemis-Switch.nro ; tests/ contient des tests unitaires portables lancés avec ctest, plus des vérifications Python d’i18n et de publication.
+
+### Scénario : Diffuser un jeu PC sur Switch
+
+1. Copier Artemis-Switch.nro dans sdmc:/switch/Artemis-Switch/ et lancer hbmenu par redirection de titre.
+2. Ouvrir Artemis Switch, choisir le PC hôte et terminer le jumelage par NIP dans l’interface web de l’hôte.
+3. Créer un profil de flux (par exemple 60 FPS, H.265, Fit avec FSR) et l’associer à cet hôte.
+4. Lancer une application et appuyer ensemble sur - et &#43; pour ouvrir la surcouche.
+5. Ouvrir Performance pour suivre le débit et la latence du pipeline, puis lancer et enregistrer un Benchmark.
 
 ## Langages (octets GitHub Linguist)
 
@@ -578,6 +708,23 @@ AudioTranscript découpe un enregistrement WAV autour des silences, transmet les
 
 **Cas d’usage:** Transcription automatique par lots d&#39;enregistrements audio.
 
+## Cas d’utilisation
+
+CLI Python qui découpe un fichier WAV aux silences et transcrit chaque segment pour former un seul texte.
+
+- **Découper l’audio aux silences** (Utilisateur de la CLI): main.py charge le WAV avec pydub et appelle split_on_silence avec --min-silence-len, --silence-thresh (relatif au dBFS du fichier) et --keep-silence, puis écrit chaque morceau dans audio-chunks/chunkN.wav.
+- **Transcrire les segments** (Utilisateur de la CLI, Amazon Transcribe): Chaque segment passe par recognize_amazon (us-east-1, compartiment S3 du .env) et les textes sont joints puis affichés. Le README parle de Google Speech Recognition, mais le code appelle Amazon ; l’option --language n’est pas transmise.
+- **Mettre les clés AWS dans .env** (Utilisateur de la CLI, Amazon Transcribe): load_dotenv lit AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY et AWS_BUCKET_NAME ; main.py lève une erreur si l’une manque.
+- **Tester Whisper sur un exemple** (Utilisateur de la CLI, Hugging Face Hub): ai.py est un script à part qui charge openai/whisper-large-v2 avec transformers et transcrit un échantillon LibriSpeech de test ; il n’est pas relié à la CLI et ses paquets ne figurent pas dans requirements.txt.
+
+### Scénario : Transcrire une entrevue enregistrée
+
+1. Lancer pip install -r requirements.txt, puis python-dotenv, que main.py importe mais que le fichier n’inclut pas.
+2. Créer un fichier .env avec AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY et AWS_BUCKET_NAME.
+3. Lancer python main.py entrevue.wav -m 700 -s -16 (le chemin est positionnel, caro.wav par défaut).
+4. main.py écrit les segments dans audio-chunks/ et affiche une barre de progression Rich.
+5. Chaque segment est envoyé à Amazon Transcribe et le texte complet s’affiche à la fin.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -650,6 +797,24 @@ AuthLaravel est un projet d’apprentissage du contrôle d’accès avec Laravel
 **Pourquoi il existe:** Modèle d&#39;authentification Laravel implémentant JWT, sessions et politiques de rôles.
 
 **Cas d’usage:** Socle d&#39;authentification robuste pour projets et API Laravel.
+
+## Cas d’utilisation
+
+Appli de labo Laravel 10 et React (Inertia) pour le cours GTI619 de l’ÉTS : rôles, limitation des connexions, mots de passe.
+
+- **Créer un compte** (Utilisateur inscrit): RegisteredUserController enregistre un nouvel utilisateur avec courriel, nom d’utilisateur, téléphone et mot de passe ; le formulaire est resources/js/Pages/Auth/Register.tsx.
+- **Se connecter avec limitation** (Utilisateur inscrit, Administrateur): LoginRequest bloque une paire courriel et IP après 5 échecs et enregistre login_attempts, navigateur, OS, IP et last_login dans la fiche de l’utilisateur.
+- **Réinitialiser le mot de passe** (Utilisateur inscrit, Mailpit (courriel dev)): Les routes forgot-password envoient un lien de réinitialisation par courriel ; dans l’environnement Sail, Mailpit l’intercepte et l’affiche sur le port 8025.
+- **Changer profil et mot de passe** (Utilisateur inscrit): PUT /password passe par PasswordController, et /profile permet de modifier ou supprimer le compte via ProfileController.
+- **Voir les comptes (admin)** (Administrateur): /admin passe par le middleware AdminAuthenticated, et /dashboard affiche AdminDashboard.tsx avec le courriel, les rôles et les permissions de chaque compte si le rôle est roles:admin ; les autres rôles voient le tableau de bord simple.
+
+### Scénario : Lancer le labo et tester l’accès par rôle
+
+1. Depuis AuthLaravel/, lancer ./vendor/bin/sail up -d pour démarrer l’application avec MariaDB, Redis et Mailpit.
+2. Lancer ./vendor/bin/sail artisan migrate puis db:seed pour créer les comptes admin, user, residential et business.
+3. Ouvrir http://localhost/login et se connecter avec admin@example.com pour voir la table des comptes.
+4. Se connecter avec user@example.com et ouvrir /admin ; le middleware renvoie vers le tableau de bord.
+5. Utiliser Forgot password et lire le courriel de réinitialisation dans Mailpit sur http://localhost:8025.
 
 ## Langages (octets GitHub Linguist)
 
@@ -737,6 +902,25 @@ Il s’agit d’un travail scolaire, sans certification de sécurité. Les route
 - Dépôt: https://github.com/AlgoETS/BatchBacktesting
 
 
+## Cas d’utilisation
+
+Carnets d&#39;AlgoÉTS qui testent en parallèle des stratégies d&#39;indicateurs sur le S&amp;P 500 et des cryptos, avec CSV et graphiques.
+
+- **Constituer l&#39;univers de titres** (Chercheur en stratégie, Liste S&amp;P 500 (Wiki)): get_SP500() lit la table des symboles du S&amp;P 500 sur Wikipédia avec pandas.read_html, et get_all_crypto() renvoie une liste fixe de paires crypto comme BTCUSD et ETHUSD.
+- **Télécharger les cours** (Chercheur en stratégie, API de cours FMP): process_instrument appelle le point historical-price-full de FMP pour les actions, ou sa variante crypto, avec la clé FMP_API_KEY lue dans l&#39;environnement par src/config.py.
+- **Tester une stratégie en lot** (Chercheur en stratégie, API de cours FMP): run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True) lance backtesting.py sur chaque titre dans un pool de fils et écrit output/raw/&lt;Stratégie&gt;/&lt;titre&gt;-&lt;début&gt;-&lt;fin&gt;.csv.
+- **Toutes stratégies, un titre** (Chercheur en stratégie): run_backtests_strategies([&#34;BMO&#34;], STRATEGIES_STR) soumet chaque stratégie définie dans src/strategies.py (EMA, RSI, MACD, bandes de Bollinger, ADX, TRIX…) pour les instruments donnés.
+- **Comparer au buy &amp; hold** (Chercheur en stratégie): analyse.ipynb charge output/raw/&lt;Stratégie&gt;/*.csv, classe les instruments selon Return [%] et trace les cinq meilleurs face au Buy &amp; Hold Return [%] avec matplotlib.
+- **Ouvrir les graphiques HTML** (Chercheur en stratégie): Avec generate_plots=True, plot_results enregistre chaque graphique backtesting.py dans output/charts/&lt;Stratégie&gt;/&lt;titre&gt;-&lt;début&gt;-&lt;fin&gt;.html ; le dépôt contient déjà ceux de 23 stratégies.
+
+### Scénario : Tester l&#39;EMA sur le S&amp;P 500
+
+1. Installer les dépendances avec pip install -r requirements.txt et définir FMP_API_KEY dans l&#39;environnement (voir .env.exemple).
+2. Lancer jupyter notebook et ouvrir batch.ipynb.
+3. Exécuter la cellule tickers = get_SP500() puis run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True).
+4. Consulter output/EMA-&lt;début&gt;-&lt;fin&gt;.csv pour les résultats combinés et output/charts/EMA/ pour un graphique HTML par titre.
+5. Ouvrir analyse.ipynb et exécuter la section EMA pour voir les meilleurs rendements et les comparer au buy and hold.
+
 
 
 ---
@@ -757,6 +941,24 @@ Mon fork bloc propose un parcours Blender autour du stockage S3 et MinIO. Il con
 **Pourquoi il existe:** Intégration directe du stockage objet AWS S3 dans Blender via Boto3, éliminant la saturation des disques locaux pour les assets 3D.
 
 **Cas d’usage:** Synchronisation cloud d&#39;assets 3D, sauvegardes et flux de rendu distribués.
+
+## Cas d’utilisation
+
+Extension Blender qui liste, envoie, télécharge et importe des fichiers de compartiments MinIO ou AWS S3 dans un panneau latéral.
+
+- **Ajouter une connexion** (Utilisateur Blender): Dans les préférences de l’extension, chaque CloudConnection contient le type (MinIO ou AWS S3), le point d’accès ou la région, les clés et le nom du compartiment ; plusieurs connexions peuvent être listées.
+- **Parcourir et chercher** (Utilisateur Blender, Compartiment MinIO/S3): Refresh File List appelle list_objects (MinIO) ou list_objects_v2 (boto3) et dessine une arborescence dans l’onglet Cloud de la vue 3D ; le champ Search filtre les noms par sous-chaîne.
+- **Envoyer le .blend courant** (Utilisateur Blender, Compartiment MinIO/S3): Upload Current File envoie le .blend enregistré sous son nom de fichier. Le README parle d’envoyer aussi textures et dépendances, mais addon.py n’envoie que le .blend.
+- **Importer un maillage** (Utilisateur Blender, Compartiment MinIO/S3): Download enregistre un objet dans le dossier temporaire du système ; Load to Scene le télécharge puis appelle l’importateur STL, OBJ, USD ou PLY de Blender.
+- **Supprimer un fichier distant** (Utilisateur Blender, Compartiment MinIO/S3): Delete appelle remove_object (MinIO) ou delete_object (S3) puis rafraîchit la liste.
+
+### Scénario : Importer un scan d’un compartiment MinIO dans Blender
+
+1. Installer l’extension dans Edit &gt; Preferences &gt; Add-ons ; au premier chargement, elle installe boto3, minio et rapidfuzz avec pip.
+2. Dans les préférences, ajouter une connexion MinIO avec URL, clés et nom du compartiment.
+3. Ouvrir l’onglet Cloud dans la barre latérale de la vue 3D et cliquer sur Refresh File List.
+4. Taper une partie du nom dans Search pour filtrer la liste.
+5. Cliquer sur Load to Scene sur un fichier .obj ou .stl pour l’importer.
 
 ## Langages (octets GitHub Linguist)
 
@@ -811,6 +1013,37 @@ Le parcours S3 effectue un seul appel list_objects_v2 sans pagination. L’envoi
 
 ---
 
+# BullETS : une bibliothèque Python pour backtester des stratégies
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/bullets/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/bullets/index.md
+
+- Dépôt: https://github.com/AlgoETS/BullETS
+
+
+## Cas d’utilisation
+
+Bibliothèque Python pour écrire et backtester des stratégies boursières sur les données de Financial Modeling Prep.
+
+- **Écrire une stratégie** (Auteur de stratégie): On hérite de Strategy (src/bullets/strategy.py) et on redéfinit on_start, on_resolution et on_finish ; le constructeur valide les dates, la résolution, le solde, le glissement et les frais.
+- **Lancer un backtest** (Auteur de stratégie, API de marché FMP): Runner.start (src/bullets/runner.py) parcourt les moments de marché ouverts (fins de semaine, fériés américains et hors-heures exclus), appelle la stratégie et les ordres en attente, puis journalise solde final, frais et profit.
+- **Passer des ordres** (Auteur de stratégie, API de marché FMP): Portfolio (src/bullets/portfolio/portfolio.py) exécute les ordres au marché à un prix ajusté selon le haut du jour, plus des frais fixes, et vérifie les ordres stop et à cours limité à chaque résolution.
+- **Lire cours et états financiers** (Auteur de stratégie, API de marché FMP): FmpDataSource (src/bullets/data_source/data_source_fmp.py) met en cache les cours quotidiens, horaires ou à la minute et lit les états financiers et listes de symboles de l’API FMP.
+- **Calculer des indicateurs** (Auteur de stratégie, API de marché FMP): Indicators (src/bullets/data_indicators/indicators.py) calcule SMA, WMA, EMA, MACD, RSI, écart type et bandes de Bollinger à partir des cours des jours de marché.
+- **Tester et publier le paquet** (GitHub Actions, API de marché FMP): python-pr.yml et python-merge.yml lancent flake8 et unittest avec le secret FMP_TOKEN (couverture envoyée à Codecov après fusion) ; python-publish.yml publie le paquet sur PyPI avec twine à chaque version.
+
+### Scénario : Backtester un achat quotidien d’AAPL
+
+1. Créer un environnement virtuel, lancer pip install BullETS et obtenir une clé d’API Financial Modeling Prep.
+2. Hériter de Strategy et faire appeler self.portfolio.market_order(&#34;AAPL&#34;, 5) dans on_resolution.
+3. Créer FmpDataSource(clé, Resolution.DAILY) et la stratégie du 2019-03-05 au 2019-04-22 avec un solde de départ de 5 000, comme dans le README.
+4. Appeler Runner(strategy).start() ; chaque jour ouvert exécute l’ordre au prix avec glissement, plus les frais.
+5. Lire le journal : encaisse initiale, solde final, encaisse finale, frais payés, profit en pourcentage et appels FMP restants.
+
+
+
+---
+
 # ChitUI : Une passerelle locale vers les imprimantes résine
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/chitui/
@@ -826,6 +1059,24 @@ ChitUI fournit une interface web pour des imprimantes résine SDCP. Un processus
 **Pourquoi il existe:** Interface de contrôle web pour imprimantes 3D résine SDCP 3.0 avec découverte UDP sur LAN.
 
 **Cas d’usage:** Contrôle à distance d&#39;imprimantes 3D résine sans poste dédié.
+
+## Cas d’utilisation
+
+Interface web Flask qui trouve les imprimantes résine SDCP 3.0 (Chitubox) du réseau, envoie des fichiers et lance l’impression.
+
+- **Découvrir les imprimantes** (Opérateur d’impression, Imprimante résine SDCP): Au démarrage, discover_printers (main.py) diffuse M99999 en UDP sur le port 3000, enregistre les réponses et ouvre un WebSocket vers chaque imprimante sur ws://&lt;ip&gt;:3030/websocket.
+- **Suivre l’état de l’imprimante** (Opérateur d’impression, Imprimante résine SDCP): Le navigateur interroge par Socket.IO ; main.py envoie les commandes SDCP 0 (état) et 1 (attributs) et relaie les messages de l’imprimante vers web/js/chitui.js et sdcp.js.
+- **Téléverser un fichier** (Opérateur d’impression, Imprimante résine SDCP): POST /upload accepte les fichiers .ctb, .goo et .prz, calcule un MD5 et envoie des morceaux de 1 Mo à http://&lt;ip&gt;:3030/uploadFile/upload ; /progress diffuse le pourcentage.
+- **Lister et effacer les fichiers** (Opérateur d’impression, Imprimante résine SDCP): printer_files envoie la commande SDCP 258 avec un chemin de stockage ; action_delete envoie la commande 259 avec la liste des fichiers.
+- **Lancer une impression** (Opérateur d’impression, Imprimante résine SDCP): action_print envoie la commande SDCP 128 avec le nom du fichier et StartLayer 0.
+
+### Scénario : Envoyer un modèle tranché à une imprimante résine depuis le navigateur
+
+1. Installer requirements.txt dans un virtualenv et lancer python main.py, ou docker run --net=host pour que la diffusion UDP fonctionne.
+2. Au démarrage, ChitUI diffuse M99999 sur le port UDP 3000 et se connecte au WebSocket de chaque imprimante sur le port 3030.
+3. Ouvrir http://127.0.0.1:54780/ pour voir les imprimantes trouvées et leur état.
+4. Téléverser un fichier .ctb ; ChitUI l’enregistre dans /tmp puis l’envoie en morceaux de 1 Mo avec contrôle MD5.
+5. Choisir le fichier dans la liste de l’imprimante et lancer l’impression.
 
 ## Langages (octets GitHub Linguist)
 
@@ -941,6 +1192,24 @@ ComfyUI-UML ajoute des nœuds de diagrammes à ComfyUI. Le texte entre dans un w
 
 **Cas d’usage:** Pipelines IA visuels associant schémas d&#39;architecture et post-traitement graphique.
 
+## Cas d’utilisation
+
+Nœuds ComfyUI qui rendent des diagrammes Mermaid, PlantUML, Graphviz et autres types Kroki, au besoin à partir de code LLM.
+
+- **Rendre un diagramme** (Utilisateur ComfyUI, API Kroki): Le nœud UML Render (nodes/uml_diagram.py) envoie le code à Kroki via nodes/kroki_client.py et renvoie du png, svg, jpeg, pdf, txt ou base64, selon les formats permis pour chaque type.
+- **Rendre Mermaid hors ligne** (Utilisateur ComfyUI): Avec le backend local, web/js/render_mermaid.mjs utilise beautiful-mermaid (après npm ci dans web/js) pour produire du SVG ou du PNG ; Graphviz se rend en local si le paquet graphviz est installé.
+- **Générer le code avec un LLM** (Utilisateur ComfyUI, Fournisseur de LLM): UML Code Assistant (nodes/uml_llm.py), ou LLM Prompt Engine suivi de LLM Call, remplit un gabarit de prompts/ et appelle Ollama, OpenAI, Anthropic ou Gemini ; le résultat alimente UML Render.
+- **Prévisualiser et partager** (Utilisateur ComfyUI, API Kroki): Diagram Viewer URL (nodes/uml_viewer_url.py) transforme kroki_url en lien de visualiseur et en lien iframe (viewer.html?embed=1) et affiche un aperçu dans le nœud.
+- **Enregistrer dans ComfyUI** (Utilisateur ComfyUI): Le bouton Save du visualiseur envoie une requête à /comfyui-uml/save, déclarée avec les autres routes dans nodes/uml_routes.py.
+
+### Scénario : Tracer un diagramme de séquence à partir d’un prompt avec Ollama en local
+
+1. Lancer comfy node install comfyui-uml (ou cloner dans ComfyUI/custom_nodes et faire pip install -r requirements.txt), puis redémarrer ComfyUI.
+2. Charger workflows/uml_llm_ollama.json dans le canevas ComfyUI.
+3. Décrire le diagramme dans UML Code Assistant, avec le fournisseur ollama et un modèle local.
+4. Lancer la file ; UML Render envoie le code généré à Kroki et produit l’image.
+5. Ouvrir le lien de Diagram Viewer URL pour zoomer, copier le lien ou enregistrer le diagramme dans ComfyUI.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -1019,6 +1288,25 @@ Ce site réunit des CV bilingues, des données structurées, des PDF LaTeX et un
 **Pourquoi il existe:** Portfolio et CV statique bilingue haute performance avec schémas AEO, CI/CD et zéro dépendance runtime.
 
 **Cas d’usage:** Présentation professionnelle et vitrine technique d&#39;ingénierie logicielle.
+
+## Cas d’utilisation
+
+Source d&#39;antoineboucher.info/CV : CV HTML bilingue, PDF LaTeX, CV en JSON et blogue Hugo avec une page par projet.
+
+- **Mettre à jour le CV** (Propriétaire du site): Le propriétaire modifie index-en.html et index-fr.html, data/resume.*.json et data/cv.yaml ; scripts/build/generate_cv.py produit les fichiers LaTeX skills.tex à partir du YAML.
+- **Compiler les CV en PDF** (Propriétaire du site): python build_cv.py build --all compile cv-en/resume.tex et cv-fr/resume.tex avec XeLaTeX dans une image Docker.
+- **Rafraîchir les pages projets** (Propriétaire du site): scripts/build/repository_docs.py lit les dépôts publics sans exécuter leur code et écrit hugo/data/repository_*.json, que le shortcode repository-note affiche sous hugo/content/projects/notes/&lt;slug&gt;/.
+- **Publier le site** (Propriétaire du site, GitHub Pages): scripts/deploy/publish_site.py lance build_docs.py (Hugo avec HUGO_ENV=production, fusion du sitemap, vérifications), check_public_repos.py et les tests des notes, puis, avec --publish, valide docs/ et pousse main.
+- **Lire le CV (EN ou FR)** (Recruteur ou lecteur, GitHub Pages): GitHub Pages sert /CV/index-en.html et /CV/index-fr.html, les PDF sous /CV/cv-en/ et /CV/cv-fr/, ainsi que /CV/resume.json ou /CV/resume.md pour la lecture machine.
+- **Parcourir blogue et projets** (Recruteur ou lecteur, GitHub Pages): Le site Hugo est publié sous /CV/blog/ et /CV/blog/fr/, avec une version Markdown de chaque page, et llms.txt, robots.txt et sitemap.xml copiés à la racine.
+
+### Scénario : Publier une mise à jour du CV
+
+1. Modifier le poste dans index-en.html et index-fr.html, ainsi que data/resume.en.json et data/resume.fr.json.
+2. Lancer python build_cv.py build --all pour régénérer cv-en/resume.pdf et cv-fr/resume.pdf.
+3. Lancer python scripts/deploy/publish_site.py pour construire le CV et le blogue dans un dossier temporaire, les valider et mettre à jour docs/.
+4. Vérifier docs/ en local, valider les changements de source, puis relancer le script avec --publish pour valider docs/ et pousser main.
+5. Attendre que GitHub Pages (main, /docs) traite la poussée, puis vérifier https://antoineboucher.info/CV/.
 
 ## Langages (octets GitHub Linguist)
 
@@ -1146,6 +1434,24 @@ D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin
 **Pourquoi il existe:** Plugin ChatGPT officiel avec spécification OpenAPI pour convertir des descriptions en diagrammes.
 
 **Cas d’usage:** Intégration ChatGPT pour architectes et développeurs logiciels.
+
+## Cas d’utilisation
+
+Backend FastAPI de plugin ChatGPT qui transforme du code PlantUML, Mermaid, D2 ou Kroki en liens de diagramme.
+
+- **Obtenir un lien PlantUML** (Client plugin ChatGPT, Moteurs de rendu): POST /generate_diagram avec lang plantuml encode le code pour le serveur PlantUML public (thème blueprint par défaut) et renvoie url, content et playground.
+- **Ouvrir Mermaid dans l’éditeur** (Client plugin ChatGPT, Moteurs de rendu): Pour lang mermaid, mermaid/mermaid.py construit un état d’éditeur encodé (thème dark par défaut) et renvoie des liens vers Mermaid Live Editor.
+- **Rendre D2 ou un type Kroki** (Client plugin ChatGPT, Moteurs de rendu): Les alias D2 et chaque langage de KROKI_LANGUAGE_SUPPORT passent par generate_kroki_diagram (kroki/kroki.py) et renvoient un lien SVG.
+- **Servir le manifeste** (Client plugin ChatGPT): app.py sert /.well-known/ai-plugin.json, /openapi.yaml, /openapi.json, /logo.png et /.well-known/privacy.txt pour qu’un client ChatGPT puisse charger le plugin.
+- **Lancer et tester en local** (Développeur): uvicorn app:app sert l’API sur le port 5003 avec la documentation à / ; test_app.py couvre les points d’accès en CI, et vercel.json envoie chaque chemin vers app.py.
+
+### Scénario : Brancher le plugin à ChatGPT en local
+
+1. Créer un virtualenv, lancer pip install -r requirements-dev.txt puis python -m pytest.
+2. Démarrer l’API avec uvicorn app:app --host 127.0.0.1 --port 5003.
+3. Dans ChatGPT, choisir Develop your own plugin et saisir localhost:5003 pour charger /.well-known/ai-plugin.json.
+4. Demander un diagramme de séquence ; ChatGPT appelle POST /generate_diagram avec lang plantuml.
+5. L’API renvoie l’URL de l’image et un lien d’essai que ChatGPT montre à l’utilisateur.
 
 ## Langages (octets GitHub Linguist)
 
@@ -1277,6 +1583,24 @@ DasherControl réunit des liens et des applications intégrées dans des espaces
 
 **Cas d’usage:** Tableau de bord centralisé pour services conteneurisés en homelab, signets et gestion d&#39;espaces de travail.
 
+## Cas d’utilisation
+
+Tableau de bord Rust (Rocket) et Vue pour homelab : espaces de travail en grille d’applets et contrôle Docker de base.
+
+- **Se connecter au tableau** (Admin du homelab, PostgreSQL): cargo run --bin create_admin crée le premier compte ; POST /tenants/api/login vérifie le hachage bcrypt et renvoie un JWT utilisé par les routes protégées.
+- **Disposer des applets en grille** (Admin du homelab): GridLayoutMain.vue place des applets comme IFrame, Shortcut, Editor, Canvas, Terminal et DockerManager sur une grille redimensionnable.
+- **Changer d’espace de travail** (Admin du homelab, PostgreSQL): Les routes /workspaces/api créent, mettent à jour, listent et suppriment les espaces de travail et leurs applets, stockés dans PostgreSQL via Diesel.
+- **Piloter les conteneurs Docker** (Admin du homelab, Moteur Docker): /containers/api/docker_list liste les conteneurs via shiplift, et /containers/api/stop/&lt;id&gt; et restart/&lt;id&gt; agissent sur un conteneur si un jeton valide est fourni.
+- **Ouvrir un terminal SSH web** (Admin du homelab): src/bin/start_websocket.rs relie un WebSocket à une session ssh2 pour l’applet Terminal ; le README indique que le terminal web est en cours.
+
+### Scénario : Installer le tableau de bord sur un serveur Ubuntu
+
+1. Construire l’interface avec cd frontend &amp;&amp; npm install &amp;&amp; npm run build.
+2. Définir DATABASE_URL dans Rocket.toml et .env, puis lancer diesel migration run.
+3. Lancer cargo run --bin create_admin, puis cargo run pour démarrer le serveur Rocket.
+4. Se connecter, ajouter des applets IFrame pour des services comme Sonarr ou Jellyfin et enregistrer l’espace.
+5. Ouvrir l’applet DockerManager pour lister les conteneurs et en redémarrer un.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -1398,6 +1722,24 @@ Dimension est mon espace de travail Rust pour les mathématiques et l’infograp
 **Pourquoi il existe:** Pipeline graphique wgpu haute performance et moteur d&#39;algèbre linéaire implémentés en Rust à partir des fondamentaux.
 
 **Cas d’usage:** Rendu 3D de cartes de relief accéléré matériellement, transformations spatiales et apprentissage de l&#39;infographie.
+
+## Cas d’utilisation
+
+Un espace de travail Rust autour de mathlib : algèbre linéaire, rendu wgpu, analyseurs, physique et géométrie, avec démos WASM.
+
+- **Calculer en dense et creux** (Développeur Rust): Le crate mathlib fournit matrices denses et creuses, vecteurs, SVD et outils 3D ; cd mathlib &amp;&amp; cargo test et cargo bench les mettent à l’épreuve.
+- **Rendre une scène 3D avec wgpu** (Développeur Rust, GPU via wgpu): Le crate render dessine une scène mathlib Tree avec wgpu ; cargo run -p render-demo --example render_native ouvre une fenêtre avec un cube, un manipulateur et la sélection.
+- **Charger maillages et fichiers** (Développeur Rust): Le crate parse lit JSON, XML, OBJ, MTL, BVH, glTF, PLY, PNG, JPEG, ZIP et TAR, chacun derrière une fonctionnalité Cargo comme json ou obj.
+- **Simuler physique et collisions** (Développeur Rust): physics implémente PBD/XPBD avec les exemples particles_2d, rigid_bodies_3d et softbody_3d ; collision ajoute les requêtes AABB, OBB, BVH, BSP, rayon et frustum.
+- **Publier le site de démos WASM** (Développeur Rust, Navigateur WASM/WebGPU): just website-build compile en WASM les démos mathlib, render, kinematics, physics, geometry et neural dans website/ ; pages.yml les déploie sur GitHub Pages.
+
+### Scénario : Essayer les démos en local avant de pousser
+
+1. Lancer cd mathlib &amp;&amp; cargo test pour vérifier la bibliothèque de base.
+2. Lancer just run-render pour ouvrir la scène wgpu native et déplacer le manipulateur.
+3. Lancer just website-build pour compiler chaque démo en WASM dans website/.
+4. Lancer just website-serve et ouvrir http://localhost:3000/ pour parcourir /mathlib/, /render/ et /physics/.
+5. Pousser sur main ; le flux Pages reconstruit website/ et le publie.
 
 ## Langages (octets GitHub Linguist)
 
@@ -1534,6 +1876,24 @@ donneesqc-mcp est un fork qui expose des opérations de données ouvertes du Qu�
 
 **Cas d’usage:** Interrogation en langage naturel des jeux de données municipaux et provinciaux ouverts.
 
+## Cas d’utilisation
+
+Un serveur MCP qui laisse les agents IA chercher, interroger en SQL et cartographier les données ouvertes du Québec.
+
+- **Chercher des jeux de données** (Analyste avec un agent, Portails CKAN ouverts): search_datasets et search_montreal_datasets appellent les API CKAN de Données Québec et de Montréal (DQ_API_URL, MTL_API_URL) via helpers/ckan_api.py.
+- **Lancer du SQL en lecture** (Analyste avec un agent, Portails CKAN ouverts): query_resource_sql et query_montreal_sql envoient du SQL au DataStore CKAN après que validate_sql() a rejeté tout ce qui n’est pas un SELECT.
+- **Chercher et interroger en un** (Analyste avec un agent, Portails CKAN ouverts): find_and_query enchaîne recherche, liste des ressources et requête DataStore pour éviter trois allers-retours à l’agent.
+- **Explorer les couches géo** (Analyste avec un agent, Services géo IGO): list_geospatial_layers, get_geospatial_features et get_map_url interrogent le WFS IGO et construisent des URL WMS GetMap via helpers/geo_api.py.
+- **Géocoder et convertir** (Analyste avec un agent, Services géo IGO): geocode et reverse_geocode utilisent le géocodeur icherche (GEOCODER_URL) ; convert_coordinates passe d’EPSG:32198 à EPSG:4326 et inversement.
+
+### Scénario : Compter les arbres publics par arrondissement à Montréal
+
+1. Démarrer le serveur avec docker compose up -d (ou uv sync puis uv run python main.py) ; il écoute sur le port 8000 en HTTP streamable.
+2. L’inscrire dans le client, par exemple claude mcp add --transport http donneesqc http://localhost:8000/mcp.
+3. Demander à l’agent les données sur les arbres publics ; il appelle search_montreal_datasets pour trouver le jeu.
+4. L’agent appelle query_montreal_data pour voir les colonnes de la ressource DataStore.
+5. Il envoie une requête SELECT … GROUP BY via query_montreal_sql et répond avec le compte par arrondissement.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -1626,6 +1986,24 @@ ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une inter
 
 **Cas d’usage:** Affichage matériel déporté pour métriques ou domotique.
 
+## Cas d’utilisation
+
+Un micrologiciel ESP32 et une appli Android qui pilotent un afficheur 7 segments I2C en minuterie ou chronomètre par Wi-Fi.
+
+- **Connecter la carte au Wi-Fi** (Opérateur de minuterie, ESP32 &#43; afficheur): Sans identifiants enregistrés, wifi.cpp lance un point d’accès ESPTimer ; la page / sert alors le formulaire, et POST /connect enregistre SSID et mot de passe en NVS.
+- **Lancer minuterie ou chrono** (Opérateur de minuterie, ESP32 &#43; afficheur): POST /timer-action avec action, mode, minutes et seconds démarre, met en pause ou arrête une tâche FreeRTOS (COUNTDOWN ou STOPWATCH) dans display.cpp.
+- **Fixer l’affichage directement** (Opérateur de minuterie, ESP32 &#43; afficheur): POST /update-display avec minutes et seconds appelle updateDisplay() et diffuse un message displayUpdated.
+- **Suivre l’état en direct** (Appli Android, ESP32 &#43; afficheur): Le WebSocket /ws diffuse des messages JSON timerStarted, timerStopped et displayUpdated ; le WebSocketClient Android les écoute.
+- **Piloter depuis Android** (Opérateur de minuterie, Appli Android): TimerApiService.kt reprend les mêmes points d’accès avec Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) derrière les fragments TimerControl et WiFiConnect.
+
+### Scénario : Préparer un compte à rebours de 5 minutes sur une carte neuve
+
+1. Câbler le module I2C Adafruit sur SDA, SCL, VCC et GND, puis flasher avec pio run -t upload (env firebeetle).
+2. Au premier démarrage, rien n’est en NVS : rejoindre le point d’accès ESPTimer et ouvrir la page de la carte.
+3. Choisir un réseau dans /scan et l’envoyer à /connect ; la carte l’enregistre et rejoint le réseau local.
+4. Lire la nouvelle adresse IP au moniteur série à 115200 bauds et l’ouvrir dans un navigateur ou l’appli Android.
+5. Envoyer action=start, mode=countdown, minutes=5, seconds=0 à /timer-action ; l’afficheur décompte et /ws signale chaque mise à jour.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -1695,6 +2073,23 @@ FlashGames conserve de petits jeux Flash dans une collection web. La page choisi
 
 **Cas d’usage:** Préservation numérique de créations historiques.
 
+## Cas d’utilisation
+
+Une page web qui fait rejouer trois jeux Flash de 2010 grâce à l’émulateur Ruffle, sans aucun plugiciel.
+
+- **Choisir un jeu dans la liste** (Joueur): La liste déroulante #swfSelector d’index.html propose Tag, Ricochet Kill et Ballon, chacun avec une courte description.
+- **Jouer à un SWF en ligne** (Joueur, Émulateur Ruffle): loadSWF() crée un lecteur Ruffle avec RufflePlayer.newest() et charge tag.swf, ricochet kill.swf ou jeux.swf dans #swfContainer.
+- **Ouvrir un jeu par l’URL** (Joueur): updateHash() inscrit la clé du jeu dans le fragment d’URL ; les écouteurs load et hashchange rechargent ce jeu, donc un lien #tag l’ouvre directement.
+- **Lancer la collection en local** (Joueur, Émulateur Ruffle): Le README indique de cloner le dépôt et d’ouvrir index.html ; Ruffle vient d’unpkg, donc une connexion réseau reste nécessaire.
+
+### Scénario : Rejouer Ricochet Kill depuis un lien partagé
+
+1. Ouvrir https://antoinebou12.github.io/FlashGames/ (ou index.html depuis un clone).
+2. La page charge le premier jeu, Tag, puisqu’aucun fragment n’est défini.
+3. Choisir Ricochet Kill dans la liste Select a Game ; l’URL devient #ricochet_kill.
+4. Ruffle charge ricochet kill.swf dans la zone de jeu noire et la barre de description se met à jour.
+5. Jouer à la souris, puis copier l’URL pour envoyer quelqu’un directement au même jeu.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -1755,6 +2150,23 @@ Cette extension archivée tentait d’ajouter des boutons de téléchargement au
 **Pourquoi il existe:** Extension de navigateur injectant un bouton de téléchargement direct de fichier unique dans GitHub et GitLab.
 
 **Cas d’usage:** Téléchargement immédiat d&#39;un fichier isolé sans cloner le dépôt entier.
+
+## Cas d’utilisation
+
+Une extension Chrome qui ajoute un lien de téléchargement et la taille de chaque fichier dans GitHub, GitLab et Bitbucket.
+
+- **Ajouter des icônes aux listes** (Visiteur de dépôt, Site d’hébergement Git): manifest.json injecte inject_github.js, inject_gitlab.js ou inject_bitbucket.js selon le site ; chaque script ajoute une icône-lien à chaque ligne (td.content, td.tree-item-file-name ou tr.iterable-item).
+- **Télécharger un seul fichier** (Visiteur de dépôt, Site d’hébergement Git): Le script réécrit le lien blob en URL brute (raw.githubusercontent.com sur GitHub, /raw/ sur GitLab), récupère le texte et pose une URL d’objet Blob avec l’attribut download.
+- **Afficher la taille du fichier** (Visiteur de dépôt, Site d’hébergement Git): Sur GitHub, getFileURLDocument() charge la page du fichier avec XMLHttpRequest et changeFileSize() copie la ligne Bytes/KB/MB dans un span près de l’icône.
+- **Ouvrir un dossier par l’icône** (Visiteur de dépôt, Site d’hébergement Git): Les chemins sans extension sont traités comme des dossiers : l’icône renvoie alors à la page du dossier au lieu de télécharger.
+
+### Scénario : Récupérer un seul fichier de config sur GitHub
+
+1. Charger l’extension dans Chrome (Manifest V2, scripts de contenu pour github.com, gitlab.com et bitbucket.org).
+2. Ouvrir la liste de fichiers d’un dépôt sur github.com ; inject_github.js attend que document.readyState soit complete.
+3. Une petite icône GitHub et une taille s’affichent à côté de chaque fichier.
+4. Cliquer sur l’icône du fichier : le contenu brut est enregistré sous le nom du fichier.
+5. Si les icônes n’apparaissent pas, actualiser la page comme le conseille le README ; son titre signale aussi que l’extension ne fonctionne plus.
 
 ## Langages (octets GitHub Linguist)
 
@@ -1822,6 +2234,24 @@ GreenScreenVideotoAlphaPNGs sépare acquisition vidéo, extraction des images et
 **Pourquoi il existe:** Pipeline de traitement OpenCV convertissant des vidéos fond vert en séquences PNG avec canal alpha.
 
 **Cas d’usage:** Préparation d&#39;assets d&#39;animation 2D pour la réalité augmentée.
+
+## Cas d’utilisation
+
+Un outil Python qui transforme une vidéo sur fond vert en PNG transparents, GIF ou .mov alpha pour Lens Studio.
+
+- **Télécharger une vidéo par URL** (Créateur de filtres AR, YouTube (yt-dlp)): greenscreen convert accepte une URL YouTube ; convert.py appelle download_video() et download_audio() de download.py, qui s’appuient sur yt-dlp.
+- **Découper la vidéo en images** (Créateur de filtres AR, ffmpeg): frames.py écrit des PNG numérotés (0.png, 1.png…) avec ffmpeg, ou avec OpenCV si l’option --no-ffmpeg est donnée.
+- **Retirer le fond vert** (Créateur de filtres AR): chroma.py calcule une distance YCbCr à la couleur clé (pixel 1,1 par défaut, tolérance 50–130) et écrit des PNG RVBA dans un dossier voisin *_alpha.
+- **Créer un GIF transparent** (Créateur de filtres AR, ffmpeg): greenscreen gif &lt;dossier&gt; utilise par défaut numpngw et l’extension facultative APNGLib, ou une palette ffmpeg avec --fast-ffmpeg ; le GIF est écrit à côté du dossier.
+- **Encoder un .mov avec alpha** (Créateur de filtres AR, ffmpeg): greenscreen video &lt;dossier&gt; --fps 30 encode la séquence en Videogen-&lt;horodatage&gt;.mov avec le codec qtrle ou prores_4444.
+
+### Scénario : D’un clip sur fond vert à une animation Lens Studio
+
+1. Lancer bash install.sh (ou .\install.ps1 sous Windows), puis uv run greenscreen --help.
+2. Lancer uv run greenscreen convert clip.mp4 pour extraire les images dans clip/ et les images détourées dans clip_alpha/.
+3. Les fichiers qui commencent par le nom du clip sont déplacés dans project_clip/, sauf avec --no-project-dir.
+4. Lancer uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg pour obtenir un GIF transparent sans APNGLib.
+5. Dans Lens Studio, passer par Resources → Add New → 2D animation from files et choisir les PNG *_alpha.
 
 ## Langages (octets GitHub Linguist)
 
@@ -1924,6 +2354,24 @@ hass_renpho est un fork d’intégration Home Assistant pour les mesures Renpho.
 
 **Cas d’usage:** Centralisation des données de santé privées dans Home Assistant.
 
+## Cas d’utilisation
+
+Une intégration Home Assistant qui interroge l’ancienne API infonuagique Renpho et expose les mesures de la balance en capteurs.
+
+- **Se connecter, choisir l’usager** (Usager Home Assistant, Home Assistant, API nuagique Renpho): config_flow.py valide le courriel et le mot de passe auprès de Renpho, puis affiche l’étape select_user si le compte a plusieurs usagers.
+- **Interroger les mesures** (Home Assistant, API nuagique Renpho): RenphoWeightCoordinator appelle get_measurements(), list_girth() et list_girth_goal() toutes les refresh secondes via un DataUpdateCoordinator.
+- **Afficher les mesures** (Usager Home Assistant, Home Assistant): sensor.py et sensor_configs.py créent des capteurs pour le poids, l’IMC, la masse grasse, l’eau, le métabolisme de base, les tours de taille et objectifs, en kg ou lb.
+- **Passer par un mandataire** (Usager Home Assistant, API nuagique Renpho): Le paramètre facultatif proxy (http:// ou socks5://) est vérifié par check_proxy() avant les appels, pour les adresses IP bloquées par renpho.qnclouds.com.
+- **Tester un compte dans l’API** (Usager Home Assistant, API nuagique Renpho): api/app.py est une application FastAPI avec des routes comme /auth, /users, /measurements et /girth_info ; vercel.json la déploie et le README renvoie à sa page /docs.
+
+### Scénario : Faire arriver la pesée du matin dans Home Assistant
+
+1. Copier custom_components/renpho dans &lt;config_dir&gt;/custom_components/renpho/ (ou installer via HACS).
+2. Ajouter renpho: avec email, password et refresh: 600 dans configuration.yaml, plus sensor: platform: renpho.
+3. Redémarrer Home Assistant ; l’intégration se connecte à l’ancienne API Renpho et retrouve l’identifiant de l’usager.
+4. Monter sur la balance avec l’ancienne appli Renpho pour que la mesure arrive dans le nuage.
+5. Au prochain cycle de rafraîchissement, les capteurs de poids et de masse grasse se mettent à jour dans le tableau de bord.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -2001,6 +2449,23 @@ Cette expérience affiche des images dans GTK avec Cairo. Viewer3.py rend la rep
 **Pourquoi il existe:** Pipeline de test d&#39;affichage 10 bits HDR vérifiant le banding de couleur et la luminance sous Linux.
 
 **Cas d’usage:** Calibration et vérification d&#39;écrans HDR 10 bits sur stations de travail Linux.
+
+## Cas d’utilisation
+
+Des scripts Linux pour vérifier qu’un écran HDR affiche bien 10 bits par canal sous un serveur X en profondeur 30.
+
+- **Lancer X en profondeur 30** (Testeur d’écran, Serveur X (Xorg)): Xdepth.sh exécute startx -- -depth 30 et affiche la profondeur via xwininfo, avec repli sur 24 ; xorg.conf fixe DefaultDepth 30.
+- **Afficher un dégradé 10 bits** (Testeur d’écran, Écran HDR10): Viewer.py regroupe les canaux RVB d’images/gray_gradient_10.tiff dans une surface cairo FORMAT_RGB30 et la dessine dans une fenêtre GTK 3.
+- **Comparer 8 bits et 10 bits** (Testeur d’écran, Écran HDR10): Le dossier images/ contient gray_gradient_8.tiff à côté de gray_gradient_10.tiff : on peut afficher le même dégradé aux deux profondeurs et comparer les bandes à l’œil.
+- **Lire une vidéo en 10 bits** (Testeur d’écran, Écran HDR10): Viewer3.py ajoute une interface Typer avec --image-path et --video-path ; la vidéo est lue image par image avec le lecteur ffmpeg d’imageio, dans un fil, à 30 i/s.
+
+### Scénario : Vérifier un nouvel écran HDR10 sous Ubuntu
+
+1. Arrêter le gestionnaire d’affichage : sudo systemctl stop lightdm || sudo systemctl stop gdm, puis sudo pkill Xorg.
+2. Démarrer X avec startx -- -depth 30 (ou lancer Xdepth.sh).
+3. Confirmer avec xwininfo -root | grep Depth que la fenêtre racine indique une profondeur de 30.
+4. Lancer python3 Viewer.py pour ouvrir images/gray_gradient_10.tiff dans la fenêtre du visualiseur.
+5. Chercher des bandes dans le dégradé ; des transitions lisses indiquent que la chaîne 10 bits fonctionne de bout en bout.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2103,6 +2568,25 @@ Ce fork Hydra est un lanceur desktop avec Electron et React. Sa compilation comp
 
 **Cas d’usage:** Lanceur et gestionnaire de jeux open source.
 
+## Cas d’utilisation
+
+Une copie de Hydra Launcher, ludothèque Electron qui télécharge, lance, compte le temps de jeu et synchronise les sauvegardes.
+
+- **Constituer sa ludothèque** (Joueur, API et nuage Hydra): Les gestionnaires IPC de src/main/events/library (add-game-to-library, add-custom-game-to-library, assign-game-to-collection) gèrent la ludothèque locale ; les événements catalogue récupèrent fiches et illustrations.
+- **Télécharger et mettre en file** (Joueur, Torrents et hébergeurs): Les torrents passent par python_rpc/main.py avec libtorrent, tandis que services/hosters gère des hébergeurs directs comme Gofile, Mediafire et Pixeldrain ; les événements torrenting gèrent la file.
+- **Ajouter des sources** (Joueur, Torrents et hébergeurs): Les événements download-sources ajoutent, retirent et synchronisent les listes de sources qui alimentent les options de téléchargement.
+- **Lancer et mesurer le temps** (Joueur): process-watcher.ts compare les processus en cours aux exécutables connus pour noter le temps de jeu ; sous Linux, umu.ts et wine-prefix.ts préparent Proton ou Wine.
+- **Sauvegarder dans le nuage** (Joueur, API et nuage Hydra): Ludusavi.backupGame() exécute le binaire ludusavi fourni pour réunir les sauvegardes, et les services cloud-save les téléversent, les comparent et les restaurent avec Hydra Cloud.
+- **Débloquer des succès** (Joueur, API et nuage Hydra): services/achievements repère et lit les fichiers de succès locaux, les fusionne avec les données distantes et affiche des notifications.
+
+### Scénario : De la fiche du catalogue à la sauvegarde dans le nuage
+
+1. Installer Node.js avec Yarn, Python 3.9&#43; (pip install -r requirements.txt) et Rust, puis lancer yarn ; postinstall compile hydra-native.
+2. Ouvrir un jeu dans le catalogue et l’ajouter à la ludothèque.
+3. Choisir une option de téléchargement ; le processus RPC Python lance le torrent et la page des téléchargements affiche la progression.
+4. Lancer le jeu ; la surveillance des processus repère l’exécutable et compte le temps de jeu.
+5. Fermer le jeu et synchroniser ; ludusavi copie les fichiers de sauvegarde et le service cloud-save les téléverse.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -2174,6 +2658,25 @@ ipc-toolkit fournit des composants géométriques pour la simulation avec contac
 **Pourquoi il existe:** Boîte à outils d&#39;ingénierie pour la gestion du contact et de la friction dans les simulations par éléments finis.
 
 **Cas d’usage:** Mécanique du contact continu non linéaire pour moteurs physiques.
+
+## Cas d’utilisation
+
+Bibliothèque C&#43;&#43; avec liaisons Python pour l’Incremental Potential Contact : barrières, CCD et frottement pour simulateurs.
+
+- **Construire un maillage** (Développeur simulation): ipc::CollisionMesh reçoit les matrices de sommets, d’arêtes et de faces (Eigen), comme dans le démarrage rapide du README.
+- **Trouver les contacts sous dhat** (Développeur simulation, Simulateur hôte): NormalCollisions::build() s’appuie sur une phase large (grille de hachage, LBVH, balayage…) pour réunir les paires de primitives plus proches que dhat.
+- **Évaluer barrière et dérivées** (Développeur simulation, Simulateur hôte): BarrierPotential renvoie l’énergie, le gradient et la hessienne creuse que le solveur hôte ajoute à son objectif.
+- **Obtenir un pas sans collision** (Développeur simulation, Simulateur hôte): compute_collision_free_stepsize() lance la détection de collision continue (Tight Inclusion par défaut, variantes non linéaire et additive dans src/ipc/ccd) entre deux états de sommets.
+- **Ajouter le frottement** (Développeur simulation, Simulateur hôte): FrictionPotential agit sur les TangentialCollisions ; smooth_mu.hpp ajoute des coefficients de frottement anisotrope elliptique (commit Anisotropic friction #210).
+- **Le piloter depuis Python** (Développeur simulation): Les liaisons pybind11 de python/src exposent la même API sous ipctk (pip install ipctk), compilées quand IPC_TOOLKIT_BUILD_PYTHON est activé.
+
+### Scénario : Ajouter le contact à un pas de temps implicite
+
+1. Installer les liaisons avec pip install ipctk, ou ajouter la bibliothèque à un projet CMake.
+2. Créer un CollisionMesh à partir des sommets, arêtes et faces de la scène.
+3. Construire les NormalCollisions avec dhat = 1e-3 pour les positions actuelles.
+4. Ajouter l’énergie, le gradient et la hessienne de BarrierPotential au système de Newton du solveur.
+5. Avant d’accepter le pas de Newton, le limiter avec compute_collision_free_stepsize pour qu’aucune surface ne se traverse.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2289,6 +2792,24 @@ Ce fork du thème Kendall JSON Resume transforme un CV structuré en HTML. Le mo
 
 **Cas d’usage:** Génération automatique de CV à partir de fichiers JSON structurés.
 
+## Cas d’utilisation
+
+Un thème JSON Resume qui transforme resume.json en page HTML Bootstrap avec Mustache et des icônes FontAwesome.
+
+- **Rendre resume.json en HTML** (Auteur du CV, resume-cli): index.js exporte render(), qui prépare l’objet CV puis remplit resume.template avec Mustache, en intégrant style.css et print.css.
+- **Prévisualiser en local** (Auteur du CV, resume-cli): Le README lance resume serve --theme . depuis le dossier du thème et ouvre l’aperçu sur http://localhost:4000.
+- **Afficher photo ou Gravatar** (Auteur du CV, Gravatar): Si basics.image est absent, render() construit une URL Gravatar à partir de basics.email avec le paquet gravatar.
+- **Associer profils et icônes** (Auteur du CV): Chaque réseau de basics.profiles reçoit une classe FontAwesome, avec des cas particuliers comme stackoverflow, gitlab et keybase.
+- **Imprimer une copie propre** (Auteur du CV): print.css est injecté comme style media=&#34;print&#34; ; il masque la photo et retire les URL affichées après les liens.
+
+### Scénario : Prévisualiser un CV avec le thème Kendall
+
+1. Installer l’outil avec npm install -g resume-cli.
+2. Créer et remplir resume.json avec resume init.
+3. Lancer npm install dans le dossier du thème pour obtenir mustache, lodash et gravatar.
+4. Lancer resume serve --theme . et ouvrir http://localhost:4000.
+5. Vérifier que seules les sections remplies (work, education, skills…) apparaissent, puis imprimer depuis le navigateur.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -2364,6 +2885,36 @@ Les anciennes dépendances et les champs attendus demandent une vérification. U
 
 ---
 
+# Kelly_RM : expériences sur le critère de Kelly pour dimensionner les positions
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/kelly-rm/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/kelly-rm/index.md
+
+- Dépôt: https://github.com/AlgoETS/Kelly_RM
+
+
+## Cas d’utilisation
+
+Carnets et utilitaires pour estimer les chances de gain par backtest et dimensionner les positions selon Kelly.
+
+- **Simuler le jeu de Kelly** (Chercheur quantitatif): BaseGame (Kelly_game/betting_strategies.py) joue des lancers de pièce biaisée ; Kelly, KellyWithAnEstimate, ConstantDollar et BetLikeADummy fixent la mise, et Playing the Game.ipynb trace richesse et taux de croissance avec Altair.
+- **Télécharger l’historique** (Chercheur quantitatif, API de données marché): src/data.py encapsule les points d’accès historical-price-full de Financial Modeling Prep et les chandelles Binance ; src/request_api.py envoie les requêtes avec httpx et src/config.py lit les clés dans l’environnement.
+- **Optimiser une stratégie RSI** (Chercheur quantitatif): sandbox/Main strategy.ipynb sépare chaque série en trois ans d’entraînement et une suite inédite, puis balaie les bornes et la fenêtre de RsiOscillator avec backtesting.py et affiche une carte de chaleur seaborn.
+- **Estimer les chances par titre** (Chercheur quantitatif): À partir des transactions de chaque backtest, le carnet calcule par titre la probabilité de gain, la moyenne et la variance des gains et des pertes, sur les deux périodes, et garde les titres présents dans les deux.
+- **Calculer la fraction de Kelly** (Chercheur quantitatif): La section Kelly Criterion applique f* = (p·b − q)/b avec b = gain moyen / perte moyenne et enregistre le résultat dans une colonne Kelly_Fraction.
+
+### Scénario : Dimensionner des positions RSI selon Kelly
+
+1. Lancer pip install -r requirements.txt, ajouter les paquets manquants du carnet (pandas_ta, scipy, sympy) et définir FMP_API_KEY dans l’environnement.
+2. Ouvrir sandbox/Main strategy.ipynb ; il lit les symboles du S&amp;P 500 sur Wikipédia et télécharge dix historiques avec src/data.py.
+3. Séparer chaque série en trois ans d’entraînement et une période inédite.
+4. Optimiser RsiOscillator avec Backtest.optimize et lire la carte de chaleur des paramètres.
+5. Calculer par titre la probabilité de gain et la taille des gains et pertes sur les deux périodes, puis la fraction de Kelly des titres retenus.
+
+
+
+---
+
 # kroki-playground : Un éditeur, une API et un moteur de rendu
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/kroki-playground/
@@ -2380,6 +2931,24 @@ kroki-playground est une interface Next.js pour modifier des diagrammes textuels
 **Pourquoi il existe:** Suite d&#39;expérimentation de diagrammes en TypeScript déployée sur Vercel avec rendu instantané.
 
 **Cas d’usage:** Prototypage rapide de diagrammes d&#39;architecture variés.
+
+## Cas d’utilisation
+
+Un bac à sable Next.js pour écrire du code de diagramme Kroki, voir le SVG en direct et le partager par l’URL.
+
+- **Prévisualiser un diagramme** (Auteur de diagrammes, Serveur Kroki): DiagramGenerator.tsx compresse la source avec encodeDiagramPayload() (pako, base64url) et charge &lt;base&gt;/&lt;type&gt;/svg/&lt;encodé&gt; depuis kroki.io ou NEXT_PUBLIC_KROKI_BASE_URL.
+- **Changer de type de diagramme** (Auteur de diagrammes): lib/kroki/diagramTypes.ts liste les routes Kroki (plantuml, mermaid, graphviz, d2, vega-lite…) proposées dans le sélecteur de type.
+- **Partager ou télécharger** (Auteur de diagrammes): La page inscrit ?type=…&amp;source=… dans l’historique, peut copier l’URL Kroki dans le presse-papiers et enregistre l’image sous diagram.svg.
+- **Rendre via l’API REST** (Développeur client API, Serveur Kroki): app/api/generate-diagram/route.ts accepte GET ou POST avec diagramSource, selectedDiagram et outputFormat et renvoie diagramData en base64 ; le README et openapi.yaml nomment le chemin /api/generateDiagram.
+- **Consulter la doc OpenAPI** (Développeur client API): /api-docs affiche public/openapi.yaml avec swagger-ui-react, et GET /api/openapi sert la spécification.
+
+### Scénario : Esquisser un diagramme de séquence et l’envoyer à un collègue
+
+1. Lancer npm install puis npm run dev et ouvrir http://localhost:3000.
+2. Choisir plantuml dans la liste des types et coller la source @startuml … @enduml.
+3. L’aperçu SVG se met à jour depuis Kroki à mesure que la source change.
+4. Copier l’URL de la page, qui porte maintenant ?type=plantuml&amp;source=&lt;encodé&gt;, et l’envoyer.
+5. Cliquer sur télécharger pour enregistrer diagram.svg dans le document de conception.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2439,6 +3008,36 @@ Un lien de partage encodé contient toujours une source récupérable. La compre
 
 ---
 
+# LegosTracker : catalogue LEGO et historique des prix des ensembles
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/legostracker/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/legostracker/index.md
+
+- Dépôt: https://github.com/AlgoETS/LegosTracker
+
+
+## Cas d’utilisation
+
+Carnets et collecteur Playwright pour étudier les ensembles LEGO avec Rebrickable et l’historique de prix BrickEconomy.
+
+- **Collecter les prix des sets** (Collectionneur LEGO, Site BrickEconomy): brickeconomy.py lit set_list.txt, ouvre chaque set sur BrickEconomy avec Playwright Chromium, écrit &lt;set&gt;_history.csv et &lt;set&gt;_new.csv à partir des graphiques et ajoute détails et prix à lego_sets.csv.
+- **Explorer le catalogue LEGO** (Collectionneur LEGO, Exports Rebrickable): general.ipynb charge les tables CSV Rebrickable de datasets/ (couleurs, inventaires, pièces, sets, thèmes) et trace des décomptes, par exemple couleurs transparentes ou opaques.
+- **Modéliser le prix d’un set** (Collectionneur LEGO): analyse.ipynb nettoie data/001-1_history.csv, ajuste des régressions linéaire et gradient boosting sur les dates, projette jusqu’en 2030, lance un Monte Carlo sur les rendements et trace les bandes de prix de data/001-1_new.csv.
+- **Comparer les prix collectés** (Collectionneur LEGO): analyse.ipynb charge data/lego_sets.csv, retire les symboles monétaires et donne le prix Quick Buy le plus bas et le plus haut ainsi que la moyenne de Pricing.
+- **Mettre à jour sa collection** (Collectionneur LEGO, Site BrickEconomy): price.ipynb lit mycollection.csv, cherche chaque set sur BrickEconomy avec requests et BeautifulSoup pour le prix de détail et la valeur actuelle, puis écrit updated_mycollection.csv.
+
+### Scénario : Suivre le prix du set 001-1
+
+1. Installer playwright, pydantic et aiohttp puis lancer playwright install, comme dans brickeconomy.ipynb.
+2. Inscrire les numéros de sets, par exemple 001-1, dans set_list.txt, un par ligne.
+3. Lancer python brickeconomy.py ; une fenêtre Chromium visible cherche sur BrickEconomy et ouvre la page de chaque set.
+4. Déplacer 001-1_history.csv, 001-1_new.csv et lego_sets.csv dans data/, où analyse.ipynb les lit.
+5. Exécuter analyse.ipynb pour tracer l’historique, ajuster les régressions et simuler les prix futurs.
+
+
+
+---
+
 # linkshare : Une application Rails de partage de liens
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/linkshare/
@@ -2454,6 +3053,24 @@ linkshare est un projet Rails archivé pour partager des liens, commenter et vot
 **Pourquoi il existe:** Plateforme Ruby on Rails avec extraction asynchrone de métadonnées OpenGraph.
 
 **Cas d’usage:** Partage social et organisation de liens avec prévisualisation riche.
+
+## Cas d’utilisation
+
+Un site social Ruby on Rails 4.1 où les membres partagent liens ou fichiers, votent, commentent et prévisualisent les pages.
+
+- **Partager un lien ou un fichier** (Membre): LinksController#create enregistre un Link avec titre, URL et description ; le modèle Link monte aussi un FileUploader CarrierWave, et /files/new réutilise le même formulaire.
+- **Prévisualiser une page** (Membre, Embedly): Le fil et la page du lien ajoutent des ancres embedly-card, et application.js appelle embedly(&#39;card&#39;, …) pour afficher une carte ou une infobulle d’aperçu.
+- **Voter et commenter** (Membre): PUT /links/:id/like et /dislike s’appuient sur acts_as_votable, et les routes imbriquées /links/:link_id/comments rattachent les commentaires au lien.
+- **Chercher liens et membres** (Membre): Link.search et User.search filtrent par titre ou nom avec LIKE ; le fil est paginé à cinq liens par page avec will_paginate, et les fiches membres affichent un témoin de présence.
+- **Gérer le contenu dans /admin** (Administrateur): config/routes.rb monte RailsAdmin sur /admin, et la table users comporte un indicateur admin.
+
+### Scénario : Publier un article et recueillir des réactions
+
+1. Démarrer l’application comme dans le README : rails server -p 8080 -b 0.0.0.0, avec redis-server en marche.
+2. S’inscrire sur /users/sign_up avec un nom et l’avatar obligatoire.
+3. Ouvrir /links/new, coller l’URL de l’article avec un titre et une description, puis valider.
+4. Sur le fil d’accueil, survoler le titre pour voir l’aperçu Embedly avec les votes et commentaires.
+5. D’autres membres aiment le lien avec PUT /links/:id/like et répondent sous /links/:id/comments.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2523,6 +3140,25 @@ Ce fork LLM2SVG contient des outils de données SVG et une structure d’évalua
 **Pourquoi il existe:** Générateur et validateur Python d&#39;illustrations vectorielles SVG à partir de descriptions en langage naturel.
 
 **Cas d’usage:** Génération automatisée d&#39;icônes et d&#39;illustrations vectorielles pour systèmes de design.
+
+## Cas d’utilisation
+
+Outils Python et données pour un défi texte vers SVG : charger les consignes, valider les SVG, créer et rendre des formes.
+
+- **Charger consignes et SVG** (Chercheur en ML): SVGDataLoader (utils/data_loader.py) lit data/train/train.csv et data/test/test.csv et rassemble les SVG rangés sous data/train/svg/&lt;id&gt;/ ; SVGDataset (utils/svg_dataset.py) les expose comme Dataset PyTorch.
+- **Valider les contraintes SVG** (Chercheur en ML): SVGConstraints.validate_svg (utils/svg_constraints.py) refuse les fichiers de plus de 10 000 octets et tout élément ou attribut hors de la liste permise, avec une analyse defusedxml.
+- **Repérer les termes clés** (Chercheur en ML): TextParser (utils/text_parser.py) repère couleurs, formes, motifs, matières, vêtements, paysages et architecture dans une description et en déduit une catégorie principale.
+- **Composer un SVG de formes** (Chercheur en ML): utils/svg_utils.py fournit des fonctions pour rect, circle, ellipse, path, polygon, line et group, un générateur de palette, generate_shapes et optimize_svg qui raccourcit les nombres.
+- **Convertir un SVG en PNG** (Chercheur en ML, Moteur cairosvg): svg_to_png (utils/svg_utils.py) appelle cairosvg.svg2png et écrit un fichier ou renvoie les octets PNG.
+- **Analyser le jeu de SVG** (Chercheur en ML): SVGAnalyzer (utils/svg_analyzer.py) compte les SVG, mesure leur taille, recense les éléments, valide chaque fichier et trace un histogramme des tailles face à la limite de 10 Ko.
+
+### Scénario : Vérifier des SVG candidats avant soumission
+
+1. Pointer SVGDataLoader vers le dossier data/ local (le chemin par défaut vise le disque Windows de l’auteur).
+2. Lire les consignes de data/train/train.csv, par exemple « a starlit night over snow-covered peaks ».
+3. Lancer SVGAnalyzer.validate_all_svgs(&#34;train&#34;) pour tester chaque SVG de data/train/svg/ avec SVGConstraints.
+4. Appeler generate_summary_report pour obtenir un tableau des tailles et des sources déduites, puis plot_svg_size_distribution.
+5. Rendre un SVG valide avec svg_to_png pour le comparer à la consigne.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2600,6 +3236,25 @@ Ce fork Maestro relie une interface d’envoi React à un backend Spring et des 
 **Pourquoi il existe:** Pipeline de reconnaissance optique de partitions musicales (OMR) convertissant des images en fichiers MIDI.
 
 **Cas d’usage:** Numérisation de partitions musicales physiques pour écoute et arrangement.
+
+## Cas d’utilisation
+
+Application web qui transforme une partition numérisée (PDF, PNG, JPG) en fichier MIDI, avec tempos ajustables.
+
+- **Téléverser une partition** (Musicien): Le formulaire React (maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx) reçoit le fichier déposé et un nom de MIDI ; useMaestroClient.ts vérifie GET /health avant d’envoyer à /convert.
+- **Régler le tempo par mesure** (Musicien): Le formulaire garde une liste de tempos, mesures et options « forcer » (120 à la mesure 1 par défaut) et l’envoie dans le champ JSON tempos.
+- **Lire les notes avec Audiveris** (Moteur OMR Audiveris): POST /convert (ConvertController.java) vérifie le fichier (10 Mo au plus, signature PDF/JPG/PNG) puis AudiverisController.java lance Audiveris en mode batch pour exporter un .mxl.
+- **Convertir MusicXML en MIDI** (music21 (Python)): backend/src/main/MxlToMidi.py charge le .mxl avec music21, applique les nuances et les tempos demandés, puis écrit le .mid.
+- **Télécharger le fichier MIDI** (Musicien): Le backend renvoie le .mid en pièce jointe et le frontend l’enregistre avec js-file-download ; les dossiers In et Out sont nettoyés trois secondes plus tard.
+- **Basculer anglais ou français** (Musicien): LanguageSwitcher.tsx bascule i18next entre en-US et fr-CA à partir des textes de maestro-app/public/locales/.
+
+### Scénario : Transformer une partition PDF en MIDI en local
+
+1. Copier les dossiers bin et lib d’Audiveris dans backend/audiveris/dist, comme l’indique backend/README.md.
+2. Démarrer les deux services avec docker-compose up -d (backend sur le port 8080, frontend sur le port 3000).
+3. Ouvrir localhost:3000, déposer une partition PDF et saisir un nom de fichier MIDI.
+4. Ajouter une ligne de tempo, par exemple 90 à la mesure 1, puis envoyer le formulaire.
+5. Le backend lance Audiveris puis MxlToMidi.py, et le navigateur télécharge le .mid.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2706,6 +3361,25 @@ marketwatch est un client Python archivé pour le jeu boursier virtuel de Market
 
 **Cas d’usage:** Développement de bots de trading automatisés et analyse de portefeuilles.
 
+## Cas d’utilisation
+
+Client Python pour le jeu boursier MarketWatch : cours, ordres, portefeuilles et listes (connexion bloquée par un captcha).
+
+- **Obtenir le cours d’une action** (Joueur, Site MarketWatch): MarketWatch.get_price (marketwatch/__init__.py) charge la page de l’action avec httpx et lit le cours avec BeautifulSoup ; le README l’indique fonctionnel avec skip_login=True.
+- **Acheter, vendre ou couvrir** (Joueur, Site MarketWatch): buy, sell, short et cover construisent un ordre et l’envoient à une partie ; MarketWatchGame (marketwatch/game.py) lie ces appels à un identifiant de partie.
+- **Lire portefeuille et ordres** (Joueur, Site MarketWatch): get_portfolio, get_positions, get_pending_orders, get_leaderboard et get_game_settings lisent les pages de la partie ; cancel_order et cancel_all_orders annulent les ordres en attente.
+- **Gérer les listes de suivi** (Joueur, Site MarketWatch): create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist et delete_watchlist_item appellent les points d’accès des listes de suivi.
+- **Servir des cartes HTML** (Joueur, Site MarketWatch): api/app.py est une application FastAPI avec authentification HTTP Basic qui rend des gabarits Jinja2 pour /game, /portfolio, /leaderboard, /card et /watchlist.
+- **Trader sur croisement EMA** (GitHub Actions, Site MarketWatch): .github/workflows/ema-workflow.yml s’exécute toutes les cinq minutes, lit les cours avec yfinance, calcule les EMA 20 et 80 et achète ou vend 100 actions à chaque croisement.
+
+### Scénario : Consulter un cours puis passer un ordre
+
+1. Installer le paquet avec pip install marketwatch.
+2. Créer MarketWatch(email, password, skip_login=True) puis appeler get_price(&#34;AAPL&#34;).
+3. Pour les appels de partie, se connecter avec de vrais identifiants ; le README prévient que le captcha bloque cette étape.
+4. Une fois connecté, appeler get_games(), puis buy(game_id, &#34;AAPL&#34;, 100).
+5. Vérifier le résultat avec get_positions(game_id) et get_pending_orders(game_id).
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -2778,6 +3452,36 @@ Le README indique que la connexion est bloquée par un CAPTCHA. Ce client histor
 
 ---
 
+# MarkokChainMonteCarlo : backtests par Monte Carlo et chaîne de Markov
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/markokchainmontecarlo/index.md
+
+- Dépôt: https://github.com/AlgoETS/MarkokChainMonteCarlo
+
+
+## Cas d’utilisation
+
+Carnets qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, puis backtestent une stratégie qui s’en sert.
+
+- **Séparer les prix en 2023** (Chercheur quantitatif, API de marché FMP): mcmc.ipynb et backtest.ipynb téléchargent l’historique complet d’AAPL avec get_historical_price_full_stock et le coupent au 2023-01-01 en prices_before_january_2023 et prices_after_january_2023.
+- **Simuler des trajectoires** (Chercheur quantitatif): monte_carlo_simulation tire des chocs quotidiens à partir de la dérive et de la volatilité des rendements logarithmiques ; mcmc.ipynb ajoute des variantes à volatilité glissante et à chocs extrêmes, sur 364 jours et 1 000 ou 10 000 trajectoires.
+- **Simuler une chaîne de Markov** (Chercheur quantitatif): Les clôtures d’entraînement sont réparties en tranches de 10 $ de 0 à 200 ; pandas.crosstab construit la matrice de transition normalisée et markov_chain_simulation tire une suite de tranches.
+- **Backtester MCMCStrategy** (Chercheur quantitatif): backtest.ipynb exécute MCMCStrategy (stop de 5 %, prise de profit tirée d’une trajectoire simulée) et BuyAndHoldStrategy avec backtesting.py : 10 000 en encaisse, commission de 0,2 %, ordres exclusifs, sur les deux périodes.
+- **Ajuster une tendance linéaire** (Chercheur quantitatif): La section Linear Regression de mcmc.ipynb ajuste une LinearRegression scikit-learn sur l’indice des jours des deux périodes avec un train_test_split 80/20.
+
+### Scénario : Comparer MCMCStrategy et l’achat-conservation sur AAPL
+
+1. Installer les paquets de la commande pip du README et mettre sa propre clé dans la cellule FMP_API_KEY.
+2. Ouvrir backtest.ipynb et télécharger l’historique d’AAPL avec get_historical_price_full_stock.
+3. Couper les données au 2023-01-01 et construire la matrice de transition des tranches de prix sur la première partie.
+4. Créer les objets Backtest de MCMCStrategy et BuyAndHoldStrategy sur les deux périodes et appeler run().
+5. Tracer le résultat ; output/MCMCStrategy.html est un graphique backtesting.py enregistré pour MCMCStrategy.
+
+
+
+---
+
 # MediaBoxDockerCompose : Une pile média reliée par volumes et réseaux
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/mediaboxdockercompose/
@@ -2794,6 +3498,25 @@ MediaBoxDockerCompose rassemble des services homelab avec Docker Compose. Les d�
 **Pourquoi il existe:** Stack GitOps complète combinant réseau sécurisé WireGuard VPN et plus de 15 microservices d&#39;automatisation homelab.
 
 **Cas d’usage:** Serveur multimédia privé conteneurisé avec accès distant chiffré et routage sécurisé.
+
+## Cas d’utilisation
+
+Pile Docker Compose pour un serveur multimédia maison : téléchargements automatisés, Plex/Jellyfin, outils d’admin et proxy Caddy.
+
+- **Démarrer la pile multimédia** (Admin du homelab, Hôte Docker): docker-compose.yml définit une vingtaine de conteneurs qui lisent PUID, PGID, TZ et ROOT dans .env ; docker-compose up -d les lance tous.
+- **Automatiser le téléchargement** (Admin du homelab, Hôte Docker): Sonarr, Radarr, Lidarr et Bazarr gèrent séries, films, musique et sous-titres, alimentés par Jackett, Prowlarr ou NZBHydra2 et confiés à Deluge ou NZBGet, le tout sous ${ROOT}.
+- **Regarder ou demander un titre** (Spectateur, Hôte Docker): Plex (port 32400) et Jellyfin (port 8096) diffusent la bibliothèque ; Ombi et Jellyseerr reçoivent les demandes et Tautulli suit l’activité de Plex.
+- **Surveiller et parcourir l’hôte** (Admin du homelab, Hôte Docker): Netdata (port 19999) affiche les métriques, FileBrowser donne accès aux fichiers et Dashmachine (port 5000) sert de page d’accueil configurée par dashmachine/config.ini.
+- **Publier via Caddy** (Admin du homelab): caddy/Caddyfile relie des sous-domaines comme sonarr.{$DOMAIN} aux ports locaux, avec journaux, limite de débit, liste d’IP permises et authentification de base tirée de caddy/.env.
+- **Ajouter des services en option** (Admin du homelab, Hôte Docker): Des fichiers compose distincts sous extra/ ajoutent un partage Samba, un serveur d’accès WireGuard et Portainer ; whisper/docker-compose.yml lance un service Whisper ASR sur le port 9000.
+
+### Scénario : Monter un serveur séries et films sur une machine
+
+1. Installer Docker et Docker Compose, puis cloner le dépôt.
+2. Modifier .env : régler TZ, PUID, PGID, ROOT (par exemple /media/MediaBox) et PLEX_CLAIM.
+3. Lancer docker-compose up -d à la racine du dépôt.
+4. Ouvrir Prowlarr sur le port 9696 et Sonarr sur le port 8989 pour relier indexeurs et client de téléchargement.
+5. Pointer Plex (port 32400) ou Jellyfin (port 8096) vers les dossiers terminés sous ROOT, puis regarder.
 
 ## Technologies vérifiées
 
@@ -2876,6 +3599,25 @@ Les images et services externes évoluent séparément. Vérifiez identifiants, 
 - Dépôt: https://github.com/ETSim/MistubaVideo
 
 
+## Cas d’utilisation
+
+Outils Mitsuba 3 d&#39;ETSim qui rendent par lancer de rayons des suites OBJ et des enregistrements d&#39;usure en images, MP4 et GIF.
+
+- **Rendre une suite d&#39;OBJ** (Chercheur (simulation), Mitsuba 3 et FFmpeg): python main.py multi --folder exports --regex &#34;\d&#43;\.obj&#34; crée une scène XML par OBJ trouvé, la rend sur CPU ou CUDA avec le spp et la résolution voulus, puis encode MP4 et GIF avec FFmpeg.
+- **Rendre plusieurs vues** (Chercheur (simulation)): --view front --view top ou --all-views rend chaque image depuis les caméras avant, arrière, gauche, droite, dessus, dessous ou perspective de src/mitsuba/camera.py, avec le nom de la vue dans le fichier.
+- **Débruiter et extraire les AOV** (Chercheur (simulation), Mitsuba 3 et FFmpeg): python main.py denoise &lt;chemin&gt; applique le débruiteur OptiX de src/mitsuba/denoising.py aux images rendues, et python main.py aov &lt;fichier.exr&gt; extrait les couches AOV d&#39;un EXR dans des fichiers séparés.
+- **Produire une vidéo de champ** (Chercheur (simulation), Mitsuba 3 et FFmpeg): mitsuba-video render &lt;manifest.json&gt; -q paper rend les corps rigides à leurs poses enregistrées avec un mélange de matériaux piloté par le champ et une carte de chaleur, ajoute l&#39;atlas UV et un graphique d&#39;aire couverte, puis encode un MP4.
+- **Rendre un essai d&#39;usure** (Chercheur (simulation), Essais TextureFriction): python main.py wear render simulation_&lt;ts&gt; ou tf-render lit un dossier --record ou un fichier .h5 de TextureFriction via la source texturefriction.
+- **Écrire et valider un manifeste** (Chercheur (simulation)): Tout projet peut produire un manifest.json versionné avec ManifestWriter ; mitsuba-video validate le vérifie avec manifest-v1.schema.json, et mitsuba-video fixture crée un petit exemple synthétique.
+
+### Scénario : Rendre la vidéo de champ de démonstration
+
+1. Installer FFmpeg et Mitsuba 3, puis lancer pip install -e &#34;packages/mitsuba_video[texturefriction]&#34; pour obtenir mitsuba-video et tf-render.
+2. Créer une entrée synthétique avec mitsuba-video fixture demo.
+3. Vérifier rapidement le cadrage avec mitsuba-video preview demo.
+4. Lancer mitsuba-video render demo -q preview pour rendre les images et encoder le MP4.
+5. Pour des données réelles, lancer python main.py wear render sur un dossier simulation_&lt;ts&gt; de TextureFriction avec -q paper.
+
 
 
 ---
@@ -2896,6 +3638,25 @@ nova-backtest est un fork archivé d’un framework de backtesting. Sa classe ce
 **Pourquoi il existe:** Moteur de backtest financier communiquant avec les API d&#39;exchanges crypto pour stratégies quantitatives.
 
 **Cas d’usage:** Validation de stratégies algorithmiques sur données historiques.
+
+## Cas d’utilisation
+
+Bibliothèque Python qui télécharge les chandelles des plateformes crypto et teste une stratégie avec profits et drawdown.
+
+- **Télécharger l’historique** (Auteur de stratégies, API REST de plateforme): BackTest.get_historical_data (novalabs-backtest/utils/backtest.py) appelle le client de la plateforme et garde les données OHLCV dans database/&lt;exchange&gt;/hist_&lt;pair&gt;_&lt;candle&gt;.csv, à partir du 2019-01-01.
+- **Choisir une plateforme** (Auteur de stratégies, API REST de plateforme): clients() (novalabs-backtest/clients/clients.py) renvoie un client Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda ou BTCEX, chacun conforme à BackTestClientInterface.
+- **Définir entrées et sorties** (Auteur de stratégies): Une stratégie hérite de BackTest et remplit build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) et exit_strategy (exit_signal).
+- **Lancer le backtest** (Auteur de stratégies): run_backtest simule les positions par paire avec les frais de la plateforme, un nombre maximal de positions et une durée de détention maximale, puis trace le profit cumulé.
+- **Enregistrer les statistiques** (Auteur de stratégies): L’exécution écrit results/&lt;strategy&gt;_pairs_stats.csv et results/&lt;strategy&gt;_overall_stats.json avec rendements, drawdown et chiffres par paire.
+- **Créer des indicateurs** (Auteur de stratégies): TechnicalIndicatorsCreation (novalabs-backtest/utils/indicators.py) ajoute décalages, ratios de clôture et niveaux de support ou de résistance à un DataFrame de chandelles.
+
+### Scénario : Tester une stratégie MACD sur des paires Binance
+
+1. Installer les dépendances de requirements.txt (la commande pip du README écrit le paquet novelabs-backtest).
+2. Hériter de BackTest avec exchange=&#34;binance&#34;, candle=&#34;1h&#34;, list_pairs=[&#34;BTCUSDT&#34;, &#34;ETHUSDT&#34;], un capital de départ, un levier et max_pos.
+3. Calculer l’histogramme MACD dans build_indicators et fixer entry_signal, take_profit et stop_loss dans entry_strategy.
+4. Appeler run_backtest() ; les paires absentes sont téléchargées dans database/binance/ la première fois.
+5. Lire le graphique de profit et les fichiers JSON et CSV écrits sous results/.
 
 ## Langages (octets GitHub Linguist)
 
@@ -2963,6 +3724,25 @@ Ce fork novatorem produit des widgets musicaux depuis des services externes. Un 
 **Pourquoi il existe:** Générateur dynamique mettant à jour le profil GitHub avec l&#39;écoute Spotify en temps réel.
 
 **Cas d’usage:** Personnalisation dynamique de profil GitHub via webhooks.
+
+## Cas d’utilisation
+
+Service Flask qui génère une carte SVG « en écoute » depuis Spotify ou Last.fm pour un README de profil GitHub.
+
+- **Afficher le titre en écoute** (Propriétaire du profil, API Web Spotify): La route générique de api/orchestrator.py lit le morceau en cours, tire les couleurs de la pochette et renvoie une carte image/svg&#43;xml ; vercel.json y associe /api/spotify.
+- **Personnaliser les couleurs** (Propriétaire du profil): Les paramètres background_color, border_color, background_type, show_status et compact sont validés dans api/config.py avant le rendu du gabarit Jinja2 choisi dans api/templates.json.
+- **Utiliser Last.fm comme source** (Propriétaire du profil, API Last.fm): Si seuls LAST_FM_API_KEY et LAST_FM_USERNAME sont définis, ou si l’authentification Spotify échoue, get_now_playing passe à api/lastfm.py, qui peut chercher la pochette sur Deezer.
+- **Ouvrir le morceau en cours** (Propriétaire du profil, API Web Spotify): GET /redirect envoie le visiteur vers l’URL du morceau, ou vers le dépôt d’origine si rien ne joue.
+- **Renouveler le jeton Spotify** (Propriétaire du profil, API Web Spotify): scripts/spotify_local_auth.py capte le code OAuth sur http://127.0.0.1:8000/callback et écrit un nouveau jeton, avec option --update-vercel pour le pousser vers Vercel.
+- **Prévisualiser en local** (Propriétaire du profil): python start.py crée .venv, installe les dépendances, lance Flask sur le port 5000 et ouvre /preview ; docker-compose.yml exécute la même application avec une vérification /health.
+
+### Scénario : Ajouter une carte Spotify à un profil GitHub
+
+1. Créer une application Spotify avec l’URI de redirection http://127.0.0.1:8000/callback.
+2. Copier .env.example vers .env et remplir SPOTIFY_CLIENT_ID et SPOTIFY_SECRET_ID.
+3. Lancer python scripts/spotify_local_auth.py pour obtenir SPOTIFY_REFRESH_TOKEN.
+4. Lancer python start.py et vérifier la carte sur http://127.0.0.1:5000/preview.
+5. Déployer sur Vercel et intégrer &lt;déploiement&gt;/api/spotify comme image liée à /redirect dans le README du profil.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3034,6 +3814,25 @@ NX-Activity-Log est un fork d’un visualiseur d’activité homebrew Switch. L�
 
 **Cas d’usage:** Suivi précis et analytique du temps de jeu sur Nintendo Switch.
 
+## Cas d’utilisation
+
+Homebrew Nintendo Switch qui affiche le temps de jeu, les sessions et les lancements par utilisateur, maintenu pour HOS 22.
+
+- **Voir le temps de jeu total** (Joueur Switch, Service PDM (Switch)): L’écran All Activity liste pour chaque jeu le temps total, le nombre de lancements, le premier et le dernier lancement, triés au choix ; les totaux viennent des statistiques PDM du système.
+- **Tracer les sessions récentes** (Joueur Switch, Service PDM (Switch)): PlayData::readPlayDataFromPdm parcourt pdmqryQueryPlayEvent par pages ; RecentActivity et Details tracent un graphique par jour, mois ou année et listent chaque session.
+- **Exporter ou importer** (Joueur Switch): Les réglages lancent ExportJob, qui écrit /switch/NX-Activity-Log/export.json, et ImportJob, qui lit import.json vers importedData.json en associant les comptes par nom.
+- **Personnaliser le thème** (Joueur Switch): CustomTheme et ColourPicker permettent de changer chaque couleur ; un PNG placé à /config/NX-Activity-Log/background.png sert de fond.
+- **Mettre à jour dans l’app** (Joueur Switch, Versions GitHub): UpdateUtils.cpp interroge l’API GitHub pour la dernière version d’antoinebou12/NX-Activity-Log et télécharge son premier fichier avec curl.
+- **Remplacer la page utilisateur** (Joueur Switch): Forwarder/ est un nx-hbloader modifié qui ouvre l’application depuis la page utilisateur ; le README prévient que ce mode est instable depuis HOS 21.
+
+### Scénario : Transférer l’historique vers une nouvelle Switch
+
+1. Copier NX-Activity-Log.nro depuis la page Releases dans /switch/NX-Activity-Log/ et le lancer depuis le menu homebrew.
+2. Choisir un utilisateur, ouvrir les réglages et choisir Export pour écrire export.json.
+3. Copier export.json sur la carte SD de l’autre console sous /switch/NX-Activity-Log/import.json.
+4. Y lancer Import dans les réglages, puis redémarrer l’application.
+5. Vérifier que les sessions importées apparaissent dans Recent Activity et que All Activity affiche les totaux fusionnés.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -3101,6 +3900,25 @@ nxsand est une simulation de sable sur Switch avec une cible de développement d
 **Pourquoi il existe:** Moteur de simulation de particules et physique cellulaire optimisé sous libnx.
 
 **Cas d’usage:** Simulation physique interactive sur écran tactile de console.
+
+## Cas d’utilisation
+
+Bac à sable de particules pour Nintendo Switch (homebrew), simulé sur GPU en OpenGL ES 3.0, avec versions bureau.
+
+- **Peindre des matériaux** (Joueur, GPU (OpenGL ES 3.0)): Le tactile, les Joy-Con ou la souris deviennent des traits de pinceau (source/sim/brush_stroke.cpp) écrits dans la grille par shaders/paint.frag ; le bouton X ouvre la roue des matériaux (source/ui/material_wheel.cpp).
+- **Voir réagir les matériaux** (Joueur, GPU (OpenGL ES 3.0)): Un automate cellulaire de Margolus tourne sur des textures GL_R8UI en alternance dans shaders/sim.frag ou sim.comp ; les réactions, comme lave plus eau qui donne de la pierre, sont dans shaders/sim_common.glsl et le sim_rules_body.glsl qu’il inclut.
+- **Sauver et charger un monde** (Joueur): source/save/save.cpp garde jusqu’à trois emplacements en JSON avec grille en base64 dans sdmc:/switch/nxsand/ (./nxsand_save/ sur bureau) ; Y ou F5 fait une sauvegarde rapide.
+- **Régler les performances** (Joueur, GPU (OpenGL ES 3.0)): settings.json et le menu Engine règlent la résolution, les sous-pas, les tuiles actives, le moteur fragment ou compute et les préréglages Battery Saver, Balanced ou Quality.
+- **Importer un tampon Powder Toy** (Développeur homebrew): nx::importTptStampJson (source/save/tpt_stamp_import.cpp) associe les éléments de The Powder Toy aux matériaux NXSand et met le tampon à l’échelle de la grille.
+- **Compiler et tester le NRO** (Développeur homebrew): make produit build/NXSand.nro avec devkitPro ; make desktop et make test compilent la version bureau SDL2 et les tests de référence CPU de tests/ ; la CI fait de même dans .github/workflows/native-nro.yml.
+
+### Scénario : Compiler NXSand et jouer un premier monde
+
+1. Installer devkitPro, puis lancer dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz.
+2. Lancer make à la racine du dépôt pour obtenir build/NXSand.nro.
+3. Le copier dans sdmc:/switch/NXSand.nro et le lancer depuis le menu homebrew.
+4. Appuyer sur X pour choisir la lave, peindre avec A, puis passer à l’eau et la verser sur la lave pour voir apparaître pierre et fumée.
+5. Appuyer sur Y pour sauvegarder le monde dans sdmc:/switch/nxsand/.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3211,6 +4029,24 @@ Ce contrôleur pan-tilt archivé relie une interface desktop à une unité de po
 
 **Cas d’usage:** Positionnement robotique de caméras pour la vision par ordinateur.
 
+## Cas d’utilisation
+
+Outils Python 2 (interface et ligne de commande) qui pilotent une tourelle PTU-46-17.5 par port série.
+
+- **Initialiser au démarrage** (Tourelle PTU-46-17.5): Au lancement, pantiltcontroller.py ouvre COM3 à 9600 bauds et envoie les commandes de vitesse, d’accélération, de remise à zéro, de position d’origine et de limites (pxu1500, pnu-1000, tnu-850, txu585).
+- **Aller à une position** (Opérateur de labo, Tourelle PTU-46-17.5): La fenêtre PyQt5 de pantiltcontroller.py a des champs Pan et Tilt ; OK envoie pp&lt;valeur&gt; et tp&lt;valeur&gt; et affiche la réponse de la tourelle dans un journal.
+- **Déplacer par flèches** (Opérateur de labo, Tourelle PTU-46-17.5): Le menu Control (Ctrl&#43;O) ouvre une fenêtre dont les boutons fléchés, comme les flèches du clavier, déplacent le pan ou le tilt de 5 positions par appui.
+- **Revenir à l’origine** (Opérateur de labo, Tourelle PTU-46-17.5): Le bouton Reset envoie pp0 et tp0 et remet les positions mémorisées à zéro.
+- **Envoyer des commandes brutes** (Opérateur de labo, Tourelle PTU-46-17.5): PTC-command.py est une invite qui transmet chaque ligne tapée (par exemple r, pnu 1000, pp0) à la tourelle et affiche la réponse jusqu’à la commande exit.
+
+### Scénario : Orienter la tourelle vers une cible
+
+1. Brancher la PTU-46-17.5 sur COM3 (port codé en dur) d’un PC Windows avec Python 2.7, pyserial, PyQt5 et pywin32.
+2. Lancer python pantiltcontroller.py ; le script fixe les limites et ramène la tourelle à 0,0.
+3. Saisir 500 dans Pan et -200 dans Tilt, puis cliquer sur OK.
+4. Ouvrir Control, Control et ajuster avec les flèches par pas de 5.
+5. Cliquer sur Reset pour ramener la tourelle à l’origine.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -3260,6 +4096,37 @@ Ne chargez pas ce script avec du matériel connecté sans vérifier les mouvemen
 
 ---
 
+# PolyFEMBlenderPlugin : des simulations PolyFEM depuis une scène Blender
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/polyfemblenderplugin/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/polyfemblenderplugin/index.md
+
+- Dépôt: https://github.com/ETSim/PolyFEMBlenderPlugin
+
+
+## Cas d’utilisation
+
+Extension Blender qui transforme une scène en configuration JSON PolyFEM et lance la simulation depuis Blender.
+
+- **Assigner un matériau MEF** (Utilisateur Blender): L&#39;opérateur Apply Material enregistre module de Young, coefficient de Poisson et densité sur les objets sélectionnés à partir de préréglages comme Steel ou Aluminum.
+- **Créer le JSON PolyFEM** (Utilisateur Blender): Create PolyFEM JSON exporte chaque maillage et écrit géométrie, matériaux, contact, temps, conditions aux limites, solveur et sorties dans un fichier JSON.
+- **Tétraédriser avec TetWild** (Utilisateur Blender, Images Docker): Avec le type MSH, l&#39;objet est écrit en STL puis converti en .msh par l&#39;image yixinhu/tetwild ou un exécutable TetWild local.
+- **Lancer la simulation** (Utilisateur Blender, Images Docker, Solveur PolyFEM): Run PolyFem Simulation appelle docker run antoinebou12/polyfem --json avec le dossier du projet monté sur /data, ou un exécutable PolyFEM local, dans un fil d&#39;arrière-plan.
+- **Importer l&#39;animation** (Utilisateur Blender, Solveur PolyFEM): Render Animation lit les fichiers step_*.vtu, ajoute le déplacement solution, convertit chaque pas en OBJ avec meshio et anime sa visibilité.
+- **Télécharger les images** (Utilisateur Blender, Images Docker): Les boutons Pull Docker Image vérifient que Docker est installé et exécutent docker pull pour l&#39;image TetWild ou PolyFEM configurée.
+
+### Scénario : Simuler une scène de contact et la rejouer dans Blender
+
+1. Installer le dossier polyfem zippé par Edit &gt; Preferences &gt; Add-ons et activer PolyFem.
+2. Dans Properties &gt; Physics &gt; PolyFEM, choisir l&#39;exécution Docker et télécharger antoinebou12/polyfem et yixinhu/tetwild.
+3. Sélectionner les maillages, appliquer un matériau prédéfini et régler contact, pas de temps et temps final.
+4. Cliquer sur Create JSON Configuration pour écrire les maillages et le JSON dans le dossier d&#39;export.
+5. Cliquer sur Run PolyFem Simulation, puis Render Animation pour importer les résultats step_*.vtu en maillages animés.
+
+
+
+---
+
 # RawAnalyser : Des valeurs brutes aux graphiques de diagnostic
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/rawanalyser/
@@ -3275,6 +4142,25 @@ RawAnalyser est une ancienne expérience Python pour analyser écrêtage, canaux
 **Pourquoi il existe:** Outil d&#39;analyse de capteur photographique calculant histogrammes d&#39;écrêtage et plage dynamique sur fichiers RAW.
 
 **Cas d’usage:** Évaluation de capteurs et calibration d&#39;exposition en photographie computationnelle.
+
+## Cas d’utilisation
+
+Scripts Python 2 pour l’ajustement de caméras : vérifier écrêtage, gamma et vignettage dans des images brutes Bayer.
+
+- **Marquer ROI et gris neutres** (Ingé. qualité d’image): GUI.py (PyQt5) ouvre un fichier .raw ou .tiff, convertit le brut en TIFF pour l’affichage et enregistre la zone d’intérêt et les coins des gris cliqués dans json/points.json.
+- **Analyser chaque capture brute** (Ingé. qualité d’image, Dossier de captures): RawAnalyser.py surveille le dossier donné avec watchdog ; chaque nouveau fichier brut 1928 x 1088 sur 16 bits est séparé en canaux Bayer, enregistré en TIFF puis analysé.
+- **Détecter l’écrêtage** (Ingé. qualité d’image): clipping() affiche les niveaux minimum et maximum sur 10 bits par canal et signale en couleur l’écrêtage du noir ou du blanc quand les valeurs atteignent les limites du capteur.
+- **Mesurer gamma et vignettage** (Ingé. qualité d’image): gamma() échantillonne les gris de points.json ; vignette() retire le niveau de noir (--bl, 1024 par défaut), divise par une carte .npy de vignettage et écrit un TIFF corrigé.
+- **Inspecter un pixel** (Ingé. qualité d’image): RawPixel.py affiche la valeur et la couleur Bayer du pixel x, y selon la largeur, la hauteur et la profondeur données, et vide les canaux dans array/*.txt.
+- **Convertir le brut en TIFF** (Ingé. qualité d’image, Dossier de captures): Raw2Tiff.py écrit un TIFF à partir d’un fichier brut ; 20MPto5MP.py regroupe les images 20 Mpx de l’OV20880 en additionnant des blocs 2 x 2 de même couleur pour obtenir 5 Mpx.
+
+### Scénario : Vérifier une capture de mire OV2740
+
+1. Installer Python 2.7 et les paquets de requirements.txt, ainsi que tifffile.
+2. Lancer python GUI.py, ouvrir une capture de raw/ et cliquer la zone d’intérêt et les gris pour mettre à jour json/points.json.
+3. Démarrer python RawAnalyser.py raw json/points.json --func basic --bl 1024 pour surveiller le dossier.
+4. Copier une nouvelle capture .raw dans raw/ ; le script affiche les alertes d’écrêtage et le gamma et écrit un TIFF sous tiff/.
+5. Vérifier un point suspect avec python RawPixel.py &lt;fichier&gt; x y --width 1928 --height 1088.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3363,6 +4249,24 @@ retroarch-web-games est une ancienne configuration conteneur autour de RetroArch
 
 **Cas d’usage:** Émulation de jeux rétro dans le navigateur sans installation.
 
+## Cas d’utilisation
+
+Image Docker qui héberge le lecteur web RetroArch derrière nginx, avec des dossiers de jeux récupérés à la construction.
+
+- **Installer RetroArch web** (Auto-hébergeur, Sources de fichiers): setup_retroarch.sh télécharge la version emscripten de la veille sur buildbot.libretro.com, l’extrait dans /var/www/html et décompresse le bundle du frontend.
+- **Télécharger les jeux** (Auto-hébergeur, Sources de fichiers): InternetArchive.py (typer, rich, requests) parcourt en parallèle les pages d’archives listées pour les fichiers .zip et .7z et les range sous downloads/&lt;nom du système&gt;.
+- **Trier les jeux par lettre** (Auto-hébergeur): sort_mkdir.sh déplace chaque fichier dans un sous-dossier 0-9 ou A-Z ; le Dockerfile l’exécute pour chaque dossier de système Nintendo.
+- **Lancer le conteneur** (Auto-hébergeur): docker-compose up -d construit l’image et relie le port 8080 à nginx ; entrypoint.sh régénère les listes .index-xhr avant de lancer nginx.
+- **Jouer dans le navigateur** (Joueur web): Le joueur ouvre http://localhost:8080, choisit un cœur et charge un jeu dans la page RetroArch Web Player fournie par la version nightly (le dépôt en garde une copie, index.html, que le Dockerfile ne copie pas).
+- **Publier l’image multi-arch** (Auto-hébergeur): .github/workflows/retroarch-web-games.yaml construit avec Docker Buildx pour amd64, arm64 et arm/v7 et pousse antoinebou12/retroarch-web-games sur Docker Hub.
+
+### Scénario : Héberger un lecteur rétro sur un serveur maison
+
+1. Cloner le dépôt et prévoir la place pour une image d’environ 10 Go, comme le prévient le README.
+2. Lancer docker-compose up -d ; la construction exécute setup_retroarch.sh, InternetArchive.py et sort_mkdir.sh.
+3. Au démarrage du conteneur, entrypoint.sh indexe les cœurs et le bundle, puis nginx sert le site.
+4. Ouvrir http://localhost:8080 et charger un jeu depuis les dossiers downloads triés.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -3422,6 +4326,36 @@ Cette archive demande une revue des dépendances et du navigateur. Utilisez seul
 
 ---
 
+# Salary : explorer les guides salariaux et les données de salaires au Canada
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/salary/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/salary/index.md
+
+- Dépôt: https://github.com/AlgoETS/Salary
+
+
+## Cas d’utilisation
+
+Scripts et carnets Python qui extraient des guides salariaux et tableaux de salaires canadiens pour comparer métiers et régions.
+
+- **Extraire les guides PDF** (Analyste des salaires): src/pdf_salary_scraper_2023_1.py et src/pdf_salary_scraper_2024_1.py lisent un guide de data/pdf avec PyPDF2, suivent province et région, extraient les fourchettes junior, intermédiaire et senior par poste et enregistrent un pickle dans data/pickle.
+- **Charger les salaires 2012-2022** (Analyste des salaires): src/wages_in_time.py lit data/csv/wage_2012.csv à wage_2022.csv avec Polars, harmonise les colonnes, met en cache data/pickle/wages.pkl et affiche les postes les mieux payés par année et les postes d’ingénierie par province.
+- **Comparer métiers et régions** (Analyste des salaires): sandbox/salary_exploration_2023.ipynb et salary_exploration_2024.ipynb classent les postes par salaire maximal, filtrent l’ingénierie et le Québec, comparent un poste entre régions et provinces et trouvent les plus grands écarts.
+- **Collecter Stack Overflow** (Analyste des salaires, Sondage Stack Overflow): src/stackoverflow_scraper.py récupère la page des salaires du sondage Stack Overflow 2022 avec httpx, lit le tableau avec BeautifulSoup et l’enregistre dans data/pickle/stackoverflow_salary_data.pkl.
+- **Interroger l’API des salaires** (Client de l’API): api/app.py est une application FastAPI dont les routes /load_pickle/2023 et /salary/2024 renvoient les guides en JSON ; la documentation interactive est à /docs.
+
+### Scénario : Comparer le salaire d’architecte infonuagique au Québec
+
+1. Lancer pip install -r requirements.txt à la racine du dépôt.
+2. Placer 2023_salary_guide.pdf dans data/pdf et lancer python src/pdf_salary_scraper_2023_1.py.
+3. Vérifier que data/pickle/salary_guide_2023.pkl a été créé.
+4. Démarrer jupyter notebook et ouvrir sandbox/salary_exploration_2023.ipynb, qui sépare chaque fourchette et calcule les moyennes par niveau.
+5. Appeler compare_job_province(&#39;cloud architect&#39;, &#39;québec&#39;) pour classer les régions du Québec selon le salaire intermédiaire moyen.
+
+
+
+---
+
 # Serilog.Sinks.SentrySDK : Adapter les événements de logs à Sentry
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/serilog-sinks-sentrysdk/
@@ -3438,6 +4372,25 @@ Serilog.Sinks.SentrySDK relie un pipeline de journalisation .NET au SDK Sentry. 
 **Pourquoi il existe:** Sink Serilog .NET 6&#43; reliant la journalisation structurée à Sentry avec zéro allocation superflue.
 
 **Cas d’usage:** Observabilité des erreurs et traçage distribué pour microservices d&#39;entreprise .NET.
+
+## Cas d’utilisation
+
+Sink Serilog (NuGet) pour développeurs .NET qui envoie journaux, exceptions et traces à Sentry, avec contexte ASP.NET Core.
+
+- **Configurer WriteTo.Sentry** (Développeur .NET): SentrySinkExtensions.cs ajoute WriteTo.Sentry avec un DSN et des options comme environment, release, sampleRate, tags et enableTracing, en code ou dans la section Serilog d’appsettings.json.
+- **Envoyer journaux et exceptions** (Développeur .NET, Sentry): SentrySink.Emit convertit le niveau Serilog, copie les propriétés en extras et en tags, ajoute des fils d’Ariane et appelle CaptureMessage ou CaptureException.
+- **Tracer chaque log en span** (Développeur .NET, Sentry): Avec enableTracing, Emit ouvre une transaction nommée d’après le gabarit du message et un span enfant via ITransactionService, puis les termine.
+- **Joindre le contexte HTTP** (Développeur .NET, Sentry): Le paquet AspNetCore ajoute le middleware app.AddSentryContext() et HttpContextDestructingPolicy pour que les événements portent l’utilisateur, les en-têtes et la requête.
+- **Filtrer avant l’envoi** (Développeur .NET): Un rappel beforeSend facultatif s’enchaîne après le traitement du sink ; la démo SentryWeb réécrit aussi les messages avec un enrichisseur Serilog (Scrubbing/DivisionByZeroFilter.cs).
+- **Publier six paquets NuGet** (NuGet.org): .github/workflows/CI.yml empaquette les identifiants principal, .6 et .10 pour net6.0 et net10.0 et les pousse sur NuGet.org à la publication d’une version GitHub.
+
+### Scénario : Remonter les erreurs d’une app ASP.NET Core vers Sentry
+
+1. Lancer dotnet add package Serilog.Sinks.SentrySDK et dotnet add package Serilog.Sinks.SentrySDK.AspNetCore.
+2. Placer le DSN du projet sous Serilog, WriteTo, Sentry, Args dans appsettings.json.
+3. Construire le logger avec ReadFrom.Configuration, Destructure.With&lt;HttpContextDestructingPolicy&gt;() et le filtre CheckIfCaptured.
+4. Appeler app.AddSentryContext() dans Startup.Configure.
+5. Provoquer une erreur, par exemple avec dotnet run --project demos/SentryWeb/SentryWeb.csproj, et retrouver l’événement et sa requête dans Sentry.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3528,6 +4481,68 @@ Le contexte HTTP peut contenir des données personnelles. Vérifiez l’enrichis
 
 ---
 
+# SimilityVectorEmbedding : trouver des films proches par recherche vectorielle
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/similityvectorembedding/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/similityvectorembedding/index.md
+
+- Dépôt: https://github.com/AlgoETS/SimilityVectorEmbedding
+
+
+## Cas d’utilisation
+
+Carnets Jupyter qui vectorisent un catalogue de films et trouvent des films proches avec pgvector, Qdrant, BM25, Neo4j et Ollama.
+
+- **Vectoriser le catalogue** (Apprenant, Base en conteneur): postgres/1.create_table.ipynb compose un texte par film à partir de movies.json et l’encode avec BART, GTE, MiniLM-L12, RoBERTa et e5-large, avec une colonne de vecteurs par modèle.
+- **Trouver des films proches** (Apprenant, Base en conteneur): postgres/0.simple.ipynb retrouve le titre saisi avec pg_trgm, puis classe le catalogue par similarité cosinus pour un titre, plusieurs titres ou des titres notés.
+- **Chercher dans Gradio** (Apprenant, Base en conteneur): Les dernières cellules de postgres/0.simple.ipynb lancent une interface Gradio (modes Single, Multiple et Ratings) qui affiche affiches, années et scores.
+- **Chercher avec Qdrant** (Apprenant, Base en conteneur): qdrant/0.simple.ipynb insère des vecteurs MiniLM de 384 dimensions dans une collection cosinus, l’interroge et projette les vecteurs avec t-SNE et k-means.
+- **Interroger un LLM local** (Apprenant, Base en conteneur, LLM local (Ollama)): postgres/3.LLMS.ipynb vectorise une question, lance une requête cosinus pgvector et transmet le schéma à une chaîne LangChain reliée à Ollama llama2:13b-chat.
+- **Comparer BM25 et graphe Neo4j** (Apprenant, Base en conteneur): bm25/0.bm25.ipynb classe les films par mots-clés avec rank_bm25, et neo4j/1.create_db.ipynb les note selon les genres, réalisateurs, scénaristes et acteurs partagés.
+
+### Scénario : Trouver des films proches de The Matrix
+
+1. Démarrer PostgreSQL avec pgvector et pg_trgm : cd postgres, puis docker-compose up -d.
+2. Ouvrir postgres/0.simple.ipynb avec jupyter notebook et exécuter les cellules d’installation et d’import.
+3. Exécuter main() pour charger movies.json, vectoriser chaque film avec all-MiniLM-L6-v2 et l’insérer dans la table movies.
+4. Appeler find_similar_movies(conn, cur, &#34;The Matrix&#34;) pour obtenir les titres les plus proches au-dessus d’un seuil cosinus de 0,5.
+5. Tracer le résultat avec plot_similar_movies ou refaire la recherche dans l’interface Gradio.
+
+
+
+---
+
+# Simulateur : un jeu de simulation boursière en Django
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/index.md
+
+- Dépôt: https://github.com/AlgoETS/Simulateur
+
+
+## Cas d’utilisation
+
+Jeu boursier Django : les admins lancent des scénarios scriptés et les équipes échangent des actions simulées en direct.
+
+- **Créer un scénario** (Admin de simulation): Le tableau de bord admin suit cinq étapes de formulaire (réglages, entreprises et actions, équipes, événements, révision) appuyées sur les API de scénario et de gestionnaire de simulation.
+- **Lancer une simulation** (Admin de simulation): manage.py start_simulation passe une simulation à l’état en cours ; SimulationManager écrit ensuite des chandelles OHLC à partir du modèle de bruit choisi (brownien, Perlin, marche aléatoire, fBm, Monte-Carlo) à chaque pas.
+- **Générer du contenu par IA** (Admin de simulation, LLM Ollama): simulation/api/ai_llm.py expose create-news-ai, create-event-ai, create-trigger-ai, create-company-stock-ai et create-scenario-ai, qui interrogent un modèle Ollama (OLLAMA_MODEL, llama3 par défaut).
+- **Rejoindre une équipe** (Joueur): Un membre génère un lien d’invitation depuis le tableau d’équipe (team/generate-join-link/) et les autres joueurs s’en servent pour entrer ; la même page affiche membres et classements.
+- **Acheter et vendre des actions** (Joueur): Depuis /dashboard/, le formulaire d’ordre appelle POST /api/stock/buy/ ou /api/stock/sell/, qui vérifient le solde au dernier prix, enregistrent l’ordre et mettent à jour les positions.
+- **Suivre les cours en direct** (Joueur): Le tableau de jeu ouvre ws/simulation/&lt;id&gt;/ et Django Channels pousse les mises à jour de cours, actualités, événements et déclencheurs depuis SimulationConsumer.
+
+### Scénario : Lancer la simulation de démonstration
+
+1. Dans simulateur/, copier env-default vers .env et exécuter python3 run.py --install pour installer, migrer, créer admin/admin et charger les CSV.
+2. Démarrer le serveur ASGI et la simulation 1 avec python3 run.py --start-simulation 1 (Daphne sur le port 8000).
+3. Se connecter en admin et ouvrir /dashboard/admin pour revoir le scénario, les réglages et la fonction de bruit.
+4. Ouvrir /dashboard/game : les chandelles arrivent par le WebSocket ws/simulation/ à chaque pas de temps.
+5. Depuis /dashboard/, choisir la simulation et une action puis cliquer sur Buy, qui appelle POST /api/stock/buy/ ; consulter ensuite positions et classements.
+
+
+
+---
+
 # sm64coopdx-switch-N3DS : Isoler un port derrière les interfaces de plateforme
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/
@@ -3543,6 +4558,25 @@ Ce fork explore les cibles Switch et New 3DS de sm64coopdx. Le code commun du je
 **Pourquoi il existe:** Portage système en C bas niveau optimisant le réseau multithread et la mémoire pour consoles portables.
 
 **Cas d’usage:** Jeu multijoueur coopératif portable sur consoles Switch et New 3DS.
+
+## Cas d’utilisation
+
+Portage homebrew non officiel de sm64coopdx (coop en ligne) pour Switch, avec une cible New 3DS en chantier ; ROM non fournie.
+
+- **Installer avec sa propre ROM** (Joueur Switch): docs/SWITCH_INSTALL.md : extraire le ZIP à la racine de la carte SD, ajouter une ROM US sous switch/sm64coopdx/baserom.us.z64 conforme à sm64.us.sha1, puis lancer sm64coopdx.nro en mode application complète.
+- **Rejoindre un salon CoopNet** (Joueur Switch, Salons CoopNet): La version Switch envoie l’empreinte réelle du NRO et liste les salons de l’espace sm64coop-android, comme l’explique docs/switch.md ; le client se trouve sous src/pc/network/coopnet.
+- **Jouer en sans-fil local** (Joueur Switch): src/pc/network/socket/socket_ldn.c ajoute un transport sans fil local et src/pc/djui/djui_panel_ldn_browser.c liste les sessions à proximité.
+- **Saisir un mot de passe** (Joueur Switch, Salons CoopNet): Les mots de passe des salons privés passent par le clavier intégré au jeu (src/pc/djui/djui_panel_switch_text_entry.c) plutôt que par le clavier natif de la Switch.
+- **Compiler et empaqueter le NRO** (Développeur du portage): Dans l’image Docker devkitpro/devkita64, make -f Makefile.switch-sdmc SWITCH_COOPNET=1 switch-nro compile le NRO et switch-dist vérifie l’en-tête et les empreintes puis écrit le ZIP ; build-switch-game.yml exécute en CI des contrôles sans ROM.
+- **Compiler la cible New 3DS** (Développeur du portage): Makefile.new3ds compile une coquille de plateforme et Makefile.new3ds-game le moteur complet avec rendu Citro3D et audio NDSP ; docs/new3ds-port.md précise que le jeu n’est pas encore vérifié sur console.
+
+### Scénario : Jouer en coop en ligne depuis une Switch
+
+1. Extraire le ZIP Switch de sm64coopdx à la racine de la carte SD, ce qui crée switch/sm64coopdx/.
+2. Copier votre propre ROM US dans switch/sm64coopdx/baserom.us.z64.
+3. Maintenir R en lançant un jeu pour ouvrir le menu homebrew en mode application complète, puis lancer SM64CoopDX.
+4. Ouvrir le menu de connexion, choisir un salon CoopNet public et taper son mot de passe sur le clavier du jeu s’il est privé.
+5. En cas d’échec, lire startup.log, coopnet.log et exception.log sous switch/sm64coopdx/logs/.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3607,6 +4641,36 @@ Les essais du jeu complet nécessitent des ressources de jeu obtenues légalemen
 
 ---
 
+# Sport-Arbitrage : calculatrice d’arbitrage pour paris sportifs
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/sport-arbitrage/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/sport-arbitrage/index.md
+
+- Dépôt: https://github.com/AlgoETS/Sport-Arbitrage
+
+
+## Cas d’utilisation
+
+Calculatrice web qui vérifie les cotes de deux sites de paris pour repérer un arbitrage et répartir la mise.
+
+- **Choisir 2 ou 3 issues** (Parieur): Le sélecteur Number of Odds d’index.html appelle toggleOddsFields() dans script.js, qui n’affiche les deux champs Draw que pour trois issues.
+- **Saisir les cotes de deux sites** (Parieur): Le formulaire reçoit les cotes Win et Lost des sites 1 et 2, les cotes Draw facultatives et la mise totale.
+- **Repérer un arbitrage** (Parieur): calculateArbitrage() teste des paires fixes entre les deux sites ; hasArbitrageOpportunity() signale un arbitrage quand la somme des inverses des cotes est inférieure à 1.
+- **Répartir la mise** (Parieur): Pour chaque occasion, script.js affiche le pourcentage d’arbitrage, les mises optimales, le gain par issue et le profit garanti.
+- **Vérifier le calcul en Python** (Parieur): arbitrage.ipynb reprend les mêmes fonctions en Python avec des cotes d’exemple codées en dur pour le cas à deux issues.
+
+### Scénario : Tester les cotes d’exemple du carnet
+
+1. Ouvrir index.html dans un navigateur et laisser Number of Odds à 2.
+2. Saisir Win Site 1 = 1.3, Lost Site 1 = 3.93, Win Site 2 = 1.42 et Lost Site 2 = 2.9.
+3. Entrer une mise totale (Total Investment) de 100 et cliquer sur Calculate.
+4. Lire le résultat : seule la paire lost-site1 et win-site2 se qualifie, avec des mises d’environ 26,54 et 73,46.
+5. Comparer avec la ligne de profit garanti (environ 4,31) et relancer arbitrage.ipynb pour vérifier les mêmes chiffres.
+
+
+
+---
+
 # SpringBootFilesUploader : Séparer les octets et les métadonnées
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/springbootfilesuploader/
@@ -3623,6 +4687,24 @@ SpringBootFilesUploader est un backend Kotlin et Spring qui sépare stockage bin
 **Pourquoi il existe:** Microservice Spring Boot en Kotlin avec téléversement multipart en flux et validation d&#39;intégrité.
 
 **Cas d’usage:** Backend ingestion de fichiers à haut débit.
+
+## Cas d’utilisation
+
+API Spring Boot en Kotlin qui range les fichiers téléversés dans MinIO/S3 derrière des rôles JWT, avec des routes Docker et SSH.
+
+- **S&#39;inscrire et obtenir un JWT** (Utilisateur de l&#39;API, MinIO S3 et MongoDB): POST /auth/signup enregistre l&#39;utilisateur dans MongoDB avec son mot de passe haché et ses rôles ; POST /auth/signin renvoie un JwtResponse avec le jeton et les rôles (AuthController.kt, JwtUtils.kt).
+- **Téléverser un document** (Modérateur ou admin, MinIO S3 et MongoDB): POST /files/documents (modérateur ou admin) valide l&#39;extension avec DOC_FILE_EXTENSION_REGEX, écrit le fichier dans le bucket S3 sous files/&lt;uuid&gt;/&lt;nom&gt; et note ses métadonnées dans MongoDB.
+- **Télécharger un fichier stocké** (Utilisateur de l&#39;API, MinIO S3 et MongoDB): GET /files/{id} retrouve la fiche du fichier dans MongoDB, lit l&#39;objet dans S3 et le renvoie en pièce jointe avec son type et sa taille.
+- **Gérer des conteneurs Docker** (Modérateur ou admin): Les routes /containers listent, créent, démarrent, arrêtent, redémarrent et renomment des conteneurs avec docker-java, sur l&#39;hôte Docker défini dans application.yml (tcp://127.0.0.1:2375).
+- **Lancer une commande SSH** (Modérateur ou admin): POST /ssh/cli (admin seulement) ouvre une session Apache SSHD avec l&#39;hôte, le port et les identifiants reçus, puis renvoie la sortie de la commande.
+
+### Scénario : Déposer un PDF puis le récupérer
+
+1. Démarrer MongoDB sur localhost:27017 et MinIO sur localhost:9000, comme le prévoit application.yml, puis lancer ./gradlew bootRun.
+2. Envoyer POST /auth/signup avec un nom d&#39;utilisateur, un courriel, un mot de passe et le rôle « mod ».
+3. Appeler POST /auth/signin et copier le JWT de la réponse.
+4. Envoyer le PDF à POST /files/documents dans le champ multipart « document » avec le jeton Bearer ; la réponse donne fileId et fileName.
+5. Appeler GET /files/{fileId} pour télécharger le PDF, ou parcourir les routes dans Swagger UI à /api-docs.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3694,6 +4776,25 @@ switch-wifi est un tableau de bord réseau pour Switch avec une interface Boreal
 **Pourquoi il existe:** Utilitaire C&#43;&#43; natif communiquant directement avec les services wlan de l&#39;OS Switch.
 
 **Cas d’usage:** Configuration réseau rapide pour console Switch sans interface complexe.
+
+## Cas d’utilisation
+
+Application homebrew pour Nintendo Switch qui affiche l&#39;état du Wi-Fi, mesure le lien HTTPS et lit l&#39;état Bluetooth.
+
+- **Vérifier le lien Wi-Fi** (Joueur sur Switch, Horizon NIFM / BTM): L&#39;onglet Dashboard lit le type de lien, le SSID, l&#39;IPv4, la passerelle, le DNS et les barres de signal 0 à 3 via NIFM (NetworkService) ; le RSSI vient de wlan:inf seulement si le micrologiciel l&#39;expose.
+- **Mesurer la connexion** (Joueur sur Switch, Serveur de débit HTTPS): SpeedTestEngine lance 8 sondes de latence HTTPS, puis un téléchargement de 25 Mio et un envoi de 10 Mio remplis de zéros avec libcurl vers speed.cloudflare.com par défaut, avec médiane, P95 et gigue.
+- **Voir les réseaux enregistrés** (Joueur sur Switch, Horizon NIFM / BTM): L&#39;onglet Networks montre les métadonnées de base des profils enregistrés et les canaux autorisés par Horizon, avec le calcul de chevauchement de core/metrics ; les identifiants ne sont jamais affichés.
+- **Inspecter le Bluetooth** (Joueur sur Switch, Horizon NIFM / BTM): BluetoothService lit l&#39;état radio BTM et le nombre d&#39;appareils, puis lance un balayage BLE passif limité qui renvoie au plus dix adresses uniques.
+- **Exporter un rapport** (Joueur sur Switch): L&#39;onglet About écrit sdmc:/switch-wifi-diagnostics.txt avec la version, la cible de compatibilité, les détails réseau et les compteurs Bluetooth, sans identifiants.
+
+### Scénario : Comparer deux canaux de routeur sur Switch
+
+1. Compiler build-switch/switch-wifi.nro dans le conteneur devkitpro/devkita64 et le vérifier avec python3 scripts/verify_nro.py.
+2. Copier le NRO sur la carte SD et le lancer depuis le menu homebrew.
+3. Ouvrir l&#39;onglet Dashboard pour confirmer que la Switch est en Wi-Fi et noter les barres de signal.
+4. Lancer l&#39;onglet Benchmark et lire la latence médiane, le P95, la gigue et les débits descendant et montant.
+5. Changer le canal du routeur, relancer la mesure et comparer les graphiques d&#39;historique.
+6. Exporter sdmc:/switch-wifi-diagnostics.txt depuis l&#39;onglet About pour garder le résultat.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3798,6 +4899,24 @@ TCH099 est un projet pédagogique qui combine pages frontend statiques et API PH
 **Pourquoi il existe:** Environnement multi-conteneurs isolé avec réseau bridge, persistance MariaDB et interface web.
 
 **Cas d’usage:** Référence d&#39;architecture conteneurisée pour application et base de données.
+
+## Cas d’utilisation
+
+Application web de démonstration en PHP et MariaDB, avec client Android, pour enseigner le routage, les sessions et Azure.
+
+- **Créer un compte** (Utilisateur web/mobile, Base MariaDB): La page d&#39;inscription ou SignupActivity sur Android envoie les données à /api/signup ; api/signup.php appelle registerUser(), qui ajoute le compte à la table Clients créée par db/1create.sql.
+- **Se connecter (session)** (Utilisateur web/mobile, Base MariaDB): login.html et LoginActivity envoient le nom d&#39;utilisateur et le mot de passe à /api/login ; api/login.php les vérifie avec loginUser() et ouvre une session PHP, que /api/logout ferme.
+- **Afficher une image au hasard** (Utilisateur web/mobile): random-image.html appelle /api/random-image, qui renvoie l&#39;URL d&#39;un chat venant de TheCatAPI ou celle de thispersondoesnotexist.com selon imageType.
+- **Saluer selon la langue** (Utilisateur web/mobile): /api/hello-world/$langue répond par une salutation en français, anglais, espagnol ou allemand ; c&#39;est l&#39;exemple d&#39;API minimal.
+- **Lister les clients (admin)** (Administrateur, Base MariaDB): La route /admin ne sert admin.html que si isAdmin() est vrai ; la page charge /api/clients, qui lit la table Clients lorsque la session a le rôle admin.
+
+### Scénario : Lancer la démo en local jusqu&#39;à la page admin
+
+1. Remplir DB_HOST et les variables MYSQL_* indiquées dans le README, puis lancer docker-compose up -d --build.
+2. Charger le schéma et les données avec python3 db/db.py, ou importer db/1create.sql, 2contraines.sql et 3insert.sql dans phpMyAdmin sur le port 8060.
+3. Ouvrir http://localhost:8001/signup, créer un compte, puis se connecter sur /login.
+4. Avec un compte admin, ouvrir /admin pour voir la table Clients chargée par /api/clients.
+5. Pousser sur main pour que .github/workflows/main_tch099antoine.yml zippe l&#39;application et la déploie sur Azure Web App.
 
 ## Langages (octets GitHub Linguist)
 
@@ -3929,6 +5048,37 @@ Une démonstration de routes ne constitue pas une revue de sécurité. Sessions,
 
 ---
 
+# TradingViewBuilder : indicateurs et stratégies en Pine Script
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/tradingviewbuilder/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/tradingviewbuilder/index.md
+
+- Dépôt: https://github.com/AlgoETS/TradingViewBuilder
+
+
+## Cas d’utilisation
+
+Indicateurs et stratégies Pine Script (EMA, MACD, RSI, Bollinger, RVI …) à coller dans TradingView.
+
+- **Afficher un indicateur** (Trader, TradingView): Coller un fichier .indicator comme rsi.indicator ou macd.indicator dans le Pine Editor et l’ajouter au graphique pour tracer la série et ses niveaux.
+- **Tester un croisement** (Trader, TradingView): ema.strategy, mac.strategy et macd.strategy entrent sur un croisement rapide/lente ou MACD/signal et inversent ou ferment au croisement opposé.
+- **Jouer les retours de bande** (Trader, TradingView): bollingerbands.strategy et linearregression.strategy achètent quand la clôture repasse au-dessus de la bande basse et vendent à découvert sous la bande haute.
+- **Suivre un oscillateur** (Trader, TradingView): rsi.strategy réagit aux croisements du RSI avec 30 et 70, et rvi.strategy aux croisements du Relative Vigor Index avec sa ligne de signal.
+- **Ajuster les paramètres** (Trader, TradingView): Chaque script déclare des input() (périodes, multiplicateurs, niveaux) que le README propose de modifier avec l’icône d’engrenage du graphique.
+- **Esquisser un portefeuille** (Trader): TimeSeriesMomentumEffect.strategy esquisse un momentum sur 12 mois pour 60 contrats à terme, avec cible de volatilité et plafond de levier ; c’est un brouillon, pas du Pine valide.
+
+### Scénario : Tester la stratégie RSI sur un graphique
+
+1. Se connecter à TradingView, ouvrir un graphique et cliquer sur l’onglet Pine Editor.
+2. Copier le contenu de rsi.strategy et le coller dans l’éditeur.
+3. Cliquer sur Add to Chart : les entrées Long apparaissent quand le RSI(14) passe au-dessus de 30, les entrées Short quand il passe sous 70.
+4. Ouvrir l’icône d’engrenage pour modifier RSI Length, Overbought Level ou Oversold Level et comparer les opérations.
+5. Ajouter rsi.indicator dans un panneau séparé pour voir l’oscillateur avec les mêmes niveaux.
+
+
+
+---
+
 # TrueMapData : des cartes de hauteur pour la métrologie et l’infographie
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/
@@ -3936,6 +5086,25 @@ Une démonstration de routes ne constitue pas une revue de sécurité. Sessions,
 
 - Dépôt: https://github.com/ETSim/TrueMapData
 
+
+## Cas d’utilisation
+
+Bibliothèque Python et CLI tmd-process pour les cartes de hauteur .tmd TrueMap et GelSight : métrologie, usure, 3D.
+
+- **Charger une carte .tmd** (Chercheur tribologie, TrueMap / GelSight): TMD.load(&#34;fichier.tmd&#34;) dans tmd/core/tmd.py décode les en-têtes v1 ou v2 et renvoie height_map, un tableau float32 (hauteur, largeur), avec un dictionnaire metadata.
+- **Exporter des cartes de texture** (Chercheur tribologie): tmd-process maps all|normal|ao|bump|hillshade|displacement écrit des cartes PNG via les générateurs de tmd/image/maps/, et maps batch traite un dossier entier.
+- **Exporter un maillage 3D** (Chercheur tribologie): tmd-process mesh generate exporte en STL, OBJ, PLY, glTF ou USD avec une triangulation adaptative ou quadtree ; mesh apply pose les cartes sur un gabarit OBJ/MTL comme tmd/fixtures/templates/plane.
+- **Mesurer la rugosité ISO 25178** (Chercheur tribologie, Surfalize (ISO 25178)): tmd-process roughness file &lt;chemin&gt; --quick calcule les paramètres surfaciques via l&#39;extra optionnel truemapdata[roughness], qui installe Surfalize sous GPL-3.0.
+- **Suivre l&#39;usure entre scans** (Chercheur tribologie, TrueMap / GelSight): tmd-wear (équivalent de tmd-process wear) calcule courbes de portance, séries de volume d&#39;usure, axe de glissement et évolution des rayures sur des séquences alignées, via tmd/sequence/wear_analysis.py.
+- **Tracer surfaces et profils** (Chercheur tribologie): tmd-process visualize basic &lt;fichier&gt; trace cartes de chaleur 2D, surfaces 3D et profils X/Y avec les traceurs matplotlib, plotly, seaborn ou Polyscope (optionnel) ; tribology plot produit un tableau de bord PNG.
+
+### Scénario : Comparer deux captures GelSight d&#39;un échantillon usé
+
+1. Installer le paquet avec pip install truemapdata, ou pip install -e . depuis un clone.
+2. Lancer tmd-wear bearing curve examples/gelsight/circle_0mm_100g_heightmap_linear_detrend.tmd --json pour obtenir la courbe d&#39;Abbott de la première capture.
+3. Lancer tmd-wear volume-series avec ce fichier et tests/fixtures/gelsight_wear_volume_second_frame.tmd pour mesurer le volume perdu entre les deux images.
+4. Exporter les textures avec tmd-process maps all &lt;fichier&gt; -o ./maps_out.
+5. Construire un maillage avec tmd-process mesh generate &lt;fichier&gt; --format stl --method adaptive --quality high pour voir la zone usée en 3D.
 
 
 
@@ -3957,6 +5126,24 @@ uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une s
 **Pourquoi il existe:** Serveur phare Model Context Protocol (MCP) générant PlantUML, Mermaid et Kroki directement depuis des LLMs (Claude, Cursor, ChatGPT) sans dépendance locale.
 
 **Cas d’usage:** Génération interactive de diagrammes d&#39;architecture pour le pair programming avec IA et la documentation.
+
+## Cas d’utilisation
+
+Serveur MCP qui permet aux assistants IA de transformer une source ou une description en diagramme rendu dans la conversation.
+
+- **Rendre un diagramme** (Client MCP (chat IA), Kroki / PlantUML): generate_uml reçoit un diagram_type, le code source, un format et un thème optionnel, fait le rendu via Kroki (KROKI_SERVER, https://kroki.io par défaut) et renvoie le fichier, son URL et un lien vers le terrain de jeu.
+- **Valider une source** (Client MCP (chat IA)): validate_uml vérifie le type, le format et la structure de base en local, sans rendu, pour que l&#39;assistant corrige la source avant de lancer le rendu.
+- **Rendre un lot de diagrammes** (Client MCP (chat IA), Kroki / PlantUML): generate_uml_batch rend plusieurs éléments en parallèle limité, dans l&#39;ordre reçu, jusqu&#39;à la limite batch_max_items.
+- **Retoucher dans le visualiseur** (Développeur, Client MCP (chat IA)): Dans les clients compatibles MCP Apps, le résultat s&#39;ouvre dans ui://uml-mcp/diagram-viewer : zoom, édition de la source, changement de thème ou de format, export SVG, PNG, HTML ou PDF.
+- **Héberger le serveur soi-même** (Développeur, Kroki / PlantUML): uv tool install uml-mcp &amp;&amp; uml-mcp setup l&#39;installe en local ; docker-compose.yml lance le serveur sur le port 8000 avec des conteneurs Kroki et un profil PlantUML de secours optionnel, et deploy/helm/uml-mcp vise Kubernetes.
+
+### Scénario : Dessiner une séquence de connexion depuis Cursor
+
+1. Ajouter le point d&#39;accès hébergé https://uml-mcp.vercel.app/mcp à la configuration MCP, comme dans .cursor/mcp.json.
+2. Demander à l&#39;assistant : « Dessine un diagramme de séquence d&#39;un utilisateur qui se connecte via une passerelle d&#39;API. »
+3. L&#39;assistant appelle list_diagram_types, écrit la source Mermaid ou PlantUML et la vérifie avec validate_uml.
+4. Il appelle generate_uml_image ; le serveur fait le rendu via Kroki et renvoie un PNG en ligne avec les liens de rendu et de terrain de jeu.
+5. Ouvrir le lien du terrain de jeu ou le visualiseur MCP App pour retoucher la source et exporter en SVG.
 
 ## Langages (octets GitHub Linguist)
 
@@ -4071,6 +5258,24 @@ uml-skill regroupe des instructions de rédaction de diagrammes et un petit outi
 
 **Cas d’usage:** Intégration directe de génération UML dans des agents autonomes.
 
+## Cas d’utilisation
+
+Skill d&#39;agent (diagramming-uml) qui guide les agents IA pour écrire une source de diagramme et la rendre via uml-mcp ou Kroki.
+
+- **Installer le skill** (Développeur, Agent IA de code): Le README propose npx @smithery/cli@latest skill add antoinebou12/uml, ou la copie du dossier dans .cursor/skills/diagramming-uml/ pour que l&#39;agent charge SKILL.md.
+- **Planifier et écrire le code** (Agent IA de code): SKILL.md fait passer l&#39;agent par le but, le type de diagramme, le plan et les règles de lisibilité (environ 25 nœuds Mermaid ou 30 PlantUML, transitions étiquetées) avant d&#39;écrire la source.
+- **Choisir un diagram_type** (Agent IA de code): references/DIAGRAM-TYPES.md associe des intentions (séquence, couloirs, ER, architecture…) à un diagram_type Kroki et à une forme Mermaid ou PlantUML, à confirmer avec uml://types.
+- **Rendre via uml-mcp** (Agent IA de code, uml-mcp / Kroki): Quand uml-mcp est branché, le skill demande à l&#39;agent d&#39;appeler validate_uml puis generate_uml ou generate_uml_batch, et de rendre l&#39;URL Kroki et le lien du terrain de jeu.
+- **Créer une URL Kroki sans MCP** (Développeur, uml-mcp / Kroki): Sans MCP, scripts/kroki_url.py compresse la source avec zlib, l&#39;encode en base64url et affiche une URL https://kroki.io/&lt;backend&gt;/&lt;format&gt;/…
+
+### Scénario : Obtenir un lien partageable vers une séquence
+
+1. Installer le skill avec npx @smithery/cli@latest skill add antoinebou12/uml.
+2. Demander à l&#39;agent un diagramme de séquence d&#39;un paiement ; le skill s&#39;active sur la demande de diagramme.
+3. L&#39;agent choisit sequence ou le sequenceDiagram de Mermaid dans la table d&#39;intentions et écrit la source.
+4. Avec uml-mcp branché, il appelle validate_uml et generate_uml, puis répond avec l&#39;URL, le lien du terrain de jeu et une copie du code.
+5. Sans uml-mcp, lancer python scripts/kroki_url.py -t mermaid diagram.mmd pour obtenir le lien.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
@@ -4147,6 +5352,129 @@ La charge du lien est récupérable, sans chiffrement. Les instructions ne garan
 
 ---
 
+# WearBlender : des scènes Blender pour les effets d’usure
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/wearblender/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/wearblender/index.md
+
+- Dépôt: https://github.com/ETSim/WearBlender
+
+
+## Cas d’utilisation
+
+Scènes Blender d&#39;exemple pour apprendre à simuler l&#39;usure avec des shaders, des geometry nodes et de la peinture.
+
+- **Étudier l&#39;usure des arêtes** (Apprenant, enseignant, Blender 4.5): Edge wear.blend construit un masque d&#39;arêtes usées dans l&#39;éditeur de shaders avec les nœuds Bevel et Geometry, une rampe de couleur et une texture de rugosité.
+- **Étudier des rayures** (Apprenant, enseignant, Blender 4.5): Scratched.blend combine textures Voronoi et Noise, rampes de couleur et nœuds Bump sur une Suzanne pour dessiner des micro-rayures.
+- **Faire pivoter une normal map** (Apprenant, enseignant, Blender 4.5): NormalRotation.blend fait pivoter les vecteurs d&#39;une normal map image avec les nœuds Vector Rotate et Vector Math.
+- **Piloter l&#39;usure par peinture** (Apprenant, enseignant, Blender 4.5): WeightPainting.blend lit un attribut peint avec des geometry nodes Named Attribute et un nœud Attribute pour mélanger des matériaux.
+- **Déformer avec une flowmap** (Apprenant, enseignant, Blender 4.5): flowmap.blend sépare puis recombine des composantes vectorielles pour décaler les coordonnées de texture selon une image de flux.
+- **Projeter une texture caméra** (Apprenant, enseignant, Blender 4.5): SurfaceCameraProjection.blend contient une seconde caméra, un CameraProjectionMaterial avec shader d&#39;émission et un monde de corps rigides.
+
+### Scénario : Décortiquer la scène d&#39;usure des arêtes
+
+1. Cloner le dépôt et ouvrir Edge wear.blend dans Blender 4.5 LTS.
+2. Sélectionner le plan et ouvrir le Shader Editor pour suivre les nœuds Bevel et Geometry jusqu&#39;à la rampe de couleur.
+3. Déplacer les repères de la rampe et voir les arêtes usées grandir ou rétrécir dans la vue.
+4. Ouvrir Scratched.blend et comparer comment les textures Voronoi et Noise alimentent le nœud Bump.
+5. Copier le montage de nœuds dans son propre matériau comme point de départ.
+
+
+
+---
+
+# WearMachine : les fichiers CAO d’un banc d’usure GelSight
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/wearmachine/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/wearmachine/index.md
+
+- Dépôt: https://github.com/ETSim/WearMachine
+
+
+## Cas d’utilisation
+
+Fichiers CAO, d&#39;impression et de dessin d&#39;un petit banc d&#39;usure par glissement dont les échantillons passent au GelSight.
+
+- **Imprimer les pièces** (Constructeur du banc, Imprimante ou découpe): Print/ contient les STL du rail, du support de rail, du patin, du poussoir, de l&#39;entretoise, du support de roulement, du support moteur, de l&#39;écrou, des porte-échantillons et des porte-poids.
+- **Modifier les pièces en CAO** (Constructeur du banc): Raw/ conserve les solides STEP des porte-échantillons, des pièces du rail et de la plupart des porte-poids pour modifier les cotes avant impression.
+- **Découper les pièces DXF** (Constructeur du banc, Imprimante ou découpe): Drawing/ fournit les contours DXF, dont une plaque Base disponible seulement en DXF, ainsi qu&#39;une feuille Inkscape A4 à 16 trous pour un moule.
+- **Régler la charge normale** (Constructeur du banc): Les Weight Holder existent en versions 10, 20, 50, 100, 200, 500 et 1000 g pour appliquer une charge choisie sur l&#39;échantillon.
+- **Placer sous le GelSight** (Constructeur du banc, Scanner GelSight): Les porte-échantillons de 30 mm et 40 mm et un support carré de paillasse placent les échantillons usés pour la capture GelSight, comme le décrit le README.
+
+### Scénario : Monter le banc et lancer un essai chargé
+
+1. Ouvrir Picture/Assembly.png pour voir le cadre à deux rails et la traverse à cinq trous d&#39;échantillons.
+2. Imprimer Rail, Rail_Holder, Rail_Ski, Pusher, Seperator, Holder Berring, nema17bracket_v2 et t8_nut depuis Print/Rail/.
+3. Découper la plaque Base depuis Drawing/Rail/Base.dxf et monter le rail avec un moteur NEMA 17 et une vis T8.
+4. Imprimer le porte-poids de la charge visée, par exemple Weight Holder 200g.stl, et le poser sur l&#39;échantillon.
+5. Après chaque distance de glissement, placer l&#39;échantillon dans le support 30 mm ou 40 mm et le numériser au GelSight.
+
+
+
+---
+
+# WearSurfacesDatasets : des séquences mesurées de surfaces usées
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/wearsurfacesdatasets/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/wearsurfacesdatasets/index.md
+
+- Dépôt: https://github.com/ETSim/WearSurfacesDatasets
+
+
+## Cas d’utilisation
+
+Séquences de cartes de surfaces usées (matériau, grain, charge, distance) avec outils Python et visionneuse WebGPU.
+
+- **Télécharger les séquences** (Chercheur en rendu, Stockage Git LFS): Les feuilles Parquet et les shards WebDataset sont des objets Git LFS : git lfs pull remplace les pointeurs dans data/parquet et data/shards.
+- **Parcourir une usure** (Chercheur en rendu, Navigateur WebGPU): docs/serve_local.py sert docs/index.html, qui lit le Parquet avec parquet-wasm et affiche les cartes en WebGPU pendant qu&#39;on fait défiler la distance ou qu&#39;on lance la lecture.
+- **Aligner une séquence** (Chercheur en rendu, Navigateur WebGPU): POST /api/align/sequence lance un recalage SIFT/ECC en deux passes des normal maps sur la première image, recadre la zone commune et met les PNG en cache dans data/aligned.
+- **Interpoler et extrapoler** (Chercheur en rendu): python -m alignment.bake ajoute des points milieux Catmull-Rom et des normal maps extrapolées par FFT et SLERP après la dernière mesure.
+- **Empaqueter Parquet et shards** (Chercheur en rendu): generate_datasets.py parquet et webdataset transforment un arbre wear/ de cartes PNG en feuilles Parquet imbriquées et en fichiers shard-*.tar.
+- **Extraire les cartes en PNG** (Chercheur en rendu): read_datasets.py decompress et generate_datasets.py extract réécrivent en fichiers image les octets JPEG stockés par map_type.
+
+### Scénario : Examiner l&#39;usure d&#39;un carton sous 200 g
+
+1. Cloner le dépôt, lancer git lfs pull et pip install -r requirements.txt.
+2. Démarrer python docs/serve_local.py et ouvrir http://127.0.0.1:8080/docs/index.html.
+3. Choisir Cartboard / Raw / Normal · S60 · 200 g et cliquer sur Load sequence.
+4. Cliquer sur Align sequence, puis faire défiler la distance de 0 mm à 2400 mm ou lancer Play.
+5. Lancer python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack pour ajouter les étapes interpolées et extrapolées.
+
+
+
+---
+
+# WearTrailsExperiments : des traces d’usure pilotées par le contact, dans le navigateur
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/weartrailsexperiments/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/weartrailsexperiments/index.md
+
+- Dépôt: https://github.com/ETSim/WearTrailsExperiments
+
+
+## Cas d’utilisation
+
+Expériences web qui transforment le contact et le glissement de corps rigides en cartes d&#39;usure et de flux sur une texture de sol.
+
+- **Faire glisser un corps** (Chercheur en rendu, Navigateur (WebGL), CDN three.js/Ammo.js): docs/index.html charge three.js 0.158 et Ammo.js depuis un CDN, puis main-clean-complete.js lâche un cube, une sphère, un palet, un cône, un cube mou ou un GLB sur un plan avec vitesse, force et frottement réglés.
+- **Comparer les boîtes de contact** (Chercheur en rendu, Navigateur (WebGL)): docs/js/bounding-box/ ajuste la zone de contact par AABB, OBB par ACP, OMBB par calipers tournants, KDOP-8 ou une méthode hybride.
+- **Examiner les vues de contact** (Chercheur en rendu, Navigateur (WebGL)): Huit vignettes montrent les vues du dessus, du dessous et d&#39;intersection, la vitesse tangentielle, la traction instantanée, la distance de glissement cumulée et l&#39;usure locale.
+- **Accumuler l&#39;usure au sol** (Chercheur en rendu, Navigateur (WebGL)): FlowAccumulationManager ajoute K x traction x vitesse dans des tampons du sol et conserve la direction de glissement, encodée en HSVA ou RGBA.
+- **Mélanger des variantes GLB** (Chercheur en rendu, Navigateur (WebGL)): GroundVariantManager charge un sol GLB à variantes de matériaux et utilise l&#39;usure cumulée comme carte de mélange et la direction du flux pour pivoter les textures.
+- **Exporter les cartes en PNG** (Chercheur en rendu, Navigateur (WebGL)): Export Wear Map et Save Stamps enregistrent les canevas du sol en PNG par un lien de téléchargement.
+
+### Scénario : Enregistrer la trace d&#39;usure d&#39;un cube qui glisse
+
+1. Servir le dossier docs/ avec python -m http.server 8000 et ouvrir http://localhost:8000.
+2. Choisir Cube (subdiv 10), l&#39;algorithme OBB (PCA-based) et une valeur de frottement, puis cliquer sur Start.
+3. Utiliser Pause, Step Frame et Apply Angular Impulse pour suivre la zone de contact dans les vignettes.
+4. Basculer l&#39;encodage d&#39;usure entre HSVA (Direction &#43; Wear) et RGBA pour lire direction et quantité.
+5. Cliquer sur Export Wear Map pour enregistrer en PNG la carte cumulée du sol.
+
+
+
+---
+
 # WordsEnigma : Un jeu de mots entre Redwood et Prisma
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/wordsenigma/
@@ -4163,6 +5491,24 @@ WordsEnigma est un fork avec deux espaces Redwood, web et API. Son modèle relie
 **Pourquoi il existe:** Moteur de jeu et validateur de dictionnaires en TypeScript supportant plusieurs langues et longueurs de mots.
 
 **Cas d’usage:** Logique de jeu de lettres algorithmique et heuristiques de résolution.
+
+## Cas d’utilisation
+
+Prototype RedwoodJS d&#39;un Wordle multilingue, avec grille de mots en français, API GraphQL et gestion admin sur PostgreSQL.
+
+- **Deviner un mot de 5 lettres** (Joueur): La page /phil (MotDuJourPhilPage/App.tsx) donne six essais sur une grille 6×5, refuse les mots absents de la liste française de data/fr.ts et colore les lettres et les touches ; la solution est codée en dur (GRAND).
+- **Créer un compte** (Joueur): /signup, /login, /forgot-password et /reset-password passent par dbAuth de Redwood (api/src/functions/auth.ts) sur le modèle User, avec mot de passe haché et sel.
+- **Gérer mots et banques** (Administrateur): Les routes sous /admin, protégées par Private roles=&#34;admin&#34;, offrent des pages CRUD générées pour utilisateurs, langues, mots, banques de mots, parties, essais, lettres et statistiques via les services GraphQL.
+- **Charger les mots français** (Administrateur, Dictionnaires en ligne): yarn seed lance scripts/seed.ts, qui crée les langues et la banque de mots fr, puis récupère les définitions sur fr.wiktionary.org ou le-dictionnaire.com avec le robot cheerio avant d&#39;insérer les mots.
+- **Suivre parties et séries** (Joueur): Le schéma Prisma enregistre chaque Game avec ses TryRow et Letter, et une ligne Statistic par utilisateur (parties jouées, gagnées, perdues, série, moyenne) ; le modèle existe, mais les pages de jeu ne l&#39;alimentent pas encore.
+
+### Scénario : Lancer la grille française en local
+
+1. Démarrer PostgreSQL avec docker run --name=db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -d postgres, comme dans le README racine.
+2. Dans WordsEnigma/, lancer yarn install, puis yarn rw prisma migrate dev pour appliquer api/db/migrations.
+3. Lancer yarn seed pour charger les langues, la banque fr et les mots.
+4. Démarrer yarn redwood dev et ouvrir http://localhost:8910/phil.
+5. Taper cinq lettres, valider et lire les couleurs jusqu&#39;à trouver le mot ou épuiser les six lignes.
 
 ## Langages (octets GitHub Linguist)
 
@@ -4225,6 +5571,24 @@ Le manifeste vise une ancienne chaîne Redwood et Node. Autorisations et règles
 
 - Dépôt: https://github.com/AlgoETS/Workshop1
 
+
+## Cas d’utilisation
+
+Atelier AlgoÉTS en français : carnets Jupyter, des bases de Python aux API, à pandas, aux graphiques et à une EMA sur Apple.
+
+- **Préparer son environnement** (Participant, Jupyter ou Colab): 0.1_python_environement présente virtualenv, Anaconda et Jupyter Lab ; 0.2_jupyter_cloud montre DeepNote et Google Colab, et le README pointe vers une copie Colab du premier carnet.
+- **Apprendre les bases de Python** (Participant, Jupyter ou Colab): 1.1_python_basic et 1.2_python_advanced couvrent variables, structures de contrôle, lecture de fichier (monfichier.txt) et une petite base SQLite (ma_base.db).
+- **Appeler une API web** (Participant, Jupyter ou Colab): 2.1_python_api explique les verbes REST, les codes d&#39;état, les jetons Bearer, les clés d&#39;API et OAuth, avec des exemples requests et httpx asynchrone.
+- **Nettoyer des données (pandas)** (Participant): 3.1_python_panda présente les DataFrame, le filtrage avec loc et iloc, les valeurs manquantes, les fusions, les indicateurs pandas_ta et une comparaison avec polars.
+- **Tracer une EMA sur Apple** (Participant, API de cours FMP): 5.1_project_ema récupère les cours journaliers d&#39;AAPL via historical-price-full de FMP, calcule une EMA 20 jours avec ewm de pandas et la trace avec la clôture dans Matplotlib ; 4.2 ajoute SMM, RSI et MACD.
+
+### Scénario : Suivre l&#39;atelier jusqu&#39;au projet EMA
+
+1. Cloner https://github.com/AlgoETS/Workshop1.git et lancer pip install -r requirements.txt.
+2. Démarrer jupyter notebook, ou ouvrir 1.0-basic/1.1_python_basic.ipynb dans Google Colab depuis le lien du README.
+3. Parcourir 1.0-basic, 2.0-api et 3.0-data dans l&#39;ordre.
+4. Ouvrir 5.0-project/5.1_project_ema.ipynb et remplacer YOUR_API_KEY par une clé Financial Modeling Prep.
+5. Exécuter les cellules pour charger les cours d&#39;AAPL dans un DataFrame, ajouter EMA_20 et tracer la clôture avec l&#39;EMA 20 jours.
 
 
 

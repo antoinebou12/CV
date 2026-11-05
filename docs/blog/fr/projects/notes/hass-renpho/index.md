@@ -20,6 +20,24 @@ hass_renpho est un fork d’intégration Home Assistant pour les mesures Renpho.
 
 **Cas d’usage:** Centralisation des données de santé privées dans Home Assistant.
 
+## Cas d’utilisation
+
+Une intégration Home Assistant qui interroge l’ancienne API infonuagique Renpho et expose les mesures de la balance en capteurs.
+
+- **Se connecter, choisir l’usager** (Usager Home Assistant, Home Assistant, API nuagique Renpho): config_flow.py valide le courriel et le mot de passe auprès de Renpho, puis affiche l’étape select_user si le compte a plusieurs usagers.
+- **Interroger les mesures** (Home Assistant, API nuagique Renpho): RenphoWeightCoordinator appelle get_measurements(), list_girth() et list_girth_goal() toutes les refresh secondes via un DataUpdateCoordinator.
+- **Afficher les mesures** (Usager Home Assistant, Home Assistant): sensor.py et sensor_configs.py créent des capteurs pour le poids, l’IMC, la masse grasse, l’eau, le métabolisme de base, les tours de taille et objectifs, en kg ou lb.
+- **Passer par un mandataire** (Usager Home Assistant, API nuagique Renpho): Le paramètre facultatif proxy (http:// ou socks5://) est vérifié par check_proxy() avant les appels, pour les adresses IP bloquées par renpho.qnclouds.com.
+- **Tester un compte dans l’API** (Usager Home Assistant, API nuagique Renpho): api/app.py est une application FastAPI avec des routes comme /auth, /users, /measurements et /girth_info ; vercel.json la déploie et le README renvoie à sa page /docs.
+
+### Scénario : Faire arriver la pesée du matin dans Home Assistant
+
+1. Copier custom_components/renpho dans <config_dir>/custom_components/renpho/ (ou installer via HACS).
+2. Ajouter renpho: avec email, password et refresh: 600 dans configuration.yaml, plus sensor: platform: renpho.
+3. Redémarrer Home Assistant ; l’intégration se connecte à l’ancienne API Renpho et retrouve l’identifiant de l’usager.
+4. Monter sur la balance avec l’ancienne appli Renpho pour que la mesure arrive dans le nuage.
+5. Au prochain cycle de rafraîchissement, les capteurs de poids et de masse grasse se mettent à jour dans le tableau de bord.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

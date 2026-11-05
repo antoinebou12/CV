@@ -21,6 +21,24 @@ ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une inter
 
 **Cas d’usage:** Affichage matériel déporté pour métriques ou domotique.
 
+## Cas d’utilisation
+
+Un micrologiciel ESP32 et une appli Android qui pilotent un afficheur 7 segments I2C en minuterie ou chronomètre par Wi-Fi.
+
+- **Connecter la carte au Wi-Fi** (Opérateur de minuterie, ESP32 + afficheur): Sans identifiants enregistrés, wifi.cpp lance un point d’accès ESPTimer ; la page / sert alors le formulaire, et POST /connect enregistre SSID et mot de passe en NVS.
+- **Lancer minuterie ou chrono** (Opérateur de minuterie, ESP32 + afficheur): POST /timer-action avec action, mode, minutes et seconds démarre, met en pause ou arrête une tâche FreeRTOS (COUNTDOWN ou STOPWATCH) dans display.cpp.
+- **Fixer l’affichage directement** (Opérateur de minuterie, ESP32 + afficheur): POST /update-display avec minutes et seconds appelle updateDisplay() et diffuse un message displayUpdated.
+- **Suivre l’état en direct** (Appli Android, ESP32 + afficheur): Le WebSocket /ws diffuse des messages JSON timerStarted, timerStopped et displayUpdated ; le WebSocketClient Android les écoute.
+- **Piloter depuis Android** (Opérateur de minuterie, Appli Android): TimerApiService.kt reprend les mêmes points d’accès avec Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) derrière les fragments TimerControl et WiFiConnect.
+
+### Scénario : Préparer un compte à rebours de 5 minutes sur une carte neuve
+
+1. Câbler le module I2C Adafruit sur SDA, SCL, VCC et GND, puis flasher avec pio run -t upload (env firebeetle).
+2. Au premier démarrage, rien n’est en NVS : rejoindre le point d’accès ESPTimer et ouvrir la page de la carte.
+3. Choisir un réseau dans /scan et l’envoyer à /connect ; la carte l’enregistre et rejoint le réseau local.
+4. Lire la nouvelle adresse IP au moniteur série à 115200 bauds et l’ouvrir dans un navigateur ou l’appli Android.
+5. Envoyer action=start, mode=countdown, minutes=5, seconds=0 à /timer-action ; l’afficheur décompte et /ws signale chaque mise à jour.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

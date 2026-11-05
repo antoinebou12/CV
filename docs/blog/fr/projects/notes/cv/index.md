@@ -21,6 +21,25 @@ Ce site réunit des CV bilingues, des données structurées, des PDF LaTeX et un
 
 **Cas d’usage:** Présentation professionnelle et vitrine technique d'ingénierie logicielle.
 
+## Cas d’utilisation
+
+Source d'antoineboucher.info/CV : CV HTML bilingue, PDF LaTeX, CV en JSON et blogue Hugo avec une page par projet.
+
+- **Mettre à jour le CV** (Propriétaire du site): Le propriétaire modifie index-en.html et index-fr.html, data/resume.*.json et data/cv.yaml ; scripts/build/generate_cv.py produit les fichiers LaTeX skills.tex à partir du YAML.
+- **Compiler les CV en PDF** (Propriétaire du site): python build_cv.py build --all compile cv-en/resume.tex et cv-fr/resume.tex avec XeLaTeX dans une image Docker.
+- **Rafraîchir les pages projets** (Propriétaire du site): scripts/build/repository_docs.py lit les dépôts publics sans exécuter leur code et écrit hugo/data/repository_*.json, que le shortcode repository-note affiche sous hugo/content/projects/notes/<slug>/.
+- **Publier le site** (Propriétaire du site, GitHub Pages): scripts/deploy/publish_site.py lance build_docs.py (Hugo avec HUGO_ENV=production, fusion du sitemap, vérifications), check_public_repos.py et les tests des notes, puis, avec --publish, valide docs/ et pousse main.
+- **Lire le CV (EN ou FR)** (Recruteur ou lecteur, GitHub Pages): GitHub Pages sert /CV/index-en.html et /CV/index-fr.html, les PDF sous /CV/cv-en/ et /CV/cv-fr/, ainsi que /CV/resume.json ou /CV/resume.md pour la lecture machine.
+- **Parcourir blogue et projets** (Recruteur ou lecteur, GitHub Pages): Le site Hugo est publié sous /CV/blog/ et /CV/blog/fr/, avec une version Markdown de chaque page, et llms.txt, robots.txt et sitemap.xml copiés à la racine.
+
+### Scénario : Publier une mise à jour du CV
+
+1. Modifier le poste dans index-en.html et index-fr.html, ainsi que data/resume.en.json et data/resume.fr.json.
+2. Lancer python build_cv.py build --all pour régénérer cv-en/resume.pdf et cv-fr/resume.pdf.
+3. Lancer python scripts/deploy/publish_site.py pour construire le CV et le blogue dans un dossier temporaire, les valider et mettre à jour docs/.
+4. Vérifier docs/ en local, valider les changements de source, puis relancer le script avec --publish pour valider docs/ et pousser main.
+5. Attendre que GitHub Pages (main, /docs) traite la poussée, puis vérifier https://antoineboucher.info/CV/.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

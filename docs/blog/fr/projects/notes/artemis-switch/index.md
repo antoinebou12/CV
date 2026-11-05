@@ -21,6 +21,24 @@ Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu. L
 
 **Cas d’usage:** Diffusion de jeux PC vers Nintendo Switch en mode portable avec latence minimale.
 
+## Cas d’utilisation
+
+Fork de Moonlight-Switch qui diffuse des jeux PC sur Nintendo Switch, avec mise à l’échelle FSR, profils de flux et télémétrie.
+
+- **Jumeler un hôte et diffuser** (Joueur sur Switch, PC hôte GameStream): GameStreamClient.cpp et MoonlightSession.cpp gèrent le jumelage par NIP et les sessions avec Sunshine, Apollo, Vibeshine ou Punktfunk ; DiscoverManager trouve les hôtes et WakeOnLanManager peut les réveiller.
+- **Régler l’affichage vidéo** (Joueur sur Switch): Fit, Fill, Stretch, zoom et panoramique, rotation et plage complète passent par un seul chemin de présentation deko3d, avec mise à l’échelle FSR/EASU, netteté RCAS et tramage après le décodage NVDEC.
+- **Enregistrer des profils** (Joueur sur Switch, PC hôte GameStream): Les profils nommés enregistrent FPS (30 à 120), résolution, débit, codec et présentation dans profile.json ; on peut les associer à un hôte, les modifier, les importer ou les exporter (StreamProfileStore.cpp, ProfileEditorDialog.cpp).
+- **Exporter un banc d’essai** (Joueur sur Switch): La page Performance affiche débit, latence, file d’images, temps GPU et fréquences de la Switch ; les commandes Benchmark démarrer, arrêter et enregistrer écrivent un fichier via app/src/benchmark/BenchmarkExport.cpp.
+- **Compiler et tester l’appli** (Développeur): Avec devkitA64 et CMake, la cible Moonlight.nro construit le binaire Switch, publié par la CI sous le nom Artemis-Switch.nro ; tests/ contient des tests unitaires portables lancés avec ctest, plus des vérifications Python d’i18n et de publication.
+
+### Scénario : Diffuser un jeu PC sur Switch
+
+1. Copier Artemis-Switch.nro dans sdmc:/switch/Artemis-Switch/ et lancer hbmenu par redirection de titre.
+2. Ouvrir Artemis Switch, choisir le PC hôte et terminer le jumelage par NIP dans l’interface web de l’hôte.
+3. Créer un profil de flux (par exemple 60 FPS, H.265, Fit avec FSR) et l’associer à cet hôte.
+4. Lancer une application et appuyer ensemble sur - et + pour ouvrir la surcouche.
+5. Ouvrir Performance pour suivre le débit et la latence du pipeline, puis lancer et enregistrer un Benchmark.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

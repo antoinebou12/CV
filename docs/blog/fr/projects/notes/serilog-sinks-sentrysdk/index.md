@@ -21,6 +21,25 @@ Serilog.Sinks.SentrySDK relie un pipeline de journalisation .NET au SDK Sentry. 
 
 **Cas d’usage:** Observabilité des erreurs et traçage distribué pour microservices d'entreprise .NET.
 
+## Cas d’utilisation
+
+Sink Serilog (NuGet) pour développeurs .NET qui envoie journaux, exceptions et traces à Sentry, avec contexte ASP.NET Core.
+
+- **Configurer WriteTo.Sentry** (Développeur .NET): SentrySinkExtensions.cs ajoute WriteTo.Sentry avec un DSN et des options comme environment, release, sampleRate, tags et enableTracing, en code ou dans la section Serilog d’appsettings.json.
+- **Envoyer journaux et exceptions** (Développeur .NET, Sentry): SentrySink.Emit convertit le niveau Serilog, copie les propriétés en extras et en tags, ajoute des fils d’Ariane et appelle CaptureMessage ou CaptureException.
+- **Tracer chaque log en span** (Développeur .NET, Sentry): Avec enableTracing, Emit ouvre une transaction nommée d’après le gabarit du message et un span enfant via ITransactionService, puis les termine.
+- **Joindre le contexte HTTP** (Développeur .NET, Sentry): Le paquet AspNetCore ajoute le middleware app.AddSentryContext() et HttpContextDestructingPolicy pour que les événements portent l’utilisateur, les en-têtes et la requête.
+- **Filtrer avant l’envoi** (Développeur .NET): Un rappel beforeSend facultatif s’enchaîne après le traitement du sink ; la démo SentryWeb réécrit aussi les messages avec un enrichisseur Serilog (Scrubbing/DivisionByZeroFilter.cs).
+- **Publier six paquets NuGet** (NuGet.org): .github/workflows/CI.yml empaquette les identifiants principal, .6 et .10 pour net6.0 et net10.0 et les pousse sur NuGet.org à la publication d’une version GitHub.
+
+### Scénario : Remonter les erreurs d’une app ASP.NET Core vers Sentry
+
+1. Lancer dotnet add package Serilog.Sinks.SentrySDK et dotnet add package Serilog.Sinks.SentrySDK.AspNetCore.
+2. Placer le DSN du projet sous Serilog, WriteTo, Sentry, Args dans appsettings.json.
+3. Construire le logger avec ReadFrom.Configuration, Destructure.With<HttpContextDestructingPolicy>() et le filtre CheckIfCaptured.
+4. Appeler app.AddSentryContext() dans Startup.Configure.
+5. Provoquer une erreur, par exemple avec dotnet run --project demos/SentryWeb/SentryWeb.csproj, et retrouver l’événement et sa requête dans Sentry.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

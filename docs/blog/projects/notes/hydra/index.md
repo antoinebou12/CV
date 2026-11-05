@@ -21,6 +21,25 @@ This Hydra fork is a desktop launcher with an Electron shell and React interface
 
 **Best fit:** Open-source alternative game launcher and library organizer.
 
+## Use cases
+
+A fork of Hydra Launcher, an Electron game library that downloads, launches, tracks playtime and syncs saves.
+
+- **Build a game library** (Player, Hydra API and Cloud): IPC handlers in src/main/events/library (add-game-to-library, add-custom-game-to-library, assign-game-to-collection) manage the local library; catalogue events fetch game details and artwork.
+- **Download and queue games** (Player, Torrents and hosters): Torrent downloads run in python_rpc/main.py with libtorrent, while services/hosters handles direct hosts such as Gofile, Mediafire and Pixeldrain; torrenting events manage the queue.
+- **Add download sources** (Player, Torrents and hosters): download-sources events add, remove and sync the source lists that feed download options for each game.
+- **Launch and track playtime** (Player): process-watcher.ts scans running processes against known executables to record playtime; on Linux, umu.ts and wine-prefix.ts prepare Proton or Wine.
+- **Back up saves to the cloud** (Player, Hydra API and Cloud): Ludusavi.backupGame() runs the bundled ludusavi binary to collect save files, and the cloud-save services upload, compare and restore them with Hydra Cloud.
+- **Unlock achievements** (Player, Hydra API and Cloud): services/achievements finds and parses local achievement files, merges them with remote data and shows notifications.
+
+### Scenario: From catalogue page to a backed-up save
+
+1. Install Node.js with Yarn, Python 3.9+ (pip install -r requirements.txt) and Rust, then run yarn; postinstall builds hydra-native.
+2. Open a game in the catalogue and add it to the library.
+3. Pick a download option; the Python RPC process starts the torrent and the download page shows progress.
+4. Launch the game; the process watcher detects the executable and counts playtime.
+5. Close the game and sync the save; ludusavi backs up the files and the cloud-save service uploads them.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

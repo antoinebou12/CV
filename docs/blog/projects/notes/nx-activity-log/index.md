@@ -21,6 +21,25 @@ NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application 
 
 **Best fit:** Detailed gameplay analytics and playtime tracking for Switch homebrew.
 
+## Use cases
+
+Nintendo Switch homebrew that shows detailed per-user play time, sessions and launches, maintained for HOS 22.
+
+- **View all-time playtime** (Switch player, Switch PDM service): The All Activity screen lists each game's total playtime, launch count, first and last launch, sorted by the chosen criterion; totals come from the system PDM statistics.
+- **Graph recent play sessions** (Switch player, Switch PDM service): PlayData::readPlayDataFromPdm pages through pdmqryQueryPlayEvent; RecentActivity and Details draw a graph by day, month or year and list each play session.
+- **Export or import play data** (Switch player): Settings runs ExportJob to write /switch/NX-Activity-Log/export.json and ImportJob to read import.json into importedData.json, matched by username.
+- **Customize the theme** (Switch player): CustomTheme and ColourPicker let the player change every colour; a PNG at /config/NX-Activity-Log/background.png sets a custom background.
+- **Update from inside the app** (Switch player, GitHub Releases): UpdateUtils.cpp queries the GitHub API for the latest antoinebou12/NX-Activity-Log release and downloads its first asset with curl.
+- **Replace the User Page** (Switch player): Forwarder/ is a modified nx-hbloader that opens the app from the User Page; the README warns this mode is unreliable on HOS 21 and later.
+
+### Scenario: Move play history to a new Switch
+
+1. Copy NX-Activity-Log.nro from the Releases page to /switch/NX-Activity-Log/ and launch it from the homebrew menu.
+2. Pick a user, then open Settings and choose Export to write export.json.
+3. Copy export.json to the other console's SD card as /switch/NX-Activity-Log/import.json.
+4. Run Settings, Import there and restart the app.
+5. Check that imported sessions appear in Recent Activity and that All Activity shows the merged totals.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

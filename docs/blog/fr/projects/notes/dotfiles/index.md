@@ -21,6 +21,25 @@ Ces dotfiles regroupent la configuration de shell et d’éditeur que j’utilis
 
 **Cas d’usage:** Reproduction instantanée d'un environnement shell optimisé sur tout système Unix.
 
+## Cas d’utilisation
+
+Scripts Bash qui installent, mettent à jour et retirent un environnement shell Linux : vimrc, Oh My Zsh, tmux, outils.
+
+- **Installer la config vim** (Développeur, Projets en amont): La fonction install_vimrc d’install.sh installe vim et git, clone amix/vimrc dans ~/.vim_runtime et lance son installateur ; edit_vimrc place NERDTree à gauche et affiche les numéros de ligne.
+- **Configurer Oh My Zsh et tmux** (Développeur, Projets en amont): install_oh_my_zsh télécharge l’installateur officiel d’Oh My Zsh avec wget ; edit_oh_my_zsh change le thème et écrit un thème d’invite minimal ; install_tmux écrit un ~/.tmux.conf complet.
+- **Installer des outils de dev** (Développeur, Outil apt/dnf/pacman): bash install.sh <option> lance un installateur (Python, JDK, nvm, .NET, Go, Rust, Docker, kubectl, AWS CLI, Azure CLI, JupyterLab, outils réseau) ; install_package lit /etc/os-release pour choisir apt-get, pacman, dnf, yum ou brew.
+- **Mettre à jour scripts et vimrc** (Développeur, Projets en amont): update.sh définit update_install_script (git pull puis bash install.sh) et update_vimrc (git pull --rebase dans ~/.vim_runtime puis update_plugins.py) ; le fichier ne fait que les définir, il faut donc le sourcer.
+- **Désinstaller avec sauvegarde** (Développeur, Outil apt/dnf/pacman): uninstall.sh copie ~/.vimrc et ~/.tmux.conf en fichiers .backup avant de les supprimer, puis purge JDK, Python, Rust, Go, Jupyter, AWS CLI, Azure CLI et nvm ; lancé avec bash, il appelle chaque fonction l’une après l’autre.
+- **Afficher neofetch au login** (Développeur, Outil apt/dnf/pacman): motd/motd.sh installe neofetch avec apt-get s’il manque et écrit /etc/update-motd.d/10-neofetch pour afficher le résumé du système dans la bannière de connexion.
+
+### Scénario : Préparer une machine Ubuntu neuve
+
+1. Cloner le dépôt et lancer bash install.sh sans option pour afficher la liste de usage().
+2. Lancer bash install.sh install_vimrc pour installer vim et git et cloner amix/vimrc dans ~/.vim_runtime.
+3. Lancer bash install.sh install_oh_my_zsh puis install_tmux pour obtenir zsh et un ~/.tmux.conf prêt.
+4. Lancer bash install.sh install_docker : le script récupère get.docker.com et Docker Compose 1.29.2.
+5. Sur un serveur, lancer motd/motd.sh en root pour voir neofetch à chaque connexion SSH.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

@@ -21,6 +21,25 @@ This website combines bilingual CV pages, structured resume data, LaTeX PDFs and
 
 **Best fit:** Professional software engineering presentation and technical documentation.
 
+## Use cases
+
+Source of antoineboucher.info/CV: bilingual HTML CV, LaTeX PDFs, JSON résumé and a Hugo blog with project pages.
+
+- **Update CV content** (Site owner): The owner edits index-en.html and index-fr.html, data/resume.*.json and data/cv.yaml; scripts/build/generate_cv.py writes the LaTeX skills.tex files from the YAML.
+- **Build the PDF résumés** (Site owner): python build_cv.py build --all compiles cv-en/resume.tex and cv-fr/resume.tex with XeLaTeX inside a Docker image.
+- **Refresh project pages** (Site owner): scripts/build/repository_docs.py reads public repositories without running their code and writes hugo/data/repository_*.json, which the repository-note shortcode renders under hugo/content/projects/notes/<slug>/.
+- **Publish the site** (Site owner, GitHub Pages): scripts/deploy/publish_site.py runs build_docs.py (Hugo with HUGO_ENV=production, sitemap merge, deploy checks), check_public_repos.py and the note tests, then with --publish commits docs/ and pushes main.
+- **Read the CV in EN or FR** (Recruiter or reader, GitHub Pages): GitHub Pages serves /CV/index-en.html and /CV/index-fr.html, the PDFs under /CV/cv-en/ and /CV/cv-fr/, and /CV/resume.json or /CV/resume.md for machine reading.
+- **Browse blog and projects** (Recruiter or reader, GitHub Pages): The Hugo build is published at /CV/blog/ and /CV/blog/fr/, with a Markdown twin of each page and llms.txt, robots.txt and sitemap.xml copied to the site root.
+
+### Scenario: Ship a CV update
+
+1. Edit the job entry in index-en.html and index-fr.html and the matching data/resume.en.json and data/resume.fr.json.
+2. Run python build_cv.py build --all to rebuild cv-en/resume.pdf and cv-fr/resume.pdf.
+3. Run python scripts/deploy/publish_site.py to build the CV and blog into a staging folder, validate it and update docs/.
+4. Review docs/ locally, commit the source changes, then rerun the script with --publish to commit docs/ and push main.
+5. Wait for GitHub Pages (main, /docs) to process the push and check https://antoineboucher.info/CV/.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

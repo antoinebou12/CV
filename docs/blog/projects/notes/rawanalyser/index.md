@@ -20,6 +20,25 @@ RawAnalyser is an older Python image-analysis experiment for clipping, channel v
 
 **Best fit:** Camera sensor benchmarking and exposure verification in computational photography.
 
+## Use cases
+
+Python 2 scripts for camera-tuning engineers to check clipping, gamma and vignetting in raw Bayer sensor captures.
+
+- **Mark ROI and gray patches** (Image quality engineer): GUI.py (PyQt5) opens a .raw or .tiff file, converts raw to TIFF for display and saves the clicked region of interest and gray patch corners to json/points.json.
+- **Analyse each new raw capture** (Image quality engineer, Camera capture folder): RawAnalyser.py uses a watchdog observer on the given folder; every new 1928 x 1088 16-bit raw file is split into Bayer channels, saved as TIFF and analysed.
+- **Detect black or white clipping** (Image quality engineer): clipping() prints per-channel minimum and maximum 10-bit levels and flags CLIPPING BLACK or white in colour when values reach the sensor limits.
+- **Measure gamma and vignetting** (Image quality engineer): gamma() samples the gray patches from points.json; vignette() subtracts the black level (--bl, default 1024), divides by a stored .npy vignette map and writes a corrected TIFF.
+- **Inspect one pixel's value** (Image quality engineer): RawPixel.py prints the value and Bayer colour of the pixel at x, y for a given width, height and bit depth, and dumps channels to array/*.txt.
+- **Convert raw files to TIFF** (Image quality engineer, Camera capture folder): Raw2Tiff.py writes a TIFF from one raw file; 20MPto5MP.py bins 20 MP OV20880 frames by summing 2 x 2 same-colour pixels into a 5 MP image.
+
+### Scenario: Check an OV2740 colour-checker capture
+
+1. Install Python 2.7 and the packages in requirements.txt, plus tifffile.
+2. Run python GUI.py, open a capture from raw/ and click the ROI and gray patches to update json/points.json.
+3. Start python RawAnalyser.py raw json/points.json --func basic --bl 1024 to watch the folder.
+4. Copy a new .raw capture into raw/; the script prints clipping warnings and gamma figures and writes a TIFF under tiff/.
+5. Check a suspicious spot with python RawPixel.py <file> x y --width 1928 --height 1088.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

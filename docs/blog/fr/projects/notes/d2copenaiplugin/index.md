@@ -21,6 +21,24 @@ D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin
 
 **Cas d’usage:** Intégration ChatGPT pour architectes et développeurs logiciels.
 
+## Cas d’utilisation
+
+Backend FastAPI de plugin ChatGPT qui transforme du code PlantUML, Mermaid, D2 ou Kroki en liens de diagramme.
+
+- **Obtenir un lien PlantUML** (Client plugin ChatGPT, Moteurs de rendu): POST /generate_diagram avec lang plantuml encode le code pour le serveur PlantUML public (thème blueprint par défaut) et renvoie url, content et playground.
+- **Ouvrir Mermaid dans l’éditeur** (Client plugin ChatGPT, Moteurs de rendu): Pour lang mermaid, mermaid/mermaid.py construit un état d’éditeur encodé (thème dark par défaut) et renvoie des liens vers Mermaid Live Editor.
+- **Rendre D2 ou un type Kroki** (Client plugin ChatGPT, Moteurs de rendu): Les alias D2 et chaque langage de KROKI_LANGUAGE_SUPPORT passent par generate_kroki_diagram (kroki/kroki.py) et renvoient un lien SVG.
+- **Servir le manifeste** (Client plugin ChatGPT): app.py sert /.well-known/ai-plugin.json, /openapi.yaml, /openapi.json, /logo.png et /.well-known/privacy.txt pour qu’un client ChatGPT puisse charger le plugin.
+- **Lancer et tester en local** (Développeur): uvicorn app:app sert l’API sur le port 5003 avec la documentation à / ; test_app.py couvre les points d’accès en CI, et vercel.json envoie chaque chemin vers app.py.
+
+### Scénario : Brancher le plugin à ChatGPT en local
+
+1. Créer un virtualenv, lancer pip install -r requirements-dev.txt puis python -m pytest.
+2. Démarrer l’API avec uvicorn app:app --host 127.0.0.1 --port 5003.
+3. Dans ChatGPT, choisir Develop your own plugin et saisir localhost:5003 pour charger /.well-known/ai-plugin.json.
+4. Demander un diagramme de séquence ; ChatGPT appelle POST /generate_diagram avec lang plantuml.
+5. L’API renvoie l’URL de l’image et un lien d’essai que ChatGPT montre à l’utilisateur.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

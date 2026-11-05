@@ -20,6 +20,23 @@ Cette expérience affiche des images dans GTK avec Cairo. Viewer3.py rend la rep
 
 **Cas d’usage:** Calibration et vérification d'écrans HDR 10 bits sur stations de travail Linux.
 
+## Cas d’utilisation
+
+Des scripts Linux pour vérifier qu’un écran HDR affiche bien 10 bits par canal sous un serveur X en profondeur 30.
+
+- **Lancer X en profondeur 30** (Testeur d’écran, Serveur X (Xorg)): Xdepth.sh exécute startx -- -depth 30 et affiche la profondeur via xwininfo, avec repli sur 24 ; xorg.conf fixe DefaultDepth 30.
+- **Afficher un dégradé 10 bits** (Testeur d’écran, Écran HDR10): Viewer.py regroupe les canaux RVB d’images/gray_gradient_10.tiff dans une surface cairo FORMAT_RGB30 et la dessine dans une fenêtre GTK 3.
+- **Comparer 8 bits et 10 bits** (Testeur d’écran, Écran HDR10): Le dossier images/ contient gray_gradient_8.tiff à côté de gray_gradient_10.tiff : on peut afficher le même dégradé aux deux profondeurs et comparer les bandes à l’œil.
+- **Lire une vidéo en 10 bits** (Testeur d’écran, Écran HDR10): Viewer3.py ajoute une interface Typer avec --image-path et --video-path ; la vidéo est lue image par image avec le lecteur ffmpeg d’imageio, dans un fil, à 30 i/s.
+
+### Scénario : Vérifier un nouvel écran HDR10 sous Ubuntu
+
+1. Arrêter le gestionnaire d’affichage : sudo systemctl stop lightdm || sudo systemctl stop gdm, puis sudo pkill Xorg.
+2. Démarrer X avec startx -- -depth 30 (ou lancer Xdepth.sh).
+3. Confirmer avec xwininfo -root | grep Depth que la fenêtre racine indique une profondeur de 30.
+4. Lancer python3 Viewer.py pour ouvrir images/gray_gradient_10.tiff dans la fenêtre du visualiseur.
+5. Chercher des bandes dans le dégradé ; des transitions lisses indiquent que la chaîne 10 bits fonctionne de bout en bout.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

@@ -20,6 +20,25 @@ This LLM2SVG fork contains SVG dataset utilities and an evaluation-oriented scaf
 
 **Best fit:** Automated vector icon and diagram generation for design systems.
 
+## Use cases
+
+Python utilities and data for a text-to-SVG challenge: load prompts, check SVG rules, build and render shapes.
+
+- **Load prompts and SVG samples** (ML researcher): SVGDataLoader in utils/data_loader.py reads data/train/train.csv and data/test/test.csv and collects the SVG files stored under data/train/svg/<id>/; SVGDataset in utils/svg_dataset.py wraps them as a PyTorch Dataset.
+- **Validate SVG constraints** (ML researcher): SVGConstraints.validate_svg in utils/svg_constraints.py rejects files over 10,000 bytes and any element or attribute outside the allowlist, parsing with defusedxml.
+- **Extract terms from a prompt** (ML researcher): TextParser in utils/text_parser.py pulls colours, shapes, patterns, materials, clothing, landscape and architecture terms from a description and picks a primary category.
+- **Build SVG from primitives** (ML researcher): utils/svg_utils.py has helpers for rect, circle, ellipse, path, polygon, line and group elements, a colour palette generator, generate_shapes and optimize_svg to shorten numbers.
+- **Render SVG to PNG** (ML researcher, cairosvg renderer): svg_to_png in utils/svg_utils.py calls cairosvg.svg2png and either writes a file or returns PNG bytes.
+- **Report on the SVG dataset** (ML researcher): SVGAnalyzer in utils/svg_analyzer.py counts SVGs, measures their sizes, tallies elements, validates every file and plots a size histogram against the 10 KB limit.
+
+### Scenario: Check a set of candidate SVGs before submission
+
+1. Point SVGDataLoader at the local data/ folder (the default path is hard-coded to the author’s Windows drive).
+2. Read the prompts from data/train/train.csv, for example "a starlit night over snow-covered peaks".
+3. Run SVGAnalyzer.validate_all_svgs("train") to test every SVG under data/train/svg/ with SVGConstraints.
+4. Call generate_summary_report to get a table of sizes and inferred sources, then plot_svg_size_distribution.
+5. Render a passing SVG with svg_to_png to compare it with the prompt.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

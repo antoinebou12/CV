@@ -21,6 +21,26 @@ Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet ré
 
 **Cas d’usage:** Accès distant et jeu PC sur matériel New 3DS.
 
+## Cas d’utilisation
+
+Fork de Moonlight Embedded qui diffuse les jeux d’un PC Sunshine sur une New 3DS, avec une interface d’aide à l’écran du bas.
+
+- **Installer le CIA ou le 3DSX** (Joueur sur 3DS): dist/INSTALL.md explique comment installer artemis.cia depuis le menu HOME avec FBI, ou copier artemis.3dsx dans sd:/3ds/artemis/ pour le Homebrew Launcher ; un firmware modifié est requis.
+- **Jumeler un hôte** (Joueur sur 3DS, PC hôte Sunshine): Le joueur ajoute un hôte par son IP locale (host_discovery.cpp peut aussi balayer le réseau) et choisit pair ; pair_host dans src/n3ds_main.cpp affiche un NIP à saisir dans Sunshine et garde un enregistrement de jumelage.
+- **Diffuser un jeu ou le bureau** (Joueur sur 3DS, PC hôte Sunshine): La vidéo s’affiche à l’écran du haut avec le décodeur H.264 matériel de la New 3DS ; selon le README, les anciens modèles passent au décodage logiciel, avec moins d’images par seconde.
+- **Changer de mode tactile** (Joueur sur 3DS, PC hôte Sunshine): Le menu SELECT de l’écran du bas passe d’un gestionnaire à l’autre dans src/input/touch/ : manette, souris, clavier, loupe et miroir, avec les affichages Fit, Fill, Stretch et le zoom.
+- **Enregistrer les mesures en CSV** (Joueur sur 3DS): Depuis l’onglet Session, la surcouche de performance affiche la télémétrie ; export_stream_benchmark_csv (src/stream_benchmark.cpp) écrit benchmark_<horodatage>.csv sur la carte SD.
+- **Compiler avec devkitPro** (Développeur): Le Dockerfile donne une image devkitPro ; make y produit artemis.3dsx, artemis.cia et artemis.elf. Une installation locale de devkitPro 3ds-dev avec bannertool et makerom fonctionne aussi.
+
+### Scénario : Jouer à un jeu PC sur New 3DS en Wi-Fi
+
+1. Copier artemis.cia sur la carte SD et l’installer dans FBI avec Install and delete CIA.
+2. Ouvrir Artemis, appuyer sur A pour ajouter un hôte et saisir l’adresse IP locale du PC.
+3. Choisir pair et taper dans la page PIN de Sunshine le NIP affiché sur la 3DS.
+4. Choisir stream puis une application ; la vidéo s’affiche à l’écran du haut.
+5. Appuyer sur SELECT pour passer en mode Souris ou Loupe, ou ouvrir la surcouche de performance et enregistrer un CSV.
+6. Quitter depuis l’onglet Session pour terminer la diffusion.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

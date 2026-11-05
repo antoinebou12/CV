@@ -8,6 +8,34 @@
 
 Each entry links the HTML page and its Markdown view (append `index.md` to the URL).
 
+- [WearTrailsExperiments: contact-driven wear trails in the browser](https://antoineboucher.info/CV/blog/projects/notes/weartrailsexperiments/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/weartrailsexperiments/index.md) · 2026-11-05
+  three.js and Ammo.js experiments that turn rigid-body contact, traction and sliding into wear, sliding-distance and flow maps on a ground texture.
+- [WearSurfacesDatasets: measured wear-surface sequences](https://antoineboucher.info/CV/blog/projects/notes/wearsurfacesdatasets/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/wearsurfacesdatasets/index.md) · 2026-11-05
+  GelSight surface maps of materials worn under controlled grit, load and distance, packed as Parquet and WebDataset, with alignment tools and a WebGPU viewer.
+- [WearMachine: CAD files for a GelSight wear bench](https://antoineboucher.info/CV/blog/projects/notes/wearmachine/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/wearmachine/index.md) · 2026-11-05
+  STEP, STL, DXF and drawing files for a small sliding-wear rig: rail, pusher, weight holders and GelSight sample holders.
+- [WearBlender: Blender scenes for wear effects](https://antoineboucher.info/CV/blog/projects/notes/wearblender/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/wearblender/index.md) · 2026-11-05
+  Example Blender files showing edge wear, scratches, rotated normal maps, flow maps and painted wear with shaders and geometry nodes.
+- [TradingViewBuilder: Pine Script indicators and strategies](https://antoineboucher.info/CV/blog/projects/notes/tradingviewbuilder/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/tradingviewbuilder/index.md) · 2026-11-05
+  TradingViewBuilder collects Pine Script indicators and strategies (EMA, MACD, RSI, Bollinger Bands, RVI …) to paste into TradingView.
+- [Sport-Arbitrage: a sports-betting arbitrage calculator](https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/index.md) · 2026-11-05
+  Sport-Arbitrage is a one-page calculator that checks odds from two betting sites for an arbitrage and computes stakes and guaranteed profit.
+- [Simulateur: a Django stock-market simulation game](https://antoineboucher.info/CV/blog/projects/notes/simulateur/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md) · 2026-11-05
+  Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices.
+- [SimilityVectorEmbedding: movie similarity with vector search](https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/index.md) · 2026-11-05
+  Jupyter notebooks that embed a movie catalog and compare pgvector, Qdrant, BM25, Neo4j and a local LLM for finding similar films.
+- [Salary: exploring Canadian salary guides and wage data](https://antoineboucher.info/CV/blog/projects/notes/salary/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/salary/index.md) · 2026-11-05
+  Salary extracts Canadian salary guide PDFs and Job Bank wage tables with Python, then compares pay by job, province and region in notebooks.
+- [PolyFEMBlenderPlugin: PolyFEM simulations from a Blender scene](https://antoineboucher.info/CV/blog/projects/notes/polyfemblenderplugin/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/polyfemblenderplugin/index.md) · 2026-11-05
+  Blender 4.2 add-on that exports meshes and physics settings to a PolyFEM JSON file, runs PolyFEM through Docker and imports the results.
+- [MarkokChainMonteCarlo: Monte Carlo and Markov chain backtests](https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/index.md) · 2026-11-05
+  AlgoÉTS notebooks that simulate AAPL prices with Monte Carlo paths and a Markov chain, then backtest a strategy built on them against buy and hold.
+- [LegosTracker: LEGO catalog data and set price history](https://antoineboucher.info/CV/blog/projects/notes/legostracker/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/legostracker/index.md) · 2026-11-05
+  LegosTracker combines Rebrickable catalog exports, a Playwright scraper for BrickEconomy prices and notebooks that model LEGO set values.
+- [Kelly_RM: Kelly criterion experiments for trade sizing](https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/index.md) · 2026-11-05
+  Kelly_RM holds AlgoÉTS notebooks that simulate Kelly betting and estimate trade odds from RSI backtests to compute a Kelly fraction.
+- [BullETS: a Python library for backtesting trading strategies](https://antoineboucher.info/CV/blog/projects/notes/bullets/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/bullets/index.md) · 2026-11-05
+  BullETS is an AlgoÉTS Python library for writing stock trading strategies and backtesting them on Financial Modeling Prep data.
 - [Workshop1: Python learning notebooks](https://antoineboucher.info/CV/blog/projects/notes/workshop1/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/workshop1/index.md) · 2026-10-24
   Workshop1 is an AlgoETS notebook series that moves from Python fundamentals and APIs to pandas, charts and an EMA exercise.
 - [TrueMapData: height maps for metrology and graphics](https://antoineboucher.info/CV/blog/projects/notes/truemapdata/) — [Markdown](https://antoineboucher.info/CV/blog/projects/notes/truemapdata/index.md) · 2026-10-24

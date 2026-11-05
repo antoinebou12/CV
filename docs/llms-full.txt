@@ -22,6 +22,25 @@ These dotfiles collect the shell and editor setup I used across machines. The in
 
 **Best fit:** Reproducible shell and developer environment across macOS and Linux servers.
 
+## Use cases
+
+Bash scripts that install, update and remove a Linux shell setup: vimrc, Oh My Zsh, tmux and dev tools.
+
+- **Install the vimrc setup** (Developer, Upstream projects): install_vimrc in install.sh installs vim and git, clones amix/vimrc into ~/.vim_runtime and runs its installer; edit_vimrc moves NERDTree to the left and turns on line numbers.
+- **Set up Oh My Zsh and tmux** (Developer, Upstream projects): install_oh_my_zsh downloads the official Oh My Zsh installer with wget; edit_oh_my_zsh switches the theme and writes a minimal prompt theme; install_tmux writes a full ~/.tmux.conf.
+- **Install dev toolchains** (Developer, OS package manager): bash install.sh &lt;option&gt; runs one installer (Python, JDK, nvm, .NET, Go, Rust, Docker, kubectl, AWS CLI, Azure CLI, JupyterLab, network tools); install_package reads /etc/os-release to pick apt-get, pacman, dnf, yum or brew.
+- **Update the scripts and vimrc** (Developer, Upstream projects): update.sh defines update_install_script (git pull, then bash install.sh) and update_vimrc (git pull --rebase in ~/.vim_runtime, then update_plugins.py); the file only defines them, so it is meant to be sourced.
+- **Remove tools with backups** (Developer, OS package manager): uninstall.sh copies ~/.vimrc and ~/.tmux.conf to .backup files before deleting them, and purges JDK, Python, Rust, Go, Jupyter, AWS CLI, Azure CLI and nvm; run with bash, it calls every uninstall function in turn.
+- **Show neofetch at login** (Developer, OS package manager): motd/motd.sh installs neofetch with apt-get when missing and writes /etc/update-motd.d/10-neofetch so the system summary appears in the login banner.
+
+### Scenario: Set up a fresh Ubuntu machine
+
+1. Clone the repository and run bash install.sh with no option to print the usage() list.
+2. Run bash install.sh install_vimrc to install vim and git and clone amix/vimrc into ~/.vim_runtime.
+3. Run bash install.sh install_oh_my_zsh, then install_tmux, to get zsh and a written ~/.tmux.conf.
+4. Run bash install.sh install_docker; it fetches get.docker.com and Docker Compose 1.29.2.
+5. On a server, run motd/motd.sh as root so neofetch shows at each SSH login.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -87,6 +106,24 @@ The script edits home-directory files and runs privileged package commands. Back
 - Repository: https://github.com/AlgoETS/AINewsTracker
 
 
+## Use cases
+
+FastAPI service from AlgoÉTS that collects financial news, scores it with FinBERT and stores it in MongoDB.
+
+- **Fetch news from a source** (Quant analyst, News feeds and APIs): The /news routes pull the Financial Modeling Prep 8-K RSS feed, GNews or a named feed with feedparser, download each article&#39;s text and save it; limits above 10 run as background tasks.
+- **Score article sentiment** (Quant analyst): TextMetrics loads ProsusAI/finbert for sentiment, Jean-Baptiste/roberta-ticker for ticker extraction and distilbart-cnn-12-6 for summaries; GET /articles/{article_id}/score returns the stored score.
+- **Query news by company** (Quant analyst): /company stores tickers, and /articles/articles_by_company_id/{company_id} or POST /articles/articles_by_company_ids return the articles linked to one or more companies.
+- **Seed companies and news** (Quant analyst, News feeds and APIs): POST /seed/seed_companies and /seed/seed_news start CompanySeeder and NewsSeeder in the background; NewsSeeder reads Financial Modeling Prep stock news with FMP_API_KEY and saves the articles to MongoDB.
+- **Serve scored articles** (Backtesting service): GET /v1/articles, protected by a Bearer service token (AINEWSTRACKER_SERVICE_TOKEN), returns articles filtered by symbols and time window with sentiment label, probabilities and model name, paged by cursor.
+
+### Scenario: Collect and query Apple news locally
+
+1. Copy .env.example to .env, set FMP_API_KEY, then run docker-compose up --build to start the API with MongoDB and Redis.
+2. Open http://localhost:8000/api/v1/docs and call POST /seed/seed_companies.
+3. Call POST /seed/seed_news; NewsSeeder reads Financial Modeling Prep stock news in the background and stores the scored articles.
+4. Read the stored articles with GET /articles/ and check one with GET /articles/{article_id}/score.
+5. From a backtesting service, call GET /v1/articles?symbols=AAPL with the Bearer service token.
+
 
 
 ---
@@ -107,6 +144,24 @@ another-install-script is a shell entry point for choosing system setup and cont
 **Why it exists:** Interactive TUI shell installer automating deployment of Docker containers and server configurations.
 
 **Best fit:** One-command server provisioning for homelabs and development VPS.
+
+## Use cases
+
+Whiptail menu in Bash that installs base tools and Docker Compose services on a personal Ubuntu server.
+
+- **Install base server tools** (Server admin): The Installation entry of main_setup_menu (src/menu.sh) shows a checklist: basic packages, Docker, Cockpit, LXDE, Ansible, Dokku, Vagrant and more; src/install.sh runs the selected items.
+- **Deploy selected containers** (Server admin, Docker Engine): Add Container lists the folders under containers/; each &lt;name&gt;.sh runs docker-compose up -d on the docker-compose.yml next to it (for example containers/gogs/).
+- **Open ports for containers** (Server admin, UFW firewall): After containers are added, manage_firewall_ports_allow_list in src/firewall.sh reads their ports from config.yml and allows them; with system.firewall set to yes, ufw denies other incoming traffic but keeps SSH, 2222, HTTP and HTTPS.
+- **Remove installed containers** (Server admin, Docker Engine): remove_container_menu shows the installed containers; each remove_docker_&lt;name&gt; function runs docker-compose down on that service.
+- **Uninstall the setup** (Server admin, Docker Engine, UFW firewall): The Uninstall entry runs uninstall.sh, which loads the src/ modules to undo the setup. The Backup entry currently calls the same script; the backup helpers in src/backup.sh are not wired to the menu.
+
+### Scenario: Provision a new VPS with a few self-hosted services
+
+1. Clone the repository and run sudo bash setup.sh; it opens main_setup_menu because bashmenu is yes in config.yml.
+2. Choose Installation and keep basic and docker checked; selecting docker opens the container list next.
+3. Tick services such as gogs and bookstack; each script runs docker-compose up -d.
+4. Let the firewall step allow the ports listed in config.yml and enable ufw.
+5. Later, use Remove Container to stop a service with docker-compose down.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -226,6 +281,25 @@ This is the repository behind my GitHub profile README. It combines ordinary Mar
 
 **Best fit:** Automated profile asset generation.
 
+## Use cases
+
+GitHub profile README with links, badges, pinned projects and stats, kept current by scheduled Actions.
+
+- **Read the profile and links** (Profile visitor): README.md opens with the platform and graphics headline, then links (GitHub, LinkedIn, website, CV, email), certification badges and the main languages and tools.
+- **Browse pinned projects** (Profile visitor): A collapsible Featured projects section shows pin cards for repositories such as AINewsTracker, hass_renpho, ipc-toolkit and TrueMapData, plus the DashCTRL, ETSim and UFOKEK organisations.
+- **Refresh 3D contribution chart** (GitHub Actions): github-profile-3d-contrib.yml runs daily at 05:00 UTC, generates the 3D contribution calendar, keeps only profile-night-green.svg and commits it.
+- **Update LeetCode badges** (GitHub Actions): update-readme.yml runs daily at 12:00 UTC, fetches stats from leetcodestats.cyclic.app and rewrites the badges between the LEETCODE_STATS markers in README.md.
+- **Check README links** (Profile owner, GitHub Actions): On each push or pull request to main or master, check-links.yml runs lychee on README.md and docs/**/*.md and writes a job summary.
+- **Publish the Jekyll page** (Profile owner, GitHub Actions): jekyll-pages.yml builds docs/ with the jekyll-theme-primer theme and deploys it to GitHub Pages; docs/index.md points back to the profile README.
+
+### Scenario: Edit the profile and let automation keep it current
+
+1. The owner edits README.md, for example the Featured projects list, and pushes to master.
+2. check-links.yml runs lychee on README.md and the docs Markdown and reports broken links.
+3. jekyll-pages.yml builds docs/ and deploys the small Jekyll site to GitHub Pages.
+4. Each day, github-profile-3d-contrib.yml regenerates profile-night-green.svg and commits it.
+5. A visitor opens the profile page and sees the updated README, stats cards and 3D calendar.
+
 ## Features and components
 
 - **README and assets** — README.md is the visible profile document. The images, models and profile-3d-contrib directories hold assets used alongside it. GitHub renders the document, while linked services may generate their own images separately.
@@ -282,6 +356,24 @@ This archived repository stores a home-infrastructure diagram in several formats
 **Why it exists:** Editable home-infrastructure diagrams preserved as PlantUML and draw.io sources, with HTML and image exports.
 
 **Best fit:** Reading an archived infrastructure snapshot or editing its diagram sources to document a homelab.
+
+## Use cases
+
+C4 PlantUML and draw.io diagrams of a home lab: Cloudflare, an OVH VPS, hypervisors, a NAS and services.
+
+- **View the v1 draw.io diagram** (Reader, Diagram renderers): architecture.drawio.html embeds the draw.io XML in the diagrams.net viewer script, with zoom, layers and lightbox; the README links it as v1.
+- **Render the v2 C4 diagram** (Reader, Diagram renderers): architecture.plantuml includes C4_Deployment, Font Awesome, OSA and Office icon sets; the README v2 link is an encoded render on the PlantUML server.
+- **Trace external access paths** (Reader): The Rel lines show users reaching Cloudflare over HTTPS, Cloudflare forwarding to the OVH VPS, the VPS reaching the home and personal networks over WireGuard, and the admin using Teleport over SSH.
+- **Inventory VMs and containers** (Reader): Deployment nodes list XCP-ng, Proxmox and Windows hosts, a QNAP NAS with a media stack, and VMs such as Talos (Portainer, AI News Tracker, Freqtrade), Home Assistant and Caddy with Prometheus and Grafana, each with CPU, RAM and disk properties.
+- **Edit and re-export the diagram** (Diagram maintainer, Diagram renderers): The maintainer edits architecture.plantuml or architecture.drawio and exports a picture such as home architecture.png.
+
+### Scenario: Follow a web request into the home lab
+
+1. Open architecture.plantuml, or the v2 link in README.md rendered by the PlantUML server.
+2. Start at the User person, who reaches Cloudflare (CDN and reverse proxy) over HTTPS.
+3. Follow Cloudflare to the OVH VPS, which runs Caddy, Teleport and Uptime Kuma.
+4. Follow the WireGuard link from the VPS to the Personal Network and its Proxmox host.
+5. See the Caddy VM route traffic to AI News Tracker, Marketwatch, Portainer, Plex and Jellyfin.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -346,6 +438,26 @@ Artemis-N3DS adapts Moonlight Embedded to the Nintendo 3DS family. It combines h
 **Why it exists:** Constrained systems engineering streaming 60fps video over 802.11n Wi-Fi to a dual-screen ARM11 device.
 
 **Best fit:** Remote desktop and gaming on legacy Nintendo New 3DS hardware.
+
+## Use cases
+
+Moonlight Embedded fork that streams games from a Sunshine PC to a New 3DS, with a bottom-screen helper UI.
+
+- **Install the CIA or 3DSX** (3DS player): dist/INSTALL.md describes installing artemis.cia from the HOME Menu with FBI, or copying artemis.3dsx to sd:/3ds/artemis/ for the Homebrew Launcher; custom firmware is required.
+- **Pair with a host** (3DS player, Sunshine host PC): The player adds a host by LAN IP (host_discovery.cpp can also scan the network) and chooses pair; pair_host in src/n3ds_main.cpp shows a PIN to type into Sunshine and keeps a pair record.
+- **Stream a game or desktop** (3DS player, Sunshine host PC): Video plays on the top screen using the New 3DS hardware H.264 decoder; older 3DS models fall back to software decode at lower frame rates, per the README.
+- **Switch touch input modes** (3DS player, Sunshine host PC): The SELECT hub on the bottom screen switches between gamepad, mouse, keyboard, magnify and mirror handlers in src/input/touch/, plus Fit, Fill, Stretch and zoom display options.
+- **Save performance as CSV** (3DS player): From the Session tab, the performance overlay shows stream telemetry; export_stream_benchmark_csv in src/stream_benchmark.cpp writes benchmark_&lt;time&gt;.csv to the SD card.
+- **Build with devkitPro** (Developer): docker build of the Dockerfile gives a devkitPro image; make inside it produces artemis.3dsx, artemis.cia and artemis.elf. A local devkitPro 3ds-dev setup with bannertool and makerom also works.
+
+### Scenario: Play a PC game on a New 3DS over Wi-Fi
+
+1. Copy artemis.cia to the SD card and install it in FBI with Install and delete CIA.
+2. Open Artemis, press A to add a host and enter the PC’s LAN IP address.
+3. Choose pair and type the PIN shown on the 3DS into Sunshine’s PIN page.
+4. Choose stream and pick an app; the video plays on the top screen.
+5. Press SELECT to switch to Mouse or Magnify, or open the performance overlay and save a CSV.
+6. Quit from the Session tab to end the stream.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -436,6 +548,24 @@ Artemis-Switch is a fork in the Moonlight streaming family. The host runs the ga
 **Why it exists:** Hardware-accelerated GameStream/Moonlight client in C&#43;&#43; with custom NVN display frame pacing for zero-stutter video.
 
 **Best fit:** Ultra-low latency PC game streaming directly to Nintendo Switch handheld mode.
+
+## Use cases
+
+Moonlight-Switch fork that streams PC games to a Nintendo Switch, with FSR upscaling, stream profiles and telemetry.
+
+- **Pair and stream from a host** (Switch player, GameStream host PC): GameStreamClient.cpp and MoonlightSession.cpp handle PIN pairing and sessions with Sunshine, Apollo, Vibeshine or Punktfunk; DiscoverManager finds hosts and WakeOnLanManager can wake them.
+- **Tune video presentation** (Switch player): Fit, Fill, Stretch, Zoom/Pan, rotation and full range share one deko3d presentation path, with FSR/EASU upscaling, RCAS sharpening and dithering on top of NVDEC decode.
+- **Save stream profiles** (Switch player, GameStream host PC): Named profiles store FPS (30 to 120), resolution, bitrate, codec and presentation in profile.json; they can be assigned per host, edited and imported or exported (StreamProfileStore.cpp, ProfileEditorDialog.cpp).
+- **Export a benchmark** (Switch player): The Performance page shows bitrate, latency, frame queue, GPU time and Switch clocks; Benchmark start, stop and save write a file through app/src/benchmark/BenchmarkExport.cpp.
+- **Build and test the app** (Developer): With devkitA64 and CMake, the Moonlight.nro target builds the Switch binary, exported by CI as Artemis-Switch.nro; tests/ holds portable unit tests run with ctest, plus Python i18n and release checks.
+
+### Scenario: Stream a PC game to a Switch
+
+1. Copy Artemis-Switch.nro to sdmc:/switch/Artemis-Switch/ and start hbmenu through title redirection.
+2. Open Artemis Switch, select the PC host and finish PIN pairing in the host’s web UI.
+3. Create a stream profile (for example 60 FPS, H.265, Fit with FSR) and assign it to that host.
+4. Launch an app and press - and &#43; together to open the in-stream overlay.
+5. Open Performance to watch bitrate and pipeline latency, then run and save a Benchmark.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -578,6 +708,23 @@ AudioTranscript breaks a WAV recording into chunks around silence, sends each ch
 
 **Best fit:** Batch automated audio recording transcription and indexing.
 
+## Use cases
+
+Python CLI that splits a WAV file on silence and transcribes each chunk into a single text.
+
+- **Split audio on silence** (CLI user): main.py loads the WAV with pydub and calls split_on_silence with --min-silence-len, --silence-thresh (relative to the file’s dBFS) and --keep-silence, writing each piece to audio-chunks/chunkN.wav.
+- **Transcribe the chunks** (CLI user, Amazon Transcribe): Each chunk goes to recognize_amazon (us-east-1, S3 bucket from .env) and the texts are joined and printed. The README describes Google Speech Recognition, but the code calls Amazon; the --language option is not passed on.
+- **Set AWS keys in .env** (CLI user, Amazon Transcribe): load_dotenv reads AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_BUCKET_NAME; main.py raises an error if one is missing.
+- **Try Whisper on a sample** (CLI user, Hugging Face Hub): ai.py is a separate script that loads openai/whisper-large-v2 with transformers and transcribes one LibriSpeech dummy sample; it is not wired to the CLI and its packages are not in requirements.txt.
+
+### Scenario: Transcribe a recorded interview
+
+1. Run pip install -r requirements.txt, plus python-dotenv, which main.py imports but the file does not list.
+2. Create a .env file with AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_BUCKET_NAME.
+3. Run python main.py interview.wav -m 700 -s -16 (the path is positional and defaults to caro.wav).
+4. main.py writes the chunks to audio-chunks/ and shows a Rich progress bar.
+5. Each chunk is sent to Amazon Transcribe and the full text is printed at the end.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -650,6 +797,24 @@ AuthLaravel is an access-control learning project with a Laravel backend and Vue
 **Why it exists:** Clean Laravel authentication template implementing JWT, session management, and role-based policies.
 
 **Best fit:** Secure boilerplate foundation for Laravel API and web applications.
+
+## Use cases
+
+Laravel 10 and React (Inertia) lab app for ÉTS GTI619 on roles, login throttling and password flows.
+
+- **Register an account** (Registered user): RegisteredUserController stores a new user with email, username, phone and password; the form is resources/js/Pages/Auth/Register.tsx.
+- **Log in with throttling** (Registered user, Administrator): LoginRequest locks an email and IP pair after 5 failed attempts and records login_attempts, browser, OS, IP and last_login on the user row.
+- **Reset a forgotten password** (Registered user, Mailpit (dev mail)): The forgot-password routes send a reset link by email; in the Sail stack, Mailpit catches it and shows it on port 8025.
+- **Change profile and password** (Registered user): PUT /password goes to PasswordController, and /profile lets the user edit, update or delete the account through ProfileController.
+- **View all users as admin** (Administrator): /admin uses the AdminAuthenticated middleware, and /dashboard renders AdminDashboard.tsx with every user’s email, roles and permissions when the role is roles:admin; other roles get the plain dashboard.
+
+### Scenario: Run the lab and test role-based access
+
+1. From AuthLaravel/, run ./vendor/bin/sail up -d to start the app with MariaDB, Redis and Mailpit.
+2. Run ./vendor/bin/sail artisan migrate and db:seed to create the admin, user, residential and business accounts.
+3. Open http://localhost/login and sign in as admin@example.com to see the user table on the dashboard.
+4. Sign in as user@example.com and open /admin; the middleware sends the user back to the dashboard.
+5. Use Forgot password and read the reset email in Mailpit at http://localhost:8025.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -737,6 +902,25 @@ This is coursework, not a security certification. The routes alone do not prove 
 - Repository: https://github.com/AlgoETS/BatchBacktesting
 
 
+## Use cases
+
+AlgoÉTS notebooks that backtest indicator strategies on S&amp;P 500 stocks and cryptos in parallel, with CSV and charts.
+
+- **Build the ticker universe** (Strategy researcher, Wikipedia S&amp;P 500 list): get_SP500() reads the S&amp;P 500 symbol table from Wikipedia with pandas.read_html, and get_all_crypto() returns a fixed list of crypto pairs such as BTCUSD and ETHUSD.
+- **Download daily prices** (Strategy researcher, FMP price API): process_instrument calls the FMP historical-price-full endpoint for stocks or the crypto variant, with FMP_API_KEY read from the environment in src/config.py.
+- **Backtest one strategy in batch** (Strategy researcher, FMP price API): run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True) runs backtesting.py on every ticker in a thread pool and writes output/raw/&lt;Strategy&gt;/&lt;ticker&gt;-&lt;start&gt;-&lt;end&gt;.csv.
+- **Run all strategies on a ticker** (Strategy researcher): run_backtests_strategies([&#34;BMO&#34;], STRATEGIES_STR) submits every strategy defined in src/strategies.py (EMA, RSI, MACD, Bollinger Bands, ADX, TRIX…) for the given instruments.
+- **Compare returns to buy &amp; hold** (Strategy researcher): analyse.ipynb loads output/raw/&lt;Strategy&gt;/*.csv, ranks instruments by Return [%] and plots the top five against Buy &amp; Hold Return [%] with matplotlib.
+- **Open the HTML trade charts** (Strategy researcher): With generate_plots=True, plot_results saves each backtesting.py chart as output/charts/&lt;Strategy&gt;/&lt;ticker&gt;-&lt;start&gt;-&lt;end&gt;.html; the repository already holds charts for 23 strategies.
+
+### Scenario: Test EMA on the S&amp;P 500
+
+1. Install the dependencies with pip install -r requirements.txt and put an FMP_API_KEY in the environment (see .env.exemple).
+2. Run jupyter notebook and open batch.ipynb.
+3. Run the cell tickers = get_SP500() then run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True).
+4. Check output/EMA-&lt;start&gt;-&lt;end&gt;.csv for the combined results and output/charts/EMA/ for one HTML chart per ticker.
+5. Open analyse.ipynb and run the EMA section to list the top returns and compare them with buy and hold.
+
 
 
 ---
@@ -757,6 +941,24 @@ My bloc fork adds a Blender-facing workflow around S3 and MinIO storage. It pres
 **Why it exists:** Direct AWS S3 object storage integration inside Blender via Boto3, eliminating local drive storage bloat for 3D assets.
 
 **Best fit:** Cloud-native 3D asset synchronization, backup, and distributed rendering workflows.
+
+## Use cases
+
+Blender add-on that lists, uploads, downloads and imports files from MinIO or AWS S3 buckets in a sidebar panel.
+
+- **Add a storage connection** (Blender user): In the add-on preferences, CloudConnection entries hold the type (MinIO or AWS S3), endpoint or region, access and secret keys and bucket name; several connections can be listed.
+- **Browse and search the bucket** (Blender user, MinIO or S3 bucket): Refresh File List calls list_objects (MinIO) or list_objects_v2 (boto3) and draws a folder tree in the View3D Cloud tab; the Search field filters names by substring.
+- **Upload the current .blend** (Blender user, MinIO or S3 bucket): Upload Current File sends the saved .blend under its file name. The README mentions uploading textures and other dependencies, but addon.py only uploads the .blend itself.
+- **Import a mesh into the scene** (Blender user, MinIO or S3 bucket): Download saves an object to the system temp folder; Load to Scene downloads it and calls Blender’s STL, OBJ, USD or PLY importer.
+- **Delete a remote file** (Blender user, MinIO or S3 bucket): Delete calls remove_object (MinIO) or delete_object (S3) and refreshes the list.
+
+### Scenario: Pull a scan from a MinIO bucket into Blender
+
+1. Install the add-on from Edit &gt; Preferences &gt; Add-ons; on first load it installs boto3, minio and rapidfuzz with pip.
+2. In the preferences, add a MinIO connection with endpoint URL, keys and bucket name.
+3. Open the Cloud tab in the 3D view sidebar and press Refresh File List.
+4. Type part of a file name in Search to narrow the list.
+5. Press Load to Scene on an .obj or .stl file to import it.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -811,6 +1013,37 @@ The S3 path makes one list_objects_v2 request without pagination. Uploading the 
 
 ---
 
+# BullETS: a Python library for backtesting trading strategies
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/bullets/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/bullets/index.md
+
+- Repository: https://github.com/AlgoETS/BullETS
+
+
+## Use cases
+
+Python library for writing and backtesting stock trading strategies on Financial Modeling Prep data.
+
+- **Write a strategy** (Strategy author): Subclass Strategy in src/bullets/strategy.py and override on_start, on_resolution and on_finish; the constructor validates dates, resolution, balance, slippage and fees.
+- **Run a backtest** (Strategy author, FMP market data API): Runner.start in src/bullets/runner.py steps through open market moments (weekends, US holidays and off-hours skipped), calls the strategy and pending orders, then logs final balance, fees and profit.
+- **Place market and stop orders** (Strategy author, FMP market data API): Portfolio in src/bullets/portfolio/portfolio.py fills market orders at a slippage price derived from the daily high plus a flat fee, and checks stop and limit orders at each resolution.
+- **Fetch prices and statements** (Strategy author, FMP market data API): FmpDataSource in src/bullets/data_source/data_source_fmp.py caches daily, hourly or minute prices and reads income, balance sheet and cash flow statements plus symbol lists from the FMP API.
+- **Compute indicators** (Strategy author, FMP market data API): Indicators in src/bullets/data_indicators/indicators.py computes SMA, WMA, EMA, MACD, RSI, standard deviation and Bollinger Bands from data source prices on open market days.
+- **Test and publish the package** (GitHub Actions, FMP market data API): python-pr.yml and python-merge.yml run flake8 and unittest with an FMP_TOKEN secret (coverage goes to Codecov on merge); python-publish.yml uploads the sdist to PyPI with twine on release.
+
+### Scenario: Backtest buying AAPL every trading day
+
+1. Create a virtual environment, run pip install BullETS and get an API key from Financial Modeling Prep.
+2. Subclass Strategy and make on_resolution call self.portfolio.market_order(&#34;AAPL&#34;, 5).
+3. Build FmpDataSource(key, Resolution.DAILY) and the strategy from 2019-03-05 to 2019-04-22 with a 5,000 starting balance, as in the README.
+4. Call Runner(strategy).start(); each open day fills the order at the slippage price plus the transaction fee.
+5. Read the log: initial cash, final balance, final cash, fees paid, profit percentage and remaining FMP calls.
+
+
+
+---
+
 # ChitUI: A local bridge to resin printers
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/chitui/
@@ -826,6 +1059,24 @@ ChitUI places a browser interface in front of SDCP resin printers. A Python proc
 **Why it exists:** Full-featured web control interface for Chitubox SDCP 3.0 resin printers with LAN UDP discovery.
 
 **Best fit:** Headless remote management and real-time print monitoring for SLA 3D printers.
+
+## Use cases
+
+Flask web UI that finds Chitubox SDCP 3.0 resin printers on the LAN, uploads files and starts prints.
+
+- **Discover printers on the LAN** (Printer operator, SDCP resin printer): At start-up, discover_printers in main.py broadcasts M99999 over UDP port 3000, saves the replies and opens a WebSocket to each printer at ws://&lt;ip&gt;:3030/websocket.
+- **Watch printer status** (Printer operator, SDCP resin printer): The browser asks over Socket.IO; main.py sends SDCP commands 0 (status) and 1 (attributes) and relays printer messages to web/js/chitui.js and sdcp.js.
+- **Upload a print file** (Printer operator, SDCP resin printer): POST /upload accepts .ctb, .goo and .prz files, computes an MD5 and sends 1 MB parts to http://&lt;ip&gt;:3030/uploadFile/upload; /progress streams the percentage.
+- **List and delete files** (Printer operator, SDCP resin printer): printer_files sends SDCP command 258 with a storage path; action_delete sends command 259 with the file list.
+- **Start a print** (Printer operator, SDCP resin printer): action_print sends SDCP command 128 with the file name and StartLayer 0.
+
+### Scenario: Send a sliced model to a resin printer from a browser
+
+1. Install requirements.txt in a virtualenv and run python main.py, or use docker run --net=host so UDP broadcast works.
+2. At start-up, ChitUI broadcasts M99999 on UDP port 3000 and connects to each printer’s WebSocket on port 3030.
+3. Open http://127.0.0.1:54780/ to see the discovered printers and their status.
+4. Upload a .ctb file; ChitUI saves it to /tmp and sends it in 1 MB parts with an MD5 check.
+5. Pick the file in the printer’s file list and start the print.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -941,6 +1192,24 @@ ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a re
 
 **Best fit:** Visual AI workflows combining diagram generation with image refinement.
 
+## Use cases
+
+ComfyUI custom nodes that render Mermaid, PlantUML, Graphviz and other Kroki diagrams, optionally from LLM code.
+
+- **Render a diagram from code** (ComfyUI user, Kroki API): The UML Render node (nodes/uml_diagram.py) sends code to Kroki through nodes/kroki_client.py and returns png, svg, jpeg, pdf, txt or base64, checked against each type’s supported formats.
+- **Render Mermaid offline** (ComfyUI user): With backend set to local, web/js/render_mermaid.mjs uses beautiful-mermaid (after npm ci in web/js) to make SVG or PNG; Graphviz renders locally when the graphviz package is installed.
+- **Generate code with an LLM** (ComfyUI user, LLM provider): UML Code Assistant (nodes/uml_llm.py), or LLM Prompt Engine followed by LLM Call, fills a template from prompts/ and calls Ollama, OpenAI, Anthropic or Gemini; the result feeds UML Render.
+- **Preview and share a link** (ComfyUI user, Kroki API): Diagram Viewer URL (nodes/uml_viewer_url.py) turns kroki_url into a viewer link and an iframe link (viewer.html?embed=1) and shows a live preview in the node.
+- **Save a diagram to ComfyUI** (ComfyUI user): The viewer’s Save button posts to /comfyui-uml/save, registered with the other routes in nodes/uml_routes.py.
+
+### Scenario: Draw a sequence diagram from a prompt with a local Ollama model
+
+1. Run comfy node install comfyui-uml (or clone into ComfyUI/custom_nodes and pip install -r requirements.txt), then restart ComfyUI.
+2. Load workflows/uml_llm_ollama.json in the ComfyUI canvas.
+3. Describe the diagram in UML Code Assistant, with provider ollama and a local model.
+4. Queue the prompt; UML Render sends the generated code to Kroki and outputs the image.
+5. Open the link from Diagram Viewer URL to zoom, copy the link or save the diagram to ComfyUI.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -1019,6 +1288,25 @@ This website combines bilingual CV pages, structured resume data, LaTeX PDFs and
 **Why it exists:** High-performance, accessible, bilingual static portfolio and CV with AEO schema, automated CI/CD, and zero runtime overhead.
 
 **Best fit:** Professional software engineering presentation and technical documentation.
+
+## Use cases
+
+Source of antoineboucher.info/CV: bilingual HTML CV, LaTeX PDFs, JSON résumé and a Hugo blog with project pages.
+
+- **Update CV content** (Site owner): The owner edits index-en.html and index-fr.html, data/resume.*.json and data/cv.yaml; scripts/build/generate_cv.py writes the LaTeX skills.tex files from the YAML.
+- **Build the PDF résumés** (Site owner): python build_cv.py build --all compiles cv-en/resume.tex and cv-fr/resume.tex with XeLaTeX inside a Docker image.
+- **Refresh project pages** (Site owner): scripts/build/repository_docs.py reads public repositories without running their code and writes hugo/data/repository_*.json, which the repository-note shortcode renders under hugo/content/projects/notes/&lt;slug&gt;/.
+- **Publish the site** (Site owner, GitHub Pages): scripts/deploy/publish_site.py runs build_docs.py (Hugo with HUGO_ENV=production, sitemap merge, deploy checks), check_public_repos.py and the note tests, then with --publish commits docs/ and pushes main.
+- **Read the CV in EN or FR** (Recruiter or reader, GitHub Pages): GitHub Pages serves /CV/index-en.html and /CV/index-fr.html, the PDFs under /CV/cv-en/ and /CV/cv-fr/, and /CV/resume.json or /CV/resume.md for machine reading.
+- **Browse blog and projects** (Recruiter or reader, GitHub Pages): The Hugo build is published at /CV/blog/ and /CV/blog/fr/, with a Markdown twin of each page and llms.txt, robots.txt and sitemap.xml copied to the site root.
+
+### Scenario: Ship a CV update
+
+1. Edit the job entry in index-en.html and index-fr.html and the matching data/resume.en.json and data/resume.fr.json.
+2. Run python build_cv.py build --all to rebuild cv-en/resume.pdf and cv-fr/resume.pdf.
+3. Run python scripts/deploy/publish_site.py to build the CV and blog into a staging folder, validate it and update docs/.
+4. Review docs/ locally, commit the source changes, then rerun the script with --publish to commit docs/ and push main.
+5. Wait for GitHub Pages (main, /docs) to process the push and check https://antoineboucher.info/CV/.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -1146,6 +1434,24 @@ D2COpenAIPlugin is a FastAPI diagram service with a plugin manifest and an OpenA
 **Why it exists:** OpenAI ChatGPT plugin manifest and OpenAPI endpoint handler for text-to-diagram conversion.
 
 **Best fit:** ChatGPT Plus GPT Store integration for software architects.
+
+## Use cases
+
+FastAPI ChatGPT-plugin backend that turns PlantUML, Mermaid, D2 or Kroki source into diagram links.
+
+- **Get a PlantUML image link** (ChatGPT plugin client, Diagram renderers): POST /generate_diagram with lang plantuml encodes the code for the public PlantUML server (theme blueprint by default) and returns url, content and playground.
+- **Open Mermaid in Live Editor** (ChatGPT plugin client, Diagram renderers): For lang mermaid, mermaid/mermaid.py builds an encoded editor state (theme dark by default) and returns Mermaid Live Editor links.
+- **Render D2 or Kroki types** (ChatGPT plugin client, Diagram renderers): D2 aliases and every language in KROKI_LANGUAGE_SUPPORT go through generate_kroki_diagram in kroki/kroki.py and return an SVG link.
+- **Serve the plugin manifest** (ChatGPT plugin client): app.py serves /.well-known/ai-plugin.json, /openapi.yaml, /openapi.json, /logo.png and /.well-known/privacy.txt so a ChatGPT client can load the plugin.
+- **Run and test locally** (Developer): uvicorn app:app serves the API on port 5003 with docs at /; test_app.py covers the endpoints in CI, and vercel.json routes every path to app.py.
+
+### Scenario: Connect the plugin to ChatGPT on localhost
+
+1. Create a virtualenv, run pip install -r requirements-dev.txt and python -m pytest.
+2. Start the API with uvicorn app:app --host 127.0.0.1 --port 5003.
+3. In ChatGPT, choose Develop your own plugin and enter localhost:5003 to load /.well-known/ai-plugin.json.
+4. Ask for a sequence diagram; ChatGPT calls POST /generate_diagram with lang plantuml.
+5. The API returns the image URL and a playground link that ChatGPT shows to the user.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -1277,6 +1583,24 @@ DasherControl brings homelab links and embedded applications into saved workspac
 
 **Best fit:** Centralized command dashboard for homelab containerized services, bookmarks, and layout management.
 
+## Use cases
+
+Rust (Rocket) and Vue dashboard for a home lab: grid workspaces of applets plus basic Docker container control.
+
+- **Sign in to the dashboard** (Homelab admin, PostgreSQL): cargo run --bin create_admin creates the first account; POST /tenants/api/login checks the bcrypt hash and returns a JWT used by the protected routes.
+- **Arrange applets in a grid** (Homelab admin): GridLayoutMain.vue places applets such as IFrame, Shortcut, Editor, Canvas, Terminal and DockerManager on a resizable grid.
+- **Save and switch workspaces** (Homelab admin, PostgreSQL): The /workspaces/api routes create, update, list and delete workspaces and their applets, stored in PostgreSQL through Diesel.
+- **Stop or restart containers** (Homelab admin, Docker Engine): /containers/api/docker_list lists containers through shiplift, and /containers/api/stop/&lt;id&gt; and restart/&lt;id&gt; act on one container when a valid token is sent.
+- **Open a web SSH terminal** (Homelab admin): src/bin/start_websocket.rs bridges a WebSocket to an ssh2 session for the Terminal applet; the README lists the web terminal as in progress.
+
+### Scenario: Set up the dashboard on an Ubuntu server
+
+1. Build the frontend with cd frontend &amp;&amp; npm install &amp;&amp; npm run build.
+2. Set DATABASE_URL in Rocket.toml and .env, then run diesel migration run.
+3. Run cargo run --bin create_admin, then cargo run to start the Rocket server.
+4. Sign in, add IFrame applets for services such as Sonarr or Jellyfin and save the workspace.
+5. Open the DockerManager applet to list containers and restart one.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -1398,6 +1722,24 @@ Dimension is my Rust workspace for mathematics and graphics experiments. mathlib
 **Why it exists:** High-performance wgpu graphics pipeline and linear algebra math engine built entirely in Rust from first principles.
 
 **Best fit:** Hardware-accelerated 3D heightmap rendering, spatial transformation pipelines, and graphics education.
+
+## Use cases
+
+A Rust workspace around mathlib: linear algebra, wgpu rendering, parsers, physics and geometry, with WASM demos.
+
+- **Compute with dense and sparse** (Rust developer): The mathlib crate provides dense and sparse matrices, vectors, SVD and 3D helpers; cd mathlib &amp;&amp; cargo test and cargo bench exercise them.
+- **Render a 3D scene with wgpu** (Rust developer, GPU via wgpu): The render crate draws a mathlib Tree scene through wgpu; cargo run -p render-demo --example render_native opens a window with a cube, gizmo and picking.
+- **Load meshes and data files** (Rust developer): The parse crate reads JSON, XML, OBJ, MTL, BVH, glTF, PLY, PNG, JPEG, ZIP and TAR behind Cargo features such as json and obj.
+- **Simulate physics, collisions** (Rust developer): physics implements PBD/XPBD with examples particles_2d, rigid_bodies_3d and softbody_3d; collision adds AABB, OBB, BVH, BSP, ray and frustum queries.
+- **Publish the WASM demo site** (Rust developer, Browser (WASM/WebGPU)): just website-build compiles the mathlib, render, kinematics, physics, geometry and neural demos to WASM into website/; pages.yml deploys it to GitHub Pages.
+
+### Scenario: Trying the demos locally before a push
+
+1. Run cd mathlib &amp;&amp; cargo test to check the core library.
+2. Run just run-render to open the native wgpu scene and move the gizmo.
+3. Run just website-build to compile every demo to WASM into website/.
+4. Run just website-serve and open http://localhost:3000/ to browse /mathlib/, /render/ and /physics/.
+5. Push to main; the Pages workflow rebuilds website/ and publishes it.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -1534,6 +1876,24 @@ donneesqc-mcp is a fork exposing Québec and Montréal open-data operations thro
 
 **Best fit:** Natural language querying of public municipal and provincial datasets across transportation, demographics, and municipal services.
 
+## Use cases
+
+An MCP server that lets AI agents search, query in SQL and map Québec and Montréal open data in conversation.
+
+- **Search open datasets** (Analyst with an agent, CKAN open data portals): search_datasets and search_montreal_datasets call the CKAN APIs of Données Québec and Montréal (DQ_API_URL, MTL_API_URL) through helpers/ckan_api.py.
+- **Run read-only SQL queries** (Analyst with an agent, CKAN open data portals): query_resource_sql and query_montreal_sql send SQL to the CKAN DataStore after validate_sql() rejects anything that is not a SELECT.
+- **Find and query in one call** (Analyst with an agent, CKAN open data portals): find_and_query chains search, resource listing and DataStore query so the agent avoids three round trips.
+- **Explore geospatial layers** (Analyst with an agent, IGO geo services): list_geospatial_layers, get_geospatial_features and get_map_url query the IGO WFS and build WMS GetMap URLs through helpers/geo_api.py.
+- **Geocode, convert coordinates** (Analyst with an agent, IGO geo services): geocode and reverse_geocode use the icherche geocoder (GEOCODER_URL); convert_coordinates switches between EPSG:32198 and EPSG:4326.
+
+### Scenario: Counting public trees per borough in Montréal
+
+1. Start the server with docker compose up -d (or uv sync then uv run python main.py); it listens on port 8000 with streamable HTTP.
+2. Register it in the client, for example claude mcp add --transport http donneesqc http://localhost:8000/mcp.
+3. Ask the agent for public tree data; it calls search_montreal_datasets to find the dataset.
+4. The agent calls query_montreal_data to see the columns of the DataStore resource.
+5. It sends a SELECT … GROUP BY query through query_montreal_sql and answers with the per-borough counts.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -1626,6 +1986,24 @@ ESP32-7SEG connects an ESP32 clock display to network configuration and an HTTP 
 
 **Best fit:** Physical computing status dashboards and hardware displays.
 
+## Use cases
+
+ESP32 firmware and an Android app that drive an I2C 7-segment display as a countdown or stopwatch over Wi-Fi.
+
+- **Join the board to Wi-Fi** (Timer operator, ESP32 &#43; 7-seg display): Without saved credentials, wifi.cpp starts an access point named ESPTimer; the / page then serves the setup form, and POST /connect stores the SSID and password in NVS.
+- **Start a countdown or stopwatch** (Timer operator, ESP32 &#43; 7-seg display): POST /timer-action with action, mode, minutes and seconds starts, pauses or stops a FreeRTOS task (COUNTDOWN or STOPWATCH) in display.cpp.
+- **Set the digits directly** (Timer operator, ESP32 &#43; 7-seg display): POST /update-display with minutes and seconds calls updateDisplay() and pushes a displayUpdated message.
+- **Follow updates live** (Android app, ESP32 &#43; 7-seg display): The /ws WebSocket broadcasts timerStarted, timerStopped and displayUpdated JSON; the Android WebSocketClient listens to it.
+- **Control it from Android** (Timer operator, Android app): TimerApiService.kt maps the same endpoints with Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) behind the TimerControl and WiFiConnect fragments.
+
+### Scenario: Setting up a 5-minute countdown on a fresh board
+
+1. Wire the Adafruit I2C backpack to SDA, SCL, VCC and GND, then flash the firmware with pio run -t upload (env firebeetle).
+2. On first boot no credentials are in NVS, so join the ESPTimer access point and open the board&#39;s page.
+3. Pick a network from /scan and submit it to /connect; the board saves it and joins the LAN.
+4. Read the new IP in the serial monitor at 115200 baud and open it in a browser or the Android app.
+5. Send action=start, mode=countdown, minutes=5, seconds=0 to /timer-action; the display counts down and /ws reports each update.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -1695,6 +2073,23 @@ FlashGames preserves small Flash games in a browser-facing collection. The page 
 
 **Best fit:** Digital preservation and retro gaming nostalgia.
 
+## Use cases
+
+A browser page that replays three Flash games from 2010 through the Ruffle emulator, with no plugin needed.
+
+- **Pick a game from the list** (Player): The #swfSelector drop-down in index.html lists Tag, Ricochet Kill and Ballon, each with a short description.
+- **Play a SWF in the browser** (Player, Ruffle emulator): loadSWF() creates a Ruffle player with RufflePlayer.newest() and loads tag.swf, ricochet kill.swf or jeux.swf into #swfContainer.
+- **Open a game by URL hash** (Player): updateHash() writes the game key into the URL hash, and the load and hashchange listeners reload that game, so a link like #tag opens it directly.
+- **Run the collection locally** (Player, Ruffle emulator): The README says to clone the repository and open index.html; Ruffle is loaded from unpkg, so a network connection is still needed.
+
+### Scenario: Replaying Ricochet Kill from a shared link
+
+1. Open https://antoinebou12.github.io/FlashGames/ (or index.html from a clone).
+2. The page loads the first game, Tag, because no hash is set.
+3. Choose Ricochet Kill in the Select a Game list; the URL becomes #ricochet_kill.
+4. Ruffle loads ricochet kill.swf into the black game area and the description bar updates.
+5. Play with the mouse, then copy the URL to send someone straight to the same game.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -1755,6 +2150,23 @@ This archived extension attempted to add individual-file download controls to re
 **Why it exists:** Browser extension injecting one-click raw file download buttons into GitHub &amp; GitLab interfaces.
 
 **Best fit:** Quick single-file extraction without cloning large repositories.
+
+## Use cases
+
+A Chrome extension that adds a download link and file size next to each file in GitHub, GitLab and Bitbucket listings.
+
+- **Add icons to file listings** (Repository visitor, Git hosting site): manifest.json injects inject_github.js, inject_gitlab.js or inject_bitbucket.js on matching pages; each script appends an icon link to every row (td.content, td.tree-item-file-name or tr.iterable-item).
+- **Download a single file** (Repository visitor, Git hosting site): The script rewrites the blob link to its raw URL (raw.githubusercontent.com on GitHub, /raw/ on GitLab), fetches the text and sets a Blob object URL with a download attribute.
+- **Show each file&#39;s size** (Repository visitor, Git hosting site): On GitHub, getFileURLDocument() loads the file page with XMLHttpRequest and changeFileSize() copies the Bytes/KB/MB line into a span next to the icon.
+- **Open a folder from its icon** (Repository visitor, Git hosting site): Paths without a file extension are treated as directories, so the icon simply links to the folder page instead of downloading.
+
+### Scenario: Grabbing one config file from a GitHub repository
+
+1. Load the extension in Chrome (Manifest V2, content scripts for github.com, gitlab.com and bitbucket.org).
+2. Open a repository&#39;s file list on github.com; inject_github.js waits for document.readyState to be complete.
+3. A small GitHub icon and a size label appear next to each file row.
+4. Click the icon next to the file: the raw content is saved under the file&#39;s name.
+5. If icons do not appear, refresh the page as the README advises; the README title also flags the extension as not working.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -1822,6 +2234,24 @@ GreenScreenVideotoAlphaPNGs separates video acquisition, frame extraction and ch
 **Why it exists:** OpenCV color-keying pipeline converting chroma-key green videos to RGBA alpha PNG sequences.
 
 **Best fit:** Asset preparation for augmented reality (Snapchat Lens Studio, Spark AR).
+
+## Use cases
+
+A Python CLI that turns green-screen video into transparent PNG frames, GIFs or alpha .mov files for Lens Studio.
+
+- **Download footage from a URL** (AR lens creator, YouTube (yt-dlp)): greenscreen convert accepts a YouTube URL; convert.py calls download_video() and download_audio() from download.py, which use yt-dlp.
+- **Split a video into frames** (AR lens creator, ffmpeg): frames.py writes numbered PNGs (0.png, 1.png…) with ffmpeg, or with OpenCV when --no-ffmpeg is passed.
+- **Key out the green background** (AR lens creator): chroma.py computes a YCbCr distance from the key color (pixel 1,1 by default, tolerance 50–130) and writes RGBA PNGs into a sibling *_alpha folder.
+- **Build a transparent GIF** (AR lens creator, ffmpeg): greenscreen gif &lt;dir&gt; uses numpngw and the optional APNGLib extension by default, or an ffmpeg palette with --fast-ffmpeg; the GIF is written next to the folder.
+- **Encode an alpha .mov** (AR lens creator, ffmpeg): greenscreen video &lt;dir&gt; --fps 30 encodes the PNG sequence to Videogen-&lt;stamp&gt;.mov with the qtrle or prores_4444 codec.
+
+### Scenario: From a green-screen clip to a Lens Studio animation
+
+1. Run bash install.sh (or .\install.ps1 on Windows), then uv run greenscreen --help.
+2. Run uv run greenscreen convert clip.mp4 to extract frames into clip/ and keyed frames into clip_alpha/.
+3. Outputs that start with the clip name are moved into project_clip/ unless --no-project-dir is set.
+4. Run uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg to get a transparent GIF without APNGLib.
+5. In Lens Studio, use Resources → Add New → 2D animation from files and pick the *_alpha PNGs.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -1924,6 +2354,24 @@ hass_renpho is a fork of a Home Assistant integration for Renpho measurements. A
 
 **Best fit:** Self-hosted health metric tracking and smart home automation triggers.
 
+## Use cases
+
+A Home Assistant integration that polls the legacy Renpho cloud API and exposes scale measurements as sensors.
+
+- **Sign in and pick a scale user** (Home Assistant user, Home Assistant, Renpho cloud API): config_flow.py validates the email and password against Renpho, then shows a select_user step when the account has several scale users.
+- **Poll measurements on a timer** (Home Assistant, Renpho cloud API): RenphoWeightCoordinator calls get_measurements(), list_girth() and list_girth_goal() every refresh seconds through a DataUpdateCoordinator.
+- **Show body metrics as sensors** (Home Assistant user, Home Assistant): sensor.py and sensor_configs.py create sensors for weight, BMI, body fat, water, BMR, girth values and goals, with kg or lb for weight.
+- **Route calls through a proxy** (Home Assistant user, Renpho cloud API): An optional proxy setting (http:// or socks5://) is checked by check_proxy() before Renpho calls, for IPs that renpho.qnclouds.com blocks.
+- **Test an account in the API** (Home Assistant user, Renpho cloud API): api/app.py is a FastAPI app with routes such as /auth, /users, /measurements and /girth_info; vercel.json deploys it and the README points to its /docs page.
+
+### Scenario: Getting the morning weigh-in into Home Assistant
+
+1. Copy custom_components/renpho into &lt;config_dir&gt;/custom_components/renpho/ (or install through HACS).
+2. Add renpho: with email, password and refresh: 600 to configuration.yaml, plus sensor: platform: renpho.
+3. Restart Home Assistant; the integration signs in to the legacy Renpho API and resolves the user id.
+4. Step on the scale with the outdated Renpho app so the measurement reaches the cloud.
+5. Within the next refresh cycle the weight and body-fat sensors update on the dashboard.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -2001,6 +2449,23 @@ This display experiment loads image data into a GTK drawing area through Cairo. 
 **Why it exists:** 10-bit HDR pipeline testing color banding and luminance curves on Linux display servers.
 
 **Best fit:** Calibration and verification of 4K 10-bit HDR displays on Linux workstations.
+
+## Use cases
+
+Linux scripts to check that an HDR display really shows 10 bits per channel under an X server at depth 30.
+
+- **Start X at depth 30** (Display tester, X server (Xorg)): Xdepth.sh runs startx -- -depth 30 and prints the depth from xwininfo, falling back to depth 24; xorg.conf sets DefaultDepth 30.
+- **Show a 10-bit gray gradient** (Display tester, HDR10 monitor): Viewer.py packs the RGB channels of images/gray_gradient_10.tiff into a cairo FORMAT_RGB30 surface and draws it in a GTK 3 window.
+- **Compare 8-bit and 10-bit** (Display tester, HDR10 monitor): The images/ folder holds gray_gradient_8.tiff next to gray_gradient_10.tiff, so the same gradient can be viewed at both depths to compare banding by eye.
+- **Play a video at 10 bpc** (Display tester, HDR10 monitor): Viewer3.py adds a Typer CLI with --image-path and --video-path; videos are read frame by frame with imageio&#39;s ffmpeg reader in a thread at 30 fps.
+
+### Scenario: Checking a new HDR10 monitor on Ubuntu
+
+1. Stop the display manager: sudo systemctl stop lightdm || sudo systemctl stop gdm, then sudo pkill Xorg.
+2. Start X with startx -- -depth 30 (or run Xdepth.sh).
+3. Confirm with xwininfo -root | grep Depth that the root window reports depth 30.
+4. Run python3 Viewer.py to open images/gray_gradient_10.tiff in the viewer window.
+5. Look for banding in the gradient; smooth steps mean the 10-bit path works end to end.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2103,6 +2568,25 @@ This Hydra fork is a desktop launcher with an Electron shell and React interface
 
 **Best fit:** Open-source alternative game launcher and library organizer.
 
+## Use cases
+
+A fork of Hydra Launcher, an Electron game library that downloads, launches, tracks playtime and syncs saves.
+
+- **Build a game library** (Player, Hydra API and Cloud): IPC handlers in src/main/events/library (add-game-to-library, add-custom-game-to-library, assign-game-to-collection) manage the local library; catalogue events fetch game details and artwork.
+- **Download and queue games** (Player, Torrents and hosters): Torrent downloads run in python_rpc/main.py with libtorrent, while services/hosters handles direct hosts such as Gofile, Mediafire and Pixeldrain; torrenting events manage the queue.
+- **Add download sources** (Player, Torrents and hosters): download-sources events add, remove and sync the source lists that feed download options for each game.
+- **Launch and track playtime** (Player): process-watcher.ts scans running processes against known executables to record playtime; on Linux, umu.ts and wine-prefix.ts prepare Proton or Wine.
+- **Back up saves to the cloud** (Player, Hydra API and Cloud): Ludusavi.backupGame() runs the bundled ludusavi binary to collect save files, and the cloud-save services upload, compare and restore them with Hydra Cloud.
+- **Unlock achievements** (Player, Hydra API and Cloud): services/achievements finds and parses local achievement files, merges them with remote data and shows notifications.
+
+### Scenario: From catalogue page to a backed-up save
+
+1. Install Node.js with Yarn, Python 3.9&#43; (pip install -r requirements.txt) and Rust, then run yarn; postinstall builds hydra-native.
+2. Open a game in the catalogue and add it to the library.
+3. Pick a download option; the Python RPC process starts the torrent and the download page shows progress.
+4. Launch the game; the process watcher detects the executable and counts playtime.
+5. Close the game and sync the save; ludusavi backs up the files and the cloud-save service uploads them.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -2174,6 +2658,25 @@ ipc-toolkit provides geometric building blocks for contact-aware simulation. Thi
 **Why it exists:** Friction and contact physics toolkit for robust computer graphics and finite element simulation.
 
 **Best fit:** Nonlinear continuous contact mechanics in 3D physics engines.
+
+## Use cases
+
+A C&#43;&#43; library with Python bindings for Incremental Potential Contact: contact barriers, CCD and friction for simulators.
+
+- **Build a collision mesh** (Simulation developer): ipc::CollisionMesh takes vertex, edge and face matrices (Eigen), as in the README quick start.
+- **Find contacts within dhat** (Simulation developer, Host simulator): NormalCollisions::build() uses a broad phase (hash grid, LBVH, sweep and prune…) to collect primitive pairs closer than dhat.
+- **Evaluate barrier, derivatives** (Simulation developer, Host simulator): BarrierPotential returns the energy, gradient and sparse Hessian that the host solver adds to its objective.
+- **Get a collision-free step size** (Simulation developer, Host simulator): compute_collision_free_stepsize() runs continuous collision detection (Tight Inclusion by default, nonlinear and additive variants in src/ipc/ccd) between two vertex states.
+- **Add anisotropic friction** (Simulation developer, Host simulator): FrictionPotential works on TangentialCollisions; smooth_mu.hpp adds elliptical anisotropic friction coefficients (commit Anisotropic friction #210).
+- **Script it from Python** (Simulation developer): pybind11 bindings under python/src expose the same API as ipctk (pip install ipctk), built when IPC_TOOLKIT_BUILD_PYTHON is ON.
+
+### Scenario: Adding contact to one implicit time step
+
+1. Install the bindings with pip install ipctk, or add the library to a CMake project.
+2. Create a CollisionMesh from the vertices, edges and faces of the scene.
+3. Build NormalCollisions with dhat = 1e-3 for the current positions.
+4. Add the BarrierPotential energy, gradient and Hessian to the solver&#39;s Newton system.
+5. Before accepting the Newton step, clamp it with compute_collision_free_stepsize so no surfaces cross.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2289,6 +2792,24 @@ This fork of the Kendall JSON Resume theme turns structured resume data into HTM
 
 **Best fit:** Automated resume compilation from structured JSON data.
 
+## Use cases
+
+A JSON Resume theme that renders resume.json to a Bootstrap HTML page with Mustache and FontAwesome icons.
+
+- **Render resume.json to HTML** (Resume author, resume-cli): index.js exports render(), which prepares the resume object and fills resume.template with Mustache, inlining style.css and print.css.
+- **Preview the theme locally** (Resume author, resume-cli): The README runs resume serve --theme . from the theme folder and opens the preview on http://localhost:4000.
+- **Show a photo or Gravatar** (Resume author, Gravatar): When basics.image is missing, render() builds a Gravatar URL from basics.email with the gravatar package.
+- **Map profiles to icons** (Resume author): Each basics.profiles network is mapped to a FontAwesome class, with special cases such as stackoverflow, gitlab and keybase.
+- **Print a clean copy** (Resume author): print.css is injected as a media=&#34;print&#34; style; it hides the photo and removes link URLs after anchors.
+
+### Scenario: Previewing a resume with the Kendall theme
+
+1. Install the CLI with npm install -g resume-cli.
+2. Create and fill resume.json with resume init.
+3. Run npm install in the theme folder to get mustache, lodash and gravatar.
+4. Run resume serve --theme . and open http://localhost:4000.
+5. Check that only filled sections (work, education, skills…) appear, then print from the browser.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -2364,6 +2885,36 @@ Old theme dependencies and expected schema fields need review with current resum
 
 ---
 
+# Kelly_RM: Kelly criterion experiments for trade sizing
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/index.md
+
+- Repository: https://github.com/AlgoETS/Kelly_RM
+
+
+## Use cases
+
+Notebooks and helpers to estimate trade odds from backtests and size positions with the Kelly criterion.
+
+- **Simulate the Kelly coin game** (Quant researcher): BaseGame in Kelly_game/betting_strategies.py plays biased coin flips; Kelly, KellyWithAnEstimate, ConstantDollar and BetLikeADummy set the wager, and Playing the Game.ipynb plots wealth paths and growth rates with Altair.
+- **Download price history** (Quant researcher, Market data APIs): src/data.py wraps Financial Modeling Prep historical-price-full endpoints and Binance futures klines; src/request_api.py sends the requests with httpx and src/config.py reads the API keys from the environment.
+- **Optimize an RSI strategy** (Quant researcher): sandbox/Main strategy.ipynb splits each series into three training years and an unseen remainder, then grid-searches RsiOscillator bounds and window with backtesting.py and shows a seaborn heatmap.
+- **Estimate win odds per ticker** (Quant researcher): From each backtest trade table the notebook computes win probability, mean and variance of win and loss sizes per ticker, on training and unseen data, and keeps tickers present in both.
+- **Compute the Kelly fraction** (Quant researcher): The Kelly Criterion section applies f* = (p·b − q)/b with b = mean win size / mean loss size and stores the result in a Kelly_Fraction column.
+
+### Scenario: Size RSI trades with the Kelly criterion
+
+1. Run pip install -r requirements.txt, add the missing notebook packages (pandas_ta, scipy, sympy) and set FMP_API_KEY in the environment.
+2. Open sandbox/Main strategy.ipynb; it reads S&amp;P 500 symbols from Wikipedia and downloads ten price histories through src/data.py.
+3. Split each series into a three-year training set and an unseen set.
+4. Optimize RsiOscillator with Backtest.optimize and read the parameter heatmap.
+5. Compute win probability and win/loss sizes per ticker on both sets, then the Kelly fraction for each kept ticker.
+
+
+
+---
+
 # kroki-playground: An editor, an API and a renderer
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/kroki-playground/
@@ -2380,6 +2931,24 @@ kroki-playground is a Next.js interface for editing text diagrams and previewing
 **Why it exists:** Serverless diagram experimentation suite in TypeScript running on Vercel with instant preview.
 
 **Best fit:** Rapid prototyping of PlantUML, Mermaid, GraphViz, and C4 architecture diagrams.
+
+## Use cases
+
+A Next.js playground to write diagram source for Kroki, preview the SVG live and share it through the URL.
+
+- **Preview a diagram live** (Diagram author, Kroki server): DiagramGenerator.tsx deflates the source with encodeDiagramPayload() (pako, base64url) and loads &lt;base&gt;/&lt;type&gt;/svg/&lt;encoded&gt; from kroki.io or NEXT_PUBLIC_KROKI_BASE_URL.
+- **Switch between diagram types** (Diagram author): lib/kroki/diagramTypes.ts lists the Kroki route names (plantuml, mermaid, graphviz, d2, vega-lite…) offered in the type picker.
+- **Share or download the result** (Diagram author): The page pushes ?type=…&amp;source=… into the browser history, can copy the Kroki URL to the clipboard and saves the image as diagram.svg.
+- **Render through the REST API** (API client developer, Kroki server): app/api/generate-diagram/route.ts accepts GET or POST with diagramSource, selectedDiagram and outputFormat and returns base64 diagramData; the README and openapi.yaml name the path /api/generateDiagram.
+- **Read the OpenAPI docs** (API client developer): /api-docs renders public/openapi.yaml with swagger-ui-react, and GET /api/openapi serves the specification.
+
+### Scenario: Sketching a sequence diagram and sending it to a teammate
+
+1. Run npm install then npm run dev and open http://localhost:3000.
+2. Choose plantuml in the type list and paste the @startuml … @enduml source.
+3. The SVG preview refreshes from Kroki as the source changes.
+4. Copy the page URL, which now carries ?type=plantuml&amp;source=&lt;encoded&gt;, and send it.
+5. Click download to save diagram.svg for the design document.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2439,6 +3008,36 @@ An encoded share URL still contains recoverable diagram source. Compression and 
 
 ---
 
+# LegosTracker: LEGO catalog data and set price history
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/legostracker/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/legostracker/index.md
+
+- Repository: https://github.com/AlgoETS/LegosTracker
+
+
+## Use cases
+
+Notebooks and a Playwright scraper to study LEGO sets with Rebrickable data and BrickEconomy price history.
+
+- **Scrape set prices** (LEGO collector, BrickEconomy website): brickeconomy.py reads set_list.txt, opens each set on BrickEconomy with Playwright Chromium, writes &lt;set&gt;_history.csv and &lt;set&gt;_new.csv from the page charts and appends details and pricing to lego_sets.csv.
+- **Explore the LEGO catalog** (LEGO collector, Rebrickable exports): general.ipynb loads the Rebrickable CSV tables in datasets/ (colors, inventories, parts, sets, themes) and plots counts such as transparent versus opaque colors.
+- **Model a set&#39;s price history** (LEGO collector): analyse.ipynb cleans data/001-1_history.csv, fits linear and gradient boosting regressions on dates, projects to 2030, runs a Monte Carlo on log returns and plots the price bands in data/001-1_new.csv.
+- **Compare scraped set prices** (LEGO collector): analyse.ipynb loads data/lego_sets.csv, strips currency symbols and reports the lowest and highest Quick Buy price and the average Pricing value.
+- **Update collection values** (LEGO collector, BrickEconomy website): price.ipynb reads mycollection.csv, looks up each set on BrickEconomy search with requests and BeautifulSoup for retail and current values, and writes updated_mycollection.csv.
+
+### Scenario: Track the price of set 001-1
+
+1. Install playwright, pydantic and aiohttp and run playwright install, as in brickeconomy.ipynb.
+2. List set numbers such as 001-1 in set_list.txt, one per line.
+3. Run python brickeconomy.py; a visible Chromium window searches BrickEconomy and opens each set page.
+4. Move the generated 001-1_history.csv, 001-1_new.csv and lego_sets.csv into data/, where analyse.ipynb reads them.
+5. Run analyse.ipynb to plot the history, fit the regressions and simulate future prices.
+
+
+
+---
+
 # linkshare: A Rails application for shared links
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/linkshare/
@@ -2454,6 +3053,24 @@ linkshare is an archived Rails learning project for sharing links, commenting an
 **Why it exists:** Ruby on Rails web platform featuring asynchronous OpenGraph metadata scrapers and card previews.
 
 **Best fit:** Social bookmarking and rich link curation.
+
+## Use cases
+
+A Ruby on Rails 4.1 social site where signed-in users share links or files, vote, comment and preview pages.
+
+- **Share a link or a file** (Member): LinksController#create saves a Link with title, url and description; the Link model also mounts a CarrierWave FileUploader, and /files/new reuses the same form.
+- **Preview a shared page** (Member, Embedly): The feed and link views add embedly-card anchors, and application.js calls embedly(&#39;card&#39;, …) to render a preview card or tooltip.
+- **Vote and comment on links** (Member): PUT /links/:id/like and /dislike use acts_as_votable, and nested /links/:link_id/comments routes attach comments to a link.
+- **Search links and users** (Member): Link.search and User.search filter by title or name with LIKE; the feed is paginated five links per page with will_paginate, and user cards show an online indicator.
+- **Manage content in /admin** (Administrator): config/routes.rb mounts RailsAdmin at /admin, and the users table has an admin flag.
+
+### Scenario: Posting an article and collecting reactions
+
+1. Start the app as in the README: rails server -p 8080 -b 0.0.0.0, with redis-server running.
+2. Sign up at /users/sign_up with a name and the required avatar image.
+3. Open /links/new, paste the article URL with a title and description, then submit.
+4. On the home feed, hover the title to see the Embedly preview with vote and comment counts.
+5. Other members like the link with PUT /links/:id/like and reply under /links/:id/comments.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2523,6 +3140,25 @@ This LLM2SVG fork contains SVG dataset utilities and an evaluation-oriented scaf
 **Why it exists:** Structured prompt engineering framework and Python validator generating crisp, valid SVG illustrations from LLM responses.
 
 **Best fit:** Automated vector icon and diagram generation for design systems.
+
+## Use cases
+
+Python utilities and data for a text-to-SVG challenge: load prompts, check SVG rules, build and render shapes.
+
+- **Load prompts and SVG samples** (ML researcher): SVGDataLoader in utils/data_loader.py reads data/train/train.csv and data/test/test.csv and collects the SVG files stored under data/train/svg/&lt;id&gt;/; SVGDataset in utils/svg_dataset.py wraps them as a PyTorch Dataset.
+- **Validate SVG constraints** (ML researcher): SVGConstraints.validate_svg in utils/svg_constraints.py rejects files over 10,000 bytes and any element or attribute outside the allowlist, parsing with defusedxml.
+- **Extract terms from a prompt** (ML researcher): TextParser in utils/text_parser.py pulls colours, shapes, patterns, materials, clothing, landscape and architecture terms from a description and picks a primary category.
+- **Build SVG from primitives** (ML researcher): utils/svg_utils.py has helpers for rect, circle, ellipse, path, polygon, line and group elements, a colour palette generator, generate_shapes and optimize_svg to shorten numbers.
+- **Render SVG to PNG** (ML researcher, cairosvg renderer): svg_to_png in utils/svg_utils.py calls cairosvg.svg2png and either writes a file or returns PNG bytes.
+- **Report on the SVG dataset** (ML researcher): SVGAnalyzer in utils/svg_analyzer.py counts SVGs, measures their sizes, tallies elements, validates every file and plots a size histogram against the 10 KB limit.
+
+### Scenario: Check a set of candidate SVGs before submission
+
+1. Point SVGDataLoader at the local data/ folder (the default path is hard-coded to the author’s Windows drive).
+2. Read the prompts from data/train/train.csv, for example &#34;a starlit night over snow-covered peaks&#34;.
+3. Run SVGAnalyzer.validate_all_svgs(&#34;train&#34;) to test every SVG under data/train/svg/ with SVGConstraints.
+4. Call generate_summary_report to get a table of sizes and inferred sources, then plot_svg_size_distribution.
+5. Render a passing SVG with svg_to_png to compare it with the prompt.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2600,6 +3236,25 @@ This Maestro fork connects a React upload interface to a Spring backend and exte
 **Why it exists:** Optical Music Recognition (OMR) pipeline translating sheet music scans into MIDI score sequences.
 
 **Best fit:** Digitization of physical sheet music for playback and editing.
+
+## Use cases
+
+Web app that turns a scanned music sheet (PDF, PNG, JPG) into a MIDI file, with optional tempo overrides.
+
+- **Upload a music sheet** (Musician): The React form in maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx takes a dropped file and a MIDI file name, then useMaestroClient.ts checks GET /health before posting to /convert.
+- **Set tempos per measure** (Musician): The form keeps a list of tempo, measure and force entries (default 120 at measure 1) and sends it as the JSON field tempos.
+- **Recognize notes with Audiveris** (Audiveris OMR engine): POST /convert in ConvertController.java checks the file (10 MB limit, PDF/JPG/PNG signature) and AudiverisController.java runs Audiveris in batch mode to export a .mxl file.
+- **Convert MusicXML to MIDI** (music21 (Python)): backend/src/main/MxlToMidi.py loads the .mxl with music21, applies dynamics and the requested tempo marks, and writes the .mid file.
+- **Download the MIDI file** (Musician): The backend returns the .mid as an attachment and the frontend saves it with js-file-download; input and output folders are cleaned three seconds later.
+- **Switch English or French** (Musician): LanguageSwitcher.tsx toggles i18next between en-US and fr-CA, using the strings in maestro-app/public/locales/.
+
+### Scenario: Turn a PDF score into a MIDI file locally
+
+1. Copy the Audiveris bin and lib folders into backend/audiveris/dist as backend/README.md explains.
+2. Start both services with docker-compose up -d (backend on port 8080, frontend on port 3000).
+3. Open localhost:3000, drop a PDF score and enter a MIDI file name.
+4. Add a tempo row, for example 90 at measure 1, and submit the form.
+5. The backend runs Audiveris, then MxlToMidi.py, and the browser downloads the .mid file.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2706,6 +3361,25 @@ marketwatch is an archived Python client for MarketWatch’s virtual trading gam
 
 **Best fit:** Automated trading bot development and portfolio backtesting.
 
+## Use cases
+
+Python client for the MarketWatch stock game: quotes, trades, portfolios and watchlists (login now blocked by captcha).
+
+- **Get a stock price** (Game player, MarketWatch website): MarketWatch.get_price in marketwatch/__init__.py fetches the stock page with httpx and reads the intraday price with BeautifulSoup; the README marks it as working with skip_login=True.
+- **Buy, sell, short or cover** (Game player, MarketWatch website): buy, sell, short and cover build an order payload and submit it to a game; MarketWatchGame in marketwatch/game.py binds the same calls to one game ID.
+- **Read portfolio and orders** (Game player, MarketWatch website): get_portfolio, get_positions, get_pending_orders, get_leaderboard and get_game_settings scrape game pages; cancel_order and cancel_all_orders remove pending orders.
+- **Manage watchlists** (Game player, MarketWatch website): create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist and delete_watchlist_item call the MarketWatch watchlist endpoints.
+- **Serve HTML game cards** (Game player, MarketWatch website): api/app.py is a FastAPI app with HTTP Basic auth that renders Jinja2 templates for /game, /portfolio, /leaderboard, /card and /watchlist.
+- **Trade on an EMA crossover** (GitHub Actions, MarketWatch website): .github/workflows/ema-workflow.yml runs on a five-minute cron, pulls prices with yfinance, computes 20 and 80 period EMAs and buys or sells 100 shares on a crossover.
+
+### Scenario: Check a quote, then trade in a game
+
+1. Install the package with pip install marketwatch.
+2. Create MarketWatch(email, password, skip_login=True) and call get_price(&#34;AAPL&#34;).
+3. For game calls, log in with real credentials; the README warns this step currently fails on a captcha.
+4. Once logged in, call get_games(), then buy(game_id, &#34;AAPL&#34;, 100).
+5. Check the result with get_positions(game_id) and get_pending_orders(game_id).
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -2778,6 +3452,36 @@ The README reports broken login because of CAPTCHA. This historical client shoul
 
 ---
 
+# MarkokChainMonteCarlo: Monte Carlo and Markov chain backtests
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/index.md
+
+- Repository: https://github.com/AlgoETS/MarkokChainMonteCarlo
+
+
+## Use cases
+
+Notebooks that simulate AAPL prices with Monte Carlo and a Markov chain, then backtest a strategy built on them.
+
+- **Split prices at 2023** (Quant researcher, FMP market data API): mcmc.ipynb and backtest.ipynb download the full AAPL history with get_historical_price_full_stock and split it at 2023-01-01 into prices_before_january_2023 and prices_after_january_2023.
+- **Simulate Monte Carlo paths** (Quant researcher): monte_carlo_simulation draws daily shocks from the drift and volatility of log returns; mcmc.ipynb adds variants with rolling volatility and occasional extreme moves, run for 364 days with 1,000 or 10,000 paths.
+- **Simulate a Markov chain** (Quant researcher): Training closes are cut into $10 bins from 0 to 200; pandas.crosstab builds the normalized transition matrix and markov_chain_simulation samples a sequence of bins.
+- **Backtest MCMCStrategy** (Quant researcher): backtest.ipynb runs MCMCStrategy (5% stop loss, take profit drawn from a simulated path) and BuyAndHoldStrategy with backtesting.py: 10,000 cash, 0.2% commission, exclusive orders, on both periods.
+- **Fit a linear trend** (Quant researcher): The Linear Regression section of mcmc.ipynb fits scikit-learn LinearRegression on the day index of both periods with an 80/20 train_test_split.
+
+### Scenario: Compare MCMCStrategy with buy and hold on AAPL
+
+1. Install the packages from the README pip command and put your own key in the FMP_API_KEY cell.
+2. Open backtest.ipynb and download the AAPL history with get_historical_price_full_stock.
+3. Split the data at 2023-01-01 and build the price-bin transition matrix from the earlier part.
+4. Create Backtest objects for MCMCStrategy and BuyAndHoldStrategy on both periods and call run().
+5. Plot the result; output/MCMCStrategy.html is a saved backtesting.py chart of MCMCStrategy.
+
+
+
+---
+
 # MediaBoxDockerCompose: A media stack connected by volumes and networks
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/mediaboxdockercompose/
@@ -2794,6 +3498,25 @@ MediaBoxDockerCompose brings several homelab services together in Docker Compose
 **Why it exists:** Comprehensive GitOps container stack combining WireGuard VPN tunnel networking with 15&#43; homelab automation services.
 
 **Best fit:** Automated, isolated private cloud media server with remote access and encrypted traffic routing.
+
+## Use cases
+
+Docker Compose stack for a home media server: download automation, Plex/Jellyfin, admin tools and a Caddy proxy.
+
+- **Start the media stack** (Homelab admin, Docker host): docker-compose.yml defines about twenty containers that share PUID, PGID, TZ and ROOT from .env; docker-compose up -d starts them all.
+- **Automate media downloads** (Homelab admin, Docker host): Sonarr, Radarr, Lidarr and Bazarr handle TV, movies, music and subtitles, fed by Jackett, Prowlarr or NZBHydra2 and sent to Deluge or NZBGet, all under ${ROOT}.
+- **Watch or request media** (Media viewer, Docker host): Plex (port 32400) and Jellyfin (port 8096) serve the library; Ombi and Jellyseerr take requests and Tautulli reports Plex activity.
+- **Monitor and browse the host** (Homelab admin, Docker host): Netdata (port 19999) shows host metrics, FileBrowser gives web file access and Dashmachine (port 5000) is a start page configured by dashmachine/config.ini.
+- **Publish services via Caddy** (Homelab admin): caddy/Caddyfile maps subdomains such as sonarr.{$DOMAIN} to local ports with logging, rate limiting, an IP allowlist and basic auth taken from caddy/.env.
+- **Add optional extras** (Homelab admin, Docker host): Separate compose files under extra/ add Samba shares, a WireGuard access server and Portainer; whisper/docker-compose.yml runs a Whisper ASR web service on port 9000.
+
+### Scenario: Bring up a TV and movie server on one machine
+
+1. Install Docker and Docker Compose, then clone the repository.
+2. Edit .env: set TZ, PUID, PGID, ROOT (for example /media/MediaBox) and PLEX_CLAIM.
+3. Run docker-compose up -d from the repository root.
+4. Open Prowlarr on port 9696 and Sonarr on port 8989 to connect indexers and the download client.
+5. Point Plex (port 32400) or Jellyfin (port 8096) at the completed folders under ROOT and start watching.
 
 ## Verified technologies
 
@@ -2876,6 +3599,25 @@ Image tags and external services age independently. Review credentials, publishe
 - Repository: https://github.com/ETSim/MistubaVideo
 
 
+## Use cases
+
+Mitsuba 3 tools from ETSim that path-trace OBJ sequences and wear-field recordings into frames, MP4 videos and GIFs.
+
+- **Render an OBJ sequence** (Simulation researcher, Mitsuba 3 and FFmpeg): python main.py multi --folder exports --regex &#34;\d&#43;\.obj&#34; builds a scene XML per matching OBJ, renders it on CPU or CUDA at the chosen spp and resolution, then encodes MP4 and GIF with FFmpeg.
+- **Render several camera views** (Simulation researcher): --view front --view top or --all-views renders each frame from the front, back, left, right, top, bottom or perspective camera defined in src/mitsuba/camera.py, with the view name in the file name.
+- **Denoise and split AOVs** (Simulation researcher, Mitsuba 3 and FFmpeg): python main.py denoise &lt;path&gt; runs the OptiX denoiser from src/mitsuba/denoising.py on rendered images, and python main.py aov &lt;file.exr&gt; extracts the AOV layers of an EXR into separate files.
+- **Make a field video** (Simulation researcher, Mitsuba 3 and FFmpeg): mitsuba-video render &lt;manifest.json&gt; -q paper path-traces rigid bodies at their recorded poses with a field-driven material blend and heatmap, adds a UV atlas panel and a covered-area chart, and encodes an MP4.
+- **Render a wear recording** (Simulation researcher, TextureFriction runs): python main.py wear render simulation_&lt;ts&gt; or tf-render reads a TextureFriction --record folder or .h5 file through the texturefriction source.
+- **Write and check a manifest** (Simulation researcher): Any project can emit a versioned manifest.json with ManifestWriter; mitsuba-video validate checks it against manifest-v1.schema.json, and mitsuba-video fixture creates a small synthetic example.
+
+### Scenario: Render the demo field video
+
+1. Install FFmpeg and Mitsuba 3, then run pip install -e &#34;packages/mitsuba_video[texturefriction]&#34; to get mitsuba-video and tf-render.
+2. Create a synthetic input with mitsuba-video fixture demo.
+3. Check the framing quickly with mitsuba-video preview demo.
+4. Run mitsuba-video render demo -q preview to path-trace the frames and encode the MP4.
+5. For real data, point python main.py wear render at a TextureFriction simulation_&lt;ts&gt; folder with -q paper.
+
 
 
 ---
@@ -2896,6 +3638,25 @@ nova-backtest is an archived fork of a strategy-backtesting framework. The core 
 **Why it exists:** Financial backtesting framework interfacing with centralized crypto exchange APIs for quantitative strategy testing.
 
 **Best fit:** Algorithmic trading strategy validation on historical tick data.
+
+## Use cases
+
+Python library to download crypto exchange candles and backtest a trading strategy with profit and drawdown stats.
+
+- **Download historical candles** (Strategy developer, Exchange REST API): BackTest.get_historical_data in novalabs-backtest/utils/backtest.py calls the exchange client and caches OHLCV data in database/&lt;exchange&gt;/hist_&lt;pair&gt;_&lt;candle&gt;.csv, starting from 2019-01-01.
+- **Pick an exchange client** (Strategy developer, Exchange REST API): clients() in novalabs-backtest/clients/clients.py returns a client for Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda or BTCEX, each following BackTestClientInterface.
+- **Define entry and exit rules** (Strategy developer): A strategy subclasses BackTest and fills build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) and exit_strategy (exit_signal).
+- **Run the backtest** (Strategy developer): run_backtest simulates positions per pair with exchange fees, a maximum number of positions and a maximum holding time, then plots cumulative profit.
+- **Save performance statistics** (Strategy developer): The run writes results/&lt;strategy&gt;_pairs_stats.csv and results/&lt;strategy&gt;_overall_stats.json with returns, drawdown and per-pair figures.
+- **Build indicator features** (Strategy developer): TechnicalIndicatorsCreation in novalabs-backtest/utils/indicators.py adds lags, close ratios and support or resistance levels to a candle DataFrame.
+
+### Scenario: Backtest a MACD strategy on Binance pairs
+
+1. Install the dependencies listed in requirements.txt (the README&#39;s pip command spells the package novelabs-backtest).
+2. Subclass BackTest with exchange=&#34;binance&#34;, candle=&#34;1h&#34;, list_pairs=[&#34;BTCUSDT&#34;, &#34;ETHUSDT&#34;], a start bankroll, leverage and max_pos.
+3. Compute the MACD histogram in build_indicators and set entry_signal, take_profit and stop_loss in entry_strategy.
+4. Call run_backtest(); missing pairs are downloaded into database/binance/ on first use.
+5. Read the profit chart and the JSON and CSV files written under results/.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -2963,6 +3724,25 @@ This novatorem fork builds music-status widgets from provider data. A Flask orch
 **Why it exists:** Real-time dynamic GitHub profile README updater streaming live Spotify listening status.
 
 **Best fit:** Live GitHub profile personalization and webhook integration.
+
+## Use cases
+
+Flask service that renders a Spotify or Last.fm now-playing card as an SVG for a GitHub profile README.
+
+- **Show the now-playing card** (Profile owner, Spotify Web API): The catch-all route in api/orchestrator.py fetches the current track, extracts colours from the album art and returns an image/svg&#43;xml card; vercel.json maps /api/spotify to it.
+- **Customize card colours** (Profile owner): Query parameters background_color, border_color, background_type, show_status and compact are validated in api/config.py before rendering the Jinja2 template chosen in api/templates.json.
+- **Use Last.fm as a source** (Profile owner, Last.fm API): When only LAST_FM_API_KEY and LAST_FM_USERNAME are set, or Spotify auth fails, get_now_playing switches to api/lastfm.py, which can pull album art from Deezer.
+- **Open the current song** (Profile owner, Spotify Web API): GET /redirect sends the visitor to the track URL, or to the upstream repository when nothing is playing.
+- **Renew the refresh token** (Profile owner, Spotify Web API): scripts/spotify_local_auth.py captures the OAuth code on http://127.0.0.1:8000/callback and writes a new refresh token, optionally pushing it to Vercel with --update-vercel.
+- **Preview the card locally** (Profile owner): python start.py creates .venv, installs requirements, starts Flask on port 5000 and opens /preview; docker-compose.yml runs the same app with a /health check.
+
+### Scenario: Add a Spotify card to a GitHub profile
+
+1. Create a Spotify app with the redirect URI http://127.0.0.1:8000/callback.
+2. Copy .env.example to .env and fill SPOTIFY_CLIENT_ID and SPOTIFY_SECRET_ID.
+3. Run python scripts/spotify_local_auth.py to obtain SPOTIFY_REFRESH_TOKEN.
+4. Run python start.py and check the card at http://127.0.0.1:5000/preview.
+5. Deploy to Vercel and embed &lt;deployment&gt;/api/spotify as an image linked to /redirect in the profile README.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3034,6 +3814,25 @@ NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application 
 
 **Best fit:** Detailed gameplay analytics and playtime tracking for Switch homebrew.
 
+## Use cases
+
+Nintendo Switch homebrew that shows detailed per-user play time, sessions and launches, maintained for HOS 22.
+
+- **View all-time playtime** (Switch player, Switch PDM service): The All Activity screen lists each game&#39;s total playtime, launch count, first and last launch, sorted by the chosen criterion; totals come from the system PDM statistics.
+- **Graph recent play sessions** (Switch player, Switch PDM service): PlayData::readPlayDataFromPdm pages through pdmqryQueryPlayEvent; RecentActivity and Details draw a graph by day, month or year and list each play session.
+- **Export or import play data** (Switch player): Settings runs ExportJob to write /switch/NX-Activity-Log/export.json and ImportJob to read import.json into importedData.json, matched by username.
+- **Customize the theme** (Switch player): CustomTheme and ColourPicker let the player change every colour; a PNG at /config/NX-Activity-Log/background.png sets a custom background.
+- **Update from inside the app** (Switch player, GitHub Releases): UpdateUtils.cpp queries the GitHub API for the latest antoinebou12/NX-Activity-Log release and downloads its first asset with curl.
+- **Replace the User Page** (Switch player): Forwarder/ is a modified nx-hbloader that opens the app from the User Page; the README warns this mode is unreliable on HOS 21 and later.
+
+### Scenario: Move play history to a new Switch
+
+1. Copy NX-Activity-Log.nro from the Releases page to /switch/NX-Activity-Log/ and launch it from the homebrew menu.
+2. Pick a user, then open Settings and choose Export to write export.json.
+3. Copy export.json to the other console&#39;s SD card as /switch/NX-Activity-Log/import.json.
+4. Run Settings, Import there and restart the app.
+5. Check that imported sessions appear in Recent Activity and that All Activity shows the merged totals.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -3101,6 +3900,25 @@ nxsand is a falling-sand simulation for Switch with a desktop development target
 **Why it exists:** Cellular automaton sand physics simulation engine running on libnx with touch and controller input.
 
 **Best fit:** Interactive physics simulations on handheld console touchscreens.
+
+## Use cases
+
+Falling-sand sandbox for Nintendo Switch homebrew, simulated on the GPU with OpenGL ES 3.0, with desktop builds.
+
+- **Paint materials on the grid** (Player, GPU (OpenGL ES 3.0)): Touch, Joy-Con or mouse input becomes brush strokes (source/sim/brush_stroke.cpp) written into the grid by shaders/paint.frag; the X button opens the material ring (source/ui/material_wheel.cpp).
+- **Watch materials react** (Player, GPU (OpenGL ES 3.0)): A Margolus cellular automaton runs on ping-pong GL_R8UI textures in shaders/sim.frag or sim.comp, with reactions such as lava plus water giving stone in shaders/sim_common.glsl and the sim_rules_body.glsl it includes.
+- **Save and load worlds** (Player): source/save/save.cpp stores up to three slots as JSON with base64 grids in sdmc:/switch/nxsand/ (./nxsand_save/ on desktop); Y or F5 quick-saves.
+- **Tune performance settings** (Player, GPU (OpenGL ES 3.0)): settings.json and the Engine menu set sim resolution, substeps, active tiles, fragment or compute backend and the Battery Saver, Balanced or Quality presets.
+- **Import a Powder Toy stamp** (Homebrew developer): nx::importTptStampJson in source/save/tpt_stamp_import.cpp maps The Powder Toy element IDs to NXSand materials and scales the stamp into the grid.
+- **Build and test the NRO** (Homebrew developer): make builds build/NXSand.nro with devkitPro; make desktop and make test build the SDL2 desktop version and the CPU reference tests in tests/; CI does the same in .github/workflows/native-nro.yml.
+
+### Scenario: Build NXSand and play a first world
+
+1. Install devkitPro, then run dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz.
+2. Run make at the repository root to get build/NXSand.nro.
+3. Copy it to sdmc:/switch/NXSand.nro and launch it from the Homebrew Menu.
+4. Press X to pick Lava, paint with A, then switch to Water and pour it on the lava to see stone and smoke form.
+5. Press Y to quick-save the world into sdmc:/switch/nxsand/.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3211,6 +4029,24 @@ This archived pan-tilt controller connects a desktop interface to a serial-contr
 
 **Best fit:** Automated camera positioning for computer vision experiments.
 
+## Use cases
+
+Python 2 desktop and command-line tools that drive a PTU-46-17.5 pan-tilt unit over a serial port.
+
+- **Initialize the unit on start** (PTU-46-17.5 unit): On start, pantiltcontroller.py opens COM3 at 9600 baud and sends speed, acceleration, reset, home position and pan and tilt limit commands (pxu1500, pnu-1000, tnu-850, txu585).
+- **Move to a pan/tilt position** (Lab operator, PTU-46-17.5 unit): The PyQt5 window in pantiltcontroller.py has Pan and Tilt fields; OK sends pp&lt;value&gt; and tp&lt;value&gt; and shows the unit&#39;s reply in a log box.
+- **Jog with arrows or buttons** (Lab operator, PTU-46-17.5 unit): The Control menu (Ctrl&#43;O) opens a dialog whose arrow buttons, and the keyboard arrow keys, move pan or tilt by 5 positions per press.
+- **Return to home position** (Lab operator, PTU-46-17.5 unit): The Reset button sends pp0 and tp0 and sets the stored positions back to zero.
+- **Send raw serial commands** (Lab operator, PTU-46-17.5 unit): PTC-command.py is a prompt that forwards each typed line (for example r, pnu 1000, pp0) to the unit and prints the reply until exit is typed.
+
+### Scenario: Point the pan-tilt unit at a target
+
+1. Connect the PTU-46-17.5 to COM3 (the port is hard-coded) on a Windows PC with Python 2.7, pyserial, PyQt5 and pywin32.
+2. Run python pantiltcontroller.py; the script sets limits and moves the unit to 0,0.
+3. Type 500 in Pan and -200 in Tilt, then click OK.
+4. Open Control, Control and fine-tune with the arrow keys in steps of 5.
+5. Click Reset to bring the unit back to home.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -3260,6 +4096,37 @@ Do not import or run this script against attached hardware without reviewing sta
 
 ---
 
+# PolyFEMBlenderPlugin: PolyFEM simulations from a Blender scene
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/polyfemblenderplugin/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/polyfemblenderplugin/index.md
+
+- Repository: https://github.com/ETSim/PolyFEMBlenderPlugin
+
+
+## Use cases
+
+Blender add-on that turns a scene into a PolyFEM JSON setup and runs the simulation from Blender.
+
+- **Assign FEM materials** (Simulation user): The Apply Material operator stores Young&#39;s modulus, Poisson&#39;s ratio and density on the selected objects from a preset list such as Steel or Aluminum.
+- **Create PolyFEM JSON** (Simulation user): Create PolyFEM JSON exports each mesh and writes geometry, materials, contact, time, boundary-condition, solver and output blocks to one JSON file.
+- **Tetrahedralize with TetWild** (Simulation user, Docker images): With the MSH export type, the object is written as STL and converted to .msh by the yixinhu/tetwild image or a local TetWild executable.
+- **Run the simulation** (Simulation user, Docker images, PolyFEM solver): Run PolyFem Simulation calls docker run antoinebou12/polyfem --json with the project folder mounted on /data, or a local PolyFEM executable, in a background thread.
+- **Import results as animation** (Simulation user, PolyFEM solver): Render Animation reads step_*.vtu files, adds the solution displacement, converts each step to OBJ with meshio and keyframes its visibility.
+- **Pull solver images** (Simulation user, Docker images): The Pull Docker Image buttons check that Docker is installed and run docker pull for the configured TetWild or PolyFEM image.
+
+### Scenario: Simulate a contact scene and play it back in Blender
+
+1. Install the zipped polyfem folder through Edit &gt; Preferences &gt; Add-ons and enable PolyFem.
+2. In Properties &gt; Physics &gt; PolyFEM, choose Docker execution and pull antoinebou12/polyfem and yixinhu/tetwild.
+3. Select the meshes, apply a material preset and set contact, time step and end time.
+4. Click Create JSON Configuration to write the meshes and the JSON file to the export path.
+5. Click Run PolyFem Simulation, then Render Animation to import the step_*.vtu results as keyframed meshes.
+
+
+
+---
+
 # RawAnalyser: From raw sensor values to diagnostic plots
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/rawanalyser/
@@ -3275,6 +4142,25 @@ RawAnalyser is an older Python image-analysis experiment for clipping, channel v
 **Why it exists:** Sensor pixel analysis tool computing clipping histograms and dynamic range for RAW camera frames.
 
 **Best fit:** Camera sensor benchmarking and exposure verification in computational photography.
+
+## Use cases
+
+Python 2 scripts for camera-tuning engineers to check clipping, gamma and vignetting in raw Bayer sensor captures.
+
+- **Mark ROI and gray patches** (Image quality engineer): GUI.py (PyQt5) opens a .raw or .tiff file, converts raw to TIFF for display and saves the clicked region of interest and gray patch corners to json/points.json.
+- **Analyse each new raw capture** (Image quality engineer, Camera capture folder): RawAnalyser.py uses a watchdog observer on the given folder; every new 1928 x 1088 16-bit raw file is split into Bayer channels, saved as TIFF and analysed.
+- **Detect black or white clipping** (Image quality engineer): clipping() prints per-channel minimum and maximum 10-bit levels and flags CLIPPING BLACK or white in colour when values reach the sensor limits.
+- **Measure gamma and vignetting** (Image quality engineer): gamma() samples the gray patches from points.json; vignette() subtracts the black level (--bl, default 1024), divides by a stored .npy vignette map and writes a corrected TIFF.
+- **Inspect one pixel&#39;s value** (Image quality engineer): RawPixel.py prints the value and Bayer colour of the pixel at x, y for a given width, height and bit depth, and dumps channels to array/*.txt.
+- **Convert raw files to TIFF** (Image quality engineer, Camera capture folder): Raw2Tiff.py writes a TIFF from one raw file; 20MPto5MP.py bins 20 MP OV20880 frames by summing 2 x 2 same-colour pixels into a 5 MP image.
+
+### Scenario: Check an OV2740 colour-checker capture
+
+1. Install Python 2.7 and the packages in requirements.txt, plus tifffile.
+2. Run python GUI.py, open a capture from raw/ and click the ROI and gray patches to update json/points.json.
+3. Start python RawAnalyser.py raw json/points.json --func basic --bl 1024 to watch the folder.
+4. Copy a new .raw capture into raw/; the script prints clipping warnings and gamma figures and writes a TIFF under tiff/.
+5. Check a suspicious spot with python RawPixel.py &lt;file&gt; x y --width 1928 --height 1088.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3363,6 +4249,24 @@ retroarch-web-games is an archived container setup around a web build of RetroAr
 
 **Best fit:** Zero-friction retro gaming via Docker on desktop, mobile, or smart TVs.
 
+## Use cases
+
+Docker image that self-hosts the RetroArch web player behind nginx, with game folders fetched at build time.
+
+- **Install RetroArch web build** (Self-hoster, Online file sources): setup_retroarch.sh downloads the previous day&#39;s emscripten build from buildbot.libretro.com, extracts it into /var/www/html and unpacks the frontend bundle.
+- **Download game sets** (Self-hoster, Online file sources): InternetArchive.py (typer, rich, requests) scrapes the listed archive pages for .zip and .7z files in parallel and saves them under downloads/&lt;system name&gt;.
+- **Sort games by first letter** (Self-hoster): sort_mkdir.sh moves each file into a 0-9 or A-Z subfolder; the Dockerfile runs it for every Nintendo system folder.
+- **Run the container** (Self-hoster): docker-compose up -d builds the image and maps port 8080 to nginx; entrypoint.sh regenerates the .index-xhr file lists before starting nginx.
+- **Play in the browser** (Browser player): The player opens http://localhost:8080, picks a core and loads a game in the RetroArch Web Player page shipped with the nightly build (the repository keeps a copy as index.html, not copied by the Dockerfile).
+- **Publish multi-arch images** (Self-hoster): .github/workflows/retroarch-web-games.yaml builds with Docker Buildx for amd64, arm64 and arm/v7 and pushes antoinebou12/retroarch-web-games to Docker Hub.
+
+### Scenario: Host a retro game player on a home server
+
+1. Clone the repository and check there is room for an image of about 10 GB, as the README warns.
+2. Run docker-compose up -d; the build runs setup_retroarch.sh, InternetArchive.py and sort_mkdir.sh.
+3. When the container starts, entrypoint.sh indexes the cores and bundle, then nginx serves the site.
+4. Open http://localhost:8080 and load a game from the sorted downloads folders.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -3422,6 +4326,36 @@ This archived setup needs dependency and browser review before reuse. Only use g
 
 ---
 
+# Salary: exploring Canadian salary guides and wage data
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/salary/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/salary/index.md
+
+- Repository: https://github.com/AlgoETS/Salary
+
+
+## Use cases
+
+Python scripts and notebooks that extract Canadian salary guides and wage tables to compare jobs by region.
+
+- **Extract salary guide PDFs** (Salary analyst): src/pdf_salary_scraper_2023_1.py and src/pdf_salary_scraper_2024_1.py read a guide in data/pdf with PyPDF2, track province and region, parse entry, mid and senior ranges per job and save a pickle in data/pickle.
+- **Load 2012–2022 wage tables** (Salary analyst): src/wages_in_time.py reads data/csv/wage_2012.csv to wage_2022.csv with Polars, harmonizes column names, caches data/pickle/wages.pkl and prints the top-paid jobs per year and engineering jobs per province.
+- **Compare jobs by region** (Salary analyst): sandbox/salary_exploration_2023.ipynb and salary_exploration_2024.ipynb rank jobs by maximum salary, filter engineering and Québec jobs, compare one job across regions and provinces, and find the widest gaps.
+- **Scrape Stack Overflow pay** (Salary analyst, Stack Overflow survey): src/stackoverflow_scraper.py fetches the 2022 Stack Overflow survey salary page with httpx, parses the table with BeautifulSoup and pickles it to data/pickle/stackoverflow_salary_data.pkl.
+- **Query salary data over HTTP** (API client): api/app.py is a FastAPI app whose /load_pickle/2023 and /salary/2024 routes return the pickled guides as JSON; interactive documentation is at /docs.
+
+### Scenario: Compare cloud architect pay across Québec regions
+
+1. Run pip install -r requirements.txt from the repository root.
+2. Place 2023_salary_guide.pdf in data/pdf and run python src/pdf_salary_scraper_2023_1.py.
+3. Check that data/pickle/salary_guide_2023.pkl was written.
+4. Start jupyter notebook and open sandbox/salary_exploration_2023.ipynb, which splits each range and computes entry, mid and senior means.
+5. Call compare_job_province(&#39;cloud architect&#39;, &#39;québec&#39;) to rank Québec regions by mean mid-level salary.
+
+
+
+---
+
 # Serilog.Sinks.SentrySDK: Adapting log events to Sentry
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/
@@ -3438,6 +4372,25 @@ Serilog.Sinks.SentrySDK connects a .NET logging pipeline to the Sentry SDK. Its 
 **Why it exists:** Production .NET 6&#43; Serilog sink bridging structured logging and Sentry error telemetry with zero allocation overhead.
 
 **Best fit:** Enterprise .NET microservice error observability and distributed trace correlation.
+
+## Use cases
+
+NuGet Serilog sink for .NET developers that sends logs, exceptions and traces to Sentry, with ASP.NET Core context.
+
+- **Configure WriteTo.Sentry** (.NET developer): SentrySinkExtensions.cs adds WriteTo.Sentry with a DSN and options such as environment, release, sampleRate, tags and enableTracing, usable from code or the Serilog section of appsettings.json.
+- **Send logs and exceptions** (.NET developer, Sentry): SentrySink.Emit maps the Serilog level, copies properties into scope extras and tags, adds breadcrumbs and calls CaptureMessage or CaptureException.
+- **Trace each log as a span** (.NET developer, Sentry): With enableTracing on, Emit starts a transaction named from the message template and a child span through ITransactionService, then finishes both.
+- **Attach HTTP request context** (.NET developer, Sentry): The AspNetCore package adds app.AddSentryContext() middleware and HttpContextDestructingPolicy so events carry the user, headers and request data.
+- **Scrub data before sending** (.NET developer): An optional beforeSend callback is chained after the sink&#39;s own handling; the SentryWeb demo also rewrites messages with a Serilog enricher (Scrubbing/DivisionByZeroFilter.cs).
+- **Publish six NuGet packages** (NuGet.org): .github/workflows/CI.yml packs the main, .6 and .10 package ids for net6.0 and net10.0 and pushes them to NuGet.org when a GitHub release is published.
+
+### Scenario: Report errors from an ASP.NET Core app to Sentry
+
+1. Run dotnet add package Serilog.Sinks.SentrySDK and dotnet add package Serilog.Sinks.SentrySDK.AspNetCore.
+2. Put the project DSN under Serilog, WriteTo, Sentry, Args in appsettings.json.
+3. Build the logger with ReadFrom.Configuration, Destructure.With&lt;HttpContextDestructingPolicy&gt;() and the CheckIfCaptured filter.
+4. Call app.AddSentryContext() in Startup.Configure.
+5. Trigger an error, for example with dotnet run --project demos/SentryWeb/SentryWeb.csproj, and find the event with its request data in Sentry.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3528,6 +4481,68 @@ Request context can contain personal data. Review enrichment and filtering befor
 
 ---
 
+# SimilityVectorEmbedding: movie similarity with vector search
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/index.md
+
+- Repository: https://github.com/AlgoETS/SimilityVectorEmbedding
+
+
+## Use cases
+
+Jupyter notebooks that embed a movie catalog and find similar films with pgvector, Qdrant, BM25, Neo4j and Ollama.
+
+- **Embed the movie catalog** (Learner, Database container): postgres/1.create_table.ipynb builds one text per film from movies.json and encodes it with BART, GTE, MiniLM-L12, RoBERTa and e5-large, storing one vector column per model.
+- **Find films like a title** (Learner, Database container): postgres/0.simple.ipynb resolves the typed title with pg_trgm, then ranks the catalog by cosine similarity for one title, several titles or rated titles.
+- **Search from a Gradio page** (Learner, Database container): The last cells of postgres/0.simple.ipynb launch a Gradio interface with Single, Multiple and Ratings modes that shows posters, years and similarity scores.
+- **Search with Qdrant** (Learner, Database container): qdrant/0.simple.ipynb upserts 384-dimension MiniLM vectors into a cosine collection, searches it and projects the vectors with t-SNE and k-means.
+- **Ask a local LLM** (Learner, Database container, Local LLM (Ollama)): postgres/3.LLMS.ipynb embeds a question, runs a pgvector cosine query and passes the schema to a LangChain chain backed by Ollama llama2:13b-chat.
+- **Compare BM25 and graph search** (Learner, Database container): bm25/0.bm25.ipynb ranks films by keywords with rank_bm25, and neo4j/1.create_db.ipynb scores films by shared genres, directors, writers and actors.
+
+### Scenario: Find films like The Matrix
+
+1. Start PostgreSQL with pgvector and pg_trgm: cd postgres, then docker-compose up -d.
+2. Open postgres/0.simple.ipynb with jupyter notebook and run the pip install and import cells.
+3. Run main() to load movies.json, embed each film with all-MiniLM-L6-v2 and insert it into the movies table.
+4. Call find_similar_movies(conn, cur, &#34;The Matrix&#34;) to get the closest titles above a 0.5 cosine threshold.
+5. Plot the result with plot_similar_movies or try the same search in the Gradio interface.
+
+
+
+---
+
+# Simulateur: a Django stock-market simulation game
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/simulateur/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md
+
+- Repository: https://github.com/AlgoETS/Simulateur
+
+
+## Use cases
+
+Django stock-market game where admins run scripted scenarios and teams trade simulated stocks live.
+
+- **Build a scenario** (Simulation admin): The admin dashboard walks through five form steps (settings, companies and stocks, teams, events, review) backed by the scenario and simulation-manager APIs.
+- **Run a market simulation** (Simulation admin): manage.py start_simulation sets a simulation to ongoing; SimulationManager then writes OHLC candles from the chosen noise model (Brownian, Perlin, random walk, fBm, Monte Carlo) at each time step.
+- **Generate content with AI** (Simulation admin, Ollama LLM): simulation/api/ai_llm.py exposes create-news-ai, create-event-ai, create-trigger-ai, create-company-stock-ai and create-scenario-ai, which prompt an Ollama model (OLLAMA_MODEL, llama3 by default).
+- **Join a team** (Player): A team member generates a join link from the team dashboard (team/generate-join-link/) and other players join with it; the same page shows members and leaderboards.
+- **Buy and sell stocks** (Player): From /dashboard/, the order form calls POST /api/stock/buy/ or /api/stock/sell/, which check the balance against the latest price, record an order and update holdings.
+- **Follow live prices** (Player): The game dashboard opens ws/simulation/&lt;id&gt;/ and Django Channels pushes stock updates, news, events and triggers from SimulationConsumer.
+
+### Scenario: Run the seeded demo simulation
+
+1. In simulateur/, copy env-default to .env and run python3 run.py --install to install packages, migrate, create admin/admin and seed the CSV data.
+2. Start the ASGI server and simulation 1 with python3 run.py --start-simulation 1 (Daphne on port 8000).
+3. Sign in as admin and open /dashboard/admin to review the scenario, settings and noise function.
+4. Open /dashboard/game: candles arrive over the ws/simulation/ WebSocket at each timer step.
+5. From /dashboard/, choose the simulation and a stock and press Buy, which calls POST /api/stock/buy/; then check holdings and leaderboards.
+
+
+
+---
+
 # sm64coopdx-switch-N3DS: Keeping a port behind platform interfaces
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/
@@ -3543,6 +4558,25 @@ This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co
 **Why it exists:** Low-level C systems port optimizing multi-threaded networking and memory layout for embedded handheld consoles.
 
 **Best fit:** Co-op multiplayer emulation and custom embedded gaming on Switch &amp; N3DS.
+
+## Use cases
+
+Unofficial Nintendo Switch homebrew port of sm64coopdx online co-op, with an early New 3DS target; you supply the ROM.
+
+- **Install with your own ROM** (Switch player): docs/SWITCH_INSTALL.md: extract the release ZIP to the SD card root, add a US ROM as switch/sm64coopdx/baserom.us.z64 matching sm64.us.sha1, and launch sm64coopdx.nro in full application mode.
+- **Join a public CoopNet lobby** (Switch player, CoopNet lobby service): The Switch build sends its genuine NRO fingerprint and lists lobbies in the sm64coop-android namespace, as described in docs/switch.md; the client code is under src/pc/network/coopnet.
+- **Play over local wireless** (Switch player): src/pc/network/socket/socket_ldn.c adds a local wireless transport and src/pc/djui/djui_panel_ldn_browser.c lists nearby sessions.
+- **Enter a lobby password** (Switch player, CoopNet lobby service): Private-lobby passwords use the in-game keypad in src/pc/djui/djui_panel_switch_text_entry.c instead of the native Switch keyboard.
+- **Build and package the NRO** (Port developer): In the devkitpro/devkita64 Docker image, make -f Makefile.switch-sdmc SWITCH_COOPNET=1 switch-nro builds the NRO and switch-dist checks the header and hashes and writes the release ZIP; build-switch-game.yml runs ROM-free portability gates in CI.
+- **Build the New 3DS target** (Port developer): Makefile.new3ds builds a platform shell and Makefile.new3ds-game the full engine with a Citro3D renderer and NDSP audio; docs/new3ds-port.md says gameplay on hardware is not verified yet.
+
+### Scenario: Play co-op online from a Switch
+
+1. Extract the sm64coopdx Switch release ZIP to the SD card root, creating switch/sm64coopdx/.
+2. Copy your own US ROM to switch/sm64coopdx/baserom.us.z64.
+3. Hold R while starting a game to open the Homebrew Menu in full application mode, then launch SM64CoopDX.
+4. Open the join menu, pick a public CoopNet lobby and type its password on the in-game keypad if it is private.
+5. If something fails, read startup.log, coopnet.log and exception.log under switch/sm64coopdx/logs/.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3607,6 +4641,36 @@ Full-game testing requires the user’s own legally obtained game assets and act
 
 ---
 
+# Sport-Arbitrage: a sports-betting arbitrage calculator
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/index.md
+
+- Repository: https://github.com/AlgoETS/Sport-Arbitrage
+
+
+## Use cases
+
+Browser calculator that checks two bookmakers&#39; odds for a sports-betting arbitrage and splits the stake.
+
+- **Pick 2 or 3 outcomes** (Bettor): The Number of Odds selector in index.html calls toggleOddsFields() in script.js, which shows the two Draw fields only for three outcomes.
+- **Enter odds from two sites** (Bettor): The form takes Win and Lost odds for Site 1 and Site 2, optional Draw odds, and the total investment.
+- **Detect an arbitrage** (Bettor): calculateArbitrage() tests fixed cross-site pairings; hasArbitrageOpportunity() reports one when the sum of inverse odds is below 1.
+- **Split the stake** (Bettor): For each opportunity, script.js prints the arbitrage percentage, optimal stakes, returns per outcome and guaranteed profit.
+- **Check the math in Python** (Bettor): arbitrage.ipynb implements the same functions in Python with hard-coded sample odds for the two-outcome case.
+
+### Scenario: Test the notebook&#39;s sample odds
+
+1. Open index.html in a browser and keep Number of Odds at 2.
+2. Enter Win Site 1 = 1.3, Lost Site 1 = 3.93, Win Site 2 = 1.42 and Lost Site 2 = 2.9.
+3. Enter a Total Investment of 100 and click Calculate.
+4. Read the result: only the lost-site1 and win-site2 pair qualifies, with stakes of about 26.54 and 73.46.
+5. Compare with the guaranteed profit line (about 4.31) and rerun arbitrage.ipynb to check the same numbers.
+
+
+
+---
+
 # SpringBootFilesUploader: File bytes and metadata on separate paths
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/
@@ -3623,6 +4687,24 @@ SpringBootFilesUploader is a Kotlin and Spring backend with a file-upload path t
 **Why it exists:** Spring Boot microservice written in Kotlin with streaming multipart file upload and integrity validation.
 
 **Best fit:** High-throughput file ingestion and storage backend.
+
+## Use cases
+
+Kotlin Spring Boot API that stores uploaded files in MinIO/S3 behind JWT roles, with Docker and SSH admin endpoints.
+
+- **Sign up and get a JWT** (API user, MinIO S3 and MongoDB): POST /auth/signup saves a user with hashed password and roles in MongoDB; POST /auth/signin returns a JwtResponse with the token and roles (AuthController.kt, JwtUtils.kt).
+- **Upload a document** (Moderator or admin, MinIO S3 and MongoDB): POST /files/documents (moderator or admin) checks the extension against DOC_FILE_EXTENSION_REGEX, writes the bytes to the S3 bucket under files/&lt;uuid&gt;/&lt;name&gt; and records metadata in MongoDB.
+- **Download a stored file** (API user, MinIO S3 and MongoDB): GET /files/{id} looks up the file record in MongoDB, reads the object from S3 and returns it as an attachment with its content type and size.
+- **Manage Docker containers** (Moderator or admin): The /containers routes list, create, start, stop, restart and rename containers through docker-java against the Docker host set in application.yml (tcp://127.0.0.1:2375).
+- **Run a remote SSH command** (Moderator or admin): POST /ssh/cli (admin only) opens an Apache SSHD session with the host, port and credentials in the request body and returns the command output.
+
+### Scenario: Store a PDF and fetch it back
+
+1. Start MongoDB on localhost:27017 and MinIO on localhost:9000, as configured in application.yml, then run ./gradlew bootRun.
+2. POST /auth/signup with a username, email, password and the role &#34;mod&#34;.
+3. POST /auth/signin and copy the JWT from the response.
+4. POST /files/documents with the PDF in the multipart field &#34;document&#34; and the Bearer token; the response returns fileId and fileName.
+5. GET /files/{fileId} to download the PDF, or browse the routes in Swagger UI at /api-docs.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3694,6 +4776,25 @@ switch-wifi is a Switch network dashboard with a Borealis interface. It separate
 **Why it exists:** Native C&#43;&#43; network configuration tool interfacing directly with Switch horizon OS wlan services.
 
 **Best fit:** Fast headless Wi-Fi network credential provisioning on Switch.
+
+## Use cases
+
+Nintendo Switch homebrew app that shows Wi-Fi state, benchmarks the HTTPS path and reads Bluetooth status.
+
+- **Check the Wi-Fi link** (Switch owner, Horizon NIFM / BTM): The Dashboard tab reads link type, SSID, IPv4, gateway, DNS and 0-3 signal bars from NIFM through NetworkService, with RSSI from legacy wlan:inf only where firmware exposes it.
+- **Benchmark the connection** (Switch owner, HTTPS speed server): SpeedTestEngine runs 8 HTTPS latency probes, then a 25 MiB download and a 10 MiB zero-filled upload with libcurl against speed.cloudflare.com by default, reporting median, P95 and jitter.
+- **Review saved networks** (Switch owner, Horizon NIFM / BTM): The Networks tab lists basic saved-profile metadata and Horizon&#39;s allowed channels, with channel-overlap math from core/metrics; credentials are never read for display.
+- **Scan Bluetooth state** (Switch owner, Horizon NIFM / BTM): BluetoothService reads BTM radio state and device counts, and runs a bounded passive BLE scan that returns at most ten unique addresses.
+- **Export a diagnostics report** (Switch owner): The About tab writes sdmc:/switch-wifi-diagnostics.txt with the app version, compatibility target, network details and Bluetooth counts, without credentials.
+
+### Scenario: Compare two router channels on a Switch
+
+1. Build build-switch/switch-wifi.nro in the devkitpro/devkita64 container and check it with python3 scripts/verify_nro.py.
+2. Copy the NRO to the SD card and launch it from the homebrew menu.
+3. Open the Dashboard tab to confirm the Switch is on Wi-Fi and note the signal bars.
+4. Run the Benchmark tab and read median latency, P95, jitter, download and upload speed.
+5. Change the router channel, run the benchmark again and compare the history graphs.
+6. Export sdmc:/switch-wifi-diagnostics.txt from the About tab to keep the result.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3798,6 +4899,24 @@ TCH099 is a teaching-oriented web project that combines static frontend pages wi
 **Why it exists:** Isolated multi-container environment with bridge networking, MariaDB persistence, and web interfaces.
 
 **Best fit:** Full-stack containerized database application reference.
+
+## Use cases
+
+PHP and MariaDB demo web app with an Android client, used to teach routing, sessions and Azure deployment.
+
+- **Create an account** (Web or mobile user, MariaDB database): The signup page or SignupActivity on Android posts to /api/signup; api/signup.php calls registerUser(), which inserts the account into the Clients table created by db/1create.sql.
+- **Log in with a session** (Web or mobile user, MariaDB database): login.html and LoginActivity post the username and password to /api/login; api/login.php checks them with loginUser() and opens a PHP session, and /api/logout closes it.
+- **Show a random image** (Web or mobile user): random-image.html calls /api/random-image, which returns a cat picture URL from TheCatAPI or a thispersondoesnotexist.com URL depending on imageType.
+- **Get a greeting by language** (Web or mobile user): /api/hello-world/$langue answers with a greeting in French, English, Spanish or German, as a minimal API example.
+- **List clients as admin** (Administrator, MariaDB database): The /admin route serves admin.html only when isAdmin() is true; the page loads /api/clients, which reads the Clients table for a session whose role is admin.
+
+### Scenario: Run the demo locally and reach the admin page
+
+1. Fill the DB_HOST and MYSQL_* variables listed in the README, then run docker-compose up -d --build.
+2. Load the schema and seed data with python3 db/db.py, or import db/1create.sql, 2contraines.sql and 3insert.sql in phpMyAdmin on port 8060.
+3. Open http://localhost:8001/signup, create an account, then log in at /login.
+4. With an admin account, open /admin to see the Clients table loaded from /api/clients.
+5. Push to main to let .github/workflows/main_tch099antoine.yml zip the app and deploy it to the Azure Web App.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -3929,6 +5048,37 @@ A route-level demonstration is not a full security review. Session handling, dat
 
 ---
 
+# TradingViewBuilder: Pine Script indicators and strategies
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/tradingviewbuilder/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/tradingviewbuilder/index.md
+
+- Repository: https://github.com/AlgoETS/TradingViewBuilder
+
+
+## Use cases
+
+Pine Script indicators and strategies (EMA, MACD, RSI, Bollinger, RVI …) to paste into TradingView.
+
+- **Plot an indicator** (Trader, TradingView): Paste a .indicator file such as rsi.indicator or macd.indicator into the Pine Editor and add it to the chart to plot the series and its levels.
+- **Test a crossover strategy** (Trader, TradingView): ema.strategy, mac.strategy and macd.strategy enter on a fast/slow or MACD/signal crossover and reverse or close on the opposite cross.
+- **Trade band reversals** (Trader, TradingView): bollingerbands.strategy and linearregression.strategy go long when the close crosses above the lower band and short when it crosses below the upper band.
+- **Trade oscillator signals** (Trader, TradingView): rsi.strategy trades RSI crosses of the 30 and 70 levels, and rvi.strategy trades crosses of the Relative Vigor Index and its signal line.
+- **Tune script inputs** (Trader, TradingView): Each script declares input() values (lengths, multipliers, levels) that the README says to change from the gear icon on the chart.
+- **Sketch a momentum portfolio** (Trader): TimeSeriesMomentumEffect.strategy outlines a 12-month time-series momentum on 60 futures with volatility targeting and a leverage cap; it is a draft, not valid Pine.
+
+### Scenario: Backtest the RSI strategy on a chart
+
+1. Log in to TradingView, open a chart and click the Pine Editor tab.
+2. Copy the contents of rsi.strategy and paste it into the editor.
+3. Click Add to Chart: Long entries appear when RSI(14) crosses above 30 and Short entries when it crosses below 70.
+4. Open the gear icon to change RSI Length, Overbought Level or Oversold Level and compare the trades.
+5. Add rsi.indicator in a separate pane to see the oscillator with the same levels.
+
+
+
+---
+
 # TrueMapData: height maps for metrology and graphics
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/truemapdata/
@@ -3936,6 +5086,25 @@ A route-level demonstration is not a full security review. Session handling, dat
 
 - Repository: https://github.com/ETSim/TrueMapData
 
+
+## Use cases
+
+Python library and tmd-process CLI that read TrueMap and GelSight .tmd height maps for metrology, wear and 3D export.
+
+- **Load a .tmd height map** (Tribology researcher, TrueMap / GelSight): TMD.load(&#34;file.tmd&#34;) in tmd/core/tmd.py decodes v1 or v2 headers and returns height_map as a float32 (height, width) array plus a metadata dict.
+- **Export texture maps** (Tribology researcher): tmd-process maps all|normal|ao|bump|hillshade|displacement writes PNG maps through the generators in tmd/image/maps/, and maps batch processes a whole folder.
+- **Export a 3D mesh** (Tribology researcher): tmd-process mesh generate exports STL, OBJ, PLY, glTF or USD with adaptive or quadtree triangulation; mesh apply puts the maps on a template OBJ/MTL such as tmd/fixtures/templates/plane.
+- **Measure ISO 25178 roughness** (Tribology researcher, Surfalize (ISO 25178)): tmd-process roughness file &lt;path&gt; --quick computes areal parameters through the optional truemapdata[roughness] extra, which installs Surfalize under GPL-3.0.
+- **Track wear across scans** (Tribology researcher, TrueMap / GelSight): tmd-wear (same as tmd-process wear) computes bearing curves, wear-volume series, slip axis and scratch evolution on aligned sequences, using tmd/sequence/wear_analysis.py.
+- **Plot surfaces and profiles** (Tribology researcher): tmd-process visualize basic &lt;file&gt; draws 2D heatmaps, 3D surfaces and X/Y profiles with the matplotlib, plotly, seaborn or optional Polyscope plotters; tribology plot writes a PNG dashboard.
+
+### Scenario: Compare two GelSight captures of a worn sample
+
+1. Install the package with pip install truemapdata, or pip install -e . from a clone.
+2. Run tmd-wear bearing curve examples/gelsight/circle_0mm_100g_heightmap_linear_detrend.tmd --json to get the Abbott curve of the first capture.
+3. Run tmd-wear volume-series with that file and tests/fixtures/gelsight_wear_volume_second_frame.tmd to measure the volume lost between frames.
+4. Export textures with tmd-process maps all &lt;file&gt; -o ./maps_out.
+5. Build a mesh with tmd-process mesh generate &lt;file&gt; --format stl --method adaptive --quality high for a 3D view of the worn area.
 
 
 
@@ -3957,6 +5126,24 @@ uml-mcp exposes diagram tools to MCP clients. The client supplies diagram source
 **Why it exists:** Flagship Model Context Protocol (MCP) server generating PlantUML, Mermaid, and Kroki directly from LLMs (Claude, Cursor, ChatGPT) with zero local dependencies.
 
 **Best fit:** Interactive architectural diagram generation for AI pair programming and automated design docs.
+
+## Use cases
+
+MCP server that lets AI assistants turn diagram source or a description into a rendered diagram inside the chat.
+
+- **Render one diagram** (MCP client (AI chat), Kroki / PlantUML): generate_uml takes a diagram_type, the source code, a format and an optional theme, renders through Kroki (KROKI_SERVER, https://kroki.io by default) and returns the file, its URL and a playground link.
+- **Validate diagram source** (MCP client (AI chat)): validate_uml checks the type, format and basic structure locally without rendering, so the assistant can fix the source before calling a renderer.
+- **Render a batch of diagrams** (MCP client (AI chat), Kroki / PlantUML): generate_uml_batch renders several items with bounded concurrency and stable ordering, up to the batch_max_items setting.
+- **Edit in the chat viewer** (Developer, MCP client (AI chat)): In clients that support MCP Apps, results open in ui://uml-mcp/diagram-viewer, where the user can zoom, edit the source, change theme or format and export SVG, PNG, HTML or PDF.
+- **Self-host the server** (Developer, Kroki / PlantUML): uv tool install uml-mcp &amp;&amp; uml-mcp setup installs it locally; docker-compose.yml starts the server on port 8000 with Kroki containers and an opt-in PlantUML fallback profile, and deploy/helm/uml-mcp targets Kubernetes.
+
+### Scenario: Draw a login sequence from Cursor
+
+1. Add the hosted endpoint https://uml-mcp.vercel.app/mcp to the MCP config, as in .cursor/mcp.json.
+2. Ask the assistant: &#34;Draw a sequence diagram of a user logging in through an API gateway.&#34;
+3. The assistant calls list_diagram_types, writes Mermaid or PlantUML source and checks it with validate_uml.
+4. It calls generate_uml_image; the server renders through Kroki and returns an inline PNG with render and playground links.
+5. Open the playground link or the MCP App viewer to edit the source and export SVG.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -4071,6 +5258,24 @@ uml-skill packages diagram-writing instructions and a small Python helper. It is
 
 **Best fit:** Drop-in diagram generation capabilities for LLM agent frameworks.
 
+## Use cases
+
+Agent skill (diagramming-uml) that guides AI coding agents to write diagram source and render it via uml-mcp or Kroki.
+
+- **Install the skill** (Developer, AI coding agent): The README lists npx @smithery/cli@latest skill add antoinebou12/uml, or copying the folder into .cursor/skills/diagramming-uml/ so the agent loads SKILL.md.
+- **Plan and write diagram code** (AI coding agent): SKILL.md walks the agent through purpose, diagram type, outline and readability rules (about 25 Mermaid or 30 PlantUML nodes, labelled transitions) before it writes source.
+- **Pick a diagram_type** (AI coding agent): references/DIAGRAM-TYPES.md maps intents such as sequence, swimlane, ER or architecture to a Kroki diagram_type and Mermaid or PlantUML form, to be confirmed with uml://types.
+- **Render through uml-mcp** (AI coding agent, uml-mcp / Kroki): When uml-mcp is connected, the skill tells the agent to call validate_uml then generate_uml or generate_uml_batch and to return the Kroki url and playground link.
+- **Build a Kroki URL offline** (Developer, uml-mcp / Kroki): Without MCP, scripts/kroki_url.py compresses the source with zlib, encodes it in base64url and prints a https://kroki.io/&lt;backend&gt;/&lt;format&gt;/... URL.
+
+### Scenario: Get a shareable sequence diagram link
+
+1. Install the skill with npx @smithery/cli@latest skill add antoinebou12/uml.
+2. Ask the agent for a sequence diagram of a checkout flow; the skill activates on the diagram request.
+3. The agent picks sequence or Mermaid sequenceDiagram from the intent table and writes the source.
+4. With uml-mcp connected, it calls validate_uml and generate_uml and replies with the url, the playground link and a copy of the code.
+5. Without uml-mcp, run python scripts/kroki_url.py -t mermaid diagram.mmd to get the link.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |
@@ -4147,6 +5352,129 @@ A URL payload is recoverable text, not encryption. The bundle’s instructions d
 
 ---
 
+# WearBlender: Blender scenes for wear effects
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/wearblender/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearblender/index.md
+
+- Repository: https://github.com/ETSim/WearBlender
+
+
+## Use cases
+
+Blender example scenes for learning how to fake wear with shaders, geometry nodes and painting.
+
+- **Study an edge-wear shader** (Learner or teacher, Blender 4.5): Edge wear.blend builds a worn-edge mask in the shader editor from Bevel and Geometry nodes, a color ramp and a roughness image texture.
+- **Study procedural scratches** (Learner or teacher, Blender 4.5): Scratched.blend combines Voronoi and Noise textures, color ramps and Bump nodes on a Suzanne mesh to draw micro-scratches.
+- **Rotate a normal map** (Learner or teacher, Blender 4.5): NormalRotation.blend rotates the vectors of an image-based normal map with Vector Rotate and Vector Math nodes.
+- **Drive wear from painted data** (Learner or teacher, Blender 4.5): WeightPainting.blend reads a painted attribute through Named Attribute geometry nodes and an Attribute shader node to mix materials.
+- **Offset textures with a flowmap** (Learner or teacher, Blender 4.5): flowmap.blend separates and recombines vector components to push texture coordinates along a flow image.
+- **Project a camera texture** (Learner or teacher, Blender 4.5): SurfaceCameraProjection.blend has a second camera, a CameraProjectionMaterial with an emission shader and a rigid-body world.
+
+### Scenario: Take apart the edge-wear scene
+
+1. Clone the repository and open Edge wear.blend in Blender 4.5 LTS.
+2. Select the plane and open the Shader Editor to follow the Bevel and Geometry nodes into the color ramp.
+3. Change the ramp stops and watch the worn edges grow or shrink in the viewport.
+4. Open Scratched.blend and compare how Voronoi and Noise textures feed the Bump node.
+5. Copy the node setup into your own material as a starting point.
+
+
+
+---
+
+# WearMachine: CAD files for a GelSight wear bench
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/wearmachine/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearmachine/index.md
+
+- Repository: https://github.com/ETSim/WearMachine
+
+
+## Use cases
+
+CAD, print and drawing files for a small sliding-wear bench whose samples are scanned with a GelSight sensor.
+
+- **Print the bench parts** (Bench builder, 3D printer or cutter): Print/ holds STL files for the rail, rail holder, ski, pusher, separator, bearing holder, motor bracket, lead-screw nut, sample holders and weight holders.
+- **Modify parts in CAD** (Bench builder): Raw/ keeps STEP solids of the sample holders, rail parts and most weight holders so dimensions can be changed before printing.
+- **Cut flat parts from DXF** (Bench builder, 3D printer or cutter): Drawing/ provides DXF outlines, including a Base plate that exists only as DXF, plus an Inkscape A4 sheet with 16 holes for a mold.
+- **Set the normal load** (Bench builder): Weight Holder parts come in 10, 20, 50, 100, 200, 500 and 1000 g versions to press the sample with a chosen load.
+- **Hold samples under GelSight** (Bench builder, GelSight scanner): The 30 mm and 40 mm sample holders and a square benchtop holder position worn samples for GelSight capture, as the README describes.
+
+### Scenario: Build the bench and run a loaded sliding test
+
+1. Open Picture/Assembly.png to see the frame with two rails and the crossbar holding five sample holes.
+2. Print Rail, Rail_Holder, Rail_Ski, Pusher, Seperator, Holder Berring, nema17bracket_v2 and t8_nut from Print/Rail/.
+3. Cut the Base plate from Drawing/Rail/Base.dxf and assemble the rail with a NEMA 17 motor and T8 lead screw.
+4. Print the weight holder for the target load, for example Weight Holder 200g.stl, and place it on the sample.
+5. After each sliding distance, move the sample to the 30 mm or 40 mm holder and scan it with the GelSight.
+
+
+
+---
+
+# WearSurfacesDatasets: measured wear-surface sequences
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/wearsurfacesdatasets/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearsurfacesdatasets/index.md
+
+- Repository: https://github.com/ETSim/WearSurfacesDatasets
+
+
+## Use cases
+
+Measured wear-surface map sequences (material, grit, load, distance) with Python tools and a WebGPU viewer.
+
+- **Download the map sequences** (Graphics researcher, Git LFS storage): Parquet leaves and WebDataset shards are Git LFS objects, so git lfs pull replaces the pointers under data/parquet and data/shards.
+- **Scrub a wear timeline** (Graphics researcher, WebGPU browser): docs/serve_local.py serves docs/index.html, which reads Parquet with parquet-wasm and renders the maps with WebGPU while the user scrubs distance or presses Play.
+- **Align a sequence** (Graphics researcher, WebGPU browser): POST /api/align/sequence runs a two-pass SIFT/ECC registration of the normal maps to frame 0, crops the common region and caches PNGs in data/aligned.
+- **Interpolate and extrapolate** (Graphics researcher): python -m alignment.bake adds Catmull-Rom midpoints and FFT plus SLERP extrapolated normal maps after the last measured step.
+- **Pack Parquet and shards** (Graphics researcher): generate_datasets.py parquet and webdataset turn a wear/ tree of PNG maps into nested Parquet leaves and shard-*.tar files.
+- **Extract maps as PNG** (Graphics researcher): read_datasets.py decompress and generate_datasets.py extract write the JPEG bytes stored per map_type back to image files.
+
+### Scenario: Inspect cardboard wear under 200 g
+
+1. Clone the repository, run git lfs pull and pip install -r requirements.txt.
+2. Start python docs/serve_local.py and open http://127.0.0.1:8080/docs/index.html.
+3. Pick Cartboard / Raw / Normal · S60 · 200 g and click Load sequence.
+4. Click Align sequence, then scrub the distance from 0 mm to 2400 mm or press Play.
+5. Run python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack to add interpolated and extrapolated steps.
+
+
+
+---
+
+# WearTrailsExperiments: contact-driven wear trails in the browser
+
+- HTML page: https://antoineboucher.info/CV/blog/projects/notes/weartrailsexperiments/
+- Markdown: https://antoineboucher.info/CV/blog/projects/notes/weartrailsexperiments/index.md
+
+- Repository: https://github.com/ETSim/WearTrailsExperiments
+
+
+## Use cases
+
+Browser experiments that turn rigid-body contact and sliding into wear and flow maps on a ground texture.
+
+- **Slide a body on the ground** (Graphics researcher, Web browser (WebGL), three.js/Ammo.js CDN): docs/index.html loads three.js 0.158 and Ammo.js from a CDN, then main-clean-complete.js drops a cube, sphere, puck, cone, soft cube or custom GLB on a plane with set speed, force and friction.
+- **Compare contact bounding boxes** (Graphics researcher, Web browser (WebGL)): docs/js/bounding-box/ fits the contact patch with AABB, PCA-based OBB, rotating-calipers OMBB, KDOP-8 or a hybrid method.
+- **Inspect contact field views** (Graphics researcher, Web browser (WebGL)): Eight picture-in-picture canvases show top, bottom and intersection views, tangential velocity, instant traction, accumulated sliding distance and local wear.
+- **Accumulate wear on the ground** (Graphics researcher, Web browser (WebGL)): FlowAccumulationManager adds K x traction x velocity into ground buffers and keeps the sliding direction, encoded as HSVA or RGBA.
+- **Blend GLB material variants** (Graphics researcher, Web browser (WebGL)): GroundVariantManager loads a GLB ground with material variants and uses accumulated wear as the blend map and flow direction to rotate textures.
+- **Export wear maps as PNG** (Graphics researcher, Web browser (WebGL)): Export Wear Map and Save Stamps write the ground canvases to PNG files through a download link.
+
+### Scenario: Record the wear trail of a sliding cube
+
+1. Serve the docs/ folder with python -m http.server 8000 and open http://localhost:8000.
+2. Choose Cube (subdiv 10), the OBB (PCA-based) algorithm and a friction value, then click Start.
+3. Use Pause, Step Frame and Apply Angular Impulse to follow the contact patch in the PiP views.
+4. Switch the wear encoding between HSVA (Direction &#43; Wear) and RGBA to read direction and amount.
+5. Click Export Wear Map to save the accumulated ground map as a PNG.
+
+
+
+---
+
 # WordsEnigma: A word game across Redwood and Prisma
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/wordsenigma/
@@ -4163,6 +5491,24 @@ WordsEnigma is a fork with separate Redwood web and API workspaces. Its data mod
 **Why it exists:** TypeScript dictionary validation and game solver engine supporting multiple languages and word lengths.
 
 **Best fit:** Algorithmic word game logic and solver heuristics.
+
+## Use cases
+
+RedwoodJS prototype of a multi-language Wordle, with a French word board, GraphQL API and admin CRUD on PostgreSQL.
+
+- **Guess a five-letter word** (Player): The /phil page (MotDuJourPhilPage/App.tsx) gives six tries on a 6×5 grid, rejects words missing from the French list in data/fr.ts and colours letters and keyboard keys; the solution is hard-coded to GRAND.
+- **Create an account** (Player): /signup, /login, /forgot-password and /reset-password use Redwood dbAuth (api/src/functions/auth.ts) against the User model with hashed password and salt.
+- **Manage words and word banks** (Administrator): Routes under /admin, wrapped in Private roles=&#34;admin&#34;, give scaffolded CRUD pages for users, languages, words, word banks, games, try rows, letters and statistics through the GraphQL SDL services.
+- **Seed French words** (Administrator, Online dictionaries): yarn seed runs scripts/seed.ts, which upserts languages and the fr word bank, then fetches definitions from fr.wiktionary.org or le-dictionnaire.com with the cheerio crawler before inserting words.
+- **Track games and streaks** (Player): The Prisma schema stores each Game with its TryRow and Letter records and a Statistic row per user (games played, won, lost, streak, average); the data model is in place but the play pages do not write to it yet.
+
+### Scenario: Run the French board locally
+
+1. Start PostgreSQL with docker run --name=db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -d postgres, as in the root README.
+2. In WordsEnigma/, run yarn install, then yarn rw prisma migrate dev to apply api/db/migrations.
+3. Run yarn seed to load the languages, the fr word bank and the words.
+4. Start yarn redwood dev and open http://localhost:8910/phil.
+5. Type five letters, press Enter and read the colours until the word is found or the six rows are used.
 
 ## Languages (GitHub Linguist bytes)
 
@@ -4225,6 +5571,24 @@ The manifest targets an older Redwood and Node toolchain. Authorization and game
 
 - Repository: https://github.com/AlgoETS/Workshop1
 
+
+## Use cases
+
+AlgoÉTS French workshop: Jupyter notebooks from Python basics to APIs, pandas, charts and a 20-day EMA on Apple stock.
+
+- **Set up a Python environment** (Workshop participant, Jupyter or Colab): 0.1_python_environement covers virtualenv, Anaconda and Jupyter Lab; 0.2_jupyter_cloud shows DeepNote and Google Colab, and the README links a Colab copy of the first notebook.
+- **Learn Python basics** (Workshop participant, Jupyter or Colab): 1.1_python_basic and 1.2_python_advanced cover variables, control flow, file I/O on monfichier.txt and a small SQLite database (ma_base.db).
+- **Call a web API** (Workshop participant, Jupyter or Colab): 2.1_python_api explains REST verbs, status codes, Bearer tokens, API keys and OAuth, with requests and async httpx examples.
+- **Clean data with pandas** (Workshop participant): 3.1_python_panda walks through DataFrames, filtering with loc and iloc, missing values, merges, pandas_ta indicators and a polars comparison.
+- **Plot an EMA on Apple stock** (Workshop participant, FMP price API): 5.1_project_ema fetches AAPL daily prices from FMP historical-price-full, computes a 20-day EMA with pandas ewm and plots it against the close with Matplotlib; 4.2 adds SMA, RSI and MACD charts.
+
+### Scenario: Follow the workshop up to the EMA project
+
+1. Clone https://github.com/AlgoETS/Workshop1.git and run pip install -r requirements.txt.
+2. Start jupyter notebook, or open 1.0-basic/1.1_python_basic.ipynb in Google Colab from the README link.
+3. Work through 1.0-basic, 2.0-api and 3.0-data in order.
+4. Open 5.0-project/5.1_project_ema.ipynb and replace YOUR_API_KEY with a Financial Modeling Prep key.
+5. Run the cells to load AAPL prices into a DataFrame, add EMA_20 and plot the close price with the 20-day EMA.
 
 
 

@@ -21,6 +21,25 @@ marketwatch est un client Python archivé pour le jeu boursier virtuel de Market
 
 **Cas d’usage:** Développement de bots de trading automatisés et analyse de portefeuilles.
 
+## Cas d’utilisation
+
+Client Python pour le jeu boursier MarketWatch : cours, ordres, portefeuilles et listes (connexion bloquée par un captcha).
+
+- **Obtenir le cours d’une action** (Joueur, Site MarketWatch): MarketWatch.get_price (marketwatch/__init__.py) charge la page de l’action avec httpx et lit le cours avec BeautifulSoup ; le README l’indique fonctionnel avec skip_login=True.
+- **Acheter, vendre ou couvrir** (Joueur, Site MarketWatch): buy, sell, short et cover construisent un ordre et l’envoient à une partie ; MarketWatchGame (marketwatch/game.py) lie ces appels à un identifiant de partie.
+- **Lire portefeuille et ordres** (Joueur, Site MarketWatch): get_portfolio, get_positions, get_pending_orders, get_leaderboard et get_game_settings lisent les pages de la partie ; cancel_order et cancel_all_orders annulent les ordres en attente.
+- **Gérer les listes de suivi** (Joueur, Site MarketWatch): create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist et delete_watchlist_item appellent les points d’accès des listes de suivi.
+- **Servir des cartes HTML** (Joueur, Site MarketWatch): api/app.py est une application FastAPI avec authentification HTTP Basic qui rend des gabarits Jinja2 pour /game, /portfolio, /leaderboard, /card et /watchlist.
+- **Trader sur croisement EMA** (GitHub Actions, Site MarketWatch): .github/workflows/ema-workflow.yml s’exécute toutes les cinq minutes, lit les cours avec yfinance, calcule les EMA 20 et 80 et achète ou vend 100 actions à chaque croisement.
+
+### Scénario : Consulter un cours puis passer un ordre
+
+1. Installer le paquet avec pip install marketwatch.
+2. Créer MarketWatch(email, password, skip_login=True) puis appeler get_price("AAPL").
+3. Pour les appels de partie, se connecter avec de vrais identifiants ; le README prévient que le captcha bloque cette étape.
+4. Une fois connecté, appeler get_games(), puis buy(game_id, "AAPL", 100).
+5. Vérifier le résultat avec get_positions(game_id) et get_pending_orders(game_id).
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

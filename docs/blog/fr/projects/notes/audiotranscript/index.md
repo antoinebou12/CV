@@ -21,6 +21,23 @@ AudioTranscript découpe un enregistrement WAV autour des silences, transmet les
 
 **Cas d’usage:** Transcription automatique par lots d'enregistrements audio.
 
+## Cas d’utilisation
+
+CLI Python qui découpe un fichier WAV aux silences et transcrit chaque segment pour former un seul texte.
+
+- **Découper l’audio aux silences** (Utilisateur de la CLI): main.py charge le WAV avec pydub et appelle split_on_silence avec --min-silence-len, --silence-thresh (relatif au dBFS du fichier) et --keep-silence, puis écrit chaque morceau dans audio-chunks/chunkN.wav.
+- **Transcrire les segments** (Utilisateur de la CLI, Amazon Transcribe): Chaque segment passe par recognize_amazon (us-east-1, compartiment S3 du .env) et les textes sont joints puis affichés. Le README parle de Google Speech Recognition, mais le code appelle Amazon ; l’option --language n’est pas transmise.
+- **Mettre les clés AWS dans .env** (Utilisateur de la CLI, Amazon Transcribe): load_dotenv lit AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY et AWS_BUCKET_NAME ; main.py lève une erreur si l’une manque.
+- **Tester Whisper sur un exemple** (Utilisateur de la CLI, Hugging Face Hub): ai.py est un script à part qui charge openai/whisper-large-v2 avec transformers et transcrit un échantillon LibriSpeech de test ; il n’est pas relié à la CLI et ses paquets ne figurent pas dans requirements.txt.
+
+### Scénario : Transcrire une entrevue enregistrée
+
+1. Lancer pip install -r requirements.txt, puis python-dotenv, que main.py importe mais que le fichier n’inclut pas.
+2. Créer un fichier .env avec AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY et AWS_BUCKET_NAME.
+3. Lancer python main.py entrevue.wav -m 700 -s -16 (le chemin est positionnel, caro.wav par défaut).
+4. main.py écrit les segments dans audio-chunks/ et affiche une barre de progression Rich.
+5. Chaque segment est envoyé à Amazon Transcribe et le texte complet s’affiche à la fin.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

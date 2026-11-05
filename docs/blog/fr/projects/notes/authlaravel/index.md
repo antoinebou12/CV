@@ -20,6 +20,24 @@ AuthLaravel est un projet d’apprentissage du contrôle d’accès avec Laravel
 
 **Cas d’usage:** Socle d'authentification robuste pour projets et API Laravel.
 
+## Cas d’utilisation
+
+Appli de labo Laravel 10 et React (Inertia) pour le cours GTI619 de l’ÉTS : rôles, limitation des connexions, mots de passe.
+
+- **Créer un compte** (Utilisateur inscrit): RegisteredUserController enregistre un nouvel utilisateur avec courriel, nom d’utilisateur, téléphone et mot de passe ; le formulaire est resources/js/Pages/Auth/Register.tsx.
+- **Se connecter avec limitation** (Utilisateur inscrit, Administrateur): LoginRequest bloque une paire courriel et IP après 5 échecs et enregistre login_attempts, navigateur, OS, IP et last_login dans la fiche de l’utilisateur.
+- **Réinitialiser le mot de passe** (Utilisateur inscrit, Mailpit (courriel dev)): Les routes forgot-password envoient un lien de réinitialisation par courriel ; dans l’environnement Sail, Mailpit l’intercepte et l’affiche sur le port 8025.
+- **Changer profil et mot de passe** (Utilisateur inscrit): PUT /password passe par PasswordController, et /profile permet de modifier ou supprimer le compte via ProfileController.
+- **Voir les comptes (admin)** (Administrateur): /admin passe par le middleware AdminAuthenticated, et /dashboard affiche AdminDashboard.tsx avec le courriel, les rôles et les permissions de chaque compte si le rôle est roles:admin ; les autres rôles voient le tableau de bord simple.
+
+### Scénario : Lancer le labo et tester l’accès par rôle
+
+1. Depuis AuthLaravel/, lancer ./vendor/bin/sail up -d pour démarrer l’application avec MariaDB, Redis et Mailpit.
+2. Lancer ./vendor/bin/sail artisan migrate puis db:seed pour créer les comptes admin, user, residential et business.
+3. Ouvrir http://localhost/login et se connecter avec admin@example.com pour voir la table des comptes.
+4. Se connecter avec user@example.com et ouvrir /admin ; le middleware renvoie vers le tableau de bord.
+5. Utiliser Forgot password et lire le courriel de réinitialisation dans Mailpit sur http://localhost:8025.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

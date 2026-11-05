@@ -21,6 +21,23 @@ AudioTranscript breaks a WAV recording into chunks around silence, sends each ch
 
 **Best fit:** Batch automated audio recording transcription and indexing.
 
+## Use cases
+
+Python CLI that splits a WAV file on silence and transcribes each chunk into a single text.
+
+- **Split audio on silence** (CLI user): main.py loads the WAV with pydub and calls split_on_silence with --min-silence-len, --silence-thresh (relative to the file’s dBFS) and --keep-silence, writing each piece to audio-chunks/chunkN.wav.
+- **Transcribe the chunks** (CLI user, Amazon Transcribe): Each chunk goes to recognize_amazon (us-east-1, S3 bucket from .env) and the texts are joined and printed. The README describes Google Speech Recognition, but the code calls Amazon; the --language option is not passed on.
+- **Set AWS keys in .env** (CLI user, Amazon Transcribe): load_dotenv reads AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_BUCKET_NAME; main.py raises an error if one is missing.
+- **Try Whisper on a sample** (CLI user, Hugging Face Hub): ai.py is a separate script that loads openai/whisper-large-v2 with transformers and transcribes one LibriSpeech dummy sample; it is not wired to the CLI and its packages are not in requirements.txt.
+
+### Scenario: Transcribe a recorded interview
+
+1. Run pip install -r requirements.txt, plus python-dotenv, which main.py imports but the file does not list.
+2. Create a .env file with AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_BUCKET_NAME.
+3. Run python main.py interview.wav -m 700 -s -16 (the path is positional and defaults to caro.wav).
+4. main.py writes the chunks to audio-chunks/ and shows a Rich progress bar.
+5. Each chunk is sent to Amazon Transcribe and the full text is printed at the end.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

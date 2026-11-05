@@ -21,6 +21,24 @@ Dimension est mon espace de travail Rust pour les mathématiques et l’infograp
 
 **Cas d’usage:** Rendu 3D de cartes de relief accéléré matériellement, transformations spatiales et apprentissage de l'infographie.
 
+## Cas d’utilisation
+
+Un espace de travail Rust autour de mathlib : algèbre linéaire, rendu wgpu, analyseurs, physique et géométrie, avec démos WASM.
+
+- **Calculer en dense et creux** (Développeur Rust): Le crate mathlib fournit matrices denses et creuses, vecteurs, SVD et outils 3D ; cd mathlib && cargo test et cargo bench les mettent à l’épreuve.
+- **Rendre une scène 3D avec wgpu** (Développeur Rust, GPU via wgpu): Le crate render dessine une scène mathlib Tree avec wgpu ; cargo run -p render-demo --example render_native ouvre une fenêtre avec un cube, un manipulateur et la sélection.
+- **Charger maillages et fichiers** (Développeur Rust): Le crate parse lit JSON, XML, OBJ, MTL, BVH, glTF, PLY, PNG, JPEG, ZIP et TAR, chacun derrière une fonctionnalité Cargo comme json ou obj.
+- **Simuler physique et collisions** (Développeur Rust): physics implémente PBD/XPBD avec les exemples particles_2d, rigid_bodies_3d et softbody_3d ; collision ajoute les requêtes AABB, OBB, BVH, BSP, rayon et frustum.
+- **Publier le site de démos WASM** (Développeur Rust, Navigateur WASM/WebGPU): just website-build compile en WASM les démos mathlib, render, kinematics, physics, geometry et neural dans website/ ; pages.yml les déploie sur GitHub Pages.
+
+### Scénario : Essayer les démos en local avant de pousser
+
+1. Lancer cd mathlib && cargo test pour vérifier la bibliothèque de base.
+2. Lancer just run-render pour ouvrir la scène wgpu native et déplacer le manipulateur.
+3. Lancer just website-build pour compiler chaque démo en WASM dans website/.
+4. Lancer just website-serve et ouvrir http://localhost:3000/ pour parcourir /mathlib/, /render/ et /physics/.
+5. Pousser sur main ; le flux Pages reconstruit website/ et le publie.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

@@ -21,6 +21,25 @@ nova-backtest est un fork archivé d’un framework de backtesting. Sa classe ce
 
 **Cas d’usage:** Validation de stratégies algorithmiques sur données historiques.
 
+## Cas d’utilisation
+
+Bibliothèque Python qui télécharge les chandelles des plateformes crypto et teste une stratégie avec profits et drawdown.
+
+- **Télécharger l’historique** (Auteur de stratégies, API REST de plateforme): BackTest.get_historical_data (novalabs-backtest/utils/backtest.py) appelle le client de la plateforme et garde les données OHLCV dans database/<exchange>/hist_<pair>_<candle>.csv, à partir du 2019-01-01.
+- **Choisir une plateforme** (Auteur de stratégies, API REST de plateforme): clients() (novalabs-backtest/clients/clients.py) renvoie un client Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda ou BTCEX, chacun conforme à BackTestClientInterface.
+- **Définir entrées et sorties** (Auteur de stratégies): Une stratégie hérite de BackTest et remplit build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) et exit_strategy (exit_signal).
+- **Lancer le backtest** (Auteur de stratégies): run_backtest simule les positions par paire avec les frais de la plateforme, un nombre maximal de positions et une durée de détention maximale, puis trace le profit cumulé.
+- **Enregistrer les statistiques** (Auteur de stratégies): L’exécution écrit results/<strategy>_pairs_stats.csv et results/<strategy>_overall_stats.json avec rendements, drawdown et chiffres par paire.
+- **Créer des indicateurs** (Auteur de stratégies): TechnicalIndicatorsCreation (novalabs-backtest/utils/indicators.py) ajoute décalages, ratios de clôture et niveaux de support ou de résistance à un DataFrame de chandelles.
+
+### Scénario : Tester une stratégie MACD sur des paires Binance
+
+1. Installer les dépendances de requirements.txt (la commande pip du README écrit le paquet novelabs-backtest).
+2. Hériter de BackTest avec exchange="binance", candle="1h", list_pairs=["BTCUSDT", "ETHUSDT"], un capital de départ, un levier et max_pos.
+3. Calculer l’histogramme MACD dans build_indicators et fixer entry_signal, take_profit et stop_loss dans entry_strategy.
+4. Appeler run_backtest() ; les paires absentes sont téléchargées dans database/binance/ la première fois.
+5. Lire le graphique de profit et les fichiers JSON et CSV écrits sous results/.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

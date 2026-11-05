@@ -21,6 +21,24 @@ This fork of the Kendall JSON Resume theme turns structured resume data into HTM
 
 **Best fit:** Automated resume compilation from structured JSON data.
 
+## Use cases
+
+A JSON Resume theme that renders resume.json to a Bootstrap HTML page with Mustache and FontAwesome icons.
+
+- **Render resume.json to HTML** (Resume author, resume-cli): index.js exports render(), which prepares the resume object and fills resume.template with Mustache, inlining style.css and print.css.
+- **Preview the theme locally** (Resume author, resume-cli): The README runs resume serve --theme . from the theme folder and opens the preview on http://localhost:4000.
+- **Show a photo or Gravatar** (Resume author, Gravatar): When basics.image is missing, render() builds a Gravatar URL from basics.email with the gravatar package.
+- **Map profiles to icons** (Resume author): Each basics.profiles network is mapped to a FontAwesome class, with special cases such as stackoverflow, gitlab and keybase.
+- **Print a clean copy** (Resume author): print.css is injected as a media="print" style; it hides the photo and removes link URLs after anchors.
+
+### Scenario: Previewing a resume with the Kendall theme
+
+1. Install the CLI with npm install -g resume-cli.
+2. Create and fill resume.json with resume init.
+3. Run npm install in the theme folder to get mustache, lodash and gravatar.
+4. Run resume serve --theme . and open http://localhost:4000.
+5. Check that only filled sections (work, education, skills…) appear, then print from the browser.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

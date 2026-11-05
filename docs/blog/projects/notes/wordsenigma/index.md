@@ -21,6 +21,24 @@ WordsEnigma is a fork with separate Redwood web and API workspaces. Its data mod
 
 **Best fit:** Algorithmic word game logic and solver heuristics.
 
+## Use cases
+
+RedwoodJS prototype of a multi-language Wordle, with a French word board, GraphQL API and admin CRUD on PostgreSQL.
+
+- **Guess a five-letter word** (Player): The /phil page (MotDuJourPhilPage/App.tsx) gives six tries on a 6×5 grid, rejects words missing from the French list in data/fr.ts and colours letters and keyboard keys; the solution is hard-coded to GRAND.
+- **Create an account** (Player): /signup, /login, /forgot-password and /reset-password use Redwood dbAuth (api/src/functions/auth.ts) against the User model with hashed password and salt.
+- **Manage words and word banks** (Administrator): Routes under /admin, wrapped in Private roles="admin", give scaffolded CRUD pages for users, languages, words, word banks, games, try rows, letters and statistics through the GraphQL SDL services.
+- **Seed French words** (Administrator, Online dictionaries): yarn seed runs scripts/seed.ts, which upserts languages and the fr word bank, then fetches definitions from fr.wiktionary.org or le-dictionnaire.com with the cheerio crawler before inserting words.
+- **Track games and streaks** (Player): The Prisma schema stores each Game with its TryRow and Letter records and a Statistic row per user (games played, won, lost, streak, average); the data model is in place but the play pages do not write to it yet.
+
+### Scenario: Run the French board locally
+
+1. Start PostgreSQL with docker run --name=db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -d postgres, as in the root README.
+2. In WordsEnigma/, run yarn install, then yarn rw prisma migrate dev to apply api/db/migrations.
+3. Run yarn seed to load the languages, the fr word bank and the words.
+4. Start yarn redwood dev and open http://localhost:8910/phil.
+5. Type five letters, press Enter and read the colours until the word is found or the six rows are used.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

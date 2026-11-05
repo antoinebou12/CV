@@ -20,6 +20,24 @@ ChitUI fournit une interface web pour des imprimantes résine SDCP. Un processus
 
 **Cas d’usage:** Contrôle à distance d'imprimantes 3D résine sans poste dédié.
 
+## Cas d’utilisation
+
+Interface web Flask qui trouve les imprimantes résine SDCP 3.0 (Chitubox) du réseau, envoie des fichiers et lance l’impression.
+
+- **Découvrir les imprimantes** (Opérateur d’impression, Imprimante résine SDCP): Au démarrage, discover_printers (main.py) diffuse M99999 en UDP sur le port 3000, enregistre les réponses et ouvre un WebSocket vers chaque imprimante sur ws://<ip>:3030/websocket.
+- **Suivre l’état de l’imprimante** (Opérateur d’impression, Imprimante résine SDCP): Le navigateur interroge par Socket.IO ; main.py envoie les commandes SDCP 0 (état) et 1 (attributs) et relaie les messages de l’imprimante vers web/js/chitui.js et sdcp.js.
+- **Téléverser un fichier** (Opérateur d’impression, Imprimante résine SDCP): POST /upload accepte les fichiers .ctb, .goo et .prz, calcule un MD5 et envoie des morceaux de 1 Mo à http://<ip>:3030/uploadFile/upload ; /progress diffuse le pourcentage.
+- **Lister et effacer les fichiers** (Opérateur d’impression, Imprimante résine SDCP): printer_files envoie la commande SDCP 258 avec un chemin de stockage ; action_delete envoie la commande 259 avec la liste des fichiers.
+- **Lancer une impression** (Opérateur d’impression, Imprimante résine SDCP): action_print envoie la commande SDCP 128 avec le nom du fichier et StartLayer 0.
+
+### Scénario : Envoyer un modèle tranché à une imprimante résine depuis le navigateur
+
+1. Installer requirements.txt dans un virtualenv et lancer python main.py, ou docker run --net=host pour que la diffusion UDP fonctionne.
+2. Au démarrage, ChitUI diffuse M99999 sur le port UDP 3000 et se connecte au WebSocket de chaque imprimante sur le port 3030.
+3. Ouvrir http://127.0.0.1:54780/ pour voir les imprimantes trouvées et leur état.
+4. Téléverser un fichier .ctb ; ChitUI l’enregistre dans /tmp puis l’envoie en morceaux de 1 Mo avec contrôle MD5.
+5. Choisir le fichier dans la liste de l’imprimante et lancer l’impression.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

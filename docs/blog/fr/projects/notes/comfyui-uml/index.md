@@ -20,6 +20,24 @@ ComfyUI-UML ajoute des nœuds de diagrammes à ComfyUI. Le texte entre dans un w
 
 **Cas d’usage:** Pipelines IA visuels associant schémas d'architecture et post-traitement graphique.
 
+## Cas d’utilisation
+
+Nœuds ComfyUI qui rendent des diagrammes Mermaid, PlantUML, Graphviz et autres types Kroki, au besoin à partir de code LLM.
+
+- **Rendre un diagramme** (Utilisateur ComfyUI, API Kroki): Le nœud UML Render (nodes/uml_diagram.py) envoie le code à Kroki via nodes/kroki_client.py et renvoie du png, svg, jpeg, pdf, txt ou base64, selon les formats permis pour chaque type.
+- **Rendre Mermaid hors ligne** (Utilisateur ComfyUI): Avec le backend local, web/js/render_mermaid.mjs utilise beautiful-mermaid (après npm ci dans web/js) pour produire du SVG ou du PNG ; Graphviz se rend en local si le paquet graphviz est installé.
+- **Générer le code avec un LLM** (Utilisateur ComfyUI, Fournisseur de LLM): UML Code Assistant (nodes/uml_llm.py), ou LLM Prompt Engine suivi de LLM Call, remplit un gabarit de prompts/ et appelle Ollama, OpenAI, Anthropic ou Gemini ; le résultat alimente UML Render.
+- **Prévisualiser et partager** (Utilisateur ComfyUI, API Kroki): Diagram Viewer URL (nodes/uml_viewer_url.py) transforme kroki_url en lien de visualiseur et en lien iframe (viewer.html?embed=1) et affiche un aperçu dans le nœud.
+- **Enregistrer dans ComfyUI** (Utilisateur ComfyUI): Le bouton Save du visualiseur envoie une requête à /comfyui-uml/save, déclarée avec les autres routes dans nodes/uml_routes.py.
+
+### Scénario : Tracer un diagramme de séquence à partir d’un prompt avec Ollama en local
+
+1. Lancer comfy node install comfyui-uml (ou cloner dans ComfyUI/custom_nodes et faire pip install -r requirements.txt), puis redémarrer ComfyUI.
+2. Charger workflows/uml_llm_ollama.json dans le canevas ComfyUI.
+3. Décrire le diagramme dans UML Code Assistant, avec le fournisseur ollama et un modèle local.
+4. Lancer la file ; UML Render envoie le code généré à Kroki et produit l’image.
+5. Ouvrir le lien de Diagram Viewer URL pour zoomer, copier le lien ou enregistrer le diagramme dans ComfyUI.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

@@ -21,6 +21,25 @@ nova-backtest is an archived fork of a strategy-backtesting framework. The core 
 
 **Best fit:** Algorithmic trading strategy validation on historical tick data.
 
+## Use cases
+
+Python library to download crypto exchange candles and backtest a trading strategy with profit and drawdown stats.
+
+- **Download historical candles** (Strategy developer, Exchange REST API): BackTest.get_historical_data in novalabs-backtest/utils/backtest.py calls the exchange client and caches OHLCV data in database/<exchange>/hist_<pair>_<candle>.csv, starting from 2019-01-01.
+- **Pick an exchange client** (Strategy developer, Exchange REST API): clients() in novalabs-backtest/clients/clients.py returns a client for Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda or BTCEX, each following BackTestClientInterface.
+- **Define entry and exit rules** (Strategy developer): A strategy subclasses BackTest and fills build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) and exit_strategy (exit_signal).
+- **Run the backtest** (Strategy developer): run_backtest simulates positions per pair with exchange fees, a maximum number of positions and a maximum holding time, then plots cumulative profit.
+- **Save performance statistics** (Strategy developer): The run writes results/<strategy>_pairs_stats.csv and results/<strategy>_overall_stats.json with returns, drawdown and per-pair figures.
+- **Build indicator features** (Strategy developer): TechnicalIndicatorsCreation in novalabs-backtest/utils/indicators.py adds lags, close ratios and support or resistance levels to a candle DataFrame.
+
+### Scenario: Backtest a MACD strategy on Binance pairs
+
+1. Install the dependencies listed in requirements.txt (the README's pip command spells the package novelabs-backtest).
+2. Subclass BackTest with exchange="binance", candle="1h", list_pairs=["BTCUSDT", "ETHUSDT"], a start bankroll, leverage and max_pos.
+3. Compute the MACD histogram in build_indicators and set entry_signal, take_profit and stop_loss in entry_strategy.
+4. Call run_backtest(); missing pairs are downloaded into database/binance/ on first use.
+5. Read the profit chart and the JSON and CSV files written under results/.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

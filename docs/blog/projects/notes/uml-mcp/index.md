@@ -21,6 +21,24 @@ uml-mcp exposes diagram tools to MCP clients. The client supplies diagram source
 
 **Best fit:** Interactive architectural diagram generation for AI pair programming and automated design docs.
 
+## Use cases
+
+MCP server that lets AI assistants turn diagram source or a description into a rendered diagram inside the chat.
+
+- **Render one diagram** (MCP client (AI chat), Kroki / PlantUML): generate_uml takes a diagram_type, the source code, a format and an optional theme, renders through Kroki (KROKI_SERVER, https://kroki.io by default) and returns the file, its URL and a playground link.
+- **Validate diagram source** (MCP client (AI chat)): validate_uml checks the type, format and basic structure locally without rendering, so the assistant can fix the source before calling a renderer.
+- **Render a batch of diagrams** (MCP client (AI chat), Kroki / PlantUML): generate_uml_batch renders several items with bounded concurrency and stable ordering, up to the batch_max_items setting.
+- **Edit in the chat viewer** (Developer, MCP client (AI chat)): In clients that support MCP Apps, results open in ui://uml-mcp/diagram-viewer, where the user can zoom, edit the source, change theme or format and export SVG, PNG, HTML or PDF.
+- **Self-host the server** (Developer, Kroki / PlantUML): uv tool install uml-mcp && uml-mcp setup installs it locally; docker-compose.yml starts the server on port 8000 with Kroki containers and an opt-in PlantUML fallback profile, and deploy/helm/uml-mcp targets Kubernetes.
+
+### Scenario: Draw a login sequence from Cursor
+
+1. Add the hosted endpoint https://uml-mcp.vercel.app/mcp to the MCP config, as in .cursor/mcp.json.
+2. Ask the assistant: "Draw a sequence diagram of a user logging in through an API gateway."
+3. The assistant calls list_diagram_types, writes Mermaid or PlantUML source and checks it with validate_uml.
+4. It calls generate_uml_image; the server renders through Kroki and returns an inline PNG with render and playground links.
+5. Open the playground link or the MCP App viewer to edit the source and export SVG.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

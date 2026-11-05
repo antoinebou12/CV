@@ -21,6 +21,25 @@ switch-wifi est un tableau de bord réseau pour Switch avec une interface Boreal
 
 **Cas d’usage:** Configuration réseau rapide pour console Switch sans interface complexe.
 
+## Cas d’utilisation
+
+Application homebrew pour Nintendo Switch qui affiche l'état du Wi-Fi, mesure le lien HTTPS et lit l'état Bluetooth.
+
+- **Vérifier le lien Wi-Fi** (Joueur sur Switch, Horizon NIFM / BTM): L'onglet Dashboard lit le type de lien, le SSID, l'IPv4, la passerelle, le DNS et les barres de signal 0 à 3 via NIFM (NetworkService) ; le RSSI vient de wlan:inf seulement si le micrologiciel l'expose.
+- **Mesurer la connexion** (Joueur sur Switch, Serveur de débit HTTPS): SpeedTestEngine lance 8 sondes de latence HTTPS, puis un téléchargement de 25 Mio et un envoi de 10 Mio remplis de zéros avec libcurl vers speed.cloudflare.com par défaut, avec médiane, P95 et gigue.
+- **Voir les réseaux enregistrés** (Joueur sur Switch, Horizon NIFM / BTM): L'onglet Networks montre les métadonnées de base des profils enregistrés et les canaux autorisés par Horizon, avec le calcul de chevauchement de core/metrics ; les identifiants ne sont jamais affichés.
+- **Inspecter le Bluetooth** (Joueur sur Switch, Horizon NIFM / BTM): BluetoothService lit l'état radio BTM et le nombre d'appareils, puis lance un balayage BLE passif limité qui renvoie au plus dix adresses uniques.
+- **Exporter un rapport** (Joueur sur Switch): L'onglet About écrit sdmc:/switch-wifi-diagnostics.txt avec la version, la cible de compatibilité, les détails réseau et les compteurs Bluetooth, sans identifiants.
+
+### Scénario : Comparer deux canaux de routeur sur Switch
+
+1. Compiler build-switch/switch-wifi.nro dans le conteneur devkitpro/devkita64 et le vérifier avec python3 scripts/verify_nro.py.
+2. Copier le NRO sur la carte SD et le lancer depuis le menu homebrew.
+3. Ouvrir l'onglet Dashboard pour confirmer que la Switch est en Wi-Fi et noter les barres de signal.
+4. Lancer l'onglet Benchmark et lire la latence médiane, le P95, la gigue et les débits descendant et montant.
+5. Changer le canal du routeur, relancer la mesure et comparer les graphiques d'historique.
+6. Exporter sdmc:/switch-wifi-diagnostics.txt depuis l'onglet About pour garder le résultat.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

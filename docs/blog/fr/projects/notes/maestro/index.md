@@ -21,6 +21,25 @@ Ce fork Maestro relie une interface d’envoi React à un backend Spring et des 
 
 **Cas d’usage:** Numérisation de partitions musicales physiques pour écoute et arrangement.
 
+## Cas d’utilisation
+
+Application web qui transforme une partition numérisée (PDF, PNG, JPG) en fichier MIDI, avec tempos ajustables.
+
+- **Téléverser une partition** (Musicien): Le formulaire React (maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx) reçoit le fichier déposé et un nom de MIDI ; useMaestroClient.ts vérifie GET /health avant d’envoyer à /convert.
+- **Régler le tempo par mesure** (Musicien): Le formulaire garde une liste de tempos, mesures et options « forcer » (120 à la mesure 1 par défaut) et l’envoie dans le champ JSON tempos.
+- **Lire les notes avec Audiveris** (Moteur OMR Audiveris): POST /convert (ConvertController.java) vérifie le fichier (10 Mo au plus, signature PDF/JPG/PNG) puis AudiverisController.java lance Audiveris en mode batch pour exporter un .mxl.
+- **Convertir MusicXML en MIDI** (music21 (Python)): backend/src/main/MxlToMidi.py charge le .mxl avec music21, applique les nuances et les tempos demandés, puis écrit le .mid.
+- **Télécharger le fichier MIDI** (Musicien): Le backend renvoie le .mid en pièce jointe et le frontend l’enregistre avec js-file-download ; les dossiers In et Out sont nettoyés trois secondes plus tard.
+- **Basculer anglais ou français** (Musicien): LanguageSwitcher.tsx bascule i18next entre en-US et fr-CA à partir des textes de maestro-app/public/locales/.
+
+### Scénario : Transformer une partition PDF en MIDI en local
+
+1. Copier les dossiers bin et lib d’Audiveris dans backend/audiveris/dist, comme l’indique backend/README.md.
+2. Démarrer les deux services avec docker-compose up -d (backend sur le port 8080, frontend sur le port 3000).
+3. Ouvrir localhost:3000, déposer une partition PDF et saisir un nom de fichier MIDI.
+4. Ajouter une ligne de tempo, par exemple 90 à la mesure 1, puis envoyer le formulaire.
+5. Le backend lance Audiveris puis MxlToMidi.py, et le navigateur télécharge le .mid.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

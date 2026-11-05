@@ -21,6 +21,24 @@ retroarch-web-games est une ancienne configuration conteneur autour de RetroArch
 
 **Cas d’usage:** Émulation de jeux rétro dans le navigateur sans installation.
 
+## Cas d’utilisation
+
+Image Docker qui héberge le lecteur web RetroArch derrière nginx, avec des dossiers de jeux récupérés à la construction.
+
+- **Installer RetroArch web** (Auto-hébergeur, Sources de fichiers): setup_retroarch.sh télécharge la version emscripten de la veille sur buildbot.libretro.com, l’extrait dans /var/www/html et décompresse le bundle du frontend.
+- **Télécharger les jeux** (Auto-hébergeur, Sources de fichiers): InternetArchive.py (typer, rich, requests) parcourt en parallèle les pages d’archives listées pour les fichiers .zip et .7z et les range sous downloads/<nom du système>.
+- **Trier les jeux par lettre** (Auto-hébergeur): sort_mkdir.sh déplace chaque fichier dans un sous-dossier 0-9 ou A-Z ; le Dockerfile l’exécute pour chaque dossier de système Nintendo.
+- **Lancer le conteneur** (Auto-hébergeur): docker-compose up -d construit l’image et relie le port 8080 à nginx ; entrypoint.sh régénère les listes .index-xhr avant de lancer nginx.
+- **Jouer dans le navigateur** (Joueur web): Le joueur ouvre http://localhost:8080, choisit un cœur et charge un jeu dans la page RetroArch Web Player fournie par la version nightly (le dépôt en garde une copie, index.html, que le Dockerfile ne copie pas).
+- **Publier l’image multi-arch** (Auto-hébergeur): .github/workflows/retroarch-web-games.yaml construit avec Docker Buildx pour amd64, arm64 et arm/v7 et pousse antoinebou12/retroarch-web-games sur Docker Hub.
+
+### Scénario : Héberger un lecteur rétro sur un serveur maison
+
+1. Cloner le dépôt et prévoir la place pour une image d’environ 10 Go, comme le prévient le README.
+2. Lancer docker-compose up -d ; la construction exécute setup_retroarch.sh, InternetArchive.py et sort_mkdir.sh.
+3. Au démarrage du conteneur, entrypoint.sh indexe les cœurs et le bundle, puis nginx sert le site.
+4. Ouvrir http://localhost:8080 et charger un jeu depuis les dossiers downloads triés.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

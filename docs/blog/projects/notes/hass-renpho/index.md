@@ -20,6 +20,24 @@ hass_renpho is a fork of a Home Assistant integration for Renpho measurements. A
 
 **Best fit:** Self-hosted health metric tracking and smart home automation triggers.
 
+## Use cases
+
+A Home Assistant integration that polls the legacy Renpho cloud API and exposes scale measurements as sensors.
+
+- **Sign in and pick a scale user** (Home Assistant user, Home Assistant, Renpho cloud API): config_flow.py validates the email and password against Renpho, then shows a select_user step when the account has several scale users.
+- **Poll measurements on a timer** (Home Assistant, Renpho cloud API): RenphoWeightCoordinator calls get_measurements(), list_girth() and list_girth_goal() every refresh seconds through a DataUpdateCoordinator.
+- **Show body metrics as sensors** (Home Assistant user, Home Assistant): sensor.py and sensor_configs.py create sensors for weight, BMI, body fat, water, BMR, girth values and goals, with kg or lb for weight.
+- **Route calls through a proxy** (Home Assistant user, Renpho cloud API): An optional proxy setting (http:// or socks5://) is checked by check_proxy() before Renpho calls, for IPs that renpho.qnclouds.com blocks.
+- **Test an account in the API** (Home Assistant user, Renpho cloud API): api/app.py is a FastAPI app with routes such as /auth, /users, /measurements and /girth_info; vercel.json deploys it and the README points to its /docs page.
+
+### Scenario: Getting the morning weigh-in into Home Assistant
+
+1. Copy custom_components/renpho into <config_dir>/custom_components/renpho/ (or install through HACS).
+2. Add renpho: with email, password and refresh: 600 to configuration.yaml, plus sensor: platform: renpho.
+3. Restart Home Assistant; the integration signs in to the legacy Renpho API and resolves the user id.
+4. Step on the scale with the outdated Renpho app so the measurement reaches the cloud.
+5. Within the next refresh cycle the weight and body-fat sensors update on the dashboard.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

@@ -21,6 +21,24 @@ uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une s
 
 **Cas d’usage:** Génération interactive de diagrammes d'architecture pour le pair programming avec IA et la documentation.
 
+## Cas d’utilisation
+
+Serveur MCP qui permet aux assistants IA de transformer une source ou une description en diagramme rendu dans la conversation.
+
+- **Rendre un diagramme** (Client MCP (chat IA), Kroki / PlantUML): generate_uml reçoit un diagram_type, le code source, un format et un thème optionnel, fait le rendu via Kroki (KROKI_SERVER, https://kroki.io par défaut) et renvoie le fichier, son URL et un lien vers le terrain de jeu.
+- **Valider une source** (Client MCP (chat IA)): validate_uml vérifie le type, le format et la structure de base en local, sans rendu, pour que l'assistant corrige la source avant de lancer le rendu.
+- **Rendre un lot de diagrammes** (Client MCP (chat IA), Kroki / PlantUML): generate_uml_batch rend plusieurs éléments en parallèle limité, dans l'ordre reçu, jusqu'à la limite batch_max_items.
+- **Retoucher dans le visualiseur** (Développeur, Client MCP (chat IA)): Dans les clients compatibles MCP Apps, le résultat s'ouvre dans ui://uml-mcp/diagram-viewer : zoom, édition de la source, changement de thème ou de format, export SVG, PNG, HTML ou PDF.
+- **Héberger le serveur soi-même** (Développeur, Kroki / PlantUML): uv tool install uml-mcp && uml-mcp setup l'installe en local ; docker-compose.yml lance le serveur sur le port 8000 avec des conteneurs Kroki et un profil PlantUML de secours optionnel, et deploy/helm/uml-mcp vise Kubernetes.
+
+### Scénario : Dessiner une séquence de connexion depuis Cursor
+
+1. Ajouter le point d'accès hébergé https://uml-mcp.vercel.app/mcp à la configuration MCP, comme dans .cursor/mcp.json.
+2. Demander à l'assistant : « Dessine un diagramme de séquence d'un utilisateur qui se connecte via une passerelle d'API. »
+3. L'assistant appelle list_diagram_types, écrit la source Mermaid ou PlantUML et la vérifie avec validate_uml.
+4. Il appelle generate_uml_image ; le serveur fait le rendu via Kroki et renvoie un PNG en ligne avec les liens de rendu et de terrain de jeu.
+5. Ouvrir le lien du terrain de jeu ou le visualiseur MCP App pour retoucher la source et exporter en SVG.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

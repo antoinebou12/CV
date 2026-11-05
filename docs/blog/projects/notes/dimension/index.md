@@ -21,6 +21,24 @@ Dimension is my Rust workspace for mathematics and graphics experiments. mathlib
 
 **Best fit:** Hardware-accelerated 3D heightmap rendering, spatial transformation pipelines, and graphics education.
 
+## Use cases
+
+A Rust workspace around mathlib: linear algebra, wgpu rendering, parsers, physics and geometry, with WASM demos.
+
+- **Compute with dense and sparse** (Rust developer): The mathlib crate provides dense and sparse matrices, vectors, SVD and 3D helpers; cd mathlib && cargo test and cargo bench exercise them.
+- **Render a 3D scene with wgpu** (Rust developer, GPU via wgpu): The render crate draws a mathlib Tree scene through wgpu; cargo run -p render-demo --example render_native opens a window with a cube, gizmo and picking.
+- **Load meshes and data files** (Rust developer): The parse crate reads JSON, XML, OBJ, MTL, BVH, glTF, PLY, PNG, JPEG, ZIP and TAR behind Cargo features such as json and obj.
+- **Simulate physics, collisions** (Rust developer): physics implements PBD/XPBD with examples particles_2d, rigid_bodies_3d and softbody_3d; collision adds AABB, OBB, BVH, BSP, ray and frustum queries.
+- **Publish the WASM demo site** (Rust developer, Browser (WASM/WebGPU)): just website-build compiles the mathlib, render, kinematics, physics, geometry and neural demos to WASM into website/; pages.yml deploys it to GitHub Pages.
+
+### Scenario: Trying the demos locally before a push
+
+1. Run cd mathlib && cargo test to check the core library.
+2. Run just run-render to open the native wgpu scene and move the gizmo.
+3. Run just website-build to compile every demo to WASM into website/.
+4. Run just website-serve and open http://localhost:3000/ to browse /mathlib/, /render/ and /physics/.
+5. Push to main; the Pages workflow rebuilds website/ and publishes it.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

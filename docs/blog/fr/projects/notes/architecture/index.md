@@ -21,6 +21,24 @@ Ce dépôt archivé conserve un diagramme d’infrastructure domestique dans plu
 
 **Cas d’usage:** Consulter un instantané d’infrastructure archivé ou modifier ses sources pour documenter un homelab.
 
+## Cas d’utilisation
+
+Diagrammes C4 PlantUML et draw.io d’un homelab : Cloudflare, un VPS OVH, des hyperviseurs, un NAS et leurs services.
+
+- **Voir le schéma draw.io v1** (Lecteur, Moteurs de rendu): architecture.drawio.html intègre le XML draw.io dans le visualiseur diagrams.net, avec zoom, calques et visionneuse ; le README le présente comme la v1.
+- **Générer le diagramme C4 v2** (Lecteur, Moteurs de rendu): architecture.plantuml inclut C4_Deployment et les icônes Font Awesome, OSA et Office ; le lien v2 du README est un rendu encodé sur le serveur PlantUML.
+- **Suivre les accès externes** (Lecteur): Les lignes Rel montrent l’utilisateur qui passe par Cloudflare en HTTPS, Cloudflare qui renvoie vers le VPS OVH, le VPS qui joint les réseaux domestique et personnel par WireGuard, et l’admin qui passe par Teleport en SSH.
+- **Inventorier VM et conteneurs** (Lecteur): Les nœuds listent les hôtes XCP-ng, Proxmox et Windows, un NAS QNAP avec sa pile média, et des VM comme Talos (Portainer, AI News Tracker, Freqtrade), Home Assistant et Caddy avec Prometheus et Grafana, chacun avec CPU, RAM et disque.
+- **Modifier et réexporter** (Mainteneur du schéma, Moteurs de rendu): Le mainteneur modifie architecture.plantuml ou architecture.drawio et exporte une image comme home architecture.png.
+
+### Scénario : Suivre une requête web jusqu’au homelab
+
+1. Ouvrir architecture.plantuml, ou le lien v2 du README.md rendu par le serveur PlantUML.
+2. Partir de la personne User, qui joint Cloudflare (CDN et proxy inverse) en HTTPS.
+3. Suivre Cloudflare jusqu’au VPS OVH, qui exécute Caddy, Teleport et Uptime Kuma.
+4. Suivre le lien WireGuard du VPS vers le Personal Network et son hôte Proxmox.
+5. Voir la VM Caddy router le trafic vers AI News Tracker, Marketwatch, Portainer, Plex et Jellyfin.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

@@ -21,6 +21,25 @@ These dotfiles collect the shell and editor setup I used across machines. The in
 
 **Best fit:** Reproducible shell and developer environment across macOS and Linux servers.
 
+## Use cases
+
+Bash scripts that install, update and remove a Linux shell setup: vimrc, Oh My Zsh, tmux and dev tools.
+
+- **Install the vimrc setup** (Developer, Upstream projects): install_vimrc in install.sh installs vim and git, clones amix/vimrc into ~/.vim_runtime and runs its installer; edit_vimrc moves NERDTree to the left and turns on line numbers.
+- **Set up Oh My Zsh and tmux** (Developer, Upstream projects): install_oh_my_zsh downloads the official Oh My Zsh installer with wget; edit_oh_my_zsh switches the theme and writes a minimal prompt theme; install_tmux writes a full ~/.tmux.conf.
+- **Install dev toolchains** (Developer, OS package manager): bash install.sh <option> runs one installer (Python, JDK, nvm, .NET, Go, Rust, Docker, kubectl, AWS CLI, Azure CLI, JupyterLab, network tools); install_package reads /etc/os-release to pick apt-get, pacman, dnf, yum or brew.
+- **Update the scripts and vimrc** (Developer, Upstream projects): update.sh defines update_install_script (git pull, then bash install.sh) and update_vimrc (git pull --rebase in ~/.vim_runtime, then update_plugins.py); the file only defines them, so it is meant to be sourced.
+- **Remove tools with backups** (Developer, OS package manager): uninstall.sh copies ~/.vimrc and ~/.tmux.conf to .backup files before deleting them, and purges JDK, Python, Rust, Go, Jupyter, AWS CLI, Azure CLI and nvm; run with bash, it calls every uninstall function in turn.
+- **Show neofetch at login** (Developer, OS package manager): motd/motd.sh installs neofetch with apt-get when missing and writes /etc/update-motd.d/10-neofetch so the system summary appears in the login banner.
+
+### Scenario: Set up a fresh Ubuntu machine
+
+1. Clone the repository and run bash install.sh with no option to print the usage() list.
+2. Run bash install.sh install_vimrc to install vim and git and clone amix/vimrc into ~/.vim_runtime.
+3. Run bash install.sh install_oh_my_zsh, then install_tmux, to get zsh and a written ~/.tmux.conf.
+4. Run bash install.sh install_docker; it fetches get.docker.com and Docker Compose 1.29.2.
+5. On a server, run motd/motd.sh as root so neofetch shows at each SSH login.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

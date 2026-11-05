@@ -21,6 +21,24 @@ uml-skill regroupe des instructions de rédaction de diagrammes et un petit outi
 
 **Cas d’usage:** Intégration directe de génération UML dans des agents autonomes.
 
+## Cas d’utilisation
+
+Skill d'agent (diagramming-uml) qui guide les agents IA pour écrire une source de diagramme et la rendre via uml-mcp ou Kroki.
+
+- **Installer le skill** (Développeur, Agent IA de code): Le README propose npx @smithery/cli@latest skill add antoinebou12/uml, ou la copie du dossier dans .cursor/skills/diagramming-uml/ pour que l'agent charge SKILL.md.
+- **Planifier et écrire le code** (Agent IA de code): SKILL.md fait passer l'agent par le but, le type de diagramme, le plan et les règles de lisibilité (environ 25 nœuds Mermaid ou 30 PlantUML, transitions étiquetées) avant d'écrire la source.
+- **Choisir un diagram_type** (Agent IA de code): references/DIAGRAM-TYPES.md associe des intentions (séquence, couloirs, ER, architecture…) à un diagram_type Kroki et à une forme Mermaid ou PlantUML, à confirmer avec uml://types.
+- **Rendre via uml-mcp** (Agent IA de code, uml-mcp / Kroki): Quand uml-mcp est branché, le skill demande à l'agent d'appeler validate_uml puis generate_uml ou generate_uml_batch, et de rendre l'URL Kroki et le lien du terrain de jeu.
+- **Créer une URL Kroki sans MCP** (Développeur, uml-mcp / Kroki): Sans MCP, scripts/kroki_url.py compresse la source avec zlib, l'encode en base64url et affiche une URL https://kroki.io/<backend>/<format>/…
+
+### Scénario : Obtenir un lien partageable vers une séquence
+
+1. Installer le skill avec npx @smithery/cli@latest skill add antoinebou12/uml.
+2. Demander à l'agent un diagramme de séquence d'un paiement ; le skill s'active sur la demande de diagramme.
+3. L'agent choisit sequence ou le sequenceDiagram de Mermaid dans la table d'intentions et écrit la source.
+4. Avec uml-mcp branché, il appelle validate_uml et generate_uml, puis répond avec l'URL, le lien du terrain de jeu et une copie du code.
+5. Sans uml-mcp, lancer python scripts/kroki_url.py -t mermaid diagram.mmd pour obtenir le lien.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

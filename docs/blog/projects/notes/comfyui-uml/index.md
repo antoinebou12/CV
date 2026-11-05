@@ -20,6 +20,24 @@ ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a re
 
 **Best fit:** Visual AI workflows combining diagram generation with image refinement.
 
+## Use cases
+
+ComfyUI custom nodes that render Mermaid, PlantUML, Graphviz and other Kroki diagrams, optionally from LLM code.
+
+- **Render a diagram from code** (ComfyUI user, Kroki API): The UML Render node (nodes/uml_diagram.py) sends code to Kroki through nodes/kroki_client.py and returns png, svg, jpeg, pdf, txt or base64, checked against each type’s supported formats.
+- **Render Mermaid offline** (ComfyUI user): With backend set to local, web/js/render_mermaid.mjs uses beautiful-mermaid (after npm ci in web/js) to make SVG or PNG; Graphviz renders locally when the graphviz package is installed.
+- **Generate code with an LLM** (ComfyUI user, LLM provider): UML Code Assistant (nodes/uml_llm.py), or LLM Prompt Engine followed by LLM Call, fills a template from prompts/ and calls Ollama, OpenAI, Anthropic or Gemini; the result feeds UML Render.
+- **Preview and share a link** (ComfyUI user, Kroki API): Diagram Viewer URL (nodes/uml_viewer_url.py) turns kroki_url into a viewer link and an iframe link (viewer.html?embed=1) and shows a live preview in the node.
+- **Save a diagram to ComfyUI** (ComfyUI user): The viewer’s Save button posts to /comfyui-uml/save, registered with the other routes in nodes/uml_routes.py.
+
+### Scenario: Draw a sequence diagram from a prompt with a local Ollama model
+
+1. Run comfy node install comfyui-uml (or clone into ComfyUI/custom_nodes and pip install -r requirements.txt), then restart ComfyUI.
+2. Load workflows/uml_llm_ollama.json in the ComfyUI canvas.
+3. Describe the diagram in UML Code Assistant, with provider ollama and a local model.
+4. Queue the prompt; UML Render sends the generated code to Kroki and outputs the image.
+5. Open the link from Diagram Viewer URL to zoom, copy the link or save the diagram to ComfyUI.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

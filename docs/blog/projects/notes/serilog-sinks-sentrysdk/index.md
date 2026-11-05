@@ -21,6 +21,25 @@ Serilog.Sinks.SentrySDK connects a .NET logging pipeline to the Sentry SDK. Its 
 
 **Best fit:** Enterprise .NET microservice error observability and distributed trace correlation.
 
+## Use cases
+
+NuGet Serilog sink for .NET developers that sends logs, exceptions and traces to Sentry, with ASP.NET Core context.
+
+- **Configure WriteTo.Sentry** (.NET developer): SentrySinkExtensions.cs adds WriteTo.Sentry with a DSN and options such as environment, release, sampleRate, tags and enableTracing, usable from code or the Serilog section of appsettings.json.
+- **Send logs and exceptions** (.NET developer, Sentry): SentrySink.Emit maps the Serilog level, copies properties into scope extras and tags, adds breadcrumbs and calls CaptureMessage or CaptureException.
+- **Trace each log as a span** (.NET developer, Sentry): With enableTracing on, Emit starts a transaction named from the message template and a child span through ITransactionService, then finishes both.
+- **Attach HTTP request context** (.NET developer, Sentry): The AspNetCore package adds app.AddSentryContext() middleware and HttpContextDestructingPolicy so events carry the user, headers and request data.
+- **Scrub data before sending** (.NET developer): An optional beforeSend callback is chained after the sink's own handling; the SentryWeb demo also rewrites messages with a Serilog enricher (Scrubbing/DivisionByZeroFilter.cs).
+- **Publish six NuGet packages** (NuGet.org): .github/workflows/CI.yml packs the main, .6 and .10 package ids for net6.0 and net10.0 and pushes them to NuGet.org when a GitHub release is published.
+
+### Scenario: Report errors from an ASP.NET Core app to Sentry
+
+1. Run dotnet add package Serilog.Sinks.SentrySDK and dotnet add package Serilog.Sinks.SentrySDK.AspNetCore.
+2. Put the project DSN under Serilog, WriteTo, Sentry, Args in appsettings.json.
+3. Build the logger with ReadFrom.Configuration, Destructure.With<HttpContextDestructingPolicy>() and the CheckIfCaptured filter.
+4. Call app.AddSentryContext() in Startup.Configure.
+5. Trigger an error, for example with dotnet run --project demos/SentryWeb/SentryWeb.csproj, and find the event with its request data in Sentry.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

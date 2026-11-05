@@ -1,0 +1,498 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=en dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Simulateur: architecture - Antoine Boucher</title><meta name=theme-color><meta name=description content="Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices."><meta name=author content="Antoine Boucher"><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/fraunces-latin.woff2><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/open-sans-latin.woff2><link rel=preload as=style href=/CV/blog/main-notes-bundle.min.b048df44e6ae28213b09f1bda47d1e7e67752b14a7b04a414b10fea1b6422177.css integrity="sha256-sEjfROauKCE7CfG9pH0efmd1KxSnsEpBSxD+obZCIXc="><link rel=stylesheet href=/CV/blog/main-notes-bundle.min.b048df44e6ae28213b09f1bda47d1e7e67752b14a7b04a414b10fea1b6422177.css integrity="sha256-sEjfROauKCE7CfG9pH0efmd1KxSnsEpBSxD+obZCIXc="><link rel=stylesheet href=/CV/blog/projects-directory.min.6deafb0f1522cf374a9678f520f04d18e1baecc86835457bd85ac2be80ea4c5c.css integrity="sha256-ber7DxUizzdKlnj1IPBNGOG67MhoNUV72FrCvoDqTFw="><link rel=stylesheet href=/CV/blog/repository-notes.min.7e71060df86436aa01bd86e4ba6ba767365b0d14c1dab261219efdd2fa5a23e0.css integrity="sha256-fnEGDfhkNqoBvYbkumunZzZbDRTB2rJhIZ790vpaI+A="><link rel=stylesheet href=/CV/blog/projects-editorial.min.61c7a3d4ca0ade75a1676a09a0207f045bc359947e3746abe90c1e7d0dd94cbc.css><link rel=stylesheet href=/CV/blog/desktop-layout.min.5b480add88292f1bc462411a5b8e2d4ae109d6a09dd2f2025f8df3b9d6c145ab.css><script defer src=/CV/blog/vendor/particles.min.faee7815a5fd27e938d1e01c8392b66332024908eb118048f608eee671371df6.js></script><script defer src=/CV/blog/background-motion.min.0fbdc9113d9f68bf7fc13ad53c612ccd01aeef50b32a257ba22d6243d197961d.js></script><script>document.documentElement.classList.add("js")</script><script defer src=/CV/blog/motion.min.42bfadd556223443557e203cec063a8b27923398b0d348219234a928d4b8bf05.js integrity="sha256-Qr+t1VYiNENVfiA87AY6iyeSM5iw00ghkjSpKNS4vwU="></script><link rel=stylesheet href=/CV/blog/reader-tools.min.321f1207657dab09af203d8ac61b96573fb5d834eef8fcf618662fa6d1b38c30.css><script defer src=/CV/blog/reader-tools.min.907705eb89277f9c514dc7088551ad6d91248b59ae6ca66a89bc0c4b02994059.js></script><link rel=stylesheet href=/CV/blog/dynamic-tables.min.2cdf474f5ccfec841329707d6f25ac70f13e8ab592d2d95c3241382fb33ed74e.css><script defer src=/CV/blog/dynamic-tables.min.f1f265f7d3f3d511b699be49de7bdf2cdfdc433118894a60d05b1602fb1a8e56.js integrity="sha256-8fJl99Pz1RG2mb5J3nvfLN/cQzEYiUpg0FsWAvsajlY="></script><script defer src=/CV/blog/site-webmcp.min.028878ee259bc889c7e272c6e4ebfca1bf1e62746fcefc932d571b3cb5e9f0c7.js integrity="sha256-Aoh47iWbyInH4nLG5Ov8ob8eYnRvzvyTLVcbPLXp8Mc="></script><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Simulateur: a Django stock-market simulation game"><meta itemprop=description content="Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices."><meta itemprop=datePublished content="2026-11-05T12:00:00-05:00"><meta itemprop=dateModified content="2026-11-05T12:00:00-05:00"><meta itemprop=wordCount content="840"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/","name":"Antoine Boucher","position":1},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/projects/","name":"Open-source projects","position":2},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/projects/notes/simulateur/","name":"Simulateur: a Django stock-market simulation game","position":3}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@id":"https://antoineboucher.info/CV/blog/projects/notes/simulateur/#article","@type":"TechArticle","about":{"@type":"SoftwareSourceCode","author":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"codeRepository":"https://github.com/AlgoETS/Simulateur","name":"Simulateur","url":"https://github.com/AlgoETS/Simulateur"},"author":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"dateModified":"2026-11-05T12:00:00-05:00","datePublished":"2026-11-05T12:00:00-05:00","description":"Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices.","headline":"Simulateur: a Django stock-market simulation game","image":["https://antoineboucher.info/CV/blog/images/post-kind-article.png"],"inLanguage":"en","isAccessibleForFree":true,"mainEntityOfPage":{"@id":"https://antoineboucher.info/CV/blog/projects/notes/simulateur/","@type":"WebPage"},"publisher":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"url":"https://antoineboucher.info/CV/blog/projects/notes/simulateur/","wordCount":840,"workTranslation":[{"@id":"https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/#article","@type":"TechArticle","inLanguage":"fr","url":"https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/"}]}</script><meta property="og:url" content="https://antoineboucher.info/CV/blog/projects/notes/simulateur/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Simulateur: a Django stock-market simulation game"><meta property="og:description" content="Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices."><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="projects"><meta property="article:published_time" content="2026-11-05T12:00:00-05:00"><meta property="article:modified_time" content="2026-11-05T12:00:00-05:00"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="Simulateur: a Django stock-market simulation game"><meta name=twitter:description content="Simulateur is a Django platform where admins script market scenarios and teams trade simulated stocks with live WebSocket prices."><link rel=alternate type=text/markdown href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md title="Antoine Boucher"><link rel=canonical href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/><link rel=alternate hreflang=en href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/><link rel=alternate hreflang=fr href=https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/><link rel=alternate hreflang=x-default href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><div id=project-particles aria-hidden=true></div><a class=site-skip-link href=#main-content>Skip to content</a><header class=site-header data-site-header><a class=site-brand href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a><div class=site-header-tools><button type=button class="site-pill site-options-toggle" popovertarget=site-settings aria-label=Options aria-haspopup=dialog aria-expanded=false>
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg>
+<span>Options</span>
+</button>
+<button type=button class="btn-menu site-pill" aria-label="Open menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Open menu" data-menu-close="Close menu">
+<span class=site-menu-bars aria-hidden=true><i></i><i></i><i></i></span></button></div><div id=site-nav-panel class=nav-wrapper><div class=nav-drawer><nav class="site-nav-main site-nav-group" aria-label="Site sections"><a class=site-pill href=/CV/blog/posts/>Posts</a><a class=site-pill href=/CV/blog/projects/ aria-current=page>Projects</a><a class=site-pill href=/CV/blog/tags/conference/>Conference</a><a class=site-pill href=/CV/blog/recipes/>Recipes</a><a class=site-pill href=/CV/blog/search/>Search</a></nav><nav class="site-cv-link site-nav-group" aria-label=CV><a class="site-pill site-pill-cv" href=https://antoineboucher.info/CV/index-en.html>CV</a></nav><nav class="site-lang-switch site-nav-group" aria-label=Language><span class="site-pill is-current" aria-current=true lang=en>EN</span><a class=site-pill href=https://antoineboucher.info/CV/blog/fr/projects/notes/simulateur/ lang=fr hreflang=fr>FR</a></nav></div></div><div id=site-settings popover=auto class=site-settings aria-label=Options><p class=site-settings-label>Options</p><button type=button class="btn-dark site-opt" aria-pressed=false data-label-dark="Dark theme" data-label-light="Light theme">
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+<span data-theme-label>Dark theme</span>
+</button>
+<button id=background-motion type=button class=site-opt hidden data-pause="Pause background" data-resume="Animate background" aria-pressed=false></button><hr><p class=site-settings-label>Profiles</p><nav class=site-profiles aria-label="Social links"><a class=site-opt href=https://github.com/antoinebou12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./github.svg) aria-hidden=true></span>
+<span>GitHub</span>
+</a><a class=site-opt href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./linkedin.svg) aria-hidden=true></span>
+<span>LinkedIn</span>
+</a><a class=site-opt href=https://antoineboucher.info/CV/blog/index.xml rel=alternate><span class=site-social-icon style=--url:url(./rss.svg) aria-hidden=true></span>
+<span>RSS</span></a></nav></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const optionsToggle=document.querySelector(".site-options-toggle"),settings=document.getElementById("site-settings");if(optionsToggle&&settings){const e="popover"in HTMLElement.prototype;e?settings.addEventListener("toggle",e=>{optionsToggle.setAttribute("aria-expanded",String(e.newState==="open"))}):(settings.hidden=!0,optionsToggle.removeAttribute("popovertarget"),optionsToggle.addEventListener("click",()=>{settings.hidden=!settings.hidden,optionsToggle.setAttribute("aria-expanded",String(!settings.hidden))}),document.addEventListener("click",e=>{!settings.hidden&&!settings.contains(e.target)&&!optionsToggle.contains(e.target)&&(settings.hidden=!0,optionsToggle.setAttribute("aria-expanded","false"))}))}const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=()=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),themeLabel=btnDark?.querySelector("[data-theme-label]"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&(btnDark.setAttribute("aria-pressed",e?"true":"false"),themeLabel&&(themeLabel.textContent=e?btnDark.dataset.labelLight:btnDark.dataset.labelDark))},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=repo-doc><header class=repo-doc-heading><nav class=repo-breadcrumbs aria-label=Breadcrumb><a class="article-back repo-doc-back" href=/CV/blog/projects/><span aria-hidden=true>←</span> Projects</a><span aria-hidden=true>/</span><span aria-current=page>Simulateur: a Django stock-market simulation game</span></nav></header><div class="repo-doc-surface min-w-0"><div class=repo-doc-prose><section class=repo-doc-content aria-labelledby=single-post-title><div class="repo-note repo-note--prose" data-repo-shell><div class=repo-shell-layout><details class=repo-sidenav-disclosure open><summary>Table of contents</summary><nav class=repo-sidenav aria-label="Table of contents"><p class=repo-sidenav-label>Table of contents</p><ol role=list><li><a href=#overview><span class=project-toc-number>1.</span> <span>Overview</span></a></li><li><a href=#project-section-2><span class=project-toc-number>2.</span> <span>Use cases</span></a></li><li><a href=#installation><span class=project-toc-number>3.</span> <span>Getting started</span></a></li><li><a href=#reader-guide><span class=project-toc-number>4.</span> <span>Repository guide</span></a></li><li><a href=#features><span class=project-toc-number>5.</span> <span>Features</span></a></li><li><a href=#limits><span class=project-toc-number>6.</span> <span>Limits</span></a></li><li><a href=#sources><span class=project-toc-number>7.</span> <span>Sources</span></a></li><li><a href=#glossary-heading><span class=project-toc-number>8.</span> <span>Glossary</span></a></li><li><a href=#project-bibliography-heading><span class=project-toc-number>9.</span> <span>References</span></a></li></ol></nav></details><div class=repo-shell-main><header class=repo-hero><div class=repo-hero-panel><h1 id=single-post-title class=repo-doc-title>Simulateur</h1><p class=repo-hero-lede>Simulateur is a stock-market simulation platform built with Django: an admin prepares a scenario with fictional companies, news and events, and teams of players trade the simulated stocks while prices move in real time. It is an <a href=https://github.com/AlgoETS>AlgoÉTS</a> repository for groups that want to run a market game together, with an admin interface that controls the settings and the flow of each simulation.</p><div class=repo-status-row><span class="repo-badge kind">Web app</span><span class="repo-badge api">API</span><span class="repo-badge docker">Docker</span></div><div class=repo-tech-badges><span class="tag tool">Python</span><span class="tag tool">Django</span><span class="tag tool">Django REST framework</span><span class="tag tool">Channels</span><span class="tag tool">Daphne</span><span class="tag tool">Celery</span><span class="tag tool">PostgreSQL</span><span class="tag tool">Redis</span><span class="tag tool">MinIO</span><span class="tag tool">Ollama</span><span class="tag tool">Wagtail</span></div><ul class=repo-meta-chips role=list><li class=repo-chip><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5.0 100 13 6.5 6.5.0 000-13zM2.5 8a5.5 5.5.0 1111 0 5.5 5.5.0 01-11 0zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1z"/></svg><span>Updated <time datetime=2026-11-05>2026-11-05</time></span></li></ul><div class=repo-actions><a class="btn primary" href=https://github.com/AlgoETS/Simulateur><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1A7 7 0 005.8 14.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1.0-.1.0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6.0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1.0.0.7-.2 2.2.8a7.4 7.4.0 014 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 008 1z"/></svg>View source</a><a class="btn ghost" href=https://github.com/AlgoETS/Simulateur#readme><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5.0 014.5 1h7A1.5 1.5.0 0113 2.5v11a.5.5.0 01-.8.4L8 11.1l-4.2 2.8a.5.5.0 01-.8-.4v-11zM4.5 2a.5.5.0 00-.5.5V10l3.7-2.5a.5.5.0 01.6.0L12 10V2.5a.5.5.0 00-.5-.5h-7z"/></svg>README</a><a class="btn ghost" href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md type=text/markdown title="Markdown brief of this project (agent context)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2 3.5A1.5 1.5.0 013.5 2h9A1.5 1.5.0 0114 3.5v9A1.5 1.5.0 0112.5 14h-9A1.5 1.5.0 012 12.5v-9zM4 5v6h1.5V8L7 10l1.5-2v3H10V5H8.5L7 7 5.5 5H4zm7 0v3.5H9.5l2 2.5 2-2.5H12V5h-1z"/></svg>Markdown</a></div></div></header><div class=repo-prose-body><h2 id=overview><span class=project-section-number>1.</span> Overview</h2><p>The Django project lives in <code>simulateur/</code>. <code>simulateur/settings.py</code> registers two local apps, <code>simulation</code> and <code>backtesting</code>, and uses SQLite unless <code>DATABASE_ENGINE=postgresql</code> is set.</p><ul><li><strong>Price engine.</strong> <code>simulation/logic/simulation_manager.py</code> holds one <code>SimulationManager</code> per simulation. While the state is <code>ongoing</code>, it sleeps for the configured timer step, skips New York market-closed hours if asked, and writes an OHLC candle per stock from the chosen noise model (<code>brownian</code>, <code>perlin</code>, <code>random_walk</code>, <code>fbm</code>, <code>random</code> or <code>monte_carlo</code> in <code>logic/noise_patterns/</code>). Each candle is stored as <code>StockPriceHistory</code> and pushed to the WebSocket layer.</li><li><strong>Lifecycle.</strong> <code>manage.py start_simulation &lt;ids></code> sets the simulations to <code>ongoing</code>, polls their state every five seconds and applies changed settings. The states are initialized, created, published, ongoing, stopped and finished.</li><li><strong>Live updates.</strong> <code>simulation/channels/consumers.py</code> serves <code>ws/simulation/&lt;room>/</code> and relays stock updates, news, events and triggers to the game dashboard.</li><li><strong>Trading.</strong> <code>simulation/api/portfolio.py</code> handles buy and sell orders against the latest price and the portfolio balance, and exposes holdings, performance and leaderboards.</li><li><strong>Scenario authoring.</strong> The admin dashboard walks through five steps (settings, companies and stocks, teams, events, review). <code>simulation/api/ai_llm.py</code> can draft news, events, triggers, companies or whole scenarios with an Ollama model (<code>OLLAMA_MODEL</code>, <code>llama3</code> by default).</li><li><strong>Backtesting app.</strong> <code>backtesting/</code> adds chart search, strategy management and a sandbox page, data endpoints named for FMP, CoinGecko and yfinance, and Celery tasks for strategy runs.</li></ul><p><code>run.py</code> ties it together: it installs requirements, applies migrations, creates a superadmin, seeds the CSV files in <code>data/</code>, then starts Daphne (and optionally simulations and the Wagtail CMS on port 8001) in separate threads. In the Docker image, <code>run.sh</code> runs the same migrate, seed and superadmin steps before <code>run.py --start-simulation 1</code>.</p><section class="doc repo-use-cases" id=use-cases><h2 id=project-section-2><span class=project-section-number>2.</span> Use cases</h2><p class=repo-lede-sm>Django stock-market game where admins run scripted scenarios and teams trade simulated stocks live.</p><figure class=repo-usecase-figure><svg class="repo-usecase-svg" viewBox="0 0 720 448" role="img" aria-labelledby="use-case-title-simulateur"><title id="use-case-title-simulateur">Use-case diagram for Simulateur: Build a scenario; Run a market simulation; Generate content with AI; Join a team; Buy and sell stocks; Follow live prices</title><rect class="uc-boundary" x="160" y="12" width="400" height="424" rx="12"/><text class="uc-system" x="360" y="38" text-anchor="middle">Simulateur</text><line class="uc-link" x1="100" y1="137.33333333333334" x2="210" y2="84"/><ellipse class="uc-case" cx="360" cy="84" rx="150" ry="22"/><text class="uc-case-label" x="360" y="88.5" text-anchor="middle">Build a scenario</text><line class="uc-link" x1="100" y1="137.33333333333334" x2="210" y2="146"/><ellipse class="uc-case" cx="360" cy="146" rx="150" ry="22"/><text class="uc-case-label" x="360" y="150.5" text-anchor="middle">Run a market simulation</text><line class="uc-link" x1="100" y1="137.33333333333334" x2="210" y2="208"/><line class="uc-link" x1="592" y1="224" x2="510" y2="208"/><ellipse class="uc-case" cx="360" cy="208" rx="150" ry="22"/><text class="uc-case-label" x="360" y="212.5" text-anchor="middle">Generate content with AI</text><line class="uc-link" x1="100" y1="286.6666666666667" x2="210" y2="270"/><ellipse class="uc-case" cx="360" cy="270" rx="150" ry="22"/><text class="uc-case-label" x="360" y="274.5" text-anchor="middle">Join a team</text><line class="uc-link" x1="100" y1="286.6666666666667" x2="210" y2="332"/><ellipse class="uc-case" cx="360" cy="332" rx="150" ry="22"/><text class="uc-case-label" x="360" y="336.5" text-anchor="middle">Buy and sell stocks</text><line class="uc-link" x1="100" y1="286.6666666666667" x2="210" y2="394"/><ellipse class="uc-case" cx="360" cy="394" rx="150" ry="22"/><text class="uc-case-label" x="360" y="398.5" text-anchor="middle">Follow live prices</text><g class="uc-person"><circle cx="82" cy="115.33333333333334" r="9"/><path d="m82 124.333333333333v27m-15-17H97m-15 17-12 18m12-18 12 18"/></g><text class="uc-actor-label" x="82" y="187.33333333333334" text-anchor="middle">Simulation admin</text><g class="uc-person"><circle cx="82" cy="264.6666666666667" r="9"/><path d="m82 273.666666666667v27m-15-17H97m-15 17-12 18m12-18 12 18"/></g><text class="uc-actor-label" x="82" y="336.6666666666667" text-anchor="middle">Player</text><rect class="uc-system-actor" x="592" y="204" width="92" height="40" rx="6"/><text class="uc-stereotype" x="638" y="228" text-anchor="middle">«system»</text><text class="uc-actor-label" x="638" y="262" text-anchor="middle">Ollama LLM</text></svg><figcaption>People on the left, external systems on the right; each oval is a use case backed by the files cited below.</figcaption></figure><dl class=repo-usecase-list><div><dt>Build a scenario</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Simulation admin</span></span><p>The admin dashboard walks through five form steps (settings, companies and stocks, teams, events, review) backed by the scenario and simulation-manager APIs.</p></dd></div><div><dt>Run a market simulation</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Simulation admin</span></span><p>manage.py start_simulation sets a simulation to ongoing; SimulationManager then writes OHLC candles from the chosen noise model (Brownian, Perlin, random walk, fBm, Monte Carlo) at each time step.</p></dd></div><div><dt>Generate content with AI</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Simulation admin</span><span class="repo-usecase-actor repo-usecase-actor--system">Ollama LLM</span></span><p>simulation/api/ai_llm.py exposes create-news-ai, create-event-ai, create-trigger-ai, create-company-stock-ai and create-scenario-ai, which prompt an Ollama model (OLLAMA_MODEL, llama3 by default).</p></dd></div><div><dt>Join a team</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Player</span></span><p>A team member generates a join link from the team dashboard (team/generate-join-link/) and other players join with it; the same page shows members and leaderboards.</p></dd></div><div><dt>Buy and sell stocks</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Player</span></span><p>From /dashboard/, the order form calls POST /api/stock/buy/ or /api/stock/sell/, which check the balance against the latest price, record an order and update holdings.</p></dd></div><div><dt>Follow live prices</dt><dd><span class=repo-usecase-actors><span class="repo-usecase-actor repo-usecase-actor--person">Player</span></span><p>The game dashboard opens ws/simulation/&lt;id>/ and Django Channels pushes stock updates, news, events and triggers from SimulationConsumer.</p></dd></div></dl><h3 id=project-section-2-1><span class=project-section-number>2.1.</span> Scenario: Run the seeded demo simulation</h3><ol class=repo-scenario><li>In simulateur/, copy env-default to .env and run python3 run.py --install to install packages, migrate, create admin/admin and seed the CSV data.</li><li>Start the ASGI server and simulation 1 with python3 run.py --start-simulation 1 (Daphne on port 8000).</li><li>Sign in as admin and open /dashboard/admin to review the scenario, settings and noise function.</li><li>Open /dashboard/game: candles arrive over the ws/simulation/ WebSocket at each timer step.</li><li>From /dashboard/, choose the simulation and a stock and press Buy, which calls POST /api/stock/buy/; then check holdings and leaderboards.</li></ol><p class=repo-usecase-sources><span>Files read</span><code>README.md</code><code>simulateur/run.py</code><code>simulateur/entrypoint.sh</code><code>simulateur/docker-compose.yml</code><code>simulateur/requirements.txt</code><code>simulateur/simulateur/settings.py</code><code>simulateur/simulateur/urls.py</code><code>simulateur/simulation/urls.py</code><code>simulateur/simulation/logic/simulation_manager.py</code><code>simulateur/simulation/logic/broker.py</code><code>simulateur/simulation/logic/BuySellQueue.py</code><code>simulateur/simulation/api/portfolio.py</code><code>simulateur/simulation/api/ai_llm.py</code><code>simulateur/simulation/channels/consumers.py</code><code>simulateur/simulation/management/commands/start_simulation.py</code><code>simulateur/simulation/management/commands/seed_database.py</code><code>docs/diagrams/actors.plantuml</code><code>simulateur/simulation/templates/dashboard/user_dashboard.html</code></p></section><h2 id=installation><span class=project-section-number>3.</span> Getting started</h2><p>The README&rsquo;s Docker Compose path runs Django, Celery, PostgreSQL, a Redis-compatible Dragonfly server and MinIO. The compose file and its <code>.env</code> live in <code>simulateur/</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-shell data-lang=shell><span style=display:flex><span>cd simulateur
+</span></span><span style=display:flex><span>cp env-default .env
+</span></span><span style=display:flex><span>docker compose --profile all down
+</span></span><span style=display:flex><span>docker compose --profile all up -d --build
+</span></span></code></pre></div><p>Without Docker, use <code>run.py</code> (the README writes <code>python3 -m run.py</code>, but the script is run directly):</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-shell data-lang=shell><span style=display:flex><span>cd simulateur
+</span></span><span style=display:flex><span>python3 run.py --install
+</span></span><span style=display:flex><span>python3 run.py --start-simulation <span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><p><code>--install</code> creates a local-development superadmin with the README&rsquo;s sample <code>admin</code>/<code>admin</code> login and seeds the database; change it before exposing the app. Another superadmin can be created with your own values:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-shell data-lang=shell><span style=display:flex><span>python3 manage.py createsuperadmin --username<span style=color:#f92672>=</span>&lt;name&gt; --password<span style=color:#f92672>=</span>&lt;password&gt; --email<span style=color:#f92672>=</span>&lt;email&gt;
+</span></span></code></pre></div><p>The Django test suite under <code>simulation/tests/</code> runs with <code>python3 manage.py test</code>. Swagger and ReDoc pages are served at <code>/swagger/</code> and <code>/redoc/</code>.</p><h2 id=reader-guide><span class=project-section-number>4.</span> Repository guide</h2><ul><li><code>simulateur/run.py</code>: install, migrate, seed and start Daphne, simulations or the CMS.</li><li><code>simulateur/simulateur/</code>: settings, URL root, ASGI entry (<code>asgi.py</code>) and Celery app.</li><li><code>simulateur/simulation/logic/</code>: simulation loop, noise models, broker and buy/sell queue.</li><li><code>simulateur/simulation/api/</code>: REST views for companies, stocks, scenarios, simulation managers, news, events, triggers, teams, portfolios and AI generation.</li><li><code>simulateur/simulation/channels/</code>: WebSocket consumer and routing.</li><li><code>simulateur/simulation/models/</code>: scenario, company, stock, team, portfolio, order and settings models.</li><li><code>simulateur/simulation/management/commands/</code>: <code>start_simulation</code>, <code>seed_database</code> and <code>createsuperadmin</code>.</li><li><code>simulateur/simulation/templates/</code>: admin, game, team and user dashboards built from partials.</li><li><code>simulateur/simulation/tests/</code>: tests for the API, models, logic, channels and commands.</li><li><code>simulateur/backtesting/</code>: backtesting views, data APIs, models and Celery tasks.</li><li><code>simulateur/cms/</code>: a separate Wagtail project.</li><li><code>simulateur/data/</code>: CSV seed data (companies, stocks, scenarios, teams, users, events, triggers …).</li><li><code>notebooks/</code>: prototypes for the broker, agents, noise, charts and strategies.</li><li><code>docs/diagrams/</code>: PlantUML use-case and sequence diagrams.</li></ul><h2 id=features><span class=project-section-number>5.</span> Features</h2><ul><li>create companies with backstories, stocks, teams and user profiles;</li><li>configure the timer step, fluctuation rate, market-hours closing and noise model per simulation;</li><li>start, stop and finish simulations from the admin dashboard or the command line;</li><li>stream OHLC candles, news, events and triggers to players over WebSockets;</li><li>buy and sell stocks within a portfolio balance and follow holdings and performance;</li><li>rank players and teams on leaderboards and invite players with team join links;</li><li>draft scenario content with a local Ollama model;</li><li>sign in with accounts or Google, GitHub, Microsoft and Notion through django-allauth;</li><li>expose health checks, Prometheus metrics and an OpenAPI description.</li></ul><h2 id=limits><span class=project-section-number>6.</span> Limits</h2><ul><li>The README lists Django 4.2.13; <code>requirements.txt</code> pins Django 5.0.8. The README badge says Python 3.12 while the Docker image uses Python 3.10.</li><li>Price broadcasts are sent to WebSocket room <code>1</code> regardless of the simulation id, so only simulation 1 receives live updates as written.</li><li>The <code>dynamic</code> trading mode relies on <code>logic/broker.py</code>, which imports the <code>BuySellQueue</code> module instead of the class and omits the <code>simulation_manager</code> argument; that path looks unfinished. The default mode is <code>static</code>.</li><li><code>logic/noise_patterns/</code> also contains GBM, Heston, Ornstein-Uhlenbeck and Vasicek models that the simulation manager does not offer.</li><li><code>backtesting/batchbacktesting.py</code> imports <code>src.data</code> and <code>strategies</code> modules that are not in the repository.</li><li>The AI endpoints need a reachable Ollama server; <code>entrypoint.sh</code> starts one and pulls a model, but the Dockerfile and compose file do not use it.</li><li>Defaults use weak demo credentials (<code>admin</code>/<code>admin</code>, <code>minioadmin</code>, <code>postgres</code>), and <code>scripts/</code> contains a localhost certificate and key.</li></ul><h2 id=sources><span class=project-section-number>7.</span> Sources</h2><ul><li><a href=https://github.com/AlgoETS/Simulateur>GitHub repository</a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/README.md>README</a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/run.py><code>simulateur/run.py</code></a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/logic/simulation_manager.py><code>simulateur/simulation/logic/simulation_manager.py</code></a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/urls.py><code>simulateur/simulation/urls.py</code></a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/api/portfolio.py><code>simulateur/simulation/api/portfolio.py</code></a></li><li><a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/docker-compose.yml><code>simulateur/docker-compose.yml</code></a></li></ul><section class="doc documentation-glossary" id=glossary aria-labelledby=glossary-heading data-glossary><h2 id=glossary-heading><span class=project-section-number>8.</span> Glossary</h2><div class=glossary-search hidden data-glossary-search><label for=glossary-query>Find a term</label>
+<input type=search id=glossary-query autocomplete=off data-glossary-query><p role=status aria-live=polite data-glossary-status data-empty="No matching terms. Try another word." data-count=terms></p></div><div class=glossary-entries><details id=term-repository data-glossary-entry><summary>Repository</summary><p>The versioned source files, configuration, and history of a project.</p></details><details id=term-readme data-glossary-entry><summary>README</summary><p>The repository’s entry document, usually covering its purpose and initial setup.</p></details><details id=term-dependency data-glossary-entry><summary>Dependency</summary><p>A library, tool, or service that another component needs to build or run.</p></details><details id=term-api data-glossary-entry><summary>API</summary><p>An interface through which software components exchange requests and results. An API does not have to use HTTP.</p></details><details id=term-http data-glossary-entry><summary>HTTP</summary><p>A request-and-response protocol used by browsers and web services. A method, path, headers, and optional body describe a request.</p></details><details id=term-session data-glossary-entry><summary>Session</summary><p>State kept across related requests, often to track a signed-in user. Authentication and permission checks remain separate concerns.</p></details><details id=term-docker data-glossary-entry><summary>Container</summary><p>An isolated process environment created from an image. Persistent data needs storage outside the container’s disposable filesystem.</p></details><details id=term-compose data-glossary-entry><summary>Docker Compose</summary><p>A configuration format and tool for starting related containers, networks, and volumes. Startup order alone does not guarantee service readiness.</p></details><details id=term-port data-glossary-entry><summary>Published port</summary><p>A host port mapped to a service’s container port. Publishing a port can expose that service beyond its container network.</p></details><details id=term-cli data-glossary-entry><summary>CLI</summary><p>A text interface in which commands and arguments select operations. Exit codes let scripts detect success or failure.</p></details><details id=term-build data-glossary-entry><summary>Build</summary><p>The steps that turn source files and dependencies into a runnable program or distributable artifact.</p></details><details id=term-mermaid data-glossary-entry><summary>Mermaid</summary><p>A text-based diagram language. Nodes and connections describe a model; the diagram itself does not execute the project.</p></details><details id=term-database data-glossary-entry><summary>Database</summary><p>A system for storing and querying structured records. Its schema, access rules, and persistence determine how the application can use that data.</p></details></div></section><script src=/CV/blog/documentation-reader.min.b63e89bc86d3c21598073be5a762be8d5eb6cec2fd8ccfb4bad7f83e4cbd602c.js integrity="sha256-tj6JvIbTwhWYBzvlp2K+jV62zsL9jM+0utf4Pky9YCw=" defer></script><section class="doc repo-project-references project-paper-references" id=project-references aria-labelledby=project-bibliography-heading><h2 id=project-bibliography-heading><span class=project-section-number>9.</span> References</h2><ol class=project-reference-entries><li id=project-source-1><a href=https://github.com/AlgoETS><cite>AlgoÉTS</cite></a>. (n.d.). <span>[Web page]</span> github.com.</li><li id=project-source-2>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur><cite>Simulateur</cite></a>. <span>[Software repository]</span> github.com.</li><li id=project-source-3>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/README.md><cite>README</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-4>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/run.py><cite>simulateur/run.py</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-5>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/logic/simulation_manager.py><cite>simulateur/simulation/logic/simulation_manager.py</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-6>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/urls.py><cite>simulateur/simulation/urls.py</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-7>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/simulation/api/portfolio.py><cite>simulateur/simulation/api/portfolio.py</cite></a>. <span>[Source file or documentation]</span> github.com.</li><li id=project-source-8>AlgoETS. (n.d.). <a href=https://github.com/AlgoETS/Simulateur/blob/main/simulateur/docker-compose.yml><cite>simulateur/docker-compose.yml</cite></a>. <span>[Source file or documentation]</span> github.com.</li></ol><p class=repo-evidence-label>“n.d.” indicates that no publication date has been verified. File links retain the inspected revision where available.</p></section></div></div></div></div></section></div></div><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  const pageNavigation = shell?.querySelector('.repo-sidenav-disclosure');
+  if (pageNavigation) {
+    const compact = matchMedia('(max-width: 1099px)');
+    
+    
+    const adaptNavigation = () => { pageNavigation.open = !compact.matches; pageNavigation.dataset.navAdapted = 'true'; };
+    adaptNavigation();
+    compact.addEventListener('change', adaptNavigation);
+    pageNavigation.addEventListener('click', event => {
+      if (compact.matches && event.target.closest('a')) pageNavigation.open = false;
+    });
+  }
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', decodeURIComponent(link.hash) === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source), .journal-article pre')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    const sourceDisclosure = document.createElement('details');
+    sourceDisclosure.className = 'article-diagram-loading';
+    const summary = document.createElement('summary');
+    summary.textContent = frPage ? 'Chargement du diagramme · Voir la source' : 'Loading diagram · View source';
+    original.replaceWith(sourceDisclosure);
+    sourceDisclosure.append(summary, original);
+    return {
+      source: block.textContent,
+      original: sourceDisclosure,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  
+  
+  const nearViewport = new WeakSet();
+  const proximity = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    let due = false;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      nearViewport.add(entry.target);
+      proximity.unobserve(entry.target);
+      due = true;
+    }
+    if (due) void paintDiagrams();
+  }, { rootMargin: '150% 0px' }) : null;
+  function blockReady(block) {
+    if (block.lazyHost && block.lazyHost.open !== true) return false;
+    if (!proximity) return true;
+    
+    if (block.container) return true;
+    if (nearViewport.has(block.original)) return true;
+    proximity.observe(block.original);
+    return false;
+  }
+  
+  
+  const umlBlocks = [...document.querySelectorAll('[data-uml-svg]')].map(host => ({
+    original: host, src: host.dataset.umlSvg, name: host.dataset.umlName || 'uml.svg',
+    lazyHost: host.closest('details'), container: null, zoom: null, painted: false, loading: false,
+  }));
+  let umlCount = 0;
+  async function paintUml() {
+    for (const block of umlBlocks) {
+      if (block.painted || block.loading || (block.lazyHost && !block.lazyHost.open)) continue;
+      block.loading = true;
+      try {
+        const response = await fetch(block.src);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const parsed = new DOMParser().parseFromString(await response.text(), 'image/svg+xml');
+        const svg = parsed.documentElement;
+        if (svg.nodeName !== 'svg') throw new Error('Not an SVG document');
+        svg.querySelectorAll('script, foreignObject').forEach(node => node.remove());
+        const prefix = `uml${++umlCount}-`;
+        for (const element of [svg, ...svg.querySelectorAll('*')]) {
+          for (const attribute of [...element.attributes]) {
+            if (/^on/i.test(attribute.name)) element.removeAttribute(attribute.name);
+            else if (attribute.name === 'id') element.id = prefix + attribute.value;
+            else if (/href$/i.test(attribute.name) && attribute.value.startsWith('#')) element.setAttribute(attribute.name, '#' + prefix + attribute.value.slice(1));
+            else if (attribute.value.includes('url(#')) element.setAttribute(attribute.name, attribute.value.replaceAll('url(#', `url(#${prefix}`));
+          }
+        }
+        
+        const natural = svg.viewBox?.baseVal?.width || parseFloat(svg.getAttribute('width')) || 800;
+        for (const name of ['style', 'width', 'height']) svg.removeAttribute(name);
+        svg.style.width = '100%';
+        
+        svg.style.setProperty('max-width', natural + 'px', 'important');
+        svg.style.height = 'auto';
+        const figure = document.createElement('figure');
+        figure.append(document.importNode(svg, true));
+        makeInteractive(block, figure, block.name);
+        figure.classList.add('uml-diagram');
+      } catch (error) {
+        console.warn('UML image remains available:', error);
+      } finally {
+        block.loading = false;
+      }
+    }
+  }
+  umlBlocks.forEach(block => block.lazyHost?.addEventListener('toggle', () => { if (block.lazyHost.open) void paintUml(); }));
+  void paintUml();
+  let paintDiagrams = async () => {};
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    paintDiagrams = async function paintDiagramsNow() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } catch (error) {
+        document.querySelectorAll('.article-diagram-loading > summary').forEach(summary => {
+          summary.textContent = frPage ? 'Diagramme indisponible · Voir la source' : 'Diagram unavailable · View source';
+        });
+        console.warn('Diagram renderer unavailable:', error);
+      } finally { rendering = false; }
+    };
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script></article></main><div id=reader-tools class=reader-ui hidden data-copied="Link copied" data-failed="Copy unavailable. Copy the address from your browser." data-empty="No matching sections. Try another word." data-results=results><div class=reader-progress aria-hidden=true><span></span></div><div class=reader-launch aria-label="Reading tools"><div class=reader-split><button type=button data-reader-search aria-haspopup=dialog><span aria-hidden=true>⌕</span> Explore this page <kbd>/</kbd></button>
+<button type=button data-reader-copy aria-describedby=reader-copy-tip aria-label="Copy page link">↗</button>
+<span id=reader-copy-tip class=reader-tooltip role=tooltip>Copy link</span></div></div><button class=reader-fab popovertarget=reader-actions aria-label="Page tools"><span aria-hidden=true>☷</span><span>Page tools</span></button><div id=reader-actions popover aria-label="Page actions"><strong>On this page</strong>
+<button type=button data-reader-search>Find a section <kbd>/</kbd></button>
+<button type=button data-reader-copy>Copy page link</button>
+<button type=button data-reader-top>Back to top <span aria-hidden=true>↑</span></button><hr><label><input type=checkbox id=reader-expand> Expand text sections</label><p>Diagrams load when opened.</p></div><dialog id=reader-search aria-labelledby=reader-search-title><header><div><small>QUICK NAVIGATION</small><h2 id=reader-search-title>Explore this page</h2></div><button type=button data-reader-close aria-label=Close>×</button></header><label for=reader-query>Find a heading or diagram</label><div class=reader-search-field><input type=search id=reader-query autocomplete=off placeholder="Architecture, tests, references…"><button type=button data-reader-clear>Clear</button></div><div class=reader-segments role=group aria-label="Filter results"><button type=button data-reader-filter=all aria-pressed=true>All</button><button type=button data-reader-filter=section aria-pressed=false>Sections</button><button type=button data-reader-filter=diagram aria-pressed=false>Diagrams</button></div><p id=reader-result-count role=status></p><ul id=reader-results></ul></dialog><div id=reader-feedback role=status aria-live=polite aria-atomic=true hidden></div></div><footer class=site-footer aria-label="Site footer"><div class=site-footer-grid><div class=site-footer-brand><a class=site-footer-name href=https://antoineboucher.info/CV/blog/>Antoine Boucher</a><p>Software engineer focused on platform and graphics; writing on Rust, systems, and performance.</p><p class=site-footer-copy>&copy; 2026 Antoine Boucher · Montréal</p></div><nav class=site-footer-col aria-label=Sections><p class=site-footer-label>Explore</p><a href=/CV/blog/posts/>Posts</a>
+<a href=/CV/blog/projects/>Projects</a>
+<a href=/CV/blog/tags/conference/>Conference</a>
+<a href=/CV/blog/recipes/>Recipes</a>
+<a href=/CV/blog/search/>Search</a>
+<a href=https://antoineboucher.info/CV/index-en.html>CV</a></nav><nav class=site-footer-col aria-label=Profiles><p class=site-footer-label>Profiles</p><a href=https://github.com/antoinebou12 rel="me noopener" target=_blank>GitHub</a><a href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank>LinkedIn</a>
+<a href=https://antoineboucher.info/CV/blog/index.xml rel=alternate type=application/rss+xml>RSS</a>
+<a href=https://cal.com/antoine-boucher-dev/30min rel=noopener target=_blank>Book a call</a></nav><nav class=site-footer-col aria-label="For agents"><p class=site-footer-label>Raw reading</p><a href=https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md type=text/markdown>This page as Markdown</a>
+<a href=/CV/blog/llms.txt>llms.txt</a>
+<a href=/CV/blog/sitemap.xml>Sitemap</a>
+<a href=https://gohugo.io/ rel=noopener target=_blank>Powered by Hugo</a></nav></div></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

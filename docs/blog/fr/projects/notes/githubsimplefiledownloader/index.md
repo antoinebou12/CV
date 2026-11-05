@@ -20,6 +20,23 @@ Cette extension archivée tentait d’ajouter des boutons de téléchargement au
 
 **Cas d’usage:** Téléchargement immédiat d'un fichier isolé sans cloner le dépôt entier.
 
+## Cas d’utilisation
+
+Une extension Chrome qui ajoute un lien de téléchargement et la taille de chaque fichier dans GitHub, GitLab et Bitbucket.
+
+- **Ajouter des icônes aux listes** (Visiteur de dépôt, Site d’hébergement Git): manifest.json injecte inject_github.js, inject_gitlab.js ou inject_bitbucket.js selon le site ; chaque script ajoute une icône-lien à chaque ligne (td.content, td.tree-item-file-name ou tr.iterable-item).
+- **Télécharger un seul fichier** (Visiteur de dépôt, Site d’hébergement Git): Le script réécrit le lien blob en URL brute (raw.githubusercontent.com sur GitHub, /raw/ sur GitLab), récupère le texte et pose une URL d’objet Blob avec l’attribut download.
+- **Afficher la taille du fichier** (Visiteur de dépôt, Site d’hébergement Git): Sur GitHub, getFileURLDocument() charge la page du fichier avec XMLHttpRequest et changeFileSize() copie la ligne Bytes/KB/MB dans un span près de l’icône.
+- **Ouvrir un dossier par l’icône** (Visiteur de dépôt, Site d’hébergement Git): Les chemins sans extension sont traités comme des dossiers : l’icône renvoie alors à la page du dossier au lieu de télécharger.
+
+### Scénario : Récupérer un seul fichier de config sur GitHub
+
+1. Charger l’extension dans Chrome (Manifest V2, scripts de contenu pour github.com, gitlab.com et bitbucket.org).
+2. Ouvrir la liste de fichiers d’un dépôt sur github.com ; inject_github.js attend que document.readyState soit complete.
+3. Une petite icône GitHub et une taille s’affichent à côté de chaque fichier.
+4. Cliquer sur l’icône du fichier : le contenu brut est enregistré sous le nom du fichier.
+5. Si les icônes n’apparaissent pas, actualiser la page comme le conseille le README ; son titre signale aussi que l’extension ne fonctionne plus.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

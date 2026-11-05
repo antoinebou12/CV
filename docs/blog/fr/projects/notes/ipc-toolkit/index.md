@@ -21,6 +21,25 @@ ipc-toolkit fournit des composants géométriques pour la simulation avec contac
 
 **Cas d’usage:** Mécanique du contact continu non linéaire pour moteurs physiques.
 
+## Cas d’utilisation
+
+Bibliothèque C++ avec liaisons Python pour l’Incremental Potential Contact : barrières, CCD et frottement pour simulateurs.
+
+- **Construire un maillage** (Développeur simulation): ipc::CollisionMesh reçoit les matrices de sommets, d’arêtes et de faces (Eigen), comme dans le démarrage rapide du README.
+- **Trouver les contacts sous dhat** (Développeur simulation, Simulateur hôte): NormalCollisions::build() s’appuie sur une phase large (grille de hachage, LBVH, balayage…) pour réunir les paires de primitives plus proches que dhat.
+- **Évaluer barrière et dérivées** (Développeur simulation, Simulateur hôte): BarrierPotential renvoie l’énergie, le gradient et la hessienne creuse que le solveur hôte ajoute à son objectif.
+- **Obtenir un pas sans collision** (Développeur simulation, Simulateur hôte): compute_collision_free_stepsize() lance la détection de collision continue (Tight Inclusion par défaut, variantes non linéaire et additive dans src/ipc/ccd) entre deux états de sommets.
+- **Ajouter le frottement** (Développeur simulation, Simulateur hôte): FrictionPotential agit sur les TangentialCollisions ; smooth_mu.hpp ajoute des coefficients de frottement anisotrope elliptique (commit Anisotropic friction #210).
+- **Le piloter depuis Python** (Développeur simulation): Les liaisons pybind11 de python/src exposent la même API sous ipctk (pip install ipctk), compilées quand IPC_TOOLKIT_BUILD_PYTHON est activé.
+
+### Scénario : Ajouter le contact à un pas de temps implicite
+
+1. Installer les liaisons avec pip install ipctk, ou ajouter la bibliothèque à un projet CMake.
+2. Créer un CollisionMesh à partir des sommets, arêtes et faces de la scène.
+3. Construire les NormalCollisions avec dhat = 1e-3 pour les positions actuelles.
+4. Ajouter l’énergie, le gradient et la hessienne de BarrierPotential au système de Newton du solveur.
+5. Avant d’accepter le pas de Newton, le limiter avec compute_collision_free_stepsize pour qu’aucune surface ne se traverse.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |

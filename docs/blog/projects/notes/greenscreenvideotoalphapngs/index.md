@@ -21,6 +21,24 @@ GreenScreenVideotoAlphaPNGs separates video acquisition, frame extraction and ch
 
 **Best fit:** Asset preparation for augmented reality (Snapchat Lens Studio, Spark AR).
 
+## Use cases
+
+A Python CLI that turns green-screen video into transparent PNG frames, GIFs or alpha .mov files for Lens Studio.
+
+- **Download footage from a URL** (AR lens creator, YouTube (yt-dlp)): greenscreen convert accepts a YouTube URL; convert.py calls download_video() and download_audio() from download.py, which use yt-dlp.
+- **Split a video into frames** (AR lens creator, ffmpeg): frames.py writes numbered PNGs (0.png, 1.png…) with ffmpeg, or with OpenCV when --no-ffmpeg is passed.
+- **Key out the green background** (AR lens creator): chroma.py computes a YCbCr distance from the key color (pixel 1,1 by default, tolerance 50–130) and writes RGBA PNGs into a sibling *_alpha folder.
+- **Build a transparent GIF** (AR lens creator, ffmpeg): greenscreen gif <dir> uses numpngw and the optional APNGLib extension by default, or an ffmpeg palette with --fast-ffmpeg; the GIF is written next to the folder.
+- **Encode an alpha .mov** (AR lens creator, ffmpeg): greenscreen video <dir> --fps 30 encodes the PNG sequence to Videogen-<stamp>.mov with the qtrle or prores_4444 codec.
+
+### Scenario: From a green-screen clip to a Lens Studio animation
+
+1. Run bash install.sh (or .\install.ps1 on Windows), then uv run greenscreen --help.
+2. Run uv run greenscreen convert clip.mp4 to extract frames into clip/ and keyed frames into clip_alpha/.
+3. Outputs that start with the clip name are moved into project_clip/ unless --no-project-dir is set.
+4. Run uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg to get a transparent GIF without APNGLib.
+5. In Lens Studio, use Resources → Add New → 2D animation from files and pick the *_alpha PNGs.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

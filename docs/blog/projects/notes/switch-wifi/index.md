@@ -21,6 +21,25 @@ switch-wifi is a Switch network dashboard with a Borealis interface. It separate
 
 **Best fit:** Fast headless Wi-Fi network credential provisioning on Switch.
 
+## Use cases
+
+Nintendo Switch homebrew app that shows Wi-Fi state, benchmarks the HTTPS path and reads Bluetooth status.
+
+- **Check the Wi-Fi link** (Switch owner, Horizon NIFM / BTM): The Dashboard tab reads link type, SSID, IPv4, gateway, DNS and 0-3 signal bars from NIFM through NetworkService, with RSSI from legacy wlan:inf only where firmware exposes it.
+- **Benchmark the connection** (Switch owner, HTTPS speed server): SpeedTestEngine runs 8 HTTPS latency probes, then a 25 MiB download and a 10 MiB zero-filled upload with libcurl against speed.cloudflare.com by default, reporting median, P95 and jitter.
+- **Review saved networks** (Switch owner, Horizon NIFM / BTM): The Networks tab lists basic saved-profile metadata and Horizon's allowed channels, with channel-overlap math from core/metrics; credentials are never read for display.
+- **Scan Bluetooth state** (Switch owner, Horizon NIFM / BTM): BluetoothService reads BTM radio state and device counts, and runs a bounded passive BLE scan that returns at most ten unique addresses.
+- **Export a diagnostics report** (Switch owner): The About tab writes sdmc:/switch-wifi-diagnostics.txt with the app version, compatibility target, network details and Bluetooth counts, without credentials.
+
+### Scenario: Compare two router channels on a Switch
+
+1. Build build-switch/switch-wifi.nro in the devkitpro/devkita64 container and check it with python3 scripts/verify_nro.py.
+2. Copy the NRO to the SD card and launch it from the homebrew menu.
+3. Open the Dashboard tab to confirm the Switch is on Wi-Fi and note the signal bars.
+4. Run the Benchmark tab and read median latency, P95, jitter, download and upload speed.
+5. Change the router channel, run the benchmark again and compare the history graphs.
+6. Export sdmc:/switch-wifi-diagnostics.txt from the About tab to keep the result.
+
 ## Languages (GitHub Linguist bytes)
 
 | Language | % |

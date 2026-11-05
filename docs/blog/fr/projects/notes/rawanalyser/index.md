@@ -20,6 +20,25 @@ RawAnalyser est une ancienne expérience Python pour analyser écrêtage, canaux
 
 **Cas d’usage:** Évaluation de capteurs et calibration d'exposition en photographie computationnelle.
 
+## Cas d’utilisation
+
+Scripts Python 2 pour l’ajustement de caméras : vérifier écrêtage, gamma et vignettage dans des images brutes Bayer.
+
+- **Marquer ROI et gris neutres** (Ingé. qualité d’image): GUI.py (PyQt5) ouvre un fichier .raw ou .tiff, convertit le brut en TIFF pour l’affichage et enregistre la zone d’intérêt et les coins des gris cliqués dans json/points.json.
+- **Analyser chaque capture brute** (Ingé. qualité d’image, Dossier de captures): RawAnalyser.py surveille le dossier donné avec watchdog ; chaque nouveau fichier brut 1928 x 1088 sur 16 bits est séparé en canaux Bayer, enregistré en TIFF puis analysé.
+- **Détecter l’écrêtage** (Ingé. qualité d’image): clipping() affiche les niveaux minimum et maximum sur 10 bits par canal et signale en couleur l’écrêtage du noir ou du blanc quand les valeurs atteignent les limites du capteur.
+- **Mesurer gamma et vignettage** (Ingé. qualité d’image): gamma() échantillonne les gris de points.json ; vignette() retire le niveau de noir (--bl, 1024 par défaut), divise par une carte .npy de vignettage et écrit un TIFF corrigé.
+- **Inspecter un pixel** (Ingé. qualité d’image): RawPixel.py affiche la valeur et la couleur Bayer du pixel x, y selon la largeur, la hauteur et la profondeur données, et vide les canaux dans array/*.txt.
+- **Convertir le brut en TIFF** (Ingé. qualité d’image, Dossier de captures): Raw2Tiff.py écrit un TIFF à partir d’un fichier brut ; 20MPto5MP.py regroupe les images 20 Mpx de l’OV20880 en additionnant des blocs 2 x 2 de même couleur pour obtenir 5 Mpx.
+
+### Scénario : Vérifier une capture de mire OV2740
+
+1. Installer Python 2.7 et les paquets de requirements.txt, ainsi que tifffile.
+2. Lancer python GUI.py, ouvrir une capture de raw/ et cliquer la zone d’intérêt et les gris pour mettre à jour json/points.json.
+3. Démarrer python RawAnalyser.py raw json/points.json --func basic --bl 1024 pour surveiller le dossier.
+4. Copier une nouvelle capture .raw dans raw/ ; le script affiche les alertes d’écrêtage et le gamma et écrit un TIFF sous tiff/.
+5. Vérifier un point suspect avec python RawPixel.py <fichier> x y --width 1928 --height 1088.
+
 ## Langages (octets GitHub Linguist)
 
 | Langage | % |
