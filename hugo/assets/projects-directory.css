@@ -405,3 +405,6 @@ html.dark .repo-directory .repo-card-media--diagram { background: #f3f6f9 !impor
 .repo-directory .repo-group-secondary { display: none !important; margin-left: auto !important; margin-right: 12px !important; color: var(--muted) !important; font: 600 11px/1.4 system-ui, sans-serif !important; letter-spacing: .08em; text-transform: uppercase; }
 .repo-directory .repo-directory-group.is-secondary-match > summary .repo-group-secondary { display: inline !important; }
 .repo-directory .repo-directory-group.is-secondary-match > summary h2 { color: var(--muted) !important; }
+/* Readability floor: card tags are ordinary words (languages, project types), not
+   tracked uppercase labels, so they stay at 12px or more. */
+.repo-directory .repo-card-tags span:not(#\#) { font-size: .75rem !important; }

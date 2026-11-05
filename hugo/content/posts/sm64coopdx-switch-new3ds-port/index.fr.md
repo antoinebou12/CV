@@ -6,8 +6,7 @@ title: "Porter sm64coopdx sur Switch et New 3DS : isoler les plateformes"
 date: 2026-10-20T10:00:00-04:00
 lastmod: 2026-10-20T10:00:00-04:00
 description: "Les cibles Switch et New 3DS de CoopDX : rendu, commandes, audio, isolation des builds et limites actuelles de validation sur console."
-images:
-  - images/featured.png
+cover_none: true
 translationKey: sm64coopdx-switch-new3ds-port
 mermaid: true
 tags: ["Nintendo Switch","Nintendo 3DS","C","Graphics","Homebrew"]

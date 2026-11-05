@@ -744,3 +744,11 @@ html:not(.dark) .blog-site .terminal {
 .blog-site .journal-meta a:hover { text-decoration: underline !important; }
 @media (max-width: 1099px) { .blog-site .journal-intro--tag .journal-intro-aside { padding-left: 0 !important; border-left: 0 !important; max-width: 56ch !important; } }
 .blog-site .journal-intro--tag .journal-intro-aside--meta-only { padding-left: 0 !important; border-left: 0 !important; }
+/* Syntax colours on the dark code surface (Chroma inline styles and highlight.js):
+   Monokai's comment grey is 3.8:1 there, and its error style paints shell prompts red on maroon. */
+pre span[style*="color:#75715e"] { color: #a09b82 !important; }
+.blog-site .single-post-surface .prose pre :is(.hljs-comment, .hljs-quote, .hljs-section, .hljs-meta),
+.terminal pre :is(.hljs-comment, .hljs-quote, .hljs-section, .hljs-meta) { color: #a09b82 !important; }
+pre span[style*="background-color:#1e0010"] { color: inherit !important; background: none !important; }
+/* Article dates on cards are set in uppercase at weight 400, so they need 12px to stay legible. */
+.post-list-card-time:not(#\#) { font-size: .75rem !important; }

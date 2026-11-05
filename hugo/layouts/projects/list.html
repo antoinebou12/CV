@@ -59,6 +59,8 @@
     <p class="repo-explorer-empty" data-repo-empty hidden>{{ if $fr }}Aucun projet ne correspond à cette recherche. Essayez un autre terme ou réinitialisez les filtres.{{ else }}No project matches this search. Try another term or reset the filters.{{ end }}</p>
   </section>
   <div data-repo-groups>
+  {{- $postRepos := newScratch -}}
+  {{- range $repoName, $articles := hugo.Data.repository_article_index.repositories -}}{{- range $articles -}}{{- $postRepos.Add .path 1 -}}{{- end -}}{{- end -}}
   {{ range $group := $stylesData.styles }}
     {{ $repos := slice }}
     {{ range $snapshot.repositories }}
@@ -100,7 +102,13 @@
         {{ $image := index (hugo.Data.repository_diagram_images.repositories | default dict) .name | default dict }}
         {{ $thumb := index $image (cond $fr "overview_fr" "overview_en") }}
         {{ $postImage := false }}
-        {{ range first 1 $posts }}{{ with partial "featured-image-resource.html" . }}{{ if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) }}{{ $postImage = .Fit "720x405 webp q82" }}{{ end }}{{ end }}{{ end }}
+        {{/* A card photo must show this repository: take it from an article dedicated to it
+             (project_docs names this note, or no other repository lists the article), never from a
+             roundup whose cover belongs to a sibling project. Otherwise the overview diagram is used. */}}
+        {{ $dedicated := slice }}
+        {{ range $posts }}{{ if eq .Params.project_docs $note.slug }}{{ $dedicated = $dedicated | append . }}{{ end }}{{ end }}
+        {{ range $posts }}{{ if and (ne .Params.project_docs $note.slug) (eq ($postRepos.Get (replace .File.Path "\\" "/")) 1) }}{{ $dedicated = $dedicated | append . }}{{ end }}{{ end }}
+        {{ range $dedicated }}{{ if not $postImage }}{{ with partial "featured-image-resource.html" . }}{{ if and (not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType)) (ge .Width 480) }}{{ $postImage = .Fit "720x405 webp q82" }}{{ end }}{{ end }}{{ end }}{{ end }}
         <li class="repo-directory-card" data-reveal data-origin="{{ if .fork }}fork{{ else }}original{{ end }}" data-language="{{ $lang }}" data-styles="{{ delimit $repoStyles " " }}" data-domains="{{ delimit $repoDomains " " }}" data-name="{{ .name }}" data-stars="{{ .stars }}" data-pushed="{{ .pushed }}" data-search="{{ $search | lower }}">
           {{ if $postImage }}
           <a class="repo-card-media repo-card-media--photo" href="{{ $article.RelPermalink }}" tabindex="-1" aria-hidden="true"><img src="{{ $postImage.RelPermalink }}" width="{{ $postImage.Width }}" height="{{ $postImage.Height }}" alt="" loading="lazy" decoding="async"></a>

@@ -2305,3 +2305,15 @@ html.dark .repo-note .repo-related-writing { border: 0; background: none; box-sh
 .repo-note .highlight pre:not(#\#):not(#\#) { padding-right: 5.75rem !important; color: #e7f0f8 !important; background: transparent !important; }
 .repo-note .highlight .repo-copy { border: 1px solid #2a3a4c; background: #121c27; color: #7eb6f5 !important; box-shadow: none; }
 .repo-note .highlight .repo-copy:hover { color: #e7f0f8 !important; border-color: #2bb8a8; }
+/* Readability: keep running prose near 72 characters per line in the wide note column.
+   Tables, code, diagrams and cards keep the full width. */
+.repo-note .repo-shell-main :is(p, .repo-system-summary):not(.table-status, .repo-link-badges, .repo-snapshot) { max-width: 72ch; }
+.repo-note .repo-shell-main :is(section, details, .repo-prose-body, .repo-guide-chapter) > :is(ul, ol):not(.repo-flow, .repo-guide-files, [role="list"]) { max-width: 72ch; }
+.repo-note .repo-hero-lede:not(#\#) { max-width: 62ch; }
+/* File references and small badges are read, not scanned like labels: 12px minimum. */
+.repo-note .repo-evidence-link:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { font-size: .8125rem; }
+.repo-note .repo-evidence-link code:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { font-size: .8125rem !important; }
+.repo-ops-badge { font-size: .75rem; }
+@media (max-width: 600px) {
+  .repo-doc .repo-snapshot-cards dt:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { font-size: 12px; }
+}
