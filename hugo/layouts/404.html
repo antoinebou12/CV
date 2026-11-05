@@ -1,0 +1,14 @@
+{{- define "main" -}}
+<article class="not-found-page" data-reveal>
+  <p class="not-found-eyebrow">404</p>
+  <h1 class="not-found-title">{{ i18n "notFoundTitle" }}</h1>
+  <p class="not-found-lead">{{ i18n "notFoundLead" }}</p>
+  <nav class="not-found-links" aria-label="{{ i18n "notFoundNavLabel" }}">
+    {{- with site.GetPage "/posts" }}<a class="not-found-link" href="{{ .RelPermalink }}">{{ i18n "notFoundPosts" }}</a>{{ end -}}
+    {{- with site.GetPage "/projects" }}<a class="not-found-link" href="{{ .RelPermalink }}">{{ i18n "notFoundProjects" }}</a>{{ end -}}
+    {{- with site.GetPage "/search" }}<a class="not-found-link not-found-link--primary" href="{{ .RelPermalink }}">{{ i18n "notFoundSearch" }}</a>{{ end -}}
+    <a class="not-found-link" href="{{ cond (eq .Lang "fr") "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" }}">{{ i18n "navCvHome" }}</a>
+  </nav>
+  <p class="not-found-hint">{{ i18n "notFoundHint" }} <a href="{{ site.Home.RelPermalink }}">{{ i18n "notFoundHome" }}</a></p>
+</article>
+{{- end -}}
