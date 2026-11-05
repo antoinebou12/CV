@@ -149,3 +149,47 @@ test('home, catalog and a project note pass WCAG 2.1 AA checks', async ({ page }
   const serious = Object.entries(violations).flatMap(([path, list]) => (list as { impact?: string; id: string }[]).filter(v => ['serious', 'critical'].includes(v.impact || '')).map(v => `${path} ${v.id}`));
   expect(serious).toEqual([]);
 });
+
+test.describe('Catalog, home strip and project extras', () => {
+  test('filter state is restored from the URL hash and written back', async ({ page }) => {
+    await page.goto(route('/blog/projects/#type=games&q=game'));
+    await expect(page.locator('[data-repo-style="games"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-repo-search]')).toHaveValue('game');
+    // The chosen type leads the visible groups (its cards match the query "game").
+    const first = page.locator('[data-repo-groups] .repo-directory-group:not([hidden])').first();
+    await expect(first).toHaveAttribute('data-project-type', 'games');
+    await expect(first).toHaveAttribute('open', '');
+    await page.locator('[data-repo-domain]').nth(1).click();
+    expect(await page.evaluate(() => location.hash)).toMatch(/type=games/);
+    await page.locator('[data-repo-reset]').click();
+    expect(await page.evaluate(() => location.hash)).toBe('');
+  });
+  test('home shows three featured repositories with styled cards', async ({ page }) => {
+    await page.goto(route('/blog/'));
+    const cards = page.locator('.home-featured-card');
+    await expect(cards).toHaveCount(3);
+    const border = await cards.first().evaluate(e => getComputedStyle(e).borderTopWidth);
+    expect(border).not.toBe('0px');
+    await expect(cards.first().locator('a').first()).toHaveAttribute('href', /\/projects\/notes\//);
+  });
+  test('project note offers a live demo panel and tabbed references where available', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 860 });
+    await page.goto(route('/blog/projects/notes/flashgames/'));
+    const panel = page.locator('[data-demo]');
+    await expect(panel).toHaveCount(1);
+    await expect(panel.locator('[data-demo-frame]')).toBeHidden();
+    await expect(panel.locator('a[target="_blank"]')).toHaveAttribute('href', /^https:\/\//);
+    await page.goto(route('/blog/projects/notes/uml-mcp/'));
+    const tabs = page.locator('.repo-guide-tabs [role="tab"]');
+    expect(await tabs.count()).toBeGreaterThan(2);
+    await tabs.nth(1).click();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('.repo-guide-chapter.is-active-tab')).toHaveCount(1);
+  });
+  test('footer directory and list pages keep a small number of navigation landmarks', async ({ page }) => {
+    await page.goto(route('/blog/posts/'));
+    expect(await page.locator('nav').count()).toBeLessThan(12);
+    await expect(page.locator('.site-footer-col')).toHaveCount(3);
+    await expect(page.locator('.site-footer a[href$="llms.txt"]')).toHaveCount(1);
+  });
+});
