@@ -967,3 +967,17 @@
   forced.addEventListener('change', sync);
   new MutationObserver(sync).observe(document.documentElement, { attributes:true, attributeFilter:['data-motion'] });
 })();
+
+/* Section pills open a collapsed section (Projects is closed by default) before the browser jumps to it. */
+(() => {
+  const reveal = id => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const details = target.matches('details') ? target : target.closest('details');
+    if (details && !details.open) details.open = true;
+  };
+  document.querySelectorAll('.cv-nav-section[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => reveal(link.getAttribute('href').slice(1)));
+  });
+  if (location.hash.length > 1) reveal(decodeURIComponent(location.hash.slice(1)));
+})();
