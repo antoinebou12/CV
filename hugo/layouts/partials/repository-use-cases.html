@@ -1,0 +1,89 @@
+{{- /* Use-case section for a project page, drawn from hugo/data/project_use_cases.json.
+       Inline SVG (people left, external systems right, use cases inside the system boundary),
+       followed by the same content as text: the use-case list, one scenario and its sources.
+       Input: dict "page" (project note) "repo" (repository name). Renders nothing without data. */ -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $i := cond $fr 1 0 -}}
+{{- with index (hugo.Data.project_use_cases.repositories | default dict) .repo -}}
+{{- $data := . -}}
+{{- $repoName := $data.repo | default $.repo -}}
+{{- $persons := where $data.actors "kind" "person" -}}
+{{- $systems := where $data.actors "kind" "system" -}}
+{{- $cases := $data.use_cases -}}
+{{- $n := len $cases -}}
+{{- $left := cond (gt (len $persons) 0) 160.0 24.0 -}}
+{{- $right := cond (gt (len $systems) 0) 560.0 696.0 -}}
+{{- $cx := div (add $left $right) 2.0 -}}
+{{- $rx := math.Min 150.0 (sub (div (sub $right $left) 2.0) 22.0) -}}
+{{- $top := 58.0 -}}
+{{- $step := 62.0 -}}
+{{- $height := add $top (mul $step $n) 18.0 -}}
+{{- $caseY := dict -}}
+{{- range $k, $c := $cases -}}{{- $caseY = merge $caseY (dict $c.id (add $top 26.0 (mul $step $k))) -}}{{- end -}}
+{{- $actorPos := dict -}}
+{{- range $k, $a := $persons -}}{{- $actorPos = merge $actorPos (dict $a.id (slice 82.0 (mul (div $height (add (len $persons) 1)) (add $k 1)))) -}}{{- end -}}
+{{- range $k, $a := $systems -}}{{- $actorPos = merge $actorPos (dict $a.id (slice 638.0 (mul (div $height (add (len $systems) 1)) (add $k 1)))) -}}{{- end -}}
+{{- $titleID := printf "use-case-title-%s" ($repoName | urlize) -}}
+<section class="doc repo-use-cases" id="use-cases">
+  <h2>{{ if $fr }}Cas d’utilisation{{ else }}Use cases{{ end }}</h2>
+  <p class="repo-lede-sm">{{ index $data.summary $i }}</p>
+  <figure class="repo-usecase-figure">
+    <svg class="repo-usecase-svg" viewBox="0 0 720 {{ $height }}" role="img" aria-labelledby="{{ $titleID }}" preserveAspectRatio="xMidYMid meet">
+      <title id="{{ $titleID }}">{{ if $fr }}Diagramme de cas d’utilisation de {{ $repoName }}{{ else }}Use-case diagram for {{ $repoName }}{{ end }}{{ if $fr }} : {{ else }}: {{ end }}{{ range $k, $c := $cases }}{{ if $k }}; {{ end }}{{ index $c.label $i }}{{ end }}</title>
+      <rect class="uc-boundary" x="{{ $left }}" y="12" width="{{ sub $right $left }}" height="{{ sub $height 24.0 }}" rx="12"/>
+      <text class="uc-system" x="{{ $cx }}" y="38" text-anchor="middle">{{ $repoName }}</text>
+      {{- range $c := $cases -}}
+        {{- $y := index $caseY $c.id -}}
+        {{- range $c.actors -}}
+          {{- with index $actorPos . -}}
+            {{- $ax := index . 0 -}}{{- $ay := index . 1 -}}
+            {{- if lt $ax 360.0 -}}
+      <line class="uc-link" x1="{{ add $ax 18.0 }}" y1="{{ sub $ay 12.0 }}" x2="{{ sub $cx $rx }}" y2="{{ $y }}"/>
+            {{- else -}}
+      <line class="uc-link" x1="{{ sub $ax 46.0 }}" y1="{{ $ay }}" x2="{{ add $cx $rx }}" y2="{{ $y }}"/>
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      <ellipse class="uc-case" cx="{{ $cx }}" cy="{{ $y }}" rx="{{ $rx }}" ry="22"/>
+      <text class="uc-case-label" x="{{ $cx }}" y="{{ add $y 4.5 }}" text-anchor="middle">{{ index $c.label $i }}</text>
+      {{- end -}}
+      {{- range $persons -}}
+        {{- $p := index $actorPos .id -}}{{- $x := index $p 0 -}}{{- $y := index $p 1 -}}
+      <g class="uc-person">
+        <circle cx="{{ $x }}" cy="{{ sub $y 34.0 }}" r="9"/>
+        <path d="M{{ $x }} {{ sub $y 25.0 }}V{{ add $y 2.0 }}M{{ sub $x 15.0 }} {{ sub $y 15.0 }}H{{ add $x 15.0 }}M{{ $x }} {{ add $y 2.0 }}L{{ sub $x 12.0 }} {{ add $y 20.0 }}M{{ $x }} {{ add $y 2.0 }}L{{ add $x 12.0 }} {{ add $y 20.0 }}"/>
+      </g>
+      <text class="uc-actor-label" x="{{ $x }}" y="{{ add $y 38.0 }}" text-anchor="middle">{{ index .label $i }}</text>
+      {{- end -}}
+      {{- range $systems -}}
+        {{- $p := index $actorPos .id -}}{{- $x := index $p 0 -}}{{- $y := index $p 1 -}}
+      <rect class="uc-system-actor" x="{{ sub $x 46.0 }}" y="{{ sub $y 20.0 }}" width="92" height="40" rx="6"/>
+      <text class="uc-stereotype" x="{{ $x }}" y="{{ add $y 4.0 }}" text-anchor="middle">«{{ if $fr }}système{{ else }}system{{ end }}»</text>
+      <text class="uc-actor-label" x="{{ $x }}" y="{{ add $y 38.0 }}" text-anchor="middle">{{ index .label $i }}</text>
+      {{- end -}}
+    </svg>
+    <figcaption>{{ if $fr }}Acteurs à gauche (personnes) et à droite (systèmes externes) ; chaque ovale est un cas d’utilisation appuyé par les fichiers cités ci-dessous.{{ else }}People on the left, external systems on the right; each oval is a use case backed by the files cited below.{{ end }}</figcaption>
+  </figure>
+  <dl class="repo-usecase-list">
+    {{- range $cases }}
+    <div>
+      <dt>{{ index .label $i }}</dt>
+      <dd>
+        <span class="repo-usecase-actors">{{ range $k, $id := .actors }}{{ with index (where $data.actors "id" $id) 0 }}<span class="repo-usecase-actor repo-usecase-actor--{{ .kind }}">{{ index .label $i }}</span>{{ end }}{{ end }}</span>
+        {{ with .detail }}<p>{{ index . $i }}</p>{{ end }}
+      </dd>
+    </div>
+    {{- end }}
+  </dl>
+  {{- with $data.scenario }}
+  <h3>{{ if $fr }}Scénario : {{ else }}Scenario: {{ end }}{{ index .title $i }}</h3>
+  <ol class="repo-scenario">
+    {{- range .steps }}<li>{{ index . $i | markdownify }}</li>{{ end }}
+  </ol>
+  {{- end }}
+  {{- with $data.evidence }}
+  <p class="repo-usecase-sources"><span>{{ if $fr }}Fichiers consultés{{ else }}Files read{{ end }}</span>{{ range . }}<code>{{ . }}</code>{{ end }}</p>
+  {{- end }}
+</section>
+{{- end -}}

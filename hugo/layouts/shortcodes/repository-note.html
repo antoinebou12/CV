@@ -233,6 +233,8 @@
         {{ end }}
       </section>
 
+      {{ partial "repository-use-cases.html" (dict "page" .Page "repo" $note.repo) }}
+
       {{ partial "repository-demo.html" (dict "note" $note "page" .Page) }}
 
       <span id="first-steps" class="repo-section-anchor" aria-hidden="true"></span>

@@ -2317,3 +2317,41 @@ html.dark .repo-note .repo-related-writing { border: 0; background: none; box-sh
 @media (max-width: 600px) {
   .repo-doc .repo-snapshot-cards dt:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { font-size: 12px; }
 }
+/* Use-case section: inline SVG painted from the note tokens, so it follows light and dark mode. */
+.repo-usecase-figure { margin: 1rem 0 1.25rem; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.repo-usecase-svg { display: block; width: 100%; height: auto; max-width: 720px; margin-inline: auto; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+.repo-usecase-svg .uc-boundary { fill: color-mix(in srgb, var(--accent) 5%, transparent); stroke: var(--line); stroke-width: 1.5; }
+.repo-usecase-svg .uc-system { fill: var(--text); font-size: 14px; font-weight: 700; }
+.repo-usecase-svg .uc-case { fill: var(--panel); stroke: var(--accent); stroke-width: 1.5; }
+.repo-usecase-svg .uc-case-label { fill: var(--text); font-size: 13px; font-weight: 600; }
+.repo-usecase-svg .uc-link { stroke: var(--muted); stroke-width: 1.2; opacity: .75; }
+.repo-usecase-svg .uc-person circle, .repo-usecase-svg .uc-person path { fill: none; stroke: var(--text); stroke-width: 1.8; stroke-linecap: round; }
+.repo-usecase-svg .uc-system-actor { fill: var(--panel2); stroke: var(--accent2); stroke-width: 1.5; }
+.repo-usecase-svg .uc-stereotype { fill: var(--muted); font-size: 11px; }
+.repo-usecase-svg .uc-actor-label { fill: var(--text); font-size: 12px; font-weight: 600; }
+.repo-usecase-figure figcaption { margin-top: .6rem; color: var(--muted); font-size: .875rem; text-align: center; }
+.repo-usecase-list { display: grid; gap: .75rem; margin: 0 0 1.25rem; padding: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+.repo-usecase-list > div { padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.repo-usecase-list dt { color: var(--text); font-weight: 700; }
+.repo-usecase-list dd { margin: .35rem 0 0; color: var(--muted); }
+.repo-usecase-list dd p { margin: .4rem 0 0; color: var(--muted); font-size: .9375rem; line-height: 1.6; }
+.repo-usecase-actors { display: flex; flex-wrap: wrap; gap: .35rem; }
+.repo-usecase-actor { padding: .1rem .5rem; border-radius: 999px; background: var(--chip); color: var(--text); font-size: .75rem; font-weight: 600; }
+.repo-usecase-actor--system { background: transparent; border: 1px solid var(--accent2); }
+.repo-note .repo-scenario { counter-reset: step; list-style: none; margin: .5rem 0 1rem; padding: 0; }
+.repo-note .repo-scenario li { counter-increment: step; position: relative; margin: 0; padding: .1rem 0 .9rem 2.6rem; color: var(--text); line-height: 1.6; max-width: 72ch; }
+.repo-note .repo-scenario li::before { content: counter(step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--accent); color: var(--bg); font-size: .8rem; font-weight: 700; }
+.repo-note .repo-scenario li:not(:last-child)::after { content: ""; position: absolute; left: .85rem; top: 1.9rem; bottom: .15rem; width: 2px; background: var(--line); }
+.repo-usecase-sources { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; color: var(--muted); font-size: .875rem; }
+.repo-usecase-sources > span { margin-right: .25rem; font-weight: 600; }
+.repo-usecase-sources code { padding: .05rem .4rem; border-radius: 5px; background: var(--panel2); color: var(--text); font-size: .8125rem; }
+@media (max-width: 600px) {
+  .repo-usecase-figure { padding: .5rem; overflow-x: auto; }
+  .repo-usecase-svg { min-width: 560px; }
+}
+/* Typography and list resets carry higher specificity on note pages; keep the use-case blocks' own layout. */
+.repo-note .repo-scenario:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { list-style: none; padding-inline-start: 0; margin-inline-start: 0; }
+.repo-note .repo-scenario li:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { list-style: none; margin: 0; padding: .1rem 0 .9rem 2.6rem; }
+.repo-note .repo-scenario li:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::marker { content: ""; }
+.repo-note .repo-usecase-list dd:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin: .4rem 0 0; padding-inline-start: 0; }
+.repo-note .repo-usecase-list dt:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin-top: 0; }

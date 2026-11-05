@@ -1,12 +1,13 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
-{{- /* Per-language sitemap: hreflang uses the short language code (matches the page <head>),
-       adds x-default on the English page, keeps real lastmod values and leaves out tag pages that
-       list a single entry (they add noise without new content). */ -}}
+{{- /* Per-language sitemap: every page, including tag pages and the tag index, with hreflang on
+       the short language code (matches the page <head>), x-default on the English page and real
+       lastmod values. Only pages marked sitemap_exclude or sitemap.disable are left out. */ -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  {{- range .Pages }}
+  {{- $pages := .Pages }}
+  {{- /* Search is built with list: never, so it is not in .Pages; it is still a public page. */}}
+  {{- with site.GetPage "/search" }}{{ if not (in $pages .) }}{{ $pages = $pages | append . }}{{ end }}{{ end }}
+  {{- range $pages }}
   {{- $skip := false }}
-  {{- if eq .Kind "term" }}{{ if lt (len .Pages) 2 }}{{ $skip = true }}{{ end }}{{ end }}
-  {{- if eq .Kind "taxonomy" }}{{ $skip = true }}{{ end }}
   {{- if or .Params.sitemap_exclude (eq .Sitemap.Disable true) }}{{ $skip = true }}{{ end }}
   {{- if not $skip }}
   <url>

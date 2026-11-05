@@ -27,6 +27,11 @@
   {{- $actions = printf `%s<a class="btn ghost" href="%s" type="text/markdown" title="%s"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5v-9ZM4 5v6h1.5V8l1.5 2 1.5-2v3H10V5H8.5L7 7 5.5 5H4Zm7 0v3.5H9.5L11.5 11l2-2.5H12V5h-1Z"/></svg>Markdown</a>` $actions .Permalink (cond $fr "Fiche Markdown de ce projet (contexte pour agents)" "Markdown brief of this project (agent context)") -}}
 {{- end -}}
 {{- $updated := printf `<ul class="repo-meta-chips" role="list"><li class="repo-chip"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1Z"/></svg><span>%s <time datetime="%s">%s</time></span></li></ul>` (cond $fr "Mis à jour" "Updated") ($page.Lastmod.Format "2006-01-02") ($page.Lastmod.Format "2006-01-02") -}}
+{{- /* Use cases follow the overview (the first section of the body). */ -}}
+{{- $useCases := partial "repository-use-cases.html" (dict "page" $page "repo" $page.Params.repository_note) -}}
+{{- if $useCases -}}
+  {{- with findRESubmatch `(?s)^(<h2\b.*?)(<h2\b.*)$` $body 1 -}}{{- $body = printf "%s%s%s" (index (index . 0) 1) $useCases (index (index . 0) 2) -}}{{- else -}}{{- $body = printf "%s%s" $body $useCases -}}{{- end -}}
+{{- end -}}
 {{- $toc := cond $fr "Table des matières" "Table of contents" -}}
 {{- $shell := printf `<div class="repo-note repo-note--prose" data-repo-shell><div class="repo-shell-layout"><details class="repo-sidenav-disclosure" open><summary>%s</summary><nav class="repo-sidenav"></nav></details><div class="repo-shell-main"><header class="repo-hero"><div class="repo-hero-panel">%s%s<div class="repo-actions">%s</div></div></header><div class="repo-prose-body">%s</div></div></div></div>` $toc $hero $updated $actions $body -}}
 {{- return $shell -}}

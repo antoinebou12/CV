@@ -1,0 +1,3047 @@
+{
+  "repositories": {
+    "ESP32-7SEG": {
+      "repo": "ESP32-7SEG",
+      "summary": [
+        "ESP32 firmware and an Android app that drive an I2C 7-segment display as a countdown or stopwatch over Wi-Fi.",
+        "Un micrologiciel ESP32 et une appli Android qui pilotent un afficheur 7 segments I2C en minuterie ou chronomètre par Wi-Fi."
+      ],
+      "actors": [
+        {
+          "id": "user",
+          "kind": "person",
+          "label": [
+            "Timer operator",
+            "Opérateur de minuterie"
+          ]
+        },
+        {
+          "id": "esp32",
+          "kind": "system",
+          "label": [
+            "ESP32 + 7-seg display",
+            "ESP32 + afficheur"
+          ]
+        },
+        {
+          "id": "android",
+          "kind": "system",
+          "label": [
+            "Android app",
+            "Appli Android"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "wifi",
+          "actors": [
+            "user",
+            "esp32"
+          ],
+          "label": [
+            "Join the board to Wi-Fi",
+            "Connecter la carte au Wi-Fi"
+          ],
+          "detail": [
+            "Without saved credentials, wifi.cpp starts an access point named ESPTimer; the / page then serves the setup form, and POST /connect stores the SSID and password in NVS.",
+            "Sans identifiants enregistrés, wifi.cpp lance un point d’accès ESPTimer ; la page / sert alors le formulaire, et POST /connect enregistre SSID et mot de passe en NVS."
+          ],
+          "evidence": [
+            "src/main.cpp",
+            "src/wifi.cpp",
+            "src/web_server.cpp"
+          ]
+        },
+        {
+          "id": "timer",
+          "actors": [
+            "user",
+            "esp32"
+          ],
+          "label": [
+            "Start a countdown or stopwatch",
+            "Lancer minuterie ou chrono"
+          ],
+          "detail": [
+            "POST /timer-action with action, mode, minutes and seconds starts, pauses or stops a FreeRTOS task (COUNTDOWN or STOPWATCH) in display.cpp.",
+            "POST /timer-action avec action, mode, minutes et seconds démarre, met en pause ou arrête une tâche FreeRTOS (COUNTDOWN ou STOPWATCH) dans display.cpp."
+          ],
+          "evidence": [
+            "src/web_server.cpp",
+            "src/display.cpp",
+            "include/display.h"
+          ]
+        },
+        {
+          "id": "set",
+          "actors": [
+            "user",
+            "esp32"
+          ],
+          "label": [
+            "Set the digits directly",
+            "Fixer l’affichage directement"
+          ],
+          "detail": [
+            "POST /update-display with minutes and seconds calls updateDisplay() and pushes a displayUpdated message.",
+            "POST /update-display avec minutes et seconds appelle updateDisplay() et diffuse un message displayUpdated."
+          ],
+          "evidence": [
+            "src/web_server.cpp",
+            "src/display.cpp"
+          ]
+        },
+        {
+          "id": "live",
+          "actors": [
+            "android",
+            "esp32"
+          ],
+          "label": [
+            "Follow updates live",
+            "Suivre l’état en direct"
+          ],
+          "detail": [
+            "The /ws WebSocket broadcasts timerStarted, timerStopped and displayUpdated JSON; the Android WebSocketClient listens to it.",
+            "Le WebSocket /ws diffuse des messages JSON timerStarted, timerStopped et displayUpdated ; le WebSocketClient Android les écoute."
+          ],
+          "evidence": [
+            "src/web_server.cpp",
+            "android/app/src/main/java/com/esptimer/api/WebSocketClient.kt"
+          ]
+        },
+        {
+          "id": "app",
+          "actors": [
+            "user",
+            "android"
+          ],
+          "label": [
+            "Control it from Android",
+            "Piloter depuis Android"
+          ],
+          "detail": [
+            "TimerApiService.kt maps the same endpoints with Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) behind the TimerControl and WiFiConnect fragments.",
+            "TimerApiService.kt reprend les mêmes points d’accès avec Retrofit (/timer-action, /connect, /scan, /update-display, /device-info) derrière les fragments TimerControl et WiFiConnect."
+          ],
+          "evidence": [
+            "android/app/src/main/java/com/esptimer/api/TimerApiService.kt",
+            "android/app/src/main/java/com/esptimer/fragment/TimerControlFragment.kt"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Setting up a 5-minute countdown on a fresh board",
+          "Préparer un compte à rebours de 5 minutes sur une carte neuve"
+        ],
+        "steps": [
+          [
+            "Wire the Adafruit I2C backpack to SDA, SCL, VCC and GND, then flash the firmware with pio run -t upload (env firebeetle).",
+            "Câbler le module I2C Adafruit sur SDA, SCL, VCC et GND, puis flasher avec pio run -t upload (env firebeetle)."
+          ],
+          [
+            "On first boot no credentials are in NVS, so join the ESPTimer access point and open the board's page.",
+            "Au premier démarrage, rien n’est en NVS : rejoindre le point d’accès ESPTimer et ouvrir la page de la carte."
+          ],
+          [
+            "Pick a network from /scan and submit it to /connect; the board saves it and joins the LAN.",
+            "Choisir un réseau dans /scan et l’envoyer à /connect ; la carte l’enregistre et rejoint le réseau local."
+          ],
+          [
+            "Read the new IP in the serial monitor at 115200 baud and open it in a browser or the Android app.",
+            "Lire la nouvelle adresse IP au moniteur série à 115200 bauds et l’ouvrir dans un navigateur ou l’appli Android."
+          ],
+          [
+            "Send action=start, mode=countdown, minutes=5, seconds=0 to /timer-action; the display counts down and /ws reports each update.",
+            "Envoyer action=start, mode=countdown, minutes=5, seconds=0 à /timer-action ; l’afficheur décompte et /ws signale chaque mise à jour."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "platformio.ini",
+        "src/main.cpp",
+        "src/wifi.cpp",
+        "src/web_server.cpp",
+        "src/display.cpp",
+        "include/display.h",
+        "android/app/src/main/java/com/esptimer/api/TimerApiService.kt",
+        ".github/workflows/firmware.yml"
+      ]
+    },
+    "FlashGames": {
+      "repo": "FlashGames",
+      "summary": [
+        "A browser page that replays three Flash games from 2010 through the Ruffle emulator, with no plugin needed.",
+        "Une page web qui fait rejouer trois jeux Flash de 2010 grâce à l’émulateur Ruffle, sans aucun plugiciel."
+      ],
+      "actors": [
+        {
+          "id": "player",
+          "kind": "person",
+          "label": [
+            "Player",
+            "Joueur"
+          ]
+        },
+        {
+          "id": "ruffle",
+          "kind": "system",
+          "label": [
+            "Ruffle emulator",
+            "Émulateur Ruffle"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "pick",
+          "actors": [
+            "player"
+          ],
+          "label": [
+            "Pick a game from the list",
+            "Choisir un jeu dans la liste"
+          ],
+          "detail": [
+            "The #swfSelector drop-down in index.html lists Tag, Ricochet Kill and Ballon, each with a short description.",
+            "La liste déroulante #swfSelector d’index.html propose Tag, Ricochet Kill et Ballon, chacun avec une courte description."
+          ],
+          "evidence": [
+            "index.html",
+            "README.md"
+          ]
+        },
+        {
+          "id": "play",
+          "actors": [
+            "player",
+            "ruffle"
+          ],
+          "label": [
+            "Play a SWF in the browser",
+            "Jouer un SWF dans le navigateur"
+          ],
+          "detail": [
+            "loadSWF() creates a Ruffle player with RufflePlayer.newest() and loads tag.swf, ricochet kill.swf or jeux.swf into #swfContainer.",
+            "loadSWF() crée un lecteur Ruffle avec RufflePlayer.newest() et charge tag.swf, ricochet kill.swf ou jeux.swf dans #swfContainer."
+          ],
+          "evidence": [
+            "index.html",
+            "tag.swf",
+            "jeux.swf"
+          ]
+        },
+        {
+          "id": "share",
+          "actors": [
+            "player"
+          ],
+          "label": [
+            "Open a game by URL hash",
+            "Ouvrir un jeu par l’URL"
+          ],
+          "detail": [
+            "updateHash() writes the game key into the URL hash, and the load and hashchange listeners reload that game, so a link like #tag opens it directly.",
+            "updateHash() inscrit la clé du jeu dans le fragment d’URL ; les écouteurs load et hashchange rechargent ce jeu, donc un lien #tag l’ouvre directement."
+          ],
+          "evidence": [
+            "index.html"
+          ]
+        },
+        {
+          "id": "local",
+          "actors": [
+            "player",
+            "ruffle"
+          ],
+          "label": [
+            "Run the collection locally",
+            "Lancer la collection en local"
+          ],
+          "detail": [
+            "The README says to clone the repository and open index.html; Ruffle is loaded from unpkg, so a network connection is still needed.",
+            "Le README indique de cloner le dépôt et d’ouvrir index.html ; Ruffle vient d’unpkg, donc une connexion réseau reste nécessaire."
+          ],
+          "evidence": [
+            "README.md",
+            "index.html"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Replaying Ricochet Kill from a shared link",
+          "Rejouer Ricochet Kill depuis un lien partagé"
+        ],
+        "steps": [
+          [
+            "Open https://antoinebou12.github.io/FlashGames/ (or index.html from a clone).",
+            "Ouvrir https://antoinebou12.github.io/FlashGames/ (ou index.html depuis un clone)."
+          ],
+          [
+            "The page loads the first game, Tag, because no hash is set.",
+            "La page charge le premier jeu, Tag, puisqu’aucun fragment n’est défini."
+          ],
+          [
+            "Choose Ricochet Kill in the Select a Game list; the URL becomes #ricochet_kill.",
+            "Choisir Ricochet Kill dans la liste Select a Game ; l’URL devient #ricochet_kill."
+          ],
+          [
+            "Ruffle loads ricochet kill.swf into the black game area and the description bar updates.",
+            "Ruffle charge ricochet kill.swf dans la zone de jeu noire et la barre de description se met à jour."
+          ],
+          [
+            "Play with the mouse, then copy the URL to send someone straight to the same game.",
+            "Jouer à la souris, puis copier l’URL pour envoyer quelqu’un directement au même jeu."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "index.html",
+        "tag.swf",
+        "jeux.swf",
+        "ricochet kill.swf"
+      ]
+    },
+    "GithubSimpleFileDownloader": {
+      "repo": "GithubSimpleFileDownloader",
+      "summary": [
+        "A Chrome extension that adds a download link and file size next to each file in GitHub, GitLab and Bitbucket listings.",
+        "Une extension Chrome qui ajoute un lien de téléchargement et la taille de chaque fichier dans GitHub, GitLab et Bitbucket."
+      ],
+      "actors": [
+        {
+          "id": "dev",
+          "kind": "person",
+          "label": [
+            "Repository visitor",
+            "Visiteur de dépôt"
+          ]
+        },
+        {
+          "id": "host",
+          "kind": "system",
+          "label": [
+            "Git hosting site",
+            "Site d’hébergement Git"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "button",
+          "actors": [
+            "dev",
+            "host"
+          ],
+          "label": [
+            "Add icons to file listings",
+            "Ajouter des icônes aux listes"
+          ],
+          "detail": [
+            "manifest.json injects inject_github.js, inject_gitlab.js or inject_bitbucket.js on matching pages; each script appends an icon link to every row (td.content, td.tree-item-file-name or tr.iterable-item).",
+            "manifest.json injecte inject_github.js, inject_gitlab.js ou inject_bitbucket.js selon le site ; chaque script ajoute une icône-lien à chaque ligne (td.content, td.tree-item-file-name ou tr.iterable-item)."
+          ],
+          "evidence": [
+            "manifest.json",
+            "src/inject/inject_github.js",
+            "src/inject/inject_gitlab.js",
+            "src/inject/inject_bitbucket.js"
+          ]
+        },
+        {
+          "id": "download",
+          "actors": [
+            "dev",
+            "host"
+          ],
+          "label": [
+            "Download a single file",
+            "Télécharger un seul fichier"
+          ],
+          "detail": [
+            "The script rewrites the blob link to its raw URL (raw.githubusercontent.com on GitHub, /raw/ on GitLab), fetches the text and sets a Blob object URL with a download attribute.",
+            "Le script réécrit le lien blob en URL brute (raw.githubusercontent.com sur GitHub, /raw/ sur GitLab), récupère le texte et pose une URL d’objet Blob avec l’attribut download."
+          ],
+          "evidence": [
+            "src/inject/inject_github.js",
+            "src/inject/inject_gitlab.js"
+          ]
+        },
+        {
+          "id": "size",
+          "actors": [
+            "dev",
+            "host"
+          ],
+          "label": [
+            "Show each file's size",
+            "Afficher la taille du fichier"
+          ],
+          "detail": [
+            "On GitHub, getFileURLDocument() loads the file page with XMLHttpRequest and changeFileSize() copies the Bytes/KB/MB line into a span next to the icon.",
+            "Sur GitHub, getFileURLDocument() charge la page du fichier avec XMLHttpRequest et changeFileSize() copie la ligne Bytes/KB/MB dans un span près de l’icône."
+          ],
+          "evidence": [
+            "src/inject/inject_github.js"
+          ]
+        },
+        {
+          "id": "folder",
+          "actors": [
+            "dev",
+            "host"
+          ],
+          "label": [
+            "Open a folder from its icon",
+            "Ouvrir un dossier par l’icône"
+          ],
+          "detail": [
+            "Paths without a file extension are treated as directories, so the icon simply links to the folder page instead of downloading.",
+            "Les chemins sans extension sont traités comme des dossiers : l’icône renvoie alors à la page du dossier au lieu de télécharger."
+          ],
+          "evidence": [
+            "src/inject/inject_github.js",
+            "README.md"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Grabbing one config file from a GitHub repository",
+          "Récupérer un seul fichier de config sur GitHub"
+        ],
+        "steps": [
+          [
+            "Load the extension in Chrome (Manifest V2, content scripts for github.com, gitlab.com and bitbucket.org).",
+            "Charger l’extension dans Chrome (Manifest V2, scripts de contenu pour github.com, gitlab.com et bitbucket.org)."
+          ],
+          [
+            "Open a repository's file list on github.com; inject_github.js waits for document.readyState to be complete.",
+            "Ouvrir la liste de fichiers d’un dépôt sur github.com ; inject_github.js attend que document.readyState soit complete."
+          ],
+          [
+            "A small GitHub icon and a size label appear next to each file row.",
+            "Une petite icône GitHub et une taille s’affichent à côté de chaque fichier."
+          ],
+          [
+            "Click the icon next to the file: the raw content is saved under the file's name.",
+            "Cliquer sur l’icône du fichier : le contenu brut est enregistré sous le nom du fichier."
+          ],
+          [
+            "If icons do not appear, refresh the page as the README advises; the README title also flags the extension as not working.",
+            "Si les icônes n’apparaissent pas, actualiser la page comme le conseille le README ; son titre signale aussi que l’extension ne fonctionne plus."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "manifest.json",
+        "src/inject/inject_github.js",
+        "src/inject/inject_gitlab.js",
+        "src/inject/inject_bitbucket.js"
+      ]
+    },
+    "GreenScreenVideotoAlphaPNGs": {
+      "repo": "GreenScreenVideotoAlphaPNGs",
+      "summary": [
+        "A Python CLI that turns green-screen video into transparent PNG frames, GIFs or alpha .mov files for Lens Studio.",
+        "Un outil Python en ligne de commande qui transforme une vidéo sur fond vert en PNG transparents, GIF ou .mov alpha pour Lens Studio."
+      ],
+      "actors": [
+        {
+          "id": "creator",
+          "kind": "person",
+          "label": [
+            "AR lens creator",
+            "Créateur de lentilles AR"
+          ]
+        },
+        {
+          "id": "youtube",
+          "kind": "system",
+          "label": [
+            "YouTube (yt-dlp)",
+            "YouTube (yt-dlp)"
+          ]
+        },
+        {
+          "id": "ffmpeg",
+          "kind": "system",
+          "label": [
+            "ffmpeg",
+            "ffmpeg"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "fetch",
+          "actors": [
+            "creator",
+            "youtube"
+          ],
+          "label": [
+            "Download footage from a URL",
+            "Télécharger une vidéo par URL"
+          ],
+          "detail": [
+            "greenscreen convert accepts a YouTube URL; convert.py calls download_video() and download_audio() from download.py, which use yt-dlp.",
+            "greenscreen convert accepte une URL YouTube ; convert.py appelle download_video() et download_audio() de download.py, qui s’appuient sur yt-dlp."
+          ],
+          "evidence": [
+            "src/greenscreen/convert.py",
+            "src/greenscreen/download.py"
+          ]
+        },
+        {
+          "id": "frames",
+          "actors": [
+            "creator",
+            "ffmpeg"
+          ],
+          "label": [
+            "Split a video into frames",
+            "Découper la vidéo en images"
+          ],
+          "detail": [
+            "frames.py writes numbered PNGs (0.png, 1.png…) with ffmpeg, or with OpenCV when --no-ffmpeg is passed.",
+            "frames.py écrit des PNG numérotés (0.png, 1.png…) avec ffmpeg, ou avec OpenCV si l’option --no-ffmpeg est donnée."
+          ],
+          "evidence": [
+            "src/greenscreen/frames.py",
+            "src/greenscreen/cli.py"
+          ]
+        },
+        {
+          "id": "key",
+          "actors": [
+            "creator"
+          ],
+          "label": [
+            "Key out the green background",
+            "Retirer le fond vert"
+          ],
+          "detail": [
+            "chroma.py computes a YCbCr distance from the key color (pixel 1,1 by default, tolerance 50–130) and writes RGBA PNGs into a sibling *_alpha folder.",
+            "chroma.py calcule une distance YCbCr à la couleur clé (pixel 1,1 par défaut, tolérance 50–130) et écrit des PNG RVBA dans un dossier voisin *_alpha."
+          ],
+          "evidence": [
+            "src/greenscreen/chroma.py",
+            "tests/test_chroma.py"
+          ]
+        },
+        {
+          "id": "gif",
+          "actors": [
+            "creator",
+            "ffmpeg"
+          ],
+          "label": [
+            "Build a transparent GIF",
+            "Créer un GIF transparent"
+          ],
+          "detail": [
+            "greenscreen gif <dir> uses numpngw and the optional APNGLib extension by default, or an ffmpeg palette with --fast-ffmpeg; the GIF is written next to the folder.",
+            "greenscreen gif <dossier> utilise par défaut numpngw et l’extension facultative APNGLib, ou une palette ffmpeg avec --fast-ffmpeg ; le GIF est écrit à côté du dossier."
+          ],
+          "evidence": [
+            "src/greenscreen/gif_pipeline.py",
+            "lib/APNGLib_fix/setup.py"
+          ]
+        },
+        {
+          "id": "mov",
+          "actors": [
+            "creator",
+            "ffmpeg"
+          ],
+          "label": [
+            "Encode an alpha .mov",
+            "Encoder un .mov avec alpha"
+          ],
+          "detail": [
+            "greenscreen video <dir> --fps 30 encodes the PNG sequence to Videogen-<stamp>.mov with the qtrle or prores_4444 codec.",
+            "greenscreen video <dossier> --fps 30 encode la séquence en Videogen-<horodatage>.mov avec le codec qtrle ou prores_4444."
+          ],
+          "evidence": [
+            "src/greenscreen/video_pipeline.py",
+            "src/greenscreen/cli.py"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "From a green-screen clip to a Lens Studio animation",
+          "D’un clip sur fond vert à une animation Lens Studio"
+        ],
+        "steps": [
+          [
+            "Run bash install.sh (or .\\install.ps1 on Windows), then uv run greenscreen --help.",
+            "Lancer bash install.sh (ou .\\install.ps1 sous Windows), puis uv run greenscreen --help."
+          ],
+          [
+            "Run uv run greenscreen convert clip.mp4 to extract frames into clip/ and keyed frames into clip_alpha/.",
+            "Lancer uv run greenscreen convert clip.mp4 pour extraire les images dans clip/ et les images détourées dans clip_alpha/."
+          ],
+          [
+            "Outputs that start with the clip name are moved into project_clip/ unless --no-project-dir is set.",
+            "Les fichiers qui commencent par le nom du clip sont déplacés dans project_clip/, sauf avec --no-project-dir."
+          ],
+          [
+            "Run uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg to get a transparent GIF without APNGLib.",
+            "Lancer uv run greenscreen gif project_clip/clip_alpha --fast-ffmpeg pour obtenir un GIF transparent sans APNGLib."
+          ],
+          [
+            "In Lens Studio, use Resources → Add New → 2D animation from files and pick the *_alpha PNGs.",
+            "Dans Lens Studio, passer par Resources → Add New → 2D animation from files et choisir les PNG *_alpha."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "pyproject.toml",
+        "src/greenscreen/cli.py",
+        "src/greenscreen/convert.py",
+        "src/greenscreen/chroma.py",
+        "src/greenscreen/frames.py",
+        "src/greenscreen/gif_pipeline.py",
+        "src/greenscreen/video_pipeline.py"
+      ]
+    },
+    "hass_renpho": {
+      "repo": "hass_renpho",
+      "summary": [
+        "A Home Assistant integration that polls the legacy Renpho cloud API and exposes scale measurements as sensors.",
+        "Une intégration Home Assistant qui interroge l’ancienne API infonuagique Renpho et expose les mesures de la balance en capteurs."
+      ],
+      "actors": [
+        {
+          "id": "owner",
+          "kind": "person",
+          "label": [
+            "Home Assistant user",
+            "Utilisateur Home Assistant"
+          ]
+        },
+        {
+          "id": "ha",
+          "kind": "system",
+          "label": [
+            "Home Assistant",
+            "Home Assistant"
+          ]
+        },
+        {
+          "id": "renpho",
+          "kind": "system",
+          "label": [
+            "Renpho cloud API",
+            "API infonuagique Renpho"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "setup",
+          "actors": [
+            "owner",
+            "ha",
+            "renpho"
+          ],
+          "label": [
+            "Sign in and pick a scale user",
+            "Se connecter, choisir l’usager"
+          ],
+          "detail": [
+            "config_flow.py validates the email and password against Renpho, then shows a select_user step when the account has several scale users.",
+            "config_flow.py valide le courriel et le mot de passe auprès de Renpho, puis affiche l’étape select_user si le compte a plusieurs usagers."
+          ],
+          "evidence": [
+            "custom_components/renpho/config_flow.py",
+            "custom_components/renpho/api_renpho.py"
+          ]
+        },
+        {
+          "id": "poll",
+          "actors": [
+            "ha",
+            "renpho"
+          ],
+          "label": [
+            "Poll measurements on a timer",
+            "Interroger les mesures"
+          ],
+          "detail": [
+            "RenphoWeightCoordinator calls get_measurements(), list_girth() and list_girth_goal() every refresh seconds through a DataUpdateCoordinator.",
+            "RenphoWeightCoordinator appelle get_measurements(), list_girth() et list_girth_goal() toutes les refresh secondes via un DataUpdateCoordinator."
+          ],
+          "evidence": [
+            "custom_components/renpho/coordinator.py"
+          ]
+        },
+        {
+          "id": "sensors",
+          "actors": [
+            "owner",
+            "ha"
+          ],
+          "label": [
+            "Show body metrics as sensors",
+            "Afficher les mesures en capteurs"
+          ],
+          "detail": [
+            "sensor.py and sensor_configs.py create sensors for weight, BMI, body fat, water, BMR, girth values and goals, with kg or lb for weight.",
+            "sensor.py et sensor_configs.py créent des capteurs pour le poids, l’IMC, la masse grasse, l’eau, le métabolisme de base, les tours de taille et objectifs, en kg ou lb."
+          ],
+          "evidence": [
+            "custom_components/renpho/sensor.py",
+            "custom_components/renpho/sensor_configs.py",
+            "README.md"
+          ]
+        },
+        {
+          "id": "proxy",
+          "actors": [
+            "owner",
+            "renpho"
+          ],
+          "label": [
+            "Route calls through a proxy",
+            "Passer par un serveur mandataire"
+          ],
+          "detail": [
+            "An optional proxy setting (http:// or socks5://) is checked by check_proxy() before Renpho calls, for IPs that renpho.qnclouds.com blocks.",
+            "Le paramètre facultatif proxy (http:// ou socks5://) est vérifié par check_proxy() avant les appels, pour les adresses IP bloquées par renpho.qnclouds.com."
+          ],
+          "evidence": [
+            "README.md",
+            "custom_components/renpho/api_renpho.py"
+          ]
+        },
+        {
+          "id": "explore",
+          "actors": [
+            "owner",
+            "renpho"
+          ],
+          "label": [
+            "Test an account in the API",
+            "Tester un compte dans l’API"
+          ],
+          "detail": [
+            "api/app.py is a FastAPI app with routes such as /auth, /users, /measurements and /girth_info; vercel.json deploys it and the README points to its /docs page.",
+            "api/app.py est une application FastAPI avec des routes comme /auth, /users, /measurements et /girth_info ; vercel.json la déploie et le README renvoie à sa page /docs."
+          ],
+          "evidence": [
+            "api/app.py",
+            "vercel.json",
+            "README.md"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Getting the morning weigh-in into Home Assistant",
+          "Faire arriver la pesée du matin dans Home Assistant"
+        ],
+        "steps": [
+          [
+            "Copy custom_components/renpho into <config_dir>/custom_components/renpho/ (or install through HACS).",
+            "Copier custom_components/renpho dans <config_dir>/custom_components/renpho/ (ou installer via HACS)."
+          ],
+          [
+            "Add renpho: with email, password and refresh: 600 to configuration.yaml, plus sensor: platform: renpho.",
+            "Ajouter renpho: avec email, password et refresh: 600 dans configuration.yaml, plus sensor: platform: renpho."
+          ],
+          [
+            "Restart Home Assistant; the integration signs in to the legacy Renpho API and resolves the user id.",
+            "Redémarrer Home Assistant ; l’intégration se connecte à l’ancienne API Renpho et retrouve l’identifiant de l’usager."
+          ],
+          [
+            "Step on the scale with the outdated Renpho app so the measurement reaches the cloud.",
+            "Monter sur la balance avec l’ancienne appli Renpho pour que la mesure arrive dans le nuage."
+          ],
+          [
+            "Within the next refresh cycle the weight and body-fat sensors update on the dashboard.",
+            "Au prochain cycle de rafraîchissement, les capteurs de poids et de masse grasse se mettent à jour dans le tableau de bord."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "hacs.json",
+        "custom_components/renpho/manifest.json",
+        "custom_components/renpho/config_flow.py",
+        "custom_components/renpho/coordinator.py",
+        "custom_components/renpho/sensor.py",
+        "custom_components/renpho/api_renpho.py",
+        "api/app.py",
+        "vercel.json"
+      ]
+    },
+    "HDR-10bpp-Display-Test": {
+      "repo": "HDR-10bpp-Display-Test",
+      "summary": [
+        "Linux scripts to check that an HDR display really shows 10 bits per channel under an X server at depth 30.",
+        "Des scripts Linux pour vérifier qu’un écran HDR affiche bien 10 bits par canal sous un serveur X en profondeur 30."
+      ],
+      "actors": [
+        {
+          "id": "tester",
+          "kind": "person",
+          "label": [
+            "Display tester",
+            "Testeur d’écran"
+          ]
+        },
+        {
+          "id": "xserver",
+          "kind": "system",
+          "label": [
+            "X server (Xorg)",
+            "Serveur X (Xorg)"
+          ]
+        },
+        {
+          "id": "monitor",
+          "kind": "system",
+          "label": [
+            "HDR10 monitor",
+            "Écran HDR10"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "depth30",
+          "actors": [
+            "tester",
+            "xserver"
+          ],
+          "label": [
+            "Start X at depth 30",
+            "Lancer X en profondeur 30"
+          ],
+          "detail": [
+            "Xdepth.sh runs startx -- -depth 30 and prints the depth from xwininfo, falling back to depth 24; xorg.conf sets DefaultDepth 30.",
+            "Xdepth.sh exécute startx -- -depth 30 et affiche la profondeur via xwininfo, avec repli sur 24 ; xorg.conf fixe DefaultDepth 30."
+          ],
+          "evidence": [
+            "Xdepth.sh",
+            "xorg.conf"
+          ]
+        },
+        {
+          "id": "gradient",
+          "actors": [
+            "tester",
+            "monitor"
+          ],
+          "label": [
+            "Show a 10-bit gray gradient",
+            "Afficher un dégradé gris 10 bits"
+          ],
+          "detail": [
+            "Viewer.py packs the RGB channels of images/gray_gradient_10.tiff into a cairo FORMAT_RGB30 surface and draws it in a GTK 3 window.",
+            "Viewer.py regroupe les canaux RVB d’images/gray_gradient_10.tiff dans une surface cairo FORMAT_RGB30 et la dessine dans une fenêtre GTK 3."
+          ],
+          "evidence": [
+            "Viewer.py",
+            "images/gray_gradient_10.tiff"
+          ]
+        },
+        {
+          "id": "compare",
+          "actors": [
+            "tester",
+            "monitor"
+          ],
+          "label": [
+            "Compare 8-bit and 10-bit",
+            "Comparer 8 bits et 10 bits"
+          ],
+          "detail": [
+            "The repository ships gray_gradient_8.tiff next to the 10-bit file so banding can be compared by eye.",
+            "Le dépôt fournit gray_gradient_8.tiff à côté du fichier 10 bits pour comparer le crénelage à l’œil."
+          ],
+          "evidence": [
+            "images/gray_gradient_8.tiff",
+            "images/gray_gradient_10.tiff"
+          ]
+        },
+        {
+          "id": "video",
+          "actors": [
+            "tester",
+            "monitor"
+          ],
+          "label": [
+            "Play a video at 10 bpc",
+            "Lire une vidéo en 10 bits"
+          ],
+          "detail": [
+            "Viewer3.py adds a Typer CLI with --image-path and --video-path; videos are read frame by frame with imageio's ffmpeg reader in a thread at 30 fps.",
+            "Viewer3.py ajoute une interface Typer avec --image-path et --video-path ; la vidéo est lue image par image avec le lecteur ffmpeg d’imageio, dans un fil, à 30 i/s."
+          ],
+          "evidence": [
+            "Viewer3.py"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Checking a new HDR10 monitor on Ubuntu",
+          "Vérifier un nouvel écran HDR10 sous Ubuntu"
+        ],
+        "steps": [
+          [
+            "Stop the display manager: sudo systemctl stop lightdm || sudo systemctl stop gdm, then sudo pkill Xorg.",
+            "Arrêter le gestionnaire d’affichage : sudo systemctl stop lightdm || sudo systemctl stop gdm, puis sudo pkill Xorg."
+          ],
+          [
+            "Start X with startx -- -depth 30 (or run Xdepth.sh).",
+            "Démarrer X avec startx -- -depth 30 (ou lancer Xdepth.sh)."
+          ],
+          [
+            "Confirm with xwininfo -root | grep Depth that the root window reports depth 30.",
+            "Confirmer avec xwininfo -root | grep Depth que la fenêtre racine indique une profondeur de 30."
+          ],
+          [
+            "Run python3 Viewer.py to open images/gray_gradient_10.tiff in the viewer window.",
+            "Lancer python3 Viewer.py pour ouvrir images/gray_gradient_10.tiff dans la fenêtre du visualiseur."
+          ],
+          [
+            "Look for banding in the gradient; smooth steps mean the 10-bit path works end to end.",
+            "Chercher des bandes dans le dégradé ; des transitions lisses indiquent que la chaîne 10 bits fonctionne de bout en bout."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "Viewer.py",
+        "Viewer3.py",
+        "Xdepth.sh",
+        "xorg.conf"
+      ]
+    },
+    "jsonresume-theme-kendall": {
+      "repo": "jsonresume-theme-kendall",
+      "summary": [
+        "A JSON Resume theme that renders resume.json to a Bootstrap HTML page with Mustache and FontAwesome icons.",
+        "Un thème JSON Resume qui transforme resume.json en page HTML Bootstrap avec Mustache et des icônes FontAwesome."
+      ],
+      "actors": [
+        {
+          "id": "author",
+          "kind": "person",
+          "label": [
+            "Resume author",
+            "Auteur du CV"
+          ]
+        },
+        {
+          "id": "cli",
+          "kind": "system",
+          "label": [
+            "resume-cli",
+            "resume-cli"
+          ]
+        },
+        {
+          "id": "gravatar",
+          "kind": "system",
+          "label": [
+            "Gravatar",
+            "Gravatar"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "render",
+          "actors": [
+            "author",
+            "cli"
+          ],
+          "label": [
+            "Render resume.json to HTML",
+            "Rendre resume.json en HTML"
+          ],
+          "detail": [
+            "index.js exports render(), which prepares the resume object and fills resume.template with Mustache, inlining style.css and print.css.",
+            "index.js exporte render(), qui prépare l’objet CV puis remplit resume.template avec Mustache, en intégrant style.css et print.css."
+          ],
+          "evidence": [
+            "index.js",
+            "resume.template"
+          ]
+        },
+        {
+          "id": "preview",
+          "actors": [
+            "author",
+            "cli"
+          ],
+          "label": [
+            "Preview the theme locally",
+            "Prévisualiser le thème en local"
+          ],
+          "detail": [
+            "The README runs resume serve --theme . from the theme folder and opens the preview on http://localhost:4000.",
+            "Le README lance resume serve --theme . depuis le dossier du thème et ouvre l’aperçu sur http://localhost:4000."
+          ],
+          "evidence": [
+            "README.md"
+          ]
+        },
+        {
+          "id": "photo",
+          "actors": [
+            "author",
+            "gravatar"
+          ],
+          "label": [
+            "Show a photo or Gravatar",
+            "Afficher une photo ou un Gravatar"
+          ],
+          "detail": [
+            "When basics.image is missing, render() builds a Gravatar URL from basics.email with the gravatar package.",
+            "Si basics.image est absent, render() construit une URL Gravatar à partir de basics.email avec le paquet gravatar."
+          ],
+          "evidence": [
+            "index.js",
+            "package.json"
+          ]
+        },
+        {
+          "id": "profiles",
+          "actors": [
+            "author"
+          ],
+          "label": [
+            "Map profiles to icons",
+            "Associer profils et icônes"
+          ],
+          "detail": [
+            "Each basics.profiles network is mapped to a FontAwesome class, with special cases such as stackoverflow, gitlab and keybase.",
+            "Chaque réseau de basics.profiles reçoit une classe FontAwesome, avec des cas particuliers comme stackoverflow, gitlab et keybase."
+          ],
+          "evidence": [
+            "index.js",
+            "README.md"
+          ]
+        },
+        {
+          "id": "print",
+          "actors": [
+            "author"
+          ],
+          "label": [
+            "Print a clean copy",
+            "Imprimer une copie propre"
+          ],
+          "detail": [
+            "print.css is injected as a media=\"print\" style; it hides the photo and removes link URLs after anchors.",
+            "print.css est injecté comme style media=\"print\" ; il masque la photo et retire les URL affichées après les liens."
+          ],
+          "evidence": [
+            "print.css",
+            "resume.template"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Previewing a resume with the Kendall theme",
+          "Prévisualiser un CV avec le thème Kendall"
+        ],
+        "steps": [
+          [
+            "Install the CLI with npm install -g resume-cli.",
+            "Installer l’outil avec npm install -g resume-cli."
+          ],
+          [
+            "Create and fill resume.json with resume init.",
+            "Créer et remplir resume.json avec resume init."
+          ],
+          [
+            "Run npm install in the theme folder to get mustache, lodash and gravatar.",
+            "Lancer npm install dans le dossier du thème pour obtenir mustache, lodash et gravatar."
+          ],
+          [
+            "Run resume serve --theme . and open http://localhost:4000.",
+            "Lancer resume serve --theme . et ouvrir http://localhost:4000."
+          ],
+          [
+            "Check that only filled sections (work, education, skills…) appear, then print from the browser.",
+            "Vérifier que seules les sections remplies (work, education, skills…) apparaissent, puis imprimer depuis le navigateur."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "package.json",
+        "index.js",
+        "resume.template",
+        "print.css"
+      ]
+    },
+    "LLM2SVG": {
+      "repo": "LLM2SVG",
+      "summary": [
+        "Python utilities and data for a text-to-SVG challenge: load prompts, check SVG rules, build and render shapes.",
+        "Outils Python et données pour un défi texte vers SVG : charger les consignes, valider les SVG, créer et rendre des formes."
+      ],
+      "actors": [
+        {
+          "id": "researcher",
+          "kind": "person",
+          "label": [
+            "ML researcher",
+            "Chercheur en ML"
+          ]
+        },
+        {
+          "id": "cairosvg",
+          "kind": "system",
+          "label": [
+            "cairosvg renderer",
+            "Moteur cairosvg"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "load-data",
+          "actors": [
+            "researcher"
+          ],
+          "label": [
+            "Load prompts and SVG samples",
+            "Charger consignes et SVG"
+          ],
+          "detail": [
+            "SVGDataLoader in utils/data_loader.py reads data/train/train.csv and data/test/test.csv and collects the SVG files stored under data/train/svg/<id>/; SVGDataset in utils/svg_dataset.py wraps them as a PyTorch Dataset.",
+            "SVGDataLoader (utils/data_loader.py) lit data/train/train.csv et data/test/test.csv et rassemble les SVG rangés sous data/train/svg/<id>/ ; SVGDataset (utils/svg_dataset.py) les expose comme Dataset PyTorch."
+          ],
+          "evidence": [
+            "utils/data_loader.py",
+            "utils/svg_dataset.py",
+            "data/train/train.csv"
+          ]
+        },
+        {
+          "id": "validate",
+          "actors": [
+            "researcher"
+          ],
+          "label": [
+            "Validate SVG constraints",
+            "Valider les contraintes SVG"
+          ],
+          "detail": [
+            "SVGConstraints.validate_svg in utils/svg_constraints.py rejects files over 10,000 bytes and any element or attribute outside the allowlist, parsing with defusedxml.",
+            "SVGConstraints.validate_svg (utils/svg_constraints.py) refuse les fichiers de plus de 10 000 octets et tout élément ou attribut hors de la liste permise, avec une analyse defusedxml."
+          ],
+          "evidence": [
+            "utils/svg_constraints.py"
+          ]
+        },
+        {
+          "id": "parse-prompt",
+          "actors": [
+            "researcher"
+          ],
+          "label": [
+            "Extract terms from a prompt",
+            "Extraire les termes d’une consigne"
+          ],
+          "detail": [
+            "TextParser in utils/text_parser.py pulls colours, shapes, patterns, materials, clothing, landscape and architecture terms from a description and picks a primary category.",
+            "TextParser (utils/text_parser.py) repère couleurs, formes, motifs, matières, vêtements, paysages et architecture dans une description et en déduit une catégorie principale."
+          ],
+          "evidence": [
+            "utils/text_parser.py"
+          ]
+        },
+        {
+          "id": "build-svg",
+          "actors": [
+            "researcher"
+          ],
+          "label": [
+            "Build SVG from primitives",
+            "Composer un SVG de formes"
+          ],
+          "detail": [
+            "utils/svg_utils.py has helpers for rect, circle, ellipse, path, polygon, line and group elements, a colour palette generator, generate_shapes and optimize_svg to shorten numbers.",
+            "utils/svg_utils.py fournit des fonctions pour rect, circle, ellipse, path, polygon, line et group, un générateur de palette, generate_shapes et optimize_svg qui raccourcit les nombres."
+          ],
+          "evidence": [
+            "utils/svg_utils.py"
+          ]
+        },
+        {
+          "id": "render",
+          "actors": [
+            "researcher",
+            "cairosvg"
+          ],
+          "label": [
+            "Render SVG to PNG",
+            "Convertir un SVG en PNG"
+          ],
+          "detail": [
+            "svg_to_png in utils/svg_utils.py calls cairosvg.svg2png and either writes a file or returns PNG bytes.",
+            "svg_to_png (utils/svg_utils.py) appelle cairosvg.svg2png et écrit un fichier ou renvoie les octets PNG."
+          ],
+          "evidence": [
+            "utils/svg_utils.py"
+          ]
+        },
+        {
+          "id": "analyze",
+          "actors": [
+            "researcher"
+          ],
+          "label": [
+            "Report on the SVG dataset",
+            "Analyser le jeu de SVG"
+          ],
+          "detail": [
+            "SVGAnalyzer in utils/svg_analyzer.py counts SVGs, measures their sizes, tallies elements, validates every file and plots a size histogram against the 10 KB limit.",
+            "SVGAnalyzer (utils/svg_analyzer.py) compte les SVG, mesure leur taille, recense les éléments, valide chaque fichier et trace un histogramme des tailles face à la limite de 10 Ko."
+          ],
+          "evidence": [
+            "utils/svg_analyzer.py"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Check a set of candidate SVGs before submission",
+          "Vérifier des SVG candidats avant soumission"
+        ],
+        "steps": [
+          [
+            "Point SVGDataLoader at the local data/ folder (the default path is hard-coded to the author’s Windows drive).",
+            "Pointer SVGDataLoader vers le dossier data/ local (le chemin par défaut vise le disque Windows de l’auteur)."
+          ],
+          [
+            "Read the prompts from data/train/train.csv, for example \"a starlit night over snow-covered peaks\".",
+            "Lire les consignes de data/train/train.csv, par exemple « a starlit night over snow-covered peaks »."
+          ],
+          [
+            "Run SVGAnalyzer.validate_all_svgs(\"train\") to test every SVG under data/train/svg/ with SVGConstraints.",
+            "Lancer SVGAnalyzer.validate_all_svgs(\"train\") pour tester chaque SVG de data/train/svg/ avec SVGConstraints."
+          ],
+          [
+            "Call generate_summary_report to get a table of sizes and inferred sources, then plot_svg_size_distribution.",
+            "Appeler generate_summary_report pour obtenir un tableau des tailles et des sources déduites, puis plot_svg_size_distribution."
+          ],
+          [
+            "Render a passing SVG with svg_to_png to compare it with the prompt.",
+            "Rendre un SVG valide avec svg_to_png pour le comparer à la consigne."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "utils/data_loader.py",
+        "utils/svg_dataset.py",
+        "utils/svg_constraints.py",
+        "utils/text_parser.py",
+        "utils/svg_utils.py",
+        "utils/svg_analyzer.py",
+        "data/train/train.csv"
+      ]
+    },
+    "Maestro": {
+      "repo": "Maestro",
+      "summary": [
+        "Web app that turns a scanned music sheet (PDF, PNG, JPG) into a MIDI file, with optional tempo overrides.",
+        "Application web qui transforme une partition numérisée (PDF, PNG, JPG) en fichier MIDI, avec tempos ajustables."
+      ],
+      "actors": [
+        {
+          "id": "musician",
+          "kind": "person",
+          "label": [
+            "Musician",
+            "Musicien"
+          ]
+        },
+        {
+          "id": "audiveris",
+          "kind": "system",
+          "label": [
+            "Audiveris OMR engine",
+            "Moteur OMR Audiveris"
+          ]
+        },
+        {
+          "id": "music21",
+          "kind": "system",
+          "label": [
+            "music21 (Python)",
+            "music21 (Python)"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "upload",
+          "actors": [
+            "musician"
+          ],
+          "label": [
+            "Upload a music sheet",
+            "Téléverser une partition"
+          ],
+          "detail": [
+            "The React form in maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx takes a dropped file and a MIDI file name, then useMaestroClient.ts checks GET /health before posting to /convert.",
+            "Le formulaire React (maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx) reçoit le fichier déposé et un nom de MIDI ; useMaestroClient.ts vérifie GET /health avant d’envoyer à /convert."
+          ],
+          "evidence": [
+            "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx",
+            "maestro-app/src/hooks/useMaestroClient.ts",
+            "maestro-app/src/components/musicSheetUploader/MusicSheetUploader.tsx"
+          ]
+        },
+        {
+          "id": "set-tempo",
+          "actors": [
+            "musician"
+          ],
+          "label": [
+            "Set tempos per measure",
+            "Régler le tempo par mesure"
+          ],
+          "detail": [
+            "The form keeps a list of tempo, measure and force entries (default 120 at measure 1) and sends it as the JSON field tempos.",
+            "Le formulaire garde une liste de tempos, mesures et options « forcer » (120 à la mesure 1 par défaut) et l’envoie dans le champ JSON tempos."
+          ],
+          "evidence": [
+            "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx"
+          ]
+        },
+        {
+          "id": "recognize",
+          "actors": [
+            "audiveris"
+          ],
+          "label": [
+            "Recognize notes with Audiveris",
+            "Lire les notes avec Audiveris"
+          ],
+          "detail": [
+            "POST /convert in ConvertController.java checks the file (10 MB limit, PDF/JPG/PNG signature) and AudiverisController.java runs Audiveris in batch mode to export a .mxl file.",
+            "POST /convert (ConvertController.java) vérifie le fichier (10 Mo au plus, signature PDF/JPG/PNG) puis AudiverisController.java lance Audiveris en mode batch pour exporter un .mxl."
+          ],
+          "evidence": [
+            "backend/src/main/java/PFE008/backend/ConvertController.java",
+            "backend/src/main/java/PFE008/backend/AudiverisController.java",
+            "backend/src/main/java/PFE008/backend/FileUtil.java"
+          ]
+        },
+        {
+          "id": "to-midi",
+          "actors": [
+            "music21"
+          ],
+          "label": [
+            "Convert MusicXML to MIDI",
+            "Convertir MusicXML en MIDI"
+          ],
+          "detail": [
+            "backend/src/main/MxlToMidi.py loads the .mxl with music21, applies dynamics and the requested tempo marks, and writes the .mid file.",
+            "backend/src/main/MxlToMidi.py charge le .mxl avec music21, applique les nuances et les tempos demandés, puis écrit le .mid."
+          ],
+          "evidence": [
+            "backend/src/main/MxlToMidi.py"
+          ]
+        },
+        {
+          "id": "download",
+          "actors": [
+            "musician"
+          ],
+          "label": [
+            "Download the MIDI file",
+            "Télécharger le fichier MIDI"
+          ],
+          "detail": [
+            "The backend returns the .mid as an attachment and the frontend saves it with js-file-download; input and output folders are cleaned three seconds later.",
+            "Le backend renvoie le .mid en pièce jointe et le frontend l’enregistre avec js-file-download ; les dossiers In et Out sont nettoyés trois secondes plus tard."
+          ],
+          "evidence": [
+            "backend/src/main/java/PFE008/backend/ConvertController.java",
+            "maestro-app/src/hooks/useMaestroClient.ts"
+          ]
+        },
+        {
+          "id": "switch-lang",
+          "actors": [
+            "musician"
+          ],
+          "label": [
+            "Switch English or French",
+            "Passer de l’anglais au français"
+          ],
+          "detail": [
+            "LanguageSwitcher.tsx toggles i18next between en-US and fr-CA, using the strings in maestro-app/public/locales/.",
+            "LanguageSwitcher.tsx bascule i18next entre en-US et fr-CA à partir des textes de maestro-app/public/locales/."
+          ],
+          "evidence": [
+            "maestro-app/src/components/languageSwitcher/LanguageSwitcher.tsx"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Turn a PDF score into a MIDI file locally",
+          "Transformer une partition PDF en MIDI en local"
+        ],
+        "steps": [
+          [
+            "Copy the Audiveris bin and lib folders into backend/audiveris/dist as backend/README.md explains.",
+            "Copier les dossiers bin et lib d’Audiveris dans backend/audiveris/dist, comme l’indique backend/README.md."
+          ],
+          [
+            "Start both services with docker-compose up -d (backend on port 8080, frontend on port 3000).",
+            "Démarrer les deux services avec docker-compose up -d (backend sur le port 8080, frontend sur le port 3000)."
+          ],
+          [
+            "Open localhost:3000, drop a PDF score and enter a MIDI file name.",
+            "Ouvrir localhost:3000, déposer une partition PDF et saisir un nom de fichier MIDI."
+          ],
+          [
+            "Add a tempo row, for example 90 at measure 1, and submit the form.",
+            "Ajouter une ligne de tempo, par exemple 90 à la mesure 1, puis envoyer le formulaire."
+          ],
+          [
+            "The backend runs Audiveris, then MxlToMidi.py, and the browser downloads the .mid file.",
+            "Le backend lance Audiveris puis MxlToMidi.py, et le navigateur télécharge le .mid."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "backend/README.md",
+        "docker-compose.yml",
+        "backend/src/main/java/PFE008/backend/ConvertController.java",
+        "backend/src/main/java/PFE008/backend/AudiverisController.java",
+        "backend/src/main/MxlToMidi.py",
+        "maestro-app/src/hooks/useMaestroClient.ts",
+        "maestro-app/src/pages/MusicSheetUploadForm/MusicSheetUploadForm.tsx",
+        "maestro-app/src/components/languageSwitcher/LanguageSwitcher.tsx"
+      ]
+    },
+    "marketwatch": {
+      "repo": "marketwatch",
+      "summary": [
+        "Python client for the MarketWatch stock game: quotes, trades, portfolios and watchlists (login now blocked by captcha).",
+        "Client Python pour le jeu boursier MarketWatch : cours, ordres, portefeuilles et listes (connexion bloquée par un captcha)."
+      ],
+      "actors": [
+        {
+          "id": "player",
+          "kind": "person",
+          "label": [
+            "Game player",
+            "Joueur"
+          ]
+        },
+        {
+          "id": "marketwatch",
+          "kind": "system",
+          "label": [
+            "MarketWatch website",
+            "Site MarketWatch"
+          ]
+        },
+        {
+          "id": "actions",
+          "kind": "system",
+          "label": [
+            "GitHub Actions",
+            "GitHub Actions"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "price",
+          "actors": [
+            "player",
+            "marketwatch"
+          ],
+          "label": [
+            "Get a stock price",
+            "Obtenir le cours d’une action"
+          ],
+          "detail": [
+            "MarketWatch.get_price in marketwatch/__init__.py fetches the stock page with httpx and reads the intraday price with BeautifulSoup; the README marks it as working with skip_login=True.",
+            "MarketWatch.get_price (marketwatch/__init__.py) charge la page de l’action avec httpx et lit le cours avec BeautifulSoup ; le README l’indique fonctionnel avec skip_login=True."
+          ],
+          "evidence": [
+            "marketwatch/__init__.py",
+            "README.md"
+          ]
+        },
+        {
+          "id": "trade",
+          "actors": [
+            "player",
+            "marketwatch"
+          ],
+          "label": [
+            "Buy, sell, short or cover",
+            "Acheter, vendre ou couvrir"
+          ],
+          "detail": [
+            "buy, sell, short and cover build an order payload and submit it to a game; MarketWatchGame in marketwatch/game.py binds the same calls to one game ID.",
+            "buy, sell, short et cover construisent un ordre et l’envoient à une partie ; MarketWatchGame (marketwatch/game.py) lie ces appels à un identifiant de partie."
+          ],
+          "evidence": [
+            "marketwatch/__init__.py",
+            "marketwatch/game.py"
+          ]
+        },
+        {
+          "id": "portfolio",
+          "actors": [
+            "player",
+            "marketwatch"
+          ],
+          "label": [
+            "Read portfolio and orders",
+            "Lire portefeuille et ordres"
+          ],
+          "detail": [
+            "get_portfolio, get_positions, get_pending_orders, get_leaderboard and get_game_settings scrape game pages; cancel_order and cancel_all_orders remove pending orders.",
+            "get_portfolio, get_positions, get_pending_orders, get_leaderboard et get_game_settings lisent les pages de la partie ; cancel_order et cancel_all_orders annulent les ordres en attente."
+          ],
+          "evidence": [
+            "marketwatch/__init__.py"
+          ]
+        },
+        {
+          "id": "watchlist",
+          "actors": [
+            "player",
+            "marketwatch"
+          ],
+          "label": [
+            "Manage watchlists",
+            "Gérer les listes de suivi"
+          ],
+          "detail": [
+            "create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist and delete_watchlist_item call the MarketWatch watchlist endpoints.",
+            "create_watchlist, add_to_watchlist, get_watchlists, delete_watchlist et delete_watchlist_item appellent les points d’accès des listes de suivi."
+          ],
+          "evidence": [
+            "marketwatch/__init__.py"
+          ]
+        },
+        {
+          "id": "cards",
+          "actors": [
+            "player",
+            "marketwatch"
+          ],
+          "label": [
+            "Serve HTML game cards",
+            "Servir des cartes HTML"
+          ],
+          "detail": [
+            "api/app.py is a FastAPI app with HTTP Basic auth that renders Jinja2 templates for /game, /portfolio, /leaderboard, /card and /watchlist.",
+            "api/app.py est une application FastAPI avec authentification HTTP Basic qui rend des gabarits Jinja2 pour /game, /portfolio, /leaderboard, /card et /watchlist."
+          ],
+          "evidence": [
+            "api/app.py",
+            "api/templates/card.html.j2",
+            "api/setup.md"
+          ]
+        },
+        {
+          "id": "ema",
+          "actors": [
+            "actions",
+            "marketwatch"
+          ],
+          "label": [
+            "Trade on an EMA crossover",
+            "Trader sur croisement EMA"
+          ],
+          "detail": [
+            ".github/workflows/ema-workflow.yml runs on a five-minute cron, pulls prices with yfinance, computes 20 and 80 period EMAs and buys or sells 100 shares on a crossover.",
+            ".github/workflows/ema-workflow.yml s’exécute toutes les cinq minutes, lit les cours avec yfinance, calcule les EMA 20 et 80 et achète ou vend 100 actions à chaque croisement."
+          ],
+          "evidence": [
+            ".github/workflows/ema-workflow.yml",
+            "notebook/ema.ipynb"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Check a quote, then trade in a game",
+          "Consulter un cours puis passer un ordre"
+        ],
+        "steps": [
+          [
+            "Install the package with pip install marketwatch.",
+            "Installer le paquet avec pip install marketwatch."
+          ],
+          [
+            "Create MarketWatch(email, password, skip_login=True) and call get_price(\"AAPL\").",
+            "Créer MarketWatch(email, password, skip_login=True) puis appeler get_price(\"AAPL\")."
+          ],
+          [
+            "For game calls, log in with real credentials; the README warns this step currently fails on a captcha.",
+            "Pour les appels de partie, se connecter avec de vrais identifiants ; le README prévient que le captcha bloque cette étape."
+          ],
+          [
+            "Once logged in, call get_games(), then buy(game_id, \"AAPL\", 100).",
+            "Une fois connecté, appeler get_games(), puis buy(game_id, \"AAPL\", 100)."
+          ],
+          [
+            "Check the result with get_positions(game_id) and get_pending_orders(game_id).",
+            "Vérifier le résultat avec get_positions(game_id) et get_pending_orders(game_id)."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "marketwatch/__init__.py",
+        "marketwatch/game.py",
+        "api/app.py",
+        "api/setup.md",
+        ".github/workflows/ema-workflow.yml",
+        "notebook/ema.ipynb"
+      ]
+    },
+    "MediaBoxDockerCompose": {
+      "repo": "MediaBoxDockerCompose",
+      "summary": [
+        "Docker Compose stack for a home media server: download automation, Plex/Jellyfin, admin tools and a Caddy proxy.",
+        "Pile Docker Compose pour un serveur multimédia maison : téléchargements automatisés, Plex/Jellyfin, outils d’admin et proxy Caddy."
+      ],
+      "actors": [
+        {
+          "id": "admin",
+          "kind": "person",
+          "label": [
+            "Homelab admin",
+            "Admin du homelab"
+          ]
+        },
+        {
+          "id": "viewer",
+          "kind": "person",
+          "label": [
+            "Media viewer",
+            "Spectateur"
+          ]
+        },
+        {
+          "id": "docker",
+          "kind": "system",
+          "label": [
+            "Docker host",
+            "Hôte Docker"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "start",
+          "actors": [
+            "admin",
+            "docker"
+          ],
+          "label": [
+            "Start the media stack",
+            "Démarrer la pile multimédia"
+          ],
+          "detail": [
+            "docker-compose.yml defines about twenty containers that share PUID, PGID, TZ and ROOT from .env; docker-compose up -d starts them all.",
+            "docker-compose.yml définit une vingtaine de conteneurs qui lisent PUID, PGID, TZ et ROOT dans .env ; docker-compose up -d les lance tous."
+          ],
+          "evidence": [
+            "docker-compose.yml",
+            ".env",
+            "README.md"
+          ]
+        },
+        {
+          "id": "automate",
+          "actors": [
+            "admin",
+            "docker"
+          ],
+          "label": [
+            "Automate media downloads",
+            "Automatiser les téléchargements"
+          ],
+          "detail": [
+            "Sonarr, Radarr, Lidarr and Bazarr handle TV, movies, music and subtitles, fed by Jackett, Prowlarr or NZBHydra2 and sent to Deluge or NZBGet, all under ${ROOT}.",
+            "Sonarr, Radarr, Lidarr et Bazarr gèrent séries, films, musique et sous-titres, alimentés par Jackett, Prowlarr ou NZBHydra2 et confiés à Deluge ou NZBGet, le tout sous ${ROOT}."
+          ],
+          "evidence": [
+            "docker-compose.yml",
+            "README.md"
+          ]
+        },
+        {
+          "id": "watch",
+          "actors": [
+            "viewer",
+            "docker"
+          ],
+          "label": [
+            "Watch or request media",
+            "Regarder ou demander un titre"
+          ],
+          "detail": [
+            "Plex (port 32400) and Jellyfin (port 8096) serve the library; Ombi and Jellyseerr take requests and Tautulli reports Plex activity.",
+            "Plex (port 32400) et Jellyfin (port 8096) diffusent la bibliothèque ; Ombi et Jellyseerr reçoivent les demandes et Tautulli suit l’activité de Plex."
+          ],
+          "evidence": [
+            "docker-compose.yml",
+            "README.md"
+          ]
+        },
+        {
+          "id": "monitor",
+          "actors": [
+            "admin",
+            "docker"
+          ],
+          "label": [
+            "Monitor and browse the host",
+            "Surveiller et parcourir l’hôte"
+          ],
+          "detail": [
+            "Netdata (port 19999) shows host metrics, FileBrowser gives web file access and Dashmachine (port 5000) is a start page configured by dashmachine/config.ini.",
+            "Netdata (port 19999) affiche les métriques, FileBrowser donne accès aux fichiers et Dashmachine (port 5000) sert de page d’accueil configurée par dashmachine/config.ini."
+          ],
+          "evidence": [
+            "docker-compose.yml",
+            "dashmachine/config.ini",
+            "README.md"
+          ]
+        },
+        {
+          "id": "proxy",
+          "actors": [
+            "admin"
+          ],
+          "label": [
+            "Publish services via Caddy",
+            "Publier via Caddy"
+          ],
+          "detail": [
+            "caddy/Caddyfile maps subdomains such as sonarr.{$DOMAIN} to local ports with logging, rate limiting, an IP allowlist and basic auth taken from caddy/.env.",
+            "caddy/Caddyfile relie des sous-domaines comme sonarr.{$DOMAIN} aux ports locaux, avec journaux, limite de débit, liste d’IP permises et authentification de base tirée de caddy/.env."
+          ],
+          "evidence": [
+            "caddy/Caddyfile",
+            "caddy/.env"
+          ]
+        },
+        {
+          "id": "extras",
+          "actors": [
+            "admin",
+            "docker"
+          ],
+          "label": [
+            "Add optional extras",
+            "Ajouter des services en option"
+          ],
+          "detail": [
+            "Separate compose files under extra/ add Samba shares, a WireGuard access server and Portainer; whisper/docker-compose.yml runs a Whisper ASR web service on port 9000.",
+            "Des fichiers compose distincts sous extra/ ajoutent un partage Samba, un serveur d’accès WireGuard et Portainer ; whisper/docker-compose.yml lance un service Whisper ASR sur le port 9000."
+          ],
+          "evidence": [
+            "extra/samba/docker-compose.yml",
+            "extra/wireguard-access-server/docker-compose.yml",
+            "extra/portainer/docker-compose.yml",
+            "whisper/docker-compose.yml"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Bring up a TV and movie server on one machine",
+          "Monter un serveur séries et films sur une machine"
+        ],
+        "steps": [
+          [
+            "Install Docker and Docker Compose, then clone the repository.",
+            "Installer Docker et Docker Compose, puis cloner le dépôt."
+          ],
+          [
+            "Edit .env: set TZ, PUID, PGID, ROOT (for example /media/MediaBox) and PLEX_CLAIM.",
+            "Modifier .env : régler TZ, PUID, PGID, ROOT (par exemple /media/MediaBox) et PLEX_CLAIM."
+          ],
+          [
+            "Run docker-compose up -d from the repository root.",
+            "Lancer docker-compose up -d à la racine du dépôt."
+          ],
+          [
+            "Open Prowlarr on port 9696 and Sonarr on port 8989 to connect indexers and the download client.",
+            "Ouvrir Prowlarr sur le port 9696 et Sonarr sur le port 8989 pour relier indexeurs et client de téléchargement."
+          ],
+          [
+            "Point Plex (port 32400) or Jellyfin (port 8096) at the completed folders under ROOT and start watching.",
+            "Pointer Plex (port 32400) ou Jellyfin (port 8096) vers les dossiers terminés sous ROOT, puis regarder."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "docker-compose.yml",
+        ".env",
+        "caddy/Caddyfile",
+        "caddy/.env",
+        "dashmachine/config.ini",
+        "extra/samba/docker-compose.yml",
+        "extra/wireguard-access-server/docker-compose.yml",
+        "extra/portainer/docker-compose.yml",
+        "whisper/docker-compose.yml"
+      ]
+    },
+    "nova-backtest": {
+      "repo": "nova-backtest",
+      "summary": [
+        "Python library to download crypto exchange candles and backtest a trading strategy with profit and drawdown stats.",
+        "Bibliothèque Python qui télécharge les chandelles des plateformes crypto et teste une stratégie avec profits et drawdown."
+      ],
+      "actors": [
+        {
+          "id": "quant",
+          "kind": "person",
+          "label": [
+            "Strategy developer",
+            "Développeur de stratégie"
+          ]
+        },
+        {
+          "id": "exchange",
+          "kind": "system",
+          "label": [
+            "Exchange REST API",
+            "API REST de plateforme"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "download",
+          "actors": [
+            "quant",
+            "exchange"
+          ],
+          "label": [
+            "Download historical candles",
+            "Télécharger l’historique"
+          ],
+          "detail": [
+            "BackTest.get_historical_data in novalabs-backtest/utils/backtest.py calls the exchange client and caches OHLCV data in database/<exchange>/hist_<pair>_<candle>.csv, starting from 2019-01-01.",
+            "BackTest.get_historical_data (novalabs-backtest/utils/backtest.py) appelle le client de la plateforme et garde les données OHLCV dans database/<exchange>/hist_<pair>_<candle>.csv, à partir du 2019-01-01."
+          ],
+          "evidence": [
+            "novalabs-backtest/utils/backtest.py"
+          ]
+        },
+        {
+          "id": "choose-exchange",
+          "actors": [
+            "quant",
+            "exchange"
+          ],
+          "label": [
+            "Pick an exchange client",
+            "Choisir une plateforme"
+          ],
+          "detail": [
+            "clients() in novalabs-backtest/clients/clients.py returns a client for Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda or BTCEX, each following BackTestClientInterface.",
+            "clients() (novalabs-backtest/clients/clients.py) renvoie un client Binance, Bybit, OKX, Huobi, KuCoin, MEXC, Oanda ou BTCEX, chacun conforme à BackTestClientInterface."
+          ],
+          "evidence": [
+            "novalabs-backtest/clients/clients.py",
+            "novalabs-backtest/clients/client_interface.py"
+          ]
+        },
+        {
+          "id": "define",
+          "actors": [
+            "quant"
+          ],
+          "label": [
+            "Define entry and exit rules",
+            "Définir entrées et sorties"
+          ],
+          "detail": [
+            "A strategy subclasses BackTest and fills build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) and exit_strategy (exit_signal).",
+            "Une stratégie hérite de BackTest et remplit build_indicators, entry_strategy (entry_signal, take_profit, stop_loss, position_size) et exit_strategy (exit_signal)."
+          ],
+          "evidence": [
+            "novalabs-backtest/utils/backtest.py"
+          ]
+        },
+        {
+          "id": "run",
+          "actors": [
+            "quant"
+          ],
+          "label": [
+            "Run the backtest",
+            "Lancer le backtest"
+          ],
+          "detail": [
+            "run_backtest simulates positions per pair with exchange fees, a maximum number of positions and a maximum holding time, then plots cumulative profit.",
+            "run_backtest simule les positions par paire avec les frais de la plateforme, un nombre maximal de positions et une durée de détention maximale, puis trace le profit cumulé."
+          ],
+          "evidence": [
+            "novalabs-backtest/utils/backtest.py"
+          ]
+        },
+        {
+          "id": "stats",
+          "actors": [
+            "quant"
+          ],
+          "label": [
+            "Save performance statistics",
+            "Enregistrer les statistiques"
+          ],
+          "detail": [
+            "The run writes results/<strategy>_pairs_stats.csv and results/<strategy>_overall_stats.json with returns, drawdown and per-pair figures.",
+            "L’exécution écrit results/<strategy>_pairs_stats.csv et results/<strategy>_overall_stats.json avec rendements, drawdown et chiffres par paire."
+          ],
+          "evidence": [
+            "novalabs-backtest/utils/backtest.py"
+          ]
+        },
+        {
+          "id": "features",
+          "actors": [
+            "quant"
+          ],
+          "label": [
+            "Build indicator features",
+            "Créer des indicateurs"
+          ],
+          "detail": [
+            "TechnicalIndicatorsCreation in novalabs-backtest/utils/indicators.py adds lags, close ratios and support or resistance levels to a candle DataFrame.",
+            "TechnicalIndicatorsCreation (novalabs-backtest/utils/indicators.py) ajoute décalages, ratios de clôture et niveaux de support ou de résistance à un DataFrame de chandelles."
+          ],
+          "evidence": [
+            "novalabs-backtest/utils/indicators.py"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Backtest a MACD strategy on Binance pairs",
+          "Tester une stratégie MACD sur des paires Binance"
+        ],
+        "steps": [
+          [
+            "Install the dependencies listed in requirements.txt (the README's pip command spells the package novelabs-backtest).",
+            "Installer les dépendances de requirements.txt (la commande pip du README écrit le paquet novelabs-backtest)."
+          ],
+          [
+            "Subclass BackTest with exchange=\"binance\", candle=\"1h\", list_pairs=[\"BTCUSDT\", \"ETHUSDT\"], a start bankroll, leverage and max_pos.",
+            "Hériter de BackTest avec exchange=\"binance\", candle=\"1h\", list_pairs=[\"BTCUSDT\", \"ETHUSDT\"], un capital de départ, un levier et max_pos."
+          ],
+          [
+            "Compute the MACD histogram in build_indicators and set entry_signal, take_profit and stop_loss in entry_strategy.",
+            "Calculer l’histogramme MACD dans build_indicators et fixer entry_signal, take_profit et stop_loss dans entry_strategy."
+          ],
+          [
+            "Call run_backtest(); missing pairs are downloaded into database/binance/ on first use.",
+            "Appeler run_backtest() ; les paires absentes sont téléchargées dans database/binance/ la première fois."
+          ],
+          [
+            "Read the profit chart and the JSON and CSV files written under results/.",
+            "Lire le graphique de profit et les fichiers JSON et CSV écrits sous results/."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "novalabs-backtest/utils/backtest.py",
+        "novalabs-backtest/clients/clients.py",
+        "novalabs-backtest/clients/client_interface.py",
+        "novalabs-backtest/utils/indicators.py",
+        "requirements.txt"
+      ]
+    },
+    "PolyFEMBlenderPlugin": {
+      "repo": "PolyFEMBlenderPlugin",
+      "summary": [
+        "Blender add-on that turns a scene into a PolyFEM JSON setup and runs the simulation from Blender.",
+        "Extension Blender qui transforme une scène en configuration JSON PolyFEM et lance la simulation depuis Blender."
+      ],
+      "actors": [
+        {
+          "id": "artist",
+          "kind": "person",
+          "label": [
+            "Simulation user",
+            "Utilisateur Blender"
+          ]
+        },
+        {
+          "id": "docker",
+          "kind": "system",
+          "label": [
+            "Docker images",
+            "Images Docker"
+          ]
+        },
+        {
+          "id": "polyfem",
+          "kind": "system",
+          "label": [
+            "PolyFEM solver",
+            "Solveur PolyFEM"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "material",
+          "actors": [
+            "artist"
+          ],
+          "label": [
+            "Assign FEM materials",
+            "Assigner un matériau MEF"
+          ],
+          "detail": [
+            "The Apply Material operator stores Young's modulus, Poisson's ratio and density on the selected objects from a preset list such as Steel or Aluminum.",
+            "L'opérateur Apply Material enregistre module de Young, coefficient de Poisson et densité sur les objets sélectionnés à partir de préréglages comme Steel ou Aluminum."
+          ],
+          "evidence": [
+            "polyfem/operators/create_polyfem_json.py",
+            "polyfem/properties/polyfem.py"
+          ]
+        },
+        {
+          "id": "json",
+          "actors": [
+            "artist"
+          ],
+          "label": [
+            "Create PolyFEM JSON",
+            "Créer le JSON PolyFEM"
+          ],
+          "detail": [
+            "Create PolyFEM JSON exports each mesh and writes geometry, materials, contact, time, boundary-condition, solver and output blocks to one JSON file.",
+            "Create PolyFEM JSON exporte chaque maillage et écrit géométrie, matériaux, contact, temps, conditions aux limites, solveur et sorties dans un fichier JSON."
+          ],
+          "evidence": [
+            "polyfem/operators/create_polyfem_json.py"
+          ]
+        },
+        {
+          "id": "tetmesh",
+          "actors": [
+            "artist",
+            "docker"
+          ],
+          "label": [
+            "Tetrahedralize with TetWild",
+            "Tétraédriser avec TetWild"
+          ],
+          "detail": [
+            "With the MSH export type, the object is written as STL and converted to .msh by the yixinhu/tetwild image or a local TetWild executable.",
+            "Avec le type MSH, l'objet est écrit en STL puis converti en .msh par l'image yixinhu/tetwild ou un exécutable TetWild local."
+          ],
+          "evidence": [
+            "polyfem/operators/create_polyfem_json.py",
+            "polyfem/panels/polyfem_json.py"
+          ]
+        },
+        {
+          "id": "run",
+          "actors": [
+            "artist",
+            "docker",
+            "polyfem"
+          ],
+          "label": [
+            "Run the simulation",
+            "Lancer la simulation"
+          ],
+          "detail": [
+            "Run PolyFem Simulation calls docker run antoinebou12/polyfem --json with the project folder mounted on /data, or a local PolyFEM executable, in a background thread.",
+            "Run PolyFem Simulation appelle docker run antoinebou12/polyfem --json avec le dossier du projet monté sur /data, ou un exécutable PolyFEM local, dans un fil d'arrière-plan."
+          ],
+          "evidence": [
+            "polyfem/operators/run_polyfem.py"
+          ]
+        },
+        {
+          "id": "animate",
+          "actors": [
+            "artist",
+            "polyfem"
+          ],
+          "label": [
+            "Import results as animation",
+            "Importer l'animation"
+          ],
+          "detail": [
+            "Render Animation reads step_*.vtu files, adds the solution displacement, converts each step to OBJ with meshio and keyframes its visibility.",
+            "Render Animation lit les fichiers step_*.vtu, ajoute le déplacement solution, convertit chaque pas en OBJ avec meshio et anime sa visibilité."
+          ],
+          "evidence": [
+            "polyfem/operators/run_polyfem.py"
+          ]
+        },
+        {
+          "id": "pull",
+          "actors": [
+            "artist",
+            "docker"
+          ],
+          "label": [
+            "Pull solver images",
+            "Télécharger les images"
+          ],
+          "detail": [
+            "The Pull Docker Image buttons check that Docker is installed and run docker pull for the configured TetWild or PolyFEM image.",
+            "Les boutons Pull Docker Image vérifient que Docker est installé et exécutent docker pull pour l'image TetWild ou PolyFEM configurée."
+          ],
+          "evidence": [
+            "polyfem/operators/create_polyfem_json.py"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Simulate a contact scene and play it back in Blender",
+          "Simuler une scène de contact et la rejouer dans Blender"
+        ],
+        "steps": [
+          [
+            "Install the zipped polyfem folder through Edit > Preferences > Add-ons and enable PolyFem.",
+            "Installer le dossier polyfem zippé par Edit > Preferences > Add-ons et activer PolyFem."
+          ],
+          [
+            "In Properties > Physics > PolyFEM, choose Docker execution and pull antoinebou12/polyfem and yixinhu/tetwild.",
+            "Dans Properties > Physics > PolyFEM, choisir l'exécution Docker et télécharger antoinebou12/polyfem et yixinhu/tetwild."
+          ],
+          [
+            "Select the meshes, apply a material preset and set contact, time step and end time.",
+            "Sélectionner les maillages, appliquer un matériau prédéfini et régler contact, pas de temps et temps final."
+          ],
+          [
+            "Click Create JSON Configuration to write the meshes and the JSON file to the export path.",
+            "Cliquer sur Create JSON Configuration pour écrire les maillages et le JSON dans le dossier d'export."
+          ],
+          [
+            "Click Run PolyFem Simulation, then Render Animation to import the step_*.vtu results as keyframed meshes.",
+            "Cliquer sur Run PolyFem Simulation, puis Render Animation pour importer les résultats step_*.vtu en maillages animés."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "polyfem/__init__.py",
+        "polyfem/blender_manifest.toml",
+        "polyfem/operators/create_polyfem_json.py",
+        "polyfem/operators/run_polyfem.py",
+        "polyfem/panels/polyfem_json.py",
+        "polyfem/properties/polyfem.py",
+        ".github/workflows/build.yml",
+        "LICENSE"
+      ]
+    },
+    "SimilityVectorEmbedding": {
+      "repo": "SimilityVectorEmbedding",
+      "summary": [
+        "Jupyter notebooks that embed a movie catalog and find similar films with pgvector, Qdrant, BM25, Neo4j and Ollama.",
+        "Carnets Jupyter qui vectorisent un catalogue de films et trouvent des films proches avec pgvector, Qdrant, BM25, Neo4j et Ollama."
+      ],
+      "actors": [
+        {
+          "id": "learner",
+          "kind": "person",
+          "label": [
+            "Learner",
+            "Apprenant"
+          ]
+        },
+        {
+          "id": "database",
+          "kind": "system",
+          "label": [
+            "Database container",
+            "Base en conteneur"
+          ]
+        },
+        {
+          "id": "llm",
+          "kind": "system",
+          "label": [
+            "Local LLM (Ollama)",
+            "LLM local (Ollama)"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "embed",
+          "actors": [
+            "learner",
+            "database"
+          ],
+          "label": [
+            "Embed the movie catalog",
+            "Vectoriser le catalogue"
+          ],
+          "detail": [
+            "postgres/1.create_table.ipynb builds one text per film from movies.json and encodes it with BART, GTE, MiniLM-L12, RoBERTa and e5-large, storing one vector column per model.",
+            "postgres/1.create_table.ipynb compose un texte par film à partir de movies.json et l’encode avec BART, GTE, MiniLM-L12, RoBERTa et e5-large, avec une colonne de vecteurs par modèle."
+          ],
+          "evidence": [
+            "postgres/1.create_table.ipynb"
+          ]
+        },
+        {
+          "id": "similar",
+          "actors": [
+            "learner",
+            "database"
+          ],
+          "label": [
+            "Find films like a title",
+            "Trouver des films proches"
+          ],
+          "detail": [
+            "postgres/0.simple.ipynb resolves the typed title with pg_trgm, then ranks the catalog by cosine similarity for one title, several titles or rated titles.",
+            "postgres/0.simple.ipynb retrouve le titre saisi avec pg_trgm, puis classe le catalogue par similarité cosinus pour un titre, plusieurs titres ou des titres notés."
+          ],
+          "evidence": [
+            "postgres/0.simple.ipynb"
+          ]
+        },
+        {
+          "id": "gradio",
+          "actors": [
+            "learner",
+            "database"
+          ],
+          "label": [
+            "Search from a Gradio page",
+            "Chercher dans Gradio"
+          ],
+          "detail": [
+            "The last cells of postgres/0.simple.ipynb launch a Gradio interface with Single, Multiple and Ratings modes that shows posters, years and similarity scores.",
+            "Les dernières cellules de postgres/0.simple.ipynb lancent une interface Gradio (modes Single, Multiple et Ratings) qui affiche affiches, années et scores."
+          ],
+          "evidence": [
+            "postgres/0.simple.ipynb"
+          ]
+        },
+        {
+          "id": "qdrant",
+          "actors": [
+            "learner",
+            "database"
+          ],
+          "label": [
+            "Search with Qdrant",
+            "Chercher avec Qdrant"
+          ],
+          "detail": [
+            "qdrant/0.simple.ipynb upserts 384-dimension MiniLM vectors into a cosine collection, searches it and projects the vectors with t-SNE and k-means.",
+            "qdrant/0.simple.ipynb insère des vecteurs MiniLM de 384 dimensions dans une collection cosinus, l’interroge et projette les vecteurs avec t-SNE et k-means."
+          ],
+          "evidence": [
+            "qdrant/0.simple.ipynb",
+            "qdrant/docker-compose.yml"
+          ]
+        },
+        {
+          "id": "llm",
+          "actors": [
+            "learner",
+            "database",
+            "llm"
+          ],
+          "label": [
+            "Ask a local LLM",
+            "Interroger un LLM local"
+          ],
+          "detail": [
+            "postgres/3.LLMS.ipynb embeds a question, runs a pgvector cosine query and passes the schema to a LangChain chain backed by Ollama llama2:13b-chat.",
+            "postgres/3.LLMS.ipynb vectorise une question, lance une requête cosinus pgvector et transmet le schéma à une chaîne LangChain reliée à Ollama llama2:13b-chat."
+          ],
+          "evidence": [
+            "postgres/3.LLMS.ipynb"
+          ]
+        },
+        {
+          "id": "compare",
+          "actors": [
+            "learner",
+            "database"
+          ],
+          "label": [
+            "Compare BM25 and graph search",
+            "Comparer BM25 et graphe Neo4j"
+          ],
+          "detail": [
+            "bm25/0.bm25.ipynb ranks films by keywords with rank_bm25, and neo4j/1.create_db.ipynb scores films by shared genres, directors, writers and actors.",
+            "bm25/0.bm25.ipynb classe les films par mots-clés avec rank_bm25, et neo4j/1.create_db.ipynb les note selon les genres, réalisateurs, scénaristes et acteurs partagés."
+          ],
+          "evidence": [
+            "bm25/0.bm25.ipynb",
+            "neo4j/1.create_db.ipynb",
+            "neo4j/docker-compose.yml"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Find films like The Matrix",
+          "Trouver des films proches de The Matrix"
+        ],
+        "steps": [
+          [
+            "Start PostgreSQL with pgvector and pg_trgm: cd postgres, then docker-compose up -d.",
+            "Démarrer PostgreSQL avec pgvector et pg_trgm : cd postgres, puis docker-compose up -d."
+          ],
+          [
+            "Open postgres/0.simple.ipynb with jupyter notebook and run the pip install and import cells.",
+            "Ouvrir postgres/0.simple.ipynb avec jupyter notebook et exécuter les cellules d’installation et d’import."
+          ],
+          [
+            "Run main() to load movies.json, embed each film with all-MiniLM-L6-v2 and insert it into the movies table.",
+            "Exécuter main() pour charger movies.json, vectoriser chaque film avec all-MiniLM-L6-v2 et l’insérer dans la table movies."
+          ],
+          [
+            "Call find_similar_movies(conn, cur, \"The Matrix\") to get the closest titles above a 0.5 cosine threshold.",
+            "Appeler find_similar_movies(conn, cur, \"The Matrix\") pour obtenir les titres les plus proches au-dessus d’un seuil cosinus de 0,5."
+          ],
+          [
+            "Plot the result with plot_similar_movies or try the same search in the Gradio interface.",
+            "Tracer le résultat avec plot_similar_movies ou refaire la recherche dans l’interface Gradio."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "postgres/README.md",
+        "postgres/docker-compose.yml",
+        "postgres/Dockerfile",
+        "postgres/init-db.sh",
+        "postgres/0.simple.ipynb",
+        "postgres/1.create_table.ipynb",
+        "postgres/3.LLMS.ipynb",
+        "qdrant/0.simple.ipynb",
+        "qdrant/docker-compose.yml",
+        "bm25/0.bm25.ipynb",
+        "neo4j/1.create_db.ipynb",
+        "neo4j/docker-compose.yml"
+      ]
+    },
+    "SpringBootFilesUploader": {
+      "repo": "SpringBootFilesUploader",
+      "summary": [
+        "Kotlin Spring Boot API that stores uploaded files in MinIO/S3 behind JWT roles, with Docker and SSH admin endpoints.",
+        "API Spring Boot en Kotlin qui range les fichiers téléversés dans MinIO/S3 derrière des rôles JWT, avec des routes Docker et SSH."
+      ],
+      "actors": [
+        {
+          "id": "user",
+          "kind": "person",
+          "label": [
+            "API user",
+            "Utilisateur de l'API"
+          ]
+        },
+        {
+          "id": "admin",
+          "kind": "person",
+          "label": [
+            "Moderator or admin",
+            "Modérateur ou admin"
+          ]
+        },
+        {
+          "id": "storage",
+          "kind": "system",
+          "label": [
+            "MinIO S3 and MongoDB",
+            "MinIO S3 et MongoDB"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "auth",
+          "actors": [
+            "user",
+            "storage"
+          ],
+          "label": [
+            "Sign up and get a JWT",
+            "S'inscrire et obtenir un JWT"
+          ],
+          "detail": [
+            "POST /auth/signup saves a user with hashed password and roles in MongoDB; POST /auth/signin returns a JwtResponse with the token and roles (AuthController.kt, JwtUtils.kt).",
+            "POST /auth/signup enregistre l'utilisateur dans MongoDB avec son mot de passe haché et ses rôles ; POST /auth/signin renvoie un JwtResponse avec le jeton et les rôles (AuthController.kt, JwtUtils.kt)."
+          ],
+          "evidence": [
+            "src/main/kotlin/com/api/project/controller/AuthController.kt",
+            "src/main/kotlin/com/api/project/service/jwt/JwtUtils.kt"
+          ]
+        },
+        {
+          "id": "upload",
+          "actors": [
+            "admin",
+            "storage"
+          ],
+          "label": [
+            "Upload a document",
+            "Téléverser un document"
+          ],
+          "detail": [
+            "POST /files/documents (moderator or admin) checks the extension against DOC_FILE_EXTENSION_REGEX, writes the bytes to the S3 bucket under files/<uuid>/<name> and records metadata in MongoDB.",
+            "POST /files/documents (modérateur ou admin) valide l'extension avec DOC_FILE_EXTENSION_REGEX, écrit le fichier dans le bucket S3 sous files/<uuid>/<nom> et note ses métadonnées dans MongoDB."
+          ],
+          "evidence": [
+            "src/main/kotlin/com/api/project/controller/FilesController.kt",
+            "src/main/kotlin/com/api/project/service/FilesService.kt",
+            "src/main/kotlin/com/api/project/repository/file/FileS3.kt",
+            "src/main/kotlin/com/api/project/constants/Constants.kt"
+          ]
+        },
+        {
+          "id": "download",
+          "actors": [
+            "user",
+            "storage"
+          ],
+          "label": [
+            "Download a stored file",
+            "Télécharger un fichier stocké"
+          ],
+          "detail": [
+            "GET /files/{id} looks up the file record in MongoDB, reads the object from S3 and returns it as an attachment with its content type and size.",
+            "GET /files/{id} retrouve la fiche du fichier dans MongoDB, lit l'objet dans S3 et le renvoie en pièce jointe avec son type et sa taille."
+          ],
+          "evidence": [
+            "src/main/kotlin/com/api/project/controller/FilesController.kt",
+            "src/main/kotlin/com/api/project/service/FilesService.kt"
+          ]
+        },
+        {
+          "id": "docker",
+          "actors": [
+            "admin"
+          ],
+          "label": [
+            "Manage Docker containers",
+            "Gérer des conteneurs Docker"
+          ],
+          "detail": [
+            "The /containers routes list, create, start, stop, restart and rename containers through docker-java against the Docker host set in application.yml (tcp://127.0.0.1:2375).",
+            "Les routes /containers listent, créent, démarrent, arrêtent, redémarrent et renomment des conteneurs avec docker-java, sur l'hôte Docker défini dans application.yml (tcp://127.0.0.1:2375)."
+          ],
+          "evidence": [
+            "src/main/kotlin/com/api/project/controller/DockerController.kt",
+            "src/main/kotlin/com/api/project/service/docker/DockerService.kt",
+            "src/main/resources/application.yml"
+          ]
+        },
+        {
+          "id": "ssh",
+          "actors": [
+            "admin"
+          ],
+          "label": [
+            "Run a remote SSH command",
+            "Lancer une commande SSH"
+          ],
+          "detail": [
+            "POST /ssh/cli (admin only) opens an Apache SSHD session with the host, port and credentials in the request body and returns the command output.",
+            "POST /ssh/cli (admin seulement) ouvre une session Apache SSHD avec l'hôte, le port et les identifiants reçus, puis renvoie la sortie de la commande."
+          ],
+          "evidence": [
+            "src/main/kotlin/com/api/project/controller/SSHController.kt",
+            "src/main/kotlin/com/api/project/service/SSHService.kt"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Store a PDF and fetch it back",
+          "Déposer un PDF puis le récupérer"
+        ],
+        "steps": [
+          [
+            "Start MongoDB on localhost:27017 and MinIO on localhost:9000, as configured in application.yml, then run ./gradlew bootRun.",
+            "Démarrer MongoDB sur localhost:27017 et MinIO sur localhost:9000, comme le prévoit application.yml, puis lancer ./gradlew bootRun."
+          ],
+          [
+            "POST /auth/signup with a username, email, password and the role \"mod\".",
+            "Envoyer POST /auth/signup avec un nom d'utilisateur, un courriel, un mot de passe et le rôle « mod »."
+          ],
+          [
+            "POST /auth/signin and copy the JWT from the response.",
+            "Appeler POST /auth/signin et copier le JWT de la réponse."
+          ],
+          [
+            "POST /files/documents with the PDF in the multipart field \"document\" and the Bearer token; the response returns fileId and fileName.",
+            "Envoyer le PDF à POST /files/documents dans le champ multipart « document » avec le jeton Bearer ; la réponse donne fileId et fileName."
+          ],
+          [
+            "GET /files/{fileId} to download the PDF, or browse the routes in Swagger UI at /api-docs.",
+            "Appeler GET /files/{fileId} pour télécharger le PDF, ou parcourir les routes dans Swagger UI à /api-docs."
+          ]
+        ]
+      },
+      "evidence": [
+        "build.gradle.kts",
+        "src/main/resources/application.yml",
+        "src/main/kotlin/com/api/project/controller/AuthController.kt",
+        "src/main/kotlin/com/api/project/controller/FilesController.kt",
+        "src/main/kotlin/com/api/project/controller/DockerController.kt",
+        "src/main/kotlin/com/api/project/controller/SSHController.kt",
+        "src/main/kotlin/com/api/project/service/FilesService.kt",
+        "src/main/kotlin/com/api/project/config/security/SecurityConf.kt"
+      ]
+    },
+    "switch-wifi": {
+      "repo": "switch-wifi",
+      "summary": [
+        "Nintendo Switch homebrew app that shows Wi-Fi state, benchmarks the HTTPS path and reads Bluetooth status.",
+        "Application homebrew pour Nintendo Switch qui affiche l'état du Wi-Fi, mesure le lien HTTPS et lit l'état Bluetooth."
+      ],
+      "actors": [
+        {
+          "id": "owner",
+          "kind": "person",
+          "label": [
+            "Switch owner",
+            "Joueur sur Switch"
+          ]
+        },
+        {
+          "id": "horizon",
+          "kind": "system",
+          "label": [
+            "Horizon NIFM / BTM",
+            "Horizon NIFM / BTM"
+          ]
+        },
+        {
+          "id": "speed",
+          "kind": "system",
+          "label": [
+            "HTTPS speed server",
+            "Serveur de débit HTTPS"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "dashboard",
+          "actors": [
+            "owner",
+            "horizon"
+          ],
+          "label": [
+            "Check the Wi-Fi link",
+            "Vérifier le lien Wi-Fi"
+          ],
+          "detail": [
+            "The Dashboard tab reads link type, SSID, IPv4, gateway, DNS and 0-3 signal bars from NIFM through NetworkService, with RSSI from legacy wlan:inf only where firmware exposes it.",
+            "L'onglet Dashboard lit le type de lien, le SSID, l'IPv4, la passerelle, le DNS et les barres de signal 0 à 3 via NIFM (NetworkService) ; le RSSI vient de wlan:inf seulement si le micrologiciel l'expose."
+          ],
+          "evidence": [
+            "README.md",
+            "src/network/network_service.cpp",
+            "src/ui/main_tabs.cpp"
+          ]
+        },
+        {
+          "id": "benchmark",
+          "actors": [
+            "owner",
+            "speed"
+          ],
+          "label": [
+            "Benchmark the connection",
+            "Mesurer la connexion"
+          ],
+          "detail": [
+            "SpeedTestEngine runs 8 HTTPS latency probes, then a 25 MiB download and a 10 MiB zero-filled upload with libcurl against speed.cloudflare.com by default, reporting median, P95 and jitter.",
+            "SpeedTestEngine lance 8 sondes de latence HTTPS, puis un téléchargement de 25 Mio et un envoi de 10 Mio remplis de zéros avec libcurl vers speed.cloudflare.com par défaut, avec médiane, P95 et gigue."
+          ],
+          "evidence": [
+            "src/network/speed_test.cpp",
+            "include/switch_wifi/network/speed_test.hpp",
+            "docs/BENCHMARKING.md"
+          ]
+        },
+        {
+          "id": "networks",
+          "actors": [
+            "owner",
+            "horizon"
+          ],
+          "label": [
+            "Review saved networks",
+            "Voir les réseaux enregistrés"
+          ],
+          "detail": [
+            "The Networks tab lists basic saved-profile metadata and Horizon's allowed channels, with channel-overlap math from core/metrics; credentials are never read for display.",
+            "L'onglet Networks montre les métadonnées de base des profils enregistrés et les canaux autorisés par Horizon, avec le calcul de chevauchement de core/metrics ; les identifiants ne sont jamais affichés."
+          ],
+          "evidence": [
+            "src/network/network_service.cpp",
+            "include/switch_wifi/core/metrics.hpp",
+            "docs/ARCHITECTURE.md"
+          ]
+        },
+        {
+          "id": "bluetooth",
+          "actors": [
+            "owner",
+            "horizon"
+          ],
+          "label": [
+            "Scan Bluetooth state",
+            "Inspecter le Bluetooth"
+          ],
+          "detail": [
+            "BluetoothService reads BTM radio state and device counts, and runs a bounded passive BLE scan that returns at most ten unique addresses.",
+            "BluetoothService lit l'état radio BTM et le nombre d'appareils, puis lance un balayage BLE passif limité qui renvoie au plus dix adresses uniques."
+          ],
+          "evidence": [
+            "src/bluetooth/bluetooth_service.cpp",
+            "docs/ARCHITECTURE.md"
+          ]
+        },
+        {
+          "id": "export",
+          "actors": [
+            "owner"
+          ],
+          "label": [
+            "Export a diagnostics report",
+            "Exporter un rapport"
+          ],
+          "detail": [
+            "The About tab writes sdmc:/switch-wifi-diagnostics.txt with the app version, compatibility target, network details and Bluetooth counts, without credentials.",
+            "L'onglet About écrit sdmc:/switch-wifi-diagnostics.txt avec la version, la cible de compatibilité, les détails réseau et les compteurs Bluetooth, sans identifiants."
+          ],
+          "evidence": [
+            "src/ui/main_tabs.cpp",
+            "README.md"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Compare two router channels on a Switch",
+          "Comparer deux canaux de routeur sur Switch"
+        ],
+        "steps": [
+          [
+            "Build build-switch/switch-wifi.nro in the devkitpro/devkita64 container and check it with python3 scripts/verify_nro.py.",
+            "Compiler build-switch/switch-wifi.nro dans le conteneur devkitpro/devkita64 et le vérifier avec python3 scripts/verify_nro.py."
+          ],
+          [
+            "Copy the NRO to the SD card and launch it from the homebrew menu.",
+            "Copier le NRO sur la carte SD et le lancer depuis le menu homebrew."
+          ],
+          [
+            "Open the Dashboard tab to confirm the Switch is on Wi-Fi and note the signal bars.",
+            "Ouvrir l'onglet Dashboard pour confirmer que la Switch est en Wi-Fi et noter les barres de signal."
+          ],
+          [
+            "Run the Benchmark tab and read median latency, P95, jitter, download and upload speed.",
+            "Lancer l'onglet Benchmark et lire la latence médiane, le P95, la gigue et les débits descendant et montant."
+          ],
+          [
+            "Change the router channel, run the benchmark again and compare the history graphs.",
+            "Changer le canal du routeur, relancer la mesure et comparer les graphiques d'historique."
+          ],
+          [
+            "Export sdmc:/switch-wifi-diagnostics.txt from the About tab to keep the result.",
+            "Exporter sdmc:/switch-wifi-diagnostics.txt depuis l'onglet About pour garder le résultat."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "docs/ARCHITECTURE.md",
+        "docs/BENCHMARKING.md",
+        "include/switch_wifi/network/speed_test.hpp",
+        "src/ui/main_tabs.cpp",
+        "scripts/verify_nro.py"
+      ]
+    },
+    "TCH099": {
+      "repo": "TCH099",
+      "summary": [
+        "PHP and MariaDB demo web app with an Android client, used to teach routing, sessions and Azure deployment.",
+        "Application web de démonstration en PHP et MariaDB, avec client Android, pour enseigner le routage, les sessions et Azure."
+      ],
+      "actors": [
+        {
+          "id": "user",
+          "kind": "person",
+          "label": [
+            "Web or mobile user",
+            "Utilisateur web/mobile"
+          ]
+        },
+        {
+          "id": "admin",
+          "kind": "person",
+          "label": [
+            "Administrator",
+            "Administrateur"
+          ]
+        },
+        {
+          "id": "db",
+          "kind": "system",
+          "label": [
+            "MariaDB database",
+            "Base MariaDB"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "signup",
+          "actors": [
+            "user",
+            "db"
+          ],
+          "label": [
+            "Create an account",
+            "Créer un compte"
+          ],
+          "detail": [
+            "The signup page or SignupActivity on Android posts to /api/signup; api/signup.php calls registerUser(), which inserts the account into the Clients table created by db/1create.sql.",
+            "La page d'inscription ou SignupActivity sur Android envoie les données à /api/signup ; api/signup.php appelle registerUser(), qui ajoute le compte à la table Clients créée par db/1create.sql."
+          ],
+          "evidence": [
+            "routes.php",
+            "api/signup.php",
+            "MyMobileApp/MyApplication/app/src/main/java/com/tch099/SignupActivity.java",
+            "db/1create.sql",
+            "api/utils/utils.php"
+          ]
+        },
+        {
+          "id": "login",
+          "actors": [
+            "user",
+            "db"
+          ],
+          "label": [
+            "Log in with a session",
+            "Se connecter (session)"
+          ],
+          "detail": [
+            "login.html and LoginActivity post the username and password to /api/login; api/login.php checks them with loginUser() and opens a PHP session, and /api/logout closes it.",
+            "login.html et LoginActivity envoient le nom d'utilisateur et le mot de passe à /api/login ; api/login.php les vérifie avec loginUser() et ouvre une session PHP, que /api/logout ferme."
+          ],
+          "evidence": [
+            "api/login.php",
+            "api/logout.php",
+            "frontend/pages/login.html",
+            "MyMobileApp/MyApplication/app/src/main/java/com/tch099/LoginActivity.java"
+          ]
+        },
+        {
+          "id": "image",
+          "actors": [
+            "user"
+          ],
+          "label": [
+            "Show a random image",
+            "Afficher une image au hasard"
+          ],
+          "detail": [
+            "random-image.html calls /api/random-image, which returns a cat picture URL from TheCatAPI or a thispersondoesnotexist.com URL depending on imageType.",
+            "random-image.html appelle /api/random-image, qui renvoie l'URL d'un chat venant de TheCatAPI ou celle de thispersondoesnotexist.com selon imageType."
+          ],
+          "evidence": [
+            "api/random-image.php",
+            "frontend/pages/random-image.html"
+          ]
+        },
+        {
+          "id": "hello",
+          "actors": [
+            "user"
+          ],
+          "label": [
+            "Get a greeting by language",
+            "Saluer selon la langue"
+          ],
+          "detail": [
+            "/api/hello-world/$langue answers with a greeting in French, English, Spanish or German, as a minimal API example.",
+            "/api/hello-world/$langue répond par une salutation en français, anglais, espagnol ou allemand ; c'est l'exemple d'API minimal."
+          ],
+          "evidence": [
+            "api/hello-world.php",
+            "routes.php"
+          ]
+        },
+        {
+          "id": "clients",
+          "actors": [
+            "admin",
+            "db"
+          ],
+          "label": [
+            "List clients as admin",
+            "Lister les clients (admin)"
+          ],
+          "detail": [
+            "The /admin route serves admin.html only when isAdmin() is true; the page loads /api/clients, which reads the Clients table for a session whose role is admin.",
+            "La route /admin ne sert admin.html que si isAdmin() est vrai ; la page charge /api/clients, qui lit la table Clients lorsque la session a le rôle admin."
+          ],
+          "evidence": [
+            "routes.php",
+            "api/clients.php",
+            "frontend/pages/admin.html"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Run the demo locally and reach the admin page",
+          "Lancer la démo en local jusqu'à la page admin"
+        ],
+        "steps": [
+          [
+            "Fill the DB_HOST and MYSQL_* variables listed in the README, then run docker-compose up -d --build.",
+            "Remplir DB_HOST et les variables MYSQL_* indiquées dans le README, puis lancer docker-compose up -d --build."
+          ],
+          [
+            "Load the schema and seed data with python3 db/db.py, or import db/1create.sql, 2contraines.sql and 3insert.sql in phpMyAdmin on port 8060.",
+            "Charger le schéma et les données avec python3 db/db.py, ou importer db/1create.sql, 2contraines.sql et 3insert.sql dans phpMyAdmin sur le port 8060."
+          ],
+          [
+            "Open http://localhost:8001/signup, create an account, then log in at /login.",
+            "Ouvrir http://localhost:8001/signup, créer un compte, puis se connecter sur /login."
+          ],
+          [
+            "With an admin account, open /admin to see the Clients table loaded from /api/clients.",
+            "Avec un compte admin, ouvrir /admin pour voir la table Clients chargée par /api/clients."
+          ],
+          [
+            "Push to main to let .github/workflows/main_tch099antoine.yml zip the app and deploy it to the Azure Web App.",
+            "Pousser sur main pour que .github/workflows/main_tch099antoine.yml zippe l'application et la déploie sur Azure Web App."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "routes.php",
+        "docker-compose.yml",
+        "Dockerfile",
+        "api/login.php",
+        "api/clients.php",
+        "api/random-image.php",
+        "db/db.py",
+        "MyMobileApp/MyApplication/app/build.gradle.kts",
+        ".github/workflows/main_tch099antoine.yml",
+        "api/utils/utils.php"
+      ]
+    },
+    "uml-mcp": {
+      "repo": "uml-mcp",
+      "summary": [
+        "MCP server that lets AI assistants turn diagram source or a description into a rendered diagram inside the chat.",
+        "Serveur MCP qui permet aux assistants IA de transformer une source ou une description en diagramme rendu dans la conversation."
+      ],
+      "actors": [
+        {
+          "id": "dev",
+          "kind": "person",
+          "label": [
+            "Developer",
+            "Développeur"
+          ]
+        },
+        {
+          "id": "client",
+          "kind": "system",
+          "label": [
+            "MCP client (AI chat)",
+            "Client MCP (chat IA)"
+          ]
+        },
+        {
+          "id": "kroki",
+          "kind": "system",
+          "label": [
+            "Kroki / PlantUML",
+            "Kroki / PlantUML"
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "id": "render",
+          "actors": [
+            "client",
+            "kroki"
+          ],
+          "label": [
+            "Render one diagram",
+            "Rendre un diagramme"
+          ],
+          "detail": [
+            "generate_uml takes a diagram_type, the source code, a format and an optional theme, renders through Kroki (KROKI_SERVER, https://kroki.io by default) and returns the file, its URL and a playground link.",
+            "generate_uml reçoit un diagram_type, le code source, un format et un thème optionnel, fait le rendu via Kroki (KROKI_SERVER, https://kroki.io par défaut) et renvoie le fichier, son URL et un lien vers le terrain de jeu."
+          ],
+          "evidence": [
+            "mcp_core/tools/diagram_tools.py",
+            "mcp_core/core/config.py"
+          ]
+        },
+        {
+          "id": "validate",
+          "actors": [
+            "client"
+          ],
+          "label": [
+            "Validate diagram source",
+            "Valider une source"
+          ],
+          "detail": [
+            "validate_uml checks the type, format and basic structure locally without rendering, so the assistant can fix the source before calling a renderer.",
+            "validate_uml vérifie le type, le format et la structure de base en local, sans rendu, pour que l'assistant corrige la source avant de lancer le rendu."
+          ],
+          "evidence": [
+            "mcp_core/tools/diagram_tools.py",
+            "mcp_core/core/diagram_validation.py"
+          ]
+        },
+        {
+          "id": "batch",
+          "actors": [
+            "client",
+            "kroki"
+          ],
+          "label": [
+            "Render a batch of diagrams",
+            "Rendre un lot de diagrammes"
+          ],
+          "detail": [
+            "generate_uml_batch renders several items with bounded concurrency and stable ordering, up to the batch_max_items setting.",
+            "generate_uml_batch rend plusieurs éléments en parallèle limité, dans l'ordre reçu, jusqu'à la limite batch_max_items."
+          ],
+          "evidence": [
+            "mcp_core/tools/diagram_tools.py"
+          ]
+        },
+        {
+          "id": "viewer",
+          "actors": [
+            "dev",
+            "client"
+          ],
+          "label": [
+            "Edit in the chat viewer",
+            "Retoucher dans le visualiseur"
+          ],
+          "detail": [
+            "In clients that support MCP Apps, results open in ui://uml-mcp/diagram-viewer, where the user can zoom, edit the source, change theme or format and export SVG, PNG, HTML or PDF.",
+            "Dans les clients compatibles MCP Apps, le résultat s'ouvre dans ui://uml-mcp/diagram-viewer : zoom, édition de la source, changement de thème ou de format, export SVG, PNG, HTML ou PDF."
+          ],
+          "evidence": [
+            "mcp_core/apps/diagram_viewer.py",
+            "README.md"
+          ]
+        },
+        {
+          "id": "selfhost",
+          "actors": [
+            "dev",
+            "kroki"
+          ],
+          "label": [
+            "Self-host the server",
+            "Héberger le serveur soi-même"
+          ],
+          "detail": [
+            "uv tool install uml-mcp && uml-mcp setup installs it locally; docker-compose.yml starts the server on port 8000 with Kroki containers and an opt-in PlantUML fallback profile, and deploy/helm/uml-mcp targets Kubernetes.",
+            "uv tool install uml-mcp && uml-mcp setup l'installe en local ; docker-compose.yml lance le serveur sur le port 8000 avec des conteneurs Kroki et un profil PlantUML de secours optionnel, et deploy/helm/uml-mcp vise Kubernetes."
+          ],
+          "evidence": [
+            "README.md",
+            "docker-compose.yml",
+            "pyproject.toml",
+            "deploy/helm/uml-mcp/Chart.yaml"
+          ]
+        }
+      ],
+      "scenario": {
+        "title": [
+          "Draw a login sequence from Cursor",
+          "Dessiner une séquence de connexion depuis Cursor"
+        ],
+        "steps": [
+          [
+            "Add the hosted endpoint https://uml-mcp.vercel.app/mcp to the MCP config, as in .cursor/mcp.json.",
+            "Ajouter le point d'accès hébergé https://uml-mcp.vercel.app/mcp à la configuration MCP, comme dans .cursor/mcp.json."
+          ],
+          [
+            "Ask the assistant: \"Draw a sequence diagram of a user logging in through an API gateway.\"",
+            "Demander à l'assistant : « Dessine un diagramme de séquence d'un utilisateur qui se connecte via une passerelle d'API. »"
+          ],
+          [
+            "The assistant calls list_diagram_types, writes Mermaid or PlantUML source and checks it with validate_uml.",
+            "L'assistant appelle list_diagram_types, écrit la source Mermaid ou PlantUML et la vérifie avec validate_uml."
+          ],
+          [
+            "It calls generate_uml_image; the server renders through Kroki and returns an inline PNG with render and playground links.",
+            "Il appelle generate_uml_image ; le serveur fait le rendu via Kroki et renvoie un PNG en ligne avec les liens de rendu et de terrain de jeu."
+          ],
+          [
+            "Open the playground link or the MCP App viewer to edit the source and export SVG.",
+            "Ouvrir le lien du terrain de jeu ou le visualiseur MCP App pour retoucher la source et exporter en SVG."
+          ]
+        ]
+      },
+      "evidence": [
+        "README.md",
+        "pyproject.toml",
+        "docker-compose.yml",
+        ".cursor/mcp.json",
+        "mcp_core/tools/diagram_tools.py",
+        "mcp_core/apps/diagram_viewer.py",
+        "mcp_core/core/config.py"
+      ]
+    }
+  }
+}

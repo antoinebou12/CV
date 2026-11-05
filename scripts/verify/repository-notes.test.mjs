@@ -296,3 +296,18 @@ test('repository articles link back to the bilingual technical guides', () => {
     assert.ok(html.includes(lang === 'fr' ? 'Documentation du projet' : 'Project documentation'));
   }
 });
+
+test('every catalog project has a use-case diagram, scenario and summary', () => {
+  const useCases = JSON.parse(read('hugo/data/project_use_cases.json')).repositories;
+  const projects = [...notes.map(note => ({ name: note.repo, slug: note.slug })), ...orgRepositories];
+  for (const project of projects) {
+    const entry = useCases[project.name];
+    assert.ok(entry, `${project.name} has use cases`);
+    for (const lang of ['en', 'fr']) {
+      const html = readFileSync(resolve(site, lang === 'fr' ? 'fr' : '', 'projects/notes', project.slug, 'index.html'), 'utf8');
+      assert.match(html, /id=["']?use-cases["' >]/, `${project.name} (${lang}) renders the section`);
+      assert.match(html, /class=["']?repo-usecase-svg/, `${project.name} (${lang}) renders the diagram`);
+      assert.ok(html.includes(entry.summary[lang === 'fr' ? 1 : 0].replace(/&/g, '&amp;').slice(0, 20)) || html.includes(entry.summary[lang === 'fr' ? 1 : 0].slice(0, 20)), `${project.name} (${lang}) shows the summary`);
+    }
+  }
+});

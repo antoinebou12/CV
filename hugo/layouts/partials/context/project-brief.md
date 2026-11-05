@@ -29,6 +29,18 @@
 
 {{ with .use_case }}**{{ if $fr }}Cas d’usage{{ else }}Best fit{{ end }}:** {{ index . $i }}{{ end }}
 {{ end }}
+{{- with index (hugo.Data.project_use_cases.repositories | default dict) $repo }}
+## {{ if $fr }}Cas d’utilisation{{ else }}Use cases{{ end }}
+
+{{ index .summary $i }}
+
+{{ $uc := . }}{{ range .use_cases }}- **{{ index .label $i }}** ({{ range $k, $id := .actors }}{{ if $k }}, {{ end }}{{ with index (where $uc.actors "id" $id) 0 }}{{ index .label $i }}{{ end }}{{ end }}){{ with .detail }}: {{ index . $i }}{{ end }}
+{{ end }}
+{{ with .scenario }}### {{ if $fr }}Scénario : {{ else }}Scenario: {{ end }}{{ index .title $i }}
+
+{{ range $k, $s := .steps }}{{ add $k 1 }}. {{ index $s $i }}
+{{ end }}{{ end }}
+{{- end }}
 {{- with $analysis.languages }}
 ## {{ if $fr }}Langages (octets GitHub Linguist){{ else }}Languages (GitHub Linguist bytes){{ end }}
 

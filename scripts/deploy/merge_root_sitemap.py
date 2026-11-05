@@ -200,6 +200,10 @@ def main() -> int:
         else:
             add_url(urlset, loc, args.lastmod, existing)
 
+    # Static HTML reports published with the CV (papers/**.html).
+    for page in sorted((blog_dir.parent / "papers").rglob("*.html")):
+        add_url(urlset, f"{site_root}/{page.relative_to(blog_dir.parent).as_posix()}", args.lastmod, existing)
+
     out_tree = ET.ElementTree(urlset)
     ET.register_namespace("", NS)
     if "xmlns:xhtml" not in urlset.attrib:

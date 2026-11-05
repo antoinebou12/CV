@@ -80,6 +80,7 @@ def main():
                                      else line for line in robots.read_text(encoding="utf-8").splitlines()) + "\n", encoding="utf-8")
         (site / ".nojekyll").touch()
         run(sys.executable, "scripts/verify/verify_deploy_build.py", "--site-dir", str(site), "--repo-root", str(ROOT))
+        run(sys.executable, "scripts/verify/check_sitemap_coverage.py", "--site-dir", str(site))
         removed = prune_generated(site)
         shutil.copytree(site, DEST, dirs_exist_ok=True)
         print(f"Production website built in {DEST}; removed {removed} stale generated files; "
