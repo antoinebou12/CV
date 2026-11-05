@@ -115,3 +115,46 @@ jobs:
 
       - name: Repository notes structure tests
         run: CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs
+
+  frontend-e2e:
+    # Playwright checks for the blog chrome, SEO tags, dynamic tables, motion and reading tools.
+    runs-on: ubuntu-latest
+    env:
+      HUGO_ENV: production
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: tools/ux-audit/package-lock.json
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.160.1"
+          extended: true
+
+      - name: Install Playwright
+        working-directory: tools/ux-audit
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Build, serve and test the site
+        working-directory: tools/ux-audit
+        run: node scripts/run-local-e2e.mjs e2e/enhancements.spec.ts
+
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-e2e-report
+          path: |
+            tools/ux-audit/e2e-report
+            tools/ux-audit/e2e-results
+          retention-days: 7
