@@ -51,14 +51,18 @@
       decoding="async"
     />
     {{- else -}}
-    {{- with .Resize "1200x" -}}
+    {{- with .Resize "1200x webp q85" -}}
+    {{- $small := $hero.Resize "720x webp q82" -}}
     <img
       src="{{ .RelPermalink }}"
+      srcset="{{ $small.RelPermalink }} {{ $small.Width }}w, {{ .RelPermalink }} {{ .Width }}w"
+      sizes="(max-width: 840px) calc(100vw - 48px), 800px"
       alt="{{ $page.Params.image_alt | default $page.Title | plainify }}"
       width="{{ .Width }}"
       height="{{ .Height }}"
       class="max-h-[min(26rem,50vh)] w-full object-cover"
       loading="eager"
+      fetchpriority="high"
       decoding="async"
     />
     {{- else -}}
@@ -78,7 +82,7 @@
 
   <div class="{{ if $isRepoNote }}repo-doc-surface{{ else }}single-post-surface single-post-body not-prose mb-10{{ end }} min-w-0">
     <div class="{{ if $isRepoNote }}repo-doc-prose{{ else }}single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert{{ end }}">
-      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 1) }}<details class="article-contents"><summary>{{ if eq .Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}</summary>{{ .TableOfContents | replaceRE "<ul>" "<ol>" | replaceRE "</ul>" "</ol>" | safeHTML }}</details>{{ end }}
+      {{ if and (not $isRepoNote) (ge (len (findRE "(?m)^## " .RawContent)) 1) }}<details class="article-contents" data-article-toc><summary>{{ if eq .Lang "fr" }}Table des matières{{ else }}Table of contents{{ end }}</summary>{{ .TableOfContents | replaceRE "<ul>" "<ol>" | replaceRE "</ul>" "</ol>" | replaceRE `<nav id="TableOfContents">` (printf `<nav id="TableOfContents" aria-label="%s">` (cond (eq .Lang "fr") "Sur cette page" "On this page")) | safeHTML }}</details>{{ end }}
       <section class="{{ if $isRepoNote }}repo-doc-content{{ else }}single-post-content{{ end }}" aria-labelledby="single-post-title">{{- if $isRepoNote -}}{{- $projectHTML := $page.Content | string -}}{{- if not (in .RawContent "{{< repository-note") -}}{{- $projectHTML = printf "%s%s%s" $projectHTML (partial "documentation-glossary.html" (dict "page" . "context" .RawContent)) (partial "project-paper-references.html" .) -}}{{- end -}}{{ partial "project-paper.html" (dict "html" $projectHTML "page" .) }}{{- else -}}{{- $page.Content -}}{{- end -}}</section>
     </div>
   </div>
@@ -201,6 +205,10 @@
   {{ if and (eq .Section "posts") (not $isRepoNote) }}
     {{ $media := resources.Get "article-media.js" | minify | fingerprint }}
     <script src="{{ $media.RelPermalink }}" integrity="{{ $media.Data.Integrity }}" defer></script>
+  {{ end }}
+  {{ if not $isRepoNote }}
+    {{ $toc := resources.Get "article-toc.js" | minify | fingerprint }}
+    <script src="{{ $toc.RelPermalink }}" integrity="{{ $toc.Data.Integrity }}" defer></script>
   {{ end }}
 </article>
 

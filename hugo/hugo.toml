@@ -109,3 +109,11 @@ target = "assets"
 [[module.mounts]]
 source = "../js/site-webmcp.js"
 target = "assets/site-webmcp.js"
+# Self-hosted web fonts live beside the CV stylesheets (scripts/build/fetch_fonts.py).
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "../css/fonts"
+target = "static/fonts"
+files = ["*.woff2"]

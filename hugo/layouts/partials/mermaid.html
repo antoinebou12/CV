@@ -305,13 +305,31 @@
     block.figure = figure;
     block.painted = true;
     if (block.imageFallback) block.imageFallback.hidden = true;
-    // Preserve readable labels on first open; Fit remains an explicit overview.
-    requestAnimationFrame(() => resize(natural));
+    // Start fitted to the column so the whole diagram is visible without scrollbars; Zoom in and 100% enlarge it.
+    requestAnimationFrame(() => fit());
     if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
   }
+  // Diagrams render when their disclosure is open and they are within two screens of the viewport,
+  // so pages with many open diagrams do not pay for all of them at load.
+  const nearViewport = new WeakSet();
+  const proximity = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    let due = false;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      nearViewport.add(entry.target);
+      proximity.unobserve(entry.target);
+      due = true;
+    }
+    if (due) void paintDiagrams();
+  }, { rootMargin: '150% 0px' }) : null;
   function blockReady(block) {
-    if (!block.lazyHost) return true;
-    return block.lazyHost.open === true;
+    if (block.lazyHost && block.lazyHost.open !== true) return false;
+    if (!proximity) return true;
+    // Repaints (theme change) of an already rendered diagram do not wait for proximity.
+    if (block.container) return true;
+    if (nearViewport.has(block.original)) return true;
+    proximity.observe(block.original);
+    return false;
   }
   // UML diagrams rendered ahead of time by uml-mcp (PlantUML through Kroki) and stored as SVG.
   // The SVG is inlined so the shared viewer can zoom it; the <img> stays as the no-script fallback.
@@ -360,6 +378,7 @@
   }
   umlBlocks.forEach(block => block.lazyHost?.addEventListener('toggle', () => { if (block.lazyHost.open) void paintUml(); }));
   void paintUml();
+  let paintDiagrams = async () => {};
   try {
     let mermaidMod = null;
     let rendering = false;
@@ -371,7 +390,7 @@
       mermaidMod = mermaid;
       return mermaid;
     }
-    async function paintDiagrams() {
+    paintDiagrams = async function paintDiagramsNow() {
       const due = blocks.filter(blockReady);
       if (!due.length) return;
       pending = true;
@@ -421,7 +440,7 @@
         });
         console.warn('Diagram renderer unavailable:', error);
       } finally { rendering = false; }
-    }
+    };
     document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
       host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
     });

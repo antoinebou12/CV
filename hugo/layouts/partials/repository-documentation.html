@@ -58,7 +58,7 @@
     <h2 id="code-structure">{{ if $hasTypes }}{{ if $fr }}Types et structure des fichiers{{ else }}Types and file structure{{ end }}{{ else }}{{ if $fr }}Structure des fichiers{{ else }}File structure{{ end }}{{ end }}</h2>
     {{ if $hasTypes }}<p class="repo-section-intro">{{ if $fr }}{{ .type_count }} types déclarés, dont {{ .overview_types }} dans l’aperçu des relations de base.{{ else }}{{ .type_count }} declared types, with {{ .overview_types }} in the base-relationship overview.{{ end }}</p>{{ else }}<p class="repo-section-intro">{{ if $fr }}La carte montre les fichiers inspectés et leur organisation.{{ else }}The map shows the inspected files and their organization.{{ end }}</p>{{ end }}
     {{ if and $showMermaid .class_overview }}
-    <details class="repo-diagram-details" data-mermaid-lazy>
+    <details class="repo-diagram-details" data-mermaid-lazy open>
       <summary>{{ if $fr }}Diagramme des types{{ else }}Type diagram{{ end }}</summary>
       <div class="repo-progressive-diagram" data-mermaid-fallback>
         <pre class="repo-mermaid-source"><code class="language-mermaid">{{ .class_overview }}</code></pre>
@@ -85,7 +85,7 @@
       {{ if .coverage.truncated_tree }}<p>{{ if $fr }}GitHub a retourné un arbre incomplet; la couverture est partielle.{{ else }}GitHub returned a truncated tree; coverage is partial.{{ end }}</p>{{ end }}
     </details>
     {{ if and $showMermaid .file_overview (not $hasDossier) }}
-    <details class="repo-diagram-details" data-mermaid-lazy>
+    <details class="repo-diagram-details" data-mermaid-lazy open>
       <summary>{{ if $fr }}Carte des fichiers{{ else }}File map{{ end }}</summary>
       <div class="repo-progressive-diagram" data-mermaid-fallback>
         <pre class="repo-mermaid-source"><code class="language-mermaid">{{ .file_overview }}</code></pre>

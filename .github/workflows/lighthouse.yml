@@ -9,6 +9,10 @@ on:
       - "index-en.html"
       - "index-fr.html"
       - "css/**"
+      - "js/**"
+      - "hugo/layouts/**"
+      - "hugo/assets/**"
+      - "hugo/hugo.toml"
       - ".github/workflows/lighthouse.yml"
       - "lighthouserc.json"
   pull_request:
@@ -50,27 +54,24 @@ jobs:
           cache: npm
           cache-dependency-path: hugo/package-lock.json
 
-      - name: Build minimal _site for CV pages
+      - name: Build _site for CV pages and the Hugo blog
+        env:
+          HUGO_ENV: production
+          HUGO_PARAMS_GITHUBPAGESREPO: CV
         run: |
-          mkdir -p _site
-          for f in index.html index-en.html index-fr.html 404.html; do
-            [ -f "$f" ] && cp "$f" _site/
-          done
-          for f in *.png *.jpg *.jpeg *.ico *.webmanifest; do
-            [ -f "$f" ] && cp "$f" _site/ 2>/dev/null || true
-          done
-          [ -d css ] && cp -r css _site/
-          [ -d papers ] && cp -r papers _site/
-          [ -d linktree ] && cp -r linktree _site/
           REPO="${GITHUB_REPOSITORY#*/}"
           mkdir -p "_site/${REPO}"
-          for d in css papers linktree; do
-            [ -d "_site/${d}" ] && ln -sfn "../${d}" "_site/${REPO}/${d}"
+          for f in index.html index-en.html index-fr.html 404.html; do
+            [ -f "$f" ] && cp "$f" "_site/${REPO}/"
           done
-          for f in index-en.html index-fr.html index.html; do
-            [ -f "_site/${f}" ] && ln -sf "../${f}" "_site/${REPO}/${f}"
+          for f in *.png *.jpg *.jpeg *.webp *.ico *.webmanifest; do
+            [ -f "$f" ] && cp "$f" "_site/${REPO}/" 2>/dev/null || true
           done
-          [ -f _site/antoine.png ] && ln -sf ../antoine.png "_site/${REPO}/antoine.png"
+          for d in css js images papers linktree; do
+            [ -d "$d" ] && cp -r "$d" "_site/${REPO}/${d}"
+          done
+          # The blog lives under /CV/blog/ in production; the same URLs are audited here.
+          hugo --gc --minify -s hugo -d "_site/${REPO}/blog" -b "http://localhost/${REPO}/blog/"
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12

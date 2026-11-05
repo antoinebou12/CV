@@ -68,7 +68,7 @@
     {{ if $repos }}
     <details class="repo-directory-group" data-project-type="{{ $group.id }}" open>
       <summary><h2>{{ index $group.label $i }}</h2><svg class="repo-group-chevron" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
-      <ul class="repo-directory-grid" role="list">
+      <ul class="repo-directory-grid" role="list" data-reveal-group>
         {{ range sort $repos "stars" "desc" }}
         {{ $lang := .language | default $other }}
         {{ $note := index (where hugo.Data.repository_notes.notes "repo" .name) 0 }}
@@ -97,7 +97,7 @@
             {{ with site.GetPage $dir }}{{ $posts = $posts | append . }}{{ end }}
           {{ end }}
         {{ end }}
-        <li class="repo-directory-card" data-origin="{{ if .fork }}fork{{ else }}original{{ end }}" data-language="{{ $lang }}" data-styles="{{ delimit $repoStyles " " }}" data-domains="{{ delimit $repoDomains " " }}" data-name="{{ .name }}" data-stars="{{ .stars }}" data-pushed="{{ .pushed }}" data-search="{{ $search | lower }}">
+        <li class="repo-directory-card" data-reveal data-origin="{{ if .fork }}fork{{ else }}original{{ end }}" data-language="{{ $lang }}" data-styles="{{ delimit $repoStyles " " }}" data-domains="{{ delimit $repoDomains " " }}" data-name="{{ .name }}" data-stars="{{ .stars }}" data-pushed="{{ .pushed }}" data-search="{{ $search | lower }}">
           <div class="repo-card-heading">
             {{ partial "repo-mark.html" (dict "name" .name "language" $lang) }}
             <h3><a href="{{ $article.RelPermalink }}">{{ .name }}</a></h3>

@@ -60,7 +60,7 @@ body.blog-site {
 .home-section-heading { font-size: .85rem !important; color: var(--text-muted) !important; letter-spacing: .08em !important; margin: 0 !important; padding: 0 !important; flex: 1 !important; }
 .post-card-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 28px !important; }
 .post-list-card { min-width: 0 !important; }
-.post-list-card-inner { display: flex !important; flex-direction: column !important; height: 100% !important; overflow: hidden !important; border: 1px solid var(--surface-border) !important; border-radius: 14px !important; background: var(--surface-1) !important; box-shadow: none !important; transform: none !important; }
+.post-list-card-inner { display: flex !important; flex-direction: column !important; height: 100% !important; overflow: hidden !important; border: 1px solid var(--surface-border) !important; border-radius: 14px !important; background: var(--surface-1) !important; box-shadow: none !important; }
 .post-list-card-inner:hover { border-color: var(--brand-accent) !important; }
 .post-list-card-hit { position: relative !important; display: flex !important; flex: 1 !important; flex-direction: column !important; text-decoration: none !important; color: inherit !important; }
 .post-list-card-hit > span { display: none !important; }
@@ -88,7 +88,8 @@ body.blog-site {
 .single-post-content :is(h2,h3,h4) { color: var(--text-strong) !important; line-height: 1.35 !important; }
 .single-post-content h2 { margin: 2.5rem 0 1rem !important; font-size: 1.65rem !important; }
 .single-post-content p { margin: 1.2rem 0 !important; }
-.single-post-content a { color: var(--brand-accent) !important; text-underline-offset: 3px !important; }
+.single-post-content a:not(.article-media-open) { color: var(--brand-accent) !important; text-decoration: underline !important; text-decoration-thickness: 1px !important; text-underline-offset: 3px !important; }
+.single-post-content :is(h2,h3,h4) a { text-decoration: none !important; }
 .single-post-content figure { margin: 2rem 0 !important; }
 .single-post-content figcaption { font-size: .85rem !important; color: var(--text-muted) !important; margin-top: 12px !important; }
 .single-post-content table { display: block; overflow-x: auto; max-width: 100%; }
@@ -634,8 +635,26 @@ html:not(.dark) .blog-site .terminal {
 .journal-article .article-references a { color: var(--brand-accent); text-decoration: underline; text-underline-offset: .2em; }
 .journal-article .reference-note { color: var(--text-muted); font-size: .85rem; line-height: 1.6; }
 .journal-article .article-citation { margin-left: .2em; font: 600 .7em/1 system-ui, sans-serif; }
+.journal-article .article-citation a { display: inline-block; min-width: 24px; min-height: 24px; padding: 4px 6px; margin: -4px -2px; text-align: center; line-height: 16px; border-radius: 6px; }
 .journal-article .single-post-content h2 { scroll-margin-top: 6rem; }
 .journal-article .article-contents ol:not(#\#):not(#\#):not(#\#) { list-style: decimal outside !important; padding-left: 1.6rem !important; margin: 0 !important; }
 .journal-article .article-contents ol > li:not(#\#):not(#\#):not(#\#) { display: list-item !important; padding-left: .35rem !important; }
 .journal-article .article-contents ol > li a:not(#\#):not(#\#):not(#\#) { display: inline !important; padding-block: 0 !important; }
 .journal-article .article-contents ol > li:not(#\#):not(#\#):not(#\#) { padding-block: .35rem !important; }
+
+/* Sticky side table of contents for articles (article-toc.js moves the disclosure into the rail). */
+@media (min-width: 1100px) {
+  .blog-site .journal-article.has-toc-rail:not(#\#):not(#\#):not(#\#) { display: grid !important; grid-template-columns: 15rem minmax(0, 1fr) !important; column-gap: clamp(2rem, 4vw, 4.5rem) !important; max-width: 1240px !important; align-items: start; }
+  .journal-article.has-toc-rail > .article-toc-rail { grid-column: 1; grid-row: 1 / span 12; position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow: auto; padding-right: .25rem; }
+  .journal-article.has-toc-rail > :not(.article-toc-rail) { grid-column: 2; }
+  .journal-article.has-toc-rail .article-contents:not(#\#):not(#\#):not(#\#) { margin: 0 !important; border: 0 !important; background: transparent !important; }
+  .journal-article.has-toc-rail .article-contents > summary { padding: .35rem 0 .75rem !important; pointer-events: none; list-style: none; font: 700 11px/1.4 var(--type-body, system-ui, sans-serif) !important; letter-spacing: .13em; text-transform: uppercase; color: var(--text-muted) !important; border-bottom: 1px solid var(--surface-border) !important; }
+  .journal-article.has-toc-rail .article-contents > summary::-webkit-details-marker { display: none; }
+  .journal-article.has-toc-rail .article-contents nav:not(#\#):not(#\#) { padding: .75rem 0 0 !important; }
+  .journal-article.has-toc-rail .article-contents ol { list-style: none !important; padding-left: 0 !important; margin: 0 !important; }
+  .journal-article.has-toc-rail .article-contents ol ol { padding-left: .9rem !important; }
+  .journal-article.has-toc-rail .article-contents li { padding-left: 0 !important; margin: 0 !important; }
+  .journal-article.has-toc-rail .article-contents a { display: block !important; padding: .4rem .6rem .4rem .75rem !important; margin-left: -.75rem; border-left: 2px solid transparent; border-radius: 0 6px 6px 0; color: var(--text-muted) !important; font-size: .875rem !important; line-height: 1.45 !important; text-decoration: none !important; }
+  .journal-article.has-toc-rail .article-contents a:hover { color: var(--text-strong) !important; background: var(--journal-soft) !important; text-decoration: none !important; }
+  .journal-article.has-toc-rail .article-contents a.is-current { color: var(--brand-accent) !important; border-left-color: var(--brand-accent); font-weight: 650; background: color-mix(in oklab, var(--brand-accent) 8%, transparent) !important; }
+}

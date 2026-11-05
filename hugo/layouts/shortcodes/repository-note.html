@@ -125,9 +125,9 @@
       </header>
 
       <dl class="repo-snapshot-cards" aria-label="{{ if $fr }}Le dépôt en bref{{ else }}Repository at a glance{{ end }}">
-        <div><dt>{{ if $fr }}Langages{{ else }}Languages{{ end }}</dt><dd>{{ len $analysis.languages }}</dd><a href="#languages-panel">{{ if $fr }}Répartition du code{{ else }}Code breakdown{{ end }} <span aria-hidden="true">↗</span></a></div>
-        <div><dt>{{ if $fr }}Composants documentés{{ else }}Documented components{{ end }}</dt><dd>{{ len $note.parts }}</dd><a href="#features">{{ if $fr }}Explorer les modules{{ else }}Explore modules{{ end }} <span aria-hidden="true">↗</span></a></div>
-        <div><dt>{{ if $fr }}Documents source{{ else }}Source documents{{ end }}</dt><dd>{{ len $guide.documents }}</dd><a href="#reader-guide">{{ if $fr }}Lire les instructions{{ else }}Read the instructions{{ end }} <span aria-hidden="true">↗</span></a></div>
+        <div><dt>{{ if $fr }}Langages{{ else }}Languages{{ end }}</dt><dd><span class="repo-snapshot-value">{{ len $analysis.languages }}</span><a href="#languages-panel">{{ if $fr }}Répartition du code{{ else }}Code breakdown{{ end }} <span aria-hidden="true">↗</span></a></dd></div>
+        <div><dt>{{ if $fr }}Composants documentés{{ else }}Documented components{{ end }}</dt><dd><span class="repo-snapshot-value">{{ len $note.parts }}</span><a href="#features">{{ if $fr }}Explorer les modules{{ else }}Explore modules{{ end }} <span aria-hidden="true">↗</span></a></dd></div>
+        <div><dt>{{ if $fr }}Documents source{{ else }}Source documents{{ end }}</dt><dd><span class="repo-snapshot-value">{{ len $guide.documents }}</span><a href="#reader-guide">{{ if $fr }}Lire les instructions{{ else }}Read the instructions{{ end }} <span aria-hidden="true">↗</span></a></dd></div>
       </dl>
       <details class="repo-language-disclosure" id="languages-panel">
         <summary><span>{{ if $fr }}Langages du dépôt{{ else }}Repository languages{{ end }}</span>{{ with index $analysis.languages 0 }}<span class="repo-language-primary">{{ .name }} {{ .percent }}%</span>{{ end }}{{ with $analysis.languages }}<span class="repo-count">{{ len . }}</span>{{ end }}</summary>
@@ -181,7 +181,7 @@
         </div>
       </details>
 
-      <section class="doc repo-overview" aria-labelledby="overview" id="overview">
+      <section class="doc repo-overview" data-reveal aria-labelledby="overview" id="overview">
         <h2>{{ if $fr }}Aperçu{{ else }}Overview{{ end }}</h2>
         <div class="repo-overview-grid">
           <article class="repo-overview-card" aria-labelledby="overview-why">
@@ -211,7 +211,7 @@
         {{ with $writing }}
         <div class="repo-related-writing" aria-labelledby="overview-writing">
           <h3 id="overview-writing">{{ if $fr }}Articles et retours d’expérience liés{{ else }}Related articles & deep dives{{ end }}</h3>
-          <div class="repo-related-cards" role="list">
+          <div class="repo-related-cards">
             {{ range . }}
             <a class="repo-related-post-card" href="{{ .url }}">
               <div class="repo-related-post-header">
@@ -228,7 +228,7 @@
       </section>
 
       <span id="first-steps" class="repo-section-anchor" aria-hidden="true"></span>
-      <section class="doc repo-auto-docs" aria-labelledby="installation" id="installation">
+      <section class="doc repo-auto-docs" data-reveal aria-labelledby="installation" id="installation">
         <h2>{{ if $fr }}Démarrage{{ else }}Getting started{{ end }}</h2>
         <p class="repo-lede-sm">{{ if $fr }}Ces commandes viennent de la documentation du dépôt. Elles n’ont pas été exécutées pendant cette revue.{{ else }}These commands come from the repository documentation. They were not run during this review.{{ end }}</p>
         {{ if $hasTabs }}
@@ -282,7 +282,7 @@
 
       {{ partial "repository-handbook.html" (dict "note" $note "page" .Page "mode" "chapters") }}
 
-      <section class="doc" aria-labelledby="features" id="features">
+      <section class="doc" data-reveal aria-labelledby="features" id="features">
         <h2>{{ if $fr }}Fonctions et composants{{ else }}Features and components{{ end }} <span class="repo-count">{{ len $note.parts }}</span></h2>
         <dl class="repo-deflist">
         {{ range $note.parts }}
@@ -294,7 +294,7 @@
         </dl>
       </section>
 
-      <section class="doc" aria-labelledby="architecture" id="architecture">
+      <section class="doc" data-reveal aria-labelledby="architecture" id="architecture">
         <h2>{{ if $fr }}Architecture{{ else }}Architecture{{ end }}</h2>
         <p class="repo-lede-sm">{{ if $fr }}Ouvrez un composant pour suivre ses connexions, ou explorez le diagramme complet.{{ else }}Expand a component to follow its connections, or explore the full diagram.{{ end }}</p>
         <div class="fig" data-arch-shell>
@@ -320,10 +320,10 @@
           </div>
         </div>
         {{ if $showMermaid }}
-        <details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy>
+        <details class="repo-diagram-details is-primary-diagram" data-mermaid-lazy open>
           <summary>
             <span class="repo-badge tool">Mermaid</span>
-            <span>{{ if $fr }}Diagramme interactif (chargement à l’ouverture){{ else }}Interactive diagram (loads on open){{ end }}</span>
+            <span>{{ if $fr }}Diagramme interactif{{ else }}Interactive diagram{{ end }}</span>
           </summary>
           {{ partial "repository-diagram.html" (dict "note" $note "lang" .Page.Lang "profile" $profile "prefer_compose" false) }}
         </details>
@@ -337,7 +337,7 @@
       {{ partial "repository-dossier.html" (dict "note" $note "page" .Page) }}
 
       {{ if $showWorkflow }}
-      <section class="doc" aria-labelledby="workflow" id="workflow" data-workflow>
+      <section class="doc" data-reveal aria-labelledby="workflow" id="workflow" data-workflow>
         <h2>{{ if $fr }}Parcours{{ else }}Workflow{{ end }}</h2>
         <p class="repo-lede-sm">{{ if $fr }}Vue pas à pas du chemin inspecté dans le dépôt. Ce n’est pas une exécution en direct.{{ else }}Step-by-step view of the path inspected in the repository. This is not a live run.{{ end }}</p>
         <div class="panel stepper">
@@ -364,11 +364,11 @@
       {{ partial "repository-runtime.html" (dict "note" $note "page" .Page "profile" $profile "analysis" $analysis "show_mermaid" $showMermaid) }}
       {{ partial "repository-documentation.html" (dict "note" $note "page" .Page "section" "reference" "show_mermaid" $showMermaid) }}
 
-      <aside class="doc repo-note-constraint" aria-labelledby="constraints" id="constraints">
+      <aside class="doc repo-note-constraint" data-reveal aria-labelledby="constraints" id="constraints">
         <h2>{{ if $fr }}Limites et points à vérifier{{ else }}Constraints and checks{{ end }}</h2>
         <aside class="repo-admonition warn">{{ index $note.limits $i }}</aside>
       </aside>
-      <section class="doc repo-note-sources" aria-labelledby="source-files" id="source-files">
+      <section class="doc repo-note-sources" data-reveal aria-labelledby="source-files" id="source-files">
         <h2>{{ if $fr }}Fichiers à lire{{ else }}Files to read{{ end }} <span class="repo-count">{{ len $note.sources }}</span></h2>
         <ul class="repo-file-list">
           {{ range $note.sources }}

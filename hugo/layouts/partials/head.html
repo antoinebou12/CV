@@ -22,9 +22,12 @@
   <meta name="author" content="{{- or .Params.author $site_author -}}" />
 
   <!-- css & js -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+  {{- /* Self-hosted fonts (css/fonts, see scripts/build/fetch_fonts.py): no third-party request on the
+         critical path. The two latin faces used above the fold are preloaded so the swap lands before
+         first paint on a warm connection. */ -}}
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ "fonts/fraunces-latin.woff2" | relURL }}" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ "fonts/open-sans-latin.woff2" | relURL }}" />
+  {{- $fonts := resources.Get "fonts.css" | resources.ExecuteAsTemplate "fonts-bundle.css" . -}}
   {{- $tokens := resources.Get "design-tokens.css" -}}
   {{- $main := resources.Get "main.css" -}}
   {{- if .Params.repository_note -}}
@@ -40,7 +43,8 @@
   <!---->
   {{- $editorial := resources.Get "editorial.css" -}}
   {{- $chrome := resources.Get "site-chrome.css" -}}
-  {{- $css := slice $tokens $main $custom $editorial $chrome | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
+  {{- $motionCSS := resources.Get "motion.css" -}}
+  {{- $css := slice $fonts $tokens $main $custom $editorial $chrome $motionCSS | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
   <link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   {{- if eq .Section "projects" -}}
@@ -63,11 +67,18 @@
   <script defer src="{{ $particlesVendor.RelPermalink }}"></script>
   {{ $motion := resources.Get "background-motion.js" | minify | fingerprint }}
   <script defer src="{{ $motion.RelPermalink }}"></script>
+  <script>document.documentElement.classList.add('js')</script>
+  {{ $reveal := resources.Get "motion.js" | minify | fingerprint }}
+  <script defer src="{{ $reveal.RelPermalink }}" integrity="{{ $reveal.Data.Integrity }}"></script>
   {{ if and .IsPage (or (eq .Section "posts") (eq .Section "projects")) }}
   {{ $readerCSS := resources.Get "reader-tools.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $readerCSS.RelPermalink }}" />
   {{ $readerJS := resources.Get "reader-tools.js" | minify | fingerprint }}
   <script defer src="{{ $readerJS.RelPermalink }}"></script>
+  {{ $tablesCSS := resources.Get "dynamic-tables.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $tablesCSS.RelPermalink }}" />
+  {{ $tablesJS := resources.Get "dynamic-tables.js" | minify | fingerprint }}
+  <script defer src="{{ $tablesJS.RelPermalink }}" integrity="{{ $tablesJS.Data.Integrity }}"></script>
   {{ end }}
   {{ $webmcp := resources.Get "site-webmcp.js" | minify | fingerprint }}
   <script defer src="{{ $webmcp.RelPermalink }}" integrity="{{ $webmcp.Data.Integrity }}"></script>

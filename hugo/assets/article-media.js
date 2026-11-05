@@ -19,6 +19,7 @@
   const caption = document.createElement('p');
   const original = document.createElement('a');
   original.textContent = fr ? 'Ouvrir l’image' : 'Open image';
+  original.href = images[0]?.currentSrc || images[0]?.src || location.href;
   original.target = '_blank';
   original.rel = 'noopener noreferrer';
   dialog.append(head, preview, caption, original);

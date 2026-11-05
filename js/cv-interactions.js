@@ -138,7 +138,8 @@
   document.querySelectorAll('.cv-nav-lang a').forEach(link => {
     link.lang = link.textContent.trim().toLowerCase();
     link.hreflang = link.lang;
-    link.setAttribute('aria-label', link.lang === 'fr' ? 'Français' : 'English');
+    // Accessible name keeps the visible code so the two labels match (axe label-content-name-mismatch).
+    link.setAttribute('aria-label', link.lang === 'fr' ? 'FR – Français' : 'EN – English');
     if (link.classList.contains('current')) link.setAttribute('aria-current', 'page');
   });
   document.querySelectorAll('i.fas, i.fab').forEach(icon => icon.setAttribute('aria-hidden', 'true'));
@@ -558,7 +559,13 @@
     button.type = 'button';
     button.className = 'expertise-evidence';
     button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-label', `${skill}: ${label}`);
+    // The visible counts stay part of the accessible name (axe label-content-name-mismatch);
+    // the skill name is prepended for screen readers only.
+    const skillPrefix = document.createElement('span');
+    skillPrefix.className = 'sr-only';
+    skillPrefix.textContent = `${skill}: `;
+    button.append(skillPrefix);
+    button.title = `${skill}: ${label}`;
     if (evidence.jobs) {
       const jobPart = document.createElement('span');
       jobPart.className = 'expertise-evidence-part';

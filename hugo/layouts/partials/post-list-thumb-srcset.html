@@ -9,8 +9,8 @@
 {{- $out := "" -}}
 {{- with $res -}}
   {{- if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) -}}
-    {{- $small := .Fit "480x270 q80" -}}
-    {{- $large := .Fit "960x540 q85" -}}
+    {{- $small := .Fit "480x270 webp q80" -}}
+    {{- $large := .Fit "960x540 webp q85" -}}
     {{- if lt $small.Width $large.Width -}}
       {{- $out = printf "%s %dw, %s %dw" $small.RelPermalink $small.Width $large.RelPermalink $large.Width -}}
     {{- end -}}

@@ -10,6 +10,7 @@ import argparse
 import base64
 import hashlib
 import json
+import struct
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -56,11 +57,21 @@ def render(source: str, destination: Path) -> dict:
     output = destination.with_suffix("." + extension)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(data)
-    return {
+    entry = {
         "path": output.relative_to(ROOT / "hugo/static").as_posix(),
         "sha256": digest,
         "bytes": len(data),
     }
+    entry.update(image_size(data))
+    return entry
+
+
+def image_size(data: bytes) -> dict:
+    """Intrinsic pixel size for PNG data, so templates can reserve space (no layout shift)."""
+    if data[:8] == b"\x89PNG\r\n\x1a\n" and len(data) >= 24:
+        width, height = struct.unpack(">II", data[16:24])
+        return {"width": width, "height": height}
+    return {}
 
 
 def jobs_for(note: dict, analysis: dict) -> list[tuple[str, str, Path]]:

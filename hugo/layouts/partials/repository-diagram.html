@@ -55,7 +55,7 @@
   <div class="repo-progressive-diagram" data-mermaid-fallback>
     {{ with $image }}
     <figure class="repo-static-diagram" data-mermaid-image-fallback>
-      <img src="{{ .path | relURL }}" loading="lazy" decoding="async" alt="{{ if $fr }}Vue statique de l’architecture de {{ $note.repo }}{{ else }}Static architecture view for {{ $note.repo }}{{ end }}">
+      <img src="{{ .path | relURL }}"{{ with .width }} width="{{ . }}"{{ end }}{{ with .height }} height="{{ . }}"{{ end }} loading="lazy" decoding="async" alt="{{ if $fr }}Vue statique de l’architecture de {{ $note.repo }}{{ else }}Static architecture view for {{ $note.repo }}{{ end }}">
       {{ if not $preferCompose }}<figcaption>{{ if $fr }}Aperçu statique. Le diagramme interactif le remplace après le chargement de Mermaid.{{ else }}Static preview. The interactive diagram replaces it after Mermaid loads.{{ end }}</figcaption>{{ end }}
     </figure>
     {{ end }}

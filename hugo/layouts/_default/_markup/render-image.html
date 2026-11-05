@@ -1,0 +1,33 @@
+{{- /*
+  Markdown images in page bundles become responsive WebP renditions with intrinsic
+  width/height (no layout shift), lazy loading and a srcset for phones. GIF, SVG and
+  remote images pass through untouched. A title becomes a <figure> caption.
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $alt := .Text | plainify -}}
+{{- $res := "" -}}
+{{- if not (or (hasPrefix $dest "http") (hasPrefix $dest "//")) -}}
+  {{- $clean := strings.TrimPrefix "./" $dest -}}
+  {{- with .Page.Resources.GetMatch $clean -}}{{ $res = . }}{{ end -}}
+{{- end -}}
+{{- $isRaster := false -}}
+{{- with $res -}}{{- if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) -}}{{- $isRaster = true -}}{{- end -}}{{- end -}}
+{{- $figure := .Title -}}
+{{- if $figure }}<figure class="article-figure">{{ end -}}
+{{- if $isRaster -}}
+  {{- $widths := slice 480 800 1200 -}}
+  {{- $set := slice -}}
+  {{- range $widths -}}
+    {{- if lt . $res.Width -}}
+      {{- $v := $res.Process (printf "resize %dx webp q82" .) -}}
+      {{- $set = $set | append (printf "%s %dw" $v.RelPermalink $v.Width) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $main := $res -}}
+  {{- if gt $res.Width 1200 }}{{ $main = $res.Process "resize 1200x webp q82" }}{{ else }}{{ $main = $res.Process "webp q82" }}{{ end -}}
+  {{- $set = $set | append (printf "%s %dw" $main.RelPermalink $main.Width) -}}
+  <img src="{{ $main.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="(max-width: 840px) calc(100vw - 48px), 800px" width="{{ $main.Width }}" height="{{ $main.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async" data-full="{{ $res.RelPermalink }}" />
+{{- else -}}
+  <img src="{{ $dest | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ with $res }}{{ if eq .MediaType.SubType "gif" }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }} />
+{{- end -}}
+{{- if $figure }}<figcaption>{{ $figure | markdownify }}</figcaption></figure>{{ end -}}

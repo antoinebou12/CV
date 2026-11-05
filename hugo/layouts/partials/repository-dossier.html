@@ -116,7 +116,7 @@
     {{ with $pub.routes }}
     <h4>{{ if $fr }}Routes HTTP{{ else }}HTTP routes{{ end }} <span class="repo-count">{{ $pub.route_total }}</span></h4>
     {{ with $pub.route_map }}
-    <details class="repo-diagram-details" data-mermaid-lazy>
+    <details class="repo-diagram-details" data-mermaid-lazy open>
       <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Carte des routes par préfixe{{ else }}Route map by prefix{{ end }}</span></summary>
       <div class="repo-progressive-diagram" data-mermaid-fallback>
         <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
@@ -206,7 +206,7 @@
   <section class="repo-dossier-part" id="dossier-entities" aria-labelledby="dossier-entities-h">
     <h3 id="dossier-entities-h">{{ if $fr }}Entités et modèle de données{{ else }}Entities and data model{{ end }} <span class="repo-count">{{ $d.entities.total }}</span></h3>
     {{ with $d.entities.diagram }}
-    <details class="repo-diagram-details" data-mermaid-lazy>
+    <details class="repo-diagram-details" data-mermaid-lazy open>
       <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Diagramme de classes des entités{{ else }}Entity class diagram{{ end }}</span></summary>
       <div class="repo-progressive-diagram" data-mermaid-fallback>
         <pre class="repo-mermaid-source"><code class="language-mermaid">{{ . }}</code></pre>
