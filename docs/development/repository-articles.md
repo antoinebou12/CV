@@ -111,14 +111,16 @@ Mermaid uses the root-level [htmlLabels setting](https://mermaid.js.org/config/s
 After editing, build Hugo and run:
 
 ```powershell
-node --test scripts/verify/repository-notes.test.mjs
+node --test scripts/verify/repository-notes.test.mjs scripts/verify/blog-links.test.mjs
 ```
+
+The second file crawls the build for local `href`/`src` values that point at nothing. Links in French posts must resolve to the English-owned bundle files (the render hooks do this), and project links use Hugo's lowercase slugs.
 
 To check a production build in `docs/blog`:
 
 ```powershell
 $env:CV_NOTES_SITE = 'docs/blog'
-node --test scripts/verify/repository-notes.test.mjs
+node --test scripts/verify/repository-notes.test.mjs scripts/verify/blog-links.test.mjs
 Remove-Item Env:CV_NOTES_SITE
 ```
 

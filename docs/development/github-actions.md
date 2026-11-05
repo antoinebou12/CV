@@ -21,7 +21,7 @@ The project uses six GitHub Actions workflows (publication itself runs locally):
    - Locale spellcheck: **codespell** (English paths) and **aspell-fr** (French paths) via `scripts/ci/spellcheck.py` — **advisory** in CI (`continue-on-error` + step summary; pre-commit still runs spellcheck locally)
    - `html-validate` on static HTML entry pages
    - `validate_cv_data.py`, `check_en_fr_parity.py`, `generate_cv.py --check`, `sync_design_tokens.py --check`, AEO regeneration diff
-   - `project-docs-structure`: Hugo build + `scripts/verify/repository-notes.test.mjs` (section anchors, diagrams, bilingual notes)
+   - `project-docs-structure`: Hugo build + `scripts/verify/repository-notes.test.mjs` (section anchors, diagrams, bilingual notes) and `scripts/verify/blog-links.test.mjs` (every local link and asset reference in the build resolves)
    - `frontend-e2e`: Playwright (`tools/ux-audit/e2e/enhancements.spec.ts`) against a local build with `HUGO_ENV=production` — hreflang and JSON-LD, header options popover, sortable tables, reduced-motion reveals, article side rail, open project diagrams, Markdown context twins, axe WCAG 2.1 AA on four pages
 
 5. **Lighthouse CI** (`.github/workflows/lighthouse.yml`)

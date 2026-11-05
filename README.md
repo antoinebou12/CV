@@ -127,6 +127,7 @@ The page order is fixed (title, badges, languages, overview, getting started, RE
 | CV data schema, EN/FR parity, generated LaTeX | `python scripts/verify/validate_cv_data.py`, `check_en_fr_parity.py`, `scripts/build/generate_cv.py --check` | `quality.yml` |
 | Spelling (advisory), html-validate | `python scripts/ci/spellcheck.py`, `npx html-validate …` | `quality.yml` |
 | Project note structure | `CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs` | `quality.yml` |
+| Blog internal links (every local href/src resolves) | `CV_NOTES_SITE=hugo/public node --test scripts/verify/blog-links.test.mjs` | `quality.yml` |
 | Frontend behaviour (Playwright) | `cd tools/ux-audit && node scripts/run-local-e2e.mjs e2e/enhancements.spec.ts` | `quality.yml` |
 | Lighthouse (CV + blog pages) | `lighthouserc.json` | `lighthouse.yml` |
 | Links | Lychee, advisory | `link-check.yml`, `compile-cv.yml` |

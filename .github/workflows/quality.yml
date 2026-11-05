@@ -114,7 +114,7 @@ jobs:
         run: hugo --minify -d public
 
       - name: Repository notes structure tests
-        run: CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs
+        run: CV_NOTES_SITE=hugo/public node --test scripts/verify/repository-notes.test.mjs scripts/verify/blog-links.test.mjs
 
   frontend-e2e:
     # Playwright checks for the blog chrome, SEO tags, dynamic tables, motion and reading tools.
