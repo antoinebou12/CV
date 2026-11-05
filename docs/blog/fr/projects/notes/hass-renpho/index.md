@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/hass_renpho
 - Révision inspectée: b38c9dfa5416e5c1d09619d963b7bfaac238494b
 
@@ -76,4 +77,5 @@ L’API est non officielle et le README rapporte des pannes. Cet article ne conf
 - [custom_components/renpho/coordinator.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/coordinator.py)
 - [custom_components/renpho/sensor.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/sensor.py)
 - [custom_components/renpho/api_renpho.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/api_renpho.py)
+
 

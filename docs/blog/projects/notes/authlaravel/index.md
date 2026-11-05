@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/AuthLaravel
 - Inspected revision: 2ec4e5d4367341fa789c0027d17ecd43ba80cf01
 
@@ -92,4 +93,5 @@ This is coursework, not a security certification. The routes alone do not prove 
 - [AuthLaravel/routes/web.php](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/routes/web.php)
 - [AuthLaravel/composer.json](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/composer.json)
 - [AuthLaravel/package.json](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/package.json)
+
 

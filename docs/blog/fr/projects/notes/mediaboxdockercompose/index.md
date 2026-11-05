@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/MediaBoxDockerCompose
 - Licence: MIT
 - Révision inspectée: 57d930a836819f7fd3a3421ee5ece5efe3e41778
@@ -88,4 +89,5 @@ Les images et services externes évoluent séparément. Vérifiez identifiants, 
 
 - [docker-compose.yml](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml)
 - [README.md](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/README.md)
+
 

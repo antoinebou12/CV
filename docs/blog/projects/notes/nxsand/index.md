@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/nxsand
 - Inspected revision: af70da331e9e74ce0d5bd0365e1447f42cfc97d0
 
@@ -107,4 +108,5 @@ GPU feature support and performance depend on the device and backend. The deskto
 - [source/gpu/sim_pipeline.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/gpu/sim_pipeline.hpp)
 - [source/sim/sim_state.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/sim/sim_state.hpp)
 - [Makefile](https://github.com/antoinebou12/nxsand/blob/main/Makefile)
+
 

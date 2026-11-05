@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/Maestro
 - License: AGPL-3.0
 - Inspected revision: 6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783
@@ -103,4 +104,5 @@ Recognition accuracy depends on the score image and recognition engine. Shared o
 - [backend/src/main/java/PFE008/backend/AudiverisController.java](https://github.com/antoinebou12/Maestro/blob/main/backend/src/main/java/PFE008/backend/AudiverisController.java)
 - [backend/src/main/MxlToMidi.py](https://github.com/antoinebou12/Maestro/blob/main/backend/src/main/MxlToMidi.py)
 - [maestro-app/package.json](https://github.com/antoinebou12/Maestro/blob/main/maestro-app/package.json)
+
 

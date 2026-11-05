@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/MediaBoxDockerCompose
 - License: MIT
 - Inspected revision: 57d930a836819f7fd3a3421ee5ece5efe3e41778
@@ -88,4 +89,5 @@ Image tags and external services age independently. Review credentials, publishe
 
 - [docker-compose.yml](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml)
 - [README.md](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/README.md)
+
 

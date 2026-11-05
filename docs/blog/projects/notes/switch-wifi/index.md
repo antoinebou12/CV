@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/switch-wifi
 - License: MIT
 - Inspected revision: 8ff883f6925c37b14b9683f8b933a9403654d08d
@@ -102,4 +103,5 @@ Unavailable radio values should remain unavailable, not appear as zero. Build co
 - [CMakeLists.txt](https://github.com/antoinebou12/switch-wifi/blob/main/CMakeLists.txt)
 - [src/core/metrics.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/core/metrics.cpp)
 - [src/main.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/main.cpp)
+
 

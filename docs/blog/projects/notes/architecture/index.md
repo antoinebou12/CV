@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/architecture
 - License: MIT
 - Inspected revision: a511b1a730ced19f6340548d5a46e20ae6e2df9b
@@ -62,4 +63,5 @@ This is an archived infrastructure snapshot. Service names and connections in a 
 - [README.md](https://github.com/antoinebou12/architecture/blob/main/README.md)
 - [architecture.plantuml](https://github.com/antoinebou12/architecture/blob/main/architecture.plantuml)
 - [architecture.drawio](https://github.com/antoinebou12/architecture/blob/main/architecture.drawio)
+
 

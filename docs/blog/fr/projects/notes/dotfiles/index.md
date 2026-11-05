@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/.dotfiles
 - Licence: MIT
 - Révision inspectée: 52ff3c19bdebfbebf1d9e320fff199044bdf5e13
@@ -72,4 +73,5 @@ Le script modifie des fichiers personnels et exécute des commandes privilégié
 - [install.sh](https://github.com/antoinebou12/.dotfiles/blob/main/install.sh)
 - [update.sh](https://github.com/antoinebou12/.dotfiles/blob/main/update.sh)
 - [uninstall.sh](https://github.com/antoinebou12/.dotfiles/blob/main/uninstall.sh)
+
 

@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/kroki-playground
 - Licence: MIT
 - Révision inspectée: 8def712a64de0f9badb65f2e1a3bb855aeb25523
@@ -73,4 +74,5 @@ Un lien de partage encodé contient toujours une source récupérable. La compre
 - [lib/kroki/encode.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/encode.ts)
 - [lib/kroki/validate.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/validate.ts)
 - [package.json](https://github.com/antoinebou12/kroki-playground/blob/main/package.json)
+
 

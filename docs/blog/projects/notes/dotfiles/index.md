@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/.dotfiles
 - License: MIT
 - Inspected revision: 52ff3c19bdebfbebf1d9e320fff199044bdf5e13
@@ -72,4 +73,5 @@ The script edits home-directory files and runs privileged package commands. Back
 - [install.sh](https://github.com/antoinebou12/.dotfiles/blob/main/install.sh)
 - [update.sh](https://github.com/antoinebou12/.dotfiles/blob/main/update.sh)
 - [uninstall.sh](https://github.com/antoinebou12/.dotfiles/blob/main/uninstall.sh)
+
 

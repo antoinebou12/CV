@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/linkshare
 - Révision inspectée: 2e223f99a50c07f3e60377f6c3252051b815c468
 
@@ -67,4 +68,5 @@ Les dépendances archivées et l’administration exposée demandent une revue a
 - [config/routes.rb](https://github.com/antoinebou12/linkshare/blob/master/config/routes.rb)
 - [Gemfile](https://github.com/antoinebou12/linkshare/blob/master/Gemfile)
 - [README.md](https://github.com/antoinebou12/linkshare/blob/master/README.md)
+
 

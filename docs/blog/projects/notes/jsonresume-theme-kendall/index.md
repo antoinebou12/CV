@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/jsonresume-theme-kendall
 - License: MIT
 - Inspected revision: d1401cef84466c09cb84f8752c185fc96e3f5c6e
@@ -90,4 +91,5 @@ Old theme dependencies and expected schema fields need review with current resum
 - [index.js](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/index.js)
 - [resume.template](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/resume.template)
 - [print.css](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/print.css)
+
 

@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/CV
 - License: MIT
 - Inspected revision: 2fdf469a3056498868554d59661713206d435b7b
@@ -125,4 +126,5 @@ English and French outputs need parity checks. A successful local build is separ
 - [scripts/build/render_resume_md.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/render_resume_md.py)
 - [scripts/build/generate_aeo_content.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/generate_aeo_content.py)
 - [hugo/hugo.toml](https://github.com/antoinebou12/CV/blob/main/hugo/hugo.toml)
+
 

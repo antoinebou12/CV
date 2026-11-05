@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/RawAnalyser
 - Inspected revision: ff745802fe293ebba44bf54389509dbb95d0fe5f
 
@@ -84,4 +85,5 @@ Python 2 syntax and deprecated scientific-library calls make this historical cod
 - [RawAnalyser.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawAnalyser.py)
 - [GUI.py](https://github.com/antoinebou12/RawAnalyser/blob/master/GUI.py)
 - [RawPixel.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawPixel.py)
+
 

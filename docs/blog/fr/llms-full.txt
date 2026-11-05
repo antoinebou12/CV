@@ -1,0 +1,4236 @@
+# Antoine Boucher — fiches de projet
+
+Une fiche par dépôt public, générée depuis les fichiers de données du site. Index court : https://antoineboucher.info/CV/blog/llms.txt
+
+
+---
+
+# .dotfiles : Un environnement shell en scripts
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/dotfiles/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/dotfiles/index.md
+
+- Dépôt: https://github.com/antoinebou12/.dotfiles
+- Licence: MIT
+- Révision inspectée: 52ff3c19bdebfbebf1d9e320fff199044bdf5e13
+
+## Résumé
+
+Ces dotfiles regroupent la configuration de shell et d’éditeur que j’utilisais sur plusieurs machines. L’installateur gère les paquets, les fichiers de configuration et les projets externes.
+
+**Pourquoi il existe:** Installateur idempotent multi-distribution supportant apt, dnf, pacman avec configuration modulaire Zsh et Vim.
+
+**Cas d’usage:** Reproduction instantanée d&#39;un environnement shell optimisé sur tout système Unix.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Shell | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+bash install.sh
+source install.sh
+install_vimrc
+```
+
+
+## Fonctions et composants
+
+- **Installation des paquets** — install.sh lit la distribution dans /etc/os-release, puis choisit apt, pacman, dnf ou yum. exec_root regroupe les commandes nécessitant des privilèges élevés. L’installation des paquets et les changements de configuration se trouvent donc dans le même script.
+- **Configuration de l’éditeur et du shell** — Le parcours Vim installe amix/vimrc et applique des réglages locaux, dont les numéros de ligne et la position de l’arborescence. D’autres fonctions installent Oh My Zsh. update.sh et uninstall.sh proposent des points d’entrée de maintenance distincts.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- install.sh → Détection de la distribution
+- Détection de la distribution → Paquets système
+- Paquets système → Configuration Vim et Zsh
+
+```mermaid
+flowchart LR
+  n0[&#34;install.sh&#34;]
+  n1[&#34;Détection de la distribution&#34;]
+  n2[&#34;Paquets système&#34;]
+  n3[&#34;Configuration Vim et Zsh&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+```
+
+**Un parcours dans le code:** Suivez install_vimrc depuis sa demande de paquets jusqu’au clonage externe, puis aux modifications dans ~/.vim_runtime. Ce parcours distingue les fichiers modifiés par l’installateur de ceux fournis par un autre projet.
+
+## Limites et points à vérifier
+
+Le script modifie des fichiers personnels et exécute des commandes privilégiées. Sauvegardez votre configuration et inspectez chaque fonction avant de l’exécuter sur une machine actuelle.
+
+## Fichiers à lire
+
+- [install.sh](https://github.com/antoinebou12/.dotfiles/blob/main/install.sh)
+- [update.sh](https://github.com/antoinebou12/.dotfiles/blob/main/update.sh)
+- [uninstall.sh](https://github.com/antoinebou12/.dotfiles/blob/main/uninstall.sh)
+
+
+
+---
+
+# AINewsTracker : analyser l’actualité financière et la backtester
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/ainewstracker/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/ainewstracker/index.md
+
+- Dépôt: https://github.com/antoinebou12/AINewsTracker
+
+
+
+
+---
+
+# another-install-script : Un menu d’installation pour le homelab
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/another-install-script/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/another-install-script/index.md
+
+- Dépôt: https://github.com/antoinebou12/another-install-script
+- Licence: GPL-3.0
+- Révision inspectée: 6e1e193260504106593f6b92bb799aacafdf0e2b
+
+## Résumé
+
+another-install-script propose un menu shell pour choisir des opérations système et installer des conteneurs. Les menus et les définitions de services sont séparés, ce qui évite de placer toutes les commandes dans setup.sh.
+
+**Pourquoi il existe:** Installateur shell interactif (TUI) automatisant le déploiement de conteneurs Docker et de configurations serveur.
+
+**Cas d’usage:** Déploiement rapide de serveurs et d&#39;environnements homelab en une commande.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Shell | 93.8 |
+| Dockerfile | 3.12 |
+| Python | 3.07 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · How to install
+
+```bash
+git clone https://github.com/antoinebou13/another-install-script.git
+cd another-install-script
+sudo bash setup.sh
+```
+
+### README.md · Project Structure
+
+```bash
+&#43;-- docs
+|   &#43;-- vendor
+|       &#43;-- ...
+|   &#43;-- docs.md
+|   &#43;-- generate_docs.md
+|   &#43;-- ...
+&#43;-- containers
+|   &#43;-- $container_name
+|   |   |   &#43;-- docker-compose.yml
+|   |   |   &#43;-- $container_name.sh
+|   |   |   &#43;-- ...
+&#43;-- src
+```
+
+### README.md · How to run coverage and tests
+
+```bash
+cd tests
+bash test.sh
+```
+
+### README.md · How to run coverage and tests
+
+```bash
+cd tests
+bash coverage.sh
+```
+
+### README.md · How to generate the documentation
+
+```bash
+git submodule update --init --recursive
+git pull --recurse-submodules
+git submodule update --remote
+cd docs/generator
+chmod &#43;x generate_docs.sh
+bash generate_docs.sh ../docs.md
+```
+
+
+## Fonctions et composants
+
+- **Point d’entrée et menus** — setup.sh charge src/menu.sh et appelle main_setup_menu. Le script racine traite les arguments, tandis que le module chargé pilote la navigation. config.yml constitue le fichier de configuration placé à côté du lanceur.
+- **Définitions des services** — Le dossier containers contient les éléments d’installation propres aux services. Cette séparation facilite l’ajout de services, mais chaque installation modifie tout de même l’hôte ou son environnement Docker.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- setup.sh → src/menu.sh
+- src/menu.sh → Configuration et sélection
+- Configuration et sélection → Installation du conteneur
+
+```mermaid
+flowchart LR
+  n0[&#34;setup.sh&#34;]
+  n1[&#34;src/menu.sh&#34;]
+  n2[&#34;Configuration et sélection&#34;]
+  n3[&#34;Installation du conteneur&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+```
+
+**Un parcours dans le code:** Partez de l’appel à main_setup_menu, puis inspectez le service choisi dans containers avant de l’exécuter. Le menu distribue les actions; le service choisi détermine les changements réels.
+
+## Limites et points à vérifier
+
+Le README présente le projet comme un travail en cours et mentionne une ancienne version d’Ubuntu. Ces notes ne prouvent pas sa compatibilité avec un serveur actuel.
+
+## Fichiers à lire
+
+- [setup.sh](https://github.com/antoinebou12/another-install-script/blob/master/setup.sh)
+- [src/menu.sh](https://github.com/antoinebou12/another-install-script/blob/master/src/menu.sh)
+- [config.yml](https://github.com/antoinebou12/another-install-script/blob/master/config.yml)
+
+
+
+---
+
+# antoinebou12 : Comment le profil GitHub est assemblé
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/antoinebou12/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/antoinebou12/index.md
+
+- Dépôt: https://github.com/antoinebou12/antoinebou12
+- Licence: GPL-3.0
+- Révision inspectée: c519c6b47b35d3d391167aa43b6cf6cafe7d0435
+
+## Résumé
+
+Ce dépôt contient le README de mon profil GitHub. Il combine du Markdown, des images, des widgets intégrés et des mises à jour planifiées. Le profil lui-même ne contient pas de serveur applicatif.
+
+**Pourquoi il existe:** Workflow automatisé de rendu de métriques et SVG pour profil GitHub dynamique.
+
+**Cas d’usage:** Génération automatique d&#39;assets de profil.
+
+## Fonctions et composants
+
+- **README et ressources** — README.md est le document visible du profil. Les dossiers images, models et profile-3d-contrib regroupent des ressources associées. GitHub affiche le document, tandis que certains services liés produisent leurs propres images.
+- **Modifications planifiées** — Le workflow update-readme récupère des statistiques LeetCode, construit des liens de badges et remplace le texte entre des marqueurs du README. D’autres workflows concernent le graphique de contributions, les liens et Pages.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Statistiques externes → GitHub Actions
+- GitHub Actions → Section délimitée du README
+- Section délimitée du README → Profil GitHub
+
+```mermaid
+flowchart LR
+  n0[&#34;Statistiques externes&#34;]
+  n1[&#34;GitHub Actions&#34;]
+  n2[&#34;Section délimitée du README&#34;]
+  n3[&#34;Profil GitHub&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+```
+
+**Un parcours dans le code:** Dans update-readme.yml, suivez la réponse HTTP jusqu’aux chaînes de badges, puis au remplacement entre marqueurs. Si un marqueur manque, ce remplacement n’a pas lieu.
+
+## Limites et points à vérifier
+
+Les services de badges peuvent tomber en panne ou devenir périmés. Un graphique de profil présente les données d’une source, sans mesurer indépendamment la qualité des contributions.
+
+## Fichiers à lire
+
+- [README.md](https://github.com/antoinebou12/antoinebou12/blob/master/README.md)
+- [.github/workflows/update-readme.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/update-readme.yml)
+- [.github/workflows/github-profile-3d-contrib.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/github-profile-3d-contrib.yml)
+
+
+
+---
+
+# architecture : L’architecture comme documentation modifiable
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/architecture/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/architecture/index.md
+
+- Dépôt: https://github.com/antoinebou12/architecture
+- Licence: MIT
+- Révision inspectée: a511b1a730ced19f6340548d5a46e20ae6e2df9b
+
+## Résumé
+
+Ce dépôt archivé conserve un diagramme d’infrastructure domestique dans plusieurs formats. Son architecture est celle d’un flux documentaire: des sources modifiables produisent des schémas consultables sans application en cours d’exécution.
+
+**Pourquoi il existe:** Schémas d’infrastructure domestique conservés en sources PlantUML et draw.io, avec des exports HTML et image.
+
+**Cas d’usage:** Consulter un instantané d’infrastructure archivé ou modifier ses sources pour documenter un homelab.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 100 |
+
+## Fonctions et composants
+
+- **Sources modifiables** — La racine contient une source PlantUML et un document draw.io. Il s’agit de deux représentations distinctes. Leur présence ne signifie pas que l’une est automatiquement produite à partir de l’autre.
+- **Vues publiées** — Les fichiers PNG et HTML permettent de consulter le schéma. Le README dirige vers ces représentations. Le dépôt décrit l’infrastructure, sans déployer ni surveiller les services représentés.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Source PlantUML → Rendu PlantUML
+- Rendu PlantUML → Image du schéma
+- Source draw.io → Export HTML et PNG
+
+```mermaid
+flowchart LR
+  n0[&#34;Source PlantUML&#34;]
+  n1[&#34;Rendu PlantUML&#34;]
+  n2[&#34;Image du schéma&#34;]
+  n3[&#34;Source draw.io&#34;]
+  n4[&#34;Export HTML et PNG&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Choisissez d’abord le format modifiable, puis comparez son rendu à l’image exportée. Conserver les sources évite qu’une capture d’écran devienne la seule description restante du système.
+
+## Limites et points à vérifier
+
+Il s’agit d’un instantané d’infrastructure archivé. Les noms et connexions du schéma ne prouvent pas que les services fonctionnent encore ou sont accessibles.
+
+## Fichiers à lire
+
+- [README.md](https://github.com/antoinebou12/architecture/blob/main/README.md)
+- [architecture.plantuml](https://github.com/antoinebou12/architecture/blob/main/architecture.plantuml)
+- [architecture.drawio](https://github.com/antoinebou12/architecture/blob/main/architecture.drawio)
+
+
+
+---
+
+# Artemis-N3DS : Le streaming sur un client à deux écrans
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-n3ds/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-n3ds/index.md
+
+- Dépôt: https://github.com/antoinebou12/Artemis-N3DS
+- Licence: GPL-3.0
+- Révision inspectée: c5eb0205ba4eb00f4fff96097d987b3267a7be08
+
+## Résumé
+
+Artemis-N3DS adapte Moonlight Embedded à la famille Nintendo 3DS. Le projet réunit découverte et jumelage de l’hôte, interface console, commandes et affichage vidéo. Le parcours matériel de la New 3DS demande une attention particulière.
+
+**Pourquoi il existe:** Défi d&#39;ingénierie sous fortes contraintes : streaming 60 FPS sur architecture ARM11 double écran.
+
+**Cas d’usage:** Accès distant et jeu PC sur matériel New 3DS.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 76.05 |
+| C | 15.71 |
+| CMake | 4.36 |
+| Makefile | 2.84 |
+| Shell | 0.64 |
+| Dockerfile | 0.4 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Docker (easiest)
+
+```bash
+docker build --network=host -t moonlight-n3ds .
+docker run --rm -it -v .:/moonlight-N3DS -w /moonlight-N3DS moonlight-n3ds:latest
+make
+```
+
+### README.md · Local (devkitPro)
+
+```bash
+make
+```
+
+
+## Fonctions et composants
+
+- **Gestion de la session** — n3ds_main.cpp réunit découverte, jumelage, profils et état de connexion. L’hôte et l’application sélectionnés déterminent la demande de streaming. Le cycle de vie graphique est suivi séparément de la configuration du flux.
+- **Médias et interaction** — L’audio, les commandes et la vidéo ont leurs modules dans src. Les capacités matérielles influencent les indications affichées. L’interface peut reprendre après un flux, tandis qu’une fermeture système explicite doit terminer l’application.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Découverte et jumelage → Application et profil
+- Application et profil → Connexion GameStream
+- Connexion GameStream → Moteurs vidéo et audio
+- Moteurs vidéo et audio → Écrans et commandes 3DS
+- Écrans et commandes 3DS → Connexion GameStream
+
+```mermaid
+flowchart LR
+  n0[&#34;Découverte et jumelage&#34;]
+  n1[&#34;Application et profil&#34;]
+  n2[&#34;Connexion GameStream&#34;]
+  n3[&#34;Moteurs vidéo et audio&#34;]
+  n4[&#34;Écrans et commandes 3DS&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n2
+```
+
+**Un parcours dans le code:** Suivez SelectedHost et le profil avant d’entrer dans le traitement des médias. Une fermeture système et un retour normal au menu sont deux transitions distinctes; un indicateur explicite évite de les confondre.
+
+## Limites et points à vérifier
+
+La 3DS d’origine et la New 3DS ont des capacités de décodage différentes. Les profils proposés dans le code ne garantissent pas une cadence ou des performances réseau mesurées.
+
+## Fichiers à lire
+
+- [src/n3ds_main.cpp](https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/n3ds_main.cpp)
+- [src/hardware_capabilities.cpp](https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/hardware_capabilities.cpp)
+- [src/video/video.hpp](https://github.com/antoinebou12/Artemis-N3DS/blob/n3ds-main/src/video/video.hpp)
+
+
+
+---
+
+# Artemis-Switch : Une image du PC à l’écran
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-switch/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/artemis-switch/index.md
+
+- Dépôt: https://github.com/antoinebou12/Artemis-Switch
+- Licence: GPL-3.0
+- Révision inspectée: 33e6854781a47e86ae349e0a7646ff00bd924ddd
+
+## Résumé
+
+Artemis-Switch est un fork de la famille Moonlight. L’hôte exécute le jeu. Le client reçoit la vidéo et l’audio compressés, affiche les images et renvoie les commandes.
+
+**Pourquoi il existe:** Client GameStream C&#43;&#43; accéléré matériellement avec calage d&#39;images NVN pour une fluidité sans saccade.
+
+**Cas d’usage:** Diffusion de jeux PC vers Nintendo Switch en mode portable avec latence minimale.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 53.78 |
+| C | 33.23 |
+| Java | 5.69 |
+| CMake | 3.51 |
+| Objective-C&#43;&#43; | 1.95 |
+| Shell | 0.75 |
+| Swift | 0.38 |
+| Python | 0.35 |
+| GLSL | 0.34 |
+| Makefile | 0.02 |
+| PowerShell | 0.01 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Developer build
+
+```bash
+git clone --recursive https://github.com/antoinebou12/Artemis-Switch.git
+cd Artemis-Switch
+cmake -B build/switch -DCMAKE_BUILD_TYPE=Release -DPLATFORM_SWITCH=ON -DUSE_DEKO3D=ON
+cmake --build build/switch --target Moonlight.nro --parallel
+```
+
+### README.md · Developer validation
+
+```bash
+python tests/i18n_consistency_test.py
+python tests/release_contract_test.py
+cmake -S tests -B build/tests -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/tests --parallel
+ctest --test-dir build/tests --output-on-failure
+```
+
+### README.md · Developer validation
+
+```bash
+python -m pip install ruff==0.12.10
+python scripts/lint.py
+cmake -S tests -B build/lint -DCMAKE_BUILD_TYPE=Debug -DARTEMIS_STRICT_WARNINGS=ON -DARTEMIS_ENABLE_CLANG_TIDY=ON
+cmake --build build/lint --parallel
+```
+
+### README.md · Developer validation
+
+```bash
+cmake -S ci/integration -B build/integration -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/integration --parallel
+ctest --test-dir build/integration --output-on-failure
+```
+
+### app/platforms/android-project/README.md · Building
+
+```bash
+cd android-project
+```
+
+### app/platforms/android-project/README.md · Building
+
+```bash
+./build_libromfs_generator.sh
+```
+
+### app/platforms/android-project/README.md · Building
+
+```bash
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jbr/Contents/Home
+export ANDROID_SDK_ROOT=~/Library/Android/sdk
+./gradlew assembleDebug
+./gradlew installDebug
+```
+
+
+## Fonctions et composants
+
+- **Session et interface** — L’interface Borealis gère le choix de l’hôte et les réglages. MoonlightSession coordonne le streaming et son fournisseur Switch choisit les implémentations vidéo et audio. L’interface et le traitement des médias ont des cycles de vie différents.
+- **Sortie propre à la plateforme** — Le fournisseur construit FFmpegVideoDecoder. Avec BOREALIS_USE_DEKO3D, il choisit ArtemisDKVideoRenderer; d’autres options choisissent d’autres moteurs. L’audio Switch utilise AudrenAudioRenderer. Ces choix sont explicites à la compilation.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Hôte GameStream → Session de streaming
+- Session de streaming → Décodeur vidéo FFmpeg
+- Décodeur vidéo FFmpeg → Rendu deko3d
+- Rendu deko3d → Écran Switch
+- Commandes manette → Session de streaming
+- Session de streaming → Hôte GameStream
+
+```mermaid
+flowchart LR
+  n0[&#34;Hôte GameStream&#34;]
+  n1[&#34;Session de streaming&#34;]
+  n2[&#34;Décodeur vidéo FFmpeg&#34;]
+  n3[&#34;Rendu deko3d&#34;]
+  n4[&#34;Écran Switch&#34;]
+  n5[&#34;Commandes manette&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n5 --&gt; n1
+  n1 --&gt; n0
+```
+
+**Un parcours dans le code:** Lisez les méthodes du fournisseur pour identifier le moteur compilé, puis suivez les images décodées vers ce moteur. Les délais réseau, de décodage et d’affichage doivent être mesurés séparément pour expliquer un flux lent.
+
+## Limites et points à vérifier
+
+Une compilation réussie ne mesure ni la latence matérielle ni la stabilité ou les codecs de chaque cible. Le crédit des auteurs Moonlight d’origine est conservé.
+
+## Fichiers à lire
+
+- [app/src/main.cpp](https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/main.cpp)
+- [app/src/streaming/MoonlightSession.cpp](https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/streaming/MoonlightSession.cpp)
+- [app/src/streaming/switch/SwitchMoonlightSessionDecoderAndRenderProvider.cpp](https://github.com/antoinebou12/Artemis-Switch/blob/main/app/src/streaming/switch/SwitchMoonlightSessionDecoderAndRenderProvider.cpp)
+
+
+
+---
+
+# AudioTranscript : Des segments WAV à la transcription
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/audiotranscript/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/audiotranscript/index.md
+
+- Dépôt: https://github.com/antoinebou12/AudioTranscript
+- Licence: MIT
+- Révision inspectée: 91b458e4385f0be729d8af54d8b500dc9d00a274
+
+## Résumé
+
+AudioTranscript découpe un enregistrement WAV autour des silences, transmet les segments à un service de reconnaissance et rassemble le texte. L’implémentation utilise Amazon, même si ses docstrings mentionnent encore Google.
+
+**Pourquoi il existe:** Pipeline de traitement et de transcription audio avec alignement temporel.
+
+**Cas d’usage:** Transcription automatique par lots d&#39;enregistrements audio.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Usage
+
+```bash
+python main.py --path &lt;audio_file_path&gt; --min-silence-len &lt;min_silence_length&gt; --silence-thresh &lt;silence_threshold&gt; --keep-silence &lt;keep_silence_duration&gt; --language &lt;language_code&gt;
+```
+
+
+## Fonctions et composants
+
+- **Découpage audio** — main.py charge un WAV avec pydub et appelle split_on_silence. Le seuil est calculé par rapport au niveau dBFS de l’enregistrement. Chaque segment est exporté dans audio-chunks avant la reconnaissance.
+- **Reconnaissance et sortie** — Un Recognizer de SpeechRecognition lit chaque fichier exporté et appelle recognize_amazon. La boucle ajoute le résultat à whole_text, ensuite affiché et retourné. Typer expose le fichier et les paramètres de découpage.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Enregistrement WAV → Découpage pydub
+- Découpage pydub → Segments WAV temporaires
+- Segments WAV temporaires → Reconnaissance Amazon
+- Reconnaissance Amazon → Texte assemblé
+
+```mermaid
+flowchart LR
+  n0[&#34;Enregistrement WAV&#34;]
+  n1[&#34;Découpage pydub&#34;]
+  n2[&#34;Segments WAV temporaires&#34;]
+  n3[&#34;Reconnaissance Amazon&#34;]
+  n4[&#34;Texte assemblé&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez transcribe_audio_file plutôt que sa docstring: la fonction vérifie les variables AWS juste avant recognize_amazon. L’argument de langue est exposé par la CLI, sans être transmis à cet appel.
+
+## Limites et points à vérifier
+
+L’audio quitte la machine pour la reconnaissance. Le code réutilise des noms fixes de tâche et de fichier; des exécutions simultanées nécessitent une gestion distincte des noms et fichiers temporaires.
+
+## Fichiers à lire
+
+- [main.py](https://github.com/antoinebou12/AudioTranscript/blob/main/main.py)
+- [requirements.txt](https://github.com/antoinebou12/AudioTranscript/blob/main/requirements.txt)
+
+
+
+---
+
+# AuthLaravel : Sessions, rôles et pages Inertia
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/authlaravel/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/authlaravel/index.md
+
+- Dépôt: https://github.com/antoinebou12/AuthLaravel
+- Révision inspectée: 2ec4e5d4367341fa789c0027d17ecd43ba80cf01
+
+## Résumé
+
+AuthLaravel est un projet d’apprentissage du contrôle d’accès avec Laravel et des pages Vue servies par Inertia. Les routes montrent comment les utilisateurs authentifiés accèdent au tableau de bord et comment les administrateurs obtiennent une vue différente.
+
+**Pourquoi il existe:** Modèle d&#39;authentification Laravel implémentant JWT, sessions et politiques de rôles.
+
+**Cas d’usage:** Socle d&#39;authentification robuste pour projets et API Laravel.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| PHP | 53.63 |
+| TypeScript | 35.05 |
+| Blade | 10.93 |
+| JavaScript | 0.37 |
+| CSS | 0.02 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### AuthLaravel/README.md · Steps
+
+```bash
+./vendor/bin/sail up -d
+npm build
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+http://localhost/login
+email: http://localhost:8025
+```
+
+### README.md · Steps
+
+```bash
+./vendor/bin/sail up -d
+npm build
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+http://localhost/login
+email: http://localhost:8025
+```
+
+
+## Fonctions et composants
+
+- **Routes et middleware** — La route du tableau de bord utilise auth et verified, puis vérifie le rôle admin. Cette branche charge les utilisateurs et affiche AdminDashboard; les autres utilisateurs reçoivent Dashboard. La route /admin déclare son propre middleware.
+- **Pages et gestion du compte** — Inertia relie les décisions des routes serveur aux pages frontend. ProfileController gère les modifications du profil, tandis que les routes de réinitialisation utilisent le mécanisme de mots de passe de Laravel. L’authentification et le choix de page restent deux opérations distinctes.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Requête du navigateur → Middleware Laravel
+- Middleware Laravel → Rôle et logique de route
+- Rôle et logique de route → Réponse Inertia
+- Réponse Inertia → Page Vue
+
+```mermaid
+flowchart LR
+  n0[&#34;Requête du navigateur&#34;]
+  n1[&#34;Middleware Laravel&#34;]
+  n2[&#34;Rôle et logique de route&#34;]
+  n3[&#34;Réponse Inertia&#34;]
+  n4[&#34;Page Vue&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Comparez /dashboard et /admin dans routes/web.php. Les deux choisissent une page administrative, mais leurs middleware diffèrent. Il faut aussi vérifier les autorisations sur les opérations de données, au-delà de la navigation.
+
+## Limites et points à vérifier
+
+Il s’agit d’un travail scolaire, sans certification de sécurité. Les routes seules ne prouvent pas que chaque opération de contrôleur respecte le modèle de rôles prévu.
+
+## Fichiers à lire
+
+- [AuthLaravel/routes/web.php](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/routes/web.php)
+- [AuthLaravel/composer.json](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/composer.json)
+- [AuthLaravel/package.json](https://github.com/antoinebou12/AuthLaravel/blob/main/AuthLaravel/package.json)
+
+
+
+---
+
+# BatchBacktesting : comparer des simulations de stratégie
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/batchbacktesting/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/batchbacktesting/index.md
+
+- Dépôt: https://github.com/antoinebou12/BatchBacktesting
+
+
+
+
+---
+
+# bloc : Le stockage objet dans Blender
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/bloc/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/bloc/index.md
+
+- Dépôt: https://github.com/antoinebou12/bloc
+- Licence: GPL-3.0
+- Révision inspectée: 6c83c217d541b632fdb0b8acc998c37e6f910075
+
+## Résumé
+
+Mon fork bloc propose un parcours Blender autour du stockage S3 et MinIO. Il conserve le crédit du projet Blender-Cloud-Storage d’origine. L’extension transforme les clés d’objets en arborescence, puis télécharge les ressources avant leur import dans Blender.
+
+**Pourquoi il existe:** Intégration directe du stockage objet AWS S3 dans Blender via Boto3, éliminant la saturation des disques locaux pour les assets 3D.
+
+**Cas d’usage:** Synchronisation cloud d&#39;assets 3D, sauvegardes et flux de rendu distribués.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Fonctions et composants
+
+- **Connexion et liste** — CloudConnection contient les réglages de fournisseur, service, bucket et région. La connexion active détermine le client boto3 ou MinIO. Les clés reçues sont découpées aux barres obliques pour construire le dictionnaire imbriqué du panneau.
+- **Recherche et import** — CloudSearchManager évalue les noms et chemins avec RapidFuzz. Le téléchargement produit d’abord un fichier local temporaire. L’opérateur choisit ensuite un importateur STL, OBJ, PLY ou USD; le transfert et l’import ont donc des états de réussite distincts.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Panneau Blender → Connexion active
+- Connexion active → API S3 ou MinIO
+- API S3 ou MinIO → Clés et arborescence
+- Clés et arborescence → Panneau Blender
+- API S3 ou MinIO → Fichier temporaire
+- Fichier temporaire → Importateur Blender
+
+```mermaid
+flowchart LR
+  n0[&#34;Panneau Blender&#34;]
+  n1[&#34;Connexion active&#34;]
+  n2[&#34;API S3 ou MinIO&#34;]
+  n3[&#34;Clés et arborescence&#34;]
+  n4[&#34;Fichier temporaire&#34;]
+  n5[&#34;Importateur Blender&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n0
+  n2 --&gt; n4
+  n4 --&gt; n5
+```
+
+**Un parcours dans le code:** Suivez l’actualisation des clés vers l’arborescence, puis le chargement de la clé choisie vers un fichier et un opérateur d’import. La liste en arrière-plan transmet les mises à jour de l’interface par les timers Blender. L’objet stocké n’est pas un dossier local.
+
+## Limites et points à vérifier
+
+Le parcours S3 effectue un seul appel list_objects_v2 sans pagination. L’envoi du .blend sauvegardé ne prouve pas que les textures externes ont été regroupées.
+
+## Fichiers à lire
+
+- [addon.py](https://github.com/antoinebou12/bloc/blob/main/addon.py)
+- [blender_manifest.toml](https://github.com/antoinebou12/bloc/blob/main/blender_manifest.toml)
+
+
+
+---
+
+# ChitUI : Une passerelle locale vers les imprimantes résine
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/chitui/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/chitui/index.md
+
+- Dépôt: https://github.com/antoinebou12/ChitUI
+- Révision inspectée: a4236172836c65116a88dcd39a934441691be34c
+
+## Résumé
+
+ChitUI fournit une interface web pour des imprimantes résine SDCP. Un processus Python sert les ressources web, découvre les imprimantes sur le réseau local et traduit les actions du navigateur en communications avec les machines.
+
+**Pourquoi il existe:** Interface de contrôle web pour imprimantes 3D résine SDCP 3.0 avec découverte UDP sur LAN.
+
+**Cas d’usage:** Contrôle à distance d&#39;imprimantes 3D résine sans poste dédié.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| JavaScript | 48.61 |
+| HTML | 24.57 |
+| Python | 22.86 |
+| CSS | 3.51 |
+| Dockerfile | 0.45 |
+
+## Technologies vérifiées
+
+- SDCP 3.0 — README title
+- Docker — README Docker section
+- Browser UI — README Usage, default port 54780
+- Local network — README Docker host networking for UDP discovery
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Setup
+
+```bash
+python -mvenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### README.md · Usage
+
+```bash
+python main.py
+```
+
+
+### Docker
+
+```bash
+docker build -t chitui:latest .
+docker run --rm --name chitui --net=host chitui:latest
+```
+
+## Fonctions et composants
+
+- **Navigateur et serveur local** — main.py crée une application Flask dont les fichiers statiques se trouvent dans web et y ajoute Flask-SocketIO. Les registres d’imprimantes et de WebSocket restent en mémoire. La découverte locale explique l’exigence de réseau hôte Docker du README.
+- **Transfert de fichier** — La route d’envoi valide l’extension et conserve temporairement le fichier. La fonction de transfert calcule une empreinte MD5 et transmet des blocs d’un mégaoctet avec leurs décalages. Une route de flux d’événements expose la progression.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Interface web → Flask et SocketIO
+- Flask et SocketIO → Découverte et session imprimante
+- Découverte et session imprimante → Imprimante SDCP
+- Imprimante SDCP → Découverte et session imprimante
+
+```mermaid
+flowchart LR
+  n0[&#34;Interface web&#34;]
+  n1[&#34;Flask et SocketIO&#34;]
+  n2[&#34;Découverte et session imprimante&#34;]
+  n3[&#34;Imprimante SDCP&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n2
+```
+
+**Un parcours dans le code:** Suivez /upload jusqu’au fichier temporaire et à la fonction de transfert. La progression est globale dans cette implémentation; des envois simultanés nécessiteraient un état par tâche pour éviter de mélanger leurs pourcentages.
+
+## Parcours
+
+1. **Choisir un fichier** — Sélectionnez un fichier d’impression pris en charge pour une imprimante découverte. Le gestionnaire d’envoi accepte les champs multipart file et printer.
+2. **Valider la requête** — Le gestionnaire vérifie les champs file ou printer manquants et les extensions ctb, goo et prz avant de continuer.
+3. **Stockage temporaire** — Le serveur reçoit le fichier dans un stockage temporaire avant le transfert vers l’imprimante.
+4. **Transférer vers l’imprimante** — L’assistant envoie des blocs à l’imprimante sélectionnée sur le réseau local. La progression est disponible sur GET /progress en text/event-stream.
+5. **Confirmer le résultat** — Vérifiez la réponse et le fichier sur l’imprimante. L’assistant peut signaler un succès après un bloc en échec; le corps de succès seul ne prouve pas la livraison.
+
+## API
+
+
+- `POST /upload`
+- `GET /upload`
+- `GET /progress`
+
+## Limites et points à vérifier
+
+Ce fork est un prototype pour réseau local. Une interface accessible ne confirme ni la compatibilité avec un firmware donné ni la sûreté d’un accès distant.
+
+## Fichiers à lire
+
+- [main.py](https://github.com/antoinebou12/ChitUI/blob/master/main.py)
+- [Dockerfile](https://github.com/antoinebou12/ChitUI/blob/master/Dockerfile)
+- [requirements.txt](https://github.com/antoinebou12/ChitUI/blob/master/requirements.txt)
+
+
+
+---
+
+# ComfyUI-UML : Le rendu de diagrammes dans un graphe de nœuds
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/comfyui-uml/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/comfyui-uml/index.md
+
+- Dépôt: https://github.com/antoinebou12/ComfyUI-UML
+- Révision inspectée: 1f1411580e0db67efd7a4ad669e42ba8677f546a
+
+## Résumé
+
+ComfyUI-UML ajoute des nœuds de diagrammes à ComfyUI. Le texte entre dans un workflow, un moteur le convertit en image et le workflow peut conserver la source ainsi que les liens du visualiseur.
+
+**Pourquoi il existe:** Nœuds personnalisés pour ComfyUI intégrant la synthèse de diagrammes dans les pipelines d&#39;IA générative.
+
+**Cas d’usage:** Pipelines IA visuels associant schémas d&#39;architecture et post-traitement graphique.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 50.91 |
+| JavaScript | 45.75 |
+| HTML | 3.34 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+comfy node install comfyui-uml
+```
+
+
+## Fonctions et composants
+
+- **Enregistrement du module** — Le fichier __init__.py charge le paquet nodes sous le nom unique comfyui_uml_nodes pour éviter un conflit avec le module nodes de ComfyUI. Il expose les correspondances de classes et le dossier web de l’extension.
+- **Rendu et visualiseur** — Le dossier nodes sépare la génération de diagrammes, les échanges Kroki et les liens du visualiseur. WEB_DIRECTORY expose les ressources du navigateur et l’enregistrement des routes permet de sauvegarder depuis le visualiseur. Le rendu local et Kroki constituent des moteurs distincts.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Texte du diagramme → Nœud ComfyUI enregistré
+- Nœud ComfyUI enregistré → Moteur local
+- Nœud ComfyUI enregistré → Service Kroki
+- Moteur local → Image et liens du visualiseur
+- Service Kroki → Image et liens du visualiseur
+
+```mermaid
+flowchart LR
+  n0[&#34;Texte du diagramme&#34;]
+  n1[&#34;Nœud ComfyUI enregistré&#34;]
+  n2[&#34;Moteur local&#34;]
+  n3[&#34;Service Kroki&#34;]
+  n4[&#34;Image et liens du visualiseur&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n2 --&gt; n4
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Partez de NODE_CLASS_MAPPINGS, puis suivez un nœud vers son moteur de rendu. Le chargeur utilise une spécification de module explicite, car ComfyUI peut importer l’extension directement depuis un chemin de fichier.
+
+## Limites et points à vérifier
+
+Le rendu Kroki transmet le texte au service configuré. Pour des schémas confidentiels, utilisez un service privé adapté et vérifiez les dépendances des moteurs locaux.
+
+## Fichiers à lire
+
+- [__init__.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/__init__.py)
+- [nodes/uml_diagram.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/uml_diagram.py)
+- [nodes/kroki_client.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/kroki_client.py)
+
+
+
+---
+
+# CV : Un dépôt, plusieurs parcours de publication
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/cv/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/cv/index.md
+
+- Dépôt: https://github.com/antoinebou12/CV
+- Licence: MIT
+- Révision inspectée: 2fdf469a3056498868554d59661713206d435b7b
+
+## Résumé
+
+Ce site réunit des CV bilingues, des données structurées, des PDF LaTeX et un blog Hugo. Un script local compile et valide le CV et le blog, puis les publie ensemble depuis docs/ sur main.
+
+**Pourquoi il existe:** Portfolio et CV statique bilingue haute performance avec schémas AEO, CI/CD et zéro dépendance runtime.
+
+**Cas d’usage:** Présentation professionnelle et vitrine technique d&#39;ingénierie logicielle.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| JavaScript | 36.98 |
+| HTML | 34.21 |
+| Python | 10.17 |
+| TeX | 8.19 |
+| CSS | 7.68 |
+| PowerShell | 0.99 |
+| Shell | 0.72 |
+| Batchfile | 0.54 |
+| Mermaid | 0.39 |
+| Go Template | 0.1 |
+| Jinja | 0.04 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Hugo blog (Paper)
+
+```bash
+cd hugo/themes/paper
+npm ci
+npm run build:css
+cd ../..
+hugo server -D
+```
+
+### README.md · Building CVs
+
+```bash
+python build_cv.py build --language en
+python build_cv.py build --all
+python build_cv.py build --all --parallel
+python build_cv.py build --language en --output ./output/cv.pdf
+python build_cv.py build --language en --clean
+python build_cv.py build --language en --verbose
+python build_cv.py build --all --ci
+```
+
+### README.md · LaTeX CVs
+
+```bash
+python build_cv.py build --language en
+```
+
+### helm/cv-stack/README.md · Installation
+
+```bash
+helm install cv-stack ./helm/cv-stack
+helm install cv-stack ./helm/cv-stack -f my-values.yaml
+helm install cv-stack ./helm/cv-stack --namespace cv-stack --create-namespace
+```
+
+### tools/medium-mirror/README.md · Setup
+
+```bash
+cd tools/medium-mirror
+npm install
+npx playwright install chromium
+```
+
+
+## Fonctions et composants
+
+- **Sources du contenu** — data/resume.en.json et resume.fr.json contiennent le CV lisible par machine. Les pages index HTML restent les sources de leur mise en page. data/aeo.yaml produit les pages À propos, tandis que Hugo gère les articles Markdown et les notes de projets.
+- **Assemblage et vérification** — build_docs.py prépare les pages et ressources, compile Hugo sous le chemin du blog, fusionne le sitemap et vérifie le déploiement avant de copier vers docs. Cette préparation empêche une compilation échouée d’écraser l’arbre publié.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- JSON du CV et données AEO → CV et À propos générés
+- CV et À propos générés → Compilation de production préparée
+- CV HTML et PDF LaTeX → Compilation de production préparée
+- Markdown Hugo → Compilation de production préparée
+- Compilation de production préparée → Site statique dans docs
+
+```mermaid
+flowchart LR
+  n0[&#34;JSON du CV et données AEO&#34;]
+  n1[&#34;CV et À propos générés&#34;]
+  n2[&#34;CV HTML et PDF LaTeX&#34;]
+  n3[&#34;Markdown Hugo&#34;]
+  n4[&#34;Compilation de production préparée&#34;]
+  n5[&#34;Site statique dans docs&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n4
+  n2 --&gt; n4
+  n3 --&gt; n4
+  n4 --&gt; n5
+```
+
+**Un parcours dans le code:** Suivez une modification du blog depuis hugo/content vers Hugo, puis vers le dossier de préparation du déploiement. Le CV suit un autre parcours: modifier un JSON ne réécrit pas automatiquement toutes les sections HTML ou LaTeX manuelles.
+
+## Limites et points à vérifier
+
+Les sorties françaises et anglaises nécessitent des vérifications de parité. Une compilation locale réussie reste distincte du push et de la vérification du déploiement public.
+
+## Fichiers à lire
+
+- [scripts/deploy/build_docs.py](https://github.com/antoinebou12/CV/blob/main/scripts/deploy/build_docs.py)
+- [scripts/build/render_resume_md.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/render_resume_md.py)
+- [scripts/build/generate_aeo_content.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/generate_aeo_content.py)
+- [hugo/hugo.toml](https://github.com/antoinebou12/CV/blob/main/hugo/hugo.toml)
+
+
+
+---
+
+# D2COpenAIPlugin : Acheminer le texte vers les moteurs de diagrammes
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/d2copenaiplugin/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/d2copenaiplugin/index.md
+
+- Dépôt: https://github.com/antoinebou12/D2COpenAIPlugin
+- Licence: MIT
+- Révision inspectée: 7d15ee155d5f392b1d90192dc2e21ec479a6291a
+
+## Résumé
+
+D2COpenAIPlugin est un service FastAPI de diagrammes avec un manifeste de plugin et une interface OpenAPI. L’implémentation choisit un parcours PlantUML, Mermaid ou Kroki selon le langage demandé.
+
+**Pourquoi il existe:** Plugin ChatGPT officiel avec spécification OpenAPI pour convertir des descriptions en diagrammes.
+
+**Cas d’usage:** Intégration ChatGPT pour architectes et développeurs logiciels.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Quick start
+
+```bash
+git clone https://github.com/antoinebou12/D2COpenAIPlugin.git
+cd D2COpenAIPlugin
+python -m venv .venv
+```
+
+### README.md · Quick start
+
+```bash
+.\.venv\Scripts\Activate.ps1
+```
+
+### README.md · Quick start
+
+```bash
+source .venv/bin/activate
+```
+
+### README.md · Quick start
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
+uvicorn app:app --host 127.0.0.1 --port 5003
+```
+
+### README.md · Quick start
+
+```bash
+python app.py
+```
+
+### plantuml/README.md · Installation
+
+```bash
+pip install plantumlapi
+```
+
+### plantuml/README.md · Installation
+
+```bash
+pip install git&#43;https://github.com/antoinebou12/plantumlapi
+```
+
+### plantuml/README.md · Command Line Usage
+
+```bash
+usage: plantuml.py [-h] [-o OUT] [-s SERVER] filename [filename ...]
+Generate images from PlantUML defined files using PlantUML server
+positional arguments: 
+  filename            file(s) to generate images from
+optional arguments: 
+  -h, --help          show this help message and exit 
+  -o OUT, --out OUT   directory to put the files into 
+  -s SERVER, --server SERVER 
+                      server to generate from; defaults to plantuml.com 
+```
+
+
+## Fonctions et composants
+
+- **Modèle de requête** — DiagramRequest contient lang, type, code et theme. Des validations contrôlent le langage et la longueur de la source. /generate_diagram rejette les champs manquants avant de choisir un moteur et de construire les liens de résultat et d’édition.
+- **Adaptateurs de rendu** — PlantUML utilise son client dédié, Mermaid construit un état d’éditeur et les alias D2 passent au moteur d2 de Kroki. Les autres langages utilisent le registre Kroki. Les adaptateurs isolent les conventions de liens et d’encodage.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Requête structurée → Modèle et route FastAPI
+- Modèle et route FastAPI → Adaptateur PlantUML
+- Modèle et route FastAPI → Encodeur d’état Mermaid
+- Modèle et route FastAPI → Adaptateur Kroki
+- Adaptateur PlantUML → Liens de résultat et d’édition
+- Encodeur d’état Mermaid → Liens de résultat et d’édition
+- Adaptateur Kroki → Liens de résultat et d’édition
+
+```mermaid
+flowchart LR
+  n0[&#34;Requête structurée&#34;]
+  n1[&#34;Modèle et route FastAPI&#34;]
+  n2[&#34;Adaptateur PlantUML&#34;]
+  n3[&#34;Encodeur d’état Mermaid&#34;]
+  n4[&#34;Adaptateur Kroki&#34;]
+  n5[&#34;Liens de résultat et d’édition&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n1 --&gt; n4
+  n2 --&gt; n5
+  n3 --&gt; n5
+  n4 --&gt; n5
+```
+
+**Un parcours dans le code:** Comparez les branches PlantUML et D2 dans app.py. Elles partagent le modèle d’entrée, mais utilisent des adaptateurs distincts. La validation de type journalise une valeur invalide sans lever d’erreur; elle diffère donc du contrôle strict du langage.
+
+## Limites et points à vérifier
+
+Le manifeste décrit le format d’intégration d’origine. Sa présence ne prouve ni la disponibilité actuelle dans un produit tiers ni la confidentialité d’un rendu distant.
+
+## Fichiers à lire
+
+- [app.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/app.py)
+- [kroki/kroki.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/kroki/kroki.py)
+- [mermaid/mermaid.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/mermaid/mermaid.py)
+
+
+
+---
+
+# DasherControl : Un tableau de bord et ses trois frontières
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/dashercontrol/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/dashercontrol/index.md
+
+- Dépôt: https://github.com/antoinebou12/DasherControl
+- Licence: MIT
+- Révision inspectée: d5e4b5af44ce8a19025fd41569978f9a3b1b910d
+
+## Résumé
+
+DasherControl réunit des liens et des applications intégrées dans des espaces de travail sauvegardés. Vue gère l’interface, Rust et Rocket exposent l’API, et Diesel conserve la disposition dans PostgreSQL. Le contrôle Docker suit un parcours distinct.
+
+**Pourquoi il existe:** Architecture homelab découplée : backend Rust/Rocket pilotant le démon Docker via Shiplift, associé à un frontend Vue réactif.
+
+**Cas d’usage:** Tableau de bord centralisé pour services conteneurisés en homelab, signets et gestion d&#39;espaces de travail.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Rust | 46.84 |
+| Vue | 43.67 |
+| JavaScript | 4 |
+| Shell | 2.55 |
+| Dockerfile | 2.05 |
+| PLpgSQL | 0.89 |
+
+## Technologies vérifiées
+
+- Rust (Rocket) — Rocket web framework in Cargo.toml
+- Vue 3 — Frontend SPA in package.json
+- PostgreSQL — Diesel ORM migrations with PostgreSQL
+- Docker Compose — Multi-stage Dockerfile and docker-compose.yml
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Install (Tested only on Ubuntu 20.04)
+
+```bash
+// bash scripts/rust-setup-dev.sh
+// bash scripts/js-dev-setup.sh
+cd frontend &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; cd ..
+cargo install diesel_cli --no-default-features --features postgres
+// go in Rocket.toml and .env and change DATABASE_URL to your postgresql server
+diesel migration run
+// create admin user
+cargo run --bin create_admin
+// run web app
+cargo run
+```
+
+### README.md · Docker
+
+```bash
+DOCKER_BUILDKIT=1 docker build -t antoinebou13/dashercontrol .
+```
+
+### README.md · Docker-compose
+
+```bash
+DOCKER_BUILDKIT=1 docker-compose up -d --build &amp;&amp; docker-compose logs
+```
+
+
+### Docker
+
+```bash
+DOCKER_BUILDKIT=1 docker build -t antoinebou13/dashercontrol .
+DOCKER_BUILDKIT=1 docker-compose up -d --build &amp;&amp; docker-compose logs -f
+```
+
+## Fonctions et composants
+
+- **Propriété des espaces** — Les routes de liste obtiennent l’identifiant du tenant depuis un jeton. La route de lecture des applets vérifie le tenant de l’espace avant de retourner son contenu. L’espace et ses applets constituent ainsi une disposition persistante liée à un utilisateur.
+- **Opérations sur les conteneurs** — src/containers/docker.rs regroupe des opérations Docker avec Shiplift. Ces appels gèrent des conteneurs et des images, plutôt que les dispositions. Leur gestion d’échec est importante: une liste en erreur affiche un message et retourne un vecteur vide.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Interface Vue → Routes Rocket
+- Routes Rocket → Diesel et PostgreSQL
+- Routes Rocket → Adaptateur Shiplift
+- Adaptateur Shiplift → Démon Docker
+
+```mermaid
+flowchart LR
+  n0[&#34;Interface Vue&#34;]
+  n1[&#34;Routes Rocket&#34;]
+  n2[&#34;Diesel et PostgreSQL&#34;]
+  n3[&#34;Adaptateur Shiplift&#34;]
+  n4[&#34;Démon Docker&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Le chargement d’un espace passe par ses routes et ses applets. Le redémarrage d’un conteneur passe plutôt par l’adaptateur Docker. L’interface doit distinguer un espace vide, Docker indisponible et une iframe bloquée par l’application intégrée.
+
+## Services Compose
+
+| Service | Runtime | Ports | Dépend de |
+| --- | --- | --- | --- |
+| dashercontrol | Build from multi-stage Dockerfile | 8000:8000 | postgres, startup healthcheck |
+| postgres | postgres:14-alpine | 5432:5432 |  |
+
+## Limites et points à vérifier
+
+D’anciennes routes de création et suppression appliquent des vérifications différentes. Ce prototype nécessite une revue des autorisations opération par opération avant un déploiement partagé.
+
+## Fichiers à lire
+
+- [src/workspaces/handler.rs](https://github.com/antoinebou12/DasherControl/blob/main/src/workspaces/handler.rs)
+- [src/containers/docker.rs](https://github.com/antoinebou12/DasherControl/blob/main/src/containers/docker.rs)
+- [Cargo.toml](https://github.com/antoinebou12/DasherControl/blob/main/Cargo.toml)
+
+
+
+---
+
+# Dimension : Du stockage matriciel à la scène affichée
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/dimension/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/dimension/index.md
+
+- Dépôt: https://github.com/antoinebou12/Dimension
+- Licence: MIT
+- Révision inspectée: 5281d0932aa99ea0d2c43e64c388b9256c75b126
+
+## Résumé
+
+Dimension est mon espace de travail Rust pour les mathématiques et l’infographie. mathlib fournit les outils numériques; render les utilise pour les transformations et les caméras côté CPU avant de soumettre le travail graphique à wgpu.
+
+**Pourquoi il existe:** Pipeline graphique wgpu haute performance et moteur d&#39;algèbre linéaire implémentés en Rust à partir des fondamentaux.
+
+**Cas d’usage:** Rendu 3D de cartes de relief accéléré matériellement, transformations spatiales et apprentissage de l&#39;infographie.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Rust | 63.95 |
+| JavaScript | 31.84 |
+| HTML | 2.57 |
+| Just | 0.52 |
+| CSS | 0.51 |
+| WGSL | 0.4 |
+| TypeScript | 0.13 |
+| Python | 0.04 |
+| Shell | 0.02 |
+| Dockerfile | 0.01 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### kinematics/README.md · Build, test, bench
+
+```bash
+cd kinematics
+cargo build
+cargo test
+cargo bench
+cargo run --example forward_kinematics
+cargo run --example jacobian_ik
+```
+
+### mathlib/demo/README.md · Build and serve
+
+```bash
+just wasm-build      # or just wasm-build-gpu for GPU support
+just wasm-serve
+```
+
+### mathlib/demo/wasm-demo/README.md · Build
+
+```bash
+wasm-pack build --target web --features wasm
+```
+
+### neural/README.md · Downloading ONNX models
+
+```bash
+cargo run -p neural --bin download_models -- --all
+```
+
+### neural/README.md · Precomputing embeddings for the WASM recommendation demo
+
+```bash
+cargo run -p neural --example precompute_demo_embeddings --features precompute -- mathlib/demo/wasm-demo/recommendation/data.json
+```
+
+### render/README.md · Build and run
+
+```bash
+cargo run -p render-demo --example render_native
+```
+
+### render/README.md · Build and run
+
+```bash
+just render-wasm         # build &#43; serve; open http://localhost:3000/wasm-demo/
+```
+
+### website/README.md · Build and serve (local)
+
+```bash
+just website-build        # Build all WASM demos and populate website/
+just website-build-gpu    # Same, but with GPU-enabled mathlib (WebGPU init, async matmul, etc.)
+just website-build-simd   # Same as website-build, but render demo built with SIMD (can improve frame rate)
+just website-serve        # Serve website/ (e.g. http://localhost:3000)
+```
+
+
+## Fonctions et composants
+
+- **Données et opérations numériques** — mathlib expose du stockage dense et creux, des vues matricielles, des vecteurs et des méthodes numériques. L’appelant choisit la représentation adaptée au problème. Les fonctions d’exécution optionnelles sont distinctes de l’API de stockage de base.
+- **Scène et frontière de plateforme** — render expose World, EntityId et Transform ainsi que des relations parent-enfant dans la scène. Les fenêtres natives et le canevas WebAssembly entourent le moteur de rendu. L’espace de travail contient aussi des crates de géométrie, collision, cinématique et physique.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Application ou démo → Données et transformations mathlib
+- Données et transformations mathlib → Hiérarchie de scène et caméra
+- Hiérarchie de scène et caméra → Ressources et passes wgpu
+- Ressources et passes wgpu → Fenêtre native ou canevas web
+
+```mermaid
+flowchart LR
+  n0[&#34;Application ou démo&#34;]
+  n1[&#34;Données et transformations mathlib&#34;]
+  n2[&#34;Hiérarchie de scène et caméra&#34;]
+  n3[&#34;Ressources et passes wgpu&#34;]
+  n4[&#34;Fenêtre native ou canevas web&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Pour une mise à jour de scène, partez du Transform local et de son parent. Suivez la scène vers le moteur sans supposer qu’un calcul matriciel s’exécute sur le GPU. wgpu est le moteur graphique; l’exécution GPU optionnelle de mathlib est une fonction différente.
+
+## Limites et points à vérifier
+
+La présence des modules ne prouve ni un moteur physique terminé ni des performances mesurées. Un benchmark doit préciser sa charge, ses options et le matériel.
+
+## Fichiers à lire
+
+- [Cargo.toml](https://github.com/antoinebou12/Dimension/blob/main/Cargo.toml)
+- [mathlib/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/mathlib/src/lib.rs)
+- [render/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/render/src/lib.rs)
+
+
+
+---
+
+# donneesqc-mcp : Une passerelle MCP vers les données ouvertes
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/donneesqc-mcp/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/donneesqc-mcp/index.md
+
+- Dépôt: https://github.com/antoinebou12/donneesqc-mcp
+- Licence: MIT
+- Révision inspectée: 53a6ee4209c44ccfe360556a1b86c29d855f3e2f
+
+## Résumé
+
+donneesqc-mcp est un fork qui expose des opérations de données ouvertes du Québec et de Montréal par MCP. Le point d’entrée enregistre les outils et démarre le transport HTTP; les accès aux données et outils géographiques restent séparés.
+
+**Pourquoi il existe:** Serveur MCP robuste reliant les assistants IA aux données ouvertes du Québec et de Montréal avec validation stricte.
+
+**Cas d’usage:** Interrogation en langage naturel des jeux de données municipaux et provinciaux ouverts.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 98.28 |
+| Shell | 1.36 |
+| Dockerfile | 0.36 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation manuelle
+
+```bash
+git clone https://github.com/Stefen-Taime/donneesqc-mcp.git
+cd donneesqc-mcp
+uv sync
+cp .env.example .env
+set -a &amp;&amp; source .env &amp;&amp; set &#43;a
+uv run python main.py
+```
+
+### README.md · Quick start
+
+```bash
+git clone https://github.com/Stefen-Taime/donneesqc-mcp.git
+cd donneesqc-mcp
+docker compose up -d
+```
+
+
+## Fonctions et composants
+
+- **Démarrage du serveur** — main.py configure les logs, initialise Sentry si demandé, appelle register_all_tools et lance MCP en streamable-http. La surveillance est optionnelle et ne sert pas elle-même les requêtes de données.
+- **Frontière des services de données** — Les groupes d’outils couvrent découverte du catalogue, accès CKAN DataStore, téléchargement et enrichissement géographique. Un résultat de catalogue décrit une ressource; le tableau ou fichier demande un accès distinct, parfois dans un autre format.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Client MCP → Outils HTTP enregistrés
+- Outils HTTP enregistrés → Recherche au catalogue
+- Recherche au catalogue → Table ou fichier
+- Table ou fichier → Résultat structuré
+- Résultat structuré → Client MCP
+
+```mermaid
+flowchart LR
+  n0[&#34;Client MCP&#34;]
+  n1[&#34;Outils HTTP enregistrés&#34;]
+  n2[&#34;Recherche au catalogue&#34;]
+  n3[&#34;Table ou fichier&#34;]
+  n4[&#34;Résultat structuré&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n0
+```
+
+**Un parcours dans le code:** Suivez main vers register_all_tools, puis l’outil d’accès derrière le résultat du catalogue. Les identifiants, formats et systèmes de coordonnées comptent davantage que le seul titre.
+
+## Limites et points à vérifier
+
+Les catalogues et schémas peuvent changer. Une requête réussie ne prouve pas que chaque ressource est récente, complète ou compatible avec un calcul.
+
+## Fichiers à lire
+
+- [main.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/main.py)
+- [tools/__init__.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/tools/__init__.py)
+- [README.md](https://github.com/antoinebou12/donneesqc-mcp/blob/main/README.md)
+
+
+
+---
+
+# ESP32-7SEG : Une horloge embarquée avec configuration réseau
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/esp32-7seg/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/esp32-7seg/index.md
+
+- Dépôt: https://github.com/antoinebou12/ESP32-7SEG
+- Licence: MIT
+- Révision inspectée: 6cac20eed8dc6293d011a0c8a8341654e0870b80
+
+## Résumé
+
+ESP32-7SEG relie une horloge sur ESP32 à une configuration réseau et une interface HTTP. Le démarrage détermine si les paramètres Wi-Fi sauvegardés peuvent être réutilisés ou si le parcours de configuration est nécessaire.
+
+**Pourquoi il existe:** Firmware embarqué et contrôleur pour affichage 7 segments multi-chiffres sur microcontrôleur ESP32.
+
+**Cas d’usage:** Affichage matériel déporté pour métriques ou domotique.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Kotlin | 58.26 |
+| C&#43;&#43; | 39.56 |
+| C | 2.18 |
+
+## Fonctions et composants
+
+- **Démarrage et connectivité** — setup initialise NVS et vérifie le résultat. Il charge les paramètres enregistrés, tente une connexion et revient à setupWiFi en cas d’échec. Ce parcours sert aussi lorsqu’aucun paramètre n’est sauvegardé.
+- **Modules d’affichage et web** — Après la configuration réseau, main.cpp appelle startClockDisplay et setupWebServer. display.cpp, wifi.cpp et web_server.cpp séparent l’affichage matériel, la connexion et le traitement HTTP.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Démarrage ESP32 → Paramètres NVS
+- Paramètres NVS → Connexion ou configuration Wi-Fi
+- Connexion ou configuration Wi-Fi → Affichage de l’horloge
+- Connexion ou configuration Wi-Fi → Interface HTTP
+
+```mermaid
+flowchart LR
+  n0[&#34;Démarrage ESP32&#34;]
+  n1[&#34;Paramètres NVS&#34;]
+  n2[&#34;Connexion ou configuration Wi-Fi&#34;]
+  n3[&#34;Affichage de l’horloge&#34;]
+  n4[&#34;Interface HTTP&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n2 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez la branche des paramètres sauvegardés dans setup. Le réseau mémorisé est essayé d’abord, mais un échec rejoint setupWiFi. L’affichage et le serveur web démarrent après cette branche.
+
+## Limites et points à vérifier
+
+Le câblage, l’affichage et le Wi-Fi doivent être vérifiés sur le matériel. Cette interface HTTP ne doit pas être supposée sûre pour une exposition Internet libre.
+
+## Fichiers à lire
+
+- [src/main.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/main.cpp)
+- [src/display.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/display.cpp)
+- [src/web_server.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/web_server.cpp)
+- [platformio.ini](https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini)
+
+
+
+---
+
+# FlashGames : Une page statique autour d’un lecteur Flash
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/flashgames/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/flashgames/index.md
+
+- Dépôt: https://github.com/antoinebou12/FlashGames
+- Licence: MIT
+- Révision inspectée: 7ee14ee2c3029c3b797d22f7594d04c4c900441c
+
+## Résumé
+
+FlashGames conserve de petits jeux Flash dans une collection web. La page choisit un SWF et héberge Ruffle. Le fichier du jeu et l’interface HTML qui l’entoure restent deux éléments distincts.
+
+**Pourquoi il existe:** Archive de préservation de jeux ActionScript/Flash des années 2010.
+
+**Cas d’usage:** Préservation numérique de créations historiques.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 100 |
+
+## Fonctions et composants
+
+- **Sélection et lecteur** — index.html inclut le script Ruffle, un sélecteur et un conteneur de lecture. La sélection modifie l’état de la page avant de charger le SWF choisi. Les styles et icônes viennent de CDN, sans compilation frontend locale.
+- **Fichiers de jeux conservés** — Le dépôt conserve les SWF à côté de la page. Ruffle fournit la couche d’exécution compatible avec le navigateur; la page ne réécrit pas les jeux en source JavaScript.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Sélecteur de jeu → État de la page
+- État de la page → Lecteur Ruffle
+- SWF choisi → Lecteur Ruffle
+
+```mermaid
+flowchart LR
+  n0[&#34;Sélecteur de jeu&#34;]
+  n1[&#34;État de la page&#34;]
+  n2[&#34;Lecteur Ruffle&#34;]
+  n3[&#34;SWF choisi&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n3 --&gt; n2
+```
+
+**Un parcours dans le code:** Suivez updateHash depuis le sélecteur vers le lecteur. Cette distinction aide au diagnostic: un problème de sélection relève de la page, tandis qu’un comportement de jeu non pris en charge peut relever du lecteur.
+
+## Limites et points à vérifier
+
+La compatibilité doit être vérifiée jeu par jeu. Les scripts externes influencent aussi la disponibilité, même si la page est statique.
+
+## Fichiers à lire
+
+- [index.html](https://github.com/antoinebou12/FlashGames/blob/main/index.html)
+- [README.md](https://github.com/antoinebou12/FlashGames/blob/main/README.md)
+
+
+
+---
+
+# GithubSimpleFileDownloader : Une extension liée à la structure des pages
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/githubsimplefiledownloader/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/githubsimplefiledownloader/index.md
+
+- Dépôt: https://github.com/antoinebou12/GithubSimpleFileDownloader
+- Révision inspectée: dfdd7966db41841e272eddfeefe80332feab161d
+
+## Résumé
+
+Cette extension archivée tentait d’ajouter des boutons de téléchargement aux explorateurs de dépôts. Son implémentation GitHub montre la fragilité d’une intégration fondée sur le DOM d’un autre site plutôt que sur une interface stable.
+
+**Pourquoi il existe:** Extension de navigateur injectant un bouton de téléchargement direct de fichier unique dans GitHub et GitLab.
+
+**Cas d’usage:** Téléchargement immédiat d&#39;un fichier isolé sans cloner le dépôt entier.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| JavaScript | 97.74 |
+| CSS | 2.26 |
+
+## Fonctions et composants
+
+- **Injection dans la page** — Le script GitHub attend que le document soit prêt, trouve les cellules td.content et insère icônes, liens et tailles. Des scripts distincts visent GitLab et Bitbucket. Chaque adaptateur dépend du balisage du site.
+- **Téléchargement du fichier brut** — Le script transforme un lien de fichier en lien brut, récupère le texte et crée un téléchargement Blob. Ce parcours textuel ne doit pas être supposé préserver tous les fichiers binaires.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Page du dépôt → Script injecté
+- Script injecté → Extraction des liens du DOM
+- Extraction des liens du DOM → Requête du fichier brut
+- Requête du fichier brut → Lien de téléchargement Blob
+
+```mermaid
+flowchart LR
+  n0[&#34;Page du dépôt&#34;]
+  n1[&#34;Script injecté&#34;]
+  n2[&#34;Extraction des liens du DOM&#34;]
+  n3[&#34;Requête du fichier brut&#34;]
+  n4[&#34;Lien de téléchargement Blob&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Partez de querySelectorAll(&#39;td.content&#39;) et examinez les positions des nœuds utilisés pour trouver le lien. Une modification du tableau peut casser ce parcours avant toute requête réseau.
+
+## Limites et points à vérifier
+
+Le README indique explicitement que l’extension ne fonctionne pas. Il s’agit d’une implémentation historique, sans recommandation d’usage actuelle.
+
+## Fichiers à lire
+
+- [manifest.json](https://github.com/antoinebou12/GithubSimpleFileDownloader/blob/master/manifest.json)
+- [src/inject/inject_github.js](https://github.com/antoinebou12/GithubSimpleFileDownloader/blob/master/src/inject/inject_github.js)
+- [src/inject/inject_gitlab.js](https://github.com/antoinebou12/GithubSimpleFileDownloader/blob/master/src/inject/inject_gitlab.js)
+
+
+
+---
+
+# GreenScreenVideotoAlphaPNGs : Un pipeline d’images transparentes
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/greenscreenvideotoalphapngs/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/greenscreenvideotoalphapngs/index.md
+
+- Dépôt: https://github.com/antoinebou12/GreenScreenVideotoAlphaPNGs
+- Licence: MIT
+- Révision inspectée: b487e51f3c702aee2b21f0149727c3cb2708f09a
+
+## Résumé
+
+GreenScreenVideotoAlphaPNGs sépare acquisition vidéo, extraction des images et suppression du fond de l’encodage final. Les PNG RGBA servent de sortie intermédiaire vers un GIF ou une vidéo avec canal alpha.
+
+**Pourquoi il existe:** Pipeline de traitement OpenCV convertissant des vidéos fond vert en séquences PNG avec canal alpha.
+
+**Cas d’usage:** Préparation d&#39;assets d&#39;animation 2D pour la réalité augmentée.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 57.96 |
+| Python | 32.32 |
+| JavaScript | 7.93 |
+| PowerShell | 0.94 |
+| Shell | 0.85 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Quick start (uv)
+
+```bash
+.\install.ps1
+uv run greenscreen --help
+```
+
+### README.md · Quick start (uv)
+
+```bash
+bash install.sh
+uv run greenscreen --help
+```
+
+### README.md · APNGLib (optional C&#43;&#43; extension)
+
+```bash
+$env:SKIP_APNGLIB=&#39;1&#39;; uv sync --extra dev
+```
+
+### README.md · APNGLib (optional C&#43;&#43; extension)
+
+```bash
+$env:SKIP_APNGLIB=&#39;0&#39;; uv sync --extra dev
+```
+
+
+## Fonctions et composants
+
+- **Étape de conversion** — La commande Typer convert délègue à run_convert. Elle accepte une vidéo locale ou un lien et peut privilégier FFmpeg ou imposer OpenCV. Le module chroma traite la transparence séparément de l’acquisition.
+- **Choix d’encodage** — gif et video prennent un dossier de PNG. Le GIF propose une palette FFmpeg; video accepte qtrle ou prores_4444. Cette étape permet de changer cadence et format sans recommencer l’acquisition.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Vidéo ou lien → Extraction des images
+- Extraction des images → Suppression du fond
+- Suppression du fond → Séquence PNG RGBA
+- Séquence PNG RGBA → Encodeur GIF
+- Séquence PNG RGBA → Encodeur vidéo alpha
+
+```mermaid
+flowchart LR
+  n0[&#34;Vidéo ou lien&#34;]
+  n1[&#34;Extraction des images&#34;]
+  n2[&#34;Suppression du fond&#34;]
+  n3[&#34;Séquence PNG RGBA&#34;]
+  n4[&#34;Encodeur GIF&#34;]
+  n5[&#34;Encodeur vidéo alpha&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n3 --&gt; n5
+```
+
+**Un parcours dans le code:** Suivez cmd_convert vers run_convert, puis utilisez ses PNG dans cmd_video. Conserver ces images permet d’inspecter les contours de transparence avant que la compression les masque.
+
+## Limites et points à vérifier
+
+Les codecs dépendent de la compilation FFmpeg installée. La transparence GIF et le canal alpha vidéo ont des capacités différentes.
+
+## Fichiers à lire
+
+- [src/greenscreen/cli.py](https://github.com/antoinebou12/GreenScreenVideotoAlphaPNGs/blob/master/src/greenscreen/cli.py)
+- [src/greenscreen/chroma.py](https://github.com/antoinebou12/GreenScreenVideotoAlphaPNGs/blob/master/src/greenscreen/chroma.py)
+- [src/greenscreen/video_pipeline.py](https://github.com/antoinebou12/GreenScreenVideotoAlphaPNGs/blob/master/src/greenscreen/video_pipeline.py)
+
+
+
+---
+
+# hass_renpho : Interroger une API cloud pour Home Assistant
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/hass-renpho/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/hass-renpho/index.md
+
+- Dépôt: https://github.com/antoinebou12/hass_renpho
+- Révision inspectée: b38c9dfa5416e5c1d09619d963b7bfaac238494b
+
+## Résumé
+
+hass_renpho est un fork d’intégration Home Assistant pour les mesures Renpho. Un coordinateur actualise les données cloud et les entités de capteurs exposent cet état. Le dépôt avertit que l’ancien parcours API ne fonctionne plus de façon fiable.
+
+**Pourquoi il existe:** Composant Home Assistant personnalisé décodant la télémétrie biométrique des balances connectées Renpho.
+
+**Cas d’usage:** Centralisation des données de santé privées dans Home Assistant.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 99.51 |
+| Dockerfile | 0.49 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+Stable
+Use the latest release
+Not stable
+git clone https://github.com/antoinebou12/hass_renpho
+```
+
+
+## Fonctions et composants
+
+- **Actualisation coordonnée** — RenphoWeightCoordinator étend DataUpdateCoordinator avec un intervalle configurable. Une actualisation appelle get_measurements, list_girth et list_girth_goal, puis conserve l’heure de mise à jour.
+- **Erreurs et état des capteurs** — Le coordinateur transforme les délais et erreurs API en UpdateFailed. L’annulation lors de l’arrêt est traitée séparément. Les définitions des capteurs et le client API restent hors de cette classe.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Coordinateur Home Assistant → Client API Renpho
+- Client API Renpho → Mesures cloud
+- Mesures cloud → État partagé actualisé
+- État partagé actualisé → Entités de capteurs
+
+```mermaid
+flowchart LR
+  n0[&#34;Coordinateur Home Assistant&#34;]
+  n1[&#34;Client API Renpho&#34;]
+  n2[&#34;Mesures cloud&#34;]
+  n3[&#34;État partagé actualisé&#34;]
+  n4[&#34;Entités de capteurs&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez _async_update_data à travers ses trois appels et exceptions. Une valeur peut être la dernière lecture réussie; l’état et l’heure d’actualisation permettent de la distinguer d’une nouvelle mesure.
+
+## Limites et points à vérifier
+
+L’API est non officielle et le README rapporte des pannes. Cet article ne confirme ni la compatibilité actuelle ni la précision médicale des mesures.
+
+## Fichiers à lire
+
+- [custom_components/renpho/coordinator.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/coordinator.py)
+- [custom_components/renpho/sensor.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/sensor.py)
+- [custom_components/renpho/api_renpho.py](https://github.com/antoinebou12/hass_renpho/blob/master/custom_components/renpho/api_renpho.py)
+
+
+
+---
+
+# HDR-10bpp-Display-Test : Assembler des canaux dix bits pour Cairo
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/hdr-10bpp-display-test/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/hdr-10bpp-display-test/index.md
+
+- Dépôt: https://github.com/antoinebou12/HDR-10bpp-Display-Test
+- Révision inspectée: 9c72e072cdcae0c7d922f502049b6a155fa2daed
+
+## Résumé
+
+Cette expérience affiche des images dans GTK avec Cairo. Viewer3.py rend la représentation explicite: les canaux sont masqués et assemblés dans un tampon uint32 avant la création d’une surface RGB30.
+
+**Pourquoi il existe:** Pipeline de test d&#39;affichage 10 bits HDR vérifiant le banding de couleur et la luminance sous Linux.
+
+**Cas d’usage:** Calibration et vérification d&#39;écrans HDR 10 bits sur stations de travail Linux.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 98.43 |
+| Shell | 1.57 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Prerequisites
+
+```bash
+sudo apt-get install xserver-xorg python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 imagej
+```
+
+### README.md · Installing
+
+```bash
+pip3 install imageio
+```
+
+### README.md · Running the test
+
+```bash
+git clone https://github.com/yourusername/HDR-10bpp-Display-Test.git
+```
+
+### README.md · Running the test
+
+```bash
+cd HDR-10bpp-Display-Test
+```
+
+### README.md · Running the test
+
+```bash
+sudo systemctl stop lightdm || sudo systemctl stop gdm
+sudo pkill Xorg
+```
+
+
+## Fonctions et composants
+
+- **Pixels et affichage** — imageio lit le tableau source. _draw_on alloue un tampon et décale chaque canal selon la profondeur choisie, puis le transmet à cairo.ImageSurface.create_for_data. Le callback GTK affiche cette surface.
+- **Parcours vidéo** — Un thread lit les images vidéo et met à jour l’image courante à la cadence demandée. Le dessin traite aussi manuellement les événements GTK. Cette ancienne approche demande de vérifier quel thread possède les opérations d’interface.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Image ou vidéo → Tableau imageio
+- Tableau imageio → Masquage et assemblage
+- Masquage et assemblage → Surface Cairo RGB30
+- Surface Cairo RGB30 → Zone de dessin GTK
+
+```mermaid
+flowchart LR
+  n0[&#34;Image ou vidéo&#34;]
+  n1[&#34;Tableau imageio&#34;]
+  n2[&#34;Masquage et assemblage&#34;]
+  n3[&#34;Surface Cairo RGB30&#34;]
+  n4[&#34;Zone de dessin GTK&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Examinez _draw_on pour voir comment la profondeur change les décalages et le format de surface. Le stockage dix bits concerne la précision numérique; les courbes HDR, les métadonnées et la calibration demandent un travail supplémentaire.
+
+## Limites et points à vérifier
+
+La table mentionne une entrée douze bits sans format Cairo correspondant. Ce code ne démontre pas un pipeline d’affichage HDR complet.
+
+## Fichiers à lire
+
+- [Viewer3.py](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/Viewer3.py)
+- [Xdepth.sh](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/Xdepth.sh)
+- [xorg.conf](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/xorg.conf)
+
+
+
+---
+
+# hydra : Une application Electron entre plusieurs processus
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/hydra/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/hydra/index.md
+
+- Dépôt: https://github.com/antoinebou12/hydra
+- Licence: MIT
+- Révision inspectée: e769e3b398c039a9e3d9977dbb1e5aa70776732e
+
+## Résumé
+
+Ce fork Hydra est un lanceur desktop avec Electron et React. Sa compilation comprend aussi un module natif et un composant RPC Python, chacun avec sa chaîne d’outils.
+
+**Pourquoi il existe:** Application de bureau orchestrant métadonnées et gestion de ludothèque.
+
+**Cas d’usage:** Lanceur et gestionnaire de jeux open source.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| TypeScript | 81.85 |
+| SCSS | 10.64 |
+| Rust | 6.46 |
+| Python | 0.55 |
+| JavaScript | 0.49 |
+| HTML | 0.01 |
+| NSIS | 0 |
+
+## Fonctions et composants
+
+- **Processus principal et affichage** — package.json dirige Electron vers out/main/index.js. Des vérifications TypeScript distinctes couvrent les parties node et web. Electron-Vite compile l’application, tandis que React et ses bibliothèques appartiennent à l’affichage.
+- **Modules natifs et Python** — build:native lance un script de module natif. build:python-rpc prépare python_rpc séparément et les paquets de plateforme utilisent ces parcours. Installer les dépendances JavaScript ne constitue donc pas toute la compilation de livraison.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Interface React → Frontière Electron
+- Frontière Electron → Services du processus principal
+- Services du processus principal → Module natif
+- Services du processus principal → Composant RPC Python
+
+```mermaid
+flowchart LR
+  n0[&#34;Interface React&#34;]
+  n1[&#34;Frontière Electron&#34;]
+  n2[&#34;Services du processus principal&#34;]
+  n3[&#34;Module natif&#34;]
+  n4[&#34;Composant RPC Python&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n2 --&gt; n4
+```
+
+**Un parcours dans le code:** Partez des scripts et distinguez compilation de l’interface, module natif et paquet Python. Examinez ensuite l’API entre processus pour une fonction donnée; les dépendances seules n’indiquent pas son propriétaire.
+
+## Limites et points à vérifier
+
+Cette note décrit la structure d’un fork et conserve le crédit d’origine. Elle ne revendique pas la création du lanceur et ne vérifie pas ses sources de téléchargement.
+
+## Fichiers à lire
+
+- [package.json](https://github.com/antoinebou12/hydra/blob/main/package.json)
+- [electron.vite.config.ts](https://github.com/antoinebou12/hydra/blob/main/electron.vite.config.ts)
+- [README.md](https://github.com/antoinebou12/hydra/blob/main/README.md)
+
+
+
+---
+
+# ipc-toolkit : Les requêtes de collision comme frontière de bibliothèque
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/ipc-toolkit/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/ipc-toolkit/index.md
+
+- Dépôt: https://github.com/antoinebou12/ipc-toolkit
+- Licence: MIT
+- Révision inspectée: 4d9e47e9f5b2afd46be99234d127d12e3c7a74cd
+
+## Résumé
+
+ipc-toolkit fournit des composants géométriques pour la simulation avec contacts. Ce fork contient maillages de collision, candidats, détection continue et énergies de contact. Une simulation externe conserve la gestion du temps et de la résolution.
+
+**Pourquoi il existe:** Boîte à outils d&#39;ingénierie pour la gestion du contact et de la friction dans les simulations par éléments finis.
+
+**Cas d’usage:** Mécanique du contact continu non linéaire pour moteurs physiques.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 94.46 |
+| CMake | 2.98 |
+| Python | 2.1 |
+| Cuda | 0.38 |
+| Dockerfile | 0.08 |
+
+## Technologies vérifiées
+
+- C&#43;&#43; — Library language from repository sources
+- CCD — Continuous collision detection in ipc.hpp / ipc.cpp
+- CMake — CMakeLists.txt build system
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### python/README.md · Installation
+
+```bash
+pip install ipctk
+```
+
+### python/README.md · Installation
+
+```bash
+pip install git&#43;https://github.com/ipc-sim/ipc-toolkit
+```
+
+### python/README.md · Build
+
+```bash
+pip install .
+```
+
+### python/README.md · Build
+
+```bash
+python -c &#34;import ipctk&#34;
+```
+
+### python/README.md · CMake Build
+
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DIPC_TOOLKIT_BUILD_PYTHON=ON ..
+make -j$(nproc)
+```
+
+
+## Fonctions et composants
+
+- **Géométrie et requêtes de collision** — ipc.hpp prend un CollisionMesh et des positions pour vérifier les intersections ou un déplacement sans collision. Les phases large et étroite ont des paramètres explicites avec valeurs par défaut, séparant candidats et tests détaillés.
+- **Calculs de contact** — L’arborescence sépare distance, barrière, friction, tangente et potentiels. Ces composants alimentent les objectifs et dérivées de l’appelant, sans intégrer automatiquement toute une scène physique.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Simulation externe → Maillage et déplacement des sommets
+- Maillage et déplacement des sommets → Candidats de phase large
+- Candidats de phase large → Détection continue précise
+- Détection continue précise → Résultat de collision
+- Résultat de collision → Simulation externe
+
+```mermaid
+flowchart LR
+  n0[&#34;Simulation externe&#34;]
+  n1[&#34;Maillage et déplacement des sommets&#34;]
+  n2[&#34;Candidats de phase large&#34;]
+  n3[&#34;Détection continue précise&#34;]
+  n4[&#34;Résultat de collision&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n0
+```
+
+**Un parcours dans le code:** Suivez is_step_collision_free depuis sa déclaration. Le résultat répond à une requête géométrique pour un déplacement proposé. L’appelant décide comment cela change son pas, sa recherche linéaire ou sa résolution de contact.
+
+## Limites et points à vérifier
+
+La présence du fork ne prouve pas l’acceptation de modifications en amont. Le comportement numérique dépend des entrées, tolérances et de l’intégration au solveur.
+
+## Fichiers à lire
+
+- [src/ipc/ipc.hpp](https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.hpp)
+- [src/ipc/ipc.cpp](https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.cpp)
+- [CMakeLists.txt](https://github.com/antoinebou12/ipc-toolkit/blob/main/CMakeLists.txt)
+
+
+
+---
+
+# jsonresume-theme-kendall : D’un document JSON au modèle de CV
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/jsonresume-theme-kendall/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/jsonresume-theme-kendall/index.md
+
+- Dépôt: https://github.com/antoinebou12/jsonresume-theme-kendall
+- Licence: MIT
+- Révision inspectée: d1401cef84466c09cb84f8752c185fc96e3f5c6e
+
+## Résumé
+
+Ce fork du thème Kendall JSON Resume transforme un CV structuré en HTML. Le moteur prépare les champs de présentation, puis utilise un modèle Mustache avec les styles écran et impression.
+
+**Pourquoi il existe:** Thème CV minimaliste parfait pour l&#39;impression avec balisage sémantique schema.org.
+
+**Cas d’usage:** Génération automatique de CV à partir de fichiers JSON structurés.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| JavaScript | 55.76 |
+| CSS | 44.24 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Install the command line
+
+```bash
+sudo npm install -g resume-cli
+```
+
+### README.md · Install npm packages
+
+```bash
+sudo npm install
+```
+
+### README.md · Serve theme
+
+```bash
+resume serve --theme .
+```
+
+### README.md · Serve theme
+
+```bash
+Preview: http://localhost:4000
+Press ctrl-c to stop
+```
+
+
+## Fonctions et composants
+
+- **Préparation des données** — index.js associe les réseaux aux icônes, formate les dates et prépare les indicateurs de sections optionnelles. Il choisit aussi une image explicite ou Gravatar. Cette logique adapte les données au modèle.
+- **Modèle et styles** — resume.template contient la structure HTML; style.css et print.css distinguent écran et impression. La transformation des données et la mise en page peuvent être examinées séparément.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- CV JSON → Préparation dans render
+- Préparation dans render → Modèle Mustache
+- Modèle Mustache → HTML et styles écran ou impression
+
+```mermaid
+flowchart LR
+  n0[&#34;CV JSON&#34;]
+  n1[&#34;Préparation dans render&#34;]
+  n2[&#34;Modèle Mustache&#34;]
+  n3[&#34;HTML et styles écran ou impression&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+```
+
+**Un parcours dans le code:** Suivez startDate vers les champs de mois et d’année. Le moteur modifie l’objet fourni; un appelant qui le réutilise doit tenir compte des données de présentation ajoutées.
+
+## Limites et points à vérifier
+
+Les anciennes dépendances et les champs attendus demandent une vérification. Un JSON valide ne garantit pas une mise en page imprimée correcte.
+
+## Fichiers à lire
+
+- [index.js](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/index.js)
+- [resume.template](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/resume.template)
+- [print.css](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/print.css)
+
+
+
+---
+
+# kroki-playground : Un éditeur, une API et un moteur de rendu
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/kroki-playground/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/kroki-playground/index.md
+
+- Dépôt: https://github.com/antoinebou12/kroki-playground
+- Licence: MIT
+- Révision inspectée: 8def712a64de0f9badb65f2e1a3bb855aeb25523
+
+## Résumé
+
+kroki-playground est une interface Next.js pour modifier des diagrammes textuels et prévisualiser leur rendu. Sa route serveur valide le type et le format, encode la source et récupère le résultat auprès de Kroki.
+
+**Pourquoi il existe:** Suite d&#39;expérimentation de diagrammes en TypeScript déployée sur Vercel avec rendu instantané.
+
+**Cas d’usage:** Prototypage rapide de diagrammes d&#39;architecture variés.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| TypeScript | 98.19 |
+| JavaScript | 0.99 |
+| CSS | 0.82 |
+
+## Fonctions et composants
+
+- **Validation avant le rendu** — app/api/generate-diagram/route.ts traite GET et POST avec une validation commune. encodeDiagramPayload prépare la source pour le lien Kroki. KROKI_BASE_URL choisit le service de rendu côté serveur.
+- **Réponse et états d’échec** — La route lit les octets reçus et retourne diagramUrl, diagramData en base64 et mimeType. Une erreur HTTP de Kroki devient une réponse 502 avec un code d’erreur externe, distincte d’une entrée invalide.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Éditeur de texte → Route API Next.js
+- Route API Next.js → Valider et encoder
+- Valider et encoder → Service Kroki configuré
+- Service Kroki configuré → Résultat base64 et aperçu
+- Résultat base64 et aperçu → Éditeur de texte
+
+```mermaid
+flowchart LR
+  n0[&#34;Éditeur de texte&#34;]
+  n1[&#34;Route API Next.js&#34;]
+  n2[&#34;Valider et encoder&#34;]
+  n3[&#34;Service Kroki configuré&#34;]
+  n4[&#34;Résultat base64 et aperçu&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n0
+```
+
+**Un parcours dans le code:** Suivez POST depuis req.json jusqu’à la validation et l’appel externe. La réponse contient les octets encodés de l’image, plutôt qu’un corps HTTP entièrement en SVG. Le client doit utiliser le type MIME retourné pour les afficher.
+
+## API
+
+
+
+## Limites et points à vérifier
+
+Un lien de partage encodé contient toujours une source récupérable. La compression et le base64 ne rendent pas un diagramme confidentiel privé.
+
+## Fichiers à lire
+
+- [app/api/generate-diagram/route.ts](https://github.com/antoinebou12/kroki-playground/blob/main/app/api/generate-diagram/route.ts)
+- [lib/kroki/encode.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/encode.ts)
+- [lib/kroki/validate.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/validate.ts)
+- [package.json](https://github.com/antoinebou12/kroki-playground/blob/main/package.json)
+
+
+
+---
+
+# linkshare : Une application Rails de partage de liens
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/linkshare/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/linkshare/index.md
+
+- Dépôt: https://github.com/antoinebou12/linkshare
+- Révision inspectée: 2e223f99a50c07f3e60377f6c3252051b815c468
+
+## Résumé
+
+linkshare est un projet Rails archivé pour partager des liens, commenter et voter. Les pages sont rendues sur le serveur, avec une gestion des comptes et une interface administrative.
+
+**Pourquoi il existe:** Plateforme Ruby on Rails avec extraction asynchrone de métadonnées OpenGraph.
+
+**Cas d’usage:** Partage social et organisation de liens avec prévisualisation riche.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Ruby | 55.29 |
+| HTML | 19.55 |
+| CSS | 13.28 |
+| JavaScript | 11.56 |
+| CoffeeScript | 0.32 |
+
+## Fonctions et composants
+
+- **Ressources et actions** — config/routes.rb associe les liens aux actions de ressources et y imbrique les commentaires. Les routes like et dislike appellent upvote et downvote. La page racine utilise links#index.
+- **Comptes et administration** — Devise fournit les routes de compte et RailsAdmin est monté sous /admin. Les contrôleurs et modèles sont distincts des routes; déclarer une route ne décrit pas toutes ses autorisations ou sa persistance.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Requête du navigateur → Routeur Rails
+- Routeur Rails → Contrôleurs liens et commentaires
+- Contrôleurs liens et commentaires → Modèles et persistance
+- Contrôleurs liens et commentaires → Réponse affichée
+
+```mermaid
+flowchart LR
+  n0[&#34;Requête du navigateur&#34;]
+  n1[&#34;Routeur Rails&#34;]
+  n2[&#34;Contrôleurs liens et commentaires&#34;]
+  n3[&#34;Modèles et persistance&#34;]
+  n4[&#34;Réponse affichée&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n2 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez PUT /links/:id/like jusqu’à upvote, puis à l’opération du modèle. Cela distingue l’action HTTP, l’identité et le vote conservé.
+
+## Limites et points à vérifier
+
+Les dépendances archivées et l’administration exposée demandent une revue avant redéploiement. Les routes seules ne prouvent pas la justesse des autorisations.
+
+## Fichiers à lire
+
+- [config/routes.rb](https://github.com/antoinebou12/linkshare/blob/master/config/routes.rb)
+- [Gemfile](https://github.com/antoinebou12/linkshare/blob/master/Gemfile)
+- [README.md](https://github.com/antoinebou12/linkshare/blob/master/README.md)
+
+
+
+---
+
+# LLM2SVG : Analyser les données avant de parler de modèle
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/llm2svg/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/llm2svg/index.md
+
+- Dépôt: https://github.com/antoinebou12/LLM2SVG
+- Révision inspectée: a8337761b49bbdcbac24f58c6adc5f17d1ac2a07
+
+## Résumé
+
+Ce fork LLM2SVG contient des outils de données SVG et une structure d’évaluation. L’implémentation permet d’examiner exemples et contraintes, sans démontrer un modèle texte-vers-SVG terminé ou entraîné.
+
+**Pourquoi il existe:** Générateur et validateur Python d&#39;illustrations vectorielles SVG à partir de descriptions en langage naturel.
+
+**Cas d’usage:** Génération automatisée d&#39;icônes et d&#39;illustrations vectorielles pour systèmes de design.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Dependencies
+
+```bash
+pip install cairosvg torch torchvision
+```
+
+
+## Fonctions et composants
+
+- **Chargement et contraintes** — SVGAnalyzer utilise SVGDataLoader et SVGConstraints. Il énumère les exemples, relève les tailles et vérifie les contraintes. Le chargement et la validation constituent des responsabilités distinctes.
+- **Rapports sur les données** — L’analyseur compte les noms d’éléments et conserve des résultats de validation par exemple. Sa méthode de résumé retourne un DataFrame pandas. Le comptage utilise une expression régulière pour tolérer du SVG mal formé.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Fichiers du jeu de données → SVGDataLoader
+- SVGDataLoader → Analyse des éléments et tailles
+- SVGDataLoader → Vérifications des contraintes
+- Analyse des éléments et tailles → Rapport de données
+- Vérifications des contraintes → Rapport de données
+
+```mermaid
+flowchart LR
+  n0[&#34;Fichiers du jeu de données&#34;]
+  n1[&#34;SVGDataLoader&#34;]
+  n2[&#34;Analyse des éléments et tailles&#34;]
+  n3[&#34;Vérifications des contraintes&#34;]
+  n4[&#34;Rapport de données&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n2 --&gt; n4
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez validate_all_svgs et comparez-le à analyze_elements. Respecter les contraintes et posséder des noms d’éléments plausibles sont deux vérifications différentes; aucune ne prouve la ressemblance visuelle avec une consigne.
+
+## Limites et points à vérifier
+
+L’analyseur possède un chemin de données par défaut propre à une machine. Ces utilitaires ne permettent pas de déduire qualité du modèle, résultats d’entraînement ou scores.
+
+## Fichiers à lire
+
+- [utils/svg_analyzer.py](https://github.com/antoinebou12/LLM2SVG/blob/main/utils/svg_analyzer.py)
+- [utils/data_loader.py](https://github.com/antoinebou12/LLM2SVG/blob/main/utils/data_loader.py)
+- [utils/svg_constraints.py](https://github.com/antoinebou12/LLM2SVG/blob/main/utils/svg_constraints.py)
+
+
+
+---
+
+# Maestro : Une partition dans un pipeline de conversion
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/maestro/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/maestro/index.md
+
+- Dépôt: https://github.com/antoinebou12/Maestro
+- Licence: AGPL-3.0
+- Révision inspectée: 6dca488e6e0e6bc444d3e57d6d3d62bad4ca4783
+
+## Résumé
+
+Ce fork Maestro relie une interface d’envoi React à un backend Spring et des outils de conversion musicale. Passer d’une image de partition au MIDI demande une reconnaissance optique et une représentation intermédiaire.
+
+**Pourquoi il existe:** Pipeline de reconnaissance optique de partitions musicales (OMR) convertissant des images en fichiers MIDI.
+
+**Cas d’usage:** Numérisation de partitions musicales physiques pour écoute et arrangement.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Java | 47.34 |
+| TypeScript | 32.3 |
+| Python | 16.02 |
+| Dockerfile | 3.14 |
+| HTML | 1 |
+| Shell | 0.2 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Getting Started
+
+```bash
+  git clone https://github.com/PrimePhil/PFE008
+```
+
+### README.md · Frontend
+
+```bash
+  cd maestro-app
+```
+
+### README.md · Frontend
+
+```bash
+  npm install
+```
+
+### README.md · Frontend
+
+```bash
+  npm run start
+```
+
+### README.md · Tests
+
+```bash
+gradle test
+```
+
+
+## Fonctions et composants
+
+- **Frontière d’envoi** — ConvertController accepte des fichiers multipart sur /convert. Il rejette les fichiers vides, contrôle la limite de 10 Mio et vérifie la signature avant sauvegarde. Un tempo optionnel accompagne la demande.
+- **Processus externes** — AudiverisController construit une commande selon le système et attend le processus Audiveris. Le backend comprend aussi MxlToMidi.py. Le démarrage, les fichiers intermédiaires et le téléchargement peuvent échouer séparément.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Envoi React → Validation Spring
+- Validation Spring → Reconnaissance Audiveris
+- Reconnaissance Audiveris → Conversion MusicXML
+- Conversion MusicXML → Téléchargement MIDI
+
+```mermaid
+flowchart LR
+  n0[&#34;Envoi React&#34;]
+  n1[&#34;Validation Spring&#34;]
+  n2[&#34;Reconnaissance Audiveris&#34;]
+  n3[&#34;Conversion MusicXML&#34;]
+  n4[&#34;Téléchargement MIDI&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez /convert dans ses validations, puis le choix de l’exécutable et du dossier de sortie. Un envoi HTTP réussi ne suffit pas: la conversion dépend aussi de l’outil externe et de ses fichiers.
+
+## Limites et points à vérifier
+
+La précision dépend de l’image et du moteur de reconnaissance. Les chemins partagés et commandes shell demandent une revue avant des envois publics simultanés.
+
+## Fichiers à lire
+
+- [backend/src/main/java/PFE008/backend/ConvertController.java](https://github.com/antoinebou12/Maestro/blob/main/backend/src/main/java/PFE008/backend/ConvertController.java)
+- [backend/src/main/java/PFE008/backend/AudiverisController.java](https://github.com/antoinebou12/Maestro/blob/main/backend/src/main/java/PFE008/backend/AudiverisController.java)
+- [backend/src/main/MxlToMidi.py](https://github.com/antoinebou12/Maestro/blob/main/backend/src/main/MxlToMidi.py)
+- [maestro-app/package.json](https://github.com/antoinebou12/Maestro/blob/main/maestro-app/package.json)
+
+
+
+---
+
+# marketwatch : Un client pour un jeu boursier virtuel
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/marketwatch/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/marketwatch/index.md
+
+- Dépôt: https://github.com/antoinebou12/marketwatch
+- Licence: Apache-2.0
+- Révision inspectée: 9a8bd76c464501f249aff141f1e105e7345155c6
+
+## Résumé
+
+marketwatch est un client Python archivé pour le jeu boursier virtuel de MarketWatch. Il regroupe connexion, lecture du jeu et ordres simulés. Ces opérations concernent le jeu, sans connexion à un compte de courtage.
+
+**Pourquoi il existe:** Client Python robuste pour interagir avec le jeu boursier virtuel de MarketWatch.
+
+**Cas d’usage:** Développement de bots de trading automatisés et analyse de portefeuilles.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 77.68 |
+| Jupyter Notebook | 13.22 |
+| Jinja | 7.65 |
+| Dockerfile | 1.45 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+pip install marketwatch
+```
+
+### README.md · Installation
+
+```bash
+pip install git&#43;https://github.com/antoinebou12/marketwatch.git
+```
+
+### README.md · Installation
+
+```bash
+git clone https://github.com/antoinebou12/marketwatch.git
+```
+
+
+## Fonctions et composants
+
+- **Session et périmètre du jeu** — MarketWatchGame hérite de MarketWatch et conserve l’identifiant du jeu. buy et sell délèguent au client de base avec cet identifiant. Les opérations de registre et de portefeuille sont liées au jeu.
+- **Dépendance distante** — Le client dépend de l’authentification et des réponses du site. La présence d’une méthode Python ne signifie pas que l’opération distante reste accessible. Un échec de connexion peut bloquer les méthodes sans changement local.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Appelant Python → Enveloppe MarketWatchGame
+- Enveloppe MarketWatchGame → Client HTTP de base
+- Client HTTP de base → Service de jeu virtuel
+- Service de jeu virtuel → Client HTTP de base
+
+```mermaid
+flowchart LR
+  n0[&#34;Appelant Python&#34;]
+  n1[&#34;Enveloppe MarketWatchGame&#34;]
+  n2[&#34;Client HTTP de base&#34;]
+  n3[&#34;Service de jeu virtuel&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n2
+```
+
+**Un parcours dans le code:** Suivez buy depuis l’enveloppe jusqu’au client de base. L’enveloppe ajoute l’identifiant; la session et la requête HTTP se trouvent plus bas.
+
+## Limites et points à vérifier
+
+Le README indique que la connexion est bloquée par un CAPTCHA. Ce client historique ne doit pas être présenté comme une intégration de trading automatisé fonctionnelle.
+
+## Fichiers à lire
+
+- [marketwatch/game.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/game.py)
+- [marketwatch/__init__.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/__init__.py)
+- [README.md](https://github.com/antoinebou12/marketwatch/blob/main/README.md)
+
+
+
+---
+
+# MediaBoxDockerCompose : Une pile média reliée par volumes et réseaux
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/mediaboxdockercompose/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/mediaboxdockercompose/index.md
+
+- Dépôt: https://github.com/antoinebou12/MediaBoxDockerCompose
+- Licence: MIT
+- Révision inspectée: 57d930a836819f7fd3a3421ee5ece5efe3e41778
+
+## Résumé
+
+MediaBoxDockerCompose rassemble des services homelab avec Docker Compose. Les définitions de services, chemins partagés et connexions réseau décrivent leur fonctionnement commun.
+
+**Pourquoi il existe:** Stack GitOps complète combinant réseau sécurisé WireGuard VPN et plus de 15 microservices d&#39;automatisation homelab.
+
+**Cas d’usage:** Serveur multimédia privé conteneurisé avec accès distant chiffré et routage sécurisé.
+
+## Technologies vérifiées
+
+- Docker Compose — docker-compose.yml multi-service stack
+- WireGuard VPN — Secure VPN tunnel integration
+- Whisper AI — Automated audio transcription worker
+- Portainer — Container management interface
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Usage
+
+```bash
+docker-compose up -d
+```
+
+
+### Docker
+
+```bash
+docker-compose up -d
+```
+
+## Fonctions et composants
+
+- **Rôles des services** — Le fichier Compose contient des clients de téléchargement et gestionnaires comme Deluge, Jackett, Sonarr et Radarr. Chaque conteneur a son image et sa configuration. Les liens du README doivent être distingués des services réellement activés.
+- **Chemins persistants** — Les volumes relient les chemins des conteneurs au stockage hôte. Les services doivent s’accorder sur les chemins lors d’un déplacement de fichiers. Réseau et persistance résolvent deux problèmes d’intégration différents.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Définitions Compose → Conteneurs de téléchargement
+- Définitions Compose → Gestionnaires média
+- Conteneurs de téléchargement → Stockage hôte partagé
+- Gestionnaires média → Stockage hôte partagé
+
+```mermaid
+flowchart LR
+  n0[&#34;Définitions Compose&#34;]
+  n1[&#34;Conteneurs de téléchargement&#34;]
+  n2[&#34;Gestionnaires média&#34;]
+  n3[&#34;Stockage hôte partagé&#34;]
+  n0 --&gt; n1
+  n0 --&gt; n2
+  n1 --&gt; n3
+  n2 --&gt; n3
+```
+
+**Un parcours dans le code:** Choisissez un service et comparez ses volumes de téléchargement et bibliothèque à ceux du consommateur. Vérifiez ensuite réseau et ports. Deux conteneurs en bon état peuvent ne pas partager la même vue des fichiers.
+
+## Services Compose
+
+| Service | Runtime | Ports | Dépend de |
+| --- | --- | --- | --- |
+| plex | plexinc/pms-docker | 32400:32400 |  |
+| wireguard | linuxserver/wireguard | 51820:51820/udp |  |
+| whisper | local build / compose | 9000:9000 |  |
+| portainer | portainer/portainer-ce | 9443:9443 |  |
+| samba | dperson/samba | 139:139, 445:445 |  |
+
+## Limites et points à vérifier
+
+Les images et services externes évoluent séparément. Vérifiez identifiants, ports publiés et permissions hôte avant de lancer cette pile personnelle ailleurs.
+
+## Fichiers à lire
+
+- [docker-compose.yml](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/docker-compose.yml)
+- [README.md](https://github.com/antoinebou12/MediaBoxDockerCompose/blob/master/README.md)
+
+
+
+---
+
+# MistubaVideo
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/mistubavideo/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/mistubavideo/index.md
+
+- Dépôt: https://github.com/antoinebou12/MistubaVideo
+
+
+
+
+---
+
+# nova-backtest : Des bougies historiques à la simulation
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/nova-backtest/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/nova-backtest/index.md
+
+- Dépôt: https://github.com/antoinebou12/nova-backtest
+- Licence: MIT
+- Révision inspectée: dda19e6e09bdd59dd483a964f2e47085d2a1bdef
+
+## Résumé
+
+nova-backtest est un fork archivé d’un framework de backtesting. Sa classe centrale choisit un client d’échange, charge une période historique et gère un capital simulé avec des contraintes de position.
+
+**Pourquoi il existe:** Moteur de backtest financier communiquant avec les API d&#39;exchanges crypto pour stratégies quantitatives.
+
+**Cas d’usage:** Validation de stratégies algorithmiques sur données historiques.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 99.74 |
+| Dockerfile | 0.26 |
+
+## Fonctions et composants
+
+- **Entrées et clients** — BackTest reçoit l’échange, la stratégie, l’intervalle, les paires et les dates. La classe construit un client avec la factory clients et charge les hypothèses de frais depuis FEES.
+- **État de simulation** — Le constructeur conserve le capital initial et courant, le levier, le nombre de positions et leur durée. Le dimensionnement géométrique est une option explicite. Les résultats dépendent de ces hypothèses autant que des signaux.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Historique de l’échange → Client et données
+- Client et données → Signaux de stratégie
+- Signaux de stratégie → Simulation positions et capital
+- Simulation positions et capital → Sorties du backtest
+
+```mermaid
+flowchart LR
+  n0[&#34;Historique de l’échange&#34;]
+  n1[&#34;Client et données&#34;]
+  n2[&#34;Signaux de stratégie&#34;]
+  n3[&#34;Simulation positions et capital&#34;]
+  n4[&#34;Sorties du backtest&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Lisez le constructeur BackTest avant d’interpréter un graphique. Les frais, le levier et les tailles changent le capital simulé; modifier une hypothèse crée une autre expérience même avec les mêmes données.
+
+## Limites et points à vérifier
+
+Une simulation historique n’est ni une exécution réelle ni une preuve de rendement futur. Ce fork est archivé et les API d’échange doivent être retestées.
+
+## Fichiers à lire
+
+- [novalabs-backtest/utils/backtest.py](https://github.com/antoinebou12/nova-backtest/blob/Master/novalabs-backtest/utils/backtest.py)
+- [novalabs-backtest/utils/constant.py](https://github.com/antoinebou12/nova-backtest/blob/Master/novalabs-backtest/utils/constant.py)
+- [README.md](https://github.com/antoinebou12/nova-backtest/blob/Master/README.md)
+
+
+
+---
+
+# novatorem : Des données musicales à un widget SVG
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/novatorem/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/novatorem/index.md
+
+- Dépôt: https://github.com/antoinebou12/novatorem
+- Licence: Unlicense
+- Révision inspectée: 5496fe08e19da0da1042236b2600e77b6df39f5d
+
+## Résumé
+
+Ce fork novatorem produit des widgets musicaux depuis des services externes. Un orchestrateur Flask gère le rendu; Spotify et Last.fm ont des modules distincts. La pochette fournit une image et des couleurs au SVG.
+
+**Pourquoi il existe:** Générateur dynamique mettant à jour le profil GitHub avec l&#39;écoute Spotify en temps réel.
+
+**Cas d’usage:** Personnalisation dynamique de profil GitHub via webhooks.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 81.61 |
+| Jinja | 16.06 |
+| HTML | 1.64 |
+| Dockerfile | 0.64 |
+| Procfile | 0.04 |
+
+## Fonctions et composants
+
+- **Fournisseur et présentation** — api/orchestrator.py contient Flask et les fonctions de rendu. Les modules des fournisseurs sont à côté. La configuration pilote modèles et palettes, séparant l’accès propre au service de l’apparence du SVG.
+- **Traitement de la pochette** — ImageData récupère la pochette une fois par objet et réutilise les octets pour le base64 et les palettes ColorThief. load_image_with_fallback essaie l’image, un remplacement, puis des couleurs par défaut en cas d’échec.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Spotify ou Last.fm → Données du fournisseur
+- Données du fournisseur → Orchestrateur Flask
+- Orchestrateur Flask → Pochette et palette de repli
+- Pochette et palette de repli → Réponse SVG
+
+```mermaid
+flowchart LR
+  n0[&#34;Spotify ou Last.fm&#34;]
+  n1[&#34;Données du fournisseur&#34;]
+  n2[&#34;Orchestrateur Flask&#34;]
+  n3[&#34;Pochette et palette de repli&#34;]
+  n4[&#34;Réponse SVG&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez ImageData._fetch vers get_base64 et get_palette. Réutiliser les octets évite des téléchargements répétés dans cet objet, sans constituer un cache persistant entre requêtes.
+
+## Limites et points à vérifier
+
+La récupération d’image désactive actuellement la vérification TLS avec verify=False. Ce point doit être corrigé avant de s’appuyer sur des pochettes distantes en production.
+
+## Fichiers à lire
+
+- [api/orchestrator.py](https://github.com/antoinebou12/novatorem/blob/master/api/orchestrator.py)
+- [api/spotify.py](https://github.com/antoinebou12/novatorem/blob/master/api/spotify.py)
+- [api/lastfm.py](https://github.com/antoinebou12/novatorem/blob/master/api/lastfm.py)
+
+
+
+---
+
+# NX-Activity-Log : Transformer les activités console en vues
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/nx-activity-log/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/nx-activity-log/index.md
+
+- Dépôt: https://github.com/antoinebou12/NX-Activity-Log
+- Licence: MIT
+- Révision inspectée: 757928a164399801dca1445a3cb3300f16abda06
+
+## Résumé
+
+NX-Activity-Log est un fork d’un visualiseur d’activité homebrew Switch. L’application lit les traces de jeu de la console et présente des résumés par utilisateur et titre. Ces traces proviennent de la console, et non de l’interface.
+
+**Pourquoi il existe:** Analyseur télémétrique lisant les journaux de jeu Switch bruts sans risque de bannissement.
+
+**Cas d’usage:** Suivi précis et analytique du temps de jeu sur Nintendo Switch.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 92.17 |
+| Makefile | 4.16 |
+| C | 3.44 |
+| Assembly | 0.23 |
+
+## Fonctions et composants
+
+- **Cycle de vie de l’application** — main.cpp crée Main::Application, l’exécute puis le libère. L’arborescence sépare le code console dans nx, l’interface et les utilitaires. Les tâches d’import et d’export possèdent leurs propres fichiers source.
+- **Traces et présentation** — Les vues décrites organisent l’activité par utilisateur, jeu et période. L’extraction doit donc rester distincte du regroupement et de l’affichage. Les données exportées sont une sortie supplémentaire, pas un remplacement des traces d’origine.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Traces d’activité console → Traitement des traces
+- Traitement des traces → Regroupement utilisateur et titre
+- Regroupement utilisateur et titre → Vues d’activité
+- Traitement des traces → Tâche d’export
+
+```mermaid
+flowchart LR
+  n0[&#34;Traces d’activité console&#34;]
+  n1[&#34;Traitement des traces&#34;]
+  n2[&#34;Regroupement utilisateur et titre&#34;]
+  n3[&#34;Vues d’activité&#34;]
+  n4[&#34;Tâche d’export&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n1 --&gt; n4
+```
+
+**Un parcours dans le code:** Commencez par Main::Application et les modules nx avant les vues. Cela distingue une modification des regroupements d’une modification des traces disponibles sur la console.
+
+## Limites et points à vérifier
+
+Il s’agit d’un fork et l’accès aux traces dépend de l’environnement console. Le dépôt ne garantit pas un historique exhaustif ou inviolable.
+
+## Fichiers à lire
+
+- [Application/source/main.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/main.cpp)
+- [Application/source/Application.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.cpp)
+- [Application/source/Application.ExportJob.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.ExportJob.cpp)
+
+
+
+---
+
+# nxsand : Une grille GPU pour le sable
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/nxsand/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/nxsand/index.md
+
+- Dépôt: https://github.com/antoinebou12/nxsand
+- Révision inspectée: af70da331e9e74ce0d5bd0365e1447f42cfc97d0
+
+## Résumé
+
+nxsand est une simulation de sable sur Switch avec une cible de développement desktop. Les matériaux occupent une grille d’entiers. Des passes mettent cette grille à jour et un parcours de rendu transforme les identifiants en image.
+
+**Pourquoi il existe:** Moteur de simulation de particules et physique cellulaire optimisé sous libnx.
+
+**Cas d’usage:** Simulation physique interactive sur écran tactile de console.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 80.07 |
+| GLSL | 10 |
+| Python | 4.44 |
+| PowerShell | 3.32 |
+| Makefile | 1.63 |
+| Shell | 0.31 |
+| Just | 0.23 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Reference versions (June 2026)
+
+```bash
+dkp-pacman -Q libnx switch-sdl2
+dkp-pacman -Syu    # pull newer libnx / switch-sdl2 when available
+```
+
+### README.md · 2. Install Switch libraries
+
+```bash
+dkp-pacman -S switch-dev switch-sdl2 switch-mesa switch-glm switch-freetype switch-harfbuzz
+```
+
+### README.md · 3. Build the NRO
+
+```bash
+make
+```
+
+### README.md · Desktop (optional)
+
+```bash
+make desktop
+./build/NXSand
+make test         # CPU reference tests, no GPU
+```
+
+### README.md · Desktop (optional)
+
+```bash
+pacman -S --needed mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-SDL2 mingw-w64-x86_64-freetype mingw-w64-x86_64-angleproject
+```
+
+
+## Fonctions et composants
+
+- **État de simulation** — SimState contient les dimensions, le compteur et les paramètres du pinceau. SimPipeline possède deux textures et framebuffers avec des opérations de peinture, calcul, lecture et chargement. Le stockage alterné conserve la grille précédente pendant le calcul de la suivante.
+- **Moteur et tests** — Le parcours fragment utilise GL_R8UI; le parcours compute utilise GL_R32UI pour imageStore. Le pipeline expose les tuiles actives et les replis. Le Makefile sépare les tests CPU, les tests GPU et l’application Switch.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Commandes de pinceau → Grille entière des matériaux
+- Grille entière des matériaux → Passe de simulation
+- Passe de simulation → Texture de grille suivante
+- Texture de grille suivante → Grille entière des matériaux
+- Texture de grille suivante → Pipeline de rendu
+
+```mermaid
+flowchart LR
+  n0[&#34;Commandes de pinceau&#34;]
+  n1[&#34;Grille entière des matériaux&#34;]
+  n2[&#34;Passe de simulation&#34;]
+  n3[&#34;Texture de grille suivante&#34;]
+  n4[&#34;Pipeline de rendu&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n1
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez paintDisk vers la modification de grille, puis step vers le moteur choisi. readTexture désigne la grille courante pour le rendu. La sauvegarde doit aussi tenir compte de l’orientation des lignes OpenGL, plutôt que copier une capture.
+
+## Limites et points à vérifier
+
+Les fonctions GPU et les performances dépendent du matériel et du moteur. Les tests desktop ne remplacent pas les mesures sur Switch.
+
+## Fichiers à lire
+
+- [source/gpu/sim_pipeline.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/gpu/sim_pipeline.hpp)
+- [source/sim/sim_state.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/sim/sim_state.hpp)
+- [Makefile](https://github.com/antoinebou12/nxsand/blob/main/Makefile)
+
+
+
+---
+
+# Pan-Tilt-Controller : Du clavier aux commandes série des moteurs
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/pan-tilt-controller/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/pan-tilt-controller/index.md
+
+- Dépôt: https://github.com/antoinebou12/Pan-Tilt-Controller
+- Révision inspectée: b565efdf9d3fc83096d18c667b6d7a7e21383377
+
+## Résumé
+
+Ce contrôleur pan-tilt archivé relie une interface desktop à une unité de positionnement série. L’implémentation combine une boucle Qt et des commandes pyserial, avec les positions demandées conservées dans des variables globales.
+
+**Pourquoi il existe:** Contrôleur série et démon de mouvement pour unité robotique pan-tilt de précision PTU-46.
+
+**Cas d’usage:** Positionnement robotique de caméras pour la vision par ordinateur.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Fonctions et composants
+
+- **Événements d’interface** — pantiltcontroller.py utilise PyQt5 et installe un filtre de touches. Les flèches et boutons modifient une position, puis construisent une commande pp ou tp. Ce code diffère de l’ancien framework décrit dans le README.
+- **Initialisation du matériel** — Le module ouvre COM3 à 9600 bauds et écrit des commandes dès son chargement. L’interface dépend donc immédiatement du matériel, avant le choix d’un port ou la confirmation d’un mouvement.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Touche ou bouton Qt → Position demandée
+- Position demandée → Commande série
+- Commande série → Connexion pyserial
+- Connexion pyserial → Matériel pan-tilt
+
+```mermaid
+flowchart LR
+  n0[&#34;Touche ou bouton Qt&#34;]
+  n1[&#34;Position demandée&#34;]
+  n2[&#34;Commande série&#34;]
+  n3[&#34;Connexion pyserial&#34;]
+  n4[&#34;Matériel pan-tilt&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez une flèche depuis positionPan ou positionTilt jusqu’à ser.write. La variable représente la cible commandée, pas une mesure indépendante de la position physique.
+
+## Limites et points à vérifier
+
+Ne chargez pas ce script avec du matériel connecté sans vérifier les mouvements initiaux, limites et arrêts d’urgence. Il utilise aussi une syntaxe de l’époque Python 2.
+
+## Fichiers à lire
+
+- [pantiltcontroller.py](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/pantiltcontroller.py)
+- [PTC-command.py](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/PTC-command.py)
+- [README.md](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/README.md)
+
+
+
+---
+
+# RawAnalyser : Des valeurs brutes aux graphiques de diagnostic
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/rawanalyser/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/rawanalyser/index.md
+
+- Dépôt: https://github.com/antoinebou12/RawAnalyser
+- Révision inspectée: ff745802fe293ebba44bf54389509dbb95d0fe5f
+
+## Résumé
+
+RawAnalyser est une ancienne expérience Python pour analyser écrêtage, canaux, gamma et vignettage. Le code expose ses hypothèses d’entrée, dont une taille de trame fixe et des régions choisies dans un fichier JSON.
+
+**Pourquoi il existe:** Outil d&#39;analyse de capteur photographique calculant histogrammes d&#39;écrêtage et plage dynamique sur fichiers RAW.
+
+**Cas d’usage:** Évaluation de capteurs et calibration d&#39;exposition en photographie computationnelle.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Usage
+
+```bash
+python RawAnalyser.py &lt;pathfolder&gt; &lt;pointfile&gt; --func &lt;clipping,gamma,vignette,histogram,noHist,basic, default all&gt; --bl &lt;black level, default 1024&gt; --vignette &lt;pathvignette&gt;
+```
+
+### README.md · Usage
+
+```bash
+python GUI.py
+```
+
+### README.md · Usage
+
+```bash
+python RawPixel.pt input&lt;file&gt; x y  --bitdepth &lt;8,10,16,default 16&gt;
+```
+
+
+## Fonctions et composants
+
+- **Surveillance et disposition brute** — NewAnalyse réagit à la création d’un fichier, charge les coordonnées et lit des uint16. Le tableau devient une image de 1088 par 1928 pixels, ensuite écrite en TIFF. Ces dimensions sont imposées par le code, pas déduites du fichier.
+- **Régions et canaux** — L’analyse construit les matrices de recadrage et de référence grise avant de séparer les canaux par des indices fixes. Les graphiques et statistiques dépendent donc des régions et de la disposition supposée du capteur.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Trame brute et régions JSON → Événement Watchdog
+- Événement Watchdog → Tableau uint16 redimensionné
+- Tableau uint16 redimensionné → Extraction des régions et canaux
+- Extraction des régions et canaux → TIFF et graphiques
+
+```mermaid
+flowchart LR
+  n0[&#34;Trame brute et régions JSON&#34;]
+  n1[&#34;Événement Watchdog&#34;]
+  n2[&#34;Tableau uint16 redimensionné&#34;]
+  n3[&#34;Extraction des régions et canaux&#34;]
+  n4[&#34;TIFF et graphiques&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez np.fromfile puis reshape et comparez les limites de recadrage aux boucles de canaux. Un graphique plausible peut rester faux si les dimensions ou la disposition Bayer diffèrent des hypothèses fixes.
+
+## Limites et points à vérifier
+
+La syntaxe Python 2 et les appels scientifiques obsolètes en font du code historique. Ce n’est ni un décodeur RAW général ni un outil de calibration validé.
+
+## Fichiers à lire
+
+- [RawAnalyser.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawAnalyser.py)
+- [GUI.py](https://github.com/antoinebou12/RawAnalyser/blob/master/GUI.py)
+- [RawPixel.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawPixel.py)
+
+
+
+---
+
+# retroarch-web-games : Préparer un émulateur pour un serveur web statique
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/retroarch-web-games/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/retroarch-web-games/index.md
+
+- Dépôt: https://github.com/antoinebou12/retroarch-web-games
+- Licence: MIT
+- Révision inspectée: 71b41f91e252873023336b14d4582aa1ac5e2b44
+
+## Résumé
+
+retroarch-web-games est une ancienne configuration conteneur autour de RetroArch web. Le dépôt réunit des fichiers d’exécution navigateur, des scripts et une image conteneur. Héberger le lecteur et fournir les jeux sont deux responsabilités distinctes.
+
+**Pourquoi il existe:** Émulateur RetroArch conteneurisé en WebAssembly exécutable dans tout navigateur moderne.
+
+**Cas d’usage:** Émulation de jeux rétro dans le navigateur sans installation.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 46.67 |
+| JavaScript | 23.61 |
+| Python | 13.72 |
+| Shell | 11.62 |
+| Dockerfile | 4.38 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Warning 
+
+```bash
+docker-compose up -d
+```
+
+
+## Fonctions et composants
+
+- **Assemblage du conteneur** — Le Dockerfile prépare l’environnement web et les éléments d’installation. entrypoint.sh pilote le démarrage du conteneur, tandis qu’index.html et libretro.js appartiennent au parcours navigateur.
+- **Exécution et contenu** — Le navigateur charge l’émulateur et ses ressources. Les jeux doivent correspondre au cœur et au format attendus. Les scripts de téléchargement constituent un parcours d’acquisition séparé de l’interface web.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Compilation Docker → Fichiers du serveur statique
+- Fichiers du serveur statique → Émulateur dans le navigateur
+- Jeu fourni par l’utilisateur → Émulateur dans le navigateur
+
+```mermaid
+flowchart LR
+  n0[&#34;Compilation Docker&#34;]
+  n1[&#34;Fichiers du serveur statique&#34;]
+  n2[&#34;Émulateur dans le navigateur&#34;]
+  n3[&#34;Jeu fourni par l’utilisateur&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n3 --&gt; n2
+```
+
+**Un parcours dans le code:** Lisez Dockerfile avec entrypoint.sh pour distinguer les téléchargements de compilation du service à l’exécution. Une image compilée peut encore manquer du cœur ou des ressources nécessaires au jeu choisi.
+
+## Limites et points à vérifier
+
+Cette archive demande une revue des dépendances et du navigateur. Utilisez seulement des jeux que vous avez le droit d’utiliser; aucun téléchargement de jeu n’est nécessaire pour examiner l’architecture.
+
+## Fichiers à lire
+
+- [Dockerfile](https://github.com/antoinebou12/retroarch-web-games/blob/master/Dockerfile)
+- [entrypoint.sh](https://github.com/antoinebou12/retroarch-web-games/blob/master/entrypoint.sh)
+- [index.html](https://github.com/antoinebou12/retroarch-web-games/blob/master/index.html)
+
+
+
+---
+
+# Serilog.Sinks.SentrySDK : Adapter les événements de logs à Sentry
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/serilog-sinks-sentrysdk/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/serilog-sinks-sentrysdk/index.md
+
+- Dépôt: https://github.com/antoinebou12/Serilog.Sinks.SentrySDK
+- Licence: MIT
+- Révision inspectée: d0b5c252b942f61f097feccef10ac2d2b43aad7b
+
+## Résumé
+
+Serilog.Sinks.SentrySDK relie un pipeline de journalisation .NET au SDK Sentry. Son sink convertit les événements structurés pour Sentry, ce qui permet aux points d’appel de conserver Serilog.
+
+**Pourquoi il existe:** Sink Serilog .NET 6&#43; reliant la journalisation structurée à Sentry avec zéro allocation superflue.
+
+**Cas d’usage:** Observabilité des erreurs et traçage distribué pour microservices d&#39;entreprise .NET.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C# | 98.04 |
+| PowerShell | 1.96 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+dotnet add package Serilog.Sinks.SentrySDK
+Install-Package Serilog.Sinks.SentrySDK
+```
+
+### README.md · Build, run tests, and coverage (local development)
+
+```bash
+dotnet restore src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj
+dotnet build src/Serilog.Sinks.SentrySDK/Serilog.Sinks.SentrySDK.csproj -c Release
+dotnet build src/Serilog.Sinks.SentrySDK.AspNetCore/Serilog.Sinks.SentrySDK.AspNetCore.csproj -c Release
+dotnet test src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj
+dotnet test src/Serilog.Sinks.SentrySDK.AspNetCore.Tests/Serilog.Sinks.SentrySDK.AspNetCore.Tests.csproj
+```
+
+### README.md · Build, run tests, and coverage (local development)
+
+```bash
+dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./reports/coverage src/Serilog.Sinks.SentrySDK.Tests/Serilog.Sinks.SentrySDK.Tests.csproj
+```
+
+### README.md · Code formatting (dotnet format)
+
+```bash
+dotnet restore src/Serilog.Sinks.SentrySDK.sln
+dotnet format src/Serilog.Sinks.SentrySDK.sln
+```
+
+### README.md · Code formatting (dotnet format)
+
+```bash
+dotnet format src/Serilog.Sinks.SentrySDK.sln --verify-no-changes
+```
+
+
+## Fonctions et composants
+
+- **Frontière entre sink et SDK** — SentrySink.cs définit une interface enveloppant le SDK, avec des méthodes de capture de messages, d’exceptions et de transactions. Son implémentation délègue à SentrySdk. Les tests peuvent remplacer ces appels externes.
+- **Contexte applicatif** — L’arborescence distingue le paquet du sink, l’intégration ASP.NET Core et les tests. Des factories de requête et d’utilisateur adaptent le contexte HTTP. La configuration des logs et leur enrichissement ont donc des responsabilités différentes.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Événement de log → Pipeline Serilog
+- Pipeline Serilog → Sink Sentry et contexte
+- Sink Sentry et contexte → Enveloppe du SDK
+- Enveloppe du SDK → SDK Sentry
+
+```mermaid
+flowchart LR
+  n0[&#34;Événement de log&#34;]
+  n1[&#34;Pipeline Serilog&#34;]
+  n2[&#34;Sink Sentry et contexte&#34;]
+  n3[&#34;Enveloppe du SDK&#34;]
+  n4[&#34;SDK Sentry&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez un log contenant une exception et comparez-le à un simple message. L’enveloppe expose des opérations distinctes; un test utile vérifie l’opération choisie et ses données, au-delà de la présence d’un appel.
+
+## Limites et points à vérifier
+
+Le contexte HTTP peut contenir des données personnelles. Vérifiez l’enrichissement et le filtrage avant transmission; la présence du paquet ne constitue pas une politique de confidentialité.
+
+## Fichiers à lire
+
+- [src/Serilog.Sinks.SentrySDK/SentrySink.cs](https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/SentrySink.cs)
+- [src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs](https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/AspNetCoreSentryRequestFactory.cs)
+- [src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs](https://github.com/antoinebou12/Serilog.Sinks.SentrySDK/blob/main/src/Serilog.Sinks.SentrySDK/SentrySinkExtensions.cs)
+
+
+
+---
+
+# sm64coopdx-switch-N3DS : Isoler un port derrière les interfaces de plateforme
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/sm64coopdx-switch-n3ds/index.md
+
+- Dépôt: https://github.com/antoinebou12/sm64coopdx-switch-N3DS
+- Révision inspectée: 567fd71a962d44e006461f3085a3a7ca3a063eb4
+
+## Résumé
+
+Ce fork explore les cibles Switch et New 3DS de sm64coopdx. Le code commun du jeu et de la coopération repose sur des couches graphiques, audio et d’entrée propres aux plateformes. La sonde de plateforme a un périmètre plus étroit que le jeu complet.
+
+**Pourquoi il existe:** Portage système en C bas niveau optimisant le réseau multithread et la mémoire pour consoles portables.
+
+**Cas d’usage:** Jeu multijoueur coopératif portable sur consoles Switch et New 3DS.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C | 82.89 |
+| C&#43;&#43; | 10.86 |
+| Lua | 4 |
+| Python | 1.44 |
+| Assembly | 0.49 |
+| Shell | 0.13 |
+| Pawn | 0.11 |
+| Go Template | 0.04 |
+| Makefile | 0.03 |
+| Dockerfile | 0 |
+| Linker Script | 0 |
+| PHP | 0 |
+| BitBake | 0 |
+
+## Fonctions et composants
+
+- **Exécution commune et moteurs** — src/pc sépare les commandes, l’audio, le rendu, le réseau et la plateforme. Le port peut remplacer un moteur en conservant le comportement commun. Les options de compilation et makefiles déterminent les implémentations liées.
+- **La sonde de plateforme** — Makefile.switch-platform compile une sonde avec le cycle de vie Switch, les commandes et les journaux de crash, puis produit un NRO avec devkitPro. Sa liste de sources est plus petite que celle du jeu complet.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Jeu et coopération communs → Interfaces de plateforme
+- Interfaces de plateforme → Moteur graphique
+- Interfaces de plateforme → Commandes et audio
+- Moteur graphique → Exécution console
+- Commandes et audio → Exécution console
+
+```mermaid
+flowchart LR
+  n0[&#34;Jeu et coopération communs&#34;]
+  n1[&#34;Interfaces de plateforme&#34;]
+  n2[&#34;Moteur graphique&#34;]
+  n3[&#34;Commandes et audio&#34;]
+  n4[&#34;Exécution console&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n2 --&gt; n4
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Lisez SOURCES dans le makefile de la sonde avant d’interpréter une compilation réussie. Elle exerce certains modules, sans prouver que tous les sous-systèmes, le rendu et la coopération fonctionnent sur console.
+
+## Limites et points à vérifier
+
+Les essais du jeu complet nécessitent des ressources de jeu obtenues légalement par l’utilisateur et une validation matérielle. Le fork conserve le crédit du projet d’origine.
+
+## Fichiers à lire
+
+- [Makefile.switch-platform](https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/main/Makefile.switch-platform)
+- [src/pc/platform/switch/switch_platform.c](https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/main/src/pc/platform/switch/switch_platform.c)
+- [Makefile.new3ds](https://github.com/antoinebou12/sm64coopdx-switch-N3DS/blob/main/Makefile.new3ds)
+
+
+
+---
+
+# SpringBootFilesUploader : Séparer les octets et les métadonnées
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/springbootfilesuploader/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/springbootfilesuploader/index.md
+
+- Dépôt: https://github.com/antoinebou12/SpringBootFilesUploader
+- Licence: MIT
+- Révision inspectée: 3be3bbc6d828edf840ab6edaffee661db671d7db
+
+## Résumé
+
+SpringBootFilesUploader est un backend Kotlin et Spring qui sépare stockage binaire et métadonnées. L’identifiant retourné au client relie ces deux représentations lors du téléchargement.
+
+**Pourquoi il existe:** Microservice Spring Boot en Kotlin avec téléversement multipart en flux et validation d&#39;intégrité.
+
+**Cas d’usage:** Backend ingestion de fichiers à haut débit.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Kotlin | 99.52 |
+| Java | 0.31 |
+| Dockerfile | 0.17 |
+
+## Fonctions et composants
+
+- **Validation HTTP** — FilesController reçoit un document multipart, vérifie l’extension et déclare des rôles modérateur/admin pour l’envoi. Le contrôle de taille est commenté. Le téléchargement utilise un identifiant, le type et la taille conservés.
+- **Coordination du stockage** — FilesService crée un chemin fondé sur un UUID et envoie les octets à FileRepository. Il conserve ensuite FileModel par FilesMongo. La lecture cherche d’abord les métadonnées, puis utilise le chemin pour récupérer les octets.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Envoi multipart → FilesController
+- FilesController → FilesService
+- FilesService → Stockage binaire FileRepository
+- FilesService → Métadonnées FilesMongo
+- Métadonnées FilesMongo → Réponse avec identifiant
+
+```mermaid
+flowchart LR
+  n0[&#34;Envoi multipart&#34;]
+  n1[&#34;FilesController&#34;]
+  n2[&#34;FilesService&#34;]
+  n3[&#34;Stockage binaire FileRepository&#34;]
+  n4[&#34;Métadonnées FilesMongo&#34;]
+  n5[&#34;Réponse avec identifiant&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n2 --&gt; n4
+  n4 --&gt; n5
+```
+
+**Un parcours dans le code:** Suivez addDocument dans FilesService: les octets sont écrits avant les métadonnées. Si la seconde écriture échoue, la première peut laisser un fichier orphelin. Une version de production nécessite un nettoyage ou une stratégie de cohérence explicite.
+
+## Limites et points à vérifier
+
+Les annotations de rôles nécessitent la configuration de sécurité correspondante. L’extension ne valide pas le contenu et document.bytes charge le fichier en mémoire.
+
+## Fichiers à lire
+
+- [src/main/kotlin/com/api/project/controller/FilesController.kt](https://github.com/antoinebou12/SpringBootFilesUploader/blob/main/src/main/kotlin/com/api/project/controller/FilesController.kt)
+- [src/main/kotlin/com/api/project/service/FilesService.kt](https://github.com/antoinebou12/SpringBootFilesUploader/blob/main/src/main/kotlin/com/api/project/service/FilesService.kt)
+- [build.gradle.kts](https://github.com/antoinebou12/SpringBootFilesUploader/blob/main/build.gradle.kts)
+
+
+
+---
+
+# switch-wifi : Séparer les mesures réseau de l’interface
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/switch-wifi/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/switch-wifi/index.md
+
+- Dépôt: https://github.com/antoinebou12/switch-wifi
+- Licence: MIT
+- Révision inspectée: 8ff883f6925c37b14b9683f8b933a9403654d08d
+
+## Résumé
+
+switch-wifi est un tableau de bord réseau pour Switch avec une interface Borealis. Il sépare les calculs portables de l’application console pour permettre de tester le cœur sans la chaîne de compilation Switch.
+
+**Pourquoi il existe:** Utilitaire C&#43;&#43; natif communiquant directement avec les services wlan de l&#39;OS Switch.
+
+**Cas d’usage:** Configuration réseau rapide pour console Switch sans interface complexe.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| C&#43;&#43; | 86.58 |
+| CMake | 8.31 |
+| Python | 5.11 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Recommended: official devkitPro container
+
+```bash
+git clone --recursive https://github.com/antoinebou12/switch-wifi.git
+cd switch-wifi
+```
+
+### README.md · Recommended: official devkitPro container
+
+```bash
+docker run --rm \
+  -v &#34;$PWD:/work&#34; -w /work \
+  devkitpro/devkita64:latest \
+  bash -lc &#39;cmake -S . -B build-switch \
+    -DPLATFORM_SWITCH=ON \
+    -DUSE_GLFW=ON \
+    -DCMAKE_BUILD_TYPE=Release &amp;&amp; \
+    cmake --build build-switch --target switch-wifi.nro --parallel&#39;
+```
+
+### README.md · Recommended: official devkitPro container
+
+```bash
+python3 scripts/verify_nro.py build-switch/switch-wifi.nro
+```
+
+### README.md · Native devkitPro installation
+
+```bash
+cmake -S . -B build-switch -DPLATFORM_SWITCH=ON -DUSE_GLFW=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build-switch --target switch-wifi.nro --parallel
+```
+
+
+## Fonctions et composants
+
+- **Cœur de calcul portable** — CMake construit switch_wifi_core depuis src/core/metrics.cpp. Les tests hôtes utilisent cette bibliothèque indépendamment de Borealis. Ils couvrent les métriques, l’historique et les benchmarks, avec des sanitizers optionnels.
+- **Intégration console** — La cible applicative rassemble les modules src et lie Borealis, les bibliothèques libnx et libcurl. Le réseau et l’interface dépendent donc de la plateforme, tandis que le cœur numérique peut rester indépendant.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Échantillons réseau → Cœur de métriques portable
+- Cœur de métriques portable → Historique et résultats
+- Historique et résultats → Tableau de bord Borealis
+- Tests unitaires hôtes → Cœur de métriques portable
+
+```mermaid
+flowchart LR
+  n0[&#34;Échantillons réseau&#34;]
+  n1[&#34;Cœur de métriques portable&#34;]
+  n2[&#34;Historique et résultats&#34;]
+  n3[&#34;Tableau de bord Borealis&#34;]
+  n4[&#34;Tests unitaires hôtes&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n4 --&gt; n1
+```
+
+**Un parcours dans le code:** Partez de la bibliothèque et de ses tests, puis examinez le module réseau qui fournit les mesures. Un débit HTTPS dépend du serveur et du trajet réseau; ce n’est pas une lecture directe de la capacité radio Wi-Fi.
+
+## Limites et points à vérifier
+
+Une valeur radio inaccessible doit rester indisponible, sans devenir zéro. La configuration de compilation ne prouve pas la compatibilité ou la précision sur chaque firmware.
+
+## Fichiers à lire
+
+- [CMakeLists.txt](https://github.com/antoinebou12/switch-wifi/blob/main/CMakeLists.txt)
+- [src/core/metrics.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/core/metrics.cpp)
+- [src/main.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/main.cpp)
+
+
+
+---
+
+# TCH099 : Un routeur PHP pour les pages et l’API
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/tch099/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/tch099/index.md
+
+- Dépôt: https://github.com/antoinebou12/TCH099
+- Licence: MIT
+- Révision inspectée: a7323c88b2ae6c12d89ef685c6a4cf4325218afc
+
+## Résumé
+
+TCH099 est un projet pédagogique qui combine pages frontend statiques et API PHP. Les routes exposent la frontière: certains chemins retournent du HTML, tandis que d’autres appellent des scripts serveur.
+
+**Pourquoi il existe:** Environnement multi-conteneurs isolé avec réseau bridge, persistance MariaDB et interface web.
+
+**Cas d’usage:** Référence d&#39;architecture conteneurisée pour application et base de données.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 30.29 |
+| PHP | 24.43 |
+| Java | 24.06 |
+| Jupyter Notebook | 9.1 |
+| Shell | 7.27 |
+| Python | 3.99 |
+| Dockerfile | 0.7 |
+| CSS | 0.15 |
+
+## Technologies vérifiées
+
+- Docker Compose — docker-compose.yml
+- MariaDB — Service image mariadb:latest in docker-compose.yml
+- Azure — README and .github/workflows/README.md describe Azure deployment
+- REST API — routes.php API routes
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Utilisation de Docker
+
+```bash
+docker-compose up -d --build
+```
+
+### README.md · Initialisation de la base de données
+
+```bash
+cd db
+python3 -m pip install mysql-connector-python python-dotenv
+python3 db.py
+```
+
+### scripts/README.md · Ubuntu/Debian
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker  # or log out and back in
+```
+
+### scripts/README.md · Installing Docker Compose
+
+```bash
+sudo curl -L &#34;https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose &amp;&amp; \
+sudo chmod &#43;x /usr/local/bin/docker-compose
+```
+
+### scripts/README.md · Verifying Installation
+
+```bash
+docker --version
+docker run hello-world
+docker-compose --version
+```
+
+### scripts/README.md · Automated Installation
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/yourusername/docker-install/main/install-docker.sh -o install-docker.sh
+chmod &#43;x install-docker.sh
+sudo ./install-docker.sh
+```
+
+
+## Fonctions et composants
+
+- **Routes des pages** — routes.php charge router.php, associe accueil et connexion aux fichiers frontend et définit les pages 403 et 404. Le callback /admin vérifie explicitement isAdmin avant de choisir la réponse.
+- **Scripts API** — Connexion, inscription, déconnexion et user_details ont leurs scripts API. Des routes de démonstration incluent une langue et une image aléatoire. Les scripts traitent les requêtes; le routeur choisit leur destination.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Navigateur ou client mobile → Routeur PHP
+- Routeur PHP → Page HTML
+- Routeur PHP → Script API
+- Script API → Données applicatives
+
+```mermaid
+flowchart LR
+  n0[&#34;Navigateur ou client mobile&#34;]
+  n1[&#34;Routeur PHP&#34;]
+  n2[&#34;Page HTML&#34;]
+  n3[&#34;Script API&#34;]
+  n4[&#34;Données applicatives&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n1 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Comparez GET /login et POST /api/login. Le premier choisit une page; le second lance l’authentification. Les contrôles doivent protéger les opérations API autant que la page administrative.
+
+## Services Compose
+
+| Service | Runtime | Ports | Dépend de |
+| --- | --- | --- | --- |
+| web | Build from Dockerfile | 8001:80 | db, startup order only |
+| db | mariadb:latest | 3306:3306 |  |
+| phpmyadmin | phpmyadmin/phpmyadmin | 8060:80 | db, startup order only |
+
+## API
+
+
+- `POST /api/login`
+- `POST /api/signup`
+- `POST /api/logout`
+- `GET /api/user_details`
+- `GET /api/clients`
+- `GET /admin`
+- `GET, POST /api/hello-world/$langue`
+- `GET, POST /api/random-image`
+
+## Limites et points à vérifier
+
+Une démonstration de routes ne constitue pas une revue de sécurité. Sessions, requêtes et secrets de déploiement demandent une inspection distincte avant hébergement public.
+
+## Fichiers à lire
+
+- [routes.php](https://github.com/antoinebou12/TCH099/blob/main/routes.php)
+- [router.php](https://github.com/antoinebou12/TCH099/blob/main/router.php)
+- [README.md](https://github.com/antoinebou12/TCH099/blob/main/README.md)
+
+
+
+---
+
+# TrueMapData : des cartes de hauteur pour la métrologie et l’infographie
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/index.md
+
+- Dépôt: https://github.com/antoinebou12/TrueMapData
+
+
+
+
+---
+
+# uml-mcp : D’un appel MCP à un diagramme
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/uml-mcp/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/uml-mcp/index.md
+
+- Dépôt: https://github.com/antoinebou12/uml-mcp
+- Licence: MIT
+- Révision inspectée: ebaeac6eb6737639cd1fd5e92967408309a9a64d
+
+## Résumé
+
+uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les services de rendu et retourne les résultats avec des liens d’édition.
+
+**Pourquoi il existe:** Serveur phare Model Context Protocol (MCP) générant PlantUML, Mermaid et Kroki directement depuis des LLMs (Claude, Cursor, ChatGPT) sans dépendance locale.
+
+**Cas d’usage:** Génération interactive de diagrammes d&#39;architecture pour le pair programming avec IA et la documentation.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 90.9 |
+| TypeScript | 7.99 |
+| Shell | 0.31 |
+| CSS | 0.26 |
+| Go Template | 0.23 |
+| Makefile | 0.14 |
+| Dockerfile | 0.11 |
+| JavaScript | 0.03 |
+| HTML | 0.02 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Quick start
+
+```bash
+git clone https://github.com/antoinebou12/uml-mcp.git
+cd uml-mcp
+uv sync
+uv run python server.py
+```
+
+### README.md · Quick start
+
+```bash
+git remote add origin https://github.com/antoinebou12/uml-mcp.git
+```
+
+### tests/mcp-rig/README.md · Running
+
+```bash
+make mcp-rig
+```
+
+### tests/mcp-rig/README.md · Running
+
+```bash
+uvx mcp-rig@0.1.0 run tests/mcp-rig/
+uvx mcp-rig@0.1.0 run tests/mcp-rig/ --tag smoke
+uvx mcp-rig@0.1.0 run tests/mcp-rig/generate.yaml --case &#34;batch*&#34;
+uvx mcp-rig@0.1.0 run tests/mcp-rig/ --server-logs   # show server stderr when debugging
+```
+
+
+## Fonctions et composants
+
+- **Un point d’entrée sans sortie parasite** — server.py délègue le démarrage à mcp_core.core.server. L’objet mcp est résolu à la demande par __getattr__, ce qui évite de construire le serveur ou d’écrire sur stdout lors d’un simple import. C’est important quand stdout transporte le protocole stdio.
+- **Transport et rendu** — Le serveur propose des parcours stdio et HTTP. Le cœur regroupe l’enregistrement des outils, la configuration et l’intégration Kroki. Le rendu reste une opération en aval: la couche MCP décrit les outils et transporte leurs entrées et résultats.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Client MCP → Transport stdio ou HTTP
+- Transport stdio ou HTTP → Outils FastMCP et validation
+- Outils FastMCP et validation → Moteur Kroki
+- Moteur Kroki → Résultat et liens
+- Résultat et liens → Client MCP
+
+```mermaid
+flowchart LR
+  n0[&#34;Client MCP&#34;]
+  n1[&#34;Transport stdio ou HTTP&#34;]
+  n2[&#34;Outils FastMCP et validation&#34;]
+  n3[&#34;Moteur Kroki&#34;]
+  n4[&#34;Résultat et liens&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+  n4 --&gt; n0
+```
+
+**Un parcours dans le code:** Partez de server.py, suivez main dans mcp_core, puis examinez l’outil de diagramme avant son moteur. Un appel fournit des arguments structurés, sans rendre automatiquement un texte quelconque valide en Mermaid ou PlantUML.
+
+## API
+
+
+
+## Limites et points à vérifier
+
+Le rendu distant transmet la source du diagramme. Vérifiez le service utilisé et sa politique de données avant d’envoyer une architecture interne ou d’autres informations confidentielles.
+
+## Fichiers à lire
+
+- [server.py](https://github.com/antoinebou12/uml-mcp/blob/main/server.py)
+- [mcp_core/core/server.py](https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/server.py)
+- [README.md](https://github.com/antoinebou12/uml-mcp/blob/main/README.md)
+
+
+
+---
+
+# uml-skill : Des instructions et un petit encodeur de secours
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/uml-skill/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/uml-skill/index.md
+
+- Dépôt: https://github.com/antoinebou12/uml-skill
+- Licence: MIT
+- Révision inspectée: 05b27cdbe68ea3a9543b8ce8f66586b62194892a
+
+## Résumé
+
+uml-skill regroupe des instructions de rédaction de diagrammes et un petit outil Python. C’est un ensemble d’instructions, sans serveur MCP ni modèle de génération d’images. L’outil peut produire un lien Kroki depuis la source.
+
+**Pourquoi il existe:** Bundle de compétences IA fournissant définitions d&#39;outils et guides pour générer des diagrammes.
+
+**Cas d’usage:** Intégration directe de génération UML dans des agents autonomes.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### scripts/README.md · Usage
+
+```bash
+python kroki_url.py --help
+```
+
+### scripts/README.md · Usage
+
+```bash
+python kroki_url.py -t mermaid diagram.mmd
+python kroki_url.py -t plantuml -f png diagram.puml
+```
+
+### scripts/README.md · Usage
+
+```bash
+Get-Content diagram.puml -Raw | python kroki_url.py -t plantuml
+```
+
+### scripts/README.md · Usage
+
+```bash
+cat diagram.puml | python kroki_url.py -t plantuml
+```
+
+
+## Fonctions et composants
+
+- **Couche d’instructions** — SKILL.md décrit le parcours et renvoie vers des références. Un agent peut suivre ces instructions avec les outils disponibles. Les références donnent des indications de syntaxe, sans constituer un environnement applicatif.
+- **Outil d’encodage** — scripts/kroki_url.py utilise la compression et l’encodage de la bibliothèque standard pour construire un lien de rendu. Produire ce lien et récupérer l’image sont deux opérations distinctes.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Demande de diagramme → Instructions et références
+- Instructions et références → Source du diagramme
+- Source du diagramme → Encodeur de lien Kroki
+- Encodeur de lien Kroki → Service de rendu
+
+```mermaid
+flowchart LR
+  n0[&#34;Demande de diagramme&#34;]
+  n1[&#34;Instructions et références&#34;]
+  n2[&#34;Source du diagramme&#34;]
+  n3[&#34;Encodeur de lien Kroki&#34;]
+  n4[&#34;Service de rendu&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Lisez l’encodeur pour suivre la source vers une charge compatible avec un lien. L’outil transporte la source; la validité et la qualité visuelle dépendent encore du langage et du moteur.
+
+## Limites et points à vérifier
+
+La charge du lien est récupérable, sans chiffrement. Les instructions ne garantissent pas la disponibilité du moteur externe choisi.
+
+## Fichiers à lire
+
+- [scripts/kroki_url.py](https://github.com/antoinebou12/uml-skill/blob/main/scripts/kroki_url.py)
+- [README.md](https://github.com/antoinebou12/uml-skill/blob/main/README.md)
+
+
+
+---
+
+# WordsEnigma : Un jeu de mots entre Redwood et Prisma
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/wordsenigma/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/wordsenigma/index.md
+
+- Dépôt: https://github.com/antoinebou12/WordsEnigma
+- Licence: Unlicense
+- Révision inspectée: a6564499a87c1442c51ea57e5b01f954654e2180
+
+## Résumé
+
+WordsEnigma est un fork avec deux espaces Redwood, web et API. Son modèle relie utilisateurs, langues, banques de mots, parties et essais. Les services GraphQL traduisent les opérations en appels Prisma.
+
+**Pourquoi il existe:** Moteur de jeu et validateur de dictionnaires en TypeScript supportant plusieurs langues et longueurs de mots.
+
+**Cas d’usage:** Logique de jeu de lettres algorithmique et heuristiques de résolution.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| TypeScript | 97.12 |
+| CSS | 2.22 |
+| JavaScript | 0.4 |
+| Dockerfile | 0.16 |
+| HTML | 0.07 |
+| Shell | 0.02 |
+
+## Fonctions et composants
+
+- **Relations des données** — schema.prisma utilise PostgreSQL. Une Game appartient à un utilisateur et à un mot, référence une banque et possède des essais. Les langues relient mots et préférences; le multilinguisme possède donc un modèle persistant.
+- **Services et persistance** — games.ts expose les opérations de liste, lecture, création, modification et suppression avec db.game. Les résolveurs de relations chargent utilisateur, mot, banque et essais. Cette couche relie les opérations GraphQL au modèle de données.
+
+## Architecture
+
+Composants et connexions vérifiés dans le dépôt.
+
+- Interface Redwood → API GraphQL
+- API GraphQL → Résolveurs du service Game
+- Résolveurs du service Game → Client Prisma
+- Client Prisma → Relations PostgreSQL
+
+```mermaid
+flowchart LR
+  n0[&#34;Interface Redwood&#34;]
+  n1[&#34;API GraphQL&#34;]
+  n2[&#34;Résolveurs du service Game&#34;]
+  n3[&#34;Client Prisma&#34;]
+  n4[&#34;Relations PostgreSQL&#34;]
+  n0 --&gt; n1
+  n1 --&gt; n2
+  n2 --&gt; n3
+  n3 --&gt; n4
+```
+
+**Un parcours dans le code:** Suivez le résolveur game vers findUnique, puis ses relations. Ces méthodes CRUD ne décrivent pas à elles seules la validation des essais et ne prouvent pas qu’un utilisateur accède seulement à ses propres parties.
+
+## Limites et points à vérifier
+
+Le manifeste vise une ancienne chaîne Redwood et Node. Autorisations et règles du jeu doivent être examinées au-delà de la forme des services avant redéploiement.
+
+## Fichiers à lire
+
+- [WordsEnigma/package.json](https://github.com/antoinebou12/WordsEnigma/blob/main/WordsEnigma/package.json)
+- [WordsEnigma/api/db/schema.prisma](https://github.com/antoinebou12/WordsEnigma/blob/main/WordsEnigma/api/db/schema.prisma)
+- [WordsEnigma/api/src/services/games/games.ts](https://github.com/antoinebou12/WordsEnigma/blob/main/WordsEnigma/api/src/services/games/games.ts)
+
+
+
+---
+
+# Workshop1 : des notebooks pour apprendre Python
+
+- Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/workshop1/
+- Markdown: https://antoineboucher.info/CV/blog/fr/projects/notes/workshop1/index.md
+
+- Dépôt: https://github.com/antoinebou12/Workshop1
+
+
+
+

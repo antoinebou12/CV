@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/ESP32-7SEG
 - Licence: MIT
 - Révision inspectée: 6cac20eed8dc6293d011a0c8a8341654e0870b80
@@ -67,4 +68,5 @@ Le câblage, l’affichage et le Wi-Fi doivent être vérifiés sur le matériel
 - [src/display.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/display.cpp)
 - [src/web_server.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/web_server.cpp)
 - [platformio.ini](https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini)
+
 

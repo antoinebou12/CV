@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/jsonresume-theme-kendall
 - Licence: MIT
 - Révision inspectée: d1401cef84466c09cb84f8752c185fc96e3f5c6e
@@ -90,4 +91,5 @@ Les anciennes dépendances et les champs attendus demandent une vérification. U
 - [index.js](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/index.js)
 - [resume.template](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/resume.template)
 - [print.css](https://github.com/antoinebou12/jsonresume-theme-kendall/blob/master/print.css)
+
 

@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/nova-backtest
 - Licence: MIT
 - Révision inspectée: dda19e6e09bdd59dd483a964f2e47085d2a1bdef
@@ -65,4 +66,5 @@ Une simulation historique n’est ni une exécution réelle ni une preuve de ren
 - [novalabs-backtest/utils/backtest.py](https://github.com/antoinebou12/nova-backtest/blob/Master/novalabs-backtest/utils/backtest.py)
 - [novalabs-backtest/utils/constant.py](https://github.com/antoinebou12/nova-backtest/blob/Master/novalabs-backtest/utils/constant.py)
 - [README.md](https://github.com/antoinebou12/nova-backtest/blob/Master/README.md)
+
 

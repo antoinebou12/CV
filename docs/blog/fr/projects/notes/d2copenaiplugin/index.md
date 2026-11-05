@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/D2COpenAIPlugin
 - Licence: MIT
 - Révision inspectée: 7d15ee155d5f392b1d90192dc2e21ec479a6291a
@@ -134,4 +135,5 @@ Le manifeste décrit le format d’intégration d’origine. Sa présence ne pro
 - [app.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/app.py)
 - [kroki/kroki.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/kroki/kroki.py)
 - [mermaid/mermaid.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/mermaid/mermaid.py)
+
 

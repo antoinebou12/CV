@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/retroarch-web-games
 - License: MIT
 - Inspected revision: 71b41f91e252873023336b14d4582aa1ac5e2b44
@@ -74,4 +75,5 @@ This archived setup needs dependency and browser review before reuse. Only use g
 - [Dockerfile](https://github.com/antoinebou12/retroarch-web-games/blob/master/Dockerfile)
 - [entrypoint.sh](https://github.com/antoinebou12/retroarch-web-games/blob/master/entrypoint.sh)
 - [index.html](https://github.com/antoinebou12/retroarch-web-games/blob/master/index.html)
+
 

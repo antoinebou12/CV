@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/marketwatch
 - Licence: Apache-2.0
 - Révision inspectée: 9a8bd76c464501f249aff141f1e105e7345155c6
@@ -87,4 +88,5 @@ Le README indique que la connexion est bloquée par un CAPTCHA. Ce client histor
 - [marketwatch/game.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/game.py)
 - [marketwatch/__init__.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/__init__.py)
 - [README.md](https://github.com/antoinebou12/marketwatch/blob/main/README.md)
+
 

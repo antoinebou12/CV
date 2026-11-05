@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "default_content_type": "text/html; charset=utf-8",
   "accept_token": "text/markdown",
   "routes": [
@@ -7,6 +7,17 @@
       "path": "/",
       "markdown_path": "/CV/blog/agent/home.md",
       "content_type": "text/markdown; charset=utf-8"
+    },
+    {
+      "path_prefix": "/blog/",
+      "markdown_suffix": "index.md",
+      "content_type": "text/markdown; charset=utf-8",
+      "note": "Every blog page and section has a Markdown twin at <url>index.md (project briefs, article bodies, section catalogs)."
+    },
+    {
+      "path": "/blog/llms.txt",
+      "content_type": "text/plain; charset=utf-8",
+      "note": "Curated index; /blog/llms-full.txt holds every project brief."
     }
   ]
 }

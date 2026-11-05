@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/another-install-script
 - License: GPL-3.0
 - Inspected revision: 6e1e193260504106593f6b92bb799aacafdf0e2b
@@ -116,4 +117,5 @@ The README calls this a work in progress and records testing on an older Ubuntu 
 - [setup.sh](https://github.com/antoinebou12/another-install-script/blob/master/setup.sh)
 - [src/menu.sh](https://github.com/antoinebou12/another-install-script/blob/master/src/menu.sh)
 - [config.yml](https://github.com/antoinebou12/another-install-script/blob/master/config.yml)
+
 

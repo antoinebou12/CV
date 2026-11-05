@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/ChitUI
 - Révision inspectée: a4236172836c65116a88dcd39a934441691be34c
 
@@ -112,4 +113,5 @@ Ce fork est un prototype pour réseau local. Une interface accessible ne confirm
 - [main.py](https://github.com/antoinebou12/ChitUI/blob/master/main.py)
 - [Dockerfile](https://github.com/antoinebou12/ChitUI/blob/master/Dockerfile)
 - [requirements.txt](https://github.com/antoinebou12/ChitUI/blob/master/requirements.txt)
+
 

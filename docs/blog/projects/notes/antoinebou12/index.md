@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/antoinebou12
 - License: GPL-3.0
 - Inspected revision: c519c6b47b35d3d391167aa43b6cf6cafe7d0435
@@ -55,4 +56,5 @@ External badge endpoints can fail or become stale. A profile graphic is a presen
 - [README.md](https://github.com/antoinebou12/antoinebou12/blob/master/README.md)
 - [.github/workflows/update-readme.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/update-readme.yml)
 - [.github/workflows/github-profile-3d-contrib.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/github-profile-3d-contrib.yml)
+
 

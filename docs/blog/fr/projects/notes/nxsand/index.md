@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/nxsand
 - Révision inspectée: af70da331e9e74ce0d5bd0365e1447f42cfc97d0
 
@@ -107,4 +108,5 @@ Les fonctions GPU et les performances dépendent du matériel et du moteur. Les 
 - [source/gpu/sim_pipeline.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/gpu/sim_pipeline.hpp)
 - [source/sim/sim_state.hpp](https://github.com/antoinebou12/nxsand/blob/main/source/sim/sim_state.hpp)
 - [Makefile](https://github.com/antoinebou12/nxsand/blob/main/Makefile)
+
 

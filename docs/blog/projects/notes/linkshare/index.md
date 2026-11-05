@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/linkshare
 - Inspected revision: 2e223f99a50c07f3e60377f6c3252051b815c468
 
@@ -67,4 +68,5 @@ Archived dependencies and the exposed admin surface need review before redeploym
 - [config/routes.rb](https://github.com/antoinebou12/linkshare/blob/master/config/routes.rb)
 - [Gemfile](https://github.com/antoinebou12/linkshare/blob/master/Gemfile)
 - [README.md](https://github.com/antoinebou12/linkshare/blob/master/README.md)
+
 

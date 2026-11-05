@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/RawAnalyser
 - Révision inspectée: ff745802fe293ebba44bf54389509dbb95d0fe5f
 
@@ -84,4 +85,5 @@ La syntaxe Python 2 et les appels scientifiques obsolètes en font du code histo
 - [RawAnalyser.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawAnalyser.py)
 - [GUI.py](https://github.com/antoinebou12/RawAnalyser/blob/master/GUI.py)
 - [RawPixel.py](https://github.com/antoinebou12/RawAnalyser/blob/master/RawPixel.py)
+
 

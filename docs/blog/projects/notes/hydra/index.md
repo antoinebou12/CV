@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/hydra
 - License: MIT
 - Inspected revision: e769e3b398c039a9e3d9977dbb1e5aa70776732e
@@ -70,4 +71,5 @@ This note describes a fork’s structure and retains upstream credit. It does no
 - [package.json](https://github.com/antoinebou12/hydra/blob/main/package.json)
 - [electron.vite.config.ts](https://github.com/antoinebou12/hydra/blob/main/electron.vite.config.ts)
 - [README.md](https://github.com/antoinebou12/hydra/blob/main/README.md)
+
 

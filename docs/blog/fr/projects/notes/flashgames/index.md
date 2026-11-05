@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/FlashGames
 - Licence: MIT
 - Révision inspectée: 7ee14ee2c3029c3b797d22f7594d04c4c900441c
@@ -60,4 +61,5 @@ La compatibilité doit être vérifiée jeu par jeu. Les scripts externes influe
 
 - [index.html](https://github.com/antoinebou12/FlashGames/blob/main/index.html)
 - [README.md](https://github.com/antoinebou12/FlashGames/blob/main/README.md)
+
 

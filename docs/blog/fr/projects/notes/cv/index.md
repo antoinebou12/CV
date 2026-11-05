@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/CV
 - Licence: MIT
 - Révision inspectée: 2fdf469a3056498868554d59661713206d435b7b
@@ -125,4 +126,5 @@ Les sorties françaises et anglaises nécessitent des vérifications de parité.
 - [scripts/build/render_resume_md.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/render_resume_md.py)
 - [scripts/build/generate_aeo_content.py](https://github.com/antoinebou12/CV/blob/main/scripts/build/generate_aeo_content.py)
 - [hugo/hugo.toml](https://github.com/antoinebou12/CV/blob/main/hugo/hugo.toml)
+
 

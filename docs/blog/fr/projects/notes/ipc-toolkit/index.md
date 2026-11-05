@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/ipc-toolkit
 - Licence: MIT
 - Révision inspectée: 4d9e47e9f5b2afd46be99234d127d12e3c7a74cd
@@ -112,4 +113,5 @@ La présence du fork ne prouve pas l’acceptation de modifications en amont. Le
 - [src/ipc/ipc.hpp](https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.hpp)
 - [src/ipc/ipc.cpp](https://github.com/antoinebou12/ipc-toolkit/blob/main/src/ipc/ipc.cpp)
 - [CMakeLists.txt](https://github.com/antoinebou12/ipc-toolkit/blob/main/CMakeLists.txt)
+
 

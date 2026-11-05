@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/architecture
 - Licence: MIT
 - Révision inspectée: a511b1a730ced19f6340548d5a46e20ae6e2df9b
@@ -62,4 +63,5 @@ Il s’agit d’un instantané d’infrastructure archivé. Les noms et connexio
 - [README.md](https://github.com/antoinebou12/architecture/blob/main/README.md)
 - [architecture.plantuml](https://github.com/antoinebou12/architecture/blob/main/architecture.plantuml)
 - [architecture.drawio](https://github.com/antoinebou12/architecture/blob/main/architecture.drawio)
+
 

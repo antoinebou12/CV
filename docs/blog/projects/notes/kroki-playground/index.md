@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/kroki-playground
 - License: MIT
 - Inspected revision: 8def712a64de0f9badb65f2e1a3bb855aeb25523
@@ -73,4 +74,5 @@ An encoded share URL still contains recoverable diagram source. Compression and 
 - [lib/kroki/encode.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/encode.ts)
 - [lib/kroki/validate.ts](https://github.com/antoinebou12/kroki-playground/blob/main/lib/kroki/validate.ts)
 - [package.json](https://github.com/antoinebou12/kroki-playground/blob/main/package.json)
+
 

@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/HDR-10bpp-Display-Test
 - Révision inspectée: 9c72e072cdcae0c7d922f502049b6a155fa2daed
 
@@ -98,4 +99,5 @@ La table mentionne une entrée douze bits sans format Cairo correspondant. Ce co
 - [Viewer3.py](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/Viewer3.py)
 - [Xdepth.sh](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/Xdepth.sh)
 - [xorg.conf](https://github.com/antoinebou12/HDR-10bpp-Display-Test/blob/master/xorg.conf)
+
 

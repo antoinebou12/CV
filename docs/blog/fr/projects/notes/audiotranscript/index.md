@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/AudioTranscript
 - Licence: MIT
 - Révision inspectée: 91b458e4385f0be729d8af54d8b500dc9d00a274
@@ -72,4 +73,5 @@ L’audio quitte la machine pour la reconnaissance. Le code réutilise des noms 
 
 - [main.py](https://github.com/antoinebou12/AudioTranscript/blob/main/main.py)
 - [requirements.txt](https://github.com/antoinebou12/AudioTranscript/blob/main/requirements.txt)
+
 

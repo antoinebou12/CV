@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/donneesqc-mcp
 - Licence: MIT
 - Révision inspectée: 53a6ee4209c44ccfe360556a1b86c29d855f3e2f
@@ -90,4 +91,5 @@ Les catalogues et schémas peuvent changer. Une requête réussie ne prouve pas 
 - [main.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/main.py)
 - [tools/__init__.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/tools/__init__.py)
 - [README.md](https://github.com/antoinebou12/donneesqc-mcp/blob/main/README.md)
+
 

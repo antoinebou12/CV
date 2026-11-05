@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/Dimension
 - License: MIT
 - Inspected revision: 5281d0932aa99ea0d2c43e64c388b9256c75b126
@@ -133,4 +134,5 @@ Workspace membership shows available modules, not a completed physics engine or 
 - [Cargo.toml](https://github.com/antoinebou12/Dimension/blob/main/Cargo.toml)
 - [mathlib/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/mathlib/src/lib.rs)
 - [render/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/render/src/lib.rs)
+
 

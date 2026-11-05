@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/uml-skill
 - License: MIT
 - Inspected revision: 05b27cdbe68ea3a9543b8ce8f66586b62194892a
@@ -91,4 +92,5 @@ A URL payload is recoverable text, not encryption. The bundle’s instructions d
 
 - [scripts/kroki_url.py](https://github.com/antoinebou12/uml-skill/blob/main/scripts/kroki_url.py)
 - [README.md](https://github.com/antoinebou12/uml-skill/blob/main/README.md)
+
 

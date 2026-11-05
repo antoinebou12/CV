@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/ComfyUI-UML
 - Inspected revision: 1f1411580e0db67efd7a4ad669e42ba8677f546a
 
@@ -76,4 +77,5 @@ Kroki rendering sends diagram text to the configured service. Use a suitable pri
 - [__init__.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/__init__.py)
 - [nodes/uml_diagram.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/uml_diagram.py)
 - [nodes/kroki_client.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/kroki_client.py)
+
 

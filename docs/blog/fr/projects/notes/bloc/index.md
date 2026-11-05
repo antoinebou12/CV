@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/bloc
 - Licence: GPL-3.0
 - Révision inspectée: 6c83c217d541b632fdb0b8acc998c37e6f910075
@@ -68,4 +69,5 @@ Le parcours S3 effectue un seul appel list_objects_v2 sans pagination. L’envoi
 
 - [addon.py](https://github.com/antoinebou12/bloc/blob/main/addon.py)
 - [blender_manifest.toml](https://github.com/antoinebou12/bloc/blob/main/blender_manifest.toml)
+
 

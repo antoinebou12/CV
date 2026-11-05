@@ -1,56 +1,147 @@
 # Antoine Boucher
 
-> Software engineer (Montréal): platform systems, interactive graphics, secure cloud delivery, and open source. English is the default language for international readers; French content lives under /fr/ on the blog and in parallel CV artifacts.
+> Software engineer in Montréal: platform work (Kubernetes, GitLab CI/CD, Terraform), interactive graphics (C++/OpenGL, Blender, Rust/wgpu), MCP tooling (uml-mcp) and DevSecOps teaching. This file indexes the CV, the articles and one documentation page per public repository; every blog page also exists as Markdown by appending `index.md` to its URL.
 
-## Identity
+Language of this file: English. French version: https://antoineboucher.info/CV/blog/fr/llms.txt
+Generated: 2026-11-05
 
-- Name: Antoine Boucher
-- Role: Software Engineer — Platform and graphics
-- Focus: backends, Kubernetes/GitLab CI/CD, Terraform, C++/OpenGL, Blender, MCP tooling (uml-mcp)
-- Proof: IMC2 secure cloud platforms; DevSecOps teaching (LOG 8100) at Polytechnique Montréal
+## Identity and CV
 
-## Profiles
+- [CV (HTML, English, default)](https://antoineboucher.info/CV/index-en.html): experience, projects, skills, certifications
+- [CV (HTML, French)](https://antoineboucher.info/CV/index-fr.html)
+- [Résumé as Markdown](https://antoineboucher.info/CV/resume.md)
+- [JSON Resume](https://antoineboucher.info/CV/resume.json): jsonresume.org schema
+- [PDF](https://antoineboucher.info/CV/cv-en/resume.pdf)
+- [GitHub](https://github.com/antoinebou12) · [LinkedIn](https://www.linkedin.com/in/antoineboucher12) · [Book a call](https://cal.com/antoine-boucher-dev/30min)
 
-- [GitHub](https://github.com/antoinebou12)
-- [LinkedIn](https://www.linkedin.com/in/antoineboucher)
+## Projects documented from the source
 
-## Machine-readable resume (default: English)
+[Catalog](https://antoineboucher.info/CV/blog/projects/) · [Catalog as Markdown](https://antoineboucher.info/CV/blog/projects/index.md). Each brief: languages (GitHub Linguist bytes), README start commands, components, architecture edges, API routes and files to read.
 
-- [Resume — Markdown (English)](https://antoineboucher.info/CV/resume.md)
-- [CV — Markdown (français)](https://antoineboucher.info/CV/resume-fr.md)
-- [JSON Resume (English)](https://antoineboucher.info/CV/resume.json)
-- [JSON Resume (français)](https://antoineboucher.info/CV/resume-fr.json)
+- [.dotfiles](https://antoineboucher.info/CV/blog/projects/notes/dotfiles/index.md): These dotfiles collect the shell and editor setup I used across machines. The installer manages packages, configuration files and upstream projects.
+- [AINewsTracker](https://antoineboucher.info/CV/blog/projects/notes/ainewstracker/index.md): AINewsTracker combines financial-news ingestion, AI analysis and market backtesting in a Python web application.
+- [another-install-script](https://antoineboucher.info/CV/blog/projects/notes/another-install-script/index.md): another-install-script is a shell entry point for choosing system setup and container installations. Its structure separates the menu from the service definitions so that adding a service does not require putting every command in setup.sh.
+- [antoinebou12](https://antoineboucher.info/CV/blog/projects/notes/antoinebou12/index.md): This is the repository behind my GitHub profile README. It combines ordinary Markdown with images, embedded widgets and scheduled updates. There is no application server in the profile itself.
+- [architecture](https://antoineboucher.info/CV/blog/projects/notes/architecture/index.md): This archived repository stores a home-infrastructure diagram in several formats. Its architecture is a documentation workflow: editable sources produce diagrams that can be opened or viewed without a running application.
+- [Artemis-N3DS](https://antoineboucher.info/CV/blog/projects/notes/artemis-n3ds/index.md): Artemis-N3DS adapts Moonlight Embedded to the Nintendo 3DS family. It combines host discovery and pairing with a console-specific interface, input handling and video presentation. The New 3DS hardware path is a particular concern.
+- [Artemis-Switch](https://antoineboucher.info/CV/blog/projects/notes/artemis-switch/index.md): Artemis-Switch is a fork in the Moonlight streaming family. The host runs the game. The client receives compressed video and audio, renders frames and sends controller input back.
+- [AudioTranscript](https://antoineboucher.info/CV/blog/projects/notes/audiotranscript/index.md): AudioTranscript breaks a WAV recording into chunks around silence, sends each chunk to a recognition service and concatenates the results. The current implementation uses Amazon recognition, even though its docstrings still mention Google.
+- [AuthLaravel](https://antoineboucher.info/CV/blog/projects/notes/authlaravel/index.md): AuthLaravel is an access-control learning project with a Laravel backend and Vue pages delivered through Inertia. The route definitions show how authenticated users reach their dashboard and how administrators receive a different view.
+- [BatchBacktesting](https://antoineboucher.info/CV/blog/projects/notes/batchbacktesting/index.md): BatchBacktesting runs Python backtests across instruments and keeps strategy assumptions and outputs visible.
+- [bloc](https://antoineboucher.info/CV/blog/projects/notes/bloc/index.md): My bloc fork adds a Blender-facing workflow around S3 and MinIO storage. It preserves the upstream Blender-Cloud-Storage credit. The add-on translates object keys into a folder browser, then downloads assets before asking Blender to import them.
+- [ChitUI](https://antoineboucher.info/CV/blog/projects/notes/chitui/index.md): ChitUI places a browser interface in front of SDCP resin printers. A Python process serves the web assets, discovers printers on the local network and translates browser actions into printer communication.
+- [ComfyUI-UML](https://antoineboucher.info/CV/blog/projects/notes/comfyui-uml/index.md): ComfyUI-UML adds diagram-oriented nodes to ComfyUI. Text enters a workflow, a rendering backend turns it into an image, and the workflow can retain the source and viewer links alongside that output.
+- [CV](https://antoineboucher.info/CV/blog/projects/notes/cv/index.md): This website combines bilingual CV pages, structured resume data, LaTeX PDFs and a Hugo blog. A local script builds and validates both the CV and blog, then publishes them together from docs/ on main.
+- [D2COpenAIPlugin](https://antoineboucher.info/CV/blog/projects/notes/d2copenaiplugin/index.md): D2COpenAIPlugin is a FastAPI diagram service with a plugin manifest and an OpenAPI surface. Its implementation selects among PlantUML, Mermaid and Kroki paths based on the request’s diagram language.
+- [DasherControl](https://antoineboucher.info/CV/blog/projects/notes/dashercontrol/index.md): DasherControl brings homelab links and embedded applications into saved workspaces. Vue handles the interface, Rust and Rocket expose the API, and Diesel persists the layout in PostgreSQL. Docker control follows a separate path.
+- [Dimension](https://antoineboucher.info/CV/blog/projects/notes/dimension/index.md): Dimension is my Rust workspace for mathematics and graphics experiments. mathlib provides numerical building blocks; render uses them for CPU-side transforms and cameras before submitting graphics work through wgpu.
+- [donneesqc-mcp](https://antoineboucher.info/CV/blog/projects/notes/donneesqc-mcp/index.md): donneesqc-mcp is a fork exposing Québec and Montréal open-data operations through MCP tools. Its entry point registers the tool collection and starts an HTTP transport, leaving dataset access and geographic helpers in separate modules.
+- [ESP32-7SEG](https://antoineboucher.info/CV/blog/projects/notes/esp32-7seg/index.md): ESP32-7SEG connects an ESP32 clock display to network configuration and an HTTP interface. The firmware startup decides whether saved Wi-Fi settings can be reused or whether the device needs its setup path.
+- [FlashGames](https://antoineboucher.info/CV/blog/projects/notes/flashgames/index.md): FlashGames preserves small Flash games in a browser-facing collection. The page selects a SWF and hosts the Ruffle player. The game binary and the surrounding HTML interface remain separate pieces.
+- [GithubSimpleFileDownloader](https://antoineboucher.info/CV/blog/projects/notes/githubsimplefiledownloader/index.md): This archived extension attempted to add individual-file download controls to repository browsers. Its GitHub implementation shows the fragility of building an integration around another website’s DOM rather than a stable application interface.
+- [GreenScreenVideotoAlphaPNGs](https://antoineboucher.info/CV/blog/projects/notes/greenscreenvideotoalphapngs/index.md): GreenScreenVideotoAlphaPNGs separates video acquisition, frame extraction and chroma keying from final encoding. RGBA PNG frames are an intermediate output that can feed either the GIF path or an alpha-capable video codec.
+- [hass_renpho](https://antoineboucher.info/CV/blog/projects/notes/hass-renpho/index.md): hass_renpho is a fork of a Home Assistant integration for Renpho measurements. A shared coordinator refreshes cloud data and sensor entities expose that state. The repository warns that its old-app API path is no longer reliably working.
+- [HDR-10bpp-Display-Test](https://antoineboucher.info/CV/blog/projects/notes/hdr-10bpp-display-test/index.md): This display experiment loads image data into a GTK drawing area through Cairo. Viewer3.py makes the pixel representation explicit: channel samples are masked and packed into a uint32 buffer before creating an RGB30 surface.
+- [hydra](https://antoineboucher.info/CV/blog/projects/notes/hydra/index.md): This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and a Python RPC component, each with its own toolchain.
+- [ipc-toolkit](https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/index.md): ipc-toolkit provides geometric building blocks for contact-aware simulation. This fork contains collision meshes, broad-phase candidates, continuous collision detection and contact-related energies. An external simulation still owns its time stepping and solve loop.
+- [jsonresume-theme-kendall](https://antoineboucher.info/CV/blog/projects/notes/jsonresume-theme-kendall/index.md): This fork of the Kendall JSON Resume theme turns structured resume data into HTML. The renderer prepares presentation fields before handing the result to a Mustache template and the accompanying screen and print styles.
+- [kroki-playground](https://antoineboucher.info/CV/blog/projects/notes/kroki-playground/index.md): kroki-playground is a Next.js interface for editing text diagrams and previewing their output. Its server route validates the requested diagram type and format, encodes the source and fetches the rendered result from Kroki.
+- [linkshare](https://antoineboucher.info/CV/blog/projects/notes/linkshare/index.md): linkshare is an archived Rails learning project for sharing links, commenting and voting. It renders pages on the server and includes account management and an administrative interface.
+- [LLM2SVG](https://antoineboucher.info/CV/blog/projects/notes/llm2svg/index.md): This LLM2SVG fork contains SVG dataset utilities and an evaluation-oriented scaffold. The visible implementation is useful for inspecting examples and constraints; it does not establish a completed or trained text-to-SVG model.
+- [Maestro](https://antoineboucher.info/CV/blog/projects/notes/maestro/index.md): This Maestro fork connects a React upload interface to a Spring backend and external music-conversion tools. Turning a score image into MIDI passes through an optical-recognition stage and an intermediate score representation.
+- [marketwatch](https://antoineboucher.info/CV/blog/projects/notes/marketwatch/index.md): marketwatch is an archived Python client for MarketWatch’s virtual trading game. It wraps login, game queries and simulated order operations. These are game interactions, not connections to a brokerage account.
+- [MediaBoxDockerCompose](https://antoineboucher.info/CV/blog/projects/notes/mediaboxdockercompose/index.md): MediaBoxDockerCompose brings several homelab services together in Docker Compose. Service definitions, shared filesystem paths and network connections describe how they work together.
+- [MistubaVideo](https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/index.md): MistubaVideo is an ETSim repository for video-related work with Mitsuba.
+- [nova-backtest](https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/index.md): nova-backtest is an archived fork of a strategy-backtesting framework. The core class selects an exchange client, loads a historical interval and manages a simulated bankroll and position constraints.
+- [novatorem](https://antoineboucher.info/CV/blog/projects/notes/novatorem/index.md): This novatorem fork builds music-status widgets from provider data. A Flask orchestrator handles rendering, while Spotify and Last.fm have separate modules. Album artwork supplies both an image and colors for the SVG.
+- [NX-Activity-Log](https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/index.md): NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title summaries. Those records are inputs from the console rather than events generated by the UI.
+- [nxsand](https://antoineboucher.info/CV/blog/projects/notes/nxsand/index.md): nxsand is a falling-sand simulation for Switch with a desktop development target. Materials live in an integer grid. Simulation passes update that grid, and a separate rendering path turns material identifiers into the displayed image.
+- [Pan-Tilt-Controller](https://antoineboucher.info/CV/blog/projects/notes/pan-tilt-controller/index.md): This archived pan-tilt controller connects a desktop interface to a serial-controlled positioning unit. The implementation mixes a Qt event loop with pyserial commands and keeps the requested pan and tilt positions in global state.
+- [RawAnalyser](https://antoineboucher.info/CV/blog/projects/notes/rawanalyser/index.md): RawAnalyser is an older Python image-analysis experiment for clipping, channel values, gamma and vignetting. Its input assumptions are visible in the implementation, including a fixed raw frame shape and regions selected through a JSON file.
+- [retroarch-web-games](https://antoineboucher.info/CV/blog/projects/notes/retroarch-web-games/index.md): retroarch-web-games is an archived container setup around a web build of RetroArch. The repository combines browser runtime files with scripts and container assembly. Hosting the player and supplying game content are separate concerns.
+- [Serilog.Sinks.SentrySDK](https://antoineboucher.info/CV/blog/projects/notes/serilog-sinks-sentrysdk/index.md): Serilog.Sinks.SentrySDK connects a .NET logging pipeline to the Sentry SDK. Its sink converts structured log events for Sentry, so application call sites can keep using Serilog.
+- [sm64coopdx-switch-N3DS](https://antoineboucher.info/CV/blog/projects/notes/sm64coopdx-switch-n3ds/index.md): This fork explores Switch and New 3DS targets for sm64coopdx. Shared game and co-op code sit above platform-specific graphics, audio and input. The platform probe is a smaller executable with a narrower purpose than the full game.
+- [SpringBootFilesUploader](https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/index.md): SpringBootFilesUploader is a Kotlin and Spring backend with a file-upload path that separates binary storage from document metadata. A file identifier returned to the client connects those two representations during download.
+- [switch-wifi](https://antoineboucher.info/CV/blog/projects/notes/switch-wifi/index.md): switch-wifi is a Switch network dashboard with a Borealis interface. It separates portable metric calculations from the console application so that host tests can exercise the core without requiring the Switch toolchain.
+- [TCH099](https://antoineboucher.info/CV/blog/projects/notes/tch099/index.md): TCH099 is a teaching-oriented web project that combines static frontend pages with PHP API handlers. The route file makes the boundary visible: some paths return HTML files, while others dispatch to server-side scripts.
+- [TrueMapData](https://antoineboucher.info/CV/blog/projects/notes/truemapdata/index.md): TrueMapData reads TrueMap and GelSight height maps, processes them and exports visual, surface and mesh-oriented results.
+- [uml-mcp](https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/index.md): uml-mcp exposes diagram tools to MCP clients. The client supplies diagram source and options; the server validates and routes the request to rendering services, then returns diagram results and useful editor links.
+- [uml-skill](https://antoineboucher.info/CV/blog/projects/notes/uml-skill/index.md): uml-skill packages diagram-writing instructions and a small Python helper. It is a skill bundle, not an MCP server or an image-generation model. The helper can produce a Kroki URL from diagram source.
+- [WordsEnigma](https://antoineboucher.info/CV/blog/projects/notes/wordsenigma/index.md): WordsEnigma is a fork with separate Redwood web and API workspaces. Its data model links users, languages, word banks, games and individual guesses. GraphQL services translate application operations into Prisma database calls.
+- [Workshop1](https://antoineboucher.info/CV/blog/projects/notes/workshop1/index.md): Workshop1 is an AlgoETS notebook series that moves from Python fundamentals and APIs to pandas, charts and an EMA exercise.
 
-## CV (static HTML)
+## Articles
 
-- [Language redirect / entry](https://antoineboucher.info/CV/index.html)
-- [Résumé — English HTML](https://antoineboucher.info/CV/index-en.html)
-- [CV — français (HTML)](https://antoineboucher.info/CV/index-fr.html)
-- [English résumé PDF](https://antoineboucher.info/CV/cv-en/resume.pdf)
-- [CV PDF (français)](https://antoineboucher.info/CV/cv-fr/resume.pdf)
-- [Link hub (social + email)](https://antoineboucher.info/CV/linktree/)
+[All articles](https://antoineboucher.info/CV/blog/posts/) · [Markdown](https://antoineboucher.info/CV/blog/posts/index.md)
 
-## Markdown views (agent context)
+- [Website refonte with Hugo (part 2)](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/index.md) (2026-10): Rebuilding my Hugo portfolio: shared visual identity, bilingual articles, repository skills, interactive diagrams and local publication.
+- [TrueMapData: from measured height maps to usable assets](https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/index.md) (2026-10): TrueMapData connects TrueMap and GelSight files to visualisation, surface metrics, wear analysis and mesh export.
+- [MistubaVideo: rendering simulation recordings with Mitsuba](https://antoineboucher.info/CV/blog/posts/mistubavideo-rendered-video/index.md) (2026-10): From recorded body poses and surface fields to rendered frames, heatmaps and video.
+- [IPC Toolkit: collision and friction inside a simulation](https://antoineboucher.info/CV/blog/posts/ipc-toolkit-contact-library/index.md) (2026-10): How IPC Toolkit supplies collision detection, distance derivatives and friction calculations to a simulation.
+- [Following financial news through AINewsTracker](https://antoineboucher.info/CV/blog/posts/ainewstracker-financial-news/index.md) (2026-10): Following financial news from collection to analysis and historical backtesting with AINewsTracker.
+- [Dimension: connecting Rust mathematics to a renderer](https://antoineboucher.info/CV/blog/posts/dimension-rust-math-rendering/index.md) (2026-10): Inside my Dimension workspace: matrix storage, numerical methods, scene transforms and a wgpu renderer for native and web targets.
+- [DasherControl: a homelab dashboard built around workspaces](https://antoineboucher.info/CV/blog/posts/dashercontrol-homelab-workspaces/index.md) (2026-10): A look back at DasherControl: Vue applets, Rust and Rocket handlers, persisted workspaces and a Docker interface.
+- [My bloc fork: browsing S3 and MinIO from Blender](https://antoineboucher.info/CV/blog/posts/bloc-blender-cloud-storage/index.md) (2026-10): A code tour of my Blender cloud-storage fork: multiple connections, folder browsing, fuzzy search and mesh imports.
+- [My reverse proxy: separating provisioning, configuration and health checks](https://antoineboucher.info/CV/blog/posts/reverse-proxy-infrastructure/index.md) (2026-10): A code-based look at my Caddy infrastructure: Terraform for VPS and DNS, Ansible for configuration, and the limits of deployment health checks.
+- [Teaching Python through an end-to-end data workshop](https://antoineboucher.info/CV/blog/posts/algoets-python-workshop/index.md) (2026-10): Inside AlgoETS Workshop1: nine notebooks connect Python fundamentals, APIs, pandas and visualization to an Apple stock EMA exercise.
+- [Serilog.Sinks.SentrySDK: connecting structured logs to error reporting](https://antoineboucher.info/CV/blog/posts/serilog-sentrysdk-structured-errors/index.md) (2026-10): A tour of the Serilog Sentry sink: SDK initialization, event handling, ASP.NET Core context, NuGet packages and observable project activity.
+- [Porting sm64coopdx to Switch and New 3DS: keep the platform boundary small](https://antoineboucher.info/CV/blog/posts/sm64coopdx-switch-new3ds-port/index.md) (2026-10): A code-based tour of the Switch and New 3DS CoopDX targets: graphics, controllers, audio, build isolation and current hardware-validation limits.
+- [Inside BatchBacktesting: parallel runs, explicit assumptions and useful outputs](https://antoineboucher.info/CV/blog/posts/batchbacktesting-engine/index.md) (2026-10): Reading BatchBacktesting’s Python engine: worker pools, 0.2% commission, strategy defaults, CSV outputs and pitfalls in aggregate analysis.
+- [ComfyUI-UML: diagrams as nodes, images and shareable source](https://antoineboucher.info/CV/blog/posts/comfyui-uml-diagram-workflows/index.md) (2026-10): How ComfyUI-UML turns Mermaid and PlantUML source into images, file outputs and viewer links, with Kroki and optional local renderers.
+- [Artemis Switch: following a frame from the network to the screen](https://antoineboucher.info/CV/blog/posts/artemis-switch-frame-pacing/index.md) (2026-10): Inside Artemis Switch: Moonlight transport, NVDEC, deko3d, frame pacing and the telemetry that makes streaming delays easier to diagnose.
+- [Thesis submitted at ÉTS](https://antoineboucher.info/CV/blog/posts/thesis-submitted-ets/index.md) (2026-10): The ÉTS master's thesis on real-time surface wear is submitted, with thanks to Sheldon Andrews and the people who helped.
+- [Claude Academy: Building with the Claude API](https://antoineboucher.info/CV/blog/posts/claude-academy-claude-api/index.md) (2026-10): Anthropic issued the Claude Academy credential Building with the Claude API in October 2026.
+- [uml-mcp — UML diagrams from chat via MCP](https://antoineboucher.info/CV/blog/posts/uml-mcp/index.md) (2026-09): Open-source MCP server for Mermaid, PlantUML, and Kroki diagrams in Cursor and ChatGPT — why I built it, how to install, and links to earlier diagram tooling.
+- [Handheld streaming and homebrew — Artemis-Switch, moonlight-N3DS, sm64coopdx-switch](https://antoineboucher.info/CV/blog/posts/handheld-streaming-homebrew/index.md) (2026-09): PC game streaming on Nintendo Switch with Artemis (Apollo/Sunshine), Moonlight on New 3DS, and a Switch port of sm64coopdx — three homebrew repos and what each one does.
+- [Joining La Caisse as a development intern](https://antoineboucher.info/CV/blog/posts/joining-la-caisse/index.md) (2026-08): Internship at La Caisse on business-process automation with SharePoint, TypeScript, C#, .NET, APIs, and SnapLogic migration.
+- [Master's thesis — contact–appearance coupling for wear in texture space](https://antoineboucher.info/CV/blog/posts/thesis-wear-texture-space/index.md) (2026-08): ÉTS master's thesis on real-time surface wear in interactive simulation — frictional dissipation, GPU texture atlases, GelSight validation, WearPaper and TextureFriction.
+- [Make figurines with AI for 3D printing](https://antoineboucher.info/CV/blog/posts/ai-figurines-3d-printing/index.md) (2026-05): Chibi vinyl figures, ComfyUI with OmniGen2 and Hunyuan3D v2, and resin printing notes with GLB examples.
+- [CAÉC 2026 poster, second place in Optics](https://antoineboucher.info/CV/blog/posts/caec-2026-optics-poster/index.md) (2026-04): Poster at CAÉC 2026 on real-time visual texture wear from experimental data, second place in the Optics category.
+- [Exploring movie similarities with vector search algorithms](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/index.md) (2026-04): A teaching narrative: pgvector kNN in SQL, Qdrant dense and sparse vectors on MovieLens, then LangChain + Ollama RAG on the same catalog.
+- [Python library for MarketWatch virtual trading](https://antoineboucher.info/CV/blog/posts/marketwatch-python-trading/index.md) (2026-04): PyPI package marketwatch — Python client for MarketWatch’s virtual stock game, API surface, limits, and how it pairs with backtesting experiments.
+- [From BMC to pitch — QcES journey notes (Spring 2024)](https://antoineboucher.info/CV/blog/posts/qces-lean-discovery-pitch/index.md) (2026-04): Notes from the QcES entrepreneurship program — business canvas, customer interviews, feedback, roadmap, and pitching without drowning in jargon.
+- [AlgoÉTS MarkÉTS — first ÉTS paper-trading competition](https://antoineboucher.info/CV/blog/posts/algoets-markets-first-competition/index.md) (2026-01): First MarkÉTS paper-trading competition at ÉTS: 4,154 orders, 170+ participants, 99%+ uptime, and a club grown to 20 members.
+- [GraphQuon 2025 — University of Toronto](https://antoineboucher.info/CV/blog/posts/graphquon-2025-university-of-toronto/index.md) (2025-11): Presented Where to Wear? at the Quebec–Ontario pre-SIGGRAPH workshop in Toronto—frictional wear, texture updates, and slides from GraphQuon 2025.
+- [25k uses for the diagram tool on the GPT Store](https://antoineboucher.info/CV/blog/posts/gpt-store-diagram-tool/index.md) (2025-10): The UML diagram tool reached 25k uses on the GPT Store. I built it to stop dragging boxes in Lucidchart and I am open to handing it on.
+- [A Method to Install Python Packages for Add-ons & Plugins in Blender (Windows, Blender 4.2+)](https://antoineboucher.info/CV/blog/posts/blender-python-packages/index.md) (2025-02): Install pip packages into Blender’s embedded Python — user modules folder, background thread, popups — without breaking the core install.
+- [GraphQuon 2024 — ÉTS (Montréal)](https://antoineboucher.info/CV/blog/posts/graphquon-2024-ets/index.md) (2024-11): GraphQuon 2024 at ÉTS — Quebec–Ontario pre-SIGGRAPH talks, the conference site we shipped, and hallway chats (including NVIDIA diffusion texture painting).
+- [Starting as a teaching assistant at Polytechnique Montréal](https://antoineboucher.info/CV/blog/posts/polytechnique-teaching-start/index.md) (2024-09): I started as a teaching assistant at Polytechnique Montréal. On the CV, that role is DevSecOps, LOG 8100, from September 2024.
+- [Multiple Technical Indicators Backtesting on Multiple Tickers using Python](https://antoineboucher.info/CV/blog/posts/multiple-indicators-backtesting/index.md) (2024-05): Scaled BatchBacktesting across stocks and crypto — reading aggregate leaderboards without mistaking screening for a strategy.
+- [Economics of LEGO Sets with Data Science](https://antoineboucher.info/CV/blog/posts/economics-lego-data-science/index.md) (2024-05): Rebrickable trends, BrickEconomy prices, Playwright scraping, and a humble regression on classic set 001-1 — narrative with charts, code in LegosTracker.
+- [Experimenting with technical indicators using Python and backtesting](https://antoineboucher.info/CV/blog/posts/experimentation-indicateurs-backtesting/index.md) (2024-05): BatchBacktesting with EMA and MACD across equities and crypto — how the batch runner works, how to read extreme results, not trading advice.
+- [Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/index.md) (2024-05): Homelab Caddy habits on a cheap EC2 edge — structured logs, CloudWatch Insights, cron shippers, Lambda queries, Step Functions glue.
+- [A Journey to AWS Certified Cloud Practitioner](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/index.md) (2024-05): Two-week study plan — Udemy, AWS Skill Builder, Cloud Quest, Escape Room, and Pearson VUE tips (extra time, Credly badge).
+- [Predicting Stock Prices with Monte Carlo Simulations](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/index.md) (2024-05): Forward Monte Carlo bands for AAPL from historical log returns — hold-out coverage, percentiles, and how that differs from MCMC.
+- [MediaBox homelab — what I run in Docker (and what stayed a bookmark)](https://antoineboucher.info/CV/blog/posts/mediabox-homelab-docker-catalog/index.md) (2024-03): How MediaBoxDockerCompose grew out of a homelab port map — what I actually wired up, and where Proxmox helper-scripts fit.
+- [Kinectron + p5.js — sketch controls and GIF export](https://antoineboucher.info/CV/blog/posts/kinectron-p5-sketch-gif/index.md) (2024-03): Wire up Kinectron with p5.js, play/stop the sketch, and save output as a GIF (Kinect v2 or Azure Kinect DK).
+- [Byzantium’s first workshop — Solidity and an ERC-20 token on Ethereum](https://antoineboucher.info/CV/blog/posts/byzantium-solidity-ethereum-workshop/index.md) (2024-03): Byzantium’s first Ethereum workshop — Remix and Sepolia, OpenZeppelin ERC-20, deploy a token, and swap transfers with the room. Led by Khalil Anis Zabat.
+- [Create a portfolio with Hugo (week 1)](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-week-1/index.md) (2024-01): Week one of a Hugo portfolio — HBTheme tradeoffs, data embeds, Substack split, iframe shortcode, and what I would do differently today.
+- [LiDAR apartment scan with Rhino on iPhone](https://antoineboucher.info/CV/blog/posts/rhino-lidar-apartment-scan/index.md) (2024-01): Room-by-room LiDAR with Rhino on iPhone — layout checks, limits of consumer scanning, and when it beats full CAD.
+- [My journey in software engineering](https://antoineboucher.info/CV/blog/posts/software-engineering-journey/index.md) (2023-12): From Flash games and Unity demos to Algolux, ÉTS capstones, co-ops, and today’s backend, platform, and DevSecOps work—a personal timeline with project links.
+- [Creating a professional résumé with JSON Resume](https://antoineboucher.info/CV/blog/posts/professional-resume-json-resume/index.md) (2022-09): Write your CV once in JSON, then export HTML or PDF with community themes—or wire the same data into a Hugo site.
+- [Snowflake Data-for-Breakfast Conference Insights](https://antoineboucher.info/CV/blog/posts/snowflake-data-for-breakfast/index.md) (2022-09): Expanded breakfast conference notes — healthcare scale, tax analytics, clean rooms, Infostrux keynote, and when a warehouse beats spreadsheets.
+- [Snapchat Lens Creator](https://antoineboucher.info/CV/blog/posts/snapchat-lens-creator/index.md) (2022-09): Snapchat lenses with millions of plays (2017-2020), Fiverr clients, a GIF-to-PNG tool, Lens Studio feedback, and 2026 Lens Insights totals.
+- [Run:ai on AWS — webinar notes (inference & autoscaling)](https://antoineboucher.info/CV/blog/posts/runai-aws-inference-webinar/index.md) (2022-09): Sketches from a Run:ai webinar — GPU inference on AWS, dashboards, CLI, and scaling models in shared clusters.
+- [Live chat and support platforms compared (3CX, ManyChat, Kommunicate, Chatwoot)](https://antoineboucher.info/CV/blog/posts/livechat-platform-notes/index.md) (2022-09): Notes from picking website chat, bots, and a team inbox—how 3CX, ManyChat, Kommunicate, and Chatwoot differ, with logos, a decision flow, and links.
+- [GitHub Copilot session at Cédille (with GitHub & Arctiq)](https://antoineboucher.info/CV/blog/posts/github-copilot-cedille-session/index.md) (2022-09): Cédille hosted GitHub and Arctiq for Copilot Chat, /createNotebook, and GitHub Next — expanded recap with photos and student takeaways.
+- [Expo Manger Santé 2023 — olives, kiosks, and discoveries](https://antoineboucher.info/CV/blog/posts/expo-manger-sante-2023/index.md) (2022-09): Two days at Montreal’s health-food expo — olive kiosk sales, vendor notes, photo credits, and products worth buying again.
+- [Diagram prompts with ChatGPT and AIPRM (PlantUML, Mermaid, and more)](https://antoineboucher.info/CV/blog/posts/chatgpt-airprm-sequence-diagrams/index.md) (2022-09): AIPRM prompt template for diagram type, elements, purpose, and tool — plus PlantUML and Mermaid sequence examples (React, FastAPI, Redis, MongoDB, cache hit/miss).
+- [D2C OpenAI plugin — diagrams with PlantUML, Mermaid, and D2](https://antoineboucher.info/CV/blog/posts/d2c-openai-diagram-plugin/index.md) (2022-09): ChatGPT plugin for PlantUML, Mermaid, and D2 diagrams — why I built it, install path, example prompts, and limits vs AIPRM templates.
+- [Skate rack — from CAD to plywood](https://antoineboucher.info/CV/blog/posts/skate-rack-cad-to-object/index.md) (2021-12): Vertical skate rack — shop-class welded frame detour, then Home Depot plywood, CAD slots, and a rental-friendly build, December 2021.
+- [Renpho scale, Home Assistant, and reverse-engineering the API](https://antoineboucher.info/CV/blog/posts/renpho-health-api-blueprint/index.md) (2021-10): Forking hass_renpho for Home Assistant — old Renpho app API, APKLeaks, Lovelace dashboards, proxy quirks, and habits that keep bio-impedance useful.
+- [Networking evolution — building a home network lab](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/index.md) (2021-09): Homelab evolution — Dell R710, closet wiring, Docker stacks, Caddy, WireGuard, Proxmox, and why I still draw the network on the wall.
+- [CodePen demos (collection)](https://antoineboucher.info/CV/blog/posts/codepen-demos-antoinebou13/index.md) (2017-01): Live CodePen embeds from the mid-2010s front-end era—forms, jQuery widgets, getDisplayMedia, Canvas blackboard, and a Three.js wave—in one bookmark.
 
-- Every blog page has a Markdown twin: append `index.md` to its URL (for example https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/index.md). Project briefs list the repository, verified technologies, getting-started commands, components, architecture edges, workflow, API routes and the files to read.
-- Section catalogs: https://antoineboucher.info/CV/blog/projects/index.md and https://antoineboucher.info/CV/blog/posts/index.md (French under /fr/).
+## Other sections
 
-## Blog (Hugo)
+- [Recipes](https://antoineboucher.info/CV/blog/recipes/): Recipe index with ingredients, timing, and cost notes—each post is one dish you can cook from this list.
+- [Search](https://antoineboucher.info/CV/blog/search/): search and tag browsing
+- [RSS feed](https://antoineboucher.info/CV/blog/index.xml)
+- [Search index (JSON)](https://antoineboucher.info/CV/blog/index.json)
 
-- [Blog home](https://antoineboucher.info/CV/blog/)
-- [Posts](https://antoineboucher.info/CV/blog/posts/)
-- [Projects](https://antoineboucher.info/CV/blog/projects/)
-- [Recipes](https://antoineboucher.info/CV/blog/recipes/)
-- [Search](https://antoineboucher.info/CV/blog/search/) — tag browse and site search
-- [English search index (JSON)](https://antoineboucher.info/CV/blog/index.json)
-- [French home](https://antoineboucher.info/CV/blog/fr/)
-- [French search index (JSON)](https://antoineboucher.info/CV/blog/fr/index.json)
+## For agents
 
-## Feeds
-
-- [RSS (English)](https://antoineboucher.info/CV/blog/index.xml)
-- [RSS (French)](https://antoineboucher.info/CV/blog/fr/index.xml)
-
-## Optional
-
-- [Intro call (Cal.com)](https://cal.com/antoine-boucher-dev/30min)
+- [llms-full.txt](https://antoineboucher.info/CV/blog/llms-full.txt): every project brief in one file
+- [Sitemap](https://antoineboucher.info/CV/sitemap.xml) · [robots.txt](https://antoineboucher.info/CV/robots.txt)
+- [Markdown map](https://antoineboucher.info/CV/.well-known/markdown-map.json) · [API catalog](https://antoineboucher.info/CV/.well-known/api-catalog) · [Agent skills](https://antoineboucher.info/CV/.well-known/agent-skills/index.json)
+- Policy: search indexing allowed; model training not allowed (see robots.txt, Content-Signal).

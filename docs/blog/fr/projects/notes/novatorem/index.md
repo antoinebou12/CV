@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/novatorem
 - Licence: Unlicense
 - Révision inspectée: 5496fe08e19da0da1042236b2600e77b6df39f5d
@@ -68,4 +69,5 @@ La récupération d’image désactive actuellement la vérification TLS avec ve
 - [api/orchestrator.py](https://github.com/antoinebou12/novatorem/blob/master/api/orchestrator.py)
 - [api/spotify.py](https://github.com/antoinebou12/novatorem/blob/master/api/spotify.py)
 - [api/lastfm.py](https://github.com/antoinebou12/novatorem/blob/master/api/lastfm.py)
+
 

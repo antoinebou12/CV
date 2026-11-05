@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/uml-mcp
 - Licence: MIT
 - Révision inspectée: ebaeac6eb6737639cd1fd5e92967408309a9a64d
@@ -111,4 +112,5 @@ Le rendu distant transmet la source du diagramme. Vérifiez le service utilisé 
 - [server.py](https://github.com/antoinebou12/uml-mcp/blob/main/server.py)
 - [mcp_core/core/server.py](https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/server.py)
 - [README.md](https://github.com/antoinebou12/uml-mcp/blob/main/README.md)
+
 

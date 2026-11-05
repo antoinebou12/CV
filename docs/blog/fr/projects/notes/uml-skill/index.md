@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/uml-skill
 - Licence: MIT
 - Révision inspectée: 05b27cdbe68ea3a9543b8ce8f66586b62194892a
@@ -91,4 +92,5 @@ La charge du lien est récupérable, sans chiffrement. Les instructions ne garan
 
 - [scripts/kroki_url.py](https://github.com/antoinebou12/uml-skill/blob/main/scripts/kroki_url.py)
 - [README.md](https://github.com/antoinebou12/uml-skill/blob/main/README.md)
+
 

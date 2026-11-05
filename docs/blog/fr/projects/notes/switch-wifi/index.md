@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/switch-wifi
 - Licence: MIT
 - Révision inspectée: 8ff883f6925c37b14b9683f8b933a9403654d08d
@@ -102,4 +103,5 @@ Une valeur radio inaccessible doit rester indisponible, sans devenir zéro. La c
 - [CMakeLists.txt](https://github.com/antoinebou12/switch-wifi/blob/main/CMakeLists.txt)
 - [src/core/metrics.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/core/metrics.cpp)
 - [src/main.cpp](https://github.com/antoinebou12/switch-wifi/blob/main/src/main.cpp)
+
 

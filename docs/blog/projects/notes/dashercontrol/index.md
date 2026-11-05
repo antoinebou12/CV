@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/DasherControl
 - License: MIT
 - Inspected revision: d5e4b5af44ce8a19025fd41569978f9a3b1b910d
@@ -120,4 +121,5 @@ Older create and delete routes use different authorization checks. This prototyp
 - [src/workspaces/handler.rs](https://github.com/antoinebou12/DasherControl/blob/main/src/workspaces/handler.rs)
 - [src/containers/docker.rs](https://github.com/antoinebou12/DasherControl/blob/main/src/containers/docker.rs)
 - [Cargo.toml](https://github.com/antoinebou12/DasherControl/blob/main/Cargo.toml)
+
 

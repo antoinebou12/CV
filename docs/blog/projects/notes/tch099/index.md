@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/TCH099
 - License: MIT
 - Inspected revision: a7323c88b2ae6c12d89ef685c6a4cf4325218afc
@@ -145,4 +146,5 @@ A route-level demonstration is not a full security review. Session handling, dat
 - [routes.php](https://github.com/antoinebou12/TCH099/blob/main/routes.php)
 - [router.php](https://github.com/antoinebou12/TCH099/blob/main/router.php)
 - [README.md](https://github.com/antoinebou12/TCH099/blob/main/README.md)
+
 

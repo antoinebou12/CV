@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/Pan-Tilt-Controller
 - Révision inspectée: b565efdf9d3fc83096d18c667b6d7a7e21383377
 
@@ -63,4 +64,5 @@ Ne chargez pas ce script avec du matériel connecté sans vérifier les mouvemen
 - [pantiltcontroller.py](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/pantiltcontroller.py)
 - [PTC-command.py](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/PTC-command.py)
 - [README.md](https://github.com/antoinebou12/Pan-Tilt-Controller/blob/master/README.md)
+
 

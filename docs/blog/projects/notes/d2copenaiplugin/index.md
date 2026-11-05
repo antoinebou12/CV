@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/D2COpenAIPlugin
 - License: MIT
 - Inspected revision: 7d15ee155d5f392b1d90192dc2e21ec479a6291a
@@ -134,4 +135,5 @@ The plugin manifest documents the original integration format. Its presence does
 - [app.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/app.py)
 - [kroki/kroki.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/kroki/kroki.py)
 - [mermaid/mermaid.py](https://github.com/antoinebou12/D2COpenAIPlugin/blob/main/mermaid/mermaid.py)
+
 

@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/novatorem
 - License: Unlicense
 - Inspected revision: 5496fe08e19da0da1042236b2600e77b6df39f5d
@@ -68,4 +69,5 @@ The image fetch currently disables TLS verification with verify=False. That dese
 - [api/orchestrator.py](https://github.com/antoinebou12/novatorem/blob/master/api/orchestrator.py)
 - [api/spotify.py](https://github.com/antoinebou12/novatorem/blob/master/api/spotify.py)
 - [api/lastfm.py](https://github.com/antoinebou12/novatorem/blob/master/api/lastfm.py)
+
 

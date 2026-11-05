@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/donneesqc-mcp
 - License: MIT
 - Inspected revision: 53a6ee4209c44ccfe360556a1b86c29d855f3e2f
@@ -90,4 +91,5 @@ Open-data catalogs and schemas can change. A successful catalog query does not p
 - [main.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/main.py)
 - [tools/__init__.py](https://github.com/antoinebou12/donneesqc-mcp/blob/main/tools/__init__.py)
 - [README.md](https://github.com/antoinebou12/donneesqc-mcp/blob/main/README.md)
+
 

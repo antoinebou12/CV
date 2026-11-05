@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/ComfyUI-UML
 - Révision inspectée: 1f1411580e0db67efd7a4ad669e42ba8677f546a
 
@@ -76,4 +77,5 @@ Le rendu Kroki transmet le texte au service configuré. Pour des schémas confid
 - [__init__.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/__init__.py)
 - [nodes/uml_diagram.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/uml_diagram.py)
 - [nodes/kroki_client.py](https://github.com/antoinebou12/ComfyUI-UML/blob/main/nodes/kroki_client.py)
+
 

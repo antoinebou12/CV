@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/AudioTranscript
 - License: MIT
 - Inspected revision: 91b458e4385f0be729d8af54d8b500dc9d00a274
@@ -72,4 +73,5 @@ Audio leaves the local machine for recognition. The code reuses fixed job and fi
 
 - [main.py](https://github.com/antoinebou12/AudioTranscript/blob/main/main.py)
 - [requirements.txt](https://github.com/antoinebou12/AudioTranscript/blob/main/requirements.txt)
+
 

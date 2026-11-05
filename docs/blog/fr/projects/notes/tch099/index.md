@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/TCH099
 - Licence: MIT
 - Révision inspectée: a7323c88b2ae6c12d89ef685c6a4cf4325218afc
@@ -145,4 +146,5 @@ Une démonstration de routes ne constitue pas une revue de sécurité. Sessions,
 - [routes.php](https://github.com/antoinebou12/TCH099/blob/main/routes.php)
 - [router.php](https://github.com/antoinebou12/TCH099/blob/main/router.php)
 - [README.md](https://github.com/antoinebou12/TCH099/blob/main/README.md)
+
 

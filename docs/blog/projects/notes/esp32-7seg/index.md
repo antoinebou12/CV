@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/ESP32-7SEG
 - License: MIT
 - Inspected revision: 6cac20eed8dc6293d011a0c8a8341654e0870b80
@@ -67,4 +68,5 @@ Hardware wiring, display support and Wi-Fi setup must be checked on the device. 
 - [src/display.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/display.cpp)
 - [src/web_server.cpp](https://github.com/antoinebou12/ESP32-7SEG/blob/main/src/web_server.cpp)
 - [platformio.ini](https://github.com/antoinebou12/ESP32-7SEG/blob/main/platformio.ini)
+
 

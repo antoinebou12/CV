@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/uml-mcp
 - License: MIT
 - Inspected revision: ebaeac6eb6737639cd1fd5e92967408309a9a64d
@@ -111,4 +112,5 @@ Remote rendering transmits the diagram source. Validate the renderer endpoint an
 - [server.py](https://github.com/antoinebou12/uml-mcp/blob/main/server.py)
 - [mcp_core/core/server.py](https://github.com/antoinebou12/uml-mcp/blob/main/mcp_core/core/server.py)
 - [README.md](https://github.com/antoinebou12/uml-mcp/blob/main/README.md)
+
 

@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/Dimension
 - Licence: MIT
 - Révision inspectée: 5281d0932aa99ea0d2c43e64c388b9256c75b126
@@ -133,4 +134,5 @@ La présence des modules ne prouve ni un moteur physique terminé ni des perform
 - [Cargo.toml](https://github.com/antoinebou12/Dimension/blob/main/Cargo.toml)
 - [mathlib/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/mathlib/src/lib.rs)
 - [render/src/lib.rs](https://github.com/antoinebou12/Dimension/blob/main/render/src/lib.rs)
+
 

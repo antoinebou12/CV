@@ -8,6 +8,7 @@
 - Publié: 2026-10-23
 - Mis à jour: 2026-10-23
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Dépôt: https://github.com/antoinebou12/antoinebou12
 - Licence: GPL-3.0
 - Révision inspectée: c519c6b47b35d3d391167aa43b6cf6cafe7d0435
@@ -55,4 +56,5 @@ Les services de badges peuvent tomber en panne ou devenir périmés. Un graphiqu
 - [README.md](https://github.com/antoinebou12/antoinebou12/blob/master/README.md)
 - [.github/workflows/update-readme.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/update-readme.yml)
 - [.github/workflows/github-profile-3d-contrib.yml](https://github.com/antoinebou12/antoinebou12/blob/master/.github/workflows/github-profile-3d-contrib.yml)
+
 

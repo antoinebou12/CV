@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/marketwatch
 - License: Apache-2.0
 - Inspected revision: 9a8bd76c464501f249aff141f1e105e7345155c6
@@ -87,4 +88,5 @@ The README reports broken login because of CAPTCHA. This historical client shoul
 - [marketwatch/game.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/game.py)
 - [marketwatch/__init__.py](https://github.com/antoinebou12/marketwatch/blob/main/marketwatch/__init__.py)
 - [README.md](https://github.com/antoinebou12/marketwatch/blob/main/README.md)
+
 

@@ -8,6 +8,7 @@
 - Published: 2026-10-23
 - Updated: 2026-10-23
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
+
 - Repository: https://github.com/antoinebou12/bloc
 - License: GPL-3.0
 - Inspected revision: 6c83c217d541b632fdb0b8acc998c37e6f910075
@@ -68,4 +69,5 @@ The S3 path makes one list_objects_v2 request without pagination. Uploading the 
 
 - [addon.py](https://github.com/antoinebou12/bloc/blob/main/addon.py)
 - [blender_manifest.toml](https://github.com/antoinebou12/bloc/blob/main/blender_manifest.toml)
+
 
