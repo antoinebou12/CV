@@ -68,8 +68,20 @@
         button.setAttribute('aria-pressed', button === active ? 'true' : 'false');
       }
     }
-    search.addEventListener('input', apply);
-    sort.addEventListener('change', () => { sortCards(); apply(); });
+    // Shareable state: filters, sort and query live in the URL hash and are restored on load.
+    function writeHash() {
+      const params = new URLSearchParams();
+      if (style) params.set('type', style);
+      if (domain) params.set('domain', domain);
+      if (origin) params.set('origin', origin);
+      if (sort.value !== 'stars') params.set('sort', sort.value);
+      if (search.value.trim()) params.set('q', search.value.trim());
+      const next = params.toString() ? '#' + params.toString() : location.pathname + location.search;
+      history.replaceState(null, '', next);
+    }
+    const applyAndRemember = () => { apply(); writeHash(); };
+    search.addEventListener('input', applyAndRemember);
+    sort.addEventListener('change', () => { sortCards(); applyAndRemember(); });
     explorer.querySelector('[data-repo-reset]').addEventListener('click', () => {
       search.value = '';
       style = '';
@@ -81,6 +93,7 @@
       pressGroup('[data-repo-origin]', explorer.querySelector('[data-repo-origin=""]'));
       sortCards();
       apply();
+      history.replaceState(null, '', location.pathname + location.search);
       search.focus();
     });
     function bindFilterGroup(selector, onPick) {
@@ -108,17 +121,29 @@
     bindFilterGroup('[data-repo-origin]', (button) => {
       origin = button.dataset.repoOrigin;
       pressGroup('[data-repo-origin]', button);
-      apply();
+      applyAndRemember();
     });
     bindFilterGroup('[data-repo-style]', (button) => {
       style = button.dataset.repoStyle;
       pressGroup('[data-repo-style]', button);
-      apply();
+      applyAndRemember();
     });
     bindFilterGroup('[data-repo-domain]', (button) => {
       domain = button.dataset.repoDomain;
       pressGroup('[data-repo-domain]', button);
-      apply();
+      applyAndRemember();
     });
+    // Restore a shared state from the hash (#type=…&domain=…&origin=…&sort=…&q=…).
+    (function restore() {
+      const params = new URLSearchParams(location.hash.replace(/^#/, ''));
+      if (![...params.keys()].length) return;
+      const pick = (selector, value) => { const button = explorer.querySelector(`${selector}="${CSS.escape(value)}"]`); if (button) { pressGroup(selector + ']', button); return true; } return false; };
+      if (params.get('type') && pick('[data-repo-style', params.get('type'))) style = params.get('type');
+      if (params.get('domain') && pick('[data-repo-domain', params.get('domain'))) domain = params.get('domain');
+      if (params.get('origin') && pick('[data-repo-origin', params.get('origin'))) origin = params.get('origin');
+      if (params.get('sort') && [...sort.options].some(o => o.value === params.get('sort'))) { sort.value = params.get('sort'); sortCards(); }
+      if (params.get('q')) search.value = params.get('q');
+      apply();
+    })();
   }
 </script>

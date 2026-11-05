@@ -59,7 +59,7 @@ def main():
                     page.write_text(updated, encoding="utf-8")
             presentation.unlink()
         shutil.copytree(site / "blog/.well-known", site / ".well-known")
-        for name in ("robots.txt", "sitemap.xml", "llms.txt"):
+        for name in ("robots.txt", "sitemap.xml", "llms.txt", "llms-full.txt"):
             shutil.copy2(site / "blog" / name, site / name)
         if (ROOT / "hugo/static/_headers").exists():
             shutil.copy2(ROOT / "hugo/static/_headers", site / "_headers")
