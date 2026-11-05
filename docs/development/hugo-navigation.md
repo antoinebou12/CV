@@ -42,6 +42,12 @@ Behavior added in this project’s partial:
 - **Escape** closes the menu.
 - **Activating any link** inside `.nav-wrapper` closes the menu (mainly for mobile).
 
+## Tag landing pages and the 404
+
+A tag that is also a menu destination (today: **Conference**) gets an index file in `hugo/content/tags/<tag>/_index.md` and `_index.fr.md`. Two front-matter keys drive the header: `eyebrow` replaces the generic "Tag" label and `description` becomes a short lede above the page count and the all-tags link. Tags without an index file keep the generic header.
+
+`hugo/layouts/404.html` renders a bilingual not-found page (Articles, Projects, Search, CV) from the `notFound*` keys in `hugo/i18n/*.toml`. On GitHub Pages the root `404.html` of the repository is served for every missing path, including blog URLs, so its links are absolute.
+
 ## Dark mode
 
 Also in `header.html`’s inline script:
