@@ -16,7 +16,7 @@ Salary is an AlgoÉTS data project about pay in Canada. It turns recruitment-fir
 
 ## Overview {#overview}
 
-The PDF path is handled by one script per guide edition. `src/pdf_salary_scraper_2023_1.py` and `src/pdf_salary_scraper_2024_1.py` read a guide in `data/pdf/` with PyPDF2, track the current province and region from fixed name lists, split each line into a job title and three salary ranges (entry, mid and senior, in thousands of dollars) and save the result as a pickle in `data/pickle/`. `src/pdf.py` is an earlier PyMuPDF experiment that tags text by font size to find headings.
+The PDF path is handled by one script per guide edition. `src/pdf_salary_scraper_2023_1.py` and `src/pdf_salary_scraper_2024_1.py` read a guide in `data/pdf/` with PyPDF2, track the current province and region from fixed name lists, split each line into a job title and three salary ranges (entry, mid and senior) and save the result as a pickle in `data/pickle/`. `src/pdf.py` is an earlier PyMuPDF experiment that tags text by font size to find headings.
 
 `src/wages_in_time.py` loads the Job Bank wage files `data/csv/wage_2012.csv` to `wage_2022.csv` with Polars, harmonizes column names across years, caches the combined table in `data/pickle/wages.pkl` and prints the best-paid jobs per year and the best-paid engineering jobs per province. `src/stackoverflow_scraper.py` scrapes the salary table of the 2022 Stack Overflow survey.
 
@@ -48,12 +48,12 @@ uvicorn app:app --reload
 
 ## Repository guide {#reader-guide}
 
-- `src/pdf_salary_scraper_2023_1.py`, `src/pdf_salary_scraper_2024_1.py` extract the Randstad-style guides; the `_2` and `generic_wip` scripts are function-based variants.
+- `src/pdf_salary_scraper_2023_1.py` and `src/pdf_salary_scraper_2024_1.py` extract the 2023 and 2024 guides (the README names Randstad as the source); the `_2` and `generic_wip` scripts are function-based variants.
 - `src/wages_in_time.py` combines the 2012–2022 Job Bank wage tables.
 - `src/stackoverflow_scraper.py` scrapes the Stack Overflow survey salary table.
 - `src/analyse.py` and `src/utils.py` hold analysis and pickle helpers; `src/__init__.py` lists provinces and regions.
 - `sandbox/` contains the 2023 and 2024 exploration notebooks and a 2023-to-2024 comparison.
-- `data/pdf/`, `data/csv/`, `data/pickle/` and `data/geo/` hold source guides, wage tables, extracted pickles and province shapefiles; `data/csv/README.md` documents the wage columns.
+- `data/pdf/`, `data/csv/`, `data/pickle/` and `data/geo/` hold source guides from several recruitment firms, wage tables, extracted pickles and province shapefiles; `data/csv/README.md` documents the wage columns.
 - `api/` contains the FastAPI app, Dockerfile, Compose file and deployment notes.
 - `web/index.html` shows 2023 results as static text; `web/job_search.html` is a search form mock-up.
 

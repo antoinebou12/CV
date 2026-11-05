@@ -1,7 +1,7 @@
 ---
 title: "WearSurfacesDatasets : des séquences mesurées de surfaces usées"
 date: 2026-11-05T12:00:00-05:00
-description: "Cartes de surface GelSight de matériaux usés selon le grain, la charge et la distance, en Parquet et WebDataset, avec outils d’alignement et visionneuse WebGPU."
+description: "Cartes GelSight de matériaux usés selon le grain, la charge et la distance, en Parquet et WebDataset, avec outils d’alignement et visionneuse WebGPU."
 translationKey: repository-note-wearsurfacesdatasets
 repository_note: "WearSurfacesDatasets"
 ---
