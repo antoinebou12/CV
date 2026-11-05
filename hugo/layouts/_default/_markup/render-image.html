@@ -7,8 +7,11 @@
 {{- $alt := .Text | plainify -}}
 {{- $res := "" -}}
 {{- if not (or (hasPrefix $dest "http") (hasPrefix $dest "//")) -}}
+  {{- /* Bundle resources are shared between translations: the English page owns the published files. */ -}}
+  {{- $owner := .Page -}}
+  {{- range .Page.AllTranslations }}{{ if eq .Lang "en" }}{{ $owner = . }}{{ end }}{{ end -}}
   {{- $clean := strings.TrimPrefix "./" $dest -}}
-  {{- with .Page.Resources.GetMatch $clean -}}{{ $res = . }}{{ end -}}
+  {{- with $owner.Resources.GetMatch $clean -}}{{ $res = . }}{{ end -}}
 {{- end -}}
 {{- $isRaster := false -}}
 {{- with $res -}}{{- if not (in (slice "gif" "svg" "svg+xml") .MediaType.SubType) -}}{{- $isRaster = true -}}{{- end -}}{{- end -}}
@@ -28,6 +31,6 @@
   {{- $set = $set | append (printf "%s %dw" $main.RelPermalink $main.Width) -}}
   <img src="{{ $main.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="(max-width: 840px) calc(100vw - 48px), 800px" width="{{ $main.Width }}" height="{{ $main.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async" data-full="{{ $res.RelPermalink }}" />
 {{- else -}}
-  <img src="{{ $dest | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ with $res }}{{ if eq .MediaType.SubType "gif" }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }} />
+  <img src="{{ with $res }}{{ .RelPermalink }}{{ else }}{{ $dest | safeURL }}{{ end }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ with $res }}{{ if eq .MediaType.SubType "gif" }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }} />
 {{- end -}}
 {{- if $figure }}<figcaption>{{ $figure | markdownify }}</figcaption></figure>{{ end -}}

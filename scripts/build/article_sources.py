@@ -74,7 +74,7 @@ def main():
                 date = re.search(r'^date:\s*(\d{4}-\d{2}-\d{2})', article_path.read_text(encoding='utf-8'), re.M)
                 records.append({'author': 'Boucher, A.', 'title': article['title'], 'type': 'Project article',
                                 'publisher': 'antoineboucher.info', 'date': date[1] if date else '',
-                                'url': 'https://antoineboucher.info/CV/blog/' + ('fr/' if lang == 'fr' else '') + article['path'].rsplit('/', 1)[0] + '/'})
+                                'url': 'https://antoineboucher.info/CV/blog/' + ('fr/' if lang == 'fr' else '') + article['path'].rsplit('/', 1)[0].lower() + '/'})
         else:
             records = sources(path.read_text(encoding='utf-8').split('---', 2)[-1])
         projects[path.relative_to(ROOT / 'hugo/content').as_posix()] = records

@@ -1,4 +1,21 @@
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /*
+  Relative links inside a page bundle (Mermaid sources, slides, workflow JSON, SVGs)
+  resolve to the bundle resource. Resources are shared between translations, so the
+  default-language page owns the published copy and French pages link to it instead of
+  publishing a second one. Citations to listed article sources get a numbered marker.
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $href := $dest -}}
+{{- if and $dest (not (or (hasPrefix $dest "http") (hasPrefix $dest "//") (hasPrefix $dest "/") (hasPrefix $dest "#") (hasPrefix $dest "mailto:") (hasPrefix $dest "tel:"))) -}}
+  {{- $owner := .Page -}}
+  {{- range .Page.AllTranslations }}{{ if eq .Lang "en" }}{{ $owner = . }}{{ end }}{{ end -}}
+  {{- $clean := strings.TrimPrefix "./" (index (split $dest "#") 0) -}}
+  {{- with $owner.Resources.GetMatch $clean -}}
+    {{- $href = .RelPermalink -}}
+    {{- with index (split $dest "#") 1 }}{{ $href = printf "%s#%s" $href . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- if and (eq .Page.Section "posts") .Page.File -}}
   {{- $url := .Destination -}}
   {{- range $n, $source := index hugo.Data.article_sources (replace .Page.File.Path "\\" "/") -}}
