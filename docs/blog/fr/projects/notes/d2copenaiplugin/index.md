@@ -69,12 +69,6 @@ python app.py
 pip install plantumlapi
 ```
 
-### plantuml/README.md · Installation
-
-```bash
-pip install git+https://github.com/antoinebou12/plantumlapi
-```
-
 ### plantuml/README.md · Command Line Usage
 
 ```bash

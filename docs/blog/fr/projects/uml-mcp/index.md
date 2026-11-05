@@ -36,4 +36,3 @@ Suivre le README pour les dépendances Python et la config MCP Cursor.
 ## Voir aussi
 
 - [D2COpenAIPlugin](https://antoineboucher.info/CV/blog/fr/projects/d2copenaiplugin/) — voie plugin ChatGPT antérieure
-- [PlantUMLAPI](https://antoineboucher.info/CV/blog/fr/projects/plantumlapi/) — client Python PlantUML prédécesseur

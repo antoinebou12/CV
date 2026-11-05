@@ -9,7 +9,7 @@
 - Updated: 2026-10-24
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
-- Repository: https://github.com/antoinebou12/AINewsTracker
+- Repository: https://github.com/AlgoETS/AINewsTracker
 
 
 

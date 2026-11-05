@@ -9,7 +9,7 @@
 - Mis à jour: 2026-10-24
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
-- Dépôt: https://github.com/antoinebou12/BatchBacktesting
+- Dépôt: https://github.com/AlgoETS/BatchBacktesting
 
 
 

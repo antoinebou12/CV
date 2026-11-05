@@ -128,20 +128,10 @@ Each entry links the HTML page and its Markdown view (append `index.md` to the U
   Docker Compose homelab stack—downloads, *Arr automation, Plex/Jellyfin, VPN, Samba, and ops dashboards—with paths driven from the repo.
 - [HDR-10bpp-Display-Test](https://antoineboucher.info/CV/blog/projects/hdr-10bpp-display-test/) — [Markdown](https://antoineboucher.info/CV/blog/projects/hdr-10bpp-display-test/index.md) · 2024-01-01
   A test to verify HDR 4K display on Linux with 10-bit color depth.
-- [Portfolio](https://antoineboucher.info/CV/blog/projects/porfolio/) — [Markdown](https://antoineboucher.info/CV/blog/projects/porfolio/index.md) · 2023-12-30
-  A personal portfolio website built with Hugo.
-- [WordUnveil](https://antoineboucher.info/CV/blog/projects/wordunveil/) — [Markdown](https://antoineboucher.info/CV/blog/projects/wordunveil/index.md) · 2021-09-06
-  Multilingual Wordle-style game built with RedwoodJS, GraphQL, and Prisma.
 - [Serilog.Sinks.SentrySDK](https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/) — [Markdown](https://antoineboucher.info/CV/blog/projects/serilog.sinks.sentrysdk/index.md) · 2021-09-06
   A Serilog sink that writes events to Sentry using Sentry SDK.
 - [RawAnalyser](https://antoineboucher.info/CV/blog/projects/rawanalyser/) — [Markdown](https://antoineboucher.info/CV/blog/projects/rawanalyser/index.md) · 2021-09-06
   Python tool for raw image analysis: clipping, gamma, vignette, and Bayer pixel inspection.
-- [PlantUMLApi](https://antoineboucher.info/CV/blog/projects/plantumlapi/) — [Markdown](https://antoineboucher.info/CV/blog/projects/plantumlapi/index.md) · 2021-09-06
-  Python client for generating diagrams via a PlantUML server.
-- [Movie Trailer Analyzer](https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/) — [Markdown](https://antoineboucher.info/CV/blog/projects/movietraileranalyzer/index.md) · 2021-09-06
-  Tools and workflows for analyzing movie trailers (see repository for details).
-- [File Classifier](https://antoineboucher.info/CV/blog/projects/fileclassifier/) — [Markdown](https://antoineboucher.info/CV/blog/projects/fileclassifier/index.md) · 2021-09-06
-  Python CLI that organizes files into categories by type, with optional topic modeling.
 - [DasherControl](https://antoineboucher.info/CV/blog/projects/dashcontrol/) — [Markdown](https://antoineboucher.info/CV/blog/projects/dashcontrol/index.md) · 2021-09-06
   Vue and Rust dashboard for dockerized homelab apps, workspaces, and applets.
 - [D2COpenAIPlugin](https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/) — [Markdown](https://antoineboucher.info/CV/blog/projects/d2copenaiplugin/index.md) · 2021-09-06

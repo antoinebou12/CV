@@ -128,24 +128,14 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
   Stack homelab Docker Compose—téléchargements, suite *Arr, Plex/Jellyfin, VPN, Samba et supervision—chemins pilotés par le dépôt.
 - [HDR-10bpp-Display-Test](https://antoineboucher.info/CV/blog/fr/projects/hdr-10bpp-display-test/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/hdr-10bpp-display-test/index.md) · 2024-01-01
   Test d’affichage HDR 4K sous Linux avec profondeur 10 bits par canal.
-- [Portfolio](https://antoineboucher.info/CV/blog/fr/projects/porfolio/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/porfolio/index.md) · 2023-12-30
-  Site portfolio personnel réalisé avec Hugo.
-- [WordUnveil](https://antoineboucher.info/CV/blog/fr/projects/wordunveil/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/wordunveil/index.md) · 2021-09-06
-  Jeu multilingue façon Wordle avec RedwoodJS, GraphQL et Prisma.
 - [Serilog.Sinks.SentrySDK](https://antoineboucher.info/CV/blog/fr/projects/serilog.sinks.sentrysdk/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/serilog.sinks.sentrysdk/index.md) · 2021-09-06
   Sink Serilog qui envoie les événements vers Sentry via le SDK Sentry.
 - [RawAnalyser](https://antoineboucher.info/CV/blog/fr/projects/rawanalyser/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/rawanalyser/index.md) · 2021-09-06
   Outil Python pour analyser des images RAW : clipping, gamma, vignettage, pixels Bayer.
-- [PlantUMLApi](https://antoineboucher.info/CV/blog/fr/projects/plantumlapi/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/plantumlapi/index.md) · 2021-09-06
-  Client Python pour générer des diagrammes via un serveur PlantUML.
 - [DasherControl](https://antoineboucher.info/CV/blog/fr/projects/dashcontrol/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/dashcontrol/index.md) · 2021-09-06
   Tableau de bord Vue et Rust pour homelab Docker : apps, espaces de travail et applets.
 - [D2COpenAIPlugin](https://antoineboucher.info/CV/blog/fr/projects/d2copenaiplugin/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/d2copenaiplugin/index.md) · 2021-09-06
   Extension ChatGPT pour générer des diagrammes PlantUML ou Mermaid.
-- [Classificateur de fichiers](https://antoineboucher.info/CV/blog/fr/projects/fileclassifier/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/fileclassifier/index.md) · 2021-09-06
-  CLI Python qui classe les fichiers par type, avec modélisation de sujets optionnelle.
-- [Analyseur de bandes-annonces](https://antoineboucher.info/CV/blog/fr/projects/movietraileranalyzer/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/movietraileranalyzer/index.md) · 2021-09-06
-  Outils et pipelines pour analyser des bandes-annonces de films.
 - [Bibliothèque Python MarketWatch](https://antoineboucher.info/CV/blog/fr/projects/marketwatch/) — [Markdown](https://antoineboucher.info/CV/blog/fr/projects/marketwatch/index.md) · 2021-09-06
   Bibliothèque Python pour interagir avec le jeu boursier MarketWatch.
 
