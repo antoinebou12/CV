@@ -3,7 +3,7 @@ image_alt: "Homelab overview"
 post_kind: article
 title: "Networking evolution — building a home network lab"
 date: 2021-09-06T10:00:00-04:00
-lastmod: 2026-05-22T18:00:00-04:00
+lastmod: 2026-11-05T12:00:00-05:00
 description: "Homelab evolution — Dell R710, closet wiring, Docker stacks, Caddy, WireGuard, Proxmox, and why I still draw the network on the wall."
 translationKey: home-networking-evolution
 tags:
@@ -61,7 +61,7 @@ The Lucidchart diagram was the “explain to a roommate” version — which sub
 
 ## Remote access and edge
 
-**Caddy** as reverse proxy; public exposure through an **OVH** front so home IP is not the only line of defense. Automatic HTTPS mattered more than I expected — fewer manual cert renewals, fewer late-night openssl commands. I later mirrored that habit on AWS; see **[Caddy + EC2 + CloudWatch]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}})**.
+**Caddy** as reverse proxy; public exposure through an **OVH** front so home IP is not the only line of defense. Remote admin and service health became part of the same job as making a service reachable. Automatic HTTPS mattered more than I expected — fewer manual cert renewals, fewer late-night openssl commands. I later mirrored that habit on AWS; see **[Caddy + EC2 + CloudWatch]({{< ref "/posts/caddy-ec2-cloudwatch-lambda/index.md" >}})**.
 
 **WireGuard** for VPN — annoying to configure the first time, fast once up. I contributed small setup helpers so friends could connect without reading man pages for a week. Split-tunnel vs full-tunnel was the debate every guest had; document your choice on the wiki page you will forget to update.
 
