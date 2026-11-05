@@ -76,9 +76,24 @@ html.dark .blog-site .btn-dark .theme-moon { display: none !important; }
 .site-social-icon { display: inline-block !important; flex-shrink: 0 !important; width: 18px !important; height: 18px !important; background: var(--url) center / contain no-repeat !important; }
 html.dark .site-social-icon { filter: invert(1) !important; }
 
-/* Footer shares the canvas and the brand type */
-.blog-site .site-footer { width: min(100%, 1170px) !important; max-width: none !important; margin: 0 auto !important; padding: 24px !important; color: #e0e7ec !important; opacity: 1 !important; font-family: var(--type-body, 'Open Sans', system-ui, sans-serif) !important; }
-.blog-site .site-footer a { color: inherit !important; }
+/* Footer: four-column directory on the canvas, matching the header rhythm. */
+.blog-site .site-footer { display: block !important; width: min(100%, 1170px) !important; max-width: none !important; height: auto !important; margin: 0 auto !important; padding: 40px 24px calc(96px + env(safe-area-inset-bottom)) !important; color: #dfe7ee !important; opacity: 1 !important; font: 400 14px/1.6 var(--type-body, 'Open Sans', system-ui, sans-serif) !important; letter-spacing: 0 !important; text-transform: none !important; }
+.blog-site .site-footer-grid { display: grid !important; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) !important; gap: 32px 40px !important; }
+.blog-site .site-footer-brand p { margin: 8px 0 0 !important; max-width: 38ch !important; color: #c3d0da !important; }
+.blog-site .site-footer-name { display: inline-block !important; color: #fff !important; font: 700 1.15rem/1.3 var(--type-display, 'Fraunces', Georgia, serif) !important; text-decoration: none !important; }
+.blog-site .site-footer-copy { font-size: 12px !important; color: #9fb0bd !important; }
+.blog-site .site-footer-label { margin: 0 0 10px !important; color: #9fb0bd !important; font: 700 11px/1.4 var(--type-body, system-ui, sans-serif) !important; letter-spacing: .12em !important; text-transform: uppercase !important; }
+.blog-site .site-footer-col { display: grid !important; gap: 4px !important; align-content: start !important; }
+.blog-site .site-footer-col a { display: inline-flex !important; align-items: center !important; min-height: 32px !important; width: fit-content !important; color: #e8eef3 !important; text-decoration: none !important; border-bottom: 1px solid transparent !important; }
+.blog-site .site-footer-col a:hover { color: #fff !important; border-bottom-color: var(--chrome-accent) !important; }
+.blog-site .site-footer a:focus-visible { outline: 2px solid #fff !important; outline-offset: 3px !important; }
+@media (max-width: 1023.98px) { .blog-site .site-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } .blog-site .site-footer-brand { grid-column: 1 / -1 !important; } }
+@media (max-width: 480px) { .blog-site .site-footer-grid { grid-template-columns: minmax(0, 1fr) !important; } }
+html:not(.dark) body.blog-site:has(.repo-doc) .site-footer { color: #3d4f5f !important; }
+html:not(.dark) body.blog-site:has(.repo-doc) .site-footer :is(.site-footer-name, .site-footer-col a) { color: #192a3c !important; }
+html:not(.dark) body.blog-site:has(.repo-doc) .site-footer :is(.site-footer-brand p, .site-footer-copy, .site-footer-label) { color: #4e6070 !important; }
+html:not(.dark) body.blog-site:has(.repo-doc) .site-footer-col a:hover { color: #006a62 !important; border-bottom-color: #006a62 !important; }
+html:not(.dark) body.blog-site:has(.repo-doc) .site-footer a:focus-visible { outline-color: #227c74 !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .blog-site .site-pill, .site-menu-bars i { transition: none !important; }

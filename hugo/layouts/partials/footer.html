@@ -1,16 +1,32 @@
-<footer
-  class="site-footer mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"
->
-  <div class="mr-auto">
-    {{- if site.Copyright -}} {{- site.Copyright -}} {{- else -}} &copy; {{-
-    now.Year }}
-    <a class="link" href="{{- `` | absURL -}}">{{- site.Title -}}</a>
-    {{- end -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $cvHome := cond $fr "https://antoineboucher.info/CV/index-fr.html" "https://antoineboucher.info/CV/index-en.html" -}}
+<footer class="site-footer" aria-label="{{ if $fr }}Pied de page{{ else }}Site footer{{ end }}">
+  <div class="site-footer-grid">
+    <div class="site-footer-brand">
+      <a class="site-footer-name" href="{{ site.Home.Permalink }}">{{ site.Title }}</a>
+      <p>{{ with site.Params.bio }}{{ . }}{{ end }}</p>
+      <p class="site-footer-copy">&copy; {{ now.Year }} {{ site.Title }} · Montréal</p>
+    </div>
+    <nav class="site-footer-col" aria-label="{{ if $fr }}Sections{{ else }}Sections{{ end }}">
+      <p class="site-footer-label">{{ if $fr }}Explorer{{ else }}Explore{{ end }}</p>
+      {{- range site.Menus.main }}
+      <a href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end }}">{{ .Name }}</a>
+      {{- end }}
+      <a href="{{ $cvHome }}">CV</a>
+    </nav>
+    <nav class="site-footer-col" aria-label="{{ if $fr }}Profils{{ else }}Profiles{{ end }}">
+      <p class="site-footer-label">{{ if $fr }}Profils{{ else }}Profiles{{ end }}</p>
+      {{- with site.Params.github }}<a href="https://github.com/{{ . }}" rel="me noopener" target="_blank">GitHub</a>{{ end }}
+      {{- with site.Params.linkedin }}<a href="https://linkedin.com/in/{{ . }}" rel="me noopener" target="_blank">LinkedIn</a>{{ end }}
+      <a href="{{ `index.xml` | absURL }}" rel="alternate" type="application/rss+xml">RSS</a>
+      <a href="https://cal.com/antoine-boucher-dev/30min" rel="noopener" target="_blank">{{ if $fr }}Prendre rendez-vous{{ else }}Book a call{{ end }}</a>
+    </nav>
+    <nav class="site-footer-col" aria-label="{{ if $fr }}Pour les agents{{ else }}For agents{{ end }}">
+      <p class="site-footer-label">{{ if $fr }}Lecture brute{{ else }}Raw reading{{ end }}</p>
+      {{- with .OutputFormats.Get "Context" }}<a href="{{ .Permalink }}" type="text/markdown">{{ if $fr }}Cette page en Markdown{{ else }}This page as Markdown{{ end }}</a>{{ end }}
+      <a href="{{ `llms.txt` | relURL }}">llms.txt</a>
+      <a href="{{ `sitemap.xml` | relURL }}">Sitemap</a>
+      <a href="https://gohugo.io/" rel="noopener" target="_blank">{{ if $fr }}Propulsé par Hugo{{ else }}Powered by Hugo{{ end }}</a>
+    </nav>
   </div>
-  {{- with .OutputFormats.Get "Context" }}
-  <a class="link mx-6" href="{{ .Permalink }}" type="text/markdown" title="{{ if eq $.Lang "fr" }}Version Markdown de cette page pour les agents et la lecture brute{{ else }}Markdown view of this page for agents and raw reading{{ end }}">Markdown</a>
-  {{- end }}
-  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo</a
-  >
 </footer>
