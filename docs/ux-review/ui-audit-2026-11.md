@@ -87,16 +87,18 @@ Pages: home, posts list, article, projects catalog, project note (uml-mcp, Flash
 6. **Filter state in the URL** — catalog and stars filters reset on reload and cannot be shared; encode type/domain/query in the hash. *Open.* (`31-patterns-navigation.md` → Navigation Audit; `11-checklist-fidelity.md` → Navigation)
 7. **Off-scale spacing** — move 22px/14px values in the catalog onto the 4/8 scale. *Open.* (`12-checklist-visual-style.md` → Spacing)
 
-## Scores at the time of the audit
+## Scores after the fixes (Lighthouse 12, mobile emulation, local static server)
 
-| Page | Performance | Accessibility | Best practices | SEO |
-| --- | --- | --- | --- | --- |
-| Blog home | 79–83 | 100 | 100 | 100 |
-| Article (uml-mcp) | 84–90 | 100 | 96* | 100 |
-| Project note (uml-mcp) | 55–68 | 100 | 100 | 100 |
-| CV (index-en.html) | 66–73 | 100 | 96* | 100 |
+| Page | Performance | Accessibility | Best practices | SEO | CLS |
+| --- | --- | --- | --- | --- | --- |
+| Blog home | 83 | 100 | 100 | 100 | 0.000 |
+| Posts list | 77 | 100 | 100 | 100 | 0.000 |
+| Article (uml-mcp) | 83 | 100 | 96* | 100 | 0.022 |
+| Projects catalog | 78 | 100 | 100 | 100 | 0.000 |
+| Project note (uml-mcp) | 70 | 100 | 100 | 100 | 0.000 |
+| CV (index-en.html) | 73 | 100 | 96* | 100 | 0.060 |
 
-*Console errors in the sandbox come from blocked third-party hosts (mermaid CDN, shields.io), not from the pages. Project note performance is bounded by page weight (12 open diagrams, 3,600 DOM nodes); diagrams now render only near the viewport.
+Before this work the same pages measured 63–75 performance, 90–96 accessibility and a 0.42 layout shift on project notes (phone). *Console errors in the sandbox come from blocked third-party hosts (mermaid CDN, shields.io), not from the pages. Project notes are bounded by page weight (open diagrams, ~3,600 DOM nodes); diagrams render only near the viewport.
 
 ```json
 {
