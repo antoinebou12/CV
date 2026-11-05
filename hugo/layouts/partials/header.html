@@ -44,9 +44,11 @@
         <a class="site-pill" href="{{- with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end -}}"{{ if $current }} aria-current="page"{{ end }}>{{- .Name -}}</a>
         {{- end -}}
         {{- with site.GetPage "/stars" }}{{ if hugo.Data.github_stars }}<a class="site-pill" href="{{ .RelPermalink }}"{{ if eq . $ }} aria-current="page"{{ end }}>{{ if $fr }}Étoiles{{ else }}Stars{{ end }}</a>{{ end }}{{ end -}}
-        <a class="site-pill site-pill-cv" href="{{ $cvHome }}">{{ i18n "navCvHome" }}</a>
       </nav>
       {{- end -}}
+      <nav class="site-cv-link site-nav-group" aria-label="{{ i18n "navCvHome" }}">
+        <a class="site-pill site-pill-cv" href="{{ $cvHome }}">{{ i18n "navCvHome" }}</a>
+      </nav>
       <nav class="site-lang-switch site-nav-group" aria-label="{{ i18n "langCvNav" }}">
         {{- range sort .AllTranslations "Lang" -}}
           {{- $label := .Language.LanguageName | default (.Lang | upper) -}}
