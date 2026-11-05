@@ -120,6 +120,12 @@
             {{ range first 1 ($editorial.links | default slice) }}
             <a class="btn ghost" href="{{ .url }}">{{ index .label $i }}</a>
             {{ end }}
+            {{ with .Page.OutputFormats.Get "Context" }}
+            <a class="btn ghost" href="{{ .Permalink }}" type="text/markdown" title="{{ if $fr }}Fiche Markdown de ce projet (contexte pour agents){{ else }}Markdown brief of this project (agent context){{ end }}">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5v-9ZM4 5v6h1.5V8l1.5 2 1.5-2v3H10V5H8.5L7 7 5.5 5H4Zm7 0v3.5H9.5L11.5 11l2-2.5H12V5h-1Z"/></svg>
+              Markdown
+            </a>
+            {{ end }}
           </div>
         </div>
       </header>

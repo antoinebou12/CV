@@ -77,3 +77,12 @@
 .repo-doc .repo-lang-dot.i1 { background:#779aca!important; }
 .repo-doc .repo-lang-dot.i2 { background:#b39558!important; }
 .repo-doc .repo-lang-dot.i3 { background:#a28fc9!important; }
+/* Phones: the three snapshot numbers sit in one compact row instead of three tall cards. */
+@media(max-width:600px) {
+ .repo-doc .repo-snapshot-cards:not(#\#):not(#\#):not(#\#):not(#\#) { grid-template-columns:repeat(3,minmax(0,1fr)); gap:.5rem; margin:0 0 1.25rem; }
+ .repo-doc .repo-snapshot-cards > div:not(#\#):not(#\#):not(#\#):not(#\#) { padding:.75rem .6rem; border-radius:12px; }
+ .repo-doc .repo-snapshot-cards dt:not(#\#):not(#\#):not(#\#):not(#\#) { font-size:11px; line-height:1.35; min-height:2.7em; }
+ .repo-doc .repo-snapshot-cards .repo-snapshot-value:not(#\#):not(#\#):not(#\#):not(#\#) { font-size:1.5rem; }
+ .repo-doc .repo-snapshot-cards dd:not(#\#):not(#\#):not(#\#):not(#\#) { margin-top:.25rem; font-size:12px; }
+ .repo-doc .repo-snapshot-cards a:not(#\#):not(#\#):not(#\#):not(#\#) { min-height:28px; font-size:12px; }
+}

@@ -2262,3 +2262,9 @@ html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
   .repo-doc .repo-sidenav .repo-sidenav-label:not(#\#):not(#\#):not(#\#) { display: none !important; }
   .repo-doc .repo-sidenav ol a:not(#\#):not(#\#):not(#\#) { min-height: 44px; }
 }
+
+/* Before the navigation script runs on phones, keep the open disclosure visually collapsed
+   so closing it does not move the content below (no layout shift). JS-less pages are unaffected. */
+@media (max-width: 760px) {
+  html.js .repo-sidenav-disclosure[open]:not([data-nav-adapted]):not(#\#):not(#\#):not(#\#):not(#\#) > .repo-sidenav { display: none !important; }
+}

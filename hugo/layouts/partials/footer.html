@@ -7,6 +7,9 @@
     <a class="link" href="{{- `` | absURL -}}">{{- site.Title -}}</a>
     {{- end -}}
   </div>
+  {{- with .OutputFormats.Get "Context" }}
+  <a class="link mx-6" href="{{ .Permalink }}" type="text/markdown" title="{{ if eq $.Lang "fr" }}Version Markdown de cette page pour les agents et la lecture brute{{ else }}Markdown view of this page for agents and raw reading{{ end }}">Markdown</a>
+  {{- end }}
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
     >Powered by Hugo</a
   >

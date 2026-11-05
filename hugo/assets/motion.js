@@ -27,7 +27,7 @@
     else observer.observe(node);
   });
   reduce.addEventListener('change', () => { if (reduce.matches) { observer.disconnect(); showAll(); } });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) return; });
+  addEventListener('beforeprint', showAll);
   // Opening a disclosure reveals what it contains without waiting for a scroll.
   document.addEventListener('toggle', (event) => {
     if (event.target.open) event.target.querySelectorAll('[data-reveal]').forEach((node) => node.classList.add('is-visible'));

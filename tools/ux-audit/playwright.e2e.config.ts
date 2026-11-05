@@ -6,5 +6,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { outputFolder: process.env.E2E_REPORT || 'e2e-report', open: 'never' }]],
   use: { baseURL: process.env.E2E_URL || 'http://127.0.0.1:8765',
     browserName: 'chromium', channel: process.env.E2E_CHANNEL || undefined,
+    // E2E_CHROME_PATH points at a preinstalled Chromium when the Playwright download is unavailable.
+    launchOptions: process.env.E2E_CHROME_PATH ? { executablePath: process.env.E2E_CHROME_PATH } : undefined,
     screenshot: 'only-on-failure', trace: 'retain-on-failure' },
 });

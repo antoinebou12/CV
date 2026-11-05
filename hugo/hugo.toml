@@ -96,8 +96,22 @@ name = "Antoine Boucher"
 bio = "Software engineer focused on platform and graphics; writing on Rust, systems, and performance."
 preloadSocialIcons = 3
 
+# Every page also publishes a Markdown "context" view at <page-url>index.md for agents and
+# answer engines (layouts/_default/*.context.md). Sections publish an index.md catalog.
+[mediaTypes."text/markdown"]
+suffixes = ["md"]
+
+[outputFormats.Context]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+rel = "alternate"
+notAlternative = false
+
 [outputs]
 home = ["HTML", "RSS", "JSON"]
+page = ["HTML", "Context"]
+section = ["HTML", "RSS", "Context"]
 
 [markup.goldmark.renderer]
 unsafe = true
