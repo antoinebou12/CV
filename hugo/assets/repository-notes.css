@@ -2293,3 +2293,15 @@ html:not(.dark) .diagram-interactive .post-diagram:not(.uml-diagram) svg text {
 .repo-note .repo-related-writing,
 html.dark .repo-note .repo-related-writing { border: 0; background: none; box-shadow: none; padding: 0; margin-top: 1.5rem; }
 .repo-note .repo-related-writing h3 { margin-bottom: .75rem !important; }
+/* Markdown code fences in hand-written notes: Chroma writes Monokai colours inline,
+   so the block needs the dark terminal surface instead of the transparent note pre. */
+.repo-note .highlight {
+  margin: .85rem 0 1.1rem;
+  overflow: hidden;
+  border: 1px solid #2a3a4c;
+  border-radius: .4rem;
+  background: #0b1219;
+}
+.repo-note .highlight pre:not(#\#):not(#\#) { padding-right: 5.75rem !important; color: #e7f0f8 !important; background: transparent !important; }
+.repo-note .highlight .repo-copy { border: 1px solid #2a3a4c; background: #121c27; color: #7eb6f5 !important; box-shadow: none; }
+.repo-note .highlight .repo-copy:hover { color: #e7f0f8 !important; border-color: #2bb8a8; }

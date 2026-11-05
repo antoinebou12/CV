@@ -288,6 +288,17 @@ html:not(.dark) .blog-site .terminal {
   --term-prompt: #2bb8a8;
   --term-link: #7eb6f5;
 }
+/* Article code blocks reuse the terminal surface below; without these tokens their
+   background resolved to transparent and Chroma's light syntax colours sat on paper. */
+.blog-site .single-post-surface .prose pre:not(.repo-mermaid-source) {
+  --term-bg: #0b1219;
+  --term-chrome: #121c27;
+  --term-line: #2a3a4c;
+  --term-fg: #e7f0f8;
+  --term-muted: #9aafc2;
+  --term-prompt: #2bb8a8;
+  --term-link: #7eb6f5;
+}
 .blog-site .terminal-comments {
   margin-top: 3.5rem !important;
   max-width: 800px;
@@ -410,7 +421,8 @@ html:not(.dark) .blog-site .terminal {
 /* Terminal styling for code blocks inside blog posts */
 .blog-site .single-post-surface .prose pre:not(.repo-mermaid-source) {
   position: relative !important;
-  padding-top: 2.25rem !important;
+  padding: 2.25rem 1.1rem 1rem !important;
+  overflow-x: auto !important;
   border-radius: 8px !important;
   border: 1px solid var(--term-line) !important;
   background: var(--term-bg) !important;

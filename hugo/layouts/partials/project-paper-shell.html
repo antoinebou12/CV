@@ -1,0 +1,32 @@
+{{- /* Hand-written project notes: give the Markdown the same shell as repository-note.html.
+       The opening (h1, badges and introduction before the first h2) becomes the hero; actions come
+       from the links recorded in project_sources.json; project-paper.html fills the contents rail. */ -}}
+{{- $html := .html | string -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $hero := $html -}}{{- $body := "" -}}
+{{- with findRESubmatch `(?s)^(.*?)(<h2\b.*)$` $html 1 -}}{{- $hero = index (index . 0) 1 -}}{{- $body = index (index . 0) 2 -}}{{- end -}}
+{{- $hero = replaceRE `(?s)<h1\b[^>]*>(.*?)</h1>` `<h1 id="single-post-title" class="repo-doc-title">$1</h1>` $hero 1 -}}
+{{- /* A row of plain links (source, docs, translation) is replaced by the action buttons below. */ -}}
+{{- $hero = replaceRE `(?s)<p>(?:<a [^>]*>[^<]*</a>\s*·?\s*){2,}</p>` "" $hero -}}
+{{- $hero = replace $hero "<p>" `<p class="repo-hero-lede">` 1 -}}
+{{- /* Same order as generated notes: title, introduction, then badges. */ -}}
+{{- with findRE `(?s)<p class="repo-hero-lede">.*?</p>` $hero 1 -}}{{- $lede := index . 0 -}}{{- $hero = replace $hero $lede "" -}}{{- $hero = replaceRE `(</h1>)` (printf "${1}%s" $lede) $hero 1 -}}{{- end -}}
+{{- $sources := index (hugo.Data.project_sources | default dict) (replace $page.File.Path "\\" "/") | default slice -}}
+{{- $repo := index (where $sources "type" "Software repository") 0 -}}
+{{- $links := slice -}}
+{{- range $sources -}}
+  {{- if and (eq .type "Web page") (or (findRE `^https://[^/]+\.github\.io/[^/]+/$` .url) (in .url "gitdiagram.com")) -}}{{- $links = $links | append . -}}{{- end -}}
+{{- end -}}
+{{- $actions := "" -}}
+{{- with $repo -}}
+  {{- $actions = printf `<a class="btn primary" href="%s"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 0 0-2.2 13.6c.3.1.5-.2.5-.4v-1.5c-2 .4-2.4-1-2.4-1-.3-.8-.8-1-1-.4-.8-.1 0-.1 0-.1.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.7.1-.5.3-.9.6-1.1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.5.8-2-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2 0 2.8-1.7 3.4-3.3 3.6.3.3.6.8.6 1.5v2.2c0 .2.2.5.5.4A7 7 0 0 0 8 1Z"/></svg>%s</a><a class="btn ghost" href="%s#readme"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v11a.5.5 0 0 1-.8.4L8 11.1l-4.2 2.8a.5.5 0 0 1-.8-.4v-11ZM4.5 2a.5.5 0 0 0-.5.5V10l3.7-2.5a.5.5 0 0 1 .6 0L12 10V2.5a.5.5 0 0 0-.5-.5h-7Z"/></svg>README</a>` .url (cond $fr "Code source" "View source") .url -}}
+{{- end -}}
+{{- range $links -}}{{- $actions = printf `%s<a class="btn ghost" href="%s">%s</a>` $actions .url .title -}}{{- end -}}
+{{- with $page.OutputFormats.Get "Context" -}}
+  {{- $actions = printf `%s<a class="btn ghost" href="%s" type="text/markdown" title="%s"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5v-9ZM4 5v6h1.5V8l1.5 2 1.5-2v3H10V5H8.5L7 7 5.5 5H4Zm7 0v3.5H9.5L11.5 11l2-2.5H12V5h-1Z"/></svg>Markdown</a>` $actions .Permalink (cond $fr "Fiche Markdown de ce projet (contexte pour agents)" "Markdown brief of this project (agent context)") -}}
+{{- end -}}
+{{- $updated := printf `<ul class="repo-meta-chips" role="list"><li class="repo-chip"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm5-3v3.3l2.4 1.4-.5.9L6.5 9V5h1Z"/></svg><span>%s <time datetime="%s">%s</time></span></li></ul>` (cond $fr "Mis à jour" "Updated") ($page.Lastmod.Format "2006-01-02") ($page.Lastmod.Format "2006-01-02") -}}
+{{- $toc := cond $fr "Table des matières" "Table of contents" -}}
+{{- $shell := printf `<div class="repo-note repo-note--prose" data-repo-shell><div class="repo-shell-layout"><details class="repo-sidenav-disclosure" open><summary>%s</summary><nav class="repo-sidenav"></nav></details><div class="repo-shell-main"><header class="repo-hero"><div class="repo-hero-panel">%s%s<div class="repo-actions">%s</div></div></header><div class="repo-prose-body">%s</div></div></div></div>` $toc $hero $updated $actions $body -}}
+{{- return $shell -}}
