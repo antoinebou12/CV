@@ -98,7 +98,6 @@ KINDS = {
         "FlashGames",
         "GreenScreenVideotoAlphaPNGs",
         "retroarch-web-games",
-        "hydra",
         "LLM2SVG",
     ],
 }
