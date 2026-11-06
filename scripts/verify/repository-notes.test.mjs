@@ -20,6 +20,13 @@ const dossiers = existsSync(resolve(root, 'hugo/data/repository_dossiers.json'))
 const site = resolve(root, process.env.CV_NOTES_SITE || '_site/blog');
 const page = (note, lang) => readFileSync(resolve(site, lang === 'fr' ? 'fr' : '', 'projects/notes', note.slug, 'index.html'), 'utf8');
 
+// A note whose Markdown no longer calls the generated template was rewritten by hand from the code.
+// It keeps the shared CI/CD, deployment and dependency sections, but not the generated layout.
+const handwritten = new Set(notes
+  .filter(note => !read(`hugo/content/projects/notes/${note.slug}/index.md`).includes('{{< repository-note >}}'))
+  .map(note => note.repo));
+const HANDWRITTEN_SECTIONS = ['overview', 'ci-cd-pipeline', 'deployment-diagram', 'external-dependencies'];
+
 function expectsMermaid(repo) {
   return notes.some(note => note.repo === repo);
 }
@@ -76,6 +83,7 @@ test('automatic documentation covers the inventory with source-pinned exports', 
     assert.ok(existsSync(resolve(site, `repository-docs/${note.slug}/analysis.json`)));
     assert.ok(existsSync(resolve(site, `repository-docs/${note.slug}/files.mmd`)));
     if (data.gitdiagram.source_file) assert.ok(existsSync(resolve(site, data.gitdiagram.source_file)));
+    if (handwritten.has(note.repo)) continue;
     for (const lang of ['en', 'fr']) {
       const html = page(note, lang);
       assert.ok(/id=["']?installation(?:["' >])/.test(html), `${note.repo}: installation`);
@@ -100,7 +108,7 @@ test('reader guides, Mermaid policy and API sections are present in both languag
     const showMermaid = expectsMermaid(note.repo);
     for (const lang of ['en', 'fr']) {
       const html = page(note, lang);
-      for (const id of ['first-steps', 'reader-guide']) {
+      for (const id of handwritten.has(note.repo) ? HANDWRITTEN_SECTIONS : ['first-steps', 'reader-guide']) {
         assert.match(html, new RegExp(`id=["']?${id}(?:["' >])`), `${note.repo}/${lang}`);
       }
       assert.ok(existsSync(resolve(site, `repository-docs/${note.slug}/architecture-${lang}.mmd`)));
@@ -109,19 +117,22 @@ test('reader guides, Mermaid policy and API sections are present in both languag
         if (hero?.path) assert.ok(existsSync(resolve(site, hero.path)));
       }
       const hero = diagramImages[note.repo]?.system || diagramImages[note.repo]?.[`overview_${lang}`];
-      if (hero?.path) {
+      // Hand-written notes draw their own figures instead of the generated hero diagram.
+      if (hero?.path && !handwritten.has(note.repo)) {
         assert.match(html, /<(?:figure|img)[^>]*(?:repo-static-diagram|data-mermaid-image-fallback)/, `${note.repo} includes a local fallback image`);
         assert.ok(html.includes(hero.path), `${note.repo} uses the recorded fallback image`);
       }
       if (showMermaid) {
         assert.match(html, /<(?:details|div)[^>]*data-mermaid-lazy/, `${note.repo} should lazy-load Mermaid`);
         assert.match(html, /<code[^>]*class=(?:["'][^"']*)?language-mermaid/, `${note.repo} should expose Mermaid source`);
-        assert.ok(html.includes(lang === 'fr' ? 'Version texte du diagramme' : 'Text version of the diagram'));
+        if (!handwritten.has(note.repo)) {
+          assert.ok(html.includes(lang === 'fr' ? 'Version texte du diagramme' : 'Text version of the diagram'));
+        }
       } else {
         assert.doesNotMatch(html, /<(?:details|div)[^>]*data-mermaid-lazy/, `${note.repo} should stay text-only`);
         assert.doesNotMatch(html, /<code[^>]*class=(?:["'][^"']*)?language-mermaid/, `${note.repo} should omit Mermaid blocks`);
       }
-      if (apiGuides[note.repo]) assert.match(html, /id=["']?api-contract(?:["' >])/);
+      if (apiGuides[note.repo] && !handwritten.has(note.repo)) assert.match(html, /id=["']?api-contract(?:["' >])/);
     }
   }
 });
@@ -171,8 +182,18 @@ for (const note of notes) {
       const source = read(path);
       assert.ok(source.includes(`translationKey: repository-note-${note.slug}`));
       assert.ok(source.includes(`repository_note: ${JSON.stringify(note.repo)}`));
-      assert.ok(source.includes('{{< repository-note >}}'));
       const html = page(note, lang);
+      if (handwritten.has(note.repo)) {
+        assert.ok(html.match(/<title>([\s\S]*?)<\/title>/)[1].trim().length <= 70);
+        assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+        for (const id of HANDWRITTEN_SECTIONS) {
+          assert.match(html, new RegExp(`id=["']?${id}(?:["' >])`), `${note.repo}/${lang}: ${id}`);
+        }
+        const otherLanguage = `/blog/${lang === 'fr' ? '' : 'fr/'}projects/notes/${note.slug}/`;
+        assert.ok(html.includes(otherLanguage), `${note.repo}/${lang}: alternate-language link`);
+        continue;
+      }
+      assert.ok(source.includes('{{< repository-note >}}'));
       assert.ok(html.match(/<title>([\s\S]*?)<\/title>/)[1].trim().length <= 70);
       for (const id of ['architecture', 'constraints', 'source-files', 'languages-panel', 'overview', 'features']) {
         assert.ok(new RegExp(`id=["']?${id}(?:["' >])`).test(html), `missing section ${id}`);
@@ -237,9 +258,14 @@ for (const note of notes) {
 test('adaptive sections: Compose topology and algorithm when profile data exists', () => {
   for (const lang of ['en', 'fr']) {
     const tch = page({ slug: 'tch099', repo: 'TCH099' }, lang);
-    assert.match(tch, /id=["']?deployment(?:["' >])/);
-    assert.match(tch, /repo-topology|is-primary-diagram/);
-    assert.ok(tch.includes('flowchart LR'));
+    if (handwritten.has('TCH099')) {
+      // The hand-written note draws its own diagrams; deployment comes from the shared section.
+      assert.match(tch, /id=["']?deployment-diagram(?:["' >])/);
+    } else {
+      assert.match(tch, /id=["']?deployment(?:["' >])/);
+      assert.match(tch, /repo-topology|is-primary-diagram/);
+      assert.ok(tch.includes('flowchart LR'));
+    }
     assert.ok(tch.includes('data-mermaid-lazy'));
     const ipc = page({ slug: 'ipc-toolkit', repo: 'ipc-toolkit' }, lang);
     assert.match(ipc, /id=["']?algorithm(?:["' >])/);
@@ -306,7 +332,9 @@ test('every catalog project has a use-case diagram, scenario and summary', () =>
     const entry = useCases[project.name];
     assert.ok(entry, `${project.name} has use cases`);
     for (const lang of ['en', 'fr']) {
-      const html = readFileSync(resolve(site, lang === 'fr' ? 'fr' : '', 'projects/notes', project.slug, 'index.html'), 'utf8');
+      // Unminified builds keep apostrophes as &#39;; the minified deploy build writes them plainly.
+      const html = readFileSync(resolve(site, lang === 'fr' ? 'fr' : '', 'projects/notes', project.slug, 'index.html'), 'utf8')
+        .replace(/&#39;/g, "'");
       assert.match(html, /id=["']?use-cases["' >]/, `${project.name} (${lang}) renders the section`);
       assert.match(html, /class=["']?repo-usecase-svg/, `${project.name} (${lang}) renders the diagram`);
       assert.ok(html.includes(entry.summary[lang === 'fr' ? 1 : 0].replace(/&/g, '&amp;').slice(0, 20)) || html.includes(entry.summary[lang === 'fr' ? 1 : 0].slice(0, 20)), `${project.name} (${lang}) shows the summary`);
