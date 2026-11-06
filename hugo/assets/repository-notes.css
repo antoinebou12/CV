@@ -863,9 +863,10 @@ html:not(.dark) .terminal {
   margin: 1rem 0 0 !important; overflow: hidden;
   border: 1px solid var(--line); border-radius: .3rem; background: var(--line);
 }
-.repo-system-summary dl div { padding: .75rem !important; background: var(--panel2); }
-.repo-system-summary dt { color: var(--muted) !important; font-size: .75rem; }
-.repo-system-summary dd { margin: .3rem 0 0 !important; color: var(--text) !important; font: 650 1.05rem/1.2 system-ui, sans-serif; }
+/* Labels may wrap; values sit on one baseline at the bottom of every cell. */
+.repo-system-summary dl div { display: flex; flex-direction: column; justify-content: space-between; gap: .3rem; padding: .75rem !important; background: var(--panel2); }
+.repo-system-summary dt { color: var(--muted) !important; font-size: .75rem; line-height: 1.35; }
+.repo-system-summary dd { margin: auto 0 0 !important; padding: 0 !important; color: var(--text) !important; font: 650 1.05rem/1.2 system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .repo-note-constraint { padding: 0 !important; border: 0 !important; background: transparent !important; }
 .repo-auto-docs { border-top: 0 !important; margin-top: 0 !important; padding-top: 0 !important; }
 .repo-section-anchor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }

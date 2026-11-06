@@ -24,16 +24,19 @@ Knowing this decides where each fix goes.
   - Found: 704 of 868 project-note references have no date, and `project-paper-references.html` printed "(n.d.)" / "(s. d.)" for them. Two AINewsTracker figure captions and the AI figurines post also had it.
   - Done: the partial now prints the `referencesChecked` date from `hugo/hugo.toml` (2026-11-05) as "(2026, November 5)" / "(2026, 5 novembre)". Dated sources use the same APA format. The note under the list now says undated sources show the date they were checked. Post captions fixed by hand. The AI figurines post was already pushed to `main` as `eb7b5148`.
   - Later: bump `referencesChecked` whenever references are re-verified.
-- [ ] **A2. Page loading animation.**
+- [x] **A2. Page loading animation.**
   - Ask: show a loading animation while a page loads.
   - Plan: a thin top progress bar plus a fade-in for the project-paper shell, in `hugo/layouts/partials/` and the site CSS. Keep it CSS-first, remove it on `DOMContentLoaded`, and skip it when `prefers-reduced-motion: reduce`. Add a spinner on Mermaid figures until they render, since those are the slow part.
   - Done when: a throttled load in Playwright shows the bar, and it never blocks content when JavaScript is off.
-- [ ] **A3. Project catalog card spacing** (screenshot 4).
+  - Done: `head.html` marks `html.page-loaded` on the window `load` event; `baseof.html` ships a `.page-load` bar that `motion.css` grows while loading and fades once loaded (hidden without JavaScript, under reduced motion and in print, and it hides itself after 12 s if `load` never fires). Project-note shells settle in from 35% opacity. Mermaid figures keep their spinner while rendering and stop it when rendering fails. Checked in Playwright with images delayed 2.5 s: the bar is visible at 55% during load, transparent after; with JavaScript off it never displays.
+- [x] **A3. Project catalog card spacing** (screenshot 4).
   - Found: cards in one row stretch to the tallest card, leaving large empty areas under short cards (PolyFEMBlenderPlugin, AudioTranscript) and around the Serilog and TrueMapData cards.
   - Plan: pin "Updated" to the card bottom and drop the forced row height, or move to a masonry-style column layout. Check with `tools/ux-audit/e2e/project-polish.spec.ts`.
-- [ ] **A4. Diagram summary stats box** (screenshot 5).
+  - Done: the catalog grid is now balanced CSS columns (2, 3 from 1600 px, 1 on phones) in `projects-directory.css`, so each card keeps its own height and no empty block sits under short cards. Card cover images on phones stay inside the card border.
+- [x] **A4. Diagram summary stats box** (screenshot 5).
   - Found: "Links supported by code or README 11/13" wraps and sits lower than "Components 17" and "Connections 13".
   - Plan: shorten the label to "Evidence-backed links" / "Liens appuyés par le code", and align all three values on one baseline in the stats grid CSS.
+  - Done: label is now "Evidence-backed links" / "Liens appuyés par le code"; each stats cell is a flex column with the value pinned to the bottom, so the three values share one baseline even when a label wraps.
 - [ ] **A5. Layered view for this CV repository** (screenshot 6).
   - Found: the layer diagram counts `docs/blog` (1,120 built files) as source, shows `docs/blog` twice, and folds the rest into "+11".
   - Plan: exclude build output (`docs/blog`, `_site`, minified CSS, generated JSON mirrors) in `scripts/build/repository_dossier.py`, and show real source folders (`hugo/layouts`, `scripts/build`, `cv-en/latex`, `css`, `js`).
