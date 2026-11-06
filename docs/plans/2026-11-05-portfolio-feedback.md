@@ -89,7 +89,7 @@ Each task edits only that note's `index.md` and `index.fr.md`, plus its data ent
 - [x] **C5. wearmachine.** Add the images from the GitHub repo and an interactive 3D/CAD view of the machine with the existing `{{< modelviewer >}}` shortcode (convert STEP/STL to GLB).
 - [x] **C6. uml-mcp.** Add a demo video and images. Reuse the existing flow SVG and add a screen recording of Cursor generating a diagram.
 - [x] **C7. truemapdata.** Add the PyPI link (and NuGet if a .NET package exists), the install command, and a short usage example taken from the README and tests.
-- [ ] **C8. springbootfilesuploader.** Verify the described structure against the code and correct it. Add the dependency table from A8.
+- [x] **C8. springbootfilesuploader.** Verify the described structure against the code and correct it. Add the dependency table from A8.
 - [ ] **C9. sport-arbitrage.** Explain the arbitrage algorithm: implied probability, the arbitrage condition, stake sizing, with a worked example and a flow diagram. Apply the same depth to the other algorithm repos (markokchainmontecarlo, batchbacktesting, nova-backtest, kelly-rm).
 - [ ] **C10. mediaboxdockercompose** (project page `projects/mediaboxdockercompose/`). Explain what the code does service by service: what each container is for, how they connect, volumes, networks and the install script.
 
