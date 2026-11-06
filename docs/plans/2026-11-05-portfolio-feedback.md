@@ -83,7 +83,7 @@ Knowing this decides where each fix goes.
 Each task edits only that note's `index.md` and `index.fr.md`, plus its data entries.
 
 - [x] **C1. simulateur.** Improve the page from the code: the price engine noise models with a short explanation of each, the simulation lifecycle as a state diagram, the WebSocket flow, and screenshots from the repository.
-- [ ] **C2. similityvectorembedding.** Explain the pipeline from the code (embedding model, pgvector schema, similarity query, ranking) and add images from the repo and the related Medium article.
+- [x] **C2. similityvectorembedding.** Explain the pipeline from the code (embedding model, pgvector schema, similarity query, ranking) and add images from the repo and the related Medium article.
 - [ ] **C3. tch099.** Improve from the hosted documentation site: what the course project does, its architecture and the team workflow.
 - [ ] **C4. salary.** Add the analysis results (charts and key numbers) to the note, and write a blog post about the results that links back to the note.
 - [ ] **C5. wearmachine.** Add the images from the GitHub repo and an interactive 3D/CAD view of the machine with the existing `{{< modelviewer >}}` shortcode (convert STEP/STL to GLB).
