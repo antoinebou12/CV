@@ -1677,7 +1677,7 @@ def workflow_detail(text):
 
 
 def build_ci(analysis, texts, paths):
-    workflows = []
+    workflows, job_signatures = [], {}
     for path, text in sorted(texts.items()):
         if not WORKFLOW.match(path):
             continue
@@ -1697,6 +1697,13 @@ def build_ci(analysis, texts, paths):
             })
         if not jobs:
             continue
+        # Workflows copied between files (one per platform, say) repeat the same job; say so once.
+        for job in jobs:
+            signature = (job["title"], job["runs_on"], tuple(job["steps"]))
+            if signature in job_signatures:
+                job["same_as"] = job_signatures[signature]
+            else:
+                job_signatures[signature] = without_expressions(name[1]) if name else PurePosixPath(path).stem
         workflows.append({
             "name": without_expressions(name[1]) if name else PurePosixPath(path).stem,
             "triggers": workflow_triggers(text),
@@ -1919,6 +1926,17 @@ def registry_summaries(wanted, offline):
     return cache
 
 
+def clean_summary(text):
+    """Registry descriptions are often README fragments: drop badges and keep link text only."""
+    if not text:
+        return None
+    text = re.sub(r"\[!\[[^\]]*\]\([^)]*\)\]\([^)]*\)|!\[[^\]]*\]\([^)]*\)", "", text)
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    text = re.sub(r"`([^`]+)`|\*\*([^*]+)\*\*", lambda m: m[1] or m[2], text)
+    text = re.sub(r"\s+", " ", text).strip(" -:")
+    return text or None
+
+
 def registry_url(ecosystem, name):
     template = REGISTRY_URLS.get(ecosystem)
     if not template:
@@ -1944,14 +1962,19 @@ def build_dependencies(stack, offline):
                 rows.append({"manifest": manifest["file"], "ecosystem": manifest["ecosystem"], "name": name,
                              "version": item.get("version", "")[:24], "scope": scope})
     summaries = registry_summaries(list(dict.fromkeys(wanted)), offline) if wanted else {}
-    seen, unique = set(), []
+    # One row per package: a package declared for both runtime and development keeps "runtime".
+    seen, unique, shown = set(), [], set()
     for row in rows:
-        key = (row["ecosystem"], row["name"].lower(), row["scope"])
+        key = (row["ecosystem"], row["name"].lower())
         if key in seen:
             continue
         seen.add(key)
         row["purpose"] = purpose(row["name"])
-        row["summary"] = summaries.get(f"{row['ecosystem']}:{row['name']}") or None
+        summary = clean_summary(summaries.get(f"{row['ecosystem']}:{row['name']}"))
+        # Two packages of one family often share a registry blurb; print it once.
+        row["summary"] = summary if summary and summary not in shown else None
+        if summary:
+            shown.add(summary)
         row["url"] = registry_url(row["ecosystem"], row["name"].split("@")[0] if row["ecosystem"] == "Embedded (PlatformIO)" else row["name"])
         unique.append(row)
     return {

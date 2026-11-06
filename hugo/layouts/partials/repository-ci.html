@@ -30,7 +30,7 @@
       <tr>
         <th scope="row"><a href="{{ .url }}">{{ .name }}</a><br><code class="repo-evidence-label">{{ .file }}</code></th>
         <td>{{ delimit (uniq $triggers) ", " }}</td>
-        <td><ul class="repo-ci-jobs">{{ range .jobs }}<li><strong>{{ .title }}</strong>{{ with .needs }} <span class="repo-evidence-label">← {{ delimit . ", " }}</span>{{ end }}{{ with .runs_on }} <code>{{ . }}</code>{{ end }}{{ with .steps }}<br><span class="repo-evidence-label"{{ if $fr }} lang="en"{{ end }}>{{ delimit (first 4 .) " · " }}</span>{{ end }}</li>{{ end }}</ul></td>
+        <td><ul class="repo-ci-jobs">{{ range .jobs }}<li><strong>{{ .title }}</strong>{{ with .needs }} <span class="repo-evidence-label">← {{ delimit . ", " }}</span>{{ end }}{{ with .runs_on }} <code>{{ . }}</code>{{ end }}{{ if .same_as }}<br><span class="repo-evidence-label">{{ if $fr }}mêmes étapes que dans {{ else }}same steps as in {{ end }}{{ .same_as }}</span>{{ else }}{{ with .steps }}<br><span class="repo-evidence-label"{{ if $fr }} lang="en"{{ end }}>{{ delimit . " · " }}</span>{{ end }}{{ end }}</li>{{ end }}</ul></td>
         <td{{ if not $targets }} class="is-empty"{{ end }}>{{ with $targets }}{{ delimit (uniq .) ", " }}{{ else }}—{{ end }}</td>
       </tr>
       {{ end }}
