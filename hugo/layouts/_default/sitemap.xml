@@ -29,6 +29,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="{{ $default.Permalink }}" />
     {{- end }}
   </url>
+  {{- /* A tag with more posts than one page holds also has /page/N/ pages; list them too. */}}
+  {{- if eq .Kind "term" }}
+  {{- $term := . }}
+  {{- $size := site.Params.listPagerSize | default 12 }}
+  {{- $total := int (math.Ceil (div (float (len .Pages)) $size)) }}
+  {{- if gt $total 1 }}
+  {{- range seq 2 $total }}
+  <url>
+    <loc>{{ $term.Permalink }}page/{{ . }}/</loc>
+    {{- if not $term.Lastmod.IsZero }}
+    <lastmod>{{ $term.Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
+    {{- end }}
+  </url>
+  {{- end }}
+  {{- end }}
+  {{- end }}
   {{- end }}
   {{- end }}
 </urlset>
