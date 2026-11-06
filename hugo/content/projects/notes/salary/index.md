@@ -2,6 +2,7 @@
 title: "Salary: exploring Canadian salary guides and wage data"
 date: 2026-11-05T12:00:00-05:00
 description: "Salary extracts Canadian salary guide PDFs and Job Bank wage tables with Python, then compares pay by job, province and region in notebooks."
+lastmod: 2026-11-06T00:30:00-05:00
 translationKey: repository-note-salary
 repository_note: "Salary"
 ---
@@ -21,6 +22,42 @@ The PDF path is handled by one script per guide edition. `src/pdf_salary_scraper
 `src/wages_in_time.py` loads the Job Bank wage files `data/csv/wage_2012.csv` to `wage_2022.csv` with Polars, harmonizes column names across years, caches the combined table in `data/pickle/wages.pkl` and prints the best-paid jobs per year and the best-paid engineering jobs per province. `src/stackoverflow_scraper.py` scrapes the salary table of the 2022 Stack Overflow survey.
 
 Analysis happens in `sandbox/salary_exploration_2023.ipynb` and `sandbox/salary_exploration_2024.ipynb`, with helper versions of the same functions in `src/analyse.py`: split the ranges, compute means per level, rank jobs, filter engineering and Québec jobs, compare one job across regions and provinces, and find the jobs with the widest regional spread. `api/app.py` exposes the 2023 and 2024 pickles as JSON through FastAPI, and `web/` holds two static HTML pages.
+
+## Results from the 2023 guide {#results}
+
+The repository keeps the raw text of the 2023 guide (the README names Randstad as the source) in `sandbox/output/output.txt`: one line per table cell, tagged with the heading level it came from. Re-reading that file with the table headers kept, instead of assuming every row is entry / mid / senior, gives the numbers below. All amounts are the guide's own, in thousands of dollars per year, and each figure is the median of range midpoints (for "75.0 - 90.0", the midpoint is 82.5). The companion article, [What a Canadian salary guide says once the tables are read correctly]({{< ref "/posts/salary-guide-2023-results/index.md" >}}), tells the same story with more context.
+
+**What is in the file.**
+
+| Count | Rows |
+| --- | --- |
+| Rows with salary ranges | 19,387 |
+| In entry / mid / senior tables | 17,915 |
+| In tables by years of experience (1, 3, 5, 10 years) | 760 |
+| In tables by company revenue (10 M$, 100 M$, 1,000 M$) | 677 |
+| Exact duplicates (same job, region and province) | 3,607 |
+| Broken ranges (high above three times low, or below low) | 3 |
+| Clean job-and-region rows left | 14,305 |
+
+The 1,437 rows from the experience and revenue tables are finance and HR roles. The extraction scripts read them as entry, mid and senior, which is how a chief financial officer at a company with 1,000 M$ in revenue (594.1k at the top of the range) ends up as a "senior" salary in the notebooks. Of the clean rows, the 1,242 in the industrial support family are hourly rates ($19.8, $22.3 and $24.9 an hour at the three levels), so they are kept apart from the 13,063 annual rows, which cover 371 jobs in 57 regions.
+
+**Levels.** The median midpoint is 66.2k at entry level, 75.9k at mid level and 86.8k at senior level. The step between levels is very regular: senior pay is 1.30 times entry pay for the median job, and 80% of rows fall between 1.22 and 1.36.
+
+![Horizontal bar chart of median mid-level pay by job family: technologies 97.2k, engineering 81.8k, marketing 81.7k, human resources 76.5k, manufacturing 75.3k, sales 64.7k, healthcare 57.0k, business support 54.8k, customer experience 54.8k](images/pay-by-job-family.svg "Median mid-level pay by job family in the 2023 guide. Technology roles sit about 15k above engineering and marketing.")
+
+**Provinces.** Alberta has the highest median mid-level midpoint (85.2k), then British Columbia (81.8k) and Saskatchewan (78.4k); Québec (71.4k) and Prince Edward Island (70.3k) are lowest. These medians mix whatever jobs each region lists, and Québec alone has 16 regions, most of them outside Montréal, so the gap is partly a difference in which jobs and places are counted, not only in pay for the same job.
+
+![Horizontal bar chart of median mid-level pay by province, from Alberta at 85.2k to Prince Edward Island at 70.3k](images/pay-by-province.svg "Median mid-level pay by province. The job mix differs between provinces, so compare the same job across cities before drawing conclusions.")
+
+**Same job, four cities.** Comparing one job across regions removes the job-mix effect. For developer and architect roles the four metro areas are within about 10% of each other: a mid-level full stack developer is at 112.4k in Montréal, 120.2k in Greater Toronto, 115.1k in Greater Vancouver and 111.7k in Calgary, and DevOps (development) is highest in Montréal at 110.0k. The exception is support work: a mid-level help desk analyst is at 61.6k in Montréal against 78.7k in Greater Toronto.
+
+![Grouped bar chart of mid-level pay for seven tech roles in Montréal, Greater Toronto, Greater Vancouver and Calgary](images/tech-pay-by-city.svg "Mid-level midpoints for seven tech roles in four metro areas. Developer pay is close across cities; help desk pay is not.")
+
+**Best-paid jobs.** Among jobs listed in at least 25 regions, the highest median mid-level midpoints are director of operations (190.4k), e-commerce director (159.7k), construction director (153.6k), manufacturing director (153.3k) and procurement director (152.3k). The best-paid technology roles are IT director (151.8k), technical lead (143.1k) and application architect (132.2k).
+
+**What the comparison notebook shows instead.** `sandbox/compare_2023_to_2024.ipynb` compares the 2023 and 2024 pickles directly. Its maximum-salary chart puts "receptionist (bilingual)" at 713k, the broken Simcoe County row, and shows the same 713k for 2024 because the 2024 minimum and maximum lists read their senior value from `df_sorted_2023`. In the 2024 pickle, `entry_max` has exactly the same mean (94.67) and standard deviation as `mid_max`, which points to an entry range assembled from the wrong numbers. The 2024 guide is also in French (`ingénieur·e chimiste`) while 2023 is in English, so jobs cannot be matched across the two years by title.
+
+![Notebook bar chart of maximum salaries in 2023 and 2024, with 713k for both years at senior level](images/notebook-max-salaries.png "The saved notebook chart: both senior bars show the 713k outlier, the 2024 one because of a copy-paste of the 2023 frame.")
 
 ## Getting started {#installation}
 
@@ -83,5 +120,7 @@ uvicorn app:app --reload
 - [`src/pdf_salary_scraper_2024_1.py`](https://github.com/AlgoETS/Salary/blob/main/src/pdf_salary_scraper_2024_1.py)
 - [`src/wages_in_time.py`](https://github.com/AlgoETS/Salary/blob/main/src/wages_in_time.py)
 - [`sandbox/salary_exploration_2023.ipynb`](https://github.com/AlgoETS/Salary/blob/main/sandbox/salary_exploration_2023.ipynb)
+- [`sandbox/compare_2023_to_2024.ipynb`](https://github.com/AlgoETS/Salary/blob/main/sandbox/compare_2023_to_2024.ipynb)
+- [`sandbox/output/output.txt`](https://github.com/AlgoETS/Salary/blob/main/sandbox/output/output.txt)
 - [`api/app.py`](https://github.com/AlgoETS/Salary/blob/main/api/app.py)
 - [`data/csv/README.md`](https://github.com/AlgoETS/Salary/blob/main/data/csv/README.md)

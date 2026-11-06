@@ -76,22 +76,22 @@ Knowing this decides where each fix goes.
   - [x] Sun Ray Clockwise, https://www.shadertoy.com/view/X3f3z2 (2024-02-11)
   - [x] Warping Mouse, https://www.shadertoy.com/view/McjSz1 (2024-01-23)
   - The URL-to-title pairing above follows the order given in the feedback. Confirm it against each shader's title when fetching.
-- [ ] **B4. Salary results post.** See C4.
+- [x] **B4. Salary results post.** See C4.
 
 ## Group C: individual project notes
 
 Each task edits only that note's `index.md` and `index.fr.md`, plus its data entries.
 
-- [ ] **C1. simulateur.** Improve the page from the code: the price engine noise models with a short explanation of each, the simulation lifecycle as a state diagram, the WebSocket flow, and screenshots from the repository.
-- [ ] **C2. similityvectorembedding.** Explain the pipeline from the code (embedding model, pgvector schema, similarity query, ranking) and add images from the repo and the related Medium article.
-- [ ] **C3. tch099.** Improve from the hosted documentation site: what the course project does, its architecture and the team workflow.
-- [ ] **C4. salary.** Add the analysis results (charts and key numbers) to the note, and write a blog post about the results that links back to the note.
-- [ ] **C5. wearmachine.** Add the images from the GitHub repo and an interactive 3D/CAD view of the machine with the existing `{{< modelviewer >}}` shortcode (convert STEP/STL to GLB).
-- [ ] **C6. uml-mcp.** Add a demo video and images. Reuse the existing flow SVG and add a screen recording of Cursor generating a diagram.
-- [ ] **C7. truemapdata.** Add the PyPI link (and NuGet if a .NET package exists), the install command, and a short usage example taken from the README and tests.
-- [ ] **C8. springbootfilesuploader.** Verify the described structure against the code and correct it. Add the dependency table from A8.
-- [ ] **C9. sport-arbitrage.** Explain the arbitrage algorithm: implied probability, the arbitrage condition, stake sizing, with a worked example and a flow diagram. Apply the same depth to the other algorithm repos (markokchainmontecarlo, batchbacktesting, nova-backtest, kelly-rm).
-- [ ] **C10. mediaboxdockercompose** (project page `projects/mediaboxdockercompose/`). Explain what the code does service by service: what each container is for, how they connect, volumes, networks and the install script.
+- [x] **C1. simulateur.** Improve the page from the code: the price engine noise models with a short explanation of each, the simulation lifecycle as a state diagram, the WebSocket flow, and screenshots from the repository.
+- [x] **C2. similityvectorembedding.** Explain the pipeline from the code (embedding model, pgvector schema, similarity query, ranking) and add images from the repo and the related Medium article.
+- [x] **C3. tch099.** Improve from the hosted documentation site: what the course project does, its architecture and the team workflow.
+- [x] **C4. salary.** Add the analysis results (charts and key numbers) to the note, and write a blog post about the results that links back to the note.
+- [x] **C5. wearmachine.** Add the images from the GitHub repo and an interactive 3D/CAD view of the machine with the existing `{{< modelviewer >}}` shortcode (convert STEP/STL to GLB).
+- [x] **C6. uml-mcp.** Add a demo video and images. Reuse the existing flow SVG and add a screen recording of Cursor generating a diagram.
+- [x] **C7. truemapdata.** Add the PyPI link (and NuGet if a .NET package exists), the install command, and a short usage example taken from the README and tests.
+- [x] **C8. springbootfilesuploader.** Verify the described structure against the code and correct it. Add the dependency table from A8.
+- [x] **C9. sport-arbitrage.** Explain the arbitrage algorithm: implied probability, the arbitrage condition, stake sizing, with a worked example and a flow diagram. Apply the same depth to the other algorithm repos (markokchainmontecarlo, batchbacktesting, nova-backtest, kelly-rm).
+- [x] **C10. mediaboxdockercompose** (project page `projects/mediaboxdockercompose/`). Explain what the code does service by service: what each container is for, how they connect, volumes, networks and the install script.
 
 ## Suggested order
 
