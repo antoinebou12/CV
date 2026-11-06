@@ -74,8 +74,34 @@ LAYER_DIRS = {
         "providers", "lib", "libs", "external",
     },
 }
+# Build output and copies of published sites are not project modules: a committed Hugo mirror
+# (docs/blog), _site, bundler output and minified assets would otherwise outweigh the source.
+BUILD_DIRS = {
+    "_site", "node_modules", "vendor", "dist", "__pycache__", ".next", ".nuxt",
+    "coverage", "site-packages", "bower_components", "_gen", "htmlcov",
+}
+# Only at the repository root: scripts/build or src/out can be real source folders.
+ROOT_BUILD_DIRS = {"build", "out", "target", "obj"}
+BUILT_SITE_EXT = {".html", ".htm", ".xml", ".js", ".css", ".json", ".map", ".txt", ".svg", ".webmanifest"}
+
+
+def is_build_output(path):
+    p = PurePosixPath(path)
+    parts = [x.lower() for x in p.parts]
+    name = parts[-1]
+    if set(parts[:-1]) & BUILD_DIRS or (len(parts) > 1 and parts[0] in ROOT_BUILD_DIRS):
+        return True
+    if re.search(r"\.min\.(?:js|css|mjs)$|\.bundle\.js$|\.map$", name):
+        return True
+    # GitHub Pages output committed under docs/ (HTML, feeds, assets); Markdown sources stay.
+    if parts[0] == "docs" and len(parts) > 1 and p.suffix.lower() in BUILT_SITE_EXT:
+        return True
+    # Hugo writes public/ and resources/_gen/ next to hugo.toml.
+    return len(parts) > 2 and parts[0] == "hugo" and parts[1] in {"public", "resources"}
+
+
 UI_EXT = {".vue", ".tsx", ".jsx", ".html", ".htm", ".css", ".scss", ".sass", ".svelte", ".blade.php", ".xml"}
-SOURCE_EXT = set(docs.LANGUAGES) | UI_EXT | {".vue", ".java", ".kt", ".gradle", ".glsl", ".ino", ".ps1"}
+SOURCE_EXT = set(docs.LANGUAGES) | UI_EXT | {".vue", ".java", ".kt", ".gradle", ".glsl", ".ino", ".ps1", ".tex", ".cls"}
 HOSTING_NAMES = {
     "dockerfile", "docker-compose.yml", "docker-compose.yaml", "compose.yml",
     "compose.yaml", "vercel.json", "netlify.toml", "procfile", "fly.toml",
@@ -532,7 +558,7 @@ def layers_mermaid(layers, lang):
         lines.append("    direction LR")
         for index, module in enumerate(layer["modules"][:4]):
             name = module["name"].replace('"', "'")
-            unit = "fichiers" if i else "files"
+            unit = ("fichiers" if i else "files") if module["files"] != 1 else ("fichier" if i else "file")
             lines.append(f'    {layer["key"]}_{index}["{name}<br/>{module["files"]} {unit}"]')
         if layer["more_modules"] or len(layer["modules"]) > 4:
             extra = layer["more_modules"] + max(0, len(layer["modules"]) - 4)
@@ -615,6 +641,162 @@ def parse_gitdiagram(analysis, paths):
         "more_steps": max(0, len(order) - 24),
         "entry_points": [label(n)["label"] for n in starts[:4]],
         "sequence": sequence_mermaid(steps[:16]),
+    }
+
+
+# --- Architecture overview: a readable view of the GitDiagram graph ---------------------
+# GitDiagram links every route to every model and repository it touches, so the raw graph can
+# cross the whole canvas dozens of times. The overview keeps every component but merges
+# parallel edges between groups, caps the fan-out of a single node, and lays groups out as
+# left-to-right lanes (clients, entry points, services, domain, data). The text version under
+# the figure keeps every original edge.
+
+FLOW_EDGE = re.compile(
+    r'^\s*(\w+)\s*(-\.->|-->|==>|---|-\.-)\s*(?:\|"?(.*?)"?\|\s*)?(\w+)\s*;?\s*$'
+)
+FLOW_NODE = re.compile(r'^\s*(\w+)\s*[\[\(\{>]')
+FLOW_LABEL = re.compile(r'^\s*(\w+)\s*[\[\(\{>/]+"?(.*?)"?[\]\)\}/]+\s*$')
+LANE_HINTS = [
+    (0, r"user|client|frontend|front-end|\bui\b|dashboard|browser|screen|page|\bcli\b|command"),
+    (1, r"\bapi\b|route|router|endpoint|controller|handler|entry|server|gateway|\bmcp\b|tool"),
+    (2, r"service|core|logic|engine|process|pipeline|worker|job|agent|runtime|integration|render"),
+    (3, r"model|schema|domain|entit|record|identity"),
+    (4, r"data|storage|store|database|\bdb\b|repo|cache|persist|file|external|cloud|infra|deploy|build|config"),
+]
+
+
+def lane_of(label):
+    text = label.lower()
+    for rank, pattern in LANE_HINTS:
+        if re.search(pattern, text):
+            return rank
+    return 2
+
+
+def parse_flowchart(source):
+    """Split a Mermaid flowchart into top-level group blocks, loose lines, edges and membership."""
+    blocks, loose, edges, groups, labels = [], [], [], {}, {}
+    stack, current = [], None
+    for raw in source.splitlines():
+        line = raw.rstrip()
+        stripped = line.strip()
+        if not stripped or re.match(r"^(flowchart|graph)\b", stripped):
+            continue
+        sub = re.match(r'^\s*subgraph\s+(\w+)\s*(?:\["?(.*?)"?\])?\s*$', line)
+        if sub:
+            if not stack:
+                current = {"id": sub[1], "label": sub[2] or sub[1], "lines": [], "declared": set()}
+                blocks.append(current)
+            stack.append(sub[1])
+            labels[sub[1]] = sub[2] or sub[1]
+            current["lines"].append(line)
+            continue
+        if stripped == "end" and stack:
+            stack.pop()
+            current["lines"].append(line)
+            if not stack:
+                current = None
+            continue
+        edge = FLOW_EDGE.match(line)
+        if edge:
+            edges.append({"from": edge[1], "arrow": edge[2], "label": (edge[3] or "").strip(), "to": edge[4]})
+            if stack:
+                for node in (edge[1], edge[4]):
+                    groups.setdefault(node, stack[0])
+            continue
+        node = FLOW_NODE.match(line)
+        if node and stack:
+            groups[node[1]] = stack[0]
+            current["declared"].add(node[1])
+            current["lines"].append(line)
+        elif stack:
+            current["lines"].append(line)
+        else:
+            loose.append(line)
+    # A node first seen in an edge inside a group must still be declared inside that group.
+    for block in blocks:
+        missing = [n for n, g in groups.items() if g == block["id"] and n not in block["declared"]]
+        if missing:
+            block["lines"][1:1] = [f"  {n}" for n in missing]
+    return blocks, loose, edges, groups, labels
+
+
+def simplify_flowchart(source, fan=3, cap=4):
+    """Return the overview Mermaid (None when the graph is already readable) and every edge."""
+    blocks, loose, edges, groups, _ = parse_flowchart(source)
+    if not edges:
+        return None, edges
+    group_of = groups.get
+    merged, used = [], set()
+
+    def collapse(key_fn):
+        buckets = {}
+        for index, e in enumerate(edges):
+            if index not in used and e["from"] != e["to"]:
+                key = key_fn(e)
+                if key:
+                    buckets.setdefault(key, []).append(index)
+        for (source_id, target_id), members in buckets.items():
+            if len(members) < fan:
+                continue
+            used.update(members)
+            found = {edges[i]["label"] for i in members}
+            dashed = all(edges[i]["arrow"].startswith("-.") for i in members)
+            merged.append({"from": source_id, "to": target_id, "arrow": "-.->" if dashed else "-->",
+                           "label": found.pop() if len(found) == 1 else ""})
+
+    crossing = lambda e: group_of(e["from"]) != group_of(e["to"])
+    # Group to group first (routes → models), then one node fanning out to a group, then fan-in.
+    collapse(lambda e: (group_of(e["from"]), group_of(e["to"])) if crossing(e) and group_of(e["from"]) and group_of(e["to"]) else None)
+    collapse(lambda e: (e["from"], group_of(e["to"])) if crossing(e) and group_of(e["to"]) else None)
+    collapse(lambda e: (group_of(e["from"]), e["to"]) if crossing(e) and group_of(e["from"]) else None)
+    kept = [e for i, e in enumerate(edges) if i not in used and e["from"] != e["to"]] + merged
+    seen, outgoing, overview = set(), Counter(), []
+    group_ids = {b["id"] for b in blocks}
+    for e in kept:
+        key = (e["from"], e["to"])
+        # Edges inside one group stay short; only edges that cross the canvas count toward the cap.
+        long = group_of(e["from"]) != group_of(e["to"]) or e["to"] in group_ids
+        if key in seen or (long and outgoing[e["from"]] >= cap):
+            continue
+        seen.add(key)
+        outgoing[e["from"]] += long
+        overview.append(e)
+    if not merged and len(overview) == sum(e["from"] != e["to"] for e in edges):
+        return None, edges
+    ordered = sorted(blocks, key=lambda b: (lane_of(b["label"]), blocks.index(b)))
+    lines = ["flowchart LR"]
+    lines += [line for line in loose if not re.match(r"^\s*class\s", line)]
+    for block in ordered:
+        lines.append("")
+        lines.extend(block["lines"])
+    lines.append("")
+    for e in overview:
+        label = f'|"{e["label"]}"|' if e["label"] else ""
+        lines.append(f'{e["from"]} {e["arrow"]}{label} {e["to"]}')
+    lines += [line for line in loose if re.match(r"^\s*class\s", line)]
+    return "\n".join(lines) + "\n", edges
+
+
+def build_architecture(analysis):
+    view = analysis.get("gitdiagram") or {}
+    source = view.get("mermaid")
+    if view.get("status") != "available" or not source:
+        return None
+    overview, edges = simplify_flowchart(source)
+    _, _, _, _, group_labels = parse_flowchart(source)
+    node_label = {}
+    for raw in source.splitlines():
+        match = FLOW_LABEL.match(raw)
+        if match and not FLOW_EDGE.match(raw) and not raw.strip().startswith("subgraph"):
+            node_label[match[1]] = re.sub(r"<br\s*/?>.*$", "", match[2]).strip()
+    name = lambda n: node_label.get(n) or group_labels.get(n) or n.replace("node_", "").replace("_", " ")
+    shown = sum(1 for line in (overview or "").splitlines() if FLOW_EDGE.match(line))
+    return {
+        "overview": overview,
+        "edges_total": len(edges),
+        "overview_edges": shown if overview else len(edges),
+        "edges": [{"from": name(e["from"]), "to": name(e["to"]), "label": e["label"]} for e in edges],
     }
 
 
@@ -1564,8 +1746,8 @@ def dossier(note, offline):
         return None
     tree = inputs["tree"]["tree"]
     analysis["_tree"] = tree
-    paths = [e["path"] for e in tree if e.get("type") == "blob"]
-    texts = load_texts(note["repo"], inputs, offline)
+    paths = [e["path"] for e in tree if e.get("type") == "blob" and not is_build_output(e["path"])]
+    texts = {k: v for k, v in load_texts(note["repo"], inputs, offline).items() if not is_build_output(k)}
     types = analysis.get("types", [])
     layers = build_layers(analysis, paths, types)
     entities = build_entities(analysis, texts, types)
@@ -1583,6 +1765,7 @@ def dossier(note, offline):
         "layers_mermaid": [layers_mermaid(layers, "en"), layers_mermaid(layers, "fr")] if layers else None,
         "modules": build_modules(analysis, paths, types),
         "flow": parse_gitdiagram(analysis, paths),
+        "architecture": build_architecture(analysis),
         "public": public,
         "private": build_private(analysis, texts),
         "services": services,

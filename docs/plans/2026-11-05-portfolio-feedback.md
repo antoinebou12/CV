@@ -37,12 +37,14 @@ Knowing this decides where each fix goes.
   - Found: "Links supported by code or README 11/13" wraps and sits lower than "Components 17" and "Connections 13".
   - Plan: shorten the label to "Evidence-backed links" / "Liens appuyés par le code", and align all three values on one baseline in the stats grid CSS.
   - Done: label is now "Evidence-backed links" / "Liens appuyés par le code"; each stats cell is a flex column with the value pinned to the bottom, so the three values share one baseline even when a label wraps.
-- [ ] **A5. Layered view for this CV repository** (screenshot 6).
+- [x] **A5. Layered view for this CV repository** (screenshot 6).
   - Found: the layer diagram counts `docs/blog` (1,120 built files) as source, shows `docs/blog` twice, and folds the rest into "+11".
   - Plan: exclude build output (`docs/blog`, `_site`, minified CSS, generated JSON mirrors) in `scripts/build/repository_dossier.py`, and show real source folders (`hugo/layouts`, `scripts/build`, `cv-en/latex`, `css`, `js`).
-- [ ] **A6. Architecture diagram readability** (screenshot 3, AINewsTracker).
+  - Done: `repository_dossier.py` drops build output before building any section: `_site`, `node_modules`, `vendor`, `dist`, coverage, `.min.js`/`.min.css`/`.map`, root `build`/`out`/`target`/`obj`, Hugo `public`/`resources`, and site files committed under `docs/` (HTML, XML, JS, CSS, JSON). LaTeX (`.tex`, `.cls`) now counts as source. The CV layer view went from 1,350 to 209 files and shows `hugo/layouts`, `css`, `scripts/build`, `scripts/verify`, `cv-en/latex`, `cv-fr/latex`; Kubernetes evidence now points at `helm/` instead of a built tag page. Vendored libraries also left ComfyUI-UML, WordsEnigma, linkshare and Serilog.Sinks.SentrySDK.
+- [x] **A6. Architecture diagram readability** (screenshot 3, AINewsTracker).
   - Found: about 40 edges cross the whole canvas because every route links straight to every model and repository.
   - Plan: in the diagram generator, collapse "route uses model" edges into one edge per layer, cap edges per node, and draw routes, services, models and storage as left-to-right lanes. Keep the full graph in the text version.
+  - Done: `repository_dossier.py` adds an `architecture` entry per dossier: GitDiagram edges between the same two groups (3 or more) become one edge, a node fanning out to one group or a group fanning in to one node does too, self-loops go, crossing edges are capped at 4 per node, and groups are ordered as left-to-right lanes (clients, entry points, services, domain, data). `repository-diagram.html` draws that overview and its text version now lists every original edge with "shows N of M". `render_repository_diagram_images.py` renders the same overview for the static preview; 12 repos changed (bloc 19 to 10 edges, Dimension 17 to 8, uml-mcp 21 to 16). The AINewsTracker note itself already used a hand-condensed 11-edge diagram; it gets the generated views through A7.
 - [ ] **A7. CI/CD pipeline and deployment diagram for every project.**
   - Ask: show the CI/CD pipeline and a deployment diagram on each project, with details when a pipeline exists.
   - Found: dossiers already list `deployment.pipelines` and tests workflows as text, and a UML deployment figure exists for some repos. 21 notes have no dossier.
