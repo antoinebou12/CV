@@ -186,6 +186,34 @@ def excerpt(lines):
     return "\n".join(selected)
 
 
+def new_lines(text, seen):
+    """Keep only the lines no earlier excerpt showed, and remember them.
+
+    A docs/README.md that copies the README's prerequisite list with two extra items
+    would otherwise print the shared items twice; only the extra items survive.
+    """
+    whole = re.sub(r"\W+", " ", text).strip().lower()
+    if not whole or whole in seen:
+        return ""
+    kept, fresh, repeated = [], [], 0
+    for line in text.splitlines():
+        # Compare without list numbering or bullets: "2. You must…" and "1. You must…" match.
+        key = re.sub(r"\W+", " ", re.sub(r"^\s*(?:[-*+]|\d+[.)])\s+", "", line)).strip().lower()
+        # Short structural lines ("Method: POST", "Parameters:") legitimately recur between sections.
+        if len(key) < 40:
+            kept.append(line)
+        elif key in seen:
+            repeated += 1
+        else:
+            fresh.append(key)
+            kept.append(line)
+    if repeated and not fresh:
+        return ""
+    seen.add(whole)
+    seen.update(fresh)
+    return "\n".join(kept)
+
+
 def unique_title(title, path, seen):
     """Return the heading, or "heading (FILE.md)" when an earlier document already used it."""
     for candidate in (title, f"{title} ({PurePosixPath(path).name})", f"{title} ({path})"):
@@ -305,10 +333,8 @@ def build(note, offline):
                     re.search(pattern, section["heading"], re.IGNORECASE)
                     and len(chapters[key]) < 5
                 ):
-                    preview = excerpt(section["lines"])
-                    normalized = re.sub(r"\W+", " ", preview).strip().lower()
-                    if preview and re.search(r"\w", preview) and normalized not in seen_text:
-                        seen_text.add(normalized)
+                    preview = new_lines(excerpt(section["lines"]), seen_text)
+                    if preview and re.search(r"\w", preview):
                         chapters[key].append(
                             {
                                 # Headings are shown as plain text, so drop inline Markdown markers.

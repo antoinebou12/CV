@@ -115,3 +115,13 @@ def test_excerpt_never_splits_a_markdown_table_row():
     assert len(value) <= 900
     assert all(line.endswith('|') and line.count('|') == 4 for line in value.splitlines())
     assert '…' not in value
+
+
+def test_copied_prerequisites_keep_only_their_new_items():
+    seen = set()
+    readme = "1. You must have a Renpho scale. If you don't have one, buy one.\n2. You must have the HACS store installed and running."
+    docs_copy = "1. You must have a Renpho account. If you don't have one, create one.\n2. You must have a Renpho scale. If you don't have one, buy one.\nMethod: POST\n3. You must have the HACS store installed and running."
+    assert docs.new_lines(readme, seen) == readme
+    assert docs.new_lines(docs_copy, seen) == "1. You must have a Renpho account. If you don't have one, create one.\nMethod: POST"
+    assert docs.new_lines(readme, seen) == ""
+    assert docs.new_lines("Method: POST\nParameters:", seen) == "Method: POST\nParameters:"
