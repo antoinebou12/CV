@@ -7,6 +7,7 @@
   html.js:not([data-motion="paused"]) [data-reveal]:not(.is-visible) { opacity: 0 !important; transform: translateY(14px) !important; }
   html.js:not([data-motion="paused"]) [data-reveal] { transition: opacity var(--motion-duration-enter, 640ms) var(--motion-ease-editorial, cubic-bezier(.22, 1, .36, 1)), transform var(--motion-duration-enter, 640ms) var(--motion-ease-editorial, cubic-bezier(.22, 1, .36, 1)) !important; transition-delay: calc(var(--reveal-index, 0) * 70ms) !important; }
   html.js [data-reveal].is-visible { opacity: 1 !important; transform: none !important; }
+  html.js [data-reveal].is-instant { transition: none !important; }
   .blog-site .post-list-card-inner, .blog-site .repo-directory-card, .blog-site .repo-related-post-card { transition: transform 240ms var(--motion-ease-out, ease-out), border-color 180ms ease-out, box-shadow 240ms ease-out !important; }
   .blog-site .post-list-card-inner:hover, .blog-site .repo-directory-card:hover, .blog-site .repo-related-post-card:hover { transform: translateY(-3px) !important; box-shadow: 0 14px 32px rgb(16 32 48 / 12%) !important; }
   .blog-site .site-pill, .blog-site .repo-badge, .blog-site .tag { transition: background-color 180ms ease-out, color 180ms ease-out, transform 180ms var(--motion-ease-out, ease-out) !important; }
@@ -37,3 +38,11 @@ html.nav-progress-done .nav-progress > span { width: 100%; transition-duration: 
   @keyframes load-shimmer { to { background-position: -400% 0; } }
 }
 @media (prefers-reduced-motion: reduce) { .nav-progress { display: none; } }
+
+/* Post card images: motion.js marks the media box while its picture loads. */
+.post-list-card-media img { transition: opacity 260ms ease-out !important; }
+.post-list-card-media.is-loading img { opacity: 0 !important; }
+.post-list-card-media.is-loading::after { content: ''; position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 3px solid currentColor !important; border-right-color: transparent !important; border-radius: 50% !important; opacity: .45; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .post-list-card-media.is-loading::after { animation: load-spin 800ms linear infinite !important; }
+}

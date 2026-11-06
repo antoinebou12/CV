@@ -13,13 +13,20 @@
       node.style.setProperty('--reveal-index', String(Math.min(index, 6)));
     });
   }
+  // Reveal content well before it reaches the viewport, so scrolling never lands on blank space.
+  // A node that is already on screen when the observer fires (a fast scroll or a jump) appears at once.
   const observer = new IntersectionObserver((entries) => {
+    let batch = 0;
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
+      const node = entry.target;
+      const box = entry.boundingClientRect;
+      if (box.top < innerHeight && box.bottom > 0) node.classList.add('is-instant');
+      else node.style.setProperty('--reveal-index', String(Math.min(batch++, 3)));
+      node.classList.add('is-visible');
+      observer.unobserve(node);
     }
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  }, { rootMargin: '0px 0px 50% 0px', threshold: 0 });
   targets.forEach((node) => {
     const box = node.getBoundingClientRect();
     // Content already on screen at load paints immediately.
@@ -33,6 +40,17 @@
     if (event.target.open) event.target.querySelectorAll('[data-reveal]').forEach((node) => node.classList.add('is-visible'));
   }, true);
   root.dataset.revealReady = 'true';
+})();
+/* Card images: a spinner holds the picture's space until it has loaded. */
+(() => {
+  for (const img of document.querySelectorAll('.post-list-card-media img')) {
+    if (img.complete && img.naturalWidth) continue;
+    const box = img.closest('.post-list-card-media');
+    box.classList.add('is-loading');
+    const done = () => box.classList.remove('is-loading');
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  }
 })();
 /* Navigation progress: a thin bar at the top while the next same-origin page loads. */
 (() => {
