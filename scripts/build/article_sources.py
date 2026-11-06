@@ -15,6 +15,7 @@ def sources(text):
     text = re.sub(r"```.*?```", "", text, flags=re.S)
     records = []
     seen = set()
+    printed = {}
     for label, url in re.findall(r"(?<!!)\[([^\]]+)\]\((https?://[^\s)]+)\)", text):
         parts = urlsplit(url)
         host = parts.hostname or ""
@@ -33,8 +34,17 @@ def sources(text):
             kind = "LinkedIn post"
         elif host == 'medium.com':
             kind = "Article"
-        records.append({"title": re.sub(r'[*`]', '', label), "url": url,
-                        "author": author, "type": kind, "publisher": host})
+        record = {"title": re.sub(r'[*`]', '', label), "url": url,
+                  "author": author, "type": kind, "publisher": host}
+        # A repository linked twice (e.g. once at its root, once at "#installation")
+        # prints the same reference twice; keep one entry, preferring the plain URL.
+        key = (record["title"], author, kind, host, parts._replace(fragment="").geturl())
+        if key in printed:
+            if not parts.fragment:
+                printed[key]["url"] = url
+            continue
+        printed[key] = record
+        records.append(record)
     return records
 
 

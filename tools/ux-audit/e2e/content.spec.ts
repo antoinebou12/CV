@@ -32,8 +32,14 @@ async function audit(page: Page) {
     const fr = document.documentElement.lang.startsWith('fr');
 
     // Repeated paragraphs and list items (same visible text twice on one page).
+    // A block that is nothing but one link is a cross-reference, not copy: a roundup post listed
+    // under each project card it covers is navigation, so it never counts as repetition.
+    const linkOnly = (el: Element) => { const links = el.querySelectorAll('a'); return links.length === 1 && clean((links[0] as HTMLElement).innerText) === clean((el as HTMLElement).innerText); };
+    // A cell that is only inline code is an identifier list read from the source: sibling classes
+    // implementing one interface (Oanda and Bybit clients, GitHub and GitLab injectors) share it.
+    const codeOnly = (el: Element) => { if (!el.querySelector('code')) return false; const copy = el.cloneNode(true) as HTMLElement; copy.querySelectorAll('code').forEach(n => n.remove()); return !/\w/.test(copy.textContent || ''); };
     const blocks = [...root.querySelectorAll('p, li, dd, blockquote, figcaption, td')].filter(visible)
-      .filter(el => !el.querySelector('p, li, ul, ol, table'))
+      .filter(el => !el.querySelector('p, li, ul, ol, table') && !linkOnly(el) && !codeOnly(el))
       .map(el => clean((el as HTMLElement).innerText)).filter(t => t.length >= 60);
     const blockCount = new Map<string, number>();
     blocks.forEach(t => blockCount.set(t, (blockCount.get(t) || 0) + 1));
@@ -66,7 +72,9 @@ async function audit(page: Page) {
       ['markdown-residue', /\*\*[^*\s][^*]{0,60}\*\*|(?:^|\s)#{2,6}\s\S|\]\((?:https?:|\/)[^)]*\)/g],
       ['template-residue', /\{\{[<%]?|ZgotmplZ|\bundefined\b|\bNaN\b|\[object Object\]/g],
       ['escaped-entity', /&(?:amp|lt|gt|quot|#\d+);/g],
-      ['doubled-word', /\b([A-Za-zÀ-ÿ]{3,})\s+\1\b/gi],
+      // Whole words only: in package lists "please-use-yarn yarn" or "redis redis-namespace" share a
+      // part of a hyphenated, dotted or scoped name, which is not a doubled word.
+      ['doubled-word', /(?<![\wÀ-ÿ\-./:@])([A-Za-zÀ-ÿ]{3,})\s+\1(?![\wÀ-ÿ\-/@]|[.:][\wÀ-ÿ])/gi],
       ['placeholder', /\b(?:TODO|TBD|FIXME|lorem ipsum)\b/gi],
     ];
     if (!fr) checks.push(['space-before-punctuation', /\w\s+[,.;:!?](?=\s|$)/g]);
