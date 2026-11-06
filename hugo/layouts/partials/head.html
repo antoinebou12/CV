@@ -67,7 +67,7 @@
   <script defer src="{{ $particlesVendor.RelPermalink }}"></script>
   {{ $motion := resources.Get "background-motion.js" | minify | fingerprint }}
   <script defer src="{{ $motion.RelPermalink }}"></script>
-  <script>document.documentElement.classList.add('js')</script>
+  <script>(function(r){r.classList.add('js');function done(){r.classList.add('page-loaded')}if(document.readyState==='complete')done();else addEventListener('load',done,{once:true});document.addEventListener('DOMContentLoaded',function(){r.classList.add('page-parsed')},{once:true})})(document.documentElement)</script>
   {{ $reveal := resources.Get "motion.js" | minify | fingerprint }}
   <script defer src="{{ $reveal.RelPermalink }}" integrity="{{ $reveal.Data.Integrity }}"></script>
   {{ if and .IsPage (or (eq .Section "posts") (eq .Section "projects")) }}

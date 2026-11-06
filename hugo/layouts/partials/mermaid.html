@@ -438,6 +438,7 @@
         }
       } catch (error) {
         document.querySelectorAll('.article-diagram-loading > summary').forEach(summary => {
+          summary.parentElement.classList.add('is-unavailable');
           summary.textContent = frPage ? 'Diagramme indisponible · Voir la source' : 'Diagram unavailable · View source';
         });
         console.warn('Diagram renderer unavailable:', error);
