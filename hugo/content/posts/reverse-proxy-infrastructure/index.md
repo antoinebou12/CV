@@ -1,10 +1,11 @@
 ---
 title: "My reverse proxy: separating provisioning, configuration and health checks"
 date: 2026-10-22T00:00:00-04:00
-lastmod: 2026-11-05T12:00:00-05:00
+lastmod: 2026-11-06T12:00:00-05:00
 description: "A code-based look at my Caddy infrastructure: Terraform for the VPS and DNS, Ansible for configuration, the order a deployment really runs in, and why its health checks and CI do not gate anything yet."
 images:
   - images/featured.png
+image_alt: "Deployment flow of the reverse proxy: Terraform provisions the VPS, firewall and Cloudflare DNS, Ansible runs its roles, the Caddy role restarts then validates, and the post-deploy checks are informational only"
 translationKey: reverse-proxy-infrastructure
 post_kind: article
 mermaid: true

@@ -1,10 +1,11 @@
 ---
 title: "Mon reverse proxy : séparer provisionnement, configuration et vérifications"
 date: 2026-10-22T00:00:00-04:00
-lastmod: 2026-11-05T12:00:00-05:00
+lastmod: 2026-11-06T12:00:00-05:00
 description: "Lecture de mon infrastructure Caddy : Terraform pour le VPS et le DNS, Ansible pour la configuration, l’ordre réel d’un déploiement et pourquoi ses contrôles et sa CI ne bloquent encore rien."
 images:
-  - images/featured.png
+  - images/featured-fr.png
+image_alt: "Flux de déploiement du proxy inverse : Terraform provisionne le VPS, le pare-feu et le DNS Cloudflare, Ansible exécute ses rôles, le rôle Caddy redémarre puis valide, et les vérifications après déploiement sont seulement informatives"
 translationKey: reverse-proxy-infrastructure
 post_kind: article
 mermaid: true
