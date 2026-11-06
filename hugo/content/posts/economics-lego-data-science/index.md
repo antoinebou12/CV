@@ -2,7 +2,7 @@
 post_kind: article
 title: Economics of LEGO Sets with Data Science
 date: 2024-05-30T12:00:00-04:00
-lastmod: 2026-05-22T16:00:00-04:00
+lastmod: 2026-11-05T12:00:00-05:00
 description: "Rebrickable trends, BrickEconomy prices, Playwright scraping, and a humble regression on classic set 001-1 — narrative with charts, code in LegosTracker."
 images:
   - images/featured.png
@@ -13,10 +13,12 @@ tags:
   - Pandas
   - Scraping
   - Playwright
+  - Data Visualization
+  - Scikit-learn
 canonicalURL: "https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb"
 ---
 
-I collect LEGO and write Python — so I merged **Rebrickable** exports with a **BrickEconomy** scraper to see how sets, colors, and themes evolved, and whether a simple model could explain prices on classics like **001-1**. This page is the story with charts; full notebooks live in **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**.
+I collect LEGO and write Python, so I merged **Rebrickable** exports with a **BrickEconomy** scraper to see how sets and themes evolved, and whether a simple model could follow the resale price of a classic set like **001-1**. The notebooks and scraper live in **[AlgoETS/LegosTracker](https://github.com/AlgoETS/LegosTracker)**.
 
 <!--more-->
 
@@ -24,108 +26,139 @@ I collect LEGO and write Python — so I merged **Rebrickable** exports with a *
 
 | Dataset | What it gives you |
 |---------|-------------------|
-| **Rebrickable CSVs** | sets, themes, parts, colors, inventories — great for counts and joins |
-| **BrickEconomy (scraped)** | historical resale-style prices Rebrickable does not ship |
+| **Rebrickable CSVs** | sets, themes, parts, colors, inventories: good for counts and joins |
+| **BrickEconomy (scraped)** | value history and sealed-price ranges that Rebrickable does not ship |
 
-Rebrickable files include `sets.csv`, `themes.csv`, `parts.csv`, `colors.csv`, and inventory tables — standard star schema for “how big is LEGO over time?”
+Rebrickable publishes `sets.csv`, `themes.csv`, `parts.csv`, `colors.csv` and the inventory tables. The schema below is how they join.
 
-![Overview of Rebrickable tables and joins](images/img-001.png)
+![Rebrickable tables and their keys](images/img-001.png)
 
 ## Sets over the decades
 
-Two trends jump out when you group by `year`:
+Grouping `sets` by `year` gives two trends:
 
-1. **Count of named sets** rises — LEGO product line expansion is real in the data.
-2. **Average part count per set** climbs — models got denser, not just more numerous.
+```python
+sets.groupby('year')['name'].nunique().plot(kind='bar')
+plt.title("The Numbers of Sets by Year")
+plt.show()
+
+parts_by_year = sets[['year', 'num_parts']].groupby('year', as_index=False).mean()
+parts_by_year.plot(x='year', y='num_parts', color="purple")
+plt.title("Average Number of Parts by Year")
+plt.show()
+```
+
+1. The **number of sets** per year climbs steeply after the late 1990s and passes 1,000 in recent years.
+2. The **average part count** per set rises too, from under 100 for most of the 1970s and 1980s to around 300 at the peak.
 
 ![Number of sets released per year](images/img-002.png)
 
 ![Average parts per set by year](images/img-003.png)
 
-Narrative check: adult-targeted lines and licensed themes show up as tail mass in part counts, not only kid-scale sets.
+## Themes that dominate the catalog
 
-## Themes — what dominates the catalog
+Count sets per `theme_id`, join `themes`, keep top-level themes (no `parent_id`) and plot the ten largest:
 
-Join `sets.theme_id` → `themes`, filter to top-level themes (no `parent_id`), bar-chart the top ten by set count.
+```python
+set_themes = sets["theme_id"].value_counts()
+set_themes = pd.DataFrame({"id": set_themes.index, "count": set_themes.values})
+set_themes = pd.merge(set_themes, themes, on="id")
+set_themes_no_parent = set_themes[pd.isnull(set_themes["parent_id"])]
+set_themes_top_10 = set_themes_no_parent.sort_values(by=["count"], ascending=False)[:10]
+top_10 = set_themes_top_10["count"]
+top_10.index = set_themes_top_10["name"]
+top_10.plot.bar(color="gold", rot=30)
+```
 
 ![Top 10 themes by number of sets](images/img-004.png)
 
-Star Wars, City, Technic, and friends crowd the head — good sanity check that merges worked before you trust price scrapes.
+Star Wars leads by a wide margin, followed by Friends, Gear, Ninjago, Bionicle and Technic. Gear and Service Packs are a reminder that the catalog counts more than buildable sets.
 
 ## Why scrape BrickEconomy?
 
-Rebrickable answers **what exists**; it does not answer **what people pay on the secondary market**. I used **Playwright + asyncio** to collect BrickEconomy pages — pydantic models for validation, aiohttp where fetch-only sufficed.
+Rebrickable answers **what exists**. It does not say **what people pay on the secondary market**. BrickEconomy shows value estimates, growth forecasts and sales trends per set, so I wrote a scraper with **Playwright**, **asyncio**, **pydantic** models for validation, and **aiohttp**.
 
-![BrickEconomy scraper workflow](images/img-005.png)
-
-Scraper code, rate limits, and HTML drift handling: see `LegosTracker` repo — too long to paste here and keep maintainable.
-
-## Environment (reference)
+![What BrickEconomy publishes for a set: value, growth forecast, sales trend](images/img-005.png)
 
 ```bash
-pip install playwright asyncio pydantic aiohttp pandas scikit-learn matplotlib
+pip install playwright pydantic aiohttp pandas scikit-learn matplotlib
 playwright install
 ```
 
-Imports and async browser setup match the repo’s `scraper/` module — run from project root with tests on a single set before batching thousands.
+The price history is not in the HTML table. It sits in an inline script that feeds a Google Charts `DataTable`, so `parse_history` reads the `<script>` tags and parses the rows out of it.
+
+![The inline chart script that holds the price history](images/img-006.png)
+
+The full `LegoAPI` class (navigation, `parse_history`, `parse_set`, CSV writing) is in the repository and the [Medium original](https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb).
 
 ## Price history for set 001-1
 
-Classic **001-1** is a teaching anchor: long history, recognizable name, enough secondary-market churn to plot.
+Set 001-1, the 1965 Samsonite Gears set, is a good test case: long history and enough resale activity to plot.
 
-Pipeline:
+![BrickEconomy page for 001-1 Samsonite Gears](images/img-007.png)
 
-1. Load scraped `001-1_history.csv` / `001-1_new.csv` from [LegosTracker data folder](https://github.com/AlgoETS/LegosTracker/tree/main/data).
-2. Clean dates and outliers (bad rows from HTML changes).
-3. Plot price vs time — look for step changes around reissues and collector spikes.
+The scraper writes two files per set. `001-1_history.csv` holds dated values with annotations such as the release, and `001-1_new.csv` holds monthly value ranges for sealed copies.
 
-![Historical price series for 001-1](images/img-006.png)
+![001-1_history.csv: dated values and annotations](images/img-009.png)
 
-## Linear regression — humble forecast
+![001-1_new.csv: monthly value ranges](images/img-008.png)
 
-Fit a simple **linear model** on engineered features (time, condition flags, maybe part count proxies) to predict logged price.
+Cleaning removes duplicates, strips currency symbols, parses dates and drops zero values:
 
-It is not alpha — it is **explainability practice**:
+```python
+df_0011.drop_duplicates(inplace=True)
+df_0011['Currency Value'] = df_0011['Currency Value'].fillna(0)
+df_0011['Currency Value'] = df_0011['Currency Value'].str.replace('[^\d.]', '', regex=True)
+df_0011['Currency Value'] = pd.to_numeric(df_0011['Currency Value'], errors='coerce')
+df_0011.drop(['Value', 'Status'], axis=1, inplace=True)
+df_0011['Date'] = pd.to_datetime(df_0011['Date'], errors='coerce')
+df_0011.rename(columns={'Currency Value': 'USD Value', 'Description': 'Set Description'}, inplace=True)
+df_0011['USD Value'] = df_0011['USD Value'].fillna(0)
+df_0011 = df_0011[df_0011['USD Value'] != 0]
+```
 
-- Does trend dominate?
-- Do residuals cluster by era?
-- Would a tree model buy you much on N=small?
+One caveat: BrickEconomy displayed Canadian dollars for my session (`C$` in the raw values), and the notebook renames the column to `USD Value` anyway. Read the axis below as Canadian dollars.
 
-![Regression fit and residuals](images/img-010.png)
+![Notebook output: lowest and highest priced sets, average price](images/img-010.png)
 
-![Prediction vs actual scatter](images/img-011.png)
+## Linear regression as a humble forecast
 
-Full coefficient tables and train/test split notes: Medium [original article](https://medium.com/@antoine.boucher012/economics-of-lego-sets-with-data-science-a4ca07d613fb) and repo notebooks.
+The model is a plain linear regression of value against the date, with a projection to 2030:
 
-## Notebook excerpts
+```python
+X = df_0011['Date'].map(pd.Timestamp.toordinal).values.reshape(-1, 1)
+y = df_0011['USD Value'].values
 
-The Medium import contained pages of one-line pandas plots. Prefer the GitHub project for copy-pasteable cells:
+model = LinearRegression().fit(X, y)
 
-- Theme merges and bar charts
-- Scraper orchestration
-- Price cleaning
-- `sklearn` regression pipeline
+future_dates = pd.date_range('2008-12-31', '2030-12-31', freq='Y')
+future_dates_ordinal = future_dates.map(pd.Timestamp.toordinal).values.reshape(-1, 1)
+future_predictions = model.predict(future_dates_ordinal)
+```
 
-![Additional exploratory charts](images/img-012.png)
+![Linear regression of set 001-1 with future predictions](images/img-011.png)
+
+It is not a trading signal. It is a way to ask simple questions: does the trend dominate, do the residuals cluster by era, and how far off are the recent spikes above 600? Plotting the gain between observations makes those spikes obvious.
+
+![Gain over time and value over time for 001-1](images/img-012.png)
 
 ## When not to trust this analysis
 
 | Pitfall | Effect |
 |---------|--------|
 | Scraper breakage | Missing months look like price crashes |
-| Survivorship in sets table | Discontinued sets skew counts |
+| Survivorship in the sets table | Discontinued sets skew counts |
 | Linear model on hype sets | Residuals explode |
-| Treating resale as MSRP | Different economic story |
+| Treating resale as MSRP | A different economic story |
 
 ## Takeaway
 
-LEGO data is messy fun — good for **pandas practice**, **async scraping discipline**, and remembering that secondary prices are sentiment plus plastic, not fundamentals.
+LEGO data is messy fun: good for **pandas practice**, **async scraping discipline**, and remembering that secondary prices are sentiment plus plastic, not fundamentals.
 
 ## Related posts
 
-- [Economics of LEGO (FR)]({{< ref "/posts/economics-lego-data-science/index.fr.md" >}}) — same analysis in French
-- [Vector databases / movie embeddings]({{< ref "/posts/vector-databases-similar-movies/index.md" >}}) — another teaching dataset story
-- [MarketWatch Python]({{< ref "/posts/marketwatch-python-trading/index.md" >}}) — different market, same curiosity
+- [Vector databases / movie embeddings]({{< ref "/posts/vector-databases-similar-movies/index.md" >}}): another teaching dataset story
+- [MarketWatch Python]({{< ref "/posts/marketwatch-python-trading/index.md" >}}): different market, same curiosity
 
 ## References
 
