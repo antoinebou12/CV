@@ -1,0 +1,44 @@
+classDiagram
+direction TB
+class tfc48c4601f45["BaseGame"] {
+  __init__()
+  _make_all_flips()
+  kelly_bet()
+  _strategy()
+  strategy()
+  play_game()
+  get_n_games()
+  get_n_game_df()
+  get_growth_rates()
+  plot_games()
+  get_binomial_distribution()
+  simulate_growth_rates()
+  plot_growth_rate_distribution()
+}
+class t8a361a0a7b54["Kelly"] {
+  _strategy()
+  simulate_growth_rates()
+  _exp_growth_rates_by_perc_wager()
+  plot_exp_growth_rates_by_perc_wager()
+}
+class tf71629f76a87["ConstantDollar"] {
+  _strategy()
+}
+class t95881280d4af["BetLikeADummy"] {
+  _strategy()
+}
+class t6517ec45c785["aon"] {
+  _strategy()
+}
+class t9f86ab1fdacd["KellyWithAnEstimate"] {
+  _strategy()
+}
+class b405e50871799["ABC"] {
+  <<unresolved_base>>
+}
+b405e50871799 <|-- tfc48c4601f45
+tfc48c4601f45 <|-- t8a361a0a7b54
+tfc48c4601f45 <|-- tf71629f76a87
+tfc48c4601f45 <|-- t95881280d4af
+tfc48c4601f45 <|-- t6517ec45c785
+tfc48c4601f45 <|-- t9f86ab1fdacd

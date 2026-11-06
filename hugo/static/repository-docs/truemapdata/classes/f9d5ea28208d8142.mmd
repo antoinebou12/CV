@@ -1,0 +1,29 @@
+classDiagram
+direction TB
+class t11a88a88e321["PolyscopePlotter"] {
+  __init__()
+  plot()
+  plot_3d()
+  save()
+  _create_point_cloud()
+  _create_mesh()
+  _create_surface()
+}
+class t934c707b8607["PolyscopeSequencePlotter"] {
+  __init__()
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+  _sequence_callback()
+  _animation_callback()
+  _statistics_callback()
+}
+class bfce588c7348a["BasePlotter"] {
+  <<unresolved_base>>
+}
+bfce588c7348a <|-- t11a88a88e321
+class be13a936c43d1["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+be13a936c43d1 <|-- t934c707b8607

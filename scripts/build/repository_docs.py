@@ -28,6 +28,30 @@ CACHE = ROOT / "_site/repository-docs-cache"
 DATA = ROOT / "hugo/data/repository_analysis.json"
 EXPORT = ROOT / "hugo/static/repository-docs"
 OWNER = "antoinebou12"
+ORG_REPOSITORIES = ROOT / "hugo/data/project_org_repositories.json"
+
+
+def org_notes():
+    """Hand-written notes for organisation repositories (AlgoETS, ETSim): no curated diagram, same analysis."""
+    return [
+        {"repo": r["name"], "slug": r["slug"], "owner": r["owner"], "files": [], "org": True}
+        for r in load(ORG_REPOSITORIES, {"repositories": []})["repositories"]
+        if not r.get("fork")
+    ]
+
+
+def inventory_notes():
+    return load(ROOT / "hugo/data/repository_notes.json")["notes"] + org_notes()
+
+
+_OWNERS = None
+
+
+def owner_of(repo):
+    global _OWNERS
+    if _OWNERS is None:
+        _OWNERS = {n["repo"]: n["owner"] for n in org_notes()}
+    return _OWNERS.get(repo, OWNER)
 MAX_BYTES = 4_000_000
 LANGUAGES = {
     ".py": "python",
@@ -179,7 +203,7 @@ def mcp(name, repo):
         "jsonrpc": "2.0",
         "id": 1,
         "method": "tools/call",
-        "params": {"name": name, "arguments": {"repository": f"{OWNER}/{repo}"}},
+        "params": {"name": name, "arguments": {"repository": f"{owner_of(repo)}/{repo}"}},
     }
     raw = request("https://gitdiagram.com/mcp", payload).decode("utf-8")
     if raw.lstrip().startswith("{"):
@@ -231,7 +255,7 @@ def fetch_blob(repo, commit, entry, offline):
     elif offline:
         raise FileNotFoundError("Source blob was not cached")
     else:
-        url = f"https://raw.githubusercontent.com/{OWNER}/{quote(repo)}/{commit}/{quote(entry['path'])}"
+        url = f"https://raw.githubusercontent.com/{owner_of(repo)}/{quote(repo)}/{commit}/{quote(entry['path'])}"
         data = request(url)
     expected = hashlib.sha1(
         b"blob " + str(len(data)).encode() + b"\0" + data
@@ -608,12 +632,12 @@ def import_gitdiagram(repo, slug, paths, offline):
     if offline:
         return load(cached, {"status": "not_checked"})
     result = {
-        "url": f"https://gitdiagram.com/{OWNER}/{quote(repo)}",
+        "url": f"https://gitdiagram.com/{owner_of(repo)}/{quote(repo)}",
     }
     try:
         response = mcp("get_repository_diagram", repo)
         view = response.get("_meta", {}).get("com.gitdiagram/diagram", {})
-        if view.get("repository", "").lower() != f"{OWNER}/{repo}".lower():
+        if view.get("repository", "").lower() != f"{owner_of(repo)}/{repo}".lower():
             raise ValueError("GitDiagram repository mismatch")
         if view.get("status") == "found" and isinstance(view.get("mermaid"), str):
             source = view["mermaid"]
@@ -667,19 +691,19 @@ def analyze(note, args):
         if not inputs:
             raise FileNotFoundError("No cached repository snapshot")
     else:
-        metadata = github(f"repos/{OWNER}/{repo}")
+        metadata = github(f"repos/{owner_of(repo)}/{repo}")
         if metadata.get("private") or metadata.get("visibility") != "public":
             raise ValueError("Only public repositories may be documented")
         branch = github(
-            f"repos/{OWNER}/{repo}/branches/{quote(metadata['default_branch'], safe='')}"
+            f"repos/{owner_of(repo)}/{repo}/branches/{quote(metadata['default_branch'], safe='')}"
         )
         commit = branch["commit"]["sha"]
-        tree = github(f"repos/{OWNER}/{repo}/git/trees/{commit}?recursive=1")
+        tree = github(f"repos/{owner_of(repo)}/{repo}/git/trees/{commit}?recursive=1")
         inputs = {
             "metadata": metadata,
             "tree": tree,
             "commit": commit,
-            "languages": github(f"repos/{OWNER}/{repo}/languages"),
+            "languages": github(f"repos/{owner_of(repo)}/{repo}/languages"),
             "fetched_at": datetime.now(UTC).isoformat(),
         }
         save(metadata_file, inputs)
@@ -731,7 +755,7 @@ def analyze(note, args):
             except (ImportError, ValueError, RuntimeError, TypeError) as exc:
                 parse_errors.append({"file": path, "error": type(exc).__name__})
     types.sort(key=lambda t: (t["file"] not in note["files"], t["file"], t["line"]))
-    source_url = f"https://github.com/{OWNER}/{quote(repo)}/blob/{commit}/"
+    source_url = f"https://github.com/{owner_of(repo)}/{quote(repo)}/blob/{commit}/"
     previous = load(EXPORT / slug / "analysis.json", {})
     per_file = []
     for path in sorted({t["file"] for t in types}):
@@ -796,7 +820,7 @@ def analyze(note, args):
         "slug": slug,
         "commit": commit,
         "source_url": source_url,
-        "tree_url": f"https://github.com/{OWNER}/{quote(repo)}/tree/{commit}",
+        "tree_url": f"https://github.com/{owner_of(repo)}/{quote(repo)}/tree/{commit}",
         "fetched_at": inputs["fetched_at"],
         "languages": languages,
         "language_bytes": total,
@@ -863,9 +887,10 @@ def main():
     if args.article_index_only:
         save(ROOT / "hugo/data/repository_article_index.json", repo_articles(notes))
         return
-    if args.repo and set(args.repo) - {n["repo"] for n in notes}:
+    everything = notes + org_notes()
+    if args.repo and set(args.repo) - {n["repo"] for n in everything}:
         parser.error("Unknown repository; only the public site inventory is accepted")
-    selected = [n for n in notes if not args.repo or n["repo"] in args.repo]
+    selected = [n for n in everything if not args.repo or n["repo"] in args.repo]
     prior = load(DATA, {"schema_version": 1, "repositories": {}})
     errors = []
     for note in selected:

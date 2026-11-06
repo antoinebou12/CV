@@ -1,0 +1,31 @@
+classDiagram
+direction TB
+class t9d592d3bc67c["MeshError"] {
+}
+class td1063c6f678c["MeshValidationError"] {
+}
+class t8444bce37cea["MeshOperationError"] {
+}
+class t99e4794ad3de["MeshData"] {
+  __post_init__()
+  vertex_count()
+  face_count()
+  triangle_count()
+  ensure_normals()
+  calculate_vertex_normals()
+  generate_uvs()
+  optimize()
+  get_bounding_box()
+  transform()
+  scale()
+  translate()
+  copy()
+  validate()
+  get_statistics()
+}
+class b9f1da97a77bd["Exception"] {
+  <<unresolved_base>>
+}
+b9f1da97a77bd <|-- t9d592d3bc67c
+t9d592d3bc67c <|-- td1063c6f678c
+t9d592d3bc67c <|-- t8444bce37cea

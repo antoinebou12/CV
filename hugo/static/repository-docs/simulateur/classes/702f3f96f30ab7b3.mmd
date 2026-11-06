@@ -1,0 +1,28 @@
+classDiagram
+direction TB
+class tc62b8773f549["BuyStockTests"] {
+  setUp()
+  tearDown()
+  test_buy_stock_success()
+  test_buy_stock_insufficient_funds()
+  test_buy_stock_invalid_amount()
+  test_buy_stock_invalid_stock()
+}
+class td2d8f06fb011["SellStockTests"] {
+  setUp()
+  tearDown()
+  test_sell_stock_success()
+  test_sell_stock_insufficient_holdings()
+}
+class t5b625a1a91f6["UserOrdersTests"] {
+  setUp()
+  tearDown()
+  test_get_user_orders_success()
+  test_get_user_orders_no_orders()
+}
+class b920a63394812["TestCase"] {
+  <<unresolved_base>>
+}
+b920a63394812 <|-- tc62b8773f549
+b920a63394812 <|-- td2d8f06fb011
+b920a63394812 <|-- t5b625a1a91f6

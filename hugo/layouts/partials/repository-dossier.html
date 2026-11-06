@@ -31,7 +31,8 @@
   (dict "id" "database" "label" (slice "Database" "Base de données") "on" (or $db.engines $db.tables $db.containers (gt $db.migrations 0)))
   (dict "id" "integrations" "label" (slice "External integrations" "Intégrations externes") "on" (or $int.services $int.http_clients $int.hosts))
   (dict "id" "stack" "label" (slice "Stack and dependencies" "Stack et dépendances") "on" (gt (len .stack.manifests) 0))
-  (dict "id" "deployment" "label" (slice "Deployment" "Déploiement") "on" (or $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets))
+  (dict "id" "ci" "label" (slice "CI/CD pipeline" "Pipeline CI/CD") "on" (ne .ci nil))
+  (dict "id" "deployment" "label" (slice "Deployment" "Déploiement") "on" (or $dep.mermaid $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets))
   (dict "id" "monitoring" "label" (slice "Monitoring" "Supervision") "on" (or $mon.signals $mon.health_routes $mon.health_checks))
   (dict "id" "security" "label" (slice "Security" "Sécurité") "on" (or $sec.controls $sec.env_vars $sec.supply_chain $sec.review))
   (dict "id" "tests" "label" (slice "Testing" "Tests automatisés") "on" (or (gt $tst.files 0) $tst.frameworks $tst.workflows))
@@ -299,17 +300,27 @@
     <details class="repo-structure-details">
       <summary><strong>{{ .ecosystem }}</strong> <code>{{ .file }}</code> <span class="repo-evidence-label">{{ with .runtime_total }}{{ . }} {{ if $fr }}à l’exécution{{ else }}runtime{{ end }}{{ end }}{{ if and .runtime_total .dev_total }}, {{ end }}{{ with .dev_total }}{{ . }} dev{{ end }}</span></summary>
       {{ with .toolchain }}<p>{{ range . }}<span class="tag status">{{ . }}</span> {{ end }}</p>{{ end }}
+      {{ if not $d.dependencies }}
       {{ with .runtime }}<p class="repo-dossier-sublabel">{{ if $fr }}Exécution{{ else }}Runtime{{ end }}</p><p class="repo-dependency-badges">{{ range . }}<a class="repo-badge tool" href="{{ $m.url }}"><span>{{ .name }}</span>{{ with .version }} <code>{{ . }}</code>{{ end }}</a> {{ end }}{{ if gt $m.runtime_total (len .) }}…{{ end }}</p>{{ end }}
       {{ with .dev }}<p class="repo-dossier-sublabel">{{ if $fr }}Développement{{ else }}Development{{ end }}</p><p class="repo-dependency-badges">{{ range . }}<a class="repo-badge tool" href="{{ $m.url }}"><span>{{ .name }}</span>{{ with .version }} <code>{{ . }}</code>{{ end }}</a> {{ end }}</p>{{ end }}
+      {{ end }}
       <p><a href="{{ .url }}">{{ if $fr }}Ouvrir le manifeste{{ else }}Open the manifest{{ end }}</a></p>
     </details>
     {{ end }}
+    {{ with $d.dependencies }}<h4>{{ if $fr }}Dépendances externes{{ else }}External dependencies{{ end }}</h4>{{ partial "repository-dependencies.html" (dict "deps" . "fr" $fr) }}{{ end }}
   </section>
   {{ end }}
 
-  {{ if or $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets }}
+  {{ with .ci }}
+  <section class="repo-dossier-part" id="dossier-ci" aria-labelledby="dossier-ci-h">
+    {{ partial "repository-ci.html" (dict "ci" . "fr" $fr "level" 3 "id" "dossier-ci-h") }}
+  </section>
+  {{ end }}
+
+  {{ if or $dep.mermaid $dep.hosting $containers $dep.base_images $dep.pipelines $dep.targets }}
   <section class="repo-dossier-part" id="dossier-deployment" aria-labelledby="dossier-deployment-h">
     <h3 id="dossier-deployment-h">{{ if $fr }}Déploiement{{ else }}Deployment{{ end }}</h3>
+    {{ partial "repository-deployment-view.html" (dict "deployment" $dep "fr" $fr) }}
     {{ with $uml.deployment }}{{ partial "repository-uml-figure.html" (dict "item" . "fr" $fr "open" false) }}{{ end }}
     {{ with $dep.hosting }}
     <h4>{{ if $fr }}Où il s’exécute{{ else }}Where it runs{{ end }}</h4>
@@ -319,7 +330,7 @@
     <h4>{{ if $fr }}Publié vers{{ else }}Published to{{ end }}</h4>
     <ul class="repo-chip-list" role="list">{{ range . }}<li><a href="{{ .url }}" title="{{ .file }}">{{ index .label $i }}</a></li>{{ end }}</ul>
     {{ end }}
-    {{ with $dep.pipelines }}
+    {{ with and (not $d.ci) $dep.pipelines }}
     <h4>{{ if $fr }}Pipelines de livraison{{ else }}Delivery pipelines{{ end }}</h4>
     <dl class="repo-deflist compact">{{ range . }}<div><dt><a href="{{ .url }}">{{ .name }}</a>{{ with .triggers }} <span class="repo-evidence-label">{{ if $fr }}déclenché par{{ else }}runs on{{ end }} {{ delimit . ", " }}</span>{{ end }}{{ with .environments }} <span class="repo-ops-badge">{{ delimit . ", " }}</span>{{ end }}</dt><dd>{{ delimit .steps " · " }}</dd></div>{{ end }}</dl>
     {{ end }}

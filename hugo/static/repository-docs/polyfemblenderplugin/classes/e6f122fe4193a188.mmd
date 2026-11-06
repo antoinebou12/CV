@@ -1,0 +1,37 @@
+classDiagram
+direction TB
+class t9cacce63bc58["PullDockerImages"] {
+  execute()
+}
+class t9be419942ff6["POLYFEM_OT_ShowMessageBox"] {
+  execute()
+  invoke()
+  draw()
+}
+class t6b8ebd2e1bac["PolyFEMApplyMaterial"] {
+  execute()
+}
+class tf522f637d36a["CreatePolyFemJSONOperator"] {
+  execute()
+  process_object()
+  export_mesh_using_tetwild()
+  export_mesh_using_executable()
+  export_mesh()
+  export_mesh_to_stl()
+  export_mesh_to_obj()
+  run_tetwild()
+  cleanup_docker_container()
+  create_json_data()
+  get_point_selection()
+  write_json_file()
+}
+class b86e45185f67a["bpy.types.Operator"] {
+  <<unresolved_base>>
+}
+b86e45185f67a <|-- t9cacce63bc58
+class be61215eb7443["Operator"] {
+  <<unresolved_base>>
+}
+be61215eb7443 <|-- t9be419942ff6
+be61215eb7443 <|-- t6b8ebd2e1bac
+be61215eb7443 <|-- tf522f637d36a

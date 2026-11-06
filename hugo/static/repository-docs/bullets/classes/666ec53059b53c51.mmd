@@ -1,0 +1,34 @@
+classDiagram
+direction TB
+class t075a21e87ecb["ActualStrategy"] {
+  on_start()
+  on_resolution()
+  on_finish()
+}
+class tee10c0f5da04["TestStrategy"] {
+  test_strategy_start_balance()
+  test_strategy_final_investment_balance()
+  test_strategy_final_cash_balance()
+  test_strategy_final_percentage_profit()
+  test_strategy_final_transaction_count()
+  test_strategy_none_date()
+  test_strategy_invalid_date()
+  test_strategy_none_resolution()
+  test_strategy_none_data_source()
+  test_strategy_invalid_balance()
+  test_income_statement()
+  test_income_statement_list()
+  test_balance_sheet_statements()
+  test_cash_flow_statements()
+  test_symbol_list()
+  test_forex_currency_pairs_list()
+  test_tradable_symbol_list()
+}
+class b0003eb599309["Strategy"] {
+  <<unresolved_base>>
+}
+b0003eb599309 <|-- t075a21e87ecb
+class bc88780df060e["unittest.TestCase"] {
+  <<unresolved_base>>
+}
+bc88780df060e <|-- tee10c0f5da04

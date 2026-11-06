@@ -1,0 +1,1503 @@
+{
+  "repo": "MistubaVideo",
+  "slug": "mistubavideo",
+  "commit": "87b180b9f03333b773fecd7708be86c75b1f822d",
+  "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/",
+  "tree_url": "https://github.com/ETSim/MistubaVideo/tree/87b180b9f03333b773fecd7708be86c75b1f822d",
+  "fetched_at": "2026-11-06T05:14:15.217234+00:00",
+  "languages": [
+    {
+      "name": "Python",
+      "bytes": 510338,
+      "percent": 99.67
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 1707,
+      "percent": 0.33
+    }
+  ],
+  "language_bytes": 512045,
+  "coverage": {
+    "tree_files": 84,
+    "eligible_files": 69,
+    "read_files": 69,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [
+    {
+      "file": "README.md",
+      "line": 42,
+      "heading": "Basic Usage",
+      "commands": "python main.py multi --folder exports --regex \"\\d+\\.obj\""
+    },
+    {
+      "file": "README.md",
+      "line": 48,
+      "heading": "Command-line Options",
+      "commands": "Options:\n  -f, --folder TEXT               Folder containing OBJ files  [required]\n  -r, --regex TEXT                Regex pattern for OBJ filenames  [default: \\d+\\.obj]\n  -n, --name TEXT                 Base name for output files  [default: multi_obj]\n  -t, --threaded                  Enable multi-threading\n  -w, --workers INTEGER           Max worker threads (if threaded)\n  --video / --no-video            Enable video creation  [default: video]\n  --gif / --no-gif                Enable GIF creation  [default: gif]\n  -d, --device TEXT               Rendering device (cpu/cuda)  [default: cpu]\n  -s, --spp INTEGER               Samples per pixel  [default: 256]\n  --width INTEGER                 Output image width  [default: 1920]\n  --height INTEGER                Output image height  [default: 1080]"
+    },
+    {
+      "file": "README.md",
+      "line": 69,
+      "heading": "Additional Commands",
+      "commands": "python main.py info"
+    },
+    {
+      "file": "README.md",
+      "line": 180,
+      "heading": "Command-line Usage",
+      "commands": "python main.py multi --folder models --view front --view top --view right"
+    },
+    {
+      "file": "README.md",
+      "line": 186,
+      "heading": "Command-line Usage",
+      "commands": "python main.py multi --folder models --all-views"
+    },
+    {
+      "file": "packages/mitsuba_video/README.md",
+      "line": 22,
+      "heading": "Install and run",
+      "commands": "pip install -e \"packages/mitsuba_video[texturefriction]\"   # drop the extra if you don't need h5py\nmitsuba-video fixture demo                                   # synthetic manifest to try things on\nmitsuba-video inspect demo\nmitsuba-video preview demo                                   # 960x540, 16 spp, every 8th frame\nmitsuba-video render  demo -q paper --camera orbit --title \"Wear on a plane\" --ramp 0.2\nmitsuba-video encode  demo/render_heatmap --fps 15 --hold 4  # new fps/title without re-rendering\nmitsuba-video render  demo --resume                          # continue an interrupted render"
+    }
+  ],
+  "manifests": [],
+  "type_count": 59,
+  "types": [
+    {
+      "id": "t060925226d27",
+      "name": "BlendParams",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/blend.py",
+      "line": 37,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t62436ad8ebb8",
+      "name": "VariantStack",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/blend.py",
+      "line": 62,
+      "language": "python",
+      "methods": [
+        "__post_init__",
+        "pair",
+        "_slice",
+        "base",
+        "worn",
+        "stages",
+        "describe"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tb4e135078502",
+      "name": "CameraPose",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/camera.py",
+      "line": 22,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t7ce172f5fafc",
+      "name": "CameraSettings",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/camera.py",
+      "line": 29,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t139e9f14a61c",
+      "name": "CameraMode",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/cli.py",
+      "line": 49,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "id": "taebaefb268f2",
+      "name": "FieldDisplay",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/color.py",
+      "line": 49,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t473909839a45",
+      "name": "MapSet",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/maps.py",
+      "line": 26,
+      "language": "python",
+      "methods": [
+        "copy"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t3a6399d23e77",
+      "name": "NormalOptions",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/maps.py",
+      "line": 69,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t91d81c598577",
+      "name": "Frame",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "line": 22,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t63502b70fd5d",
+      "name": "FieldSpec",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "line": 30,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t7be73f061142",
+      "name": "MaterialProvider",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "line": 41,
+      "language": "python",
+      "methods": [
+        "preferred_size",
+        "build"
+      ],
+      "bases": [
+        "Protocol"
+      ]
+    },
+    {
+      "id": "tdfe6975d5bce",
+      "name": "Body",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "line": 62,
+      "language": "python",
+      "methods": [
+        "label",
+        "area_per_texel",
+        "local_bounds"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te4ca22e99876",
+      "name": "MapImages",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/mtl.py",
+      "line": 82,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t40c1e4ef57ec",
+      "name": "MtlMaterial",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/mtl.py",
+      "line": 109,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_image",
+        "images",
+        "preferred_size",
+        "build"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t87130a5cbda0",
+      "name": "ObjMesh",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/obj.py",
+      "line": 16,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t4097135e28ca",
+      "name": "Look",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "line": 39,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "id": "tcb3d43ad764b",
+      "name": "VideoSettings",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "line": 54,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t6b0d540a2b0d",
+      "name": "RenderSettings",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "line": 66,
+      "language": "python",
+      "methods": [
+        "stem"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t37c25268d29b",
+      "name": "LightingSettings",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "line": 62,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t1c105f7573e0",
+      "name": "FieldScene",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "line": 102,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "set_poses",
+        "set_textures",
+        "set_camera",
+        "render"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t51bb01b1e8c7",
+      "name": "Denoiser",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "line": 272,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "active",
+        "__call__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tb63c96135cdb",
+      "name": "Source",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/source.py",
+      "line": 29,
+      "language": "python",
+      "methods": [
+        "probe",
+        "open",
+        "pose",
+        "field",
+        "describe",
+        "close"
+      ],
+      "bases": [
+        "Protocol"
+      ]
+    },
+    {
+      "id": "t982120682df9",
+      "name": "InlineMaterial",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py",
+      "line": 55,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_images",
+        "preferred_size",
+        "build"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t4f8eacc1bd2f",
+      "name": "ManifestSource",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py",
+      "line": 98,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_body",
+        "_frames",
+        "probe",
+        "open",
+        "pose",
+        "field",
+        "describe",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t2f0fbd5e8ba0",
+      "name": "ManifestWriter",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/writer.py",
+      "line": 29,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "add_field",
+        "add_body",
+        "write_image",
+        "add_frame",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tcbcba47f8615",
+      "name": "TextureFrictionSource",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/__init__.py",
+      "line": 86,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "probe",
+        "open",
+        "pose",
+        "field",
+        "describe",
+        "close",
+        "__enter__",
+        "__exit__"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t2fa89a6238f2",
+      "name": "TextureFrictionMaterial",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/materials.py",
+      "line": 90,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_mtl_image",
+        "_roughness_fallback",
+        "preferred_size",
+        "build_stack",
+        "build"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tde465417aee0",
+      "name": "MaterialVariant",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "line": 47,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t70a0ec96192b",
+      "name": "RecordedBody",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "line": 60,
+      "language": "python",
+      "methods": [
+        "variants",
+        "resolve_texture"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tb93084cd4649",
+      "name": "Recording",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "line": 151,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "body",
+        "close",
+        "__enter__",
+        "__exit__",
+        "scenario_name",
+        "_read_variant_blend",
+        "_read_bodies",
+        "_read_frames",
+        "pose",
+        "texture"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t9b4021691517",
+      "name": "PanelSource",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/video.py",
+      "line": 44,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "td3c4f437b560",
+      "name": "AreaSeries",
+      "kind": "class",
+      "file": "packages/mitsuba_video/src/mitsuba_video/video.py",
+      "line": 131,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t8aedd986730f",
+      "name": "Config",
+      "kind": "class",
+      "file": "src/config/config.py",
+      "line": 75,
+      "language": "python",
+      "methods": [
+        "__new__",
+        "_setup",
+        "_setup_denoising_attributes",
+        "_setup_aov_attributes",
+        "_setup_logging",
+        "load_from_file",
+        "find_config_file",
+        "replace_global_instance",
+        "_update_convenience_attributes",
+        "_log_config_values",
+        "_load_from_json",
+        "_load_from_env",
+        "_override_from_env",
+        "get_denoising_config",
+        "should_denoise_for_quality",
+        "get_reconstruction_filter_for_denoising",
+        "prepare_scene_for_denoising",
+        "get_aov_list_string",
+        "prepare_scene_dict_for_aovs"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tdfb2b7aa3b7e",
+      "name": "RenderDevice",
+      "kind": "class",
+      "file": "src/config/constants.py",
+      "line": 154,
+      "language": "python",
+      "methods": [
+        "get_default"
+      ],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "tf75399a68d93",
+      "name": "LogLevel",
+      "kind": "class",
+      "file": "src/config/constants.py",
+      "line": 169,
+      "language": "python",
+      "methods": [
+        "get_level"
+      ],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "tc0338f55d757",
+      "name": "OutputFormat",
+      "kind": "class",
+      "file": "src/config/constants.py",
+      "line": 185,
+      "language": "python",
+      "methods": [
+        "get_extension"
+      ],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "t87bcf736aa6e",
+      "name": "CameraView",
+      "kind": "class",
+      "file": "src/mitsuba/camera.py",
+      "line": 10,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "ta14818d59e20",
+      "name": "CameraUtils",
+      "kind": "class",
+      "file": "src/mitsuba/camera.py",
+      "line": 21,
+      "language": "python",
+      "methods": [
+        "get_camera_transform",
+        "format_transform_for_xml",
+        "get_all_standard_views",
+        "get_views_from_preset",
+        "get_default_views",
+        "get_camera_settings_for_view"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t337196b891ba",
+      "name": "CameraViewManager",
+      "kind": "class",
+      "file": "src/mitsuba/camera.py",
+      "line": 186,
+      "language": "python",
+      "methods": [
+        "get_view",
+        "scale_camera_distance",
+        "get_camera_views",
+        "validate_camera_views"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t88a4c3c902f3",
+      "name": "DenoiserManager",
+      "kind": "class",
+      "file": "src/mitsuba/denoising.py",
+      "line": 141,
+      "language": "python",
+      "methods": [
+        "_get_cached_denoiser",
+        "prepare_scene_for_denoising",
+        "create_aov_integrator_for_denoising",
+        "denoise_image",
+        "denoise_exr_file",
+        "denoise_image_safe"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t94615d9b32c5",
+      "name": "MitsubaUtils",
+      "kind": "class",
+      "file": "src/mitsuba/mitsuba.py",
+      "line": 8,
+      "language": "python",
+      "methods": [
+        "set_variant",
+        "get_available_variants",
+        "render_scene",
+        "load_scene_from_file",
+        "load_scene_from_dict"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t59982a3515ec",
+      "name": "QualityPreset",
+      "kind": "class",
+      "file": "src/mitsuba/quality.py",
+      "line": 20,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "te400504bc800",
+      "name": "QualityManager",
+      "kind": "class",
+      "file": "src/mitsuba/quality.py",
+      "line": 29,
+      "language": "python",
+      "methods": [
+        "get_default_preset",
+        "get_preset_settings",
+        "safe_sample_count",
+        "apply_preset_to_params",
+        "get_quality_settings",
+        "update_custom_preset",
+        "get_all_quality_presets"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t34bbee6e8d6e",
+      "name": "RenderSettings",
+      "kind": "class",
+      "file": "src/mitsuba/render_settings.py",
+      "line": 13,
+      "language": "python",
+      "methods": [
+        "create_default_integrator",
+        "create_default_film",
+        "create_default_sensor"
+      ],
+      "bases": []
+    },
+    {
+      "id": "te0c16f357c93",
+      "name": "AOVProcessor",
+      "kind": "class",
+      "file": "src/processing/aov.py",
+      "line": 17,
+      "language": "python",
+      "methods": [
+        "extract_aovs_from_exr",
+        "extract_aovs_from_bitmap",
+        "get_available_aov_types",
+        "is_valid_aov_type",
+        "batch_extract_aovs"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t4b1338714ddd",
+      "name": "FFmpegHelper",
+      "kind": "class",
+      "file": "src/processing/ffmpeg.py",
+      "line": 20,
+      "language": "python",
+      "methods": [
+        "check_ffmpeg",
+        "run_command",
+        "build_ffmpeg_command_video",
+        "build_ffmpeg_command_gif"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t30c5147500ac",
+      "name": "FFmpegProcessor",
+      "kind": "class",
+      "file": "src/processing/ffmpeg.py",
+      "line": 163,
+      "language": "python",
+      "methods": [
+        "get_ffmpeg_path",
+        "create_video",
+        "create_gif"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t38fdb1d08066",
+      "name": "ImageConverter",
+      "kind": "class",
+      "file": "src/processing/image.py",
+      "line": 11,
+      "language": "python",
+      "methods": [
+        "convert_exr_to_png",
+        "convert_exr_to_hdr"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tfd61e52d5aa4",
+      "name": "ObjProcessor",
+      "kind": "class",
+      "file": "src/processing/meshes.py",
+      "line": 10,
+      "language": "python",
+      "methods": [
+        "get_matching_obj_files",
+        "copy_to_mesh_folder"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t1479e03617ed",
+      "name": "SceneProcessor",
+      "kind": "class",
+      "file": "src/processing/scene.py",
+      "line": 16,
+      "language": "python",
+      "methods": [
+        "ensure_default_template",
+        "create_scene_xml_for_obj",
+        "create_scene_xmls_with_multiple_views",
+        "_apply_camera_view",
+        "_apply_aov_settings",
+        "update_template_with_params"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tabcd14175eba",
+      "name": "XMLValidator",
+      "kind": "class",
+      "file": "src/processing/xml.py",
+      "line": 15,
+      "language": "python",
+      "methods": [
+        "validate_xml"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t08f80e3029b1",
+      "name": "XMLProcessor",
+      "kind": "class",
+      "file": "src/processing/xml.py",
+      "line": 45,
+      "language": "python",
+      "methods": [
+        "create_basic_scene_xml",
+        "create_xml_from_scene_dict",
+        "update_template_xml_with_params"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta66029f56058",
+      "name": "BaseRenderer",
+      "kind": "class",
+      "file": "src/renderers/base.py",
+      "line": 20,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "get_output_path",
+        "render_scene",
+        "create_video",
+        "create_gif",
+        "_log_timing_statistics"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t01eecc643eeb",
+      "name": "MultiObjSceneRenderer",
+      "kind": "class",
+      "file": "src/renderers/multi.py",
+      "line": 30,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "prepare_scene_xmls",
+        "render_frame",
+        "_prepare_scene_xml",
+        "render_frames",
+        "_render_frames_threaded",
+        "_render_frames_sequential",
+        "create_video_and_gif",
+        "_create_video_and_gif_for_view",
+        "render_scene",
+        "render_multi_obj_scene_from_folder"
+      ],
+      "bases": [
+        "BaseRenderer"
+      ]
+    },
+    {
+      "id": "t90f95c498142",
+      "name": "CacheManager",
+      "kind": "class",
+      "file": "src/utils/cache.py",
+      "line": 17,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "_load_cache_map",
+        "_save_cache_map",
+        "_compute_hash",
+        "get_cached_path",
+        "add_to_cache",
+        "clear_cache",
+        "get_cache_stats"
+      ],
+      "bases": []
+    },
+    {
+      "id": "td76d2760c9cf",
+      "name": "FolderUtils",
+      "kind": "class",
+      "file": "src/utils/folder.py",
+      "line": 13,
+      "language": "python",
+      "methods": [
+        "ensure_folder",
+        "setup_directories",
+        "serialize_value"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t31f1ac080df4",
+      "name": "RichLogger",
+      "kind": "class",
+      "file": "src/utils/logger.py",
+      "line": 14,
+      "language": "python",
+      "methods": [
+        "get_logger",
+        "add_file_handler",
+        "create_structured_log",
+        "log_timing_data",
+        "_append_to_json_log",
+        "set_level",
+        "configure_from_settings"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t9206656ad1c6",
+      "name": "TimingManager",
+      "kind": "class",
+      "file": "src/utils/timing.py",
+      "line": 70,
+      "language": "python",
+      "methods": [
+        "log_timing_statistics",
+        "create_timing_report"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t45dfb2901dd5",
+      "name": "ZipDecoder",
+      "kind": "class",
+      "file": "src/utils/zip.py",
+      "line": 14,
+      "language": "python",
+      "methods": [
+        "decode_zip_file"
+      ],
+      "bases": []
+    }
+  ],
+  "class_files": [
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/blend.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/blend.py",
+      "download": "repository-docs/mistubavideo/classes/846fce006d43b39c.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/camera.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/camera.py",
+      "download": "repository-docs/mistubavideo/classes/3a9c0533eb52daf8.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/cli.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/cli.py",
+      "download": "repository-docs/mistubavideo/classes/10eb436a4341ee06.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/color.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/color.py",
+      "download": "repository-docs/mistubavideo/classes/f01a3620507ec3b9.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/maps.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/maps.py",
+      "download": "repository-docs/mistubavideo/classes/65c958cf93ac0eb3.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "types": 4,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/model.py",
+      "download": "repository-docs/mistubavideo/classes/595465bbcfcc71be.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/mtl.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/mtl.py",
+      "download": "repository-docs/mistubavideo/classes/52c9eea3f57bef0c.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/obj.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/obj.py",
+      "download": "repository-docs/mistubavideo/classes/5773e8ff875374ea.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "types": 3,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "download": "repository-docs/mistubavideo/classes/44fff09a6cb2e66a.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "types": 3,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "download": "repository-docs/mistubavideo/classes/65301278e0b4dc40.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/source.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/source.py",
+      "download": "repository-docs/mistubavideo/classes/9f58a78bde1c93a1.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py",
+      "download": "repository-docs/mistubavideo/classes/559d99362c2f946e.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/writer.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/writer.py",
+      "download": "repository-docs/mistubavideo/classes/15f0e26e536bc3e1.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/__init__.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/__init__.py",
+      "download": "repository-docs/mistubavideo/classes/9caa2817ac0baaef.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/materials.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/materials.py",
+      "download": "repository-docs/mistubavideo/classes/aeb1371b39503b27.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "types": 3,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "download": "repository-docs/mistubavideo/classes/21162b509811376d.mmd"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/video.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/video.py",
+      "download": "repository-docs/mistubavideo/classes/4277ce73d31c7576.mmd"
+    },
+    {
+      "path": "src/config/config.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/config/config.py",
+      "download": "repository-docs/mistubavideo/classes/d79bc1bd337636d3.mmd"
+    },
+    {
+      "path": "src/config/constants.py",
+      "types": 3,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/config/constants.py",
+      "download": "repository-docs/mistubavideo/classes/2634227e16194040.mmd"
+    },
+    {
+      "path": "src/mitsuba/camera.py",
+      "types": 3,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/camera.py",
+      "download": "repository-docs/mistubavideo/classes/d1408b24144c81d9.mmd"
+    },
+    {
+      "path": "src/mitsuba/denoising.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/denoising.py",
+      "download": "repository-docs/mistubavideo/classes/4f11b6a1ff3389f3.mmd"
+    },
+    {
+      "path": "src/mitsuba/mitsuba.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/mitsuba.py",
+      "download": "repository-docs/mistubavideo/classes/f2f827b4661b3071.mmd"
+    },
+    {
+      "path": "src/mitsuba/quality.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/quality.py",
+      "download": "repository-docs/mistubavideo/classes/22b850dd03073a8f.mmd"
+    },
+    {
+      "path": "src/mitsuba/render_settings.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/render_settings.py",
+      "download": "repository-docs/mistubavideo/classes/cd89ec7a8c66305f.mmd"
+    },
+    {
+      "path": "src/processing/aov.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/aov.py",
+      "download": "repository-docs/mistubavideo/classes/39f3929f506d59de.mmd"
+    },
+    {
+      "path": "src/processing/ffmpeg.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/ffmpeg.py",
+      "download": "repository-docs/mistubavideo/classes/881590211dc31bd4.mmd"
+    },
+    {
+      "path": "src/processing/image.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/image.py",
+      "download": "repository-docs/mistubavideo/classes/7fc90d1eba02a4a1.mmd"
+    },
+    {
+      "path": "src/processing/meshes.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/meshes.py",
+      "download": "repository-docs/mistubavideo/classes/1e8a9132b6379020.mmd"
+    },
+    {
+      "path": "src/processing/scene.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/scene.py",
+      "download": "repository-docs/mistubavideo/classes/41a691ccaac065a7.mmd"
+    },
+    {
+      "path": "src/processing/xml.py",
+      "types": 2,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/xml.py",
+      "download": "repository-docs/mistubavideo/classes/4c3fc79056b8c3ed.mmd"
+    },
+    {
+      "path": "src/renderers/base.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/renderers/base.py",
+      "download": "repository-docs/mistubavideo/classes/c07f469611bfd7b8.mmd"
+    },
+    {
+      "path": "src/renderers/multi.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/renderers/multi.py",
+      "download": "repository-docs/mistubavideo/classes/5ad798a69819748a.mmd"
+    },
+    {
+      "path": "src/utils/cache.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/cache.py",
+      "download": "repository-docs/mistubavideo/classes/5ad73bf64c286eed.mmd"
+    },
+    {
+      "path": "src/utils/folder.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/folder.py",
+      "download": "repository-docs/mistubavideo/classes/18ebbb418da31a37.mmd"
+    },
+    {
+      "path": "src/utils/logger.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/logger.py",
+      "download": "repository-docs/mistubavideo/classes/ad4da9b8b5606f71.mmd"
+    },
+    {
+      "path": "src/utils/timing.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/timing.py",
+      "download": "repository-docs/mistubavideo/classes/a16cfeac27aae393.mmd"
+    },
+    {
+      "path": "src/utils/zip.py",
+      "types": 1,
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/zip.py",
+      "download": "repository-docs/mistubavideo/classes/fec15b20994971b9.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "README.md",
+      "blob_sha": "a32fde4580356897decb57b3bc2dc8fa7bd10ded",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/README.md"
+    },
+    {
+      "path": "docker-compose.yml",
+      "blob_sha": "8366370de121076ee05fec6f24b9434297dfd2ab",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/docker-compose.yml"
+    },
+    {
+      "path": "main.py",
+      "blob_sha": "2cf7d797543f23cc678d88bf8f9b4f1b8bef67ac",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/main.py"
+    },
+    {
+      "path": "pyproject.toml",
+      "blob_sha": "4883df779b95a57d4725dc1ab432dc6a9a25f9b1",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/pyproject.toml"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "fc6ec777a66396e39ceed4c4d41f9b288cbcfa67",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/requirements.txt"
+    },
+    {
+      "path": "packages/mitsuba_video/README.md",
+      "blob_sha": "de458a9decbf840d832458e4ce1338f2dcaa8e96",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/README.md"
+    },
+    {
+      "path": "packages/mitsuba_video/pyproject.toml",
+      "blob_sha": "d1391747d16694ac916629f6663f2a78215677cd",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/pyproject.toml"
+    },
+    {
+      "path": "src/assets/__init__.py",
+      "blob_sha": "a28dfeb0cb2100867fe89f4ffbeda00f20fb9c6b",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/assets/__init__.py"
+    },
+    {
+      "path": "src/cli/__init__.py",
+      "blob_sha": "e1806b17a1260acab91a540af494de6dc9c6a2a4",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/cli/__init__.py"
+    },
+    {
+      "path": "src/cli/parameters.py",
+      "blob_sha": "3c9a1f25f616be61d09d5ec63e08d18afe5dd6ea",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/cli/parameters.py"
+    },
+    {
+      "path": "src/config/__init__.py",
+      "blob_sha": "7133a759ef51a52374931947392983c59adc9bc2",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/config/__init__.py"
+    },
+    {
+      "path": "src/config/config.py",
+      "blob_sha": "59347602999969d4f489555dd5aa0e98cfe4f20f",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/config/config.py"
+    },
+    {
+      "path": "src/config/constants.py",
+      "blob_sha": "0151bab25737e38ea8c1e22ba612c58a2ad7fffd",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/config/constants.py"
+    },
+    {
+      "path": "src/mitsuba/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/__init__.py"
+    },
+    {
+      "path": "src/mitsuba/camera.py",
+      "blob_sha": "673651a1f237a5de70505a242f38de04ad778df1",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/camera.py"
+    },
+    {
+      "path": "src/mitsuba/denoising.py",
+      "blob_sha": "8a8260dc1329472e0ad7e19a20bde14caa101f62",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/denoising.py"
+    },
+    {
+      "path": "src/mitsuba/mitsuba.py",
+      "blob_sha": "3d89224c49334d7d61c865880d293aabd2deb1ab",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/mitsuba.py"
+    },
+    {
+      "path": "src/mitsuba/quality.py",
+      "blob_sha": "47f5d95eed5976ac28fd05f999f1abe694a0a517",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/quality.py"
+    },
+    {
+      "path": "src/mitsuba/render_settings.py",
+      "blob_sha": "b8577013ea245fc448a239dba8269d250d8c4ff2",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/mitsuba/render_settings.py"
+    },
+    {
+      "path": "src/processing/__init__.py",
+      "blob_sha": "97b4741c56cb1969a7857ec32314b38208cffaaa",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/__init__.py"
+    },
+    {
+      "path": "src/processing/aov.py",
+      "blob_sha": "03dffbd32105b3f6bd61dac40354fcd265cb436f",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/aov.py"
+    },
+    {
+      "path": "src/processing/ffmpeg.py",
+      "blob_sha": "9c654e90c4edc6afce6e4e6d8a027b16e796881b",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/ffmpeg.py"
+    },
+    {
+      "path": "src/processing/image.py",
+      "blob_sha": "bb1629a2202fac65d9bca020911ebfec4aa667f5",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/image.py"
+    },
+    {
+      "path": "src/processing/meshes.py",
+      "blob_sha": "5bd1f4e60d8ce381545dd660bd92cd10281a9b86",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/meshes.py"
+    },
+    {
+      "path": "src/processing/scene.py",
+      "blob_sha": "852298a4698ad2b50e9caf4b578b9404cdd747ee",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/scene.py"
+    },
+    {
+      "path": "src/processing/xml.py",
+      "blob_sha": "8c2ae6d1e4eb97e499ea8692e669e2a2a20ca230",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/processing/xml.py"
+    },
+    {
+      "path": "src/renderers/__init__.py",
+      "blob_sha": "cecb7f8bf6d61e765216c28ce2af89aba4b4014d",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/renderers/__init__.py"
+    },
+    {
+      "path": "src/renderers/base.py",
+      "blob_sha": "1f57e233cf545a8fb59346bf27991eedd8b6bef4",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/renderers/base.py"
+    },
+    {
+      "path": "src/renderers/multi.py",
+      "blob_sha": "2fe7b08dddd0d7a96820da84feeb5dedcf8ccedb",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/renderers/multi.py"
+    },
+    {
+      "path": "src/utils/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/__init__.py"
+    },
+    {
+      "path": "src/utils/cache.py",
+      "blob_sha": "48f0f453ad99f9ae0f53c9ac1b980388a1b96e94",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/cache.py"
+    },
+    {
+      "path": "src/utils/common.py",
+      "blob_sha": "b6f2fb98475a46d4182fa547513ade203b0f5530",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/common.py"
+    },
+    {
+      "path": "src/utils/environment.py",
+      "blob_sha": "99ee1afb9c44879d2afd8cc7e3c8a29205319c39",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/environment.py"
+    },
+    {
+      "path": "src/utils/folder.py",
+      "blob_sha": "dcaea8c2fe756b4140a9097e23ac2df65f8b88bc",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/folder.py"
+    },
+    {
+      "path": "src/utils/logger.py",
+      "blob_sha": "3bd2829abcf09a01e4a074bdb219122522fafcd9",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/logger.py"
+    },
+    {
+      "path": "src/utils/timing.py",
+      "blob_sha": "ff348a7a0df61da7ebe6277a7997582bff264a6e",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/timing.py"
+    },
+    {
+      "path": "src/utils/zip.py",
+      "blob_sha": "ce79ee6ac837cd255969bdcf14ba5e3091fe5e7d",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/src/utils/zip.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/conftest.py",
+      "blob_sha": "265c757930f38f3d6c5d59d517574fada44ab99b",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/conftest.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/test_blend.py",
+      "blob_sha": "abf977872a0e63a9eaf645f656a91657c2f6873a",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/test_blend.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/test_cli.py",
+      "blob_sha": "e898d6ce9e507b9f4866235aa7769b36e5ce5c83",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/test_cli.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/test_core.py",
+      "blob_sha": "1c468ea6dad1c893bc54b2d3087b432b8e84081c",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/test_core.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/test_manifest.py",
+      "blob_sha": "240e90a3d3b17474687096f557b8bec511d932e4",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/test_manifest.py"
+    },
+    {
+      "path": "packages/mitsuba_video/tests/test_texturefriction.py",
+      "blob_sha": "08f760900f8591d8fd8ed1c49c087b9406606777",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/tests/test_texturefriction.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/__init__.py",
+      "blob_sha": "21167db81aa0ca1261bd17b801be7a89e441b7af",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/__init__.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/__main__.py",
+      "blob_sha": "ad751ccecbef3738c58564ce054d2c2542ff6f51",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/__main__.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/blend.py",
+      "blob_sha": "bfe033eeacbae517cc7acc87b14347895ae8736a",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/blend.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/camera.py",
+      "blob_sha": "a8f932b769826afb2c3424f6720b2f7de2ef79c0",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/camera.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/cli.py",
+      "blob_sha": "0bcf81e000e17454f1e47e7a23d617acd807e266",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/cli.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/color.py",
+      "blob_sha": "f2e4f8e4c4adfeea7d06b40f5620743f71d77f67",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/color.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/maps.py",
+      "blob_sha": "19edde17a5d91477ddcc9a7ce10f9987286b8f02",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/maps.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/model.py",
+      "blob_sha": "eb6d285b02f24b626d4fcdbde4bd867492850bf6",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/model.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/motion.py",
+      "blob_sha": "733b1cd7b054e261e56cd1f8207bf6a166d25675",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/motion.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/mtl.py",
+      "blob_sha": "6c45996390f10da01a1bead7a42f8bb6075b5adf",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/mtl.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/obj.py",
+      "blob_sha": "a08ee27ab22af7129459f153c286ae33f36caee2",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/obj.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/pipeline.py",
+      "blob_sha": "9669cd50ff225ab76a2a356137fea1811e0c34a0",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/pipeline.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/scene.py",
+      "blob_sha": "013e1a724fdcdaa526dc3515aca8ce291ffee280",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/scene.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/source.py",
+      "blob_sha": "c6e7a5b11d203f9615ade225d76c7a68926f8d46",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/source.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/transforms.py",
+      "blob_sha": "82e3572eefdc1429fb287131292cb2ba24b5bcae",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/transforms.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/video.py",
+      "blob_sha": "0c548eef2894bebe1ade2eb8be8ef7ac204e4a6e",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/video.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/__init__.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py",
+      "blob_sha": "3b83d0d1b025cdde77d0d08608b701afea92d691",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/__init__.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/export.py",
+      "blob_sha": "04516a3baac76ebbe41f0d9403b11b871fd0594d",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/export.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/fixture.py",
+      "blob_sha": "310d833e2bda4f0fc358e966c49af8f79344177c",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/fixture.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/manifest/writer.py",
+      "blob_sha": "a65ad369052933463d68e4417b4dec7dc099c6e2",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/manifest/writer.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/__init__.py",
+      "blob_sha": "6c0afc22e28d65c22379920b531c72c6f5f92dc4",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/__init__.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/cli.py",
+      "blob_sha": "64cb5eca832dd3d8ac66a0c88a0aa226bbab77af",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/cli.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/materials.py",
+      "blob_sha": "b271e341551d4f84ef69e2a38b703bb9502fe7b0",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/materials.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py",
+      "blob_sha": "b8e16a5f6e3db63831b0836f6715362270bfbfeb",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/recording.py"
+    },
+    {
+      "path": "packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/synthetic.py",
+      "blob_sha": "1300e05491e0fa29761466fb561cf0550f87e4eb",
+      "source_url": "https://github.com/ETSim/MistubaVideo/blob/87b180b9f03333b773fecd7708be86c75b1f822d/packages/mitsuba_video/src/mitsuba_video/sources/texturefriction/synthetic.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"MistubaVideo\"]\n  f0[\"README.md\"]\n  root --> f0\n  f1[\"docker-compose.yml\"]\n  root --> f1\n  f2[\"main.py\"]\n  root --> f2\n  f3[\"pyproject.toml\"]\n  root --> f3\n  f4[\"requirements.txt\"]\n  root --> f4\n  f5[\"packages/mitsuba_video/README.md\"]\n  root --> f5\n  f6[\"packages/mitsuba_video/pyproject.toml\"]\n  root --> f6\n  f7[\"src/assets/__init__.py\"]\n  root --> f7\n  f8[\"src/cli/__init__.py\"]\n  root --> f8\n  f9[\"src/cli/parameters.py\"]\n  root --> f9\n  f10[\"src/config/__init__.py\"]\n  root --> f10\n  f11[\"src/config/config.py\"]\n  root --> f11\n  f12[\"src/config/constants.py\"]\n  root --> f12\n  f13[\"src/mitsuba/__init__.py\"]\n  root --> f13\n  f14[\"src/mitsuba/camera.py\"]\n  root --> f14\n  f15[\"src/mitsuba/denoising.py\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass t060925226d27[\"BlendParams\"] {\n}\nclass t62436ad8ebb8[\"VariantStack\"] {\n  __post_init__()\n  pair()\n  _slice()\n  base()\n}\nclass tb4e135078502[\"CameraPose\"] {\n}\nclass t7ce172f5fafc[\"CameraSettings\"] {\n}\nclass t139e9f14a61c[\"CameraMode\"] {\n}\nclass taebaefb268f2[\"FieldDisplay\"] {\n}\nclass t473909839a45[\"MapSet\"] {\n  copy()\n}\nclass t3a6399d23e77[\"NormalOptions\"] {\n}\nclass t91d81c598577[\"Frame\"] {\n}\nclass t63502b70fd5d[\"FieldSpec\"] {\n}\nclass t7be73f061142[\"MaterialProvider\"] {\n  preferred_size()\n  build()\n}\nclass tdfe6975d5bce[\"Body\"] {\n  label()\n  area_per_texel()\n  local_bounds()\n}\nclass b7c731812fc6b[\"str\"] {\n  <<unresolved_base>>\n}\nb7c731812fc6b <|-- t139e9f14a61c\nclass b56f1c2b16a93[\"Enum\"] {\n  <<unresolved_base>>\n}\nb56f1c2b16a93 <|-- t139e9f14a61c\nclass b25114b8e01b1[\"Protocol\"] {\n  <<unresolved_base>>\n}\nb25114b8e01b1 <|-- t7be73f061142\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/ETSim/MistubaVideo",
+    "status": "missing"
+  }
+}

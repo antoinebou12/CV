@@ -1,0 +1,33 @@
+classDiagram
+direction TB
+class t31bbc97214ab["CompressionStrategy"] {
+  get_exporter()
+  get_importer()
+  compress()
+  decompress()
+}
+class t2cc11fa40da7["NPZCompressionStrategy"] {
+  __init__()
+  get_exporter()
+  get_importer()
+}
+class t2a769e81dda6["PickleCompressionStrategy"] {
+  get_exporter()
+  get_importer()
+}
+class t7fd0ca14118a["NPYCompressionStrategy"] {
+  get_exporter()
+  get_importer()
+}
+class t519213fe1855["CompressionStrategyFactory"] {
+  get_strategy()
+  register_strategy()
+  supported_formats()
+}
+class bc7eb08a970d2["ABC"] {
+  <<unresolved_base>>
+}
+bc7eb08a970d2 <|-- t31bbc97214ab
+t31bbc97214ab <|-- t2cc11fa40da7
+t31bbc97214ab <|-- t2a769e81dda6
+t31bbc97214ab <|-- t7fd0ca14118a

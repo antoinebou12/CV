@@ -1,0 +1,23 @@
+{{- /* Hand-written project notes: the same generated CI/CD pipeline, deployment diagram and
+       dependency table that generated notes carry in their dossier, as top-level sections placed
+       before the glossary. Reads repository_dossiers.json by the note's repository_note. */ -}}
+{{- $page := .page -}}
+{{- $fr := eq $page.Lang "fr" -}}
+{{- $d := index (hugo.Data.repository_dossiers.repositories | default dict) ($page.Params.repository_note | default "") -}}
+{{- $out := "" -}}
+{{- with $d -}}
+  {{- $source := printf `<p class="repo-lede-sm">%s <a href="%s"><code>%s</code></a>.</p>` (cond $fr "Généré à partir du code au commit" "Generated from the source at commit") .tree_url (substr .commit 0 7) -}}
+  {{- $ci := partial "repository-ci.html" (dict "ci" (.ci | default dict) "fr" $fr "level" 2 "id" "ci-cd-pipeline") -}}
+  {{- $deploy := partial "repository-deployment-view.html" (dict "deployment" .deployment "fr" $fr) -}}
+  {{- $out = printf `<section class="doc repo-paper-delivery" aria-labelledby="ci-cd-pipeline">%s%s</section>` $ci $source -}}
+  {{- if $deploy -}}
+    {{- $out = printf `%s<section class="doc repo-paper-delivery" aria-labelledby="deployment-diagram"><h2 id="deployment-diagram">%s</h2>%s</section>` $out (cond $fr "Schéma de déploiement" "Deployment diagram") $deploy -}}
+  {{- end -}}
+  {{- $deps := "" -}}
+  {{- with .dependencies -}}{{- if .items -}}{{- $deps = partial "repository-dependencies.html" (dict "deps" . "fr" $fr) -}}{{- end -}}{{- end -}}
+  {{- if not $deps -}}
+    {{- $deps = printf `<p class="repo-dossier-missing">%s</p>` (cond $fr "Le dépôt ne déclare aucun paquet externe : aucun manifeste (pyproject.toml, requirements.txt, package.json, pom.xml…) n’y figure." "The repository declares no external packages: it has no manifest such as pyproject.toml, requirements.txt, package.json or pom.xml.") -}}
+  {{- end -}}
+  {{- $out = printf `%s<section class="doc repo-paper-delivery" aria-labelledby="external-dependencies"><h2 id="external-dependencies">%s</h2>%s</section>` $out (cond $fr "Dépendances externes" "External dependencies") $deps -}}
+{{- end -}}
+{{- return $out -}}

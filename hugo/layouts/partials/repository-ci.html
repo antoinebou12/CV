@@ -1,0 +1,43 @@
+{{- /* CI/CD pipeline from repository_dossier.py (build_ci): a Mermaid flow of triggers, jobs and
+       `needs`, then one row per workflow. Repositories without a pipeline say so instead of
+       hiding the section. Params: ci, fr, level (2 or 3), id. */ -}}
+{{- $ci := .ci | default dict -}}
+{{- $fr := .fr -}}
+{{- $i := cond $fr 1 0 -}}
+{{- $title := cond $fr "Pipeline CI/CD" "CI/CD pipeline" -}}
+{{- $triggerFr := dict "push" "push" "pull_request" "demande de fusion" "pull_request_target" "demande de fusion" "workflow_dispatch" "lancement manuel" "schedule" "planification" "release" "publication" "workflow_run" "après un autre workflow" "workflow_call" "appelé par un workflow" "repository_dispatch" "événement API" "merge_group" "file de fusion" -}}
+{{- $triggerEn := dict "pull_request" "pull request" "pull_request_target" "pull request" "workflow_dispatch" "manual run" "workflow_run" "after another workflow" "workflow_call" "called by a workflow" "repository_dispatch" "API event" "merge_group" "merge queue" -}}
+{{- $targetFr := dict "Container registry" "Registre de conteneurs" "GitHub Releases" "Versions GitHub" -}}
+{{ if eq (.level | default 3) 2 }}<h2 id="{{ .id }}">{{ $title }}</h2>{{ else }}<h3 id="{{ .id }}">{{ $title }}</h3>{{ end }}
+{{ with $ci.workflows }}
+<p class="repo-evidence-label">{{ if $fr }}{{ $ci.workflow_total }} workflow{{ if gt $ci.workflow_total 1 }}s{{ end }} GitHub Actions, {{ $ci.job_total }} tâche{{ if gt $ci.job_total 1 }}s{{ end }}. Chaque boîte est une tâche ; les boîtes à double bord publient ou déploient, et les flèches suivent les dépendances <code>needs</code>.{{ else }}{{ $ci.workflow_total }} GitHub Actions workflow{{ if gt $ci.workflow_total 1 }}s{{ end }}, {{ $ci.job_total }} job{{ if gt $ci.job_total 1 }}s{{ end }}. Each box is a job; double-bordered boxes publish or deploy, and arrows follow <code>needs</code>.{{ end }}</p>
+{{ with $ci.mermaid }}
+<details class="repo-diagram-details" data-mermaid-lazy open>
+  <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Déroulement du pipeline{{ else }}Pipeline flow{{ end }}</span></summary>
+  <div class="repo-progressive-diagram" data-mermaid-fallback>
+    <pre class="repo-mermaid-source"><code class="language-mermaid">{{ index . $i }}</code></pre>
+  </div>
+</details>
+{{ end }}
+<div class="tablewrap">
+  <table class="repo-permission-table repo-ci-table">
+    <caption class="sr-only">{{ if $fr }}Workflows, déclencheurs, tâches et cibles{{ else }}Workflows, triggers, jobs and targets{{ end }}</caption>
+    <thead><tr><th scope="col">Workflow</th><th scope="col">{{ if $fr }}Déclencheurs{{ else }}Triggers{{ end }}</th><th scope="col">{{ if $fr }}Tâches{{ else }}Jobs{{ end }}</th><th scope="col">{{ if $fr }}Publie vers{{ else }}Publishes to{{ end }}</th></tr></thead>
+    <tbody>
+      {{ range . }}
+      {{ $targets := slice }}{{ range .jobs }}{{ range .targets }}{{ $targets = $targets | append (cond $fr (index $targetFr . | default .) .) }}{{ end }}{{ end }}
+      {{ $triggers := slice }}{{ range .triggers }}{{ $triggers = $triggers | append (cond $fr (index $triggerFr . | default .) (index $triggerEn . | default .)) }}{{ end }}
+      <tr>
+        <th scope="row"><a href="{{ .url }}">{{ .name }}</a><br><code class="repo-evidence-label">{{ .file }}</code></th>
+        <td>{{ delimit (uniq $triggers) ", " }}</td>
+        <td><ul class="repo-ci-jobs">{{ range .jobs }}<li><strong>{{ .title }}</strong>{{ with .needs }} <span class="repo-evidence-label">← {{ delimit . ", " }}</span>{{ end }}{{ with .runs_on }} <code>{{ . }}</code>{{ end }}{{ with .steps }}<br><span class="repo-evidence-label"{{ if $fr }} lang="en"{{ end }}>{{ delimit (first 4 .) " · " }}</span>{{ end }}</li>{{ end }}</ul></td>
+        <td{{ if not $targets }} class="is-empty"{{ end }}>{{ with $targets }}{{ delimit (uniq .) ", " }}{{ else }}—{{ end }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ if gt $ci.workflow_total (len .) }}<p class="repo-evidence-label">{{ if $fr }}{{ sub $ci.workflow_total (len .) }} autres workflows ne sont pas affichés.{{ else }}{{ sub $ci.workflow_total (len .) }} more workflows are not shown.{{ end }}</p>{{ end }}
+{{ else }}
+<p class="repo-dossier-missing">{{ if $fr }}Aucun pipeline CI/CD dans le dépôt{{ else }}No CI/CD pipeline in the repository{{ end }}{{ with $ci.other }}{{ if $fr }}, en dehors de {{ else }} apart from {{ end }}{{ range $n, $o := . }}{{ if $n }}, {{ end }}<a href="{{ $o.url }}">{{ $o.label }}</a>{{ end }}{{ end }}. {{ if $fr }}Le code se construit et se lance à la main, comme décrit plus haut.{{ else }}The code is built and run by hand, as described above.{{ end }}</p>
+{{ end }}

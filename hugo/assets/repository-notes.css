@@ -2356,3 +2356,22 @@ html.dark .repo-note .repo-related-writing { border: 0; background: none; box-sh
 .repo-note .repo-scenario li:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::marker { content: ""; }
 .repo-note .repo-usecase-list dd:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin: .4rem 0 0; padding-inline-start: 0; }
 .repo-note .repo-usecase-list dt:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin-top: 0; }
+
+/* Mermaid draws subgraph titles and some node labels as HTML <p> inside a fixed-height
+   foreignObject. Prose margins pushed that paragraph out of the box, so every group title was
+   clipped away. Five ID boosts beat the typography plugin's four. */
+.post-diagram svg foreignObject p:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { margin: 0 !important; line-height: 1.5 !important; }
+
+/* CI/CD workflows table: on phones each workflow becomes one stacked block (name, triggers,
+   jobs, targets) instead of four squeezed columns. */
+.repo-ci-jobs { margin: 0 !important; padding-left: 1rem !important; }
+.repo-ci-jobs li { margin: 0 0 .5rem !important; }
+@media (max-width: 640px) {
+  .repo-ci-table thead { display: none; }
+  .repo-ci-table:not(#\#), .repo-ci-table tbody, .repo-ci-table tr, .repo-ci-table th, .repo-ci-table td { display: block !important; width: auto !important; min-width: 0 !important; }
+  .repo-ci-table tr { padding: .75rem 0 !important; border-bottom: 1px solid var(--line) !important; }
+  .repo-ci-table th, .repo-ci-table td { padding: .2rem .75rem !important; border: 0 !important; background: transparent !important; }
+  .repo-ci-table td:nth-child(2)::before { content: "⟲ "; color: var(--muted); }
+  .repo-ci-table td:last-child::before { content: "→ "; color: var(--muted); }
+  .repo-ci-table td.is-empty { display: none !important; }
+}
