@@ -76,7 +76,7 @@ Prices reach the browser through Django Channels with a Redis pub/sub channel la
 
 ```mermaid
 sequenceDiagram
-  participant Loop as SimulationManager loop
+  participant Sim as SimulationManager loop
   participant DB as PostgreSQL
   participant Layer as Redis channel layer
   participant Consumer as SimulationConsumer
@@ -84,17 +84,17 @@ sequenceDiagram
   Browser->>Consumer: connect ws/simulation/<simulation_manager_id>/
   Consumer->>Layer: group_add("simulation_<id>")
   loop every timer step
-    Loop->>Loop: noise model builds an OHLC candle
-    Loop->>DB: StockPriceHistory.objects.create(...)
-    Loop->>Layer: group_send("simulation_1", type="stock_update")
+    Sim->>Sim: noise model builds an OHLC candle
+    Sim->>DB: StockPriceHistory.objects.create(...)
+    Sim->>Layer: group_send("simulation_1", type="stock_update")
     Layer->>Consumer: stock_update(event)
     Consumer->>Browser: JSON {ticker, open, high, low, close, timestamp}
     Browser->>Browser: bufferUpdate() redraws the candle chart
   end
-  Browser->>Consumer: {"type": "news", "message": ...}
+  Browser->>Consumer: JSON type news with a message
   Consumer->>Layer: group_send(type="news_update")
   Layer->>Consumer: news_update(event)
-  Consumer->>Browser: {"type": "news", "message": ...}
+  Consumer->>Browser: JSON type news with the message
 ```
 
 The consumer (`simulation/channels/consumers.py`) joins one group per room and dispatches incoming messages by their `type`: `stock`, `news`, `trigger`, `event` and `transaction`. Each handler re-broadcasts to the group, and the matching `*_update` method sends the payload back down to every connected browser. The game dashboard (`templates/dashboard/game_dashboard.html`) reads the simulation id from the `simulation_manager_id` query parameter (default `1`), reconnects up to ten times at five-second intervals, and routes messages that carry a `ticker` and a `timestamp` to the chart buffer.

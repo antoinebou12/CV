@@ -76,7 +76,7 @@ Les cours arrivent au navigateur par Django Channels, avec une couche de canaux 
 
 ```mermaid
 sequenceDiagram
-  participant Loop as Boucle SimulationManager
+  participant Sim as Boucle SimulationManager
   participant DB as PostgreSQL
   participant Layer as Couche de canaux Redis
   participant Consumer as SimulationConsumer
@@ -84,17 +84,17 @@ sequenceDiagram
   Browser->>Consumer: connexion ws/simulation/<simulation_manager_id>/
   Consumer->>Layer: group_add("simulation_<id>")
   loop à chaque pas de temps
-    Loop->>Loop: le modèle de bruit produit une chandelle OHLC
-    Loop->>DB: StockPriceHistory.objects.create(...)
-    Loop->>Layer: group_send("simulation_1", type="stock_update")
+    Sim->>Sim: le modèle de bruit produit une chandelle OHLC
+    Sim->>DB: StockPriceHistory.objects.create(...)
+    Sim->>Layer: group_send("simulation_1", type="stock_update")
     Layer->>Consumer: stock_update(event)
     Consumer->>Browser: JSON {ticker, open, high, low, close, timestamp}
     Browser->>Browser: bufferUpdate() redessine le graphique
   end
-  Browser->>Consumer: {"type": "news", "message": ...}
+  Browser->>Consumer: JSON type news avec un message
   Consumer->>Layer: group_send(type="news_update")
   Layer->>Consumer: news_update(event)
-  Consumer->>Browser: {"type": "news", "message": ...}
+  Consumer->>Browser: JSON type news avec le message
 ```
 
 Le consommateur (`simulation/channels/consumers.py`) rejoint un groupe par salle et répartit les messages entrants selon leur `type` : `stock`, `news`, `trigger`, `event` et `transaction`. Chaque gestionnaire rediffuse au groupe, et la méthode `*_update` correspondante renvoie le contenu à chaque navigateur connecté. Le tableau de jeu (`templates/dashboard/game_dashboard.html`) lit l’identifiant de simulation dans le paramètre `simulation_manager_id` de l’URL (`1` par défaut), se reconnecte jusqu’à dix fois toutes les cinq secondes et envoie au tampon du graphique les messages qui portent un `ticker` et un `timestamp`.
