@@ -1,14 +1,14 @@
 # Exploring movie similarities with vector search algorithms
 
-> A teaching narrative: pgvector kNN in SQL, Qdrant dense and sparse vectors on MovieLens, then LangChain + Ollama RAG on the same catalog.
+> A teaching narrative: pgvector kNN in SQL, Qdrant dense and sparse vectors on MovieLens behind a FastAPI app, then LangChain + Ollama RAG on the same catalog.
 
 - HTML page: https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/index.md
 - Published: 2026-04-13
-- Updated: 2026-10-20
+- Updated: 2026-11-05
 - Tags: PostgreSQL, Pgvector, Qdrant, Python, Embeddings, RAG, Machine Learning
-- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)I taught a thread on “find movies like this” that kept growing: **embeddings in PostgreSQL**, the same idea in **Qdrant** with two different vector meanings, then **retrieval + a local LLM** grounded on the same rows. This page is the story; notebooks and animations live in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding).
+- Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)I taught a thread on “find movies like this” that kept growing: **embeddings in PostgreSQL**, the same idea in **Qdrant** with two different vector meanings, then **retrieval + a local LLM** grounded on the same rows. This page is the story; notebooks and animations live in [AlgoETS/SimilityVectorEmbedding](https://github.com/AlgoETS/SimilityVectorEmbedding) (see also the [project page](https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/)). Part 2 also draws on the FastAPI teaching project I built to serve the Qdrant flows.
 
 ## The original demos
 
@@ -89,21 +89,60 @@ Full plots and distribution charts: [Medium Part 1](https://medium.com/@antoine.
 
 ## Part 2 — Qdrant, MovieLens, dense vs sparse
 
-Same “similarity in vector space,” different **semantics**:
+Same “similarity in vector space,” different **semantics**. Start with the notebook `qdrant/0.simple.ipynb`, then move to the FastAPI teaching project, which loads MovieLens 100K (1,682 movies, 943 users) and MovieLens 1M (3,883 movies, 6,040 users) into Qdrant with three collections per dataset:
 
-| Collection | Vector type | Question it answers |
-|------------|-------------|---------------------|
-| Movies | Dense text embedding | “Like this wording / vibe” |
-| Users (profile) | Dense | User representation in same space (seed pipeline) |
-| Ratings | **Sparse** movieId → rating | “Users with overlapping taste” |
+| Collection | Vector type | What is encoded | Question it answers |
+|------------|-------------|-----------------|---------------------|
+| `<dataset>_movies` | Dense, 384 dimensions, cosine | 1M: title + genres. 100K: title + release date | “Titles that read like this query” |
+| `<dataset>_ratings` | **Sparse**, named `ratings`: movieId → normalized rating | One point per user | “Users with overlapping taste” |
+| `<dataset>_users` | Dense, 384 dimensions | Gender, age and occupation as text. 1M keeps four named vectors (one per attribute plus a combined one) | “Users with a similar profile” |
 
-Dense path: encode query text with MiniLM, `search` movies collection — mirrors Part 1 but in Qdrant’s API.
+Two details change how you should read the results:
 
-Sparse path: build `NamedSparseVector` from a user’s ratings, find similar users, aggregate their high scores on unseen movies — collaborative filtering without training a neural net in the notebook.
+- **The MovieLens movie vectors do not contain plots.** They encode the title plus genres (1M) or the title plus release date (100K). The dense search here is closer to title and genre matching than to “plot language.” Only the small French `movies.json` loader embeds synopsis, cast, director and writers.
+- **Ratings are centered before they become sparse values.** The 1M loader turns ratings into z-scores (subtract the mean, divide by the standard deviation). The 100K loader rescales 1–5 to the range −1 to 1. A disliked movie becomes a negative value instead of a small positive one.
 
-FastAPI teaching project (`movie_recommendation` in the course repo) exposes both flows to a simple HTML UI.
+### How the encoder is wired
 
-Starter notebook: `qdrant/0.simple.ipynb` before MovieLens scale.
+The project loads `sentence-transformers/all-MiniLM-L6-v2` through Hugging Face `transformers` and mean-pools the last hidden state, which gives 384 dimensions. That is not the MiniLM-L12 configuration from the PostgreSQL notebooks, so vectors from the two parts are not interchangeable. Before encoding, text is lowercased, punctuation is stripped and NLTK English stopwords are removed. A query must go through the same preprocessing, or its vector drifts away from the stored ones.
+
+### Collaborative filtering with a sparse search
+
+The ratings path does not train a model. It turns your ratings into a sparse query, asks Qdrant for the 20 nearest users, then adds up those users’ ratings for movies you have not rated:
+
+```python
+query = rest.NamedSparseVector(name="ratings", vector=to_vector(user_ratings))
+results = client.search(collection_name=f"{dataset}_ratings",
+                        query_vector=query, with_vectors=True, limit=20)
+
+movie_scores = defaultdict(float)
+for user in results:
+    ratings = user.vector["ratings"]
+    for movie_id, rating in zip(ratings.indices, ratings.values):
+        if movie_id not in user_ratings:
+            movie_scores[movie_id] += rating
+
+top_5 = sorted(movie_scores.items(), key=lambda x: x[1], reverse=True)[:5]
+```
+
+The five movie IDs are then mapped back to titles by scrolling the `_movies` collection. Because the stored ratings are centered, a neighbor who disliked a movie pulls its score down.
+
+### The web app around it
+
+The FastAPI app renders one Jinja2 page. You pick a dataset (MovieLens 100K or 1M) and a mode:
+
+- **By Ratings**: an autocomplete (fed by a `/movie_names` endpoint that scrolls the movie collection) builds a list of `title:rating` pairs. The server maps titles to IDs and runs the sparse search above.
+- **By Title/Genre**: free text is preprocessed, encoded with MiniLM and sent to a dense search on `<dataset>_movies`. The top five come back with their genres and scores.
+
+`/recommendations` requires a session. Users sign in with a local account or through GitHub or Google OAuth, and their picks are saved in MongoDB. Docker Compose starts the app with Qdrant, MongoDB and Redis. The Qdrant client prefers gRPC.
+
+### Pitfalls I found reading the code again
+
+- **Query and stored ratings use different scales.** The form sends raw 1–5 ratings, while stored vectors are centered. A 1-star rating in the query is still positive, so it pulls toward users who *liked* that movie. The fix is to apply the loader’s normalization to the query too.
+- **The title-to-ID map comes from a single scroll of 10,000 points**, rebuilt on each request. That covers both MovieLens catalogs, but a larger catalog would be silently cut off.
+- **Some parts are scaffolding, not features yet.** The Redis client is created but nothing is cached. IMDb datasets can be loaded into MongoDB, but the enrichment helper is not called by any route. Recommendations from demographic profiles (the `_users` named vectors) exist only in the 1M loader’s demo, not in the API. The test suite still imports a function that no longer exists.
+
+None of this breaks the lesson: the dense and sparse paths answer different questions, and the code makes the difference visible.
 
 ## Part 3 — RAG with LangChain + Ollama
 
@@ -136,6 +175,7 @@ Notebook: `postgres/3.LLMS.ipynb`.
 |-----------|-------------|
 | Cold-start users with no ratings | Dense metadata only |
 | Billion-scale sparse CF | Specialized CF stack, not demo Qdrant |
+| Recommendations from plots on MovieLens | Add plot text first: the MovieLens vectors here only encode titles and genres or dates |
 | Sub-10 ms latency at huge QPS | Managed vector DB + tuning |
 | Legal need for exact quotes | RAG + citation checks, not raw LLM |
 

@@ -1,22 +1,24 @@
 # Évolution réseau — monter un lab à la maison
 
-> Notes homelab — Docker sur vieux matériel, bash, Caddy, WireGuard, Proxmox et schémas du setup.
+> Évolution d’un homelab — Dell R710, câblage de placard, piles Docker, Caddy, WireGuard, Proxmox, et pourquoi je dessine encore le réseau au mur.
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/posts/home-networking-evolution/
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/posts/home-networking-evolution/index.md
 - Publié: 2021-09-06
-- Mis à jour: 2026-05-22
+- Mis à jour: 2026-11-05
 - Tags: Networking, Homelab, Docker, WireGuard, Proxmox, Caddy
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Les factures cloud m’ont poussé vers un **lab maison** : vieux PC, Docker là où un SaaS suffisait, et assez de scripts pour tout reconstruire après un mauvais week-end. Ce billet raconte comment le réseau a grandi — pas un design parfait, mais une école de routage, VPN et virtualisation en cassant des choses chez moi.
 
 ## Pourquoi un lab
 
-Les cours couvraient IP, VPN et routage sur papier. Faire tourner des services à la maison rend les compromis concrets : courant, bruit, sauvegardes, et « qui a SSH quand le routeur lâche ».
+Les cours couvraient IP, VPN et routage sur papier. Faire tourner des services à la maison rend les compromis concrets : courant, bruit, sauvegardes, et « qui a SSH quand le routeur lâche ». Je voulais un endroit où casser des choses sans facture cloud — et une histoire à raconter en entrevue qui ne se résume pas à « j’ai utilisé AWS une fois ».
 
 ## Docker en premier
 
-J’ai aligné des **stacks conteneur gratuites** sur des jobs payés dans le cloud — média, tableaux de bord, petits outils. Docker comme porte d’entrée vers des services composables plutôt qu’un seul serveur « animal ».
+J’ai aligné des **stacks conteneur gratuites** sur des jobs payés dans le cloud — média, tableaux de bord, petits outils. Docker a été la porte d’entrée pour voir le homelab comme des services composables plutôt qu’un seul gros serveur « animal de compagnie ».
+
+Leçon restée : **un fichier compose par sujet**. Quand Plex faisait des siennes, je ne reconstruisais pas toute la machine — je recyclais le volume et j’apprenais ce qui persistait vraiment.
 
 ## Bash et deux machines
 
@@ -38,23 +40,25 @@ Avant les schémas Lucidchart, le lab tenait dans des **placards et étagères**
 
 ![Placard serveur homelab — rack, switch, écran et câblage](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/homelab-closet-server-setup.jpeg)
 
-La virtualisation compte quand tu snapshots avant une idée douteuse. Un hôte dédié bat le tout bare-metal.
+La virtualisation compte quand on prend un snapshot avant d’essayer une idée douteuse. Un hôte hyperviseur dédié bat les réinstallations à répétition sur bare-metal.
+
+Le schéma Lucidchart, c’était la version « expliquer au coloc » — quel sous-réseau, quelle machine, ce qui est permis depuis Internet.
 
 ![Schéma réseau (Lucidchart)](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/lucidchart.jpeg)
 
 ## Accès distant et bordure
 
-**Caddy** en reverse proxy ; exposition via un frontal **OVH** pour ne pas n’exposer que l’IP résidentielle. Admin à distance et santé des services dans la même histoire que « rendre le service joignable ».
+**Caddy** en reverse proxy ; exposition via un frontal **OVH** pour ne pas n’exposer que l’IP résidentielle. L’admin à distance et la santé des services sont devenues une partie du même travail que « rendre le service joignable ». Le HTTPS automatique a compté plus que prévu — moins de renouvellements de certificats à la main, moins de commandes openssl tard le soir. J’ai ensuite repris ce réflexe sur AWS ; voir **[Caddy + EC2 + CloudWatch](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/)**.
 
-**WireGuard** pour le VPN — pénible la première fois, rapide une fois en place. J’ai contribué à de petits aides-setup pour des ami·e·s.
+**WireGuard** pour le VPN — pénible la première fois, rapide une fois en place. J’ai contribué à de petits scripts d’installation pour que des ami·e·s puissent se connecter sans lire les pages man pendant une semaine. Tunnel partiel ou tunnel complet : chaque invité relançait le débat ; documentez votre choix sur la page wiki que vous oublierez de mettre à jour.
 
 ## Après le déménagement
 
-Nouvel appartement, plus de curiosité VLAN, VMs **Proxmox** pour des projets de club. **Lucidchart** pour le schéma mural ; vue type **C4** pour expliquer la pile.
+Nouvel appartement, plus de curiosité pour les VLAN, des VM **Proxmox** pour des projets de club. **Lucidchart** pour le schéma mural ; vue type **C4** pour expliquer la pile.
 
 ![Vue type C4](https://antoineboucher.info/CV/blog/posts/home-networking-evolution/images/c4.jpeg)
 
-Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le always-on — le lab est resté pour le privé.
+Plus tard, j’ai déplacé les sites publics vers l’**hébergement statique** (S3/GitHub Pages) pour réduire le coût du toujours-allumé — le lab est resté pour les services privés.
 
 ## Pannes mémorables
 
@@ -64,7 +68,7 @@ Plus tard, sites publics vers l’**hébergement statique** (S3/GitHub Pages) po
 
 ## Bilan
 
-Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automatiser, documenter la topologie, supposer la panne. Liens actuels : **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** sur le CV.
+Un homelab, c’est un bac à sable pour les réflexes **plateforme** : automatiser, documenter la topologie, supposer la panne. Liens actuels : **[MediaBoxDockerCompose](https://github.com/antoinebou12/MediaBoxDockerCompose)** et les scripts d’installation dans la liste de projets du CV.
 
 ## Articles connexes
 

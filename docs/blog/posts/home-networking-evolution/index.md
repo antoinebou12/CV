@@ -6,7 +6,7 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/home-networking-evolution/index.md
 - Published: 2021-09-06
-- Updated: 2026-05-22
+- Updated: 2026-11-05
 - Tags: Networking, Homelab, Docker, WireGuard, Proxmox, Caddy
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Cloud bills pushed me toward a **home lab**: old PCs, Docker instead of SaaS where possible, and enough scripting to rebuild after a bad weekend. This post is how that network grew — not a perfect design, but one that taught routing, VPNs, and virtualization by breaking things locally.
 
@@ -48,7 +48,7 @@ The Lucidchart diagram was the “explain to a roommate” version — which sub
 
 ## Remote access and edge
 
-**Caddy** as reverse proxy; public exposure through an **OVH** front so home IP is not the only line of defense. Automatic HTTPS mattered more than I expected — fewer manual cert renewals, fewer late-night openssl commands. I later mirrored that habit on AWS; see **[Caddy + EC2 + CloudWatch](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/)**.
+**Caddy** as reverse proxy; public exposure through an **OVH** front so home IP is not the only line of defense. Remote admin and service health became part of the same job as making a service reachable. Automatic HTTPS mattered more than I expected — fewer manual cert renewals, fewer late-night openssl commands. I later mirrored that habit on AWS; see **[Caddy + EC2 + CloudWatch](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/)**.
 
 **WireGuard** for VPN — annoying to configure the first time, fast once up. I contributed small setup helpers so friends could connect without reading man pages for a week. Split-tunnel vs full-tunnel was the debate every guest had; document your choice on the wiki page you will forget to update.
 

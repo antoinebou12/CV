@@ -25,7 +25,7 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
 - [Mon fork bloc : parcourir S3 et MinIO depuis Blender](https://antoineboucher.info/CV/blog/fr/posts/bloc-blender-cloud-storage/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/bloc-blender-cloud-storage/index.md) · 2026-10-23
   Lecture de mon fork de stockage cloud pour Blender : connexions multiples, dossiers, recherche approximative et import de maillages.
 - [Mon reverse proxy : séparer provisionnement, configuration et vérifications](https://antoineboucher.info/CV/blog/fr/posts/reverse-proxy-infrastructure/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/reverse-proxy-infrastructure/index.md) · 2026-10-22
-  Lecture de mon infrastructure Caddy : Terraform pour le VPS et le DNS, Ansible pour la configuration et limites des contrôles de déploiement.
+  Lecture de mon infrastructure Caddy : Terraform pour le VPS et le DNS, Ansible pour la configuration, l’ordre réel d’un déploiement et pourquoi ses contrôles et sa CI ne bloquent encore rien.
 - [Serilog.Sinks.SentrySDK : relier les logs structurés au suivi d’erreurs](https://antoineboucher.info/CV/blog/fr/posts/serilog-sentrysdk-structured-errors/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/serilog-sentrysdk-structured-errors/index.md) · 2026-10-20
   Le sink Serilog pour Sentry : initialisation du SDK, événements, contexte ASP.NET Core, packages NuGet et activité du projet.
 - [Porter sm64coopdx sur Switch et New 3DS : isoler les plateformes](https://antoineboucher.info/CV/blog/fr/posts/sm64coopdx-switch-new3ds-port/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/sm64coopdx-switch-new3ds-port/index.md) · 2026-10-20
@@ -55,7 +55,7 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
 - [Affiche au CAÉC 2026, 2e place en optique](https://antoineboucher.info/CV/blog/fr/posts/caec-2026-optics-poster/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/caec-2026-optics-poster/index.md) · 2026-04-24
   Affiche au CAÉC 2026 sur l'usure visuelle des textures en temps réel, à partir de données expérimentales. 2e place en optique.
 - [Similarité entre films et recherche vectorielle](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/vector-databases-similar-movies/index.md) · 2026-04-13
-  Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens, puis RAG LangChain + Ollama.
+  Récit pédagogique : kNN pgvector en SQL, vecteurs denses et creux Qdrant sur MovieLens derrière une application FastAPI, puis RAG LangChain + Ollama sur le même catalogue.
 - [Du BMC au pitch : notes de parcours QcES (printemps 2024)](https://antoineboucher.info/CV/blog/fr/posts/qces-lean-discovery-pitch/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/qces-lean-discovery-pitch/index.md) · 2026-04-13
   Notes du programme QcES — canevas d’affaires, entrevues clients, feedback, roadmap et pitch, sans noyer le lecteur dans le jargon.
 - [Bibliothèque Python pour le trading virtuel MarketWatch](https://antoineboucher.info/CV/blog/fr/posts/marketwatch-python-trading/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/marketwatch-python-trading/index.md) · 2026-04-13
@@ -79,19 +79,19 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
 - [Expérimentation des indicateurs technique avec Python et Backtesting](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/index.md) · 2024-05-14
   BatchBacktesting EMA/MACD — lecture des extrêmes, pas conseil de trading.
 - [Faire travailler ensemble Caddy, EC2, CloudWatch, Step Functions et Lambda](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/index.md) · 2024-05-14
-  Caddy sur EC2 pas cher — logs structurés, CloudWatch Insights, cron Python, requêtes Lambda.
+  Caddy sur une instance EC2 t4g.nano : journaux d’accès JSON, script Python nocturne vers CloudWatch, workflow Step Functions qui lance des Lambdas Logs Insights et de géolocalisation, et les corrections que je ferais aujourd’hui.
 - [Parcours vers la certification AWS Certified Cloud Practitioner](https://antoineboucher.info/CV/blog/fr/posts/aws-certified-cloud-practitioner/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/aws-certified-cloud-practitioner/index.md) · 2024-05-14
   Plan d’étude sur deux semaines — Udemy, AWS Skill Builder, Cloud Quest, Escape Room et astuces Pearson VUE (temps supplémentaire, badge Credly).
 - [Prévoir des cours boursiers avec des simulations Monte Carlo](https://antoineboucher.info/CV/blog/fr/posts/predicting-stock-prices-monte-carlo/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/predicting-stock-prices-monte-carlo/index.md) · 2024-05-14
   Bandes Monte Carlo forward sur AAPL — couverture hold-out, percentiles, différence avec MCMC.
 - [MediaBox homelab — ce que je fais tourner en Docker (et le reste en signet)](https://antoineboucher.info/CV/blog/fr/posts/mediabox-homelab-docker-catalog/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/mediabox-homelab-docker-catalog/index.md) · 2024-03-15
   Comment MediaBoxDockerCompose est né d’une carte de ports homelab — ce qui est câblé, et où entrent les scripts Proxmox.
-- [Kinectron + p5.js — contrôle du sketch et export GIF](https://antoineboucher.info/CV/blog/fr/posts/kinectron-p5-sketch-gif/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/kinectron-p5-sketch-gif/index.md) · 2024-03-15
-  Brancher Kinectron sur p5.js, arrêter / relancer le sketch et enregistrer la sortie en GIF (Kinect v2 ou Azure Kinect DK).
+- [Kinectron + p5.js — gestes, contrôle du sketch et export GIF](https://antoineboucher.info/CV/blog/fr/posts/kinectron-p5-sketch-gif/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/kinectron-p5-sketch-gif/index.md) · 2024-03-15
+  Recevoir les squelettes Kinect v2 de Kinectron dans p5.js, détecter des gestes simples à partir des articulations, rejouer des images enregistrées, arrêter / relancer le sketch et enregistrer le canvas en GIF.
 - [Premier atelier Byzantium — Solidity et token ERC-20 sur Ethereum](https://antoineboucher.info/CV/blog/fr/posts/byzantium-solidity-ethereum-workshop/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/byzantium-solidity-ethereum-workshop/index.md) · 2024-03-11
   Retour sur le premier workshop Byzantium sur Ethereum — Remix et Sepolia, ERC-20 OpenZeppelin, déploiement et échanges de tokens. Animation : Khalil Anis Zabat.
 - [Créer un portfolio avec Hugo (semaine 1)](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-week-1/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-week-1/index.md) · 2024-01-06
-  Semaine 1 portfolio Hugo — compromis HBTheme, embeds data, Substack, shortcode iframe, ce que je ferais autrement aujourd’hui.
+  Semaine 1 d’un portfolio Hugo — ce que contenait l’ancien dépôt, une première page de liens Hugo, compromis HBTheme, intégration de données, Substack, shortcode iframe et ce que je ferais autrement aujourd’hui.
 - [Scan LiDAR d’un appartement avec Rhino sur iPhone](https://antoineboucher.info/CV/blog/fr/posts/rhino-lidar-apartment-scan/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/rhino-lidar-apartment-scan/index.md) · 2024-01-02
   LiDAR pièce par pièce avec Rhino sur iPhone — validation d’aménagement, limites du scan grand public, quand ça bat la CAO complète.
 - [Mon parcours en génie logiciel](https://antoineboucher.info/CV/blog/fr/posts/software-engineering-journey/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/software-engineering-journey/index.md) · 2023-12-30
@@ -116,10 +116,10 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
   Notes élargies — santé à l’échelle, fiscalité, clean rooms, keynote Infostrux, quand un entrepôt bat les feuilles.
 - [Support à planches — du CAO au contreplaqué](https://antoineboucher.info/CV/blog/fr/posts/skate-rack-cad-to-object/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/skate-rack-cad-to-object/index.md) · 2021-12-21
   Rack skate vertical — détour cadre soudé en atelier, contreplaqué Home Depot, entailles en CAO, build location-friendly, décembre 2021.
-- [Balance Renpho, Home Assistant et rétro-ingénierie de l’API](https://antoineboucher.info/CV/blog/fr/posts/renpho-health-api-blueprint/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/renpho-health-api-blueprint/index.md) · 2021-10-10
-  Maintien de hass_renpho pour Home Assistant — API ancienne app Renpho, APKLeaks, Lovelace, proxy, et habitudes pour des métriques utiles.
+- [Balance Renpho, Home Assistant, rétro-ingénierie de l’API et prévision du poids](https://antoineboucher.info/CV/blog/fr/posts/renpho-health-api-blueprint/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/renpho-health-api-blueprint/index.md) · 2021-10-10
+  Fork de hass_renpho pour Home Assistant — API de l’ancienne app Renpho, APKLeaks, tableaux Lovelace, soucis de proxy, un notebook pandas + LSTM qui prévoit le poids à partir de l’export, et les habitudes qui rendent la bio-impédance utile.
 - [Évolution réseau — monter un lab à la maison](https://antoineboucher.info/CV/blog/fr/posts/home-networking-evolution/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/home-networking-evolution/index.md) · 2021-09-06
-  Notes homelab — Docker sur vieux matériel, bash, Caddy, WireGuard, Proxmox et schémas du setup.
+  Évolution d’un homelab — Dell R710, câblage de placard, piles Docker, Caddy, WireGuard, Proxmox, et pourquoi je dessine encore le réseau au mur.
 - [Démos CodePen (collection)](https://antoineboucher.info/CV/blog/fr/posts/codepen-demos-antoinebou13/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/codepen-demos-antoinebou13/index.md) · 2017-01-10
   Intégrations CodePen live de l’ère jQuery/vanilla (~2016–2017) : formulaires, widgets, getDisplayMedia, tableau noir Canvas et vague Three.js.
 
