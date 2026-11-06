@@ -84,7 +84,8 @@
     });
 
     // Filtering ---------------------------------------------------------------
-    const host = table.closest('.post-table-scroll') || table;
+    // The filter bar goes above the bordered, scrolling wrapper, not inside it against its edge.
+    const host = table.closest('.post-table-scroll, .tablewrap') || table;
     if (original.length > 8) {
       const bar = document.createElement('div');
       bar.className = 'table-tools';

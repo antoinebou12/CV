@@ -7,7 +7,7 @@
 {{- $i := cond $fr 1 0 -}}
 {{- with $deps.items -}}
 <p class="repo-evidence-label">{{ if $fr }}{{ $deps.total }} paquets déclarés ({{ $deps.runtime }} à l’exécution, {{ $deps.dev }} pour le développement) dans {{ range $n, $m := $deps.manifests }}{{ if $n }}, {{ end }}<a href="{{ $m.url }}"><code>{{ $m.file }}</code></a>{{ end }}.{{ else }}{{ $deps.total }} declared packages ({{ $deps.runtime }} runtime, {{ $deps.dev }} development) in {{ range $n, $m := $deps.manifests }}{{ if $n }}, {{ end }}<a href="{{ $m.url }}"><code>{{ $m.file }}</code></a>{{ end }}.{{ end }}</p>
-<details class="repo-structure-details repo-dependency-details"{{ if le (len .) 20 }} open{{ end }}>
+<details class="repo-dependency-details"{{ if le (len .) 20 }} open{{ end }}>
 <summary>{{ if $fr }}Tableau des paquets{{ else }}Package table{{ end }} <span class="repo-evidence-label">{{ len . }}{{ if gt $deps.total (len .) }} / {{ $deps.total }}{{ end }}</span></summary>
 <div class="tablewrap">
   <table class="repo-permission-table repo-dependency-table" data-dynamic-table>
