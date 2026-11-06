@@ -2,6 +2,8 @@
 title: "Kelly_RM: Kelly criterion experiments for trade sizing"
 date: 2026-11-05T12:00:00-05:00
 description: "Kelly_RM holds AlgoÉTS notebooks that simulate Kelly betting and estimate trade odds from RSI backtests to compute a Kelly fraction."
+mermaid: true
+lastmod: 2026-11-06T04:00:00-05:00
 translationKey: repository-note-kelly-rm
 repository_note: "Kelly_RM"
 ---
@@ -19,6 +21,44 @@ Kelly_RM is an AlgoÉTS research repository about risk management with the Kelly
 `Kelly_game/betting_strategies.py` defines `BaseGame`, a repeated biased coin-flip game. Subclasses only decide the wager: `Kelly` bets the optimal fraction of wealth, `KellyWithAnEstimate` waits ten flips and bets on the observed frequency, `ConstantDollar` bets a fixed amount and `BetLikeADummy` bets big after three tails. The class plots wealth paths, simulates growth-rate distributions and draws expected growth against the fixed fraction wagered, with the Kelly point marked. `Kelly_game/Playing the Game.ipynb` runs the four strategies side by side; it describes itself as companion code for a video on the Kelly criterion.
 
 `sandbox/Main strategy.ipynb` applies the idea to trading. It downloads price histories through `src/data.py` (Financial Modeling Prep and Binance helpers built on `src/request_api.py`), splits each series into three years of training data and an unseen remainder, and optimizes `RsiOscillator` from `src/strategy.py` with backtesting.py. From the resulting trade tables it computes, per ticker, the win probability and the mean and variance of win and loss sizes, keeps tickers seen in both periods, then applies f* = (p·b − q)/b with b = mean win / mean loss.
+
+## How the algorithm works {#algorithm}
+
+**The Kelly fraction.** For a bet won with probability *p* that pays *b* times the stake (and loses the stake otherwise), the fraction of wealth that maximises the long-run growth rate is
+
+```text
+f* = p − q / b = (p·b − q) / b,   with q = 1 − p
+```
+
+`BaseGame.kelly_bet` computes `p + (p − 1) / b`, the same expression, and clips it to [0, 1]: no short bets and no leverage. The quantity Kelly maximises is the expected log growth per bet, `g(f) = p · ln(1 + b·f) + q · ln(1 − f)`, which `plot_exp_growth_rates_by_perc_wager` draws against *f*.
+
+**Worked example with the notebook's game.** `Playing the Game.ipynb` uses p = 0.5, b = 1.5, 10 flips and 500 $ of starting wealth.
+
+| Fraction wagered | g(f) per flip | Typical wealth after 10 flips |
+| --- | --- | --- |
+| 5% | +1.05% | × 1.11 |
+| **f* = 1/6 ≈ 16.7%** | **+2.04%** | **× 1.23** |
+| 1/3 (twice Kelly) | 0.00% | × 1.00 |
+| 40% | −2.04% | × 0.82 |
+
+So the first Kelly bet is 500 / 6 ≈ 83.33 $. Betting twice the Kelly fraction gives zero growth, and anything above it shrinks wealth over time even though every flip has a positive expected value. The "typical wealth" column is `exp(10 · g)`, the median outcome, not the mean.
+
+**The four strategies.** `Kelly` bets f* of current wealth with the true *p*. `KellyWithAnEstimate` bets nothing for the first ten flips, then uses the observed heads frequency as *p*. `ConstantDollar` bets a fixed amount whatever the wealth. `BetLikeADummy` bets big after three tails in a row, the gambler's fallacy. `play_game` caps any wager at the current wealth and stops at zero.
+
+**From coin flips to trades.** `sandbox/Main strategy.ipynb` optimises an RSI strategy per ticker on its first three years of data (the loop downloads the first ten S&P 500 symbols, through the FMP helper written for crypto pairs), takes the trades, and computes per ticker `p` = share of winning trades, a win size and a loss size, then `b = win size / loss size` and `f* = (p·b − q)/b`.
+
+```mermaid
+flowchart LR
+  T["First 10 S&P 500 symbols"] --> D["Daily prices (FMP), first 3 years = training"]
+  D --> O["backtesting.py optimize: RSI window 10–25, bounds 15–55 / 35–80"]
+  O --> TR["Trade list per ticker"]
+  TR --> P["p = winning trades / trades"]
+  TR --> W["mean win, mean loss"]
+  P & W --> K["f* = (p·b − q) / b, b = win / loss"]
+  TR --> BT["Binomial test of p against 0.5"]
+```
+
+In the notebook, `Win_Size` is 0 for losing trades and `Loss_Size` is 0 for winning trades, and both are then averaged over *all* trades. The means are therefore p · E[win] and q · E[loss], so `b` comes out as (p · E[win]) / (q · E[loss]) instead of the payoff ratio E[win] / E[loss]. For p = 0.6, the computed `b` is 1.5 times the true ratio, which inflates the Kelly fraction.
 
 ## Getting started {#installation}
 

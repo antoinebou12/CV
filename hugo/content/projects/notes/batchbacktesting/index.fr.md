@@ -2,6 +2,8 @@
 title: "BatchBacktesting : comparer des simulations de stratégie"
 date: 2026-10-24T12:00:00-04:00
 description: "BatchBacktesting exécute des backtests Python sur plusieurs instruments en conservant les hypothèses et les résultats visibles."
+mermaid: true
+lastmod: 2026-11-06T04:00:00-05:00
 translationKey: repository-note-batchbacktesting
 repository_note: "BatchBacktesting"
 ---
@@ -34,6 +36,30 @@ Le README pointe vers un exemple publié plutôt qu'une installation en une comm
 | Paramètres par défaut | 100 000 de capital initial, commission de 0,002 (0,2 %), ordres exclusifs |
 | Stratégie EMA | EMA de 20, 80 et 150 périodes calculées ; les entrées comparent les courbes 20 et 80 ; côté long, fermeture de la position précédente puis achat avec stop à 90 % et cible à 125 % |
 | Sorties | CSV par instrument, CSV agrégé par stratégie, graphique HTML optionnel |
+
+## Comment les stratégies décident {#algorithm}
+
+**Croisement de moyennes mobiles exponentielles.** La stratégie par défaut calcule des moyennes mobiles exponentielles de la clôture, `EMAₜ = α · Pₜ + (1 − α) · EMAₜ₋₁` avec `α = 2 / (n + 1)` : 0,095 pour la moyenne sur 20 périodes et 0,025 pour celle sur 80, si bien que la courte réagit environ quatre fois plus vite. À chaque barre :
+
+- quand l’EMA 20 passe au-dessus de l’EMA 80, la stratégie ferme toute position et achète, avec un stop à 90 % et un objectif à 125 % de la clôture ;
+- quand l’EMA 80 passe au-dessus de l’EMA 20, elle ferme et vend à découvert, avec un stop à 110 % et un objectif à 75 %.
+
+La moyenne sur 150 périodes est calculée mais jamais utilisée.
+
+**Ce qu’impliquent les sorties.** Avec un stop à 10 % et un objectif à 25 %, un achat risque 10 pour gagner 25. Hors frais, il est à l’équilibre si plus de 10 / (10 + 25) ≈ 28,6 % des transactions atteignent l’objectif avant le stop. Chaque aller-retour paie aussi deux fois la commission de 0,2 %, ce qui relève un peu ce seuil. Comme le croisement suivant ferme d’abord la position, beaucoup de transactions se terminent sur un croisement plutôt que sur le stop ou l’objectif.
+
+```mermaid
+flowchart TD
+  B["Nouvelle barre"] --> C1{"EMA20 passe au-dessus de l’EMA80 ?"}
+  C1 -->|oui| L["Ferme la position, achète : SL 0,90 × clôture, TP 1,25 × clôture"]
+  C1 -->|non| C2{"EMA80 passe au-dessus de l’EMA20 ?"}
+  C2 -->|oui| S["Ferme la position, vend à découvert : SL 1,10 × clôture, TP 0,75 × clôture"]
+  C2 -->|non| H["Conserve ; le courtier vérifie SL et TP"]
+```
+
+**Les autres stratégies.** `src/strategies.py` définit vingt-trois stratégies d’indicateurs (RSI, bandes de Bollinger, MACD, régression linéaire, ADX, OBV, Aroon, DEMA, ALMA, SMA …). La plupart suivent le même modèle, et quatorze d’entre elles utilisent les mêmes sorties 90/125 % et 110/75 %. Deux d’entre elles ne testent pas ce que leur nom suggère. Dans `RSI`, `rsi30` et `rsi70` sont des RSI calculés sur 30 et 70 barres, pas les niveaux 30 et 70 : la stratégie négocie les croisements entre trois courbes de RSI. `BollingerBands` n’utilise que la première colonne de `pandas_ta.bbands`, la bande inférieure.
+
+**Agrégation.** `process_instrument` marque chaque résultat de `Backtest.run()` avec l’instrument et la stratégie, l’exécuteur les concatène en un CSV par stratégie, et `analyse.py` classe les instruments. `get_max_return` regroupe par instrument et prend `max()` colonne par colonne : la « meilleure » ligne mélange le meilleur rendement et la meilleure valeur de chacune des autres colonnes.
 
 ## Architecture
 
