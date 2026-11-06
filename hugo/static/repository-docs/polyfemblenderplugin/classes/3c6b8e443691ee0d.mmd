@@ -1,0 +1,44 @@
+classDiagram
+direction TB
+class t459f1668853c["POLYFEM_OT_ShowMessageBox"] {
+  execute()
+  invoke()
+  draw()
+  cancel()
+}
+class t80d7f3ec96da["RunPolyFemSimulationOperator"] {
+  execute()
+  run_polyfem_simulation()
+  run_docker_simulation()
+  run_executable_simulation()
+  execute_command()
+  process_report_queue()
+  show_popup()
+}
+class tf7941f2b3e3c["RenderPolyFemAnimationOperator"] {
+  execute()
+  run_animation_process()
+  process_report_queue()
+  import_next_obj()
+  ensure_collection()
+  convert_vtu_to_obj()
+  get_triangle_cells()
+  get_tetra_faces()
+  get_hexa_faces()
+  get_quad_faces()
+  show_popup()
+}
+class t92e743365475["OpenPolyFemDocsOperator"] {
+  execute()
+}
+class t9fe6e8a24f39["ClearCachePolyFemOperator"] {
+  execute()
+}
+class b528865e8f16a["Operator"] {
+  <<unresolved_base>>
+}
+b528865e8f16a <|-- t459f1668853c
+b528865e8f16a <|-- t80d7f3ec96da
+b528865e8f16a <|-- tf7941f2b3e3c
+b528865e8f16a <|-- t92e743365475
+b528865e8f16a <|-- t9fe6e8a24f39

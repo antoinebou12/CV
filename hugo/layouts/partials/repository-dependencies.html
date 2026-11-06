@@ -1,0 +1,31 @@
+{{- /* External packages declared in the repository manifests (repository_dossier.py,
+       build_dependencies): name, version, runtime or development, purpose and registry page.
+       The purpose is a bilingual category when the package is a known kind; otherwise the
+       registry's own one-line description, which is in English. Params: deps, fr. */ -}}
+{{- $deps := .deps | default dict -}}
+{{- $fr := .fr -}}
+{{- $i := cond $fr 1 0 -}}
+{{- with $deps.items -}}
+<p class="repo-evidence-label">{{ if $fr }}{{ $deps.total }} paquets déclarés ({{ $deps.runtime }} à l’exécution, {{ $deps.dev }} pour le développement) dans {{ range $n, $m := $deps.manifests }}{{ if $n }}, {{ end }}<a href="{{ $m.url }}"><code>{{ $m.file }}</code></a>{{ end }}.{{ else }}{{ $deps.total }} declared packages ({{ $deps.runtime }} runtime, {{ $deps.dev }} development) in {{ range $n, $m := $deps.manifests }}{{ if $n }}, {{ end }}<a href="{{ $m.url }}"><code>{{ $m.file }}</code></a>{{ end }}.{{ end }}</p>
+<details class="repo-dependency-details"{{ if le (len .) 20 }} open{{ end }}>
+<summary>{{ if $fr }}Tableau des paquets{{ else }}Package table{{ end }} <span class="repo-evidence-label">{{ len . }}{{ if gt $deps.total (len .) }} / {{ $deps.total }}{{ end }}</span></summary>
+<div class="tablewrap">
+  <table class="repo-permission-table repo-dependency-table" data-dynamic-table>
+    <caption class="sr-only">{{ if $fr }}Dépendances externes{{ else }}External dependencies{{ end }}</caption>
+    <thead><tr><th scope="col">{{ if $fr }}Paquet{{ else }}Package{{ end }}</th><th scope="col">Version</th><th scope="col">{{ if $fr }}Usage{{ else }}Scope{{ end }}</th><th scope="col">{{ if $fr }}Rôle{{ else }}Purpose{{ end }}</th><th scope="col">{{ if $fr }}Registre{{ else }}Registry{{ end }}</th></tr></thead>
+    <tbody>
+      {{ range . }}
+      <tr>
+        <th scope="row"><code>{{ .name }}</code></th>
+        <td>{{ with .version }}<code>{{ . }}</code>{{ else }}—{{ end }}</td>
+        <td>{{ if eq .scope "dev" }}{{ if $fr }}développement{{ else }}development{{ end }}{{ else }}{{ if $fr }}exécution{{ else }}runtime{{ end }}{{ end }}</td>
+        <td>{{ with .purpose }}{{ index . $i }}{{ else }}{{ with .summary }}<span{{ if $fr }} lang="en"{{ end }}>{{ . }}</span>{{ else }}—{{ end }}{{ end }}</td>
+        <td>{{ with .url }}<a href="{{ . }}">{{ replaceRE `^https?://(?:www\.)?([^/]+)/.*$` "$1" . }}</a>{{ else }}{{ .ecosystem }}{{ end }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+</details>
+{{ if gt $deps.total (len .) }}<p class="repo-evidence-label">{{ if $fr }}{{ sub $deps.total (len .) }} autres paquets figurent dans les manifestes.{{ else }}{{ sub $deps.total (len .) }} more packages are listed in the manifests.{{ end }}</p>{{ end }}
+{{- end -}}

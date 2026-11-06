@@ -1,0 +1,110 @@
+flowchart TD
+
+subgraph group_api["API and lifecycle"]
+  node_app["FastAPI app<br/>[main.py]"]
+  node_news_routes["News routes<br/>[news.py]"]
+  node_article_routes["Article routes<br/>[article.py]"]
+  node_company_routes["Company routes<br/>[company.py]"]
+  node_user_routes["User routes<br/>[users.py]"]
+  node_seed_routes["Seed routes<br/>[seed.py]"]
+  node_strategy_routes["Strategy routes<br/>[strategy.py]"]
+end
+
+subgraph group_news["News analysis"]
+  node_news_fetcher["News fetcher<br/>[news.py]"]
+  node_text_metrics["Text metrics<br/>[metrics.py]"]
+end
+
+subgraph group_domain["Domain data"]
+  node_article_model["Article model<br/>[article.py]"]
+  node_company_model["Company model<br/>[company.py]"]
+  node_news_model["News model<br/>[news.py]"]
+  node_user_model["User model<br/>[users.py]"]
+end
+
+subgraph group_storage["Persistence and cache"]
+  node_article_repo["Article repository<br/>[article.py]"]
+  node_company_repo["Company repository<br/>[company.py]"]
+  node_news_repo["News repository<br/>[news.py]"]
+  node_user_repo["User repository<br/>[user.py]"]
+  node_mongodb[("MongoDB<br/>[db.py]")]
+  node_redis[("Redis cache<br/>[db.py]")]
+end
+
+subgraph group_operations["Seed and trading"]
+  node_company_seeder["Company seeder<br/>[companies.py]"]
+  node_news_seeder["News seeder<br/>[news.py]"]
+  node_strategy["Trading strategy<br/>[strategy.py]"]
+end
+
+node_user(("API user"))
+node_financial_sources{{"Financial news sources"}}
+
+node_user -->|"requests"| node_app
+node_app -->|"registers"| node_news_routes
+node_app -->|"registers"| node_article_routes
+node_app -->|"registers"| node_company_routes
+node_app -->|"registers"| node_user_routes
+node_app -->|"registers"| node_seed_routes
+node_news_routes -->|"dispatches"| node_news_fetcher
+node_news_routes -->|"calls"| node_news_repo
+node_news_routes -->|"validates"| node_news_model
+node_news_fetcher -->|"analyzes with"| node_text_metrics
+node_news_fetcher -->|"builds"| node_article_model
+node_news_fetcher -->|"saves via"| node_article_repo
+node_article_routes -->|"calls"| node_article_repo
+node_company_routes -->|"calls"| node_company_repo
+node_user_routes -->|"calls"| node_user_repo
+node_user_routes -->|"uses"| node_user_model
+node_article_repo -->|"reads and writes"| node_mongodb
+node_company_repo -->|"uses"| node_mongodb
+node_news_repo -->|"uses"| node_mongodb
+node_user_repo -->|"uses"| node_mongodb
+node_app -->|"configures cache"| node_redis
+node_seed_routes -->|"dispatches"| node_company_seeder
+node_seed_routes -->|"dispatches"| node_news_seeder
+node_company_seeder -->|"fetches companies"| node_financial_sources
+node_company_seeder -->|"stores via"| node_company_repo
+node_news_seeder -->|"fetches news"| node_financial_sources
+node_news_seeder -->|"processes articles"| node_news_fetcher
+node_news_seeder -->|"stores via"| node_article_repo
+node_company_routes -->|"uses"| node_company_model
+node_article_routes -->|"uses"| node_article_model
+node_strategy_routes -->|"dispatches"| node_strategy
+node_user -.->|"requests backtest"| node_strategy_routes
+
+click node_app "https://github.com/algoets/ainewstracker/blob/main/app/main.py"
+click node_news_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/news.py"
+click node_article_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/article.py"
+click node_company_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/company.py"
+click node_user_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/users.py"
+click node_seed_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/seed.py"
+click node_news_fetcher "https://github.com/algoets/ainewstracker/blob/main/app/core/services/news.py"
+click node_text_metrics "https://github.com/algoets/ainewstracker/blob/main/app/core/services/metrics.py"
+click node_article_model "https://github.com/algoets/ainewstracker/blob/main/app/models/article.py"
+click node_company_model "https://github.com/algoets/ainewstracker/blob/main/app/models/company.py"
+click node_news_model "https://github.com/algoets/ainewstracker/blob/main/app/models/news.py"
+click node_user_model "https://github.com/algoets/ainewstracker/blob/main/app/models/users.py"
+click node_article_repo "https://github.com/algoets/ainewstracker/blob/main/app/core/repo/article.py"
+click node_company_repo "https://github.com/algoets/ainewstracker/blob/main/app/core/repo/company.py"
+click node_news_repo "https://github.com/algoets/ainewstracker/blob/main/app/core/repo/news.py"
+click node_user_repo "https://github.com/algoets/ainewstracker/blob/main/app/core/repo/user.py"
+click node_mongodb "https://github.com/algoets/ainewstracker/blob/main/app/core/database/db.py"
+click node_redis "https://github.com/algoets/ainewstracker/blob/main/app/core/database/db.py"
+click node_company_seeder "https://github.com/algoets/ainewstracker/blob/main/app/seed/companies.py"
+click node_news_seeder "https://github.com/algoets/ainewstracker/blob/main/app/seed/news.py"
+click node_strategy_routes "https://github.com/algoets/ainewstracker/blob/main/app/routers/strategy.py"
+click node_strategy "https://github.com/algoets/ainewstracker/blob/main/app/core/trading/strategy.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_app,node_news_routes,node_article_routes,node_company_routes,node_user_routes,node_seed_routes,node_strategy_routes,node_user toneBlue
+class node_news_fetcher,node_text_metrics toneAmber
+class node_article_model,node_company_model,node_news_model,node_user_model toneMint
+class node_article_repo,node_company_repo,node_news_repo,node_user_repo,node_mongodb,node_redis toneRose
+class node_company_seeder,node_news_seeder,node_strategy,node_financial_sources toneIndigo

@@ -1,0 +1,40 @@
+classDiagram
+direction TB
+class tf18378df57db["MockPlotter"] {
+  plot()
+  save()
+}
+class tfc06962c5126["MockSequencePlotter"] {
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+}
+class t7d6c43164e7a["FailingMockPlotter"] {
+  __init__()
+  plot()
+  save()
+}
+class ta88ef52b8217["TestBasePlotter"] {
+  test_cannot_instantiate_abstract_base()
+  test_mock_implementation()
+}
+class tf868fbf39beb["TestBaseSequencePlotter"] {
+  test_cannot_instantiate_abstract_base()
+  test_mock_sequence_implementation()
+}
+class ta5efac95e8d2["TestTMDPlotterFactory"] {
+  setup_method()
+  teardown_method()
+  test_register_create_list()
+  test_sequence_factory_register()
+}
+class bd531496efee5["BasePlotter"] {
+  <<unresolved_base>>
+}
+bd531496efee5 <|-- tf18378df57db
+class b450d7c3edb05["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+b450d7c3edb05 <|-- tfc06962c5126
+bd531496efee5 <|-- t7d6c43164e7a

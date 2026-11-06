@@ -14,6 +14,7 @@ tags:
   - Crypto
   - Stocks
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
+canonicalLang: "fr"
 ---
 
 I batch-ran an **EMA crossover** strategy across the S&P 500 and a list of crypto pairs with [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting), using Financial Modeling Prep for equities and Binance for crypto. This post shows what the runner does, how to read the outrageous rows at the top and bottom of the leaderboard, and why none of it is a live trading system. The original article is in French on Medium.

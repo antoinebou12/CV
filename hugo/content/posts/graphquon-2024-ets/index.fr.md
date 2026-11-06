@@ -12,7 +12,6 @@ tags:
   - SIGGRAPH
   - Infographie
   - NVIDIA
-canonicalURL: "https://graphquon.github.io/"
 images:
   - images/featured.png
 ---

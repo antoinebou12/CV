@@ -1,0 +1,31 @@
+{{- /* Radial skill map. Data: hugo/data/skill_tree.json (from data/cv.yaml via
+       scripts/build/generate_cv.py). The nested list is the text version and the no-JavaScript view. */ -}}
+{{- $fr := eq .Page.Lang "fr" -}}
+{{- $tree := index (hugo.Data.skill_tree | default dict) (cond $fr "fr" "en") -}}
+{{- with $tree -}}
+{{- $css := resources.Get "skill-map.css" | minify | fingerprint -}}
+{{- /* Not minified: Hugo's minifier renames a block-scoped variable into a temporal-dead-zone error here. */ -}}
+{{- $js := resources.Get "skill-map.js" | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<div class="skill-map" data-skill-map>
+  <script type="application/json">{{ jsonify . | safeJS }}</script>
+  <div class="skill-map-toolbar">
+    <button type="button" data-skill-map-collapse>{{ if $fr }}Replier les catégories{{ else }}Collapse categories{{ end }}</button>
+    <button type="button" data-skill-map-reset hidden>{{ if $fr }}Tout déplier{{ else }}Expand all{{ end }}</button>
+    <p class="skill-map-legend"><span><i class="is-core"></i>{{ if $fr }}Maîtrisé{{ else }}Proficient{{ end }}</span><span><i></i>{{ if $fr }}Intermédiaire{{ else }}Intermediate{{ end }}</span><span>{{ if $fr }}Cliquez sur une catégorie pour la replier.{{ else }}Click a category to fold it.{{ end }}</span></p>
+  </div>
+  <div class="skill-map-stage" data-skill-map-stage></div>
+  <details class="skill-map-text">
+    <summary>{{ if $fr }}Version texte de la carte{{ else }}Text version of the map{{ end }}</summary>
+    <ul>
+      {{ range .children }}
+      <li><strong>{{ .name }}</strong>
+        <ul>{{ range .children }}<li>{{ with .url }}<a href="{{ . }}">{{ end }}{{ .name }}{{ with .url }}</a>{{ end }}{{ with .level }} <em>({{ if $fr }}intermédiaire{{ else }}intermediate{{ end }})</em>{{ end }}</li>{{ end }}</ul>
+      </li>
+      {{ end }}
+    </ul>
+  </details>
+  <noscript><p>{{ if $fr }}La carte interactive demande JavaScript ; ouvrez la version texte ci-dessus.{{ else }}The interactive map needs JavaScript; open the text version above.{{ end }}</p></noscript>
+</div>
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- end -}}

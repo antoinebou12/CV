@@ -46,3 +46,23 @@ html.nav-progress-done .nav-progress > span { width: 100%; transition-duration: 
 @media (prefers-reduced-motion: no-preference) {
   .post-list-card-media.is-loading::after { animation: load-spin 800ms linear infinite !important; }
 }
+/* Page load: a thin bar while the document and its images load (html.page-loaded is set on the
+   window load event by the inline script in head.html). It is hidden without JavaScript, never
+   covers content, and fades out on its own after 12 s if the load event never arrives. */
+.page-load { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  html.js .page-load { display: block; position: fixed; inset: 0 0 auto 0; z-index: 95; height: 3px; pointer-events: none; animation: page-load-timeout 12s step-end forwards; }
+  html.js .page-load > span { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--hero-accent, #227c74), #4cc7f0); box-shadow: 0 0 10px rgb(76 199 240 / 55%); animation: page-load-grow 8s cubic-bezier(.08, .7, .2, 1) 120ms forwards; }
+  html.js.page-parsed:not(.page-loaded) .page-load > span { animation-duration: 4s; }
+  html.page-loaded .page-load { opacity: 0; transition: opacity 360ms ease-out 180ms; animation: none; }
+  html.page-loaded .page-load > span { animation: page-load-finish 260ms ease-out forwards; }
+  @keyframes page-load-grow { from { transform: scaleX(0); } 40% { transform: scaleX(.55); } to { transform: scaleX(.92); } }
+  @keyframes page-load-finish { to { transform: scaleX(1); } }
+  @keyframes page-load-timeout { to { visibility: hidden; } }
+  /* Project notes settle in instead of popping; content is never fully transparent. */
+  .repo-note[data-repo-shell] .repo-shell-main { animation: page-shell-in 420ms var(--motion-ease-editorial, cubic-bezier(.22, 1, .36, 1)) both; }
+  @keyframes page-shell-in { from { opacity: .35; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  /* A diagram that failed to render stops spinning; its source stays readable. */
+  html.js .article-diagram-loading.is-unavailable > summary::before { content: none; }
+}
+@media print { .page-load { display: none !important; } }

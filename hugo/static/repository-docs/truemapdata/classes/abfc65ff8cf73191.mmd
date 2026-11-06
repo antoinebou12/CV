@@ -1,0 +1,33 @@
+classDiagram
+direction TB
+class t6b1cd794dbe9["PlotlyHeightMapVisualizer"] {
+  __init__()
+  plot()
+  plot_2d()
+  plot_3d()
+  plot_profile()
+  show()
+  save()
+  _create_3d_surface()
+  _create_2d_heatmap()
+  _create_contour()
+  _create_profile()
+  _create_slider_viz()
+}
+class tbe2e4d79545c["PlotlySequenceVisualizer"] {
+  __init__()
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+  _visualize_3d_sequence()
+  _visualize_2d_sequence()
+}
+class b83cf6f5a9f05["BasePlotter"] {
+  <<unresolved_base>>
+}
+b83cf6f5a9f05 <|-- t6b1cd794dbe9
+class b023c319c8cec["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+b023c319c8cec <|-- tbe2e4d79545c

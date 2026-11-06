@@ -1,0 +1,21 @@
+classDiagram
+direction TB
+class t23f3962df216["TestNoiseStrategy"] {
+  test_abstract_method()
+  test_generate_noise_must_be_implemented()
+  test_concrete_implementation()
+}
+class tb9ac30d0cdcf["IncompleteNoiseStrategy"] {
+}
+class t65f4efc49ade["ConcreteNoiseStrategy"] {
+  generate_noise()
+}
+class b42880a6b3dcd["unittest.TestCase"] {
+  <<unresolved_base>>
+}
+b42880a6b3dcd <|-- t23f3962df216
+class b892f2be4cf47["NoiseStrategy"] {
+  <<unresolved_base>>
+}
+b892f2be4cf47 <|-- tb9ac30d0cdcf
+b892f2be4cf47 <|-- t65f4efc49ade

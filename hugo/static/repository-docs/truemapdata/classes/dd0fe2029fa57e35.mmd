@@ -1,0 +1,24 @@
+classDiagram
+direction TB
+class ta9c8154f8b19["QuadTreeNode"] {
+  __init__()
+  get_corners()
+  get_center()
+  get_midpoints()
+  subdivide()
+}
+class tf11712288e12["QuadTreeTriangulator"] {
+  __init__()
+  calculate_complexity_map()
+  triangulate()
+  _build_quadtree()
+  _calculate_node_error()
+  _get_node_complexity()
+  _extract_mesh_from_quadtree()
+  _collect_leaf_nodes()
+  _finalize_mesh()
+}
+class bb3f68dfe1dbe["BaseTriangulator"] {
+  <<unresolved_base>>
+}
+bb3f68dfe1dbe <|-- tf11712288e12

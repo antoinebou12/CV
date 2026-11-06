@@ -13,7 +13,6 @@ tags:
   - Computer Graphics
   - Friction
   - ÉTS
-canonicalURL: "https://www.dgp.toronto.edu/graphquon/"
 images:
   - images/featured.png
 ---

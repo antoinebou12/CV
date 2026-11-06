@@ -46,7 +46,9 @@ test('diagram JavaScript parses and uses strict rendering with SVG labels', () =
 
 test('automatic documentation covers the inventory with source-pinned exports', () => {
   assert.equal(analysis.schema_version, 1);
-  assert.deepEqual(Object.keys(analysis.repositories).sort(), notes.map(note => note.repo).sort());
+  // Organisation repositories (hand-written notes) are analysed too, for their CI/CD, deployment and dependency sections.
+  const analysed = [...notes.map(note => note.repo), ...orgRepositories.filter(repo => !repo.fork).map(repo => repo.name)];
+  assert.deepEqual(Object.keys(analysis.repositories).sort(), analysed.sort());
   for (const note of notes) {
     const data = analysis.repositories[note.repo];
     assert.match(data.commit, /^[0-9a-f]{40}$/);
@@ -308,6 +310,26 @@ test('every catalog project has a use-case diagram, scenario and summary', () =>
       assert.match(html, /id=["']?use-cases["' >]/, `${project.name} (${lang}) renders the section`);
       assert.match(html, /class=["']?repo-usecase-svg/, `${project.name} (${lang}) renders the diagram`);
       assert.ok(html.includes(entry.summary[lang === 'fr' ? 1 : 0].replace(/&/g, '&amp;').slice(0, 20)) || html.includes(entry.summary[lang === 'fr' ? 1 : 0].slice(0, 20)), `${project.name} (${lang}) shows the summary`);
+    }
+  }
+});
+
+test('every project note shows its CI/CD pipeline, deployment diagram and dependencies', () => {
+  const all = [
+    ...notes.map(note => ({ repo: note.repo, slug: note.slug })),
+    ...orgRepositories.filter(repo => !repo.fork).map(repo => ({ repo: repo.name, slug: repo.slug })),
+  ];
+  for (const note of all) {
+    const dossier = dossiers[note.repo];
+    assert.ok(dossier, `${note.repo}: dossier`);
+    assert.ok(dossier.ci && Array.isArray(dossier.ci.workflows), `${note.repo}: CI data`);
+    assert.match(dossier.deployment.mermaid[0], /^flowchart LR/, `${note.repo}: deployment diagram`);
+    assert.ok(dossier.dependencies, `${note.repo}: dependency data`);
+    for (const row of dossier.dependencies.items) assert.ok(!row.url || row.url.startsWith('https://'), `${note.repo}: ${row.name}`);
+    for (const lang of ['en', 'fr']) {
+      const html = page(note, lang);
+      assert.match(html, /id=["']?(?:dossier-ci-h|ci-cd-pipeline)["' >]/, `${note.repo} ${lang}: CI/CD section`);
+      assert.ok(html.includes(lang === 'fr' ? 'Schéma de déploiement' : 'Deployment diagram'), `${note.repo} ${lang}: deployment diagram`);
     }
   }
 });

@@ -20,6 +20,7 @@ from repository_handbooks import uml_call
 
 OUTPUT = ROOT / "hugo/data/repository_diagram_images.json"
 STATIC = ROOT / "hugo/static/repository-docs"
+DOSSIERS = (load(ROOT / "hugo/data/repository_dossiers.json", {}) or {}).get("repositories", {})
 
 
 def image_extension(data: bytes) -> str:
@@ -85,6 +86,9 @@ def jobs_for(note: dict, analysis: dict) -> list[tuple[str, str, Path]]:
     if gitdiagram.get("status") == "available" and gitdiagram.get("mermaid"):
         system_source = gitdiagram["mermaid"].replace("flowchart TD", "flowchart LR", 1)
         system_source = system_source.replace("graph TD", "flowchart LR", 1)
+        # The page shows the merged overview from repository_dossier.py; the preview must match it.
+        overview = (DOSSIERS.get(note["repo"]) or {}).get("architecture") or {}
+        system_source = overview.get("overview") or system_source
         jobs.append(("system", system_source, folder / "system-overview"))
     if analysis.get("class_overview"):
         jobs.append(("types", analysis["class_overview"], folder / "code-types"))

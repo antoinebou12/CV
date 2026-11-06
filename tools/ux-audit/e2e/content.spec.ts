@@ -89,6 +89,8 @@ async function audit(page: Page) {
       for (const el of root.querySelectorAll('button, summary, .repo-evidence-label, .repo-badge, h2, h3, h4')) {
         // README excerpts are quoted in their original language on purpose.
         if (el.closest('.repo-guide-chapter, .repo-source-excerpt, .repo-source-markdown')) continue;
+        // Text explicitly marked as English (workflow step names, registry descriptions) is quoted, not untranslated.
+        if (el.closest('[lang]:not([lang^="fr"])')) continue;
         const t = clean((el as HTMLElement).innerText);
         if (visible(el) && english.test(t)) findings.push({ kind: 'english-on-french-page', text: t.slice(0, 80) });
       }

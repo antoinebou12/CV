@@ -1,0 +1,16 @@
+{{- /* Deployment diagram from repository_dossier.py (deployment_mermaid): repository, CI, built
+       images, publish targets, configured hosts and Compose services, or a local run when the
+       repository ships no deployment configuration. Params: deployment, fr. */ -}}
+{{- $dep := .deployment | default dict -}}
+{{- $fr := .fr -}}
+{{- with $dep.mermaid -}}
+<details class="repo-diagram-details" data-mermaid-lazy open>
+  <summary><span class="repo-badge tool">Mermaid</span> <span>{{ if $fr }}Schéma de déploiement{{ else }}Deployment diagram{{ end }}</span></summary>
+  <div class="repo-progressive-diagram" data-mermaid-fallback>
+    <pre class="repo-mermaid-source"><code class="language-mermaid">{{ index . (cond $fr 1 0) }}</code></pre>
+  </div>
+</details>
+{{- if not (or $dep.hosting $dep.containers $dep.targets $dep.base_images) -}}
+<p class="repo-evidence-label">{{ if $fr }}Le dépôt ne contient ni Dockerfile, ni fichier Compose, ni configuration d’hébergement : le code s’exécute sur le poste qui le clone.{{ else }}The repository has no Dockerfile, Compose file or hosting configuration, so the code runs on the machine that clones it.{{ end }}</p>
+{{- end -}}
+{{- end -}}

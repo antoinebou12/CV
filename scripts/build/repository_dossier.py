@@ -74,8 +74,34 @@ LAYER_DIRS = {
         "providers", "lib", "libs", "external",
     },
 }
+# Build output and copies of published sites are not project modules: a committed Hugo mirror
+# (docs/blog), _site, bundler output and minified assets would otherwise outweigh the source.
+BUILD_DIRS = {
+    "_site", "node_modules", "vendor", "dist", "__pycache__", ".next", ".nuxt",
+    "coverage", "site-packages", "bower_components", "_gen", "htmlcov",
+}
+# Only at the repository root: scripts/build or src/out can be real source folders.
+ROOT_BUILD_DIRS = {"build", "out", "target", "obj"}
+BUILT_SITE_EXT = {".html", ".htm", ".xml", ".js", ".css", ".json", ".map", ".txt", ".svg", ".webmanifest"}
+
+
+def is_build_output(path):
+    p = PurePosixPath(path)
+    parts = [x.lower() for x in p.parts]
+    name = parts[-1]
+    if set(parts[:-1]) & BUILD_DIRS or (len(parts) > 1 and parts[0] in ROOT_BUILD_DIRS):
+        return True
+    if re.search(r"\.min\.(?:js|css|mjs)$|\.bundle\.js$|\.map$", name):
+        return True
+    # GitHub Pages output committed under docs/ (HTML, feeds, assets); Markdown sources stay.
+    if parts[0] == "docs" and len(parts) > 1 and p.suffix.lower() in BUILT_SITE_EXT:
+        return True
+    # Hugo writes public/ and resources/_gen/ next to hugo.toml.
+    return len(parts) > 2 and parts[0] == "hugo" and parts[1] in {"public", "resources"}
+
+
 UI_EXT = {".vue", ".tsx", ".jsx", ".html", ".htm", ".css", ".scss", ".sass", ".svelte", ".blade.php", ".xml"}
-SOURCE_EXT = set(docs.LANGUAGES) | UI_EXT | {".vue", ".java", ".kt", ".gradle", ".glsl", ".ino", ".ps1"}
+SOURCE_EXT = set(docs.LANGUAGES) | UI_EXT | {".vue", ".java", ".kt", ".gradle", ".glsl", ".ino", ".ps1", ".tex", ".cls"}
 HOSTING_NAMES = {
     "dockerfile", "docker-compose.yml", "docker-compose.yaml", "compose.yml",
     "compose.yaml", "vercel.json", "netlify.toml", "procfile", "fly.toml",
@@ -529,10 +555,10 @@ def layers_mermaid(layers, lang):
     for layer in main + side:
         title = layer["label"][i].replace('"', "'")
         lines.append(f'  subgraph L_{layer["key"]}["{title}"]')
-        lines.append("    direction LR")
+        lines.append("    direction TB")
         for index, module in enumerate(layer["modules"][:4]):
             name = module["name"].replace('"', "'")
-            unit = "fichiers" if i else "files"
+            unit = ("fichiers" if i else "files") if module["files"] != 1 else ("fichier" if i else "file")
             lines.append(f'    {layer["key"]}_{index}["{name}<br/>{module["files"]} {unit}"]')
         if layer["more_modules"] or len(layer["modules"]) > 4:
             extra = layer["more_modules"] + max(0, len(layer["modules"]) - 4)
@@ -615,6 +641,162 @@ def parse_gitdiagram(analysis, paths):
         "more_steps": max(0, len(order) - 24),
         "entry_points": [label(n)["label"] for n in starts[:4]],
         "sequence": sequence_mermaid(steps[:16]),
+    }
+
+
+# --- Architecture overview: a readable view of the GitDiagram graph ---------------------
+# GitDiagram links every route to every model and repository it touches, so the raw graph can
+# cross the whole canvas dozens of times. The overview keeps every component but merges
+# parallel edges between groups, caps the fan-out of a single node, and lays groups out as
+# left-to-right lanes (clients, entry points, services, domain, data). The text version under
+# the figure keeps every original edge.
+
+FLOW_EDGE = re.compile(
+    r'^\s*(\w+)\s*(-\.->|-->|==>|---|-\.-)\s*(?:\|"?(.*?)"?\|\s*)?(\w+)\s*;?\s*$'
+)
+FLOW_NODE = re.compile(r'^\s*(\w+)\s*[\[\(\{>]')
+FLOW_LABEL = re.compile(r'^\s*(\w+)\s*[\[\(\{>/]+"?(.*?)"?[\]\)\}/]+\s*$')
+LANE_HINTS = [
+    (0, r"user|client|frontend|front-end|\bui\b|dashboard|browser|screen|page|\bcli\b|command"),
+    (1, r"\bapi\b|route|router|endpoint|controller|handler|entry|server|gateway|\bmcp\b|tool"),
+    (2, r"service|core|logic|engine|process|pipeline|worker|job|agent|runtime|integration|render"),
+    (3, r"model|schema|domain|entit|record|identity"),
+    (4, r"data|storage|store|database|\bdb\b|repo|cache|persist|file|external|cloud|infra|deploy|build|config"),
+]
+
+
+def lane_of(label):
+    text = label.lower()
+    for rank, pattern in LANE_HINTS:
+        if re.search(pattern, text):
+            return rank
+    return 2
+
+
+def parse_flowchart(source):
+    """Split a Mermaid flowchart into top-level group blocks, loose lines, edges and membership."""
+    blocks, loose, edges, groups, labels = [], [], [], {}, {}
+    stack, current = [], None
+    for raw in source.splitlines():
+        line = raw.rstrip()
+        stripped = line.strip()
+        if not stripped or re.match(r"^(flowchart|graph)\b", stripped):
+            continue
+        sub = re.match(r'^\s*subgraph\s+(\w+)\s*(?:\["?(.*?)"?\])?\s*$', line)
+        if sub:
+            if not stack:
+                current = {"id": sub[1], "label": sub[2] or sub[1], "lines": [], "declared": set()}
+                blocks.append(current)
+            stack.append(sub[1])
+            labels[sub[1]] = sub[2] or sub[1]
+            current["lines"].append(line)
+            continue
+        if stripped == "end" and stack:
+            stack.pop()
+            current["lines"].append(line)
+            if not stack:
+                current = None
+            continue
+        edge = FLOW_EDGE.match(line)
+        if edge:
+            edges.append({"from": edge[1], "arrow": edge[2], "label": (edge[3] or "").strip(), "to": edge[4]})
+            if stack:
+                for node in (edge[1], edge[4]):
+                    groups.setdefault(node, stack[0])
+            continue
+        node = FLOW_NODE.match(line)
+        if node and stack:
+            groups[node[1]] = stack[0]
+            current["declared"].add(node[1])
+            current["lines"].append(line)
+        elif stack:
+            current["lines"].append(line)
+        else:
+            loose.append(line)
+    # A node first seen in an edge inside a group must still be declared inside that group.
+    for block in blocks:
+        missing = [n for n, g in groups.items() if g == block["id"] and n not in block["declared"]]
+        if missing:
+            block["lines"][1:1] = [f"  {n}" for n in missing]
+    return blocks, loose, edges, groups, labels
+
+
+def simplify_flowchart(source, fan=3, cap=4):
+    """Return the overview Mermaid (None when the graph is already readable) and every edge."""
+    blocks, loose, edges, groups, _ = parse_flowchart(source)
+    if not edges:
+        return None, edges
+    group_of = groups.get
+    merged, used = [], set()
+
+    def collapse(key_fn):
+        buckets = {}
+        for index, e in enumerate(edges):
+            if index not in used and e["from"] != e["to"]:
+                key = key_fn(e)
+                if key:
+                    buckets.setdefault(key, []).append(index)
+        for (source_id, target_id), members in buckets.items():
+            if len(members) < fan:
+                continue
+            used.update(members)
+            found = {edges[i]["label"] for i in members}
+            dashed = all(edges[i]["arrow"].startswith("-.") for i in members)
+            merged.append({"from": source_id, "to": target_id, "arrow": "-.->" if dashed else "-->",
+                           "label": found.pop() if len(found) == 1 else ""})
+
+    crossing = lambda e: group_of(e["from"]) != group_of(e["to"])
+    # Group to group first (routes → models), then one node fanning out to a group, then fan-in.
+    collapse(lambda e: (group_of(e["from"]), group_of(e["to"])) if crossing(e) and group_of(e["from"]) and group_of(e["to"]) else None)
+    collapse(lambda e: (e["from"], group_of(e["to"])) if crossing(e) and group_of(e["to"]) else None)
+    collapse(lambda e: (group_of(e["from"]), e["to"]) if crossing(e) and group_of(e["from"]) else None)
+    kept = [e for i, e in enumerate(edges) if i not in used and e["from"] != e["to"]] + merged
+    seen, outgoing, overview = set(), Counter(), []
+    group_ids = {b["id"] for b in blocks}
+    for e in kept:
+        key = (e["from"], e["to"])
+        # Edges inside one group stay short; only edges that cross the canvas count toward the cap.
+        long = group_of(e["from"]) != group_of(e["to"]) or e["to"] in group_ids
+        if key in seen or (long and outgoing[e["from"]] >= cap):
+            continue
+        seen.add(key)
+        outgoing[e["from"]] += long
+        overview.append(e)
+    if not merged and len(overview) == sum(e["from"] != e["to"] for e in edges):
+        return None, edges
+    ordered = sorted(blocks, key=lambda b: (lane_of(b["label"]), blocks.index(b)))
+    lines = ["flowchart LR"]
+    lines += [line for line in loose if not re.match(r"^\s*class\s", line)]
+    for block in ordered:
+        lines.append("")
+        lines.extend(block["lines"])
+    lines.append("")
+    for e in overview:
+        label = f'|"{e["label"]}"|' if e["label"] else ""
+        lines.append(f'{e["from"]} {e["arrow"]}{label} {e["to"]}')
+    lines += [line for line in loose if re.match(r"^\s*class\s", line)]
+    return "\n".join(lines) + "\n", edges
+
+
+def build_architecture(analysis):
+    view = analysis.get("gitdiagram") or {}
+    source = view.get("mermaid")
+    if view.get("status") != "available" or not source:
+        return None
+    overview, edges = simplify_flowchart(source)
+    _, _, _, _, group_labels = parse_flowchart(source)
+    node_label = {}
+    for raw in source.splitlines():
+        match = FLOW_LABEL.match(raw)
+        if match and not FLOW_EDGE.match(raw) and not raw.strip().startswith("subgraph"):
+            node_label[match[1]] = re.sub(r"<br\s*/?>.*$", "", match[2]).strip()
+    name = lambda n: node_label.get(n) or group_labels.get(n) or n.replace("node_", "").replace("_", " ")
+    shown = sum(1 for line in (overview or "").splitlines() if FLOW_EDGE.match(line))
+    return {
+        "overview": overview,
+        "edges_total": len(edges),
+        "overview_edges": shown if overview else len(edges),
+        "edges": [{"from": name(e["from"]), "to": name(e["to"]), "label": e["label"]} for e in edges],
     }
 
 
@@ -930,8 +1112,10 @@ def build_services(analysis, texts, types, paths):
         (r"(?:^|/)mkdocs\.ya?ml$", "MkDocs site", "Site MkDocs"),
         (r"(?:^|/)hugo\.toml$|(?:^|/)config\.toml$", "Static site generator", "Générateur de site statique"),
     ]
+    # Tool folders such as .codex or .vscode hold editor settings, not hosting configuration.
+    visible = [p for p in paths if not any(part.startswith(".") and part not in {".github", ".devcontainer"} for part in PurePosixPath(p).parts[:-1])]
     for pattern, en, fr in signals:
-        hits = [p for p in paths if re.search(pattern, p)]
+        hits = [p for p in visible if re.search(pattern, p)]
         if hits:
             hosting.append({"label": [en, fr], "count": len(hits), **evidence(analysis, hits[0])})
     deploys = [path for path, text in texts.items() if WORKFLOW.match(path) and re.search(r"pages|deploy|vercel|docker/build-push|gh-pages|publish|release", text, re.I)]
@@ -1407,6 +1591,401 @@ def build_deployment(analysis, texts, services):
     }
 
 
+# --- Delivery: CI/CD pipelines and deployment diagrams --------------------------------
+# GitHub Actions files are read line by line (no YAML dependency, nothing executed): triggers,
+# jobs, `needs`, runners, and the publish targets each job reaches. Other CI systems are named
+# only, with their file.
+
+OTHER_CI = [
+    (r"^\.gitlab-ci\.ya?ml$", "GitLab CI"),
+    (r"(?:^|/)azure-pipelines[\w.\-]*\.ya?ml$", "Azure Pipelines"),
+    (r"^\.travis\.ya?ml$", "Travis CI"),
+    (r"(?:^|/)Jenkinsfile$", "Jenkins"),
+    (r"^\.circleci/config\.ya?ml$", "CircleCI"),
+    (r"^bitbucket-pipelines\.ya?ml$", "Bitbucket Pipelines"),
+]
+TRIGGER_LABELS = {
+    "push": ("push", "push"),
+    "pull_request": ("pull request", "demande de fusion"),
+    "pull_request_target": ("pull request", "demande de fusion"),
+    "workflow_dispatch": ("manual run", "lancement manuel"),
+    "schedule": ("schedule", "planification"),
+    "release": ("release", "publication"),
+    "workflow_run": ("after another workflow", "après un autre workflow"),
+    "workflow_call": ("called by a workflow", "appelé par un workflow"),
+    "repository_dispatch": ("API event", "événement API"),
+    "merge_group": ("merge queue", "file de fusion"),
+}
+
+
+def workflow_detail(text):
+    """Jobs with title, needs, runner, step labels and the raw text of each job."""
+    jobs, current, in_jobs, body = [], None, False, []
+    for raw in text.splitlines():
+        if re.match(r"^jobs:\s*$", raw):
+            in_jobs = True
+            continue
+        if not in_jobs:
+            continue
+        if re.match(r"^\S", raw):
+            break
+        job = re.match(r"^  ([\w-]+):\s*$", raw)
+        if job:
+            if current is not None:
+                current["text"] = "\n".join(body)
+            current, body = {"id": job[1], "title": job[1], "needs": [], "runs_on": "", "steps": [], "uses": ""}, []
+            jobs.append(current)
+            continue
+        if current is None:
+            continue
+        body.append(raw)
+        needs = re.match(r"^    needs:\s*\[?([^\]#]*)\]?\s*$", raw)
+        if needs and needs[1].strip():
+            current["needs"] = [n.strip(" '\"") for n in needs[1].split(",") if n.strip(" '\"")]
+        elif needs:
+            current["_needs_list"] = True
+        elif current.get("_needs_list"):
+            item = re.match(r"^      - ([\w-]+)\s*$", raw)
+            if item:
+                current["needs"].append(item[1])
+            else:
+                current.pop("_needs_list", None)
+        title = re.match(r"^    name:\s*['\"]?(.+?)['\"]?\s*$", raw)
+        if title:
+            current["title"] = without_expressions(title[1]) or current["id"]
+        runner = re.match(r"^    runs-on:\s*['\"]?([^'\"#\n]+)", raw)
+        if runner:
+            current["runs_on"] = without_expressions(runner[1].strip()) or "matrix"
+        reusable = re.match(r"^    uses:\s*['\"]?([^'\"@\s]+)", raw)
+        if reusable:
+            current["uses"] = reusable[1]
+        step = re.match(r"^\s+- (name|uses|run):\s*['\"]?(.+?)['\"]?\s*$", raw)
+        if step and len(current["steps"]) < 8:
+            label = step[2]
+            if step[1] == "uses":
+                label = label.split("@")[0]
+            elif step[1] == "run":
+                label = label.lstrip("|> ").strip() or "run"
+            label = without_expressions(label)
+            if label and label not in current["steps"]:
+                current["steps"].append(label[:56])
+    if current is not None:
+        current["text"] = "\n".join(body)
+    for job in jobs:
+        job.pop("_needs_list", None)
+    return jobs
+
+
+def build_ci(analysis, texts, paths):
+    workflows, job_signatures = [], {}
+    for path, text in sorted(texts.items()):
+        if not WORKFLOW.match(path):
+            continue
+        name = re.search(r"^name:\s*['\"]?(.+?)['\"]?\s*$", text, re.MULTILINE)
+        jobs = []
+        for job in workflow_detail(text)[:10]:
+            targets = [en for pattern, en, _ in PUBLISH_TARGETS if re.search(pattern, job["text"])]
+            jobs.append({
+                "id": job["id"],
+                "title": job["title"][:48],
+                "needs": [n for n in job["needs"] if n],
+                "runs_on": job["runs_on"][:32],
+                "uses": job["uses"][:64],
+                "steps": job["steps"][:6],
+                "targets": targets,
+                "deploys": bool(targets) or any(DEPLOY_STEPS.search(s) for s in job["steps"]),
+            })
+        if not jobs:
+            continue
+        # Workflows copied between files (one per platform, say) repeat the same job; say so once.
+        for job in jobs:
+            signature = (job["title"], job["runs_on"], tuple(job["steps"]))
+            if signature in job_signatures:
+                job["same_as"] = job_signatures[signature]
+            else:
+                job_signatures[signature] = without_expressions(name[1]) if name else PurePosixPath(path).stem
+        workflows.append({
+            "name": without_expressions(name[1]) if name else PurePosixPath(path).stem,
+            "triggers": workflow_triggers(text),
+            "jobs": jobs,
+            **evidence(analysis, path),
+        })
+    other = []
+    for pattern, label in OTHER_CI:
+        hit = next((p for p in paths if re.search(pattern, p)), None)
+        if hit:
+            other.append({"label": label, **evidence(analysis, hit)})
+    targets = [{"label": [en, fr]} for _, en, fr in PUBLISH_TARGETS
+               if any(en in j["targets"] for w in workflows for j in w["jobs"])]
+    result = {
+        "workflows": workflows[:8],
+        "workflow_total": len(workflows),
+        "job_total": sum(len(w["jobs"]) for w in workflows),
+        "other": other,
+        "targets": targets,
+    }
+    result["mermaid"] = [ci_mermaid(result, lang) for lang in ("en", "fr")] if workflows else None
+    return result
+
+
+def mid(text):
+    return re.sub(r"[^A-Za-z0-9_]", "_", text)
+
+
+def mtext(text, limit=40):
+    return mlabel(text, limit).replace('"', "'")
+
+
+def ci_mermaid(ci, lang):
+    i = 1 if lang == "fr" else 0
+    target_fr = {en: fr for _, en, fr in PUBLISH_TARGETS}
+    lines = ["flowchart LR"]
+    edges, triggers, targets = [], {}, {}
+    for w_index, workflow in enumerate(ci["workflows"][:6]):
+        group = f"wf{w_index}"
+        lines.append(f'  subgraph {group}["{mtext(workflow["name"], 44)}"]')
+        lines.append("    direction LR")
+        ids = {job["id"]: f"{group}_{mid(job['id'])}" for job in workflow["jobs"]}
+        for job in workflow["jobs"][:8]:
+            detail = job["runs_on"] or (("réutilise " if i else "reuses ") + job["uses"].split("/")[-1] if job["uses"] else "")
+            label = mtext(job["title"]) + (f"<br/>{mtext(detail, 28)}" if detail else "")
+            shape = ('[["', '"]]') if job["deploys"] else ('["', '"]')
+            lines.append(f'    {ids[job["id"]]}{shape[0]}{label}{shape[1]}')
+        lines.append("  end")
+        names = [TRIGGER_LABELS.get(t, (t.replace("_", " "),) * 2)[i] for t in workflow["triggers"]] or ["?"]
+        key = " · ".join(dict.fromkeys(names))
+        trigger = triggers.setdefault(key, f"t{len(triggers)}")
+        for job in workflow["jobs"][:8]:
+            needs = [n for n in job["needs"] if n in ids]
+            if not needs:
+                edges.append(f"  {trigger} --> {ids[job['id']]}")
+            for need in needs:
+                edges.append(f"  {ids[need]} --> {ids[job['id']]}")
+            for target in job["targets"]:
+                node = targets.setdefault(target, f"d{len(targets)}")
+                edges.append(f"  {ids[job['id']]} -.-> {node}")
+    for key, node in triggers.items():
+        lines.append(f'  {node}(["{mtext(key, 44)}"])')
+    for target, node in targets.items():
+        lines.append(f'  {node}[("{mtext(target_fr.get(target, target) if i else target)}")]')
+    return "\n".join(lines + list(dict.fromkeys(edges))) + "\n"
+
+
+HOSTING_TARGETS = {
+    "Vercel": ("Vercel", "Vercel"),
+    "Netlify": ("Netlify", "Netlify"),
+    "Fly.io": ("Fly.io", "Fly.io"),
+    "Render": ("Render", "Render"),
+    "Heroku": ("Heroku", "Heroku"),
+    "Cloudflare Workers": ("Cloudflare Workers", "Cloudflare Workers"),
+    "Kubernetes manifests": ("Kubernetes", "Kubernetes"),
+    "Helm chart": ("Kubernetes (Helm)", "Kubernetes (Helm)"),
+    "Terraform": ("Terraform infrastructure", "Infrastructure Terraform"),
+    "MkDocs site": ("Documentation site (MkDocs)", "Site de documentation (MkDocs)"),
+    "Static site generator": ("Static site", "Site statique"),
+}
+
+
+def deployment_mermaid(dep, ci, stack, lang):
+    """Where the code goes after a commit: CI, built artefacts, hosts, Compose services, or a local run."""
+    i = 1 if lang == "fr" else 0
+    lines = ["flowchart LR", f'  repo[("{"Dépôt GitHub" if i else "GitHub repository"}")]']
+    edges = []
+    has_ci = bool(ci and ci["workflows"])
+    if has_ci:
+        count = ci["workflow_total"]
+        unit = ("workflow" if count == 1 else "workflows")
+        lines.append(f'  ci[["GitHub Actions<br/>{count} {unit}"]]')
+        edges.append(f'  repo -->|"{"push ou demande de fusion" if i else "push or pull request"}"| ci')
+    for other in (ci or {}).get("other", []):
+        node = "ci_" + mid(other["label"])
+        lines.append(f'  {node}[["{mtext(other["label"])}"]]')
+        edges.append(f"  repo --> {node}")
+    labels = {h["label"][0]: h for h in dep.get("hosting", [])}
+    # The project's own Dockerfile, not a dev container, and a real image rather than a build-stage
+    # alias or a tag left to a build argument (python:${VERSION} reads as "python:").
+    images = [b for b in dep.get("base_images", []) if not b["file"].startswith(".devcontainer/")]
+    image = next((b for b in images if re.search(r"[:/]", b["image"]) and not b["image"].endswith(":")), None)
+    if "Docker image" in labels or image:
+        detail = f"<br/>FROM {mtext(image['image'], 44)}" if image else ""
+        lines.append(f'  image["{"Image Docker" if i else "Docker image"}{detail}"]')
+        edges.append(f'  {"ci" if has_ci else "repo"} -->|"docker build"| image')
+    published = set()
+    for target in dep.get("targets", []):
+        en = target["label"][0]
+        node = "pub_" + mid(en)
+        published.add(en)
+        lines.append(f'  {node}[("{mtext(target["label"][i])}")]')
+        source = "image" if en == "Container registry" and ("Docker image" in labels or image) else ("ci" if has_ci else "repo")
+        edges.append(f'  {source} -->|"{"publie" if i else "publishes"}"| {node}')
+    for key, label in HOSTING_TARGETS.items():
+        entry = labels.get(key)
+        if not entry or label[0] in published:
+            continue
+        node = "host_" + mid(key)
+        where = entry["file"] if entry.get("count", 1) == 1 else str(PurePosixPath(entry["file"]).parent) + "/"
+        lines.append(f'  {node}("{mtext(label[i])}<br/>{mtext(where, 34)}")')
+        edges.append(f'  {"ci" if has_ci else "repo"} -.->|"{"configuré" if i else "configured"}"| {node}')
+    containers = dep.get("containers", [])
+    if containers:
+        lines.append(f'  subgraph compose["Docker Compose"]')
+        for name in containers[:8]:
+            lines.append(f'    svc_{mid(name)}["{mtext(name, 28)}"]')
+        if len(containers) > 8:
+            lines.append(f'    svc_more["+{len(containers) - 8}"]')
+        lines.append("  end")
+        edges.append(f'  {"image" if ("Docker image" in labels or image) else "repo"} -->|"docker compose up"| compose')
+    if len(edges) <= (1 if has_ci else 0):
+        runtimes = list(dict.fromkeys(m["ecosystem"] for m in (stack or {}).get("manifests", [])))[:3]
+        detail = f"<br/>{mtext(' · '.join(runtimes), 40)}" if runtimes else ""
+        lines.append(f'  local["{"Poste local" if i else "Local machine"}{detail}"]')
+        edges.append(f'  repo -->|"{"cloner et lancer" if i else "clone and run"}"| local')
+    return "\n".join(lines + edges) + "\n"
+
+
+# --- External dependencies ------------------------------------------------------------
+
+REGISTRY_URLS = {
+    "Python": "https://pypi.org/project/{name}/",
+    "Node.js": "https://www.npmjs.com/package/{name}",
+    "Rust": "https://crates.io/crates/{name}",
+    "PHP": "https://packagist.org/packages/{name}",
+    "Ruby": "https://rubygems.org/gems/{name}",
+    ".NET": "https://www.nuget.org/packages/{name}",
+    "Go": "https://pkg.go.dev/{name}",
+    "JVM (Maven)": "https://central.sonatype.com/artifact/{group}/{artifact}",
+    "JVM (Gradle)": "https://central.sonatype.com/artifact/{group}/{artifact}",
+    "Embedded (PlatformIO)": "https://registry.platformio.org/search?q={name}",
+}
+REGISTRY_API = {
+    "Python": ("https://pypi.org/pypi/{name}/json", lambda d: d.get("info", {}).get("summary")),
+    "Node.js": ("https://registry.npmjs.org/{name}/latest", lambda d: d.get("description")),
+    "Rust": ("https://crates.io/api/v1/crates/{name}", lambda d: d.get("crate", {}).get("description")),
+    "Ruby": ("https://rubygems.org/api/v1/gems/{name}.json", lambda d: d.get("info")),
+    "PHP": ("https://repo.packagist.org/p2/{name}.json", lambda d: next(iter(d.get("packages", {}).values()), [{}])[0].get("description")),
+}
+REGISTRY_CACHE = docs.CACHE / "registry-summaries.json"
+PURPOSES = [
+    (r"pytest|^jest$|vitest|mocha|chai|junit|xunit|nunit|mstest|phpunit|rspec|^coverage|pytest-cov|hypothesis|playwright|cypress|testing-library|supertest|moq|faker|factory|mock|test", "Testing", "Tests"),
+    (r"eslint|prettier|^ruff$|^black$|flake8|pylint|^mypy|isort|stylelint|rubocop|husky|lint-staged|pre-commit|codespell|bandit|pyright", "Linting and formatting", "Analyse et formatage"),
+    (r"^@types/|^typescript$|^types-|typing", "Type checking", "Typage"),
+    (r"^fastapi$|^flask|^django|^express$|^koa$|fastify|@nestjs|spring-boot-starter-web|laravel/framework|^rails$|^rocket$|actix|^axum$|aspnetcore|^starlette$|^sanic$|^hono$|^bottle$", "Web framework", "Cadriciel web"),
+    (r"uvicorn|gunicorn|hypercorn|waitress|^nodemon$", "Application server", "Serveur d’application"),
+    (r"^react|^vue|svelte|@angular|^preact|solid-js|^next$|^nuxt|bootstrap|jquery|tailwind|@mui|antd|vuetify|streamlit|gradio|^dash$", "User interface", "Interface utilisateur"),
+    (r"^vite|webpack|rollup|esbuild|parcel|babel|postcss|^sass$|autoprefixer|terser|^tsx$|ts-node|setuptools|^wheel$|hatchling|poetry-core|build$|cmake", "Build tooling", "Outils de build"),
+    (r"pydantic|marshmallow|^zod$|^yup$|^joi$|jsonschema|validator|cerberus|attrs", "Data validation", "Validation des données"),
+    (r"sqlalchemy|prisma|mongoose|pymongo|motor|psycopg|mysql|sqlite|redis|ioredis|typeorm|sequelize|knex|diesel|sqlx|entityframework|hibernate|starter-data|beanie|odmantic|asyncpg|pgvector|alembic|tortoise|peewee|h2database|postgresql", "Database access", "Accès aux données"),
+    (r"^requests$|httpx|aiohttp|axios|node-fetch|^got$|urllib3|reqwest|okhttp|retrofit|^undici$|grequests", "HTTP client", "Client HTTP"),
+    (r"matplotlib|seaborn|plotly|bokeh|chart\.?js|recharts|d3|altair|mplfinance", "Charts", "Graphiques"),
+    (r"^numpy|^pandas|scipy|polars|scikit-learn|sklearn|statsmodels|numba|xarray|pyarrow|openpyxl|xlsx", "Data analysis", "Analyse de données"),
+    (r"torch|tensorflow|keras|transformers|^openai|anthropic|langchain|sentence-transformers|onnx|llama|huggingface|tiktoken|spacy|nltk|textblob|vader|gensim|ollama", "Machine learning and AI", "Apprentissage automatique et IA"),
+    (r"opencv|pillow|^pil$|imageio|scikit-image|^three|babylon|^bpy|trimesh|open3d|vtk|glfw|^glm|^sdl|pyvista|meshio|moviepy|ffmpeg|rawpy|polyfem|mitsuba", "Graphics, imaging and 3D", "Graphisme, image et 3D"),
+    (r"serilog|sentry|winston|^pino|loguru|opentelemetry|prometheus|structlog|logging", "Logging and observability", "Journalisation et observabilité"),
+    (r"jwt|jsonwebtoken|passport|bcrypt|cryptography|oauth|argon2|^jose|authlib|sanctum|identity|security", "Authentication and security", "Authentification et sécurité"),
+    (r"^click$|^typer$|commander|yargs|^clap$|^rich$|tqdm|inquirer|colorama|chalk|^ora$|tabulate|questionary|prompt", "Command line", "Ligne de commande"),
+    (r"dotenv|^config|pyyaml|^yaml$|^toml|tomli|^ini$|settings|dynaconf", "Configuration", "Configuration"),
+    (r"celery|^rq$|bull|apscheduler|^schedule$|node-cron|hangfire|quartz", "Background jobs", "Tâches en arrière-plan"),
+    (r"boto3|aws-sdk|@aws-sdk|azure|google-cloud|minio|firebase|supabase", "Cloud services", "Services infonuagiques"),
+    (r"^mcp$|fastmcp|@modelcontextprotocol", "Model Context Protocol", "Model Context Protocol"),
+    (r"beautifulsoup|^bs4$|cheerio|scrapy|selenium|puppeteer|feedparser|newspaper|lxml|html5lib|parse5|readability", "Scraping and parsing", "Extraction web et analyse"),
+    (r"yfinance|backtesting|ta-lib|^ta$|ccxt|alpaca|pandas-ta|quantstats|vectorbt|zipline|backtrader|tradingview", "Market data and trading", "Données de marché et trading"),
+    (r"jinja|^ejs$|handlebars|mustache|^pug$|twig|blade|thymeleaf", "Templates", "Gabarits"),
+    (r"websocket|socket\.io|^ws$|signalr|channels", "Real-time messaging", "Messagerie temps réel"),
+    (r"jackson|gson|orjson|ujson|simplejson|protobuf|msgpack|serde", "Serialization", "Sérialisation"),
+    (r"lombok|devtools|spring-boot-starter$|spring-boot-starter-parent", "Framework support", "Support du cadriciel"),
+]
+
+
+def purpose(name):
+    lowered = name.lower().split(":")[-1]
+    for pattern, en, fr in PURPOSES:
+        if re.search(pattern, lowered):
+            return [en, fr]
+    return None
+
+
+def registry_summaries(wanted, offline):
+    """Short package descriptions from public registries, cached under _site; offline reads the cache."""
+    cache = docs.load(REGISTRY_CACHE, {}) or {}
+    missing = [(eco, name) for eco, name in wanted if f"{eco}:{name}" not in cache and eco in REGISTRY_API]
+    if missing and not offline:
+        def fetch(item):
+            eco, name = item
+            url, pick = REGISTRY_API[eco]
+            try:
+                data = json.loads(docs.request(url.format(name=quote(name, safe="@/"))))
+                text = (pick(data) or "").strip()
+            except (OSError, ValueError, KeyError, IndexError, TypeError, AttributeError):
+                return item, None
+            return item, re.sub(r"\s+", " ", text)[:140]
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            for (eco, name), text in pool.map(fetch, missing):
+                if text is not None:
+                    cache[f"{eco}:{name}"] = text
+        docs.save(REGISTRY_CACHE, dict(sorted(cache.items())))
+    return cache
+
+
+def clean_summary(text):
+    """Registry descriptions are often README fragments: drop badges and keep link text only."""
+    if not text:
+        return None
+    text = re.sub(r"\[!\[[^\]]*\]\([^)]*\)\]\([^)]*\)|!\[[^\]]*\]\([^)]*\)", "", text)
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    text = re.sub(r"`([^`]+)`|\*\*([^*]+)\*\*", lambda m: m[1] or m[2], text)
+    text = re.sub(r"\s+", " ", text).strip(" -:")
+    return text or None
+
+
+def registry_url(ecosystem, name):
+    template = REGISTRY_URLS.get(ecosystem)
+    if not template:
+        return None
+    if "{group}" in template:
+        parts = name.split(":")
+        if len(parts) < 2:
+            return None
+        return template.format(group=quote(parts[0]), artifact=quote(parts[1]))
+    return template.format(name=quote(name, safe="@/"))
+
+
+def build_dependencies(stack, offline):
+    """One row per declared package: version, runtime or development, purpose, registry link."""
+    rows, wanted = [], []
+    for manifest in stack.get("manifests", []):
+        for scope, items in (("runtime", manifest.get("runtime", [])), ("dev", manifest.get("dev", []))):
+            for item in items:
+                name = item["name"].strip()
+                if not name or name.startswith(("-", ".", "/", "git+", "http")):
+                    continue
+                wanted.append((manifest["ecosystem"], name))
+                rows.append({"manifest": manifest["file"], "ecosystem": manifest["ecosystem"], "name": name,
+                             "version": item.get("version", "")[:24], "scope": scope})
+    summaries = registry_summaries(list(dict.fromkeys(wanted)), offline) if wanted else {}
+    # One row per package: a package declared for both runtime and development keeps "runtime".
+    seen, unique, shown = set(), [], set()
+    for row in rows:
+        key = (row["ecosystem"], row["name"].lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        row["purpose"] = purpose(row["name"])
+        summary = clean_summary(summaries.get(f"{row['ecosystem']}:{row['name']}"))
+        # Two packages of one family often share a registry blurb; print it once.
+        row["summary"] = summary if summary and summary not in shown else None
+        if summary:
+            shown.add(summary)
+        row["url"] = registry_url(row["ecosystem"], row["name"].split("@")[0] if row["ecosystem"] == "Embedded (PlatformIO)" else row["name"])
+        unique.append(row)
+    return {
+        "items": unique[:80],
+        "total": len(unique),
+        "runtime": sum(r["scope"] == "runtime" for r in unique),
+        "dev": sum(r["scope"] == "dev" for r in unique),
+        "manifests": [{"file": m["file"], "url": m["url"], "ecosystem": m["ecosystem"]} for m in stack.get("manifests", [])],
+    }
+
+
 def build_security(analysis, texts, paths):
     controls = scan_patterns(analysis, {p: t for p, t in texts.items() if not is_test(p) and not p.lower().endswith(".md")}, SECURITY)
     env = Counter()
@@ -1467,7 +2046,7 @@ def build_stack(analysis, texts):
         runtime = [d for d in runtime if d and d.get("name")]
         dev = [d for d in dev if d and d.get("name")]
         if runtime or dev or toolchain:
-            manifests.append({"ecosystem": ecosystem, "runtime": runtime[:24], "runtime_total": len(runtime), "dev": dev[:16], "dev_total": len(dev), "toolchain": toolchain or [], **evidence(analysis, path)})
+            manifests.append({"ecosystem": ecosystem, "runtime": runtime[:24], "runtime_total": len(runtime), "dev": dev[:16], "dev_total": len(dev), "toolchain": toolchain or [], "_all": (runtime, dev), **evidence(analysis, path)})
 
     # Root manifests first: they describe the project, nested ones its examples or sub-packages.
     for path, text in sorted(texts.items(), key=lambda kv: (len(PurePosixPath(kv[0]).parts), kv[0])):
@@ -1564,8 +2143,8 @@ def dossier(note, offline):
         return None
     tree = inputs["tree"]["tree"]
     analysis["_tree"] = tree
-    paths = [e["path"] for e in tree if e.get("type") == "blob"]
-    texts = load_texts(note["repo"], inputs, offline)
+    paths = [e["path"] for e in tree if e.get("type") == "blob" and not is_build_output(e["path"])]
+    texts = {k: v for k, v in load_texts(note["repo"], inputs, offline).items() if not is_build_output(k)}
     types = analysis.get("types", [])
     layers = build_layers(analysis, paths, types)
     entities = build_entities(analysis, texts, types)
@@ -1583,6 +2162,7 @@ def dossier(note, offline):
         "layers_mermaid": [layers_mermaid(layers, "en"), layers_mermaid(layers, "fr")] if layers else None,
         "modules": build_modules(analysis, paths, types),
         "flow": parse_gitdiagram(analysis, paths),
+        "architecture": build_architecture(analysis),
         "public": public,
         "private": build_private(analysis, texts),
         "services": services,
@@ -1599,6 +2179,15 @@ def dossier(note, offline):
         "monitoring": build_monitoring(analysis, texts, public["routes"]),
         "deployment": build_deployment(analysis, texts, services),
     }
+    # The dependency table reads every declared package; the stack panel keeps its short lists.
+    full_stack = {"manifests": [{**m, "runtime": m["_all"][0], "dev": m["_all"][1]} for m in result["stack"]["manifests"]]}
+    for manifest in result["stack"]["manifests"]:
+        manifest.pop("_all", None)
+    result["dependencies"] = build_dependencies(full_stack, offline)
+    result["ci"] = build_ci(analysis, texts, paths)
+    result["deployment"]["mermaid"] = [
+        deployment_mermaid(result["deployment"], result["ci"], result["stack"], lang) for lang in ("en", "fr")
+    ]
     return result
 
 
@@ -1617,7 +2206,7 @@ def main():
     parser.add_argument("--repo", action="append", help="Repository name; repeat to select several")
     parser.add_argument("--offline", action="store_true", help="Use cached verified blobs only")
     args = parser.parse_args()
-    notes = docs.load(ROOT / "hugo/data/repository_notes.json")["notes"]
+    notes = docs.inventory_notes()
     if args.repo and set(args.repo) - {n["repo"] for n in notes}:
         parser.error("Unknown repository; only the public site inventory is accepted")
     output = docs.load(OUT, {"schema_version": 1, "repositories": {}})

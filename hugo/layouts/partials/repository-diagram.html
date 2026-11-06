@@ -10,6 +10,7 @@
 {{- $analysis := index (hugo.Data.repository_analysis.repositories | default dict) $note.repo | default dict -}}
 {{- $imageSet := index (hugo.Data.repository_diagram_images.repositories | default dict) $note.repo | default dict -}}
 {{- $image := index $imageSet "system" | default (index $imageSet (cond $fr "overview_fr" "overview_en")) -}}
+{{- $architecture := (index (hugo.Data.repository_dossiers.repositories | default dict) $note.repo | default dict).architecture | default dict -}}
 {{- $source := "" -}}
 {{- if $preferCompose -}}
   {{- $topo := slice "flowchart LR" -}}
@@ -44,6 +45,8 @@
       {{- $source = replace $source "graph TD" "flowchart LR" -}}
     {{- end -}}
   {{- end -}}
+  {{- /* repository_dossier.py merges parallel edges between groups into one; the text version keeps them all. */ -}}
+  {{- with $architecture.overview -}}{{- $source = . -}}{{- end -}}
   {{- if not $source -}}
     {{- $source = printf "flowchart LR\n" -}}
     {{- range $index, $label := $note.nodes -}}{{- $source = printf "%s  n%d[\"%s\"]\n" $source $index (replace (index $label $i) "\"" "#quot;") -}}{{- end -}}
@@ -61,11 +64,14 @@
     {{ end }}
     <pre class="repo-mermaid-source"><code class="language-mermaid">{{ $source }}</code></pre>
   </div>
-  {{ with and (not $preferCompose) $summary }}<div class="repo-system-summary"><p>{{ index .description $i }}</p><dl><div><dt>{{ if $fr }}Composants{{ else }}Components{{ end }}</dt><dd>{{ .components }}</dd></div><div><dt>{{ if $fr }}Connexions{{ else }}Connections{{ end }}</dt><dd>{{ .connections }}</dd></div><div><dt>{{ if $fr }}Liens appuyés par le code ou le README{{ else }}Links supported by code or README{{ end }}</dt><dd>{{ .evidenced }}/{{ .connections }}</dd></div></dl></div>{{ end }}
+  {{ with and (not $preferCompose) $summary }}<div class="repo-system-summary"><p>{{ index .description $i }}</p><dl><div><dt>{{ if $fr }}Composants{{ else }}Components{{ end }}</dt><dd>{{ .components }}</dd></div><div><dt>{{ if $fr }}Connexions{{ else }}Connections{{ end }}</dt><dd>{{ .connections }}</dd></div><div><dt>{{ if $fr }}Liens appuyés par le code{{ else }}Evidence-backed links{{ end }}</dt><dd>{{ .evidenced }}/{{ .connections }}</dd></div></dl></div>{{ end }}
   <details class="repo-diagram-text">
     <summary>{{ if $fr }}Version texte du diagramme{{ else }}Text version of the diagram{{ end }}</summary>
     {{ if $preferCompose }}
     <ul>{{ range $profile.services }}<li><strong>{{ .name }}</strong> — {{ .runtime }} · {{ .ports }}{{ with .depends }} → {{ . }}{{ end }}</li>{{ end }}</ul>
+    {{ else if and $architecture.overview (not $preferCompose) }}
+    <p>{{ if $fr }}Le diagramme regroupe les liens parallèles entre groupes : il en montre {{ $architecture.overview_edges }} sur {{ $architecture.edges_total }}. Liste complète :{{ else }}The diagram merges parallel links between groups, so it shows {{ $architecture.overview_edges }} of {{ $architecture.edges_total }}. Full list:{{ end }}</p>
+    <ul>{{ range $architecture.edges }}<li>{{ .from }} → {{ .to }}{{ with .label }} ({{ . }}){{ end }}</li>{{ end }}</ul>
     {{ else }}
     <ul>{{ range $note.edges }}<li>{{ index (index $note.nodes (int (index . 0))) $i }} → {{ index (index $note.nodes (int (index . 1))) $i }}</li>{{ end }}</ul>
     {{ end }}

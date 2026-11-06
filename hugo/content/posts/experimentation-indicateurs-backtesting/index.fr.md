@@ -14,6 +14,7 @@ tags:
   - Crypto
   - Stocks
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
+canonicalLang: "fr"
 ---
 
 J’ai lancé en lot une stratégie de **croisement d’EMA** sur le S&P 500 et une liste de paires crypto avec [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting), en utilisant Financial Modeling Prep pour les actions et Binance pour les cryptos. Ce billet montre ce que fait l’exécuteur, comment lire les lignes extravagantes en haut et en bas du classement, et pourquoi rien de tout ça n’est un système de trading réel.
