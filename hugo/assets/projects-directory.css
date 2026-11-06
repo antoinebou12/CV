@@ -408,3 +408,30 @@ html.dark .repo-directory .repo-card-media--diagram { background: #f3f6f9 !impor
 /* Readability floor: card tags are ordinary words (languages, project types), not
    tracked uppercase labels, so they stay at 12px or more. */
 .repo-directory .repo-card-tags span:not(#\#) { font-size: .75rem !important; }
+
+/* Catalog cards as balanced columns: each card keeps its own height, so a short card no longer
+   stretches to the tallest card of its row and leaves an empty block under its actions.
+   Reading and tab order follow each column top to bottom. Desktop and phone breakpoints below
+   mirror desktop-layout.css (3 columns from 1600 px) and projects-editorial.css (1 column). */
+.repo-directory .repo-directory-group .repo-directory-grid,
+.repo-directory .repo-directory-grid:not(#\#) {
+  display: block !important; columns: 2 !important; column-gap: 1.5rem !important;
+}
+.repo-directory .repo-directory-grid:not(#\#) > li.repo-directory-card {
+  display: flex !important; break-inside: avoid; page-break-inside: avoid;
+  width: 100% !important; min-height: 0 !important; margin: 0 0 1.5rem !important;
+}
+.repo-directory .repo-directory-grid:not(#\#) > li.repo-directory-card[hidden] { display: none !important; }
+.repo-directory .repo-directory-grid:not(#\#) .repo-directory-meta { margin-top: .25rem !important; }
+@media (min-width: 1600px) {
+  .repo-directory .repo-directory-group .repo-directory-grid,
+  .repo-directory .repo-directory-grid:not(#\#) { columns: 3 !important; }
+}
+@media (max-width: 760px) {
+  .repo-directory .repo-directory-group .repo-directory-grid,
+  .repo-directory .repo-directory-grid:not(#\#) { columns: 1 !important; }
+}
+/* Phone cards have about 20 px of padding; keep the cover image 4 px inside the border, as on desktop. */
+@media (max-width: 639px) {
+  .repo-directory .repo-directory-grid:not(#\#) .repo-card-media { margin: -16px -16px 16px !important; }
+}
