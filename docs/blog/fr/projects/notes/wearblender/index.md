@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/WearBlender
+- Révision inspectée: 422ce0f0c2cf80045564859171ee26773ea4469f
 
 
 ## Cas d’utilisation

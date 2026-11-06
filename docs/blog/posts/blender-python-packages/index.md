@@ -6,8 +6,8 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/blender-python-packages/index.md
 - Published: 2025-02-08
-- Updated: 2026-05-22
-- Tags: Blender, Python, Pip, Addons
+- Updated: 2026-11-05
+- Tags: Blender, Python, Pip, Addons, Plugins
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Blender add-ons that need **NumPy**, **meshio**, or **requests** hit the same wall: Blender ships its **own Python**, so system `pip` does nothing useful. I wrote a small installer that targets Blender’s `sys.executable`, drops wheels under `scripts/modules`, and runs in a **background thread** so the UI stays responsive (Blender 4.2+, Windows).
 
 ## The problem in one sentence
@@ -23,28 +23,106 @@ You cannot `pip install` globally and expect `import meshio` inside Blender — 
 | `site.addsitedir` | Make imports resolve next launch |
 | Background thread + `bpy.app.timers` | Avoid freezing the UI; show popups when done |
 
-## The installer script (core idea)
+## The installer script
 
 ```python
+import bpy
+import sys
+import site
+import logging
+import subprocess
+import threading
+
+# Set up logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
+# List of packages required by the add-on/plugin
 REQUIRED_PACKAGES = {
     "fileseq": "fileseq==1.15.2",
     "meshio": "meshio==5.3.4",
     "rich": "rich==13.7.0",
-    "requests": "requests==2.31.0",
+    "requests": "requests==2.31.0"
 }
 
+def get_blender_python_path():
+    """Returns the path of Blender's embedded Python interpreter."""
+    return sys.executable
+
+def get_modules_path():
+    """Return a writable directory for installing Python packages."""
+    return bpy.utils.user_resource("SCRIPTS", path="modules", create=True)
+
+def append_modules_to_sys_path(modules_path):
+    """Ensure Blender can find installed packages."""
+    if modules_path not in sys.path:
+        sys.path.append(modules_path)
+    site.addsitedir(modules_path)
+
+def display_message(message, title="Notification", icon='INFO'):
+    """Show a popup message in Blender."""
+    def draw(self, context):
+        self.layout.label(text=message)
+    def show_popup():
+        bpy.context.window_manager.popup_menu(draw, title=title, icon=icon)
+        return None  # Stops timer
+    bpy.app.timers.register(show_popup)
+
 def install_package(package, modules_path):
-    subprocess.check_call([
-        sys.executable, "-m", "pip", "install",
-        "--upgrade", "--target", modules_path, package,
-    ])
+    """Install a single package using Blender's Python."""
+    try:
+        logger.info(f"Installing {package}...")
+        subprocess.check_call([
+            get_blender_python_path(),
+            "-m",
+            "pip",
+            "install",
+            "--upgrade",
+            "--target",
+            modules_path,
+            package
+        ])
+        logger.info(f"{package} installed successfully.")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Failed to install {package}. Error: {e}")
+        display_message(f"Failed to install {package}. Check console for details.", icon='ERROR')
+
+def background_install_packages(packages, modules_path):
+    """Install missing packages in a background thread."""
+    def install_packages():
+        wm = bpy.context.window_manager
+        wm.progress_begin(0, len(packages))
+        for i, (module_name, pip_spec) in enumerate(packages.items()):
+            try:
+                __import__(module_name)
+                logger.info(f"'{module_name}' is already installed.")
+            except ImportError:
+                install_package(pip_spec, modules_path)
+            wm.progress_update(i + 1)
+        wm.progress_end()
+        display_message("All required packages installed successfully.")
+    threading.Thread(target=install_packages, daemon=True).start()
+
+# Setup
+modules_path = get_modules_path()
+append_modules_to_sys_path(modules_path)
+
+# Start package installation
+background_install_packages(REQUIRED_PACKAGES, modules_path)
 ```
 
-Full script in the [Medium article](https://medium.com/@antoine.boucher012/a-method-to-install-python-packages-for-add-ons-plugins-in-blender-windows-blender-4-2-98bcbe10fa81) and my repo copies — includes progress bar hooks and `__import__` checks to skip already-installed wheels.
+Four details do the work:
+
+- `sys.executable` inside Blender is Blender’s own interpreter, so `pip` installs for the Python that will import the package.
+- `--target` writes into the per-user `scripts/modules` folder, which is writable without admin rights and survives add-on reloads.
+- The `__import__` check skips packages that are already importable, so a second run is quick.
+- Popups go through `bpy.app.timers` because only the main thread may touch the UI, not the install thread.
 
 ## How to run it
 
 **Option A — Scripting workspace:** paste in Text Editor → Run Script → wait for popup.
+
+![Blender Scripting workspace with the installer in the Text Editor](https://antoineboucher.info/CV/blog/posts/blender-python-packages/images/img-001.png)
 
 **Option B — Add-on `register()`:**
 

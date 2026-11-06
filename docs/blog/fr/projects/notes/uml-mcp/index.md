@@ -1,12 +1,12 @@
 # uml-mcp : D’un appel MCP à un diagramme
 
-> uml-mcp expose des outils de diagrammes aux clients MCP. Le client fournit une source et des options; le serveur valide la demande, l’oriente vers les…
+> uml-mcp est un serveur MCP qui transforme la source de diagramme d’une conversation en SVG ou PNG grâce à Kroki et quatre extensions, avec une visionneuse dans la conversation, un cache de rendu et des solutions de repli. Vidéo de démonstration, chaîne de traitement et limites tirées du code.
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/uml-mcp/
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/uml-mcp/index.md
 - Publié: 2026-10-23
-- Mis à jour: 2026-10-23
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/antoinebou12/uml-mcp

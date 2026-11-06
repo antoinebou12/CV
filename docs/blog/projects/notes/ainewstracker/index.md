@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/AINewsTracker
+- Inspected revision: 74a8366f5c19e352277a74381559e310e9cf959c
 
 
 ## Use cases
@@ -29,5 +30,13 @@ FastAPI service from AlgoÉTS that collects financial news, scores it with FinBE
 3. Call POST /seed/seed_news; NewsSeeder reads Financial Modeling Prep stock news in the background and stores the scored articles.
 4. Read the stored articles with GET /articles/ and check one with GET /articles/{article_id}/score.
 5. From a backtesting service, call GET /v1/articles?symbols=AAPL with the Bearer service token.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 88.92 |
+| Shell | 8.19 |
+| Dockerfile | 2.9 |
 
 

@@ -1,12 +1,12 @@
 # nova-backtest: Historical candles into a strategy simulation
 
-> nova-backtest is an archived fork of a strategy-backtesting framework. The core class selects an exchange client, loads a historical interval and…
+> nova-backtest is an archived fork of the NovaLabs crypto backtesting library: it downloads candles from eight exchanges, finds each trade's exit with vectorised look-ahead, charges maker fees and caps open positions. The exit algorithm, a worked trade and the limits, read from the code.
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/nova-backtest/index.md
 - Published: 2026-10-23
-- Updated: 2026-10-23
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/antoinebou12/nova-backtest

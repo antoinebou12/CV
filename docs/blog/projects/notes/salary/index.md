@@ -6,10 +6,11 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/salary/index.md
 - Published: 2026-11-05
-- Updated: 2026-11-05
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/Salary
+- Inspected revision: 40b10f4d6a2a6670400b960c2476d9b7e494eaa1
 
 
 ## Use cases
@@ -29,5 +30,14 @@ Python scripts and notebooks that extract Canadian salary guides and wage tables
 3. Check that data/pickle/salary_guide_2023.pkl was written.
 4. Start jupyter notebook and open sandbox/salary_exploration_2023.ipynb, which splits each range and computes entry, mid and senior means.
 5. Call compare_job_province('cloud architect', 'québec') to rank Québec regions by mean mid-level salary.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 50.9 |
+| Jupyter Notebook | 48.1 |
+| Python | 0.99 |
+| Dockerfile | 0.02 |
 
 

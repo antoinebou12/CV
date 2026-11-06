@@ -1,0 +1,815 @@
+{
+  "repo": "AINewsTracker",
+  "slug": "ainewstracker",
+  "commit": "74a8366f5c19e352277a74381559e310e9cf959c",
+  "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/",
+  "tree_url": "https://github.com/AlgoETS/AINewsTracker/tree/74a8366f5c19e352277a74381559e310e9cf959c",
+  "fetched_at": "2026-11-06T05:13:41.541773+00:00",
+  "languages": [
+    {
+      "name": "Python",
+      "bytes": 86895,
+      "percent": 88.92
+    },
+    {
+      "name": "Shell",
+      "bytes": 8000,
+      "percent": 8.19
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 2833,
+      "percent": 2.9
+    }
+  ],
+  "language_bytes": 97728,
+  "coverage": {
+    "tree_files": 140,
+    "eligible_files": 64,
+    "read_files": 64,
+    "oversized_files": 0,
+    "truncated_tree": false,
+    "limited": false,
+    "failures": [],
+    "parse_errors": [],
+    "unavailable_parsers": []
+  },
+  "installation": [],
+  "manifests": [],
+  "type_count": 24,
+  "types": [
+    {
+      "id": "tef867e81c3c4",
+      "name": "Settings",
+      "kind": "class",
+      "file": "app/config.py",
+      "line": 8,
+      "language": "python",
+      "methods": [
+        "__new__",
+        "__init__",
+        "get_env_variable",
+        "reset"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tab34fab88443",
+      "name": "MongoDB",
+      "kind": "class",
+      "file": "app/core/database/db.py",
+      "line": 17,
+      "language": "python",
+      "methods": [
+        "__new__",
+        "connect",
+        "create_collections",
+        "get_collection",
+        "check_connection",
+        "check_server_info",
+        "check_ping",
+        "get_info",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t5001d3937086",
+      "name": "RedisDB",
+      "kind": "class",
+      "file": "app/core/database/db.py",
+      "line": 73,
+      "language": "python",
+      "methods": [
+        "__new__",
+        "connect",
+        "check_connection",
+        "get_info",
+        "get_hostname",
+        "close"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t9166c475a95b",
+      "name": "Logger",
+      "kind": "class",
+      "file": "app/core/logging.py",
+      "line": 7,
+      "language": "python",
+      "methods": [
+        "__new__",
+        "setup_structlog",
+        "get_logger",
+        "get_std_logger",
+        "set_level",
+        "info",
+        "error",
+        "debug",
+        "warning",
+        "critical",
+        "exception",
+        "log"
+      ],
+      "bases": []
+    },
+    {
+      "id": "tee6af9b9f329",
+      "name": "TokenData",
+      "kind": "class",
+      "file": "app/core/repo/user.py",
+      "line": 22,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "td6fd3f5559ec",
+      "name": "CryptoSymbol",
+      "kind": "class",
+      "file": "app/core/services/crypto.py",
+      "line": 13,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "Enum"
+      ]
+    },
+    {
+      "id": "t138a2d3d0388",
+      "name": "TextMetrics",
+      "kind": "class",
+      "file": "app/core/services/metrics.py",
+      "line": 49,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "classify_topic",
+        "detect_ticker",
+        "summarize_text",
+        "analyze_sentiment"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t76aab3ab8d3f",
+      "name": "NewsFetcher",
+      "kind": "class",
+      "file": "app/core/services/news.py",
+      "line": 29,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "process_article",
+        "fetch_rss_feed",
+        "fetch_gnews_articles",
+        "fetch_feed_entries",
+        "get_entry_text",
+        "extract_source",
+        "process_fmp_article"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t73b5ed46911f",
+      "name": "AuthService",
+      "kind": "class",
+      "file": "app/core/services/user.py",
+      "line": 21,
+      "language": "python",
+      "methods": [
+        "get_password_hash",
+        "verify_password",
+        "create_access_token",
+        "authenticate_user"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t52b6de70c5d4",
+      "name": "SentimentTradingStrategy",
+      "kind": "class",
+      "file": "app/core/trading/strategy.py",
+      "line": 10,
+      "language": "python",
+      "methods": [
+        "__init__",
+        "init",
+        "next",
+        "execute_trading_strategy"
+      ],
+      "bases": [
+        "Strategy"
+      ]
+    },
+    {
+      "id": "t65854c678502",
+      "name": "Article",
+      "kind": "class",
+      "file": "app/models/article.py",
+      "line": 8,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t02d72785eb66",
+      "name": "Config",
+      "kind": "class",
+      "file": "app/models/article.py",
+      "line": 30,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "tdb95d565e9b4",
+      "name": "Comment",
+      "kind": "class",
+      "file": "app/models/article.py",
+      "line": 33,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t947290653412",
+      "name": "Config",
+      "kind": "class",
+      "file": "app/models/article.py",
+      "line": 39,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t567573e54487",
+      "name": "Company",
+      "kind": "class",
+      "file": "app/models/company.py",
+      "line": 6,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "tdc040b34599f",
+      "name": "News",
+      "kind": "class",
+      "file": "app/models/news.py",
+      "line": 5,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "tb09e29557dab",
+      "name": "Config",
+      "kind": "class",
+      "file": "app/models/news.py",
+      "line": 20,
+      "language": "python",
+      "methods": [],
+      "bases": []
+    },
+    {
+      "id": "t99a300366384",
+      "name": "UserDTO",
+      "kind": "class",
+      "file": "app/models/users.py",
+      "line": 7,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "ted2d530189e8",
+      "name": "UserCreate",
+      "kind": "class",
+      "file": "app/models/users.py",
+      "line": 10,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t88ff424d68ca",
+      "name": "Token",
+      "kind": "class",
+      "file": "app/models/users.py",
+      "line": 14,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t005483e328c1",
+      "name": "User",
+      "kind": "class",
+      "file": "app/models/users.py",
+      "line": 18,
+      "language": "python",
+      "methods": [],
+      "bases": [
+        "BaseModel"
+      ]
+    },
+    {
+      "id": "t3a103f22ae36",
+      "name": "CompanySeeder",
+      "kind": "class",
+      "file": "app/seed/companies.py",
+      "line": 12,
+      "language": "python",
+      "methods": [
+        "generate_csv",
+        "get_sp500_data",
+        "create_companies",
+        "get_companies_and_save_to_csv",
+        "seed_companies"
+      ],
+      "bases": []
+    },
+    {
+      "id": "ta25012b4cf2e",
+      "name": "NewsSeeder",
+      "kind": "class",
+      "file": "app/seed/news.py",
+      "line": 16,
+      "language": "python",
+      "methods": [
+        "generate_csv",
+        "get_news_data",
+        "create_news",
+        "get_news_and_save_to_csv",
+        "seed_news"
+      ],
+      "bases": []
+    },
+    {
+      "id": "t31c0083c0a0e",
+      "name": "TestSettings",
+      "kind": "class",
+      "file": "tests/test_config.py",
+      "line": 7,
+      "language": "python",
+      "methods": [
+        "setUp",
+        "test_singleton",
+        "test_default_values",
+        "test_env_variables"
+      ],
+      "bases": [
+        "unittest.TestCase"
+      ]
+    }
+  ],
+  "class_files": [
+    {
+      "path": "app/config.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/config.py",
+      "download": "repository-docs/ainewstracker/classes/84f1a9419471e289.mmd"
+    },
+    {
+      "path": "app/core/database/db.py",
+      "types": 2,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/database/db.py",
+      "download": "repository-docs/ainewstracker/classes/00711ef7984cbcf8.mmd"
+    },
+    {
+      "path": "app/core/logging.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/logging.py",
+      "download": "repository-docs/ainewstracker/classes/97dd35d80fe1c201.mmd"
+    },
+    {
+      "path": "app/core/repo/user.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/user.py",
+      "download": "repository-docs/ainewstracker/classes/7925f88e141c2564.mmd"
+    },
+    {
+      "path": "app/core/services/crypto.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/crypto.py",
+      "download": "repository-docs/ainewstracker/classes/21df085f8a916f5c.mmd"
+    },
+    {
+      "path": "app/core/services/metrics.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/metrics.py",
+      "download": "repository-docs/ainewstracker/classes/51750f3822223c0f.mmd"
+    },
+    {
+      "path": "app/core/services/news.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/news.py",
+      "download": "repository-docs/ainewstracker/classes/5a8a59492d417a91.mmd"
+    },
+    {
+      "path": "app/core/services/user.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/user.py",
+      "download": "repository-docs/ainewstracker/classes/a57abeedbcc0ec76.mmd"
+    },
+    {
+      "path": "app/core/trading/strategy.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/trading/strategy.py",
+      "download": "repository-docs/ainewstracker/classes/8eba0a41f8005766.mmd"
+    },
+    {
+      "path": "app/models/article.py",
+      "types": 4,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/article.py",
+      "download": "repository-docs/ainewstracker/classes/29ff669ddf6c65e7.mmd"
+    },
+    {
+      "path": "app/models/company.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/company.py",
+      "download": "repository-docs/ainewstracker/classes/49a5c8fee8e596fe.mmd"
+    },
+    {
+      "path": "app/models/news.py",
+      "types": 2,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/news.py",
+      "download": "repository-docs/ainewstracker/classes/44e38374dad2bf34.mmd"
+    },
+    {
+      "path": "app/models/users.py",
+      "types": 4,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/users.py",
+      "download": "repository-docs/ainewstracker/classes/ac68a241ee5c674a.mmd"
+    },
+    {
+      "path": "app/seed/companies.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/seed/companies.py",
+      "download": "repository-docs/ainewstracker/classes/f45fbe2a6d8ce9d1.mmd"
+    },
+    {
+      "path": "app/seed/news.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/seed/news.py",
+      "download": "repository-docs/ainewstracker/classes/c276f084f17b4ff3.mmd"
+    },
+    {
+      "path": "tests/test_config.py",
+      "types": 1,
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/test_config.py",
+      "download": "repository-docs/ainewstracker/classes/da24b355349b53e4.mmd"
+    }
+  ],
+  "source_manifest": [
+    {
+      "path": "README.md",
+      "blob_sha": "1afddf2cdb0ce6ee8df96d61168ec5b0de00f13a",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/README.md"
+    },
+    {
+      "path": "docker-compose.yml",
+      "blob_sha": "8f2a27f9a143a129b7b4f7d24282688f0167310a",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/docker-compose.yml"
+    },
+    {
+      "path": "pyproject.toml",
+      "blob_sha": "6846641c43df89ed47873bee297d87692c89bcce",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/pyproject.toml"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "a63b69e8f51f87cf7dffda836d0181cf5cf259ce",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/requirements.txt"
+    },
+    {
+      "path": "app/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/__init__.py"
+    },
+    {
+      "path": "app/__version__.py",
+      "blob_sha": "bdafc4c7b39e9cfdcf35bf4a8f975645b6356b40",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/__version__.py"
+    },
+    {
+      "path": "app/config.py",
+      "blob_sha": "d4add760cba214fc51c639ae739bfe1ae6f2e292",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/config.py"
+    },
+    {
+      "path": "app/main.py",
+      "blob_sha": "76483d1d09072500c6df262bc3d701ad27dc2d5e",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/main.py"
+    },
+    {
+      "path": "deploy/README.md",
+      "blob_sha": "9c2e6acf5b58f60c25de5d32592bda0aa2cfef7c",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/deploy/README.md"
+    },
+    {
+      "path": "deploy/docker-compose.yml",
+      "blob_sha": "cfac3be5b68a70477c2466443a82ae087e2f0d77",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/deploy/docker-compose.yml"
+    },
+    {
+      "path": "scripts/install_cuda.sh",
+      "blob_sha": "ba73b283a9667ec535ba3ac3045e6eb410d52bbd",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/scripts/install_cuda.sh"
+    },
+    {
+      "path": "scripts/install_cuda_ubuntu.sh",
+      "blob_sha": "0b6b609e595ab6c5a218ae94c9d29d69175ee373",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/scripts/install_cuda_ubuntu.sh"
+    },
+    {
+      "path": "scripts/update_env.sh",
+      "blob_sha": "6fbe6d2072fa5357ed8d2013320c294a8d905555",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/scripts/update_env.sh"
+    },
+    {
+      "path": "scripts/update_version.sh",
+      "blob_sha": "e25e6901707ef2c3e74a6229871623a49724a224",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/scripts/update_version.sh"
+    },
+    {
+      "path": "tests/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/__init__.py"
+    },
+    {
+      "path": "tests/test_app.py",
+      "blob_sha": "50ee6e6a51f6c98b0b886c583d16d4bb845a07ec",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/test_app.py"
+    },
+    {
+      "path": "tests/test_config.py",
+      "blob_sha": "be3db4fca0c6340516c53cd4619d044c57a7e877",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/test_config.py"
+    },
+    {
+      "path": "app/core/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/__init__.py"
+    },
+    {
+      "path": "app/core/logging.py",
+      "blob_sha": "30e33ec6464993170689a5135f900c46a52fcccf",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/logging.py"
+    },
+    {
+      "path": "app/models/__init__.py",
+      "blob_sha": "31b0958ed3f2a9745d4744657ba4e0f08778ba50",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/__init__.py"
+    },
+    {
+      "path": "app/models/article.py",
+      "blob_sha": "0f5b5edf2b9daa469542a6753a8d8bdb25113dd6",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/article.py"
+    },
+    {
+      "path": "app/models/company.py",
+      "blob_sha": "82b9c56b67abb6e5ac9c35d00ba31a3a38b12bd4",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/company.py"
+    },
+    {
+      "path": "app/models/news.py",
+      "blob_sha": "8310ce50bb6d993c21ba9beec29f6b8387e2de10",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/news.py"
+    },
+    {
+      "path": "app/models/users.py",
+      "blob_sha": "9243c3380b8970482d237a00b340fac0d74c2812",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/models/users.py"
+    },
+    {
+      "path": "app/routers/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/__init__.py"
+    },
+    {
+      "path": "app/routers/article.py",
+      "blob_sha": "31ce1c0c4c89c49d9ec5a7d1b9983ecb9c6f971d",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/article.py"
+    },
+    {
+      "path": "app/routers/company.py",
+      "blob_sha": "d41d1a2dbc7690e4300a22774be511654b2a68b2",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/company.py"
+    },
+    {
+      "path": "app/routers/integration.py",
+      "blob_sha": "52a1923c92a40ef4f0a9e003727a48fc6a8eb727",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/integration.py"
+    },
+    {
+      "path": "app/routers/news.py",
+      "blob_sha": "5f1353d3d6153520b6964f14d7371ee15a92de89",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/news.py"
+    },
+    {
+      "path": "app/routers/seed.py",
+      "blob_sha": "9366c01bdeeae21d4be21b2a0f939dac253e0925",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/seed.py"
+    },
+    {
+      "path": "app/routers/strategy.py",
+      "blob_sha": "3eaf972212bb5cd224863ed3c4008b33adfdc95d",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/strategy.py"
+    },
+    {
+      "path": "app/routers/users.py",
+      "blob_sha": "4f9a2342295c05baf4b52e143c104058aa3fe273",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/routers/users.py"
+    },
+    {
+      "path": "app/seed/companies.py",
+      "blob_sha": "ab07c63c93d511af0e6f9a54f7ab6036c591d75a",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/seed/companies.py"
+    },
+    {
+      "path": "app/seed/news.py",
+      "blob_sha": "0c47a1c230532717e504cba526247acab253d9ce",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/seed/news.py"
+    },
+    {
+      "path": "tests/core/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/__init__.py"
+    },
+    {
+      "path": "tests/core/test_logging.py",
+      "blob_sha": "29e8290bfb247be3af1f3eac645874a74635044f",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/test_logging.py"
+    },
+    {
+      "path": "tests/models/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/models/__init__.py"
+    },
+    {
+      "path": "tests/models/test_articles.py",
+      "blob_sha": "c0b7d62cf063ba56e8549873bc6d5182418b2c54",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/models/test_articles.py"
+    },
+    {
+      "path": "tests/models/test_company.py",
+      "blob_sha": "d3175b445fb02da09ec4fd522dee48adbc00fed4",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/models/test_company.py"
+    },
+    {
+      "path": "tests/models/test_news.py",
+      "blob_sha": "109e1e8801592ab308d5b9424a988ea362703bc8",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/models/test_news.py"
+    },
+    {
+      "path": "tests/models/test_users.py",
+      "blob_sha": "56376cbb6114d3efd223c1ef752e3ac5d30feb58",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/models/test_users.py"
+    },
+    {
+      "path": "tests/routers/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/routers/__init__.py"
+    },
+    {
+      "path": "tests/routers/test_integration.py",
+      "blob_sha": "b5cc7797c3da16b2635dd47c7849c08178ee98e3",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/routers/test_integration.py"
+    },
+    {
+      "path": "tests/routers/test_integration_mongo.py",
+      "blob_sha": "1c3dd88e16494d85cf2883bb0fa128a290368be0",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/routers/test_integration_mongo.py"
+    },
+    {
+      "path": "app/core/database/__init__.py",
+      "blob_sha": "67de531af36a9c020172eeb4a8b8fa2a3248ab0b",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/database/__init__.py"
+    },
+    {
+      "path": "app/core/database/db.py",
+      "blob_sha": "ac54bf34a3c33437175758d23bd334e4a8a56abc",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/database/db.py"
+    },
+    {
+      "path": "app/core/repo/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/__init__.py"
+    },
+    {
+      "path": "app/core/repo/article.py",
+      "blob_sha": "0aa94838c94856a34ac7774905b89b36c7a5ccaf",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/article.py"
+    },
+    {
+      "path": "app/core/repo/company.py",
+      "blob_sha": "b2f76c47551e1f63691e13c2a1c539a8d9ab4f0c",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/company.py"
+    },
+    {
+      "path": "app/core/repo/news.py",
+      "blob_sha": "ad16702dc3ded302ea1ae514b4fcd113dc2d0ce7",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/news.py"
+    },
+    {
+      "path": "app/core/repo/user.py",
+      "blob_sha": "a5c12b4b0f8fc6d8b2983593966f8cd69412d2fe",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/repo/user.py"
+    },
+    {
+      "path": "app/core/services/__init__.py",
+      "blob_sha": "8e730fb67a57803f2a91cf7d981e132cd4d1e8ce",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/__init__.py"
+    },
+    {
+      "path": "app/core/services/crypto.py",
+      "blob_sha": "20611b2f9b906f8055b505078c16eb9e15a12d4e",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/crypto.py"
+    },
+    {
+      "path": "app/core/services/metrics.py",
+      "blob_sha": "0551a9b438a9d727fb3d2b1e5c4c84551e33a8ca",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/metrics.py"
+    },
+    {
+      "path": "app/core/services/news.py",
+      "blob_sha": "2e0eb485f28188bdccd38913194f222aedce4eee",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/news.py"
+    },
+    {
+      "path": "app/core/services/user.py",
+      "blob_sha": "0955a7f26fbbf3c9a9eddfed765f64be3cf63d3f",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/services/user.py"
+    },
+    {
+      "path": "app/core/telemetry/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/telemetry/__init__.py"
+    },
+    {
+      "path": "app/core/telemetry/prometheus.py",
+      "blob_sha": "d46de7adb826905234d7360a4994e7b688b6e4e1",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/telemetry/prometheus.py"
+    },
+    {
+      "path": "app/core/trading/strategy.py",
+      "blob_sha": "9205e4b8c8c6af343f2e4d1b92b11f021cef727d",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/app/core/trading/strategy.py"
+    },
+    {
+      "path": "tests/core/database/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/database/__init__.py"
+    },
+    {
+      "path": "tests/core/database/test_db.py",
+      "blob_sha": "a7e4c231fe48b3e8b704c184f794aa07972aec5d",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/database/test_db.py"
+    },
+    {
+      "path": "tests/core/services/test__init__.py",
+      "blob_sha": "36584c252b1dc0a73584c721fdf0d09efa410eea",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/services/test__init__.py"
+    },
+    {
+      "path": "tests/core/services/test_crypto.py",
+      "blob_sha": "caa7b1eb5f9f78c12f7986f9bcc8cfe2a4d7ef63",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/services/test_crypto.py"
+    },
+    {
+      "path": "tests/core/services/test_news.py",
+      "blob_sha": "b1d2ac10e562433af02003204ffa277795ba9c6e",
+      "source_url": "https://github.com/AlgoETS/AINewsTracker/blob/74a8366f5c19e352277a74381559e310e9cf959c/tests/core/services/test_news.py"
+    }
+  ],
+  "file_overview": "flowchart TD\n  root[\"AINewsTracker\"]\n  f0[\"README.md\"]\n  root --> f0\n  f1[\"docker-compose.yml\"]\n  root --> f1\n  f2[\"pyproject.toml\"]\n  root --> f2\n  f3[\"requirements.txt\"]\n  root --> f3\n  f4[\"app/__init__.py\"]\n  root --> f4\n  f5[\"app/__version__.py\"]\n  root --> f5\n  f6[\"app/config.py\"]\n  root --> f6\n  f7[\"app/main.py\"]\n  root --> f7\n  f8[\"deploy/README.md\"]\n  root --> f8\n  f9[\"deploy/docker-compose.yml\"]\n  root --> f9\n  f10[\"scripts/install_cuda.sh\"]\n  root --> f10\n  f11[\"scripts/install_cuda_ubuntu.sh\"]\n  root --> f11\n  f12[\"scripts/update_env.sh\"]\n  root --> f12\n  f13[\"scripts/update_version.sh\"]\n  root --> f13\n  f14[\"tests/__init__.py\"]\n  root --> f14\n  f15[\"tests/test_app.py\"]\n  root --> f15\n",
+  "file_overview_count": 16,
+  "class_overview": "classDiagram\ndirection TB\nclass tef867e81c3c4[\"Settings\"] {\n  __new__()\n  __init__()\n  get_env_variable()\n  reset()\n}\nclass tab34fab88443[\"MongoDB\"] {\n  __new__()\n  connect()\n  create_collections()\n  get_collection()\n}\nclass t5001d3937086[\"RedisDB\"] {\n  __new__()\n  connect()\n  check_connection()\n  get_info()\n}\nclass t9166c475a95b[\"Logger\"] {\n  __new__()\n  setup_structlog()\n  get_logger()\n  get_std_logger()\n}\nclass tee6af9b9f329[\"TokenData\"] {\n}\nclass td6fd3f5559ec[\"CryptoSymbol\"] {\n}\nclass t138a2d3d0388[\"TextMetrics\"] {\n  __init__()\n  classify_topic()\n  detect_ticker()\n  summarize_text()\n}\nclass t76aab3ab8d3f[\"NewsFetcher\"] {\n  __init__()\n  process_article()\n  fetch_rss_feed()\n  fetch_gnews_articles()\n}\nclass t73b5ed46911f[\"AuthService\"] {\n  get_password_hash()\n  verify_password()\n  create_access_token()\n  authenticate_user()\n}\nclass t52b6de70c5d4[\"SentimentTradingStrategy\"] {\n  __init__()\n  init()\n  next()\n  execute_trading_strategy()\n}\nclass t65854c678502[\"Article\"] {\n}\nclass t02d72785eb66[\"Config\"] {\n}\nclass b540427a18386[\"BaseModel\"] {\n  <<unresolved_base>>\n}\nb540427a18386 <|-- tee6af9b9f329\nclass b4c5ad775e02a[\"Enum\"] {\n  <<unresolved_base>>\n}\nb4c5ad775e02a <|-- td6fd3f5559ec\nclass b1fbfec4fe713[\"Strategy\"] {\n  <<unresolved_base>>\n}\nb1fbfec4fe713 <|-- t52b6de70c5d4\nclass b96efdedfe557[\"BaseModel\"] {\n  <<unresolved_base>>\n}\nb96efdedfe557 <|-- t65854c678502\n",
+  "overview_types": 12,
+  "gitdiagram": {
+    "url": "https://gitdiagram.com/AlgoETS/AINewsTracker",
+    "status": "available",
+    "missing_paths": [],
+    "source_file": "repository-docs/ainewstracker/gitdiagram.mmd",
+    "mermaid": "flowchart TD\n\nsubgraph group_api[\"API and lifecycle\"]\n  node_app[\"FastAPI app<br/>[main.py]\"]\n  node_news_routes[\"News routes<br/>[news.py]\"]\n  node_article_routes[\"Article routes<br/>[article.py]\"]\n  node_company_routes[\"Company routes<br/>[company.py]\"]\n  node_user_routes[\"User routes<br/>[users.py]\"]\n  node_seed_routes[\"Seed routes<br/>[seed.py]\"]\n  node_strategy_routes[\"Strategy routes<br/>[strategy.py]\"]\nend\n\nsubgraph group_news[\"News analysis\"]\n  node_news_fetcher[\"News fetcher<br/>[news.py]\"]\n  node_text_metrics[\"Text metrics<br/>[metrics.py]\"]\nend\n\nsubgraph group_domain[\"Domain data\"]\n  node_article_model[\"Article model<br/>[article.py]\"]\n  node_company_model[\"Company model<br/>[company.py]\"]\n  node_news_model[\"News model<br/>[news.py]\"]\n  node_user_model[\"User model<br/>[users.py]\"]\nend\n\nsubgraph group_storage[\"Persistence and cache\"]\n  node_article_repo[\"Article repository<br/>[article.py]\"]\n  node_company_repo[\"Company repository<br/>[company.py]\"]\n  node_news_repo[\"News repository<br/>[news.py]\"]\n  node_user_repo[\"User repository<br/>[user.py]\"]\n  node_mongodb[(\"MongoDB<br/>[db.py]\")]\n  node_redis[(\"Redis cache<br/>[db.py]\")]\nend\n\nsubgraph group_operations[\"Seed and trading\"]\n  node_company_seeder[\"Company seeder<br/>[companies.py]\"]\n  node_news_seeder[\"News seeder<br/>[news.py]\"]\n  node_strategy[\"Trading strategy<br/>[strategy.py]\"]\nend\n\nnode_user((\"API user\"))\nnode_financial_sources{{\"Financial news sources\"}}\n\nnode_user -->|\"requests\"| node_app\nnode_app -->|\"registers\"| node_news_routes\nnode_app -->|\"registers\"| node_article_routes\nnode_app -->|\"registers\"| node_company_routes\nnode_app -->|\"registers\"| node_user_routes\nnode_app -->|\"registers\"| node_seed_routes\nnode_news_routes -->|\"dispatches\"| node_news_fetcher\nnode_news_routes -->|\"calls\"| node_news_repo\nnode_news_routes -->|\"validates\"| node_news_model\nnode_news_fetcher -->|\"analyzes with\"| node_text_metrics\nnode_news_fetcher -->|\"builds\"| node_article_model\nnode_news_fetcher -->|\"saves via\"| node_article_repo\nnode_article_routes -->|\"calls\"| node_article_repo\nnode_company_routes -->|\"calls\"| node_company_repo\nnode_user_routes -->|\"calls\"| node_user_repo\nnode_user_routes -->|\"uses\"| node_user_model\nnode_article_repo -->|\"reads and writes\"| node_mongodb\nnode_company_repo -->|\"uses\"| node_mongodb\nnode_news_repo -->|\"uses\"| node_mongodb\nnode_user_repo -->|\"uses\"| node_mongodb\nnode_app -->|\"configures cache\"| node_redis\nnode_seed_routes -->|\"dispatches\"| node_company_seeder\nnode_seed_routes -->|\"dispatches\"| node_news_seeder\nnode_company_seeder -->|\"fetches companies\"| node_financial_sources\nnode_company_seeder -->|\"stores via\"| node_company_repo\nnode_news_seeder -->|\"fetches news\"| node_financial_sources\nnode_news_seeder -->|\"processes articles\"| node_news_fetcher\nnode_news_seeder -->|\"stores via\"| node_article_repo\nnode_company_routes -->|\"uses\"| node_company_model\nnode_article_routes -->|\"uses\"| node_article_model\nnode_strategy_routes -->|\"dispatches\"| node_strategy\nnode_user -.->|\"requests backtest\"| node_strategy_routes\n\n\nclass node_app,node_news_routes,node_article_routes,node_company_routes,node_user_routes,node_seed_routes,node_strategy_routes,node_user toneBlue\nclass node_news_fetcher,node_text_metrics toneAmber\nclass node_article_model,node_company_model,node_news_model,node_user_model toneMint\nclass node_article_repo,node_company_repo,node_news_repo,node_user_repo,node_mongodb,node_redis toneRose\nclass node_company_seeder,node_news_seeder,node_strategy,node_financial_sources toneIndigo",
+    "linked_paths": 22
+  }
+}

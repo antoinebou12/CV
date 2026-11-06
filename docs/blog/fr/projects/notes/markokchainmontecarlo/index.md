@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/index.md
 - Publié: 2026-11-05
-- Mis à jour: 2026-11-05
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/MarkokChainMonteCarlo
+- Révision inspectée: 96c96e249b3d51b63c348f38f4c4f37b67c0baf9
 
 
 ## Cas d’utilisation
@@ -29,5 +30,21 @@ Carnets qui simulent les prix d’AAPL par Monte Carlo et chaîne de Markov, pui
 3. Couper les données au 2023-01-01 et construire la matrice de transition des tranches de prix sur la première partie.
 4. Créer les objets Backtest de MCMCStrategy et BuyAndHoldStrategy sur les deux périodes et appeler run().
 5. Tracer le résultat ; output/MCMCStrategy.html est un graphique backtesting.py enregistré pour MCMCStrategy.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 93 |
+| HTML | 7 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+pip install panda lxml bs4 httpx backtesting yfinance pandas_ta scipy rich TA-Lib
+```
+
 
 

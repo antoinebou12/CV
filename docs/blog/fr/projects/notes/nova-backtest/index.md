@@ -1,12 +1,12 @@
 # nova-backtest : Des bougies historiques à la simulation
 
-> nova-backtest est un fork archivé d’un framework de backtesting. Sa classe centrale choisit un client d’échange, charge une période historique et gère…
+> nova-backtest est un fork archivé de la bibliothèque de backtesting crypto NovaLabs : il télécharge les bougies de huit plateformes, trouve la sortie de chaque transaction par anticipation vectorisée, facture les frais maker et plafonne les positions ouvertes. L’algorithme de sortie, une transaction détaillée et les limites, lus dans le code.
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/nova-backtest/
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/nova-backtest/index.md
 - Publié: 2026-10-23
-- Mis à jour: 2026-10-23
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/antoinebou12/nova-backtest

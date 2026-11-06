@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/WearSurfacesDatasets
+- Révision inspectée: 6841dff6be997b20c0ec288fd1f2f36a9d8bd8fe
 
 
 ## Cas d’utilisation
@@ -30,5 +31,50 @@ Séquences de cartes de surfaces usées (matériau, grain, charge, distance) ave
 3. Choisir Cartboard / Raw / Normal · S60 · 200 g et cliquer sur Load sequence.
 4. Cliquer sur Align sequence, puis faire défiler la distance de 0 mm à 2400 mm ou lancer Play.
 5. Lancer python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack pour ajouter les étapes interpolées et extrapolées.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+git clone https://github.com/ETSim/WearSurfacesDatasets
+cd WearSurfacesDatasets
+git lfs pull
+pip install -r requirements.txt
+python docs/serve_local.py
+```
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack
+python -m alignment.bake --all --pack
+python -m alignment.bake_extrapolate_all
+```
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+python docs/prepare_viewer_parquets.py --source data/parquet --dest data/parquet
+```
+
+### README.md · Install (Python pipeline)
+
+```bash
+pip install -r requirements.txt
+```
+
+### data/parquet/README.md · Sync / rebuild sequences
+
+```bash
+python docs/prepare_viewer_parquets.py --source data/parquet --dest data/parquet
+```
+
 
 

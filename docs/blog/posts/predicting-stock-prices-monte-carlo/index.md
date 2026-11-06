@@ -6,7 +6,7 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/predicting-stock-prices-monte-carlo/index.md
 - Published: 2024-05-14
-- Updated: 2026-05-22
+- Updated: 2026-11-05
 - Tags: Python, Finance, Monte Carlo, Backtesting
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)Trading is about **ranges**, not one magic price. I used **forward Monte Carlo** on Apple daily closes: estimate log-return drift and volatility before 2023, simulate many paths, then check whether 2023 hold-out prices fell inside a **5th–95th percentile band**.
 
@@ -32,20 +32,41 @@ Pull full history for `AAPL`, split at **2023-01-01**:
 
 ![Train vs hold-out price series](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-001.png)
 
+The same split for AAPL, GOOGL and MSFT shows how differently the three names moved after January 2023:
+
+![AAPL, GOOGL and MSFT before and after 2023](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-002.png)
+
 ## The simulation core
 
 Estimate log returns on train window → daily drift and volatility → draw Gaussian shocks → propagate price with `exp(drift + vol * Z)`.
 
 ```python
 def monte_carlo_simulation(data, days, iterations):
+    if isinstance(data, pd.Series):
+        data = data.to_numpy()
+    if not isinstance(data, np.ndarray):
+        raise TypeError("Data must be a numpy array or pandas Series")
+
     log_returns = np.log(data[1:] / data[:-1])
-    mean, variance = log_returns.mean(), log_returns.var()
-    drift = mean - 0.5 * variance
-    daily_vol = log_returns.std()
-    # ... iterate days × iterations, return price paths
+    mean = np.mean(log_returns)
+    variance = np.var(log_returns)
+    drift = mean - (0.5 * variance)
+    daily_volatility = np.std(log_returns)
+
+    future_prices = np.zeros((days, iterations))
+    current_price = data[-1]
+    for t in range(days):
+        shocks = drift + daily_volatility * norm.ppf(np.random.rand(iterations))
+        future_prices[t] = current_price * np.exp(shocks)
+        current_price = future_prices[t]
+    return future_prices
 ```
 
-Full implementation and plotting loops: [Medium original](https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b).
+`norm.ppf(np.random.rand(iterations))` turns uniform draws into standard normal shocks, so each row of `future_prices` is one trading day across every simulated path. The `- 0.5 * variance` term is the Itô correction: without it, the mean of `exp(shock)` would drift upward faster than the historical returns justify.
+
+![Simulated price paths from the training window](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-003.png)
+
+Data download helpers and plotting loops: [Medium original](https://medium.com/@antoine.boucher012/predicting-stock-prices-with-monte-carlo-simulations-0884ef32c35b).
 
 ## Reading the output
 
@@ -55,6 +76,16 @@ Full implementation and plotting loops: [Medium original](https://medium.com/@an
 - **Hold-out dot** — did reality sit inside the band at the aligned horizon?
 
 ![Percentile band and simulated paths](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-005.png)
+
+For AAPL, the mean simulated price after 364 days was **$206.63** against a real close of **$192.53** on 2023-12-29: a gap of $14.10, or 7.32 %.
+
+![Mean simulated price against the real 2023-12-29 close](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-006.png)
+
+A later run for AAPL and MSFT, with the 2024 closes as the check, gives wider fans. The MSFT mean missed by about 14 %, which is a reminder that a band built on past volatility says nothing about a re-rating.
+
+![AAPL forecast fan](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-007.png)
+
+![MSFT forecast fan](https://antoineboucher.info/CV/blog/posts/predicting-stock-prices-monte-carlo/images/img-008.png)
 
 Terminal distribution gives **quantile prices** and simple return percentiles vs last train close — useful for “how wrong is the model?” not “buy signal.”
 

@@ -6,7 +6,7 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/posts/reverse-proxy-infrastructure/index.md
 - Published: 2026-10-22
-- Updated: 2026-11-05
+- Updated: 2026-11-06
 - Tags: Caddy, Terraform, Ansible, Cloudflare, DevOps
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)My reverse-proxy project runs Caddy in Docker on a DigitalOcean VPS, with Cloudflare DNS in front. Terraform creates the infrastructure, Ansible configures it, and a set of checks looks at the resulting service.
 

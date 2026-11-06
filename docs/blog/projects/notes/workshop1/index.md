@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/Workshop1
+- Inspected revision: 7858d0e73ce4bee9bff9d6cf455118b8a6cef5f1
 
 
 ## Use cases
@@ -29,5 +30,11 @@ AlgoÉTS French workshop: Jupyter notebooks from Python basics to APIs, pandas, 
 3. Work through 1.0-basic, 2.0-api and 3.0-data in order.
 4. Open 5.0-project/5.1_project_ema.ipynb and replace YOUR_API_KEY with a Financial Modeling Prep key.
 5. Run the cells to load AAPL prices into a DataFrame, add EMA_20 and plot the close price with the 20-day EMA.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 100 |
 
 

@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/TradingViewBuilder
+- Inspected revision: 2b5bed6ac9672d4bdb6e3e8e61dc3494dc70edc0
 
 
 ## Use cases

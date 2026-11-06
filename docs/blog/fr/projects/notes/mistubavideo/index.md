@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/MistubaVideo
+- Révision inspectée: 87b180b9f03333b773fecd7708be86c75b1f822d
 
 
 ## Cas d’utilisation
@@ -30,5 +31,68 @@ Outils Mitsuba 3 d'ETSim qui rendent par lancer de rayons des suites OBJ et des 
 3. Vérifier rapidement le cadrage avec mitsuba-video preview demo.
 4. Lancer mitsuba-video render demo -q preview pour rendre les images et encoder le MP4.
 5. Pour des données réelles, lancer python main.py wear render sur un dossier simulation_<ts> de TextureFriction avec -q paper.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 99.67 |
+| Dockerfile | 0.33 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Basic Usage
+
+```bash
+python main.py multi --folder exports --regex "\d+\.obj"
+```
+
+### README.md · Command-line Options
+
+```bash
+Options:
+  -f, --folder TEXT               Folder containing OBJ files  [required]
+  -r, --regex TEXT                Regex pattern for OBJ filenames  [default: \d+\.obj]
+  -n, --name TEXT                 Base name for output files  [default: multi_obj]
+  -t, --threaded                  Enable multi-threading
+  -w, --workers INTEGER           Max worker threads (if threaded)
+  --video / --no-video            Enable video creation  [default: video]
+  --gif / --no-gif                Enable GIF creation  [default: gif]
+  -d, --device TEXT               Rendering device (cpu/cuda)  [default: cpu]
+  -s, --spp INTEGER               Samples per pixel  [default: 256]
+  --width INTEGER                 Output image width  [default: 1920]
+  --height INTEGER                Output image height  [default: 1080]
+```
+
+### README.md · Additional Commands
+
+```bash
+python main.py info
+```
+
+### README.md · Command-line Usage
+
+```bash
+python main.py multi --folder models --view front --view top --view right
+```
+
+### README.md · Command-line Usage
+
+```bash
+python main.py multi --folder models --all-views
+```
+
+### packages/mitsuba_video/README.md · Install and run
+
+```bash
+pip install -e "packages/mitsuba_video[texturefriction]"   # drop the extra if you don't need h5py
+mitsuba-video fixture demo                                   # synthetic manifest to try things on
+mitsuba-video inspect demo
+mitsuba-video preview demo                                   # 960x540, 16 spp, every 8th frame
+mitsuba-video render  demo -q paper --camera orbit --title "Wear on a plane" --ramp 0.2
+mitsuba-video encode  demo/render_heatmap --fps 15 --hold 4  # new fps/title without re-rendering
+mitsuba-video render  demo --resume                          # continue an interrupted render
+```
+
 
 

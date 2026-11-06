@@ -10,6 +10,8 @@ Each entry links the HTML page and its Markdown view (append `index.md` to the U
 
 - [Six Shadertoy shaders, read line by line](https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/) — [Markdown](https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/index.md) · 2026-11-06
   A code reading of six GLSL shaders I published on Shadertoy in 2024: domain warping, a spiral, an anti-aliased grid, a sea scene, sun rays and a mouse-driven warp.
+- [What a Canadian salary guide says once the tables are read correctly](https://antoineboucher.info/CV/blog/posts/salary-guide-2023-results/) — [Markdown](https://antoineboucher.info/CV/blog/posts/salary-guide-2023-results/index.md) · 2026-11-05
+  Re-reading the 2023 salary guide text kept in AlgoETS/Salary: 19,387 rows, the finance tables that were read as experience levels, and what pay looks like by job family, province and city.
 - [Website refonte with Hugo (part 2)](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/) — [Markdown](https://antoineboucher.info/CV/blog/posts/portfolio-hugo-website-refonte/index.md) · 2026-10-24
   Rebuilding my Hugo portfolio: shared visual identity, bilingual articles, repository skills, interactive diagrams and local publication.
 - [TrueMapData: from measured height maps to usable assets](https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/) — [Markdown](https://antoineboucher.info/CV/blog/posts/truemapdata-height-maps/index.md) · 2026-10-24
@@ -79,7 +81,7 @@ Each entry links the HTML page and its Markdown view (append `index.md` to the U
 - [Economics of LEGO Sets with Data Science](https://antoineboucher.info/CV/blog/posts/economics-lego-data-science/) — [Markdown](https://antoineboucher.info/CV/blog/posts/economics-lego-data-science/index.md) · 2024-05-30
   Rebrickable trends, BrickEconomy prices, Playwright scraping, and a humble regression on classic set 001-1 — narrative with charts, code in LegosTracker.
 - [Experimenting with technical indicators using Python and backtesting](https://antoineboucher.info/CV/blog/posts/experimentation-indicateurs-backtesting/) — [Markdown](https://antoineboucher.info/CV/blog/posts/experimentation-indicateurs-backtesting/index.md) · 2024-05-14
-  BatchBacktesting with EMA and MACD across equities and crypto — how the batch runner works, how to read extreme results, not trading advice.
+  BatchBacktesting with an EMA strategy on the S&P 500 and crypto: the code, the leaderboard, and how to read extreme returns.
 - [Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/) — [Markdown](https://antoineboucher.info/CV/blog/posts/caddy-ec2-cloudwatch-lambda/index.md) · 2024-05-14
   Caddy on a t4g.nano EC2 instance: JSON access logs, a nightly Python shipper to CloudWatch, a Step Functions workflow that runs Logs Insights and geolocation Lambdas, and the fixes I would make today.
 - [A Journey to AWS Certified Cloud Practitioner](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/) — [Markdown](https://antoineboucher.info/CV/blog/posts/aws-certified-cloud-practitioner/index.md) · 2024-05-14

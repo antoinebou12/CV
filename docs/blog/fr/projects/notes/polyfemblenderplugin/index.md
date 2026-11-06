@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/PolyFEMBlenderPlugin
+- Révision inspectée: 70794d3107843eeaa55210ff899d1f86a9ba5cf5
 
 
 ## Cas d’utilisation
@@ -30,5 +31,11 @@ Extension Blender qui transforme une scène en configuration JSON PolyFEM et lan
 3. Sélectionner les maillages, appliquer un matériau prédéfini et régler contact, pas de temps et temps final.
 4. Cliquer sur Create JSON Configuration pour écrire les maillages et le JSON dans le dossier d'export.
 5. Cliquer sur Run PolyFem Simulation, puis Render Animation pour importer les résultats step_*.vtu en maillages animés.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 100 |
 
 

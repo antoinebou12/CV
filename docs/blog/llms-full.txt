@@ -104,6 +104,7 @@ The script edits home-directory files and runs privileged package commands. Back
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/ainewstracker/index.md
 
 - Repository: https://github.com/AlgoETS/AINewsTracker
+- Inspected revision: 74a8366f5c19e352277a74381559e310e9cf959c
 
 
 ## Use cases
@@ -123,6 +124,14 @@ FastAPI service from AlgoÉTS that collects financial news, scores it with FinBE
 3. Call POST /seed/seed_news; NewsSeeder reads Financial Modeling Prep stock news in the background and stores the scored articles.
 4. Read the stored articles with GET /articles/ and check one with GET /articles/{article_id}/score.
 5. From a backtesting service, call GET /v1/articles?symbols=AAPL with the Bearer service token.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 88.92 |
+| Shell | 8.19 |
+| Dockerfile | 2.9 |
 
 
 
@@ -900,6 +909,7 @@ This is coursework, not a security certification. The routes alone do not prove 
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/batchbacktesting/index.md
 
 - Repository: https://github.com/AlgoETS/BatchBacktesting
+- Inspected revision: 6aae4af0733c248ae4c4dec1b25affa942f8037d
 
 
 ## Use cases
@@ -920,6 +930,25 @@ AlgoÉTS notebooks that backtest indicator strategies on S&amp;P 500 stocks and 
 3. Run the cell tickers = get_SP500() then run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True).
 4. Check output/EMA-&lt;start&gt;-&lt;end&gt;.csv for the combined results and output/charts/EMA/ for one HTML chart per ticker.
 5. Open analyse.ipynb and run the EMA section to list the top returns and compare them with buy and hold.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 99.98 |
+| Jupyter Notebook | 0.02 |
+| Python | 0 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Installation
+
+```bash
+git clone https://github.com/username/BatchBacktesting.git
+cd BatchBacktesting
+pip install -r requirements.txt
+```
+
 
 
 
@@ -1008,37 +1037,6 @@ The S3 path makes one list_objects_v2 request without pagination. Uploading the 
 
 - [addon.py](https://github.com/antoinebou12/bloc/blob/main/addon.py)
 - [blender_manifest.toml](https://github.com/antoinebou12/bloc/blob/main/blender_manifest.toml)
-
-
-
----
-
-# BullETS: a Python library for backtesting trading strategies
-
-- HTML page: https://antoineboucher.info/CV/blog/projects/notes/bullets/
-- Markdown: https://antoineboucher.info/CV/blog/projects/notes/bullets/index.md
-
-- Repository: https://github.com/AlgoETS/BullETS
-
-
-## Use cases
-
-Python library for writing and backtesting stock trading strategies on Financial Modeling Prep data.
-
-- **Write a strategy** (Strategy author): Subclass Strategy in src/bullets/strategy.py and override on_start, on_resolution and on_finish; the constructor validates dates, resolution, balance, slippage and fees.
-- **Run a backtest** (Strategy author, FMP market data API): Runner.start in src/bullets/runner.py steps through open market moments (weekends, US holidays and off-hours skipped), calls the strategy and pending orders, then logs final balance, fees and profit.
-- **Place market and stop orders** (Strategy author, FMP market data API): Portfolio in src/bullets/portfolio/portfolio.py fills market orders at a slippage price derived from the daily high plus a flat fee, and checks stop and limit orders at each resolution.
-- **Fetch prices and statements** (Strategy author, FMP market data API): FmpDataSource in src/bullets/data_source/data_source_fmp.py caches daily, hourly or minute prices and reads income, balance sheet and cash flow statements plus symbol lists from the FMP API.
-- **Compute indicators** (Strategy author, FMP market data API): Indicators in src/bullets/data_indicators/indicators.py computes SMA, WMA, EMA, MACD, RSI, standard deviation and Bollinger Bands from data source prices on open market days.
-- **Test and publish the package** (GitHub Actions, FMP market data API): python-pr.yml and python-merge.yml run flake8 and unittest with an FMP_TOKEN secret (coverage goes to Codecov on merge); python-publish.yml uploads the sdist to PyPI with twine on release.
-
-### Scenario: Backtest buying AAPL every trading day
-
-1. Create a virtual environment, run pip install BullETS and get an API key from Financial Modeling Prep.
-2. Subclass Strategy and make on_resolution call self.portfolio.market_order(&#34;AAPL&#34;, 5).
-3. Build FmpDataSource(key, Resolution.DAILY) and the strategy from 2019-03-05 to 2019-04-22 with a 5,000 starting balance, as in the README.
-4. Call Runner(strategy).start(); each open day fills the order at the slippage price plus the transaction fee.
-5. Read the log: initial cash, final balance, final cash, fees paid, profit percentage and remaining FMP calls.
 
 
 
@@ -2551,97 +2549,6 @@ The lookup mentions twelve-bit input but has no matching twelve-bit Cairo format
 
 ---
 
-# hydra: An Electron application across process boundaries
-
-- HTML page: https://antoineboucher.info/CV/blog/projects/notes/hydra/
-- Markdown: https://antoineboucher.info/CV/blog/projects/notes/hydra/index.md
-
-- Repository: https://github.com/antoinebou12/hydra
-- License: MIT
-- Inspected revision: e769e3b398c039a9e3d9977dbb1e5aa70776732e
-
-## Summary
-
-This Hydra fork is a desktop launcher with an Electron shell and React interface. Its build also includes a native addon and a Python RPC component, each with its own toolchain.
-
-**Why it exists:** Desktop Electron and TypeScript application orchestrating gaming library metadata and downloads.
-
-**Best fit:** Open-source alternative game launcher and library organizer.
-
-## Use cases
-
-A fork of Hydra Launcher, an Electron game library that downloads, launches, tracks playtime and syncs saves.
-
-- **Build a game library** (Player, Hydra API and Cloud): IPC handlers in src/main/events/library (add-game-to-library, add-custom-game-to-library, assign-game-to-collection) manage the local library; catalogue events fetch game details and artwork.
-- **Download and queue games** (Player, Torrents and hosters): Torrent downloads run in python_rpc/main.py with libtorrent, while services/hosters handles direct hosts such as Gofile, Mediafire and Pixeldrain; torrenting events manage the queue.
-- **Add download sources** (Player, Torrents and hosters): download-sources events add, remove and sync the source lists that feed download options for each game.
-- **Launch and track playtime** (Player): process-watcher.ts scans running processes against known executables to record playtime; on Linux, umu.ts and wine-prefix.ts prepare Proton or Wine.
-- **Back up saves to the cloud** (Player, Hydra API and Cloud): Ludusavi.backupGame() runs the bundled ludusavi binary to collect save files, and the cloud-save services upload, compare and restore them with Hydra Cloud.
-- **Unlock achievements** (Player, Hydra API and Cloud): services/achievements finds and parses local achievement files, merges them with remote data and shows notifications.
-
-### Scenario: From catalogue page to a backed-up save
-
-1. Install Node.js with Yarn, Python 3.9&#43; (pip install -r requirements.txt) and Rust, then run yarn; postinstall builds hydra-native.
-2. Open a game in the catalogue and add it to the library.
-3. Pick a download option; the Python RPC process starts the torrent and the download page shows progress.
-4. Launch the game; the process watcher detects the executable and counts playtime.
-5. Close the game and sync the save; ludusavi backs up the files and the cloud-save service uploads them.
-
-## Languages (GitHub Linguist bytes)
-
-| Language | % |
-| --- | ---: |
-| TypeScript | 81.85 |
-| SCSS | 10.64 |
-| Rust | 6.46 |
-| Python | 0.55 |
-| JavaScript | 0.49 |
-| HTML | 0.01 |
-| NSIS | 0 |
-
-## Features and components
-
-- **Main and renderer** — package.json points Electron to out/main/index.js. Separate TypeScript checks cover node and web code. Electron-Vite builds the desktop application, while React and the UI libraries belong to the renderer side.
-- **Native and Python modules** — build:native runs a dedicated addon script. build:python-rpc packages python_rpc separately, and platform packaging invokes both paths. Installing JavaScript dependencies alone is therefore not the complete release build.
-
-## Architecture
-
-Components and connections verified in the repository.
-
-- React renderer → Electron process boundary
-- Electron process boundary → Main-process services
-- Main-process services → Native addon
-- Main-process services → Python RPC component
-
-```mermaid
-flowchart LR
-  n0[&#34;React renderer&#34;]
-  n1[&#34;Electron process boundary&#34;]
-  n2[&#34;Main-process services&#34;]
-  n3[&#34;Native addon&#34;]
-  n4[&#34;Python RPC component&#34;]
-  n0 --&gt; n1
-  n1 --&gt; n2
-  n2 --&gt; n3
-  n2 --&gt; n4
-```
-
-**One path through the code:** Start with the build scripts and distinguish renderer compilation, native-addon compilation and Python packaging. Then inspect the process API for a particular feature; package dependencies alone do not identify which process owns it.
-
-## Constraints and checks
-
-This note describes a fork’s structure and retains upstream credit. It does not claim authorship of the launcher or verify its download sources.
-
-## Files to read
-
-- [package.json](https://github.com/antoinebou12/hydra/blob/main/package.json)
-- [electron.vite.config.ts](https://github.com/antoinebou12/hydra/blob/main/electron.vite.config.ts)
-- [README.md](https://github.com/antoinebou12/hydra/blob/main/README.md)
-
-
-
----
-
 # ipc-toolkit: Collision queries as a library boundary
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/ipc-toolkit/
@@ -2891,6 +2798,7 @@ Old theme dependencies and expected schema fields need review with current resum
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/index.md
 
 - Repository: https://github.com/AlgoETS/Kelly_RM
+- Inspected revision: faf4eebf51c2b7e00b1ce6ff2fdf4400b63a9bd6
 
 
 ## Use cases
@@ -2910,6 +2818,13 @@ Notebooks and helpers to estimate trade odds from backtests and size positions w
 3. Split each series into a three-year training set and an unseen set.
 4. Optimize RsiOscillator with Backtest.optimize and read the parameter heatmap.
 5. Compute win probability and win/loss sizes per ticker on both sets, then the Kelly fraction for each kept ticker.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 97.99 |
+| Python | 2.01 |
 
 
 
@@ -3014,6 +2929,7 @@ An encoded share URL still contains recoverable diagram source. Compression and 
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/legostracker/index.md
 
 - Repository: https://github.com/AlgoETS/LegosTracker
+- Inspected revision: c24d7e7693e838f9fd3888dd566926e7dea1fd7d
 
 
 ## Use cases
@@ -3033,6 +2949,13 @@ Notebooks and a Playwright scraper to study LEGO sets with Rebrickable data and 
 3. Run python brickeconomy.py; a visible Chromium window searches BrickEconomy and opens each set page.
 4. Move the generated 001-1_history.csv, 001-1_new.csv and lego_sets.csv into data/, where analyse.ipynb reads them.
 5. Run analyse.ipynb to plot the history, fit the regressions and simulate future prices.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 98.94 |
+| Python | 1.06 |
 
 
 
@@ -3458,6 +3381,7 @@ The README reports broken login because of CAPTCHA. This historical client shoul
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/markokchainmontecarlo/index.md
 
 - Repository: https://github.com/AlgoETS/MarkokChainMonteCarlo
+- Inspected revision: 96c96e249b3d51b63c348f38f4c4f37b67c0baf9
 
 
 ## Use cases
@@ -3477,6 +3401,22 @@ Notebooks that simulate AAPL prices with Monte Carlo and a Markov chain, then ba
 3. Split the data at 2023-01-01 and build the price-bin transition matrix from the earlier part.
 4. Create Backtest objects for MCMCStrategy and BuyAndHoldStrategy on both periods and call run().
 5. Plot the result; output/MCMCStrategy.html is a saved backtesting.py chart of MCMCStrategy.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 93 |
+| HTML | 7 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Installation
+
+```bash
+pip install panda lxml bs4 httpx backtesting yfinance pandas_ta scipy rich TA-Lib
+```
+
 
 
 
@@ -3597,6 +3537,7 @@ Image tags and external services age independently. Review credentials, publishe
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/mistubavideo/index.md
 
 - Repository: https://github.com/ETSim/MistubaVideo
+- Inspected revision: 87b180b9f03333b773fecd7708be86c75b1f822d
 
 
 ## Use cases
@@ -3617,6 +3558,69 @@ Mitsuba 3 tools from ETSim that path-trace OBJ sequences and wear-field recordin
 3. Check the framing quickly with mitsuba-video preview demo.
 4. Run mitsuba-video render demo -q preview to path-trace the frames and encode the MP4.
 5. For real data, point python main.py wear render at a TextureFriction simulation_&lt;ts&gt; folder with -q paper.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 99.67 |
+| Dockerfile | 0.33 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Basic Usage
+
+```bash
+python main.py multi --folder exports --regex &#34;\d&#43;\.obj&#34;
+```
+
+### README.md · Command-line Options
+
+```bash
+Options:
+  -f, --folder TEXT               Folder containing OBJ files  [required]
+  -r, --regex TEXT                Regex pattern for OBJ filenames  [default: \d&#43;\.obj]
+  -n, --name TEXT                 Base name for output files  [default: multi_obj]
+  -t, --threaded                  Enable multi-threading
+  -w, --workers INTEGER           Max worker threads (if threaded)
+  --video / --no-video            Enable video creation  [default: video]
+  --gif / --no-gif                Enable GIF creation  [default: gif]
+  -d, --device TEXT               Rendering device (cpu/cuda)  [default: cpu]
+  -s, --spp INTEGER               Samples per pixel  [default: 256]
+  --width INTEGER                 Output image width  [default: 1920]
+  --height INTEGER                Output image height  [default: 1080]
+```
+
+### README.md · Additional Commands
+
+```bash
+python main.py info
+```
+
+### README.md · Command-line Usage
+
+```bash
+python main.py multi --folder models --view front --view top --view right
+```
+
+### README.md · Command-line Usage
+
+```bash
+python main.py multi --folder models --all-views
+```
+
+### packages/mitsuba_video/README.md · Install and run
+
+```bash
+pip install -e &#34;packages/mitsuba_video[texturefriction]&#34;   # drop the extra if you don&#39;t need h5py
+mitsuba-video fixture demo                                   # synthetic manifest to try things on
+mitsuba-video inspect demo
+mitsuba-video preview demo                                   # 960x540, 16 spp, every 8th frame
+mitsuba-video render  demo -q paper --camera orbit --title &#34;Wear on a plane&#34; --ramp 0.2
+mitsuba-video encode  demo/render_heatmap --fps 15 --hold 4  # new fps/title without re-rendering
+mitsuba-video render  demo --resume                          # continue an interrupted render
+```
+
 
 
 
@@ -3792,94 +3796,6 @@ The image fetch currently disables TLS verification with verify=False. That dese
 - [api/orchestrator.py](https://github.com/antoinebou12/novatorem/blob/master/api/orchestrator.py)
 - [api/spotify.py](https://github.com/antoinebou12/novatorem/blob/master/api/spotify.py)
 - [api/lastfm.py](https://github.com/antoinebou12/novatorem/blob/master/api/lastfm.py)
-
-
-
----
-
-# NX-Activity-Log: Turning console play records into views
-
-- HTML page: https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/
-- Markdown: https://antoineboucher.info/CV/blog/projects/notes/nx-activity-log/index.md
-
-- Repository: https://github.com/antoinebou12/NX-Activity-Log
-- License: MIT
-- Inspected revision: 757928a164399801dca1445a3cb3300f16abda06
-
-## Summary
-
-NX-Activity-Log is a fork of a Switch homebrew activity viewer. The application reads console play records and presents per-user and per-title summaries. Those records are inputs from the console rather than events generated by the UI.
-
-**Why it exists:** High-precision telemetry parser reading raw Switch playtime event logs without system telemetry bans.
-
-**Best fit:** Detailed gameplay analytics and playtime tracking for Switch homebrew.
-
-## Use cases
-
-Nintendo Switch homebrew that shows detailed per-user play time, sessions and launches, maintained for HOS 22.
-
-- **View all-time playtime** (Switch player, Switch PDM service): The All Activity screen lists each game&#39;s total playtime, launch count, first and last launch, sorted by the chosen criterion; totals come from the system PDM statistics.
-- **Graph recent play sessions** (Switch player, Switch PDM service): PlayData::readPlayDataFromPdm pages through pdmqryQueryPlayEvent; RecentActivity and Details draw a graph by day, month or year and list each play session.
-- **Export or import play data** (Switch player): Settings runs ExportJob to write /switch/NX-Activity-Log/export.json and ImportJob to read import.json into importedData.json, matched by username.
-- **Customize the theme** (Switch player): CustomTheme and ColourPicker let the player change every colour; a PNG at /config/NX-Activity-Log/background.png sets a custom background.
-- **Update from inside the app** (Switch player, GitHub Releases): UpdateUtils.cpp queries the GitHub API for the latest antoinebou12/NX-Activity-Log release and downloads its first asset with curl.
-- **Replace the User Page** (Switch player): Forwarder/ is a modified nx-hbloader that opens the app from the User Page; the README warns this mode is unreliable on HOS 21 and later.
-
-### Scenario: Move play history to a new Switch
-
-1. Copy NX-Activity-Log.nro from the Releases page to /switch/NX-Activity-Log/ and launch it from the homebrew menu.
-2. Pick a user, then open Settings and choose Export to write export.json.
-3. Copy export.json to the other console&#39;s SD card as /switch/NX-Activity-Log/import.json.
-4. Run Settings, Import there and restart the app.
-5. Check that imported sessions appear in Recent Activity and that All Activity shows the merged totals.
-
-## Languages (GitHub Linguist bytes)
-
-| Language | % |
-| --- | ---: |
-| C&#43;&#43; | 92.17 |
-| Makefile | 4.16 |
-| C | 3.44 |
-| Assembly | 0.23 |
-
-## Features and components
-
-- **Application lifecycle** — main.cpp creates Main::Application, runs it and releases it afterward. The source tree separates console-facing code under nx from UI and utility modules. Import and export jobs have their own source files.
-- **Records and presentation** — The documented views organize activity by user, game and time period. That requires keeping record extraction separate from grouping and display. Exported data is another output of the application, not a substitute for the source records.
-
-## Architecture
-
-Components and connections verified in the repository.
-
-- Console activity records → Application record handling
-- Application record handling → User and title grouping
-- User and title grouping → Activity views
-- Application record handling → Export job
-
-```mermaid
-flowchart LR
-  n0[&#34;Console activity records&#34;]
-  n1[&#34;Application record handling&#34;]
-  n2[&#34;User and title grouping&#34;]
-  n3[&#34;Activity views&#34;]
-  n4[&#34;Export job&#34;]
-  n0 --&gt; n1
-  n1 --&gt; n2
-  n2 --&gt; n3
-  n1 --&gt; n4
-```
-
-**One path through the code:** Begin with Main::Application and follow the console-facing nx modules before the views. This distinguishes a change in aggregation from a change in which records are available on the device.
-
-## Constraints and checks
-
-This is a fork, and console record access depends on the environment. The repository does not establish complete or tamper-proof historical tracking.
-
-## Files to read
-
-- [Application/source/main.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/main.cpp)
-- [Application/source/Application.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.cpp)
-- [Application/source/Application.ExportJob.cpp](https://github.com/antoinebou12/NX-Activity-Log/blob/main/Application/source/Application.ExportJob.cpp)
 
 
 
@@ -4102,6 +4018,7 @@ Do not import or run this script against attached hardware without reviewing sta
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/polyfemblenderplugin/index.md
 
 - Repository: https://github.com/ETSim/PolyFEMBlenderPlugin
+- Inspected revision: 70794d3107843eeaa55210ff899d1f86a9ba5cf5
 
 
 ## Use cases
@@ -4122,6 +4039,12 @@ Blender add-on that turns a scene into a PolyFEM JSON setup and runs the simulat
 3. Select the meshes, apply a material preset and set contact, time step and end time.
 4. Click Create JSON Configuration to write the meshes and the JSON file to the export path.
 5. Click Run PolyFem Simulation, then Render Animation to import the step_*.vtu results as keyframed meshes.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 100 |
 
 
 
@@ -4332,6 +4255,7 @@ This archived setup needs dependency and browser review before reuse. Only use g
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/salary/index.md
 
 - Repository: https://github.com/AlgoETS/Salary
+- Inspected revision: 40b10f4d6a2a6670400b960c2476d9b7e494eaa1
 
 
 ## Use cases
@@ -4351,6 +4275,15 @@ Python scripts and notebooks that extract Canadian salary guides and wage tables
 3. Check that data/pickle/salary_guide_2023.pkl was written.
 4. Start jupyter notebook and open sandbox/salary_exploration_2023.ipynb, which splits each range and computes entry, mid and senior means.
 5. Call compare_job_province(&#39;cloud architect&#39;, &#39;québec&#39;) to rank Québec regions by mean mid-level salary.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 50.9 |
+| Jupyter Notebook | 48.1 |
+| Python | 0.99 |
+| Dockerfile | 0.02 |
 
 
 
@@ -4487,6 +4420,7 @@ Request context can contain personal data. Review enrichment and filtering befor
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/similityvectorembedding/index.md
 
 - Repository: https://github.com/AlgoETS/SimilityVectorEmbedding
+- Inspected revision: f3db0326f06dcadc56e0809fa054135f0ecacfc5
 
 
 ## Use cases
@@ -4508,6 +4442,14 @@ Jupyter notebooks that embed a movie catalog and find similar films with pgvecto
 4. Call find_similar_movies(conn, cur, &#34;The Matrix&#34;) to get the closest titles above a 0.5 cosine threshold.
 5. Plot the result with plot_similar_movies or try the same search in the Gradio interface.
 
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 99.9 |
+| Shell | 0.09 |
+| Dockerfile | 0.01 |
+
 
 
 ---
@@ -4518,6 +4460,7 @@ Jupyter notebooks that embed a movie catalog and find similar films with pgvecto
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/simulateur/index.md
 
 - Repository: https://github.com/AlgoETS/Simulateur
+- Inspected revision: 77f9e70c9982784327ac522c6dc6fcd050ad2ffc
 
 
 ## Use cases
@@ -4538,6 +4481,17 @@ Django stock-market game where admins run scripted scenarios and teams trade sim
 3. Sign in as admin and open /dashboard/admin to review the scenario, settings and noise function.
 4. Open /dashboard/game: candles arrive over the ws/simulation/ WebSocket at each timer step.
 5. From /dashboard/, choose the simulation and a stock and press Buy, which calls POST /api/stock/buy/; then check holdings and leaderboards.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 56.91 |
+| Python | 30.97 |
+| HTML | 11.59 |
+| Dockerfile | 0.2 |
+| CSS | 0.17 |
+| Shell | 0.16 |
 
 
 
@@ -4647,6 +4601,7 @@ Full-game testing requires the user’s own legally obtained game assets and act
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/index.md
 
 - Repository: https://github.com/AlgoETS/Sport-Arbitrage
+- Inspected revision: dbee18848ac988cd6f99764c3148d5e3349035b2
 
 
 ## Use cases
@@ -4667,11 +4622,20 @@ Browser calculator that checks two bookmakers&#39; odds for a sports-betting arb
 4. Read the result: only the lost-site1 and win-site2 pair qualifies, with stakes of about 26.54 and 73.46.
 5. Compare with the guaranteed profit line (about 4.31) and rerun arbitrage.ipynb to check the same numbers.
 
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| JavaScript | 38.34 |
+| Jupyter Notebook | 33.46 |
+| HTML | 25.5 |
+| CSS | 2.7 |
+
 
 
 ---
 
-# SpringBootFilesUploader: File bytes and metadata on separate paths
+# SpringBootFilesUploader: file uploads, and a small server console
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/index.md
@@ -5054,6 +5018,7 @@ A route-level demonstration is not a full security review. Session handling, dat
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/tradingviewbuilder/index.md
 
 - Repository: https://github.com/AlgoETS/TradingViewBuilder
+- Inspected revision: 2b5bed6ac9672d4bdb6e3e8e61dc3494dc70edc0
 
 
 ## Use cases
@@ -5085,6 +5050,7 @@ Pine Script indicators and strategies (EMA, MACD, RSI, Bollinger, RVI …) to pa
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/truemapdata/index.md
 
 - Repository: https://github.com/ETSim/TrueMapData
+- Inspected revision: 8e44bd4e57ad46eba45c46c997bd6b51d7622956
 
 
 ## Use cases
@@ -5105,6 +5071,36 @@ Python library and tmd-process CLI that read TrueMap and GelSight .tmd height ma
 3. Run tmd-wear volume-series with that file and tests/fixtures/gelsight_wear_volume_second_frame.tmd to measure the volume lost between frames.
 4. Export textures with tmd-process maps all &lt;file&gt; -o ./maps_out.
 5. Build a mesh with tmd-process mesh generate &lt;file&gt; --format stl --method adaptive --quality high for a 3D view of the worn area.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 94.36 |
+| Python | 5.64 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Installation
+
+```bash
+pip install truemapdata
+```
+
+### README.md · Installation
+
+```bash
+pip install &#34;truemapdata[mesh,viz,advanced]&#34;
+pip install &#34;truemapdata[roughness]&#34;   # Surfalize (GPL-3.0); Python 3.10&#43; only
+```
+
+### README.md · Installation
+
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
 
 
 
@@ -5358,6 +5354,7 @@ A URL payload is recoverable text, not encryption. The bundle’s instructions d
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearblender/index.md
 
 - Repository: https://github.com/ETSim/WearBlender
+- Inspected revision: 422ce0f0c2cf80045564859171ee26773ea4469f
 
 
 ## Use cases
@@ -5389,6 +5386,7 @@ Blender example scenes for learning how to fake wear with shaders, geometry node
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearmachine/index.md
 
 - Repository: https://github.com/ETSim/WearMachine
+- Inspected revision: beff25e1c78c84d26598153a20afe76fbae6a9b9
 
 
 ## Use cases
@@ -5419,6 +5417,7 @@ CAD, print and drawing files for a small sliding-wear bench whose samples are sc
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/wearsurfacesdatasets/index.md
 
 - Repository: https://github.com/ETSim/WearSurfacesDatasets
+- Inspected revision: 6841dff6be997b20c0ec288fd1f2f36a9d8bd8fe
 
 
 ## Use cases
@@ -5440,6 +5439,51 @@ Measured wear-surface map sequences (material, grit, load, distance) with Python
 4. Click Align sequence, then scrub the distance from 0 mm to 2400 mm or press Play.
 5. Run python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack to add interpolated and extrapolated steps.
 
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 100 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+git clone https://github.com/ETSim/WearSurfacesDatasets
+cd WearSurfacesDatasets
+git lfs pull
+pip install -r requirements.txt
+python docs/serve_local.py
+```
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+python -m alignment.bake --sequence-id cartboard-raw-normal-s60-200g --pack
+python -m alignment.bake --all --pack
+python -m alignment.bake_extrapolate_all
+```
+
+### README.md · Quick start — WebGPU wear viewer
+
+```bash
+python docs/prepare_viewer_parquets.py --source data/parquet --dest data/parquet
+```
+
+### README.md · Install (Python pipeline)
+
+```bash
+pip install -r requirements.txt
+```
+
+### data/parquet/README.md · Sync / rebuild sequences
+
+```bash
+python docs/prepare_viewer_parquets.py --source data/parquet --dest data/parquet
+```
+
+
 
 
 ---
@@ -5450,6 +5494,7 @@ Measured wear-surface map sequences (material, grit, load, distance) with Python
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/weartrailsexperiments/index.md
 
 - Repository: https://github.com/ETSim/WearTrailsExperiments
+- Inspected revision: 065ad38507733d951f35359059dd7d33c809c5b6
 
 
 ## Use cases
@@ -5470,6 +5515,12 @@ Browser experiments that turn rigid-body contact and sliding into wear and flow 
 3. Use Pause, Step Frame and Apply Angular Impulse to follow the contact patch in the PiP views.
 4. Switch the wear encoding between HSVA (Direction &#43; Wear) and RGBA to read direction and amount.
 5. Click Export Wear Map to save the accumulated ground map as a PNG.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 100 |
 
 
 
@@ -5570,6 +5621,7 @@ The manifest targets an older Redwood and Node toolchain. Authorization and game
 - Markdown: https://antoineboucher.info/CV/blog/projects/notes/workshop1/index.md
 
 - Repository: https://github.com/AlgoETS/Workshop1
+- Inspected revision: 7858d0e73ce4bee9bff9d6cf455118b8a6cef5f1
 
 
 ## Use cases
@@ -5589,6 +5641,12 @@ AlgoÉTS French workshop: Jupyter notebooks from Python basics to APIs, pandas, 
 3. Work through 1.0-basic, 2.0-api and 3.0-data in order.
 4. Open 5.0-project/5.1_project_ema.ipynb and replace YOUR_API_KEY with a Financial Modeling Prep key.
 5. Run the cells to load AAPL prices into a DataFrame, add EMA_20 and plot the close price with the 20-day EMA.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 100 |
 
 
 

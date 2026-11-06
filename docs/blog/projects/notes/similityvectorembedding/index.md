@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/SimilityVectorEmbedding
+- Inspected revision: f3db0326f06dcadc56e0809fa054135f0ecacfc5
 
 
 ## Use cases
@@ -30,5 +31,13 @@ Jupyter notebooks that embed a movie catalog and find similar films with pgvecto
 3. Run main() to load movies.json, embed each film with all-MiniLM-L6-v2 and insert it into the movies table.
 4. Call find_similar_movies(conn, cur, "The Matrix") to get the closest titles above a 0.5 cosine threshold.
 5. Plot the result with plot_similar_movies or try the same search in the Gradio interface.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 99.9 |
+| Shell | 0.09 |
+| Dockerfile | 0.01 |
 
 

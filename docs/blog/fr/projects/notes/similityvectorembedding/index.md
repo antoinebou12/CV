@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/SimilityVectorEmbedding
+- Révision inspectée: f3db0326f06dcadc56e0809fa054135f0ecacfc5
 
 
 ## Cas d’utilisation
@@ -30,5 +31,13 @@ Carnets Jupyter qui vectorisent un catalogue de films et trouvent des films proc
 3. Exécuter main() pour charger movies.json, vectoriser chaque film avec all-MiniLM-L6-v2 et l’insérer dans la table movies.
 4. Appeler find_similar_movies(conn, cur, "The Matrix") pour obtenir les titres les plus proches au-dessus d’un seuil cosinus de 0,5.
 5. Tracer le résultat avec plot_similar_movies ou refaire la recherche dans l’interface Gradio.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 99.9 |
+| Shell | 0.09 |
+| Dockerfile | 0.01 |
 
 

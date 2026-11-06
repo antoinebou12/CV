@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/AINewsTracker
+- Révision inspectée: 74a8366f5c19e352277a74381559e310e9cf959c
 
 
 ## Cas d’utilisation
@@ -29,5 +30,13 @@ Service FastAPI d'AlgoÉTS qui collecte des nouvelles financières, les note ave
 3. Appeler POST /seed/seed_news ; NewsSeeder lit les nouvelles boursières de Financial Modeling Prep en tâche de fond et enregistre les articles notés.
 4. Lire les articles avec GET /articles/ et vérifier l'un d'eux avec GET /articles/{article_id}/score.
 5. Depuis un service de backtest, appeler GET /v1/articles?symbols=AAPL avec le jeton de service Bearer.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Python | 88.92 |
+| Shell | 8.19 |
+| Dockerfile | 2.9 |
 
 

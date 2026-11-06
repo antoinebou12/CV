@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/LegosTracker
+- Inspected revision: c24d7e7693e838f9fd3888dd566926e7dea1fd7d
 
 
 ## Use cases
@@ -29,5 +30,12 @@ Notebooks and a Playwright scraper to study LEGO sets with Rebrickable data and 
 3. Run python brickeconomy.py; a visible Chromium window searches BrickEconomy and opens each set page.
 4. Move the generated 001-1_history.csv, 001-1_new.csv and lego_sets.csv into data/, where analyse.ipynb reads them.
 5. Run analyse.ipynb to plot the history, fit the regressions and simulate future prices.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 98.94 |
+| Python | 1.06 |
 
 

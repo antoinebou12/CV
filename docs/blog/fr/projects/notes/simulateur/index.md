@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/Simulateur
+- Révision inspectée: 77f9e70c9982784327ac522c6dc6fcd050ad2ffc
 
 
 ## Cas d’utilisation
@@ -30,5 +31,16 @@ Jeu boursier Django : les admins lancent des scénarios scriptés et les équipe
 3. Se connecter en admin et ouvrir /dashboard/admin pour revoir le scénario, les réglages et la fonction de bruit.
 4. Ouvrir /dashboard/game : les chandelles arrivent par le WebSocket ws/simulation/ à chaque pas de temps.
 5. Depuis /dashboard/, choisir la simulation et une action puis cliquer sur Buy, qui appelle POST /api/stock/buy/ ; consulter ensuite positions et classements.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 56.91 |
+| Python | 30.97 |
+| HTML | 11.59 |
+| Dockerfile | 0.2 |
+| CSS | 0.17 |
+| Shell | 0.16 |
 
 

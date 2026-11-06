@@ -10,6 +10,8 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
 
 - [Six shaders Shadertoy, lus ligne par ligne](https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/index.md) · 2026-11-06
   Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à la souris.
+- [Ce que dit un guide salarial canadien quand on lit bien ses tableaux](https://antoineboucher.info/CV/blog/fr/posts/salary-guide-2023-results/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/salary-guide-2023-results/index.md) · 2026-11-05
+  Relecture du texte du guide salarial 2023 conservé dans AlgoETS/Salary : 19 387 lignes, des tableaux financiers lus comme des niveaux d’expérience, et les salaires par famille d’emplois, province et ville.
 - [Refonte du site avec Hugo (partie 2)](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/index.md) · 2026-10-24
   Refonte du portfolio Hugo : identité commune, articles bilingues, skills de dépôt, diagrammes interactifs et publication locale.
 - [TrueMapData : des cartes mesurées aux ressources utilisables](https://antoineboucher.info/CV/blog/fr/posts/truemapdata-height-maps/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/truemapdata-height-maps/index.md) · 2026-10-24
@@ -78,8 +80,8 @@ Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté
   BatchBacktesting à l’échelle — lire les classements agrégés sans confondre criblage et stratégie.
 - [Économie des boîtes LEGO avec science des données](https://antoineboucher.info/CV/blog/fr/posts/economics-lego-data-science/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/economics-lego-data-science/index.md) · 2024-05-30
   Tendances Rebrickable, prix BrickEconomy, scraping Playwright, régression sur le set 001-1 — récit avec graphiques, code dans LegosTracker.
-- [Expérimentation des indicateurs technique avec Python et Backtesting](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/index.md) · 2024-05-14
-  BatchBacktesting EMA/MACD — lecture des extrêmes, pas conseil de trading.
+- [Expérimentation des indicateurs techniques avec Python et Backtesting](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/experimentation-indicateurs-backtesting/index.md) · 2024-05-14
+  BatchBacktesting avec une stratégie EMA sur le S&P 500 et les cryptos : le code, le classement, et comment lire des rendements extrêmes.
 - [Faire travailler ensemble Caddy, EC2, CloudWatch, Step Functions et Lambda](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/caddy-ec2-cloudwatch-lambda/index.md) · 2024-05-14
   Caddy sur une instance EC2 t4g.nano : journaux d’accès JSON, script Python nocturne vers CloudWatch, workflow Step Functions qui lance des Lambdas Logs Insights et de géolocalisation, et les corrections que je ferais aujourd’hui.
 - [Parcours vers la certification AWS Certified Cloud Practitioner](https://antoineboucher.info/CV/blog/fr/posts/aws-certified-cloud-practitioner/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/aws-certified-cloud-practitioner/index.md) · 2024-05-14

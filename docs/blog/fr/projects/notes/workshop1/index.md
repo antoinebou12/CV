@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/Workshop1
+- Révision inspectée: 7858d0e73ce4bee9bff9d6cf455118b8a6cef5f1
 
 
 ## Cas d’utilisation
@@ -29,5 +30,11 @@ Atelier AlgoÉTS en français : carnets Jupyter, des bases de Python aux API, à
 3. Parcourir 1.0-basic, 2.0-api et 3.0-data dans l'ordre.
 4. Ouvrir 5.0-project/5.1_project_ema.ipynb et remplacer YOUR_API_KEY par une clé Financial Modeling Prep.
 5. Exécuter les cellules pour charger les cours d'AAPL dans un DataFrame, ajouter EMA_20 et tracer la clôture avec l'EMA 20 jours.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 100 |
 
 

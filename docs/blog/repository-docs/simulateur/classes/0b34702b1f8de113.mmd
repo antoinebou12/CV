@@ -1,0 +1,29 @@
+classDiagram
+direction TB
+class tf5a868487bcb["StrategyManagementView"] {
+  get()
+  post()
+}
+class tcf388d219c2b["SearchChartView"] {
+  get()
+}
+class t4795379d7ea5["SandboxView"] {
+  get()
+  post()
+  get_stock_data()
+  transform_stock_data()
+  calculate_indicators()
+  calculate_ema()
+  calculate_sma()
+  calculate_bollinger()
+  calculate_crossings()
+  _detect_crossings_between_series()
+  _detect_crossings_between_two_series()
+  _detect_ema_sma_crossings()
+}
+class b812236191949["View"] {
+  <<unresolved_base>>
+}
+b812236191949 <|-- tf5a868487bcb
+b812236191949 <|-- tcf388d219c2b
+b812236191949 <|-- t4795379d7ea5

@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/ETSim/PolyFEMBlenderPlugin
+- Inspected revision: 70794d3107843eeaa55210ff899d1f86a9ba5cf5
 
 
 ## Use cases
@@ -30,5 +31,11 @@ Blender add-on that turns a scene into a PolyFEM JSON setup and runs the simulat
 3. Select the meshes, apply a material preset and set contact, time step and end time.
 4. Click Create JSON Configuration to write the meshes and the JSON file to the export path.
 5. Click Run PolyFem Simulation, then Render Animation to import the step_*.vtu results as keyframed meshes.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Python | 100 |
 
 

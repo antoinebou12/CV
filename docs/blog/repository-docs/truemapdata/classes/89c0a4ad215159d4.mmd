@@ -1,0 +1,38 @@
+classDiagram
+direction TB
+class t6e8762aca667["_PlotterMissingDep"] {
+  plot()
+  save()
+  __init__()
+}
+class t70150a354c25["_DummyPlotter"] {
+  plot()
+  save()
+}
+class t127a942ae0c8["_DummySequencePlotter"] {
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+}
+class tc290262935e7["_NotAPlotter"] {
+}
+class t0630c23f866c["_NotASequence"] {
+}
+class t365a396807bf["_SeqWithBadDep"] {
+  __init__()
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+}
+class be09801a30a04["BasePlotter"] {
+  <<unresolved_base>>
+}
+be09801a30a04 <|-- t6e8762aca667
+be09801a30a04 <|-- t70150a354c25
+class b70cfec71d513["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+b70cfec71d513 <|-- t127a942ae0c8
+b70cfec71d513 <|-- t365a396807bf

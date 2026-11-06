@@ -1,12 +1,12 @@
 # TCH099: One PHP router for pages and API calls
 
-> TCH099 is a teaching-oriented web project that combines static frontend pages with PHP API handlers. The route file makes the boundary visible: some…
+> TCH099 is a demo PHP web app with a hand-written router, a session login API, an Android client and an Azure deployment guide, documented on its own GitHub Pages site.
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/tch099/
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/tch099/index.md
 - Published: 2026-10-23
-- Updated: 2026-10-23
+- Updated: 2026-11-05
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/antoinebou12/TCH099

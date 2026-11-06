@@ -6,10 +6,11 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/truemapdata/index.md
 - Published: 2026-10-24
-- Updated: 2026-10-24
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/ETSim/TrueMapData
+- Inspected revision: 8e44bd4e57ad46eba45c46c997bd6b51d7622956
 
 
 ## Use cases
@@ -30,5 +31,35 @@ Python library and tmd-process CLI that read TrueMap and GelSight .tmd height ma
 3. Run tmd-wear volume-series with that file and tests/fixtures/gelsight_wear_volume_second_frame.tmd to measure the volume lost between frames.
 4. Export textures with tmd-process maps all <file> -o ./maps_out.
 5. Build a mesh with tmd-process mesh generate <file> --format stl --method adaptive --quality high for a 3D view of the worn area.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 94.36 |
+| Python | 5.64 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Installation
+
+```bash
+pip install truemapdata
+```
+
+### README.md · Installation
+
+```bash
+pip install "truemapdata[mesh,viz,advanced]"
+pip install "truemapdata[roughness]"   # Surfalize (GPL-3.0); Python 3.10+ only
+```
+
+### README.md · Installation
+
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
 
 

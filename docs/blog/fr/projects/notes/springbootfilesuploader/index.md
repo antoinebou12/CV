@@ -1,12 +1,12 @@
-# SpringBootFilesUploader : Séparer les octets et les métadonnées
+# SpringBootFilesUploader : envoi de fichiers et petite console serveur
 
-> SpringBootFilesUploader est un backend Kotlin et Spring qui sépare stockage binaire et métadonnées. L’identifiant retourné au client relie ces deux…
+> Une API Kotlin Spring Boot 2.6 qui range les fichiers envoyés dans S3 ou MinIO et leurs métadonnées dans MongoDB, derrière des rôles JWT, et qui pilote aussi Docker, Caddy et SSH. Structure, parcours d’une requête et dépendances vérifiés dans le code.
 
 - Page HTML: https://antoineboucher.info/CV/blog/fr/projects/notes/springbootfilesuploader/
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/index.md
 - Publié: 2026-10-23
-- Mis à jour: 2026-10-23
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/antoinebou12/SpringBootFilesUploader

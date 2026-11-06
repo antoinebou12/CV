@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/sport-arbitrage/index.md
 - Publié: 2026-11-05
-- Mis à jour: 2026-11-05
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/Sport-Arbitrage
+- Révision inspectée: dbee18848ac988cd6f99764c3148d5e3349035b2
 
 
 ## Cas d’utilisation
@@ -29,5 +30,14 @@ Calculatrice web qui vérifie les cotes de deux sites de paris pour repérer un 
 3. Entrer une mise totale (Total Investment) de 100 et cliquer sur Calculate.
 4. Lire le résultat : seule la paire lost-site1 et win-site2 se qualifie, avec des mises d’environ 26,54 et 73,46.
 5. Comparer avec la ligne de profit garanti (environ 4,31) et relancer arbitrage.ipynb pour vérifier les mêmes chiffres.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| JavaScript | 38.34 |
+| Jupyter Notebook | 33.46 |
+| HTML | 25.5 |
+| CSS | 2.7 |
 
 

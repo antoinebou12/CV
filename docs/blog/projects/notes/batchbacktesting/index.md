@@ -6,10 +6,11 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/batchbacktesting/index.md
 - Published: 2026-10-24
-- Updated: 2026-10-24
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/BatchBacktesting
+- Inspected revision: 6aae4af0733c248ae4c4dec1b25affa942f8037d
 
 
 ## Use cases
@@ -30,5 +31,24 @@ AlgoÉTS notebooks that backtest indicator strategies on S&P 500 stocks and cryp
 3. Run the cell tickers = get_SP500() then run_backtests(tickers, strategy=EMA, num_threads=12, generate_plots=True).
 4. Check output/EMA-<start>-<end>.csv for the combined results and output/charts/EMA/ for one HTML chart per ticker.
 5. Open analyse.ipynb and run the EMA section to list the top returns and compare them with buy and hold.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 99.98 |
+| Jupyter Notebook | 0.02 |
+| Python | 0 |
+
+## Getting started (repository commands, not run here)
+
+### README.md · Installation
+
+```bash
+git clone https://github.com/username/BatchBacktesting.git
+cd BatchBacktesting
+pip install -r requirements.txt
+```
+
 
 

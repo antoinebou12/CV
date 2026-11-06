@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/salary/index.md
 - Publié: 2026-11-05
-- Mis à jour: 2026-11-05
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/Salary
+- Révision inspectée: 40b10f4d6a2a6670400b960c2476d9b7e494eaa1
 
 
 ## Cas d’utilisation
@@ -29,5 +30,14 @@ Scripts et carnets Python qui extraient des guides salariaux et tableaux de sala
 3. Vérifier que data/pickle/salary_guide_2023.pkl a été créé.
 4. Démarrer jupyter notebook et ouvrir sandbox/salary_exploration_2023.ipynb, qui sépare chaque fourchette et calcule les moyennes par niveau.
 5. Appeler compare_job_province('cloud architect', 'québec') pour classer les régions du Québec selon le salaire intermédiaire moyen.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 50.9 |
+| Jupyter Notebook | 48.1 |
+| Python | 0.99 |
+| Dockerfile | 0.02 |
 
 

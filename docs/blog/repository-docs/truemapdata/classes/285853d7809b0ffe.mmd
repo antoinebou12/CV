@@ -1,0 +1,32 @@
+classDiagram
+direction TB
+class tfa4951ac0e70["SeabornHeightMapPlotter"] {
+  plot()
+  plot_heatmap()
+  plot_enhanced_heatmap()
+  plot_2d()
+  plot_3d()
+  save()
+}
+class t02174223565d["SeabornSequencePlotter"] {
+  __init__()
+  visualize_sequence()
+  create_animation()
+  visualize_statistics()
+  save_figure()
+}
+class tae94d368adc1["SeabornProfilePlotter"] {
+  __init__()
+  plot_height_distribution()
+  plot_profile_comparison()
+  plot_joint_distribution()
+  plot_profile()
+}
+class b5157c887a621["BasePlotter"] {
+  <<unresolved_base>>
+}
+b5157c887a621 <|-- tfa4951ac0e70
+class bca69c0308cc0["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+bca69c0308cc0 <|-- t02174223565d

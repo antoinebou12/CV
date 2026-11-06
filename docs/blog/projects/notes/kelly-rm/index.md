@@ -6,10 +6,11 @@
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/kelly-rm/index.md
 - Published: 2026-11-05
-- Updated: 2026-11-05
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/Kelly_RM
+- Inspected revision: faf4eebf51c2b7e00b1ce6ff2fdf4400b63a9bd6
 
 
 ## Use cases
@@ -29,5 +30,12 @@ Notebooks and helpers to estimate trade odds from backtests and size positions w
 3. Split each series into a three-year training set and an unseen set.
 4. Optimize RsiOscillator with Backtest.optimize and read the parameter heatmap.
 5. Compute win probability and win/loss sizes per ticker on both sets, then the Kelly fraction for each kept ticker.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 97.99 |
+| Python | 2.01 |
 
 

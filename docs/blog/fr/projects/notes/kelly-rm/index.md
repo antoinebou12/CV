@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/kelly-rm/index.md
 - Publié: 2026-11-05
-- Mis à jour: 2026-11-05
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/AlgoETS/Kelly_RM
+- Révision inspectée: faf4eebf51c2b7e00b1ce6ff2fdf4400b63a9bd6
 
 
 ## Cas d’utilisation
@@ -29,5 +30,12 @@ Carnets et utilitaires pour estimer les chances de gain par backtest et dimensio
 3. Séparer chaque série en trois ans d’entraînement et une période inédite.
 4. Optimiser RsiOscillator avec Backtest.optimize et lire la carte de chaleur des paramètres.
 5. Calculer par titre la probabilité de gain et la taille des gains et pertes sur les deux périodes, puis la fraction de Kelly des titres retenus.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 97.99 |
+| Python | 2.01 |
 
 

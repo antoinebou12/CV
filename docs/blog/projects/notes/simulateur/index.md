@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/AlgoETS/Simulateur
+- Inspected revision: 77f9e70c9982784327ac522c6dc6fcd050ad2ffc
 
 
 ## Use cases
@@ -30,5 +31,16 @@ Django stock-market game where admins run scripted scenarios and teams trade sim
 3. Sign in as admin and open /dashboard/admin to review the scenario, settings and noise function.
 4. Open /dashboard/game: candles arrive over the ws/simulation/ WebSocket at each timer step.
 5. From /dashboard/, choose the simulation and a stock and press Buy, which calls POST /api/stock/buy/; then check holdings and leaderboards.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| Jupyter Notebook | 56.91 |
+| Python | 30.97 |
+| HTML | 11.59 |
+| Dockerfile | 0.2 |
+| CSS | 0.17 |
+| Shell | 0.16 |
 
 

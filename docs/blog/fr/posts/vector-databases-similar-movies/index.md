@@ -85,7 +85,31 @@ Changez le nom de colonne selon le modèle : le cours garde plusieurs colonnes `
 - Comment le choix de l’encodeur déplace le sens de « similaire » (BART, MiniLM, e5-large).
 - Que la transparence du SQL vaut mieux qu’une API opaque quand on débogue de mauvais voisins.
 
-Graphiques et distributions complets : [Medium, partie 1](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d) et notebooks `postgres/` du dépôt.
+### Ce que la partie 1 a mesuré
+
+La distance cosinus compare l’angle entre deux vecteurs, la distance euclidienne (L2) l’écart entre leurs extrémités. Un document court et un document long sur le même sujet pointent dans la même direction mais n’ont pas la même longueur : c’est pourquoi le cosinus est le choix par défaut pour les embeddings de texte.
+
+![Projection de trois documents en 3D : angle cosinus et distance euclidienne](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-001.png)
+
+Pour *Les Indestructibles* (*The Incredibles*), l’article Medium classait les films les plus proches selon cinq encodeurs (BART, GTE, MiniLM, RoBERTa, e5-large) et quatre mesures : similarité cosinus, distance L2, produit scalaire et distance de Jaccard. Le panneau cosinus :
+
+![Similarité cosinus des meilleurs résultats pour The Incredibles, un panneau par encodeur](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-002.png)
+
+Les barres des meilleurs résultats se ressemblent toutes. Les distributions de scores sur tout le catalogue, elles, diffèrent, et en disent plus sur chaque encodeur que les classements :
+
+![BART : scores tassés entre 0,85 et 0,93](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-007.png)
+
+![GTE : scores centrés autour de 0,57](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-008.png)
+
+![MiniLM : scores étalés de 0,1 à 0,75](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-009.png)
+
+![RoBERTa : scores centrés autour de 0,75](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-010.png)
+
+![e5-large : scores tassés entre 0,70 et 0,86](https://antoineboucher.info/CV/blog/posts/vector-databases-similar-movies/images/img-011.png)
+
+BART donne un score élevé à presque tous les films : un seuil comme « similarité supérieure à 0,8 » garde quasiment tout le catalogue. MiniLM étale le même catalogue sur une plage bien plus large, ce qui rend ses classements plus faciles à couper. Un score n’a de sens que par rapport à la distribution de son propre encodeur.
+
+Le code des graphiques et les autres mesures de distance sont dans la [partie 1 sur Medium](https://medium.com/@antoine.boucher012/using-vector-databases-to-find-similar-movies-algorithm-part-1-f14a244bb23d) et dans les notebooks `postgres/` du dépôt.
 
 ## Partie 2 — Qdrant, MovieLens, dense et creux
 

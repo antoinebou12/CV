@@ -1,0 +1,30 @@
+classDiagram
+direction TB
+class t1634400c6ff9["MatplotlibHeightMapPlotter"] {
+  __init__()
+  plot()
+  plot_2d()
+  plot_3d()
+  plot_profile()
+  show()
+  _plot_3d_surface()
+  _plot_2d_heatmap()
+  _plot_contour()
+  _plot_profile()
+  save()
+}
+class tee335d6e350a["MatplotlibSequencePlotter"] {
+  __init__()
+  create_animation()
+  visualize_sequence()
+  visualize_statistics()
+  save_figure()
+}
+class bdff679c26b03["BasePlotter"] {
+  <<unresolved_base>>
+}
+bdff679c26b03 <|-- t1634400c6ff9
+class b2e5b13889f30["BaseSequencePlotter"] {
+  <<unresolved_base>>
+}
+b2e5b13889f30 <|-- tee335d6e350a

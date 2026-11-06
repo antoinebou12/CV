@@ -10,6 +10,7 @@
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/ETSim/WearTrailsExperiments
+- Inspected revision: 065ad38507733d951f35359059dd7d33c809c5b6
 
 
 ## Use cases
@@ -30,5 +31,11 @@ Browser experiments that turn rigid-body contact and sliding into wear and flow 
 3. Use Pause, Step Frame and Apply Angular Impulse to follow the contact patch in the PiP views.
 4. Switch the wear encoding between HSVA (Direction + Wear) and RGBA to read direction and amount.
 5. Click Export Wear Map to save the accumulated ground map as a PNG.
+
+## Languages (GitHub Linguist bytes)
+
+| Language | % |
+| --- | ---: |
+| HTML | 100 |
 
 

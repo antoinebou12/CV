@@ -10,6 +10,7 @@
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/WearTrailsExperiments
+- Révision inspectée: 065ad38507733d951f35359059dd7d33c809c5b6
 
 
 ## Cas d’utilisation
@@ -30,5 +31,11 @@ Expériences web qui transforment le contact et le glissement de corps rigides e
 3. Utiliser Pause, Step Frame et Apply Angular Impulse pour suivre la zone de contact dans les vignettes.
 4. Basculer l'encodage d'usure entre HSVA (Direction + Wear) et RGBA pour lire direction et quantité.
 5. Cliquer sur Export Wear Map pour enregistrer en PNG la carte cumulée du sol.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| HTML | 100 |
 
 

@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/wearmachine/index.md
 - Publié: 2026-11-05
-- Mis à jour: 2026-11-05
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/WearMachine
+- Révision inspectée: beff25e1c78c84d26598153a20afe76fbae6a9b9
 
 
 ## Cas d’utilisation

@@ -1,12 +1,12 @@
-# SpringBootFilesUploader: File bytes and metadata on separate paths
+# SpringBootFilesUploader: file uploads, and a small server console
 
-> SpringBootFilesUploader is a Kotlin and Spring backend with a file-upload path that separates binary storage from document metadata. A file identifier…
+> A Kotlin Spring Boot 2.6 API that stores uploaded files in S3 or MinIO with metadata in MongoDB, behind JWT roles, and also drives Docker, Caddy and SSH. Structure, request flow and dependencies checked against the code.
 
 - HTML page: https://antoineboucher.info/CV/blog/projects/notes/springbootfilesuploader/
 - Language: en
 - Translation (fr): https://antoineboucher.info/CV/blog/fr/projects/notes/springbootfilesuploader/index.md
 - Published: 2026-10-23
-- Updated: 2026-10-23
+- Updated: 2026-11-06
 - Author: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Repository: https://github.com/antoinebou12/SpringBootFilesUploader

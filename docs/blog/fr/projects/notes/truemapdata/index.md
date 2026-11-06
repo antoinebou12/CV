@@ -6,10 +6,11 @@
 - Langue: fr
 - Traduction (en): https://antoineboucher.info/CV/blog/projects/notes/truemapdata/index.md
 - Publié: 2026-10-24
-- Mis à jour: 2026-10-24
+- Mis à jour: 2026-11-06
 - Auteur: Antoine Boucher (https://antoineboucher.info/CV/index-en.html)
 
 - Dépôt: https://github.com/ETSim/TrueMapData
+- Révision inspectée: 8e44bd4e57ad46eba45c46c997bd6b51d7622956
 
 
 ## Cas d’utilisation
@@ -30,5 +31,35 @@ Bibliothèque Python et CLI tmd-process pour les cartes de hauteur .tmd TrueMap 
 3. Lancer tmd-wear volume-series avec ce fichier et tests/fixtures/gelsight_wear_volume_second_frame.tmd pour mesurer le volume perdu entre les deux images.
 4. Exporter les textures avec tmd-process maps all <fichier> -o ./maps_out.
 5. Construire un maillage avec tmd-process mesh generate <fichier> --format stl --method adaptive --quality high pour voir la zone usée en 3D.
+
+## Langages (octets GitHub Linguist)
+
+| Langage | % |
+| --- | ---: |
+| Jupyter Notebook | 94.36 |
+| Python | 5.64 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Installation
+
+```bash
+pip install truemapdata
+```
+
+### README.md · Installation
+
+```bash
+pip install "truemapdata[mesh,viz,advanced]"
+pip install "truemapdata[roughness]"   # Surfalize (GPL-3.0); Python 3.10+ only
+```
+
+### README.md · Installation
+
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
 
 
