@@ -160,8 +160,13 @@
   {{- end -}}
   <!---->
 
-  <!-- canonical: always emit (auditors and SEO); production-only tags stay in the block above -->
-  <link rel="canonical" href="{{- .Permalink -}}" />
+  <!-- canonical: always emit (auditors and SEO); production-only tags stay in the block above.
+       A mirrored article (Medium) names its original in canonicalURL. Only the page in the
+       original's language points there (canonicalLang, default en); a translation stays canonical
+       to itself so it is not dropped as a duplicate of an article in another language. -->
+  {{- $canonical := .Permalink -}}
+  {{- with .Params.canonicalURL -}}{{- if eq $.Lang ($.Params.canonicalLang | default "en") -}}{{- $canonical = . -}}{{- end -}}{{- end }}
+  <link rel="canonical" href="{{- $canonical -}}" />
   <!-- hreflang: every translation of this page, English as the default for unmatched locales -->
   {{- if .IsTranslated -}}
   {{- range .AllTranslations }}

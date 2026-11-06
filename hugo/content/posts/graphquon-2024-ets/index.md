@@ -12,7 +12,6 @@ tags:
   - SIGGRAPH
   - Computer Graphics
   - NVIDIA
-canonicalURL: "https://graphquon.github.io/"
 images:
   - images/featured.png
 ---

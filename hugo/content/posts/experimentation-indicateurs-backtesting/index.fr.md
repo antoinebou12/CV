@@ -12,6 +12,7 @@ tags:
   - Trading
   - Backtesting
 canonicalURL: "https://medium.com/@antoine.boucher012/exp%C3%A9rimentation-des-indicateurs-technique-avec-python-et-backtesting-828bf93e92cc"
+canonicalLang: "fr"
 ---
 
 Batch **EMA** et **MACD** avec [BatchBacktesting](https://github.com/AlgoETS/BatchBacktesting) — FMP et Binance. Ce billet explique le runner et comment lire des rendements extrêmes sans les prendre pour une stratégie live.
