@@ -22,3 +22,14 @@ def test_sources_exclude_examples_code_images_and_duplicate_urls():
     assert records[0]['author'] == 'org'
     assert records[1]['author'] == ''
     assert all('date' not in record for record in records)
+
+
+def test_repository_linked_at_root_and_anchor_is_one_reference():
+    text = '''[install notes](https://github.com/org/repo#installation)
+    [Repository](https://github.com/org/repo)
+    [README](https://github.com/org/repo#readme)
+    [Guide](https://github.com/org/repo/blob/main/docs/guide.md)
+    '''
+    records = module.sources(text)
+    assert [r['title'] for r in records] == ['repo', 'Guide']
+    assert records[0]['url'] == 'https://github.com/org/repo'
