@@ -21,8 +21,8 @@ nova-backtest est une bibliothèque Python de backtesting de stratégies de trad
 Une stratégie est une sous-classe de `BackTest` (`novalabs-backtest/utils/backtest.py`) qui remplit trois méthodes sur un DataFrame pandas de bougies :
 
 - `build_indicators(df)` ajoute les colonnes d’indicateurs ;
-- `entry_strategy(df)` fixe `entry_signal` (1 achat, −1 vente à découvert, NaN rien), `take_profit`, `stop_loss` et `position_size` sur la bougie du signal ;
-- `exit_strategy(df)` fixe `exit_signal` (ou NaN partout).
+- `entry_strategy(df)` fixe `entry_signal` (1 achat, −1 vente à découvert, `NaN` rien), `take_profit`, `stop_loss` et `position_size` sur la bougie du signal ;
+- `exit_strategy(df)` fixe `exit_signal` (ou `NaN` partout).
 
 Le constructeur reçoit la plateforme, l’intervalle des bougies, les paires (une liste, `"All pairs"` ou `"Random N"`), la période, le capital de départ, le levier, le nombre maximal de positions ouvertes et la durée maximale de détention. Chaque position reçoit `levier / max_pos` du capital, et les frais maker de la plateforme viennent de `FEES` dans `utils/constant.py` (Binance 0,02 %, Bybit 0,01 %, OKX 0,015 %).
 

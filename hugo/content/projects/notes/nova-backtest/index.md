@@ -21,8 +21,8 @@ nova-backtest is a Python library for backtesting crypto trading strategies, pub
 A strategy is a subclass of `BackTest` (`novalabs-backtest/utils/backtest.py`) that fills three methods on a pandas DataFrame of candles:
 
 - `build_indicators(df)` adds indicator columns;
-- `entry_strategy(df)` sets `entry_signal` (1 long, −1 short, NaN nothing), `take_profit`, `stop_loss` and `position_size` on the signal candle;
-- `exit_strategy(df)` sets `exit_signal` (or NaN everywhere).
+- `entry_strategy(df)` sets `entry_signal` (1 long, −1 short, `NaN` nothing), `take_profit`, `stop_loss` and `position_size` on the signal candle;
+- `exit_strategy(df)` sets `exit_signal` (or `NaN` everywhere).
 
 The constructor takes the exchange, the candle interval, the pairs (a list, `"All pairs"` or `"Random N"`), the period, the starting bankroll, the leverage, the maximum number of open positions and the maximum holding time. Each position gets `leverage / max_pos` of the bankroll, and the exchange's maker fee comes from `FEES` in `utils/constant.py` (Binance 0.02%, Bybit 0.01%, OKX 0.015%).
 
