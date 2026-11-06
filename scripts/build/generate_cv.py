@@ -1,8 +1,9 @@
-"""Generate LaTeX (and future HTML) from data/cv.yaml."""
+"""Generate LaTeX skills and the blog skill map data (hugo/data/skill_tree.json) from data/cv.yaml."""
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -136,6 +137,34 @@ def render_skills(data: dict, lang: str) -> str:
     )
 
 
+SKILL_TREE = ROOT / "hugo" / "data" / "skill_tree.json"
+_INTERMEDIATE = re.compile(r"\s*·\s*Int\.\s*:\s*")
+
+
+def skill_tree(data: dict, lang: str) -> dict:
+    """Categories as the inner ring, skills as leaves: the same lists as the PDF Competences row."""
+    categories = []
+    for group in data["skill_groups"][f"latex_{lang}"]:
+        name = group["category"].replace("\\&", "&")
+        leaves = []
+        if group.get("generated") == "certifications":
+            leaves = [{"name": _cert_label(cert, lang), "url": cert["url"]} for cert in data.get("certifications", [])]
+        else:
+            core, *rest = _INTERMEDIATE.split(group["latex_line"], maxsplit=1)
+            for level, chunk in (("core", core), ("intermediate", rest[0] if rest else "")):
+                for item in (part.strip() for part in chunk.split(",")):
+                    if not item:
+                        continue
+                    leaf = {"name": item}
+                    if SKILL_URLS.get(item):
+                        leaf["url"] = SKILL_URLS[item]
+                    if level == "intermediate":
+                        leaf["level"] = "intermediate"
+                    leaves.append(leaf)
+        categories.append({"name": name, "children": leaves})
+    return {"name": data["person"]["name"], "children": categories}
+
+
 def write_outputs(data: dict) -> list[Path]:
     written: list[Path] = []
     for lang, sub in (("en", "cv-en"), ("fr", "cv-fr")):
@@ -146,6 +175,10 @@ def write_outputs(data: dict) -> list[Path]:
             normalized += "\n"
         out.write_text(normalized, encoding="utf-8", newline="\n")
         written.append(out)
+    # The blog's radial skill map (hugo/content/skills) reads the same groups.
+    tree = {"generated_from": "data/cv.yaml", **{lang: skill_tree(data, lang) for lang in ("en", "fr")}}
+    SKILL_TREE.write_text(json.dumps(tree, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    written.append(SKILL_TREE)
     return written
 
 
@@ -154,7 +187,7 @@ def main() -> int:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Regenerate and fail if skills.tex content would change",
+        help="Regenerate and fail if skills.tex or skill_tree.json would change",
     )
     args = parser.parse_args()
 
@@ -166,6 +199,7 @@ def main() -> int:
     before = {p: p.read_text(encoding="utf-8") if p.is_file() else "" for p in [
         ROOT / "cv-en" / "latex" / "skills.tex",
         ROOT / "cv-fr" / "latex" / "skills.tex",
+        SKILL_TREE,
     ]}
 
     written = write_outputs(data)
@@ -173,7 +207,7 @@ def main() -> int:
     if args.check:
         changed = [p for p in written if p.read_text(encoding="utf-8") != before[p]]
         if changed:
-            print("generate_cv.py --check FAILED: skills.tex out of date. Run:")
+            print("generate_cv.py --check FAILED: generated files out of date. Run:")
             print("  python scripts/build/generate_cv.py")
             for p in written:
                 if p.read_text(encoding="utf-8") != before[p]:

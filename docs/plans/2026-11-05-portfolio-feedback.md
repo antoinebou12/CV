@@ -57,9 +57,12 @@ Knowing this decides where each fix goes.
 - [ ] **A9. Remove notes for repositories with no commits by the user.**
   - Plan: for each repo in `hugo/data/project_repositories.json` and `project_org_repositories.json`, query the GitHub commits API with `author=antoinebou12`. List repos with zero commits, confirm the list with the user, then remove their notes (EN and FR), data entries and catalog cards.
   - Needs a decision: forks where the user's work is in an upstream pull request (for example bloc) count as contributions only if the PR exists.
-- [ ] **A10. Interactive skill map** (screenshot 2).
+- [x] **A10. Interactive skill map** (screenshot 2).
   - Found: nodes overlap and are clipped at the edges ("Cloud and", "Backend and APIs" over ".NET", "Graphics and 3D" over "CUDA"). The component is not in this repository; it is most likely the JSON Resume rendering of `resume.json`. Confirm where it is served.
   - Plan: rebuild it as a SkillSet-style radial tree (https://jac21.github.io/SkillSet/) fed from `data/cv.yaml`, with categories as the inner ring and skills as leaves, labels that never overlap, and EN/FR parity. Use the `playwright-audit-fix` skill to verify both themes and phone width.
+  - Where it was served: not found. Nothing in this repository, the live CV or the blog draws it, and registry.jsonresume.org has no profile for antoinebou12. Its labels ("Cloud and platform", "Backend and APIs", "Graphics and 3D") are the `skills` names in `resume.json`, so it is a third-party JSON Resume viewer. Still to confirm with the user.
+  - Done: new page `/blog/skills/` and `/blog/fr/skills/` ("Skill map" / "Carte des compétences"). `scripts/build/generate_cv.py` writes `hugo/data/skill_tree.json` from the same `skill_groups` as the PDF Competences row (7 categories, 35 skills plus certifications, intermediate skills marked), and `--check` in CI now covers it. The `skill-map` shortcode draws a dependency-free SVG radial tree (`assets/skill-map.js`, `skill-map.css`): every visible skill gets an equal angular slot so leaf labels cannot collide, labels run along the radius and flip on the left half, the canvas is fitted to the measured labels so nothing is clipped, categories fold on click or Enter/Space, and a text version lists everything (also the no-JavaScript view). On phones the stage scrolls sideways at a readable size and opens centred. Checked in Playwright: light and dark, 1280 and 390 px, fold/unfold by mouse and keyboard, no-JS list. The script is not minified because Hugo's minifier turned a block-scoped variable into a "Cannot access before initialization" error.
+  - Not done: no link to the page yet from the CV or blog navigation, pending where the old map was linked from.
 
 ## Group B: articles
 

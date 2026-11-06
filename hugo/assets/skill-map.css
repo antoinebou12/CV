@@ -1,0 +1,47 @@
+/* Radial skill map (skill-map.js). Colours come from the docs tokens so both themes work. */
+.skill-map {
+  --skill-hue-0: #0b6e66; --skill-hue-1: #8a4f00; --skill-hue-2: #6b3fa0; --skill-hue-3: #0b5f9a;
+  --skill-hue-4: #a2324a; --skill-hue-5: #4d6b00; --skill-hue-6: #8a3a8a; --skill-hue-7: #3d4f5f;
+  margin: 1.5rem 0 2rem;
+}
+html.dark .skill-map {
+  --skill-hue-0: #6fdbd0; --skill-hue-1: #f2b45c; --skill-hue-2: #c4a3f5; --skill-hue-3: #8cc8ff;
+  --skill-hue-4: #ff9cb0; --skill-hue-5: #b5d96a; --skill-hue-6: #e7a3e7; --skill-hue-7: #c2d0de;
+}
+.skill-map-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: 0 0 .75rem; }
+.skill-map-toolbar button:not(#\#):not(#\#):not(#\#) {
+  min-height: 40px; padding: .4rem .9rem; border: 1px solid var(--docs-line); border-radius: 8px;
+  background: var(--docs-panel); color: var(--docs-text); font: 600 .85rem/1.3 var(--type-docs, system-ui); cursor: pointer;
+}
+.skill-map-toolbar button:hover:not(#\#):not(#\#):not(#\#) { border-color: var(--docs-accent); }
+.skill-map-legend { display: inline-flex; flex-wrap: wrap; gap: .25rem 1rem; margin: 0 !important; color: var(--docs-muted); font-size: .85rem; }
+.skill-map-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.skill-map-legend i:not(#\#):not(#\#):not(#\#) { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--docs-muted); }
+.skill-map-legend i.is-core:not(#\#):not(#\#):not(#\#) { background: var(--docs-muted); }
+.skill-map-stage:not(#\#):not(#\#):not(#\#) { width: 100%; max-width: 860px; margin: 0 auto; border: 1px solid var(--docs-line); border-radius: 12px; background: var(--docs-panel); overflow: hidden; }
+.skill-map:not(.is-ready) .skill-map-stage, .skill-map:not(.is-ready) .skill-map-toolbar { display: none; }
+.skill-map-svg { display: block; width: 100%; height: auto; font: 500 13px/1 var(--type-docs, system-ui); }
+.skill-map-link { fill: none; stroke: var(--hue); stroke-opacity: .45; stroke-width: 1.4; }
+.skill-map-root { fill: var(--docs-text); }
+.skill-map-leaf circle { fill: var(--hue); stroke: var(--hue); stroke-width: 2; }
+.skill-map-leaf.is-intermediate circle { fill: var(--docs-panel); }
+.skill-map-leaf.is-intermediate text { font-style: italic; }
+.skill-map-svg text { fill: var(--docs-text); paint-order: stroke; stroke: var(--docs-panel); stroke-width: 4px; stroke-linejoin: round; }
+.skill-map-leaf a text { fill: var(--docs-text); text-decoration: none; }
+.skill-map-leaf a:hover text, .skill-map-leaf a:focus-visible text { fill: var(--hue); text-decoration: underline; }
+.skill-map-category { cursor: pointer; outline: none; }
+.skill-map-category circle { fill: var(--hue); stroke: var(--docs-panel); stroke-width: 3; }
+.skill-map-category.is-collapsed circle { fill: var(--docs-panel); stroke: var(--hue); stroke-width: 3; }
+.skill-map-category text { font-weight: 700; font-size: 13.5px; fill: var(--hue); }
+.skill-map-category:focus-visible circle { stroke: var(--docs-text); stroke-width: 3; }
+.skill-map-category:focus-visible text { text-decoration: underline; }
+.skill-map-svg.has-focus .skill-map-branch:not(.is-active) { opacity: .35; }
+@media (prefers-reduced-motion: no-preference) { .skill-map-branch { transition: opacity 160ms ease-out; } }
+.skill-map-text { margin-top: 1rem; }
+.skill-map-text ul ul { margin-top: .25rem; }
+.skill-map-text em { color: var(--docs-muted); }
+@media (max-width: 640px) {
+  .skill-map-stage:not(#\#):not(#\#):not(#\#) { overflow-x: auto; overscroll-behavior-x: contain; }
+  .skill-map-svg { width: 640px; max-width: none; }
+}
+.skill-map-svg a:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) { text-decoration: none !important; border: 0 !important; background: none !important; }
