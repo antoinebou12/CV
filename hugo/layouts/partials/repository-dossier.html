@@ -155,7 +155,7 @@
     {{ end }}
     {{ with $pub.entry_points }}
     <h4>{{ if $fr }}Points d’entrée{{ else }}Entry points{{ end }}</h4>
-    <ul class="repo-file-list compact">{{ range . }}<li>{{ if eq .kind "entry file" }}{{ partial "repository-evidence.html" . }} <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ else }}<code>{{ .name }}</code> <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ if ne .name .target }} <code>{{ .target }}</code>{{ end }} · {{ partial "repository-evidence.html" . }}{{ end }}</li>{{ end }}</ul>
+    <ul class="repo-file-list compact">{{ range . }}<li>{{ if eq .kind "entry file" }}{{ partial "repository-evidence.html" . }} <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ else }}<code>{{ .name }}</code> <span class="repo-evidence-label">{{ index $kind .kind | default .kind }}</span>{{ if ne .name .target }} <code>{{ .target }}</code>{{ end }} {{ partial "repository-evidence.html" . }}{{ end }}</li>{{ end }}</ul>
     {{ end }}
     {{ with $pub.exports }}
     <h4>{{ if $fr }}Exports du paquet{{ else }}Package exports{{ end }} (<code>__all__</code>)</h4>
@@ -176,7 +176,7 @@
     <dl class="repo-dossier-stats">{{ range . }}<div><dt>{{ index .label $i }}</dt><dd>{{ .count }}</dd></div>{{ end }}</dl>
     {{ end }}
     {{ with $priv.examples }}
-    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .name }}</code> · {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
+    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .name }}</code> {{ partial "repository-evidence.html" . }}</li>{{ end }}</ul>
     {{ end }}
     {{ with $priv.internal_dirs }}
     <h4>{{ if $fr }}Dossiers internes{{ else }}Internal folders{{ end }}</h4>
@@ -196,7 +196,7 @@
       {{ range . }}
       <article class="repo-dossier-card">
         <h4>{{ index .label $i }} <span class="repo-count">{{ .total }}</span></h4>
-        <ul role="list">{{ range .items }}{{ $s := . }}<li><a href="{{ .url }}"><code>{{ .name }}</code></a>{{ with .methods }} <span class="repo-evidence-label">{{ delimit (first 3 .) ", " }}{{ if gt $s.method_count 3 }}…{{ end }}</span>{{ end }}</li>{{ end }}</ul>
+        <ul class="repo-service-items" role="list">{{ range .items }}{{ $s := . }}<li><a href="{{ .url }}"><code>{{ .name }}</code></a>{{ with .methods }}<span class="repo-service-methods">{{ delimit (first 3 .) ", " }}{{ if gt $s.method_count 3 }}{{ if $fr }} et {{ sub $s.method_count 3 }} autres{{ else }} and {{ sub $s.method_count 3 }} more{{ end }}{{ end }}</span>{{ end }}</li>{{ end }}</ul>
       </article>
       {{ end }}
     </div>
@@ -287,7 +287,7 @@
     {{ end }}
     {{ with $int.hosts }}
     <h4>{{ if $fr }}Hôtes nommés dans le code{{ else }}Hosts named in the code{{ end }}</h4>
-    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .host }}</code> <span class="repo-evidence-label">{{ .files }} {{ index $files (cond (eq .files 1) 0 1) }}</span> · {{ partial "repository-evidence.html" .evidence }}</li>{{ end }}</ul>
+    <ul class="repo-file-list compact">{{ range . }}<li><code>{{ .host }}</code> <span class="repo-evidence-label">{{ .files }} {{ index $files (cond (eq .files 1) 0 1) }}</span> {{ partial "repository-evidence.html" .evidence }}</li>{{ end }}</ul>
     {{ end }}
   </section>
   {{ end }}

@@ -555,7 +555,7 @@ def layers_mermaid(layers, lang):
     for layer in main + side:
         title = layer["label"][i].replace('"', "'")
         lines.append(f'  subgraph L_{layer["key"]}["{title}"]')
-        lines.append("    direction LR")
+        lines.append("    direction TB")
         for index, module in enumerate(layer["modules"][:4]):
             name = module["name"].replace('"', "'")
             unit = ("fichiers" if i else "files") if module["files"] != 1 else ("fichier" if i else "file")
