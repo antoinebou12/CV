@@ -123,15 +123,41 @@ Schedule it with **cron** at night so daytime SSH sessions stay quiet:
 0 0 * * * /usr/bin/python3 /home/ec2-user/cloudwatch.py
 ```
 
-Core loop (abbreviated):
+The script, as published:
 
 ```python
-cloudwatch = boto3.client("logs", region_name="us-east-1")
-log_group_name = "reverse_proxy"
-# for each .log file → log stream → put_log_events per line
-```
+import os
+import boto3
+from datetime import datetime
 
-Full script: [Medium original](https://medium.com/@antoine.boucher012/making-caddy-aws-ec2-cloudwatch-step-functions-and-lambda-work-together-creating-a-cheap-and-990fd0d9427d).
+cloudwatch = boto3.client('logs', region_name='us-east-1')
+log_group_name = 'reverse_proxy'
+log_directory = "/home/ec2-user/caddy/logs"
+
+def send_log_to_cloudwatch(log_stream_name, log_message):
+    try:
+        streams = cloudwatch.describe_log_streams(logGroupName=log_group_name, logStreamNamePrefix=log_stream_name)
+        if not streams['logStreams']:
+            cloudwatch.create_log_stream(logGroupName=log_group_name, logStreamName=log_stream_name)
+        cloudwatch.put_log_events(
+            logGroupName=log_group_name,
+            logStreamName=log_stream_name,
+            logEvents=[{
+                'timestamp': int(datetime.now().timestamp() * 1000),
+                'message': log_message
+            }]
+        )
+    except Exception as e:
+        print(f"Failed to send log to CloudWatch: {str(e)}")
+
+for filename in os.listdir(log_directory):
+    if filename.endswith(".log"):
+        log_stream_name = filename[:-4]
+        file_path = os.path.join(log_directory, filename)
+        with open(file_path, 'r') as file:
+            for line in file:
+                send_log_to_cloudwatch(log_stream_name, line.strip())
+```
 
 Things to watch with this design:
 
@@ -145,6 +171,95 @@ Things to watch with this design:
 The workflow is two Lambda invocations in sequence: **QueryLogsInsights** runs a CloudWatch Logs Insights query over the shipped logs, then **GetGeolocation** looks up the addresses it returned.
 
 ![Step Functions workflow: QueryLogsInsights then GetGeolocation](images/img-003.png)
+
+**QueryLogsInsights** starts an Insights query over the last 24 hours, polls `get_query_results` until it finishes (30 seconds at most) and returns the list of IPs in the body:
+
+```python
+import boto3
+import json
+import time
+from datetime import datetime, timedelta
+
+def lambda_handler(event, context):
+    client = boto3.client('logs')
+    query = """
+    fields @timestamp, @message
+    | parse @message /"remote_ip": "(?<remote_ip>[^"]+)"/
+    | stats count() by remote_ip
+    | sort remote_ip asc
+    """
+    start_query_response = client.start_query(
+        logGroupName='reverse_proxy',
+        startTime=int((datetime.now() - timedelta(days=1)).timestamp()),
+        endTime=int(datetime.now().timestamp()),
+        queryString=query
+    )
+    query_id = start_query_response['queryId']
+    response = None
+    max_wait_time = 30
+    start_time = time.time()
+    while response is None or response['status'] == 'Running':
+        if time.time() - start_time > max_wait_time:
+            raise TimeoutError("Query did not complete within the maximum wait time.")
+        response = client.get_query_results(queryId=query_id)
+        time.sleep(0.5)
+
+    ip_addresses = []
+    for result in response['results']:
+        for field in result:
+            if field['field'] == 'remote_ip':
+                ip_addresses.append(field['value'])
+
+    return {'statusCode': 200, 'body': json.dumps({'ip_addresses': ip_addresses})}
+```
+
+**GetGeolocation** receives that body, asks [ipinfo.io](https://ipinfo.io/) about each address, and writes one JSON event per IP to a `geoip` log group:
+
+```python
+import json
+import urllib3
+import boto3
+import time
+
+def lambda_handler(event, context):
+    ip_addresses = json.loads(event['body'])['ip_addresses']
+    http = urllib3.PoolManager()
+    results = []
+    for ip in ip_addresses:
+        response = http.request('GET', f"https://ipinfo.io/{ip}/json")
+        data = json.loads(response.data.decode('utf-8'))
+        results.append({
+            'IP': ip,
+            'Location': f"{data.get('city')}, {data.get('region')}, {data.get('country')}",
+            'Coordinates': data.get('loc'),
+            'Organization': data.get('org'),
+            'Timezone': data.get('timezone')
+        })
+
+    log_client = boto3.client('logs')
+    log_group_name = 'geoip'
+    log_stream_name = 'geolocation_results'
+    try:
+        log_client.create_log_group(logGroupName=log_group_name)
+    except log_client.exceptions.ResourceAlreadyExistsException:
+        pass
+    try:
+        log_client.create_log_stream(logGroupName=log_group_name, logStreamName=log_stream_name)
+    except log_client.exceptions.ResourceAlreadyExistsException:
+        pass
+
+    log_events = [{'timestamp': int(time.time() * 1000), 'message': json.dumps(r)} for r in results]
+    batch_size = 10
+    for i in range(0, len(log_events), batch_size):
+        log_client.put_log_events(
+            logGroupName=log_group_name,
+            logStreamName=log_stream_name,
+            logEvents=log_events[i:i + batch_size]
+        )
+    return {'statusCode': 200, 'body': json.dumps(results)}
+```
+
+Two notes on these handlers. The comment in the original said `PutLogEvents` takes ten events at a time; the real limit is 10,000 events or 1 MB per call, so the batching only costs extra requests. And the ipinfo.io calls run one after another without a token, so a long list of IPs can hit both the free rate limit and the Lambda timeout.
 
 The query I first published was meant to list distinct remote IPs:
 
