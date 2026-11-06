@@ -55,7 +55,7 @@ float noise(in vec2 _st) {
 }
 ```
 
-`random` est le hachage classique en une ligne. Il multiplie un sinus par un grand nombre et garde la partie fractionnaire, ce qui donne une valeur dans `[0, 1)` qui a l’air aléatoire mais reste la même pour une même entrée.
+`random` est le hachage classique en une ligne. Il multiplie un sinus par un grand nombre et garde la partie fractionnaire, ce qui donne une valeur entre 0 et 1 qui a l’air aléatoire mais reste la même pour une même entrée.
 
 `noise` découpe le plan en cellules unitaires. `floor` donne la cellule et `fract` la position à l’intérieur. Chaque coin de la cellule reçoit une valeur aléatoire, et les quatre valeurs sont mélangées. Le poids du mélange est `u = f*f*(3 - 2f)`, la courbe cubique de smoothstep : la pente est nulle aux bords des cellules, qui se raccordent donc sans pli visible. La dernière expression est l’interpolation bilinéaire des quatre coins, écrite à la main.
 
@@ -184,7 +184,7 @@ vec3 aces_tonemap(vec3 color) {
 }
 ```
 
-C’est l’approximation très répandue du mappage de tons filmique ACES, par Stephen Hill, surtout connue par le projet BakingLab de Matt Pettineo. `m1` convertit la couleur dans l’espace de travail ACES, la fonction rationnelle `a / b` approche la courbe de réponse du film, et `m2` reconvertit. Le `pow(…, 1/2.2)` final est un encodage gamma pour l’écran.
+C’est l’approximation très répandue du mappage de tons filmique ACES, par Stephen Hill, surtout connue par le projet [BakingLab](https://github.com/TheRealMJP/BakingLab) de Matt Pettineo. `m1` convertit la couleur dans l’espace de travail ACES, la fonction rationnelle `a / b` approche la courbe de réponse du film, et `m2` reconvertit. Le `pow(…, 1/2.2)` final est un encodage gamma pour l’écran.
 
 ```glsl
 for (int i = 0; i < 9; i++) {
@@ -461,12 +461,3 @@ Comme pour Sea and Stars, l’extrait ne contient pas les fonctions `fbm4`, `fbm
 - **`mix` ne borne pas.** Un poids hors de l’intervalle 0 à 1 extrapole, ce qui explique les cellules unies de Grid Line et les couleurs hors limites de la spirale.
 - **De petits changements dans du code repris désactivent des effets sans bruit.** Un `pow` en trop a supprimé les reflets de Seascape, et un `out` manquant a supprimé la moitié de la palette de déformation.
 - **L’essentiel de la qualité visuelle vient de quelques idées :** bruit lisse, octaves, déformation de domaine, normales par différences finies et courbe de tons. Une fois ces idées claires, la plupart du code Shadertoy devient lisible.
-
-## Références
-
-- Quilez, I. (2026, 6 novembre). *Domain warping*. https://iquilezles.org/articles/warp/
-- Gonzalez Vivo, P. et Lowe, J. (2015). *The Book of Shaders: Fractal Brownian Motion*. https://thebookofshaders.com/13/
-- Alekseev, A. (2014). *Seascape* [Shader]. Shadertoy. https://www.shadertoy.com/view/Ms2SD1
-- Andrioli, P. R. (2013). *Star Nest* [Shader]. Shadertoy. https://www.shadertoy.com/view/XlfGRj
-- nimitz. (2019). *Protean clouds* [Shader]. Shadertoy. https://www.shadertoy.com/view/3l23Rh
-- Pettineo, M. (2016). *BakingLab* [Code source], avec le mappage de tons ACES ajusté de Stephen Hill. GitHub. https://github.com/TheRealMJP/BakingLab

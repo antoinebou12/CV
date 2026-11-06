@@ -55,7 +55,7 @@ float noise(in vec2 _st) {
 }
 ```
 
-`random` is the classic one-line hash. It multiplies a sine by a large number and keeps the fractional part, which gives a value in `[0, 1)` that looks random but is the same for the same input.
+`random` is the classic one-line hash. It multiplies a sine by a large number and keeps the fractional part, which gives a value between 0 and 1 that looks random but is the same for the same input.
 
 `noise` splits the plane into unit cells. `floor` gives the cell and `fract` gives the position inside it. Each corner of the cell gets a random value, and the four values are blended. The blend weight is `u = f*f*(3 - 2f)`, the cubic smoothstep curve, so the slope is zero at cell borders and the cells join without visible creases. The last expression is bilinear interpolation of the four corners, written out by hand.
 
@@ -184,7 +184,7 @@ vec3 aces_tonemap(vec3 color) {
 }
 ```
 
-This is the widely used curve-fit of the ACES filmic tone mapper by Stephen Hill, best known from Matt Pettineo's BakingLab. `m1` converts the colour into the ACES working space, the rational function `a / b` approximates the film response curve, and `m2` converts back. The final `pow(…, 1/2.2)` is a gamma encode for the screen.
+This is the widely used curve-fit of the ACES filmic tone mapper by Stephen Hill, best known from Matt Pettineo's [BakingLab](https://github.com/TheRealMJP/BakingLab). `m1` converts the colour into the ACES working space, the rational function `a / b` approximates the film response curve, and `m2` converts back. The final `pow(…, 1/2.2)` is a gamma encode for the screen.
 
 ```glsl
 for (int i = 0; i < 9; i++) {
@@ -461,12 +461,3 @@ As with Sea and Stars, the excerpt here does not include the helper functions `f
 - **`mix` does not clamp.** A weight outside 0 to 1 extrapolates, which caused the flat cells in Grid Line and the over-range colours in the spiral.
 - **Small changes to borrowed code switch things off silently.** One extra `pow` removed Seascape's reflections, and a missing `out` removed half of the warp palette.
 - **Most of the visual quality comes from a few ideas:** smooth noise, octaves, domain warping, finite-difference normals and a tone curve. Once those are clear, most Shadertoy code becomes readable.
-
-## References
-
-- Quilez, I. (2026, November 6). *Domain warping*. https://iquilezles.org/articles/warp/
-- Gonzalez Vivo, P., & Lowe, J. (2015). *The Book of Shaders: Fractal Brownian Motion*. https://thebookofshaders.com/13/
-- Alekseev, A. (2014). *Seascape* [Shader]. Shadertoy. https://www.shadertoy.com/view/Ms2SD1
-- Andrioli, P. R. (2013). *Star Nest* [Shader]. Shadertoy. https://www.shadertoy.com/view/XlfGRj
-- nimitz. (2019). *Protean clouds* [Shader]. Shadertoy. https://www.shadertoy.com/view/3l23Rh
-- Pettineo, M. (2016). *BakingLab* [Source code], including Stephen Hill's fitted ACES tone mapping. GitHub. https://github.com/TheRealMJP/BakingLab
