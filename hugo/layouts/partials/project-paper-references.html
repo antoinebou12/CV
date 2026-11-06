@@ -1,10 +1,15 @@
 {{- $sources := index hugo.Data.project_sources (replace .File.Path "\\" "/") -}}
+{{- $isFr := eq .Lang "fr" -}}
+{{- $layout := cond $isFr "2006, 2 January" "2006, January 2" -}}
+{{- $checked := time.AsTime (site.Params.referencesChecked | default "2026-11-05") -}}
+{{- $checkedLabel := time.Format $layout $checked -}}
 <section class="doc repo-project-references project-paper-references" id="project-references" aria-labelledby="project-bibliography-heading">
-  <h2 id="project-bibliography-heading">{{ if eq .Lang "fr" }}Références{{ else }}References{{ end }}</h2>
+  <h2 id="project-bibliography-heading">{{ if $isFr }}Références{{ else }}References{{ end }}</h2>
   <ol class="project-reference-entries">
     {{ range $n, $source := $sources }}
-    <li id="project-source-{{ add $n 1 }}">{{ if .author }}{{ strings.TrimSuffix "." .author }}. ({{ with .date }}{{ . }}{{ else }}{{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}{{ end }}). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. ({{ if eq $.Lang "fr" }}s. d.{{ else }}n.d.{{ end }}).{{ end }} <span>[{{ .type }}]</span> {{ .publisher }}.</li>
+    {{- $when := $checkedLabel -}}{{- with .date }}{{ $when = time.Format $layout (time.AsTime .) }}{{ end -}}
+    <li id="project-source-{{ add $n 1 }}">{{ if .author }}{{ strings.TrimSuffix "." .author }}. ({{ $when }}). <a href="{{ .url }}"><cite>{{ .title }}</cite></a>.{{ else }}<a href="{{ .url }}"><cite>{{ .title }}</cite></a>. ({{ $when }}).{{ end }} <span>[{{ .type }}]</span> {{ .publisher }}.</li>
     {{ end }}
   </ol>
-  <p class="repo-evidence-label">{{ if eq .Lang "fr" }}« s. d. » indique qu’aucune date de publication n’a été vérifiée. Les liens des fichiers conservent la révision inspectée lorsqu’elle est disponible.{{ else }}“n.d.” indicates that no publication date has been verified. File links retain the inspected revision where available.{{ end }}</p>
+  <p class="repo-evidence-label">{{ if $isFr }}Les sources sans date de publication indiquent la date de leur dernière vérification, le {{ time.Format "2 January 2006" $checked }}. Les liens des fichiers conservent la révision inspectée lorsqu’elle est disponible.{{ else }}Sources without a publication date show the date they were last checked, {{ time.Format "January 2, 2006" $checked }}. File links retain the inspected revision where available.{{ end }}</p>
 </section>

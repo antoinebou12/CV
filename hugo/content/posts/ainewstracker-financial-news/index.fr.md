@@ -31,7 +31,7 @@ Une requête lance la collecte. Le service d’actualités récupère le contenu
 | Analyser le texte | `app/core/services/metrics.py` |
 | Stocker les articles | `app/core/repo/article.py` |
 
-{{< figure src="images/article-processing.svg" alt="Traitement des articles dans AINewsTracker" caption="AlgoETS. (n.d.). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
+{{< figure src="images/article-processing.svg" alt="Traitement des articles dans AINewsTracker" caption="AlgoETS. (2026, 5 novembre). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
 
 [Diagramme de traitement original](https://github.com/AlgoETS/AINewsTracker/blob/main/docs/diagrams/out/article_processing_flow.svg).
 

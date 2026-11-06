@@ -33,7 +33,7 @@ A news request starts a collection job. The news service retrieves feed content 
 
 Routes describe the API surface, models define stored data, services perform the news work, and repositories isolate database access. `app/main.py` also configures Redis caching.
 
-{{< figure src="images/article-processing.svg" alt="AINewsTracker article processing flow" caption="AlgoETS. (n.d.). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
+{{< figure src="images/article-processing.svg" alt="AINewsTracker article processing flow" caption="AlgoETS. (2026, November 5). Article processing flow. AINewsTracker repository, docs/diagrams/out/article_processing_flow.svg." >}}
 
 [Original processing diagram](https://github.com/AlgoETS/AINewsTracker/blob/main/docs/diagrams/out/article_processing_flow.svg).
 
