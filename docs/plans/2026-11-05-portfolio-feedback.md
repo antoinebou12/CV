@@ -91,7 +91,7 @@ Each task edits only that note's `index.md` and `index.fr.md`, plus its data ent
 - [x] **C7. truemapdata.** Add the PyPI link (and NuGet if a .NET package exists), the install command, and a short usage example taken from the README and tests.
 - [x] **C8. springbootfilesuploader.** Verify the described structure against the code and correct it. Add the dependency table from A8.
 - [x] **C9. sport-arbitrage.** Explain the arbitrage algorithm: implied probability, the arbitrage condition, stake sizing, with a worked example and a flow diagram. Apply the same depth to the other algorithm repos (markokchainmontecarlo, batchbacktesting, nova-backtest, kelly-rm).
-- [ ] **C10. mediaboxdockercompose** (project page `projects/mediaboxdockercompose/`). Explain what the code does service by service: what each container is for, how they connect, volumes, networks and the install script.
+- [x] **C10. mediaboxdockercompose** (project page `projects/mediaboxdockercompose/`). Explain what the code does service by service: what each container is for, how they connect, volumes, networks and the install script.
 
 ## Suggested order
 
