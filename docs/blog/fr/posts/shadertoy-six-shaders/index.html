@@ -1,0 +1,720 @@
+<!doctype html><html class="not-ready lg:text-base" style=--bg:#faf8f1;--page-bg:#faf8f1 lang=fr dir=ltr><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Six shaders Shadertoy, lus ligne par ligne - Antoine Boucher</title><meta name=theme-color><meta name=description content="Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à …"><meta name=author content="Antoine Boucher"><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/fraunces-latin.woff2><link rel=preload as=font type=font/woff2 crossorigin href=/CV/blog/fonts/open-sans-latin.woff2><link rel=preload as=style href=/CV/blog/main.min.50885a113567dfc5828cf4e3f6e1fd3e46e220fa61a2eb6b36b32e10f1ed84da.css integrity="sha256-UIhaETVn38WCjPTj9uH9PkbiIPphoutrNrMuEPHthNo="><link rel=stylesheet href=/CV/blog/main.min.50885a113567dfc5828cf4e3f6e1fd3e46e220fa61a2eb6b36b32e10f1ed84da.css integrity="sha256-UIhaETVn38WCjPTj9uH9PkbiIPphoutrNrMuEPHthNo="><link rel=stylesheet href=/CV/blog/repository-notes.min.7e71060df86436aa01bd86e4ba6ba767365b0d14c1dab261219efdd2fa5a23e0.css integrity="sha256-fnEGDfhkNqoBvYbkumunZzZbDRTB2rJhIZ790vpaI+A="><link rel=stylesheet href=/CV/blog/desktop-layout.min.5b480add88292f1bc462411a5b8e2d4ae109d6a09dd2f2025f8df3b9d6c145ab.css><script defer src=/CV/blog/vendor/particles.min.faee7815a5fd27e938d1e01c8392b66332024908eb118048f608eee671371df6.js></script><script defer src=/CV/blog/background-motion.min.0fbdc9113d9f68bf7fc13ad53c612ccd01aeef50b32a257ba22d6243d197961d.js></script><script>document.documentElement.classList.add("js")</script><script defer src=/CV/blog/motion.min.42bfadd556223443557e203cec063a8b27923398b0d348219234a928d4b8bf05.js integrity="sha256-Qr+t1VYiNENVfiA87AY6iyeSM5iw00ghkjSpKNS4vwU="></script><link rel=stylesheet href=/CV/blog/reader-tools.min.321f1207657dab09af203d8ac61b96573fb5d834eef8fcf618662fa6d1b38c30.css><script defer src=/CV/blog/reader-tools.min.907705eb89277f9c514dc7088551ad6d91248b59ae6ca66a89bc0c4b02994059.js></script><link rel=stylesheet href=/CV/blog/dynamic-tables.min.2cdf474f5ccfec841329707d6f25ac70f13e8ab592d2d95c3241382fb33ed74e.css><script defer src=/CV/blog/dynamic-tables.min.f1f265f7d3f3d511b699be49de7bdf2cdfdc433118894a60d05b1602fb1a8e56.js integrity="sha256-8fJl99Pz1RG2mb5J3nvfLN/cQzEYiUpg0FsWAvsajlY="></script><script defer src=/CV/blog/site-webmcp.min.028878ee259bc889c7e272c6e4ebfca1bf1e62746fcefc932d571b3cb5e9f0c7.js integrity="sha256-Aoh47iWbyInH4nLG5Ov8ob8eYnRvzvyTLVcbPLXp8Mc="></script><link rel=preload as=image href=/CV/blog/theme.svg><link rel=preload as=image href=/CV/blog/github.svg><link rel=preload as=image href=/CV/blog/linkedin.svg><link rel=preload as=image href=/CV/blog/rss.svg><script defer src=/CV/blog/highlight.min.js onload=hljs.initHighlightingOnLoad()></script><link rel=icon type=image/x-icon href=/CV/favicon.ico><link rel=apple-touch-icon href=/CV/favicon.ico><meta name=generator content="Hugo 0.160.1"><meta itemprop=name content="Six shaders Shadertoy, lus ligne par ligne"><meta itemprop=description content="Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à la souris."><meta itemprop=datePublished content="2026-11-06T00:00:00-05:00"><meta itemprop=dateModified content="2026-11-06T00:00:00-05:00"><meta itemprop=wordCount content="4397"><meta itemprop=image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta itemprop=keywords content="GLSL,Shadertoy,Shaders,Graphics,Procedural"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/","name":"Antoine Boucher","position":1},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/posts/","name":"Posts","position":2},{"@type":"ListItem","item":"https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/","name":"Six shaders Shadertoy, lus ligne par ligne","position":3}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@id":"https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/#article","@type":"BlogPosting","author":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"dateModified":"2026-11-06T00:00:00-05:00","datePublished":"2026-11-06T00:00:00-05:00","description":"Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à …","headline":"Six shaders Shadertoy, lus ligne par ligne","image":["https://antoineboucher.info/CV/blog/images/post-kind-article.png"],"inLanguage":"fr","isAccessibleForFree":true,"keywords":"GLSL, Shadertoy, Shaders, Graphics, Procedural","mainEntityOfPage":{"@id":"https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/","@type":"WebPage"},"publisher":{"@id":"https://antoineboucher.info/CV/index-en.html#person","@type":"Person","name":"Antoine Boucher","sameAs":["https://github.com/antoinebou12","https://www.linkedin.com/in/antoineboucher12"],"url":"https://antoineboucher.info/CV/index-en.html"},"url":"https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/","wordCount":4397,"workTranslation":[{"@id":"https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/#article","@type":"BlogPosting","inLanguage":"en","url":"https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/"}]}</script><meta property="og:url" content="https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/"><meta property="og:site_name" content="Antoine Boucher"><meta property="og:title" content="Six shaders Shadertoy, lus ligne par ligne"><meta property="og:description" content="Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à …"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-11-06T00:00:00-05:00"><meta property="article:modified_time" content="2026-11-06T00:00:00-05:00"><meta property="article:tag" content="GLSL"><meta property="article:tag" content="Shadertoy"><meta property="article:tag" content="Shaders"><meta property="article:tag" content="Graphics"><meta property="article:tag" content="Procedural"><meta property="og:image" content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://antoineboucher.info/CV/blog/images/post-kind-article.png"><meta name=twitter:title content="Six shaders Shadertoy, lus ligne par ligne"><meta name=twitter:description content="Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à …"><link rel=alternate type=text/markdown href=https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/index.md title="Antoine Boucher"><link rel=canonical href=https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/><link rel=alternate hreflang=en href=https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/><link rel=alternate hreflang=fr href=https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/><link rel=alternate hreflang=x-default href=https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/></head><body class="blog-site bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"><div id=project-particles aria-hidden=true></div><a class=site-skip-link href=#main-content>Aller au contenu</a><header class=site-header data-site-header><a class=site-brand href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a><div class=site-header-tools><button type=button class="site-pill site-options-toggle" popovertarget=site-settings aria-label=Options aria-haspopup=dialog aria-expanded=false>
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg>
+<span>Options</span>
+</button>
+<button type=button class="btn-menu site-pill" aria-label="Ouvrir le menu" aria-expanded=false aria-controls=site-nav-panel data-menu-open="Ouvrir le menu" data-menu-close="Fermer le menu">
+<span class=site-menu-bars aria-hidden=true><i></i><i></i><i></i></span></button></div><div id=site-nav-panel class=nav-wrapper><div class=nav-drawer><nav class="site-nav-main site-nav-group" aria-label="Sections du site"><a class=site-pill href=/CV/blog/fr/posts/ aria-current=page>Articles</a><a class=site-pill href=/CV/blog/fr/projects/>Projets</a><a class=site-pill href=/CV/blog/fr/tags/conference/>Conférences</a><a class=site-pill href=/CV/blog/fr/recipes/>Recettes</a><a class=site-pill href=/CV/blog/fr/search/>Recherche</a></nav><nav class="site-cv-link site-nav-group" aria-label=CV><a class="site-pill site-pill-cv" href=https://antoineboucher.info/CV/index-fr.html>CV</a></nav><nav class="site-lang-switch site-nav-group" aria-label=Langue><a class=site-pill href=https://antoineboucher.info/CV/blog/posts/shadertoy-six-shaders/ lang=en hreflang=en>EN</a><span class="site-pill is-current" aria-current=true lang=fr>FR</span></nav></div></div><div id=site-settings popover=auto class=site-settings aria-label=Options><p class=site-settings-label>Options</p><button type=button class="btn-dark site-opt" aria-pressed=false data-label-dark="Thème sombre" data-label-light="Thème clair">
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 13.2A8.5 8.5.0 0110.8 3.5a8.5 8.5.0 109.7 9.7z"/></svg>
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+<span data-theme-label>Thème sombre</span>
+</button>
+<button id=background-motion type=button class=site-opt hidden data-pause="Suspendre le fond animé" data-resume="Animer le fond" aria-pressed=false></button><hr><p class=site-settings-label>Profils</p><nav class=site-profiles aria-label="Liens sociaux"><a class=site-opt href=https://github.com/antoinebou12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./github.svg) aria-hidden=true></span>
+<span>GitHub</span>
+</a><a class=site-opt href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank><span class=site-social-icon style=--url:url(./linkedin.svg) aria-hidden=true></span>
+<span>LinkedIn</span>
+</a><a class=site-opt href=https://antoineboucher.info/CV/blog/index.xml rel=alternate><span class=site-social-icon style=--url:url(./rss.svg) aria-hidden=true></span>
+<span>RSS</span></a></nav></div><script>const htmlClass=document.documentElement.classList;setTimeout(()=>{htmlClass.remove("not-ready")},10);const optionsToggle=document.querySelector(".site-options-toggle"),settings=document.getElementById("site-settings");if(optionsToggle&&settings){const e="popover"in HTMLElement.prototype;e?settings.addEventListener("toggle",e=>{optionsToggle.setAttribute("aria-expanded",String(e.newState==="open"))}):(settings.hidden=!0,optionsToggle.removeAttribute("popovertarget"),optionsToggle.addEventListener("click",()=>{settings.hidden=!settings.hidden,optionsToggle.setAttribute("aria-expanded",String(!settings.hidden))}),document.addEventListener("click",e=>{!settings.hidden&&!settings.contains(e.target)&&!optionsToggle.contains(e.target)&&(settings.hidden=!0,optionsToggle.setAttribute("aria-expanded","false"))}))}const btnMenu=document.querySelector(".btn-menu"),navPanel=document.getElementById("site-nav-panel");if(btnMenu){const s=btnMenu.dataset.menuOpen,o=btnMenu.dataset.menuClose,e=e=>{e?htmlClass.add("open"):htmlClass.remove("open"),btnMenu.setAttribute("aria-expanded",e?"true":"false"),btnMenu.setAttribute("aria-label",e?o:s),navPanel&&(navPanel.inert=!e&&!window.matchMedia("(min-width: 1024px)").matches),document.querySelector("main")?.toggleAttribute("inert",e),document.querySelector("footer")?.toggleAttribute("inert",e)};btnMenu.addEventListener("click",()=>{e(!htmlClass.contains("open"))}),document.addEventListener("keydown",t=>{if(t.key==="Escape"&&htmlClass.contains("open")&&(e(!1),btnMenu.focus()),t.key==="Tab"&&htmlClass.contains("open")){const e=[...document.querySelectorAll(".site-header a[href], .site-header button:not([disabled])")].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=="hidden"&&!e.closest("[inert]")),n=e[0],s=e[e.length-1];t.shiftKey&&document.activeElement===n?(t.preventDefault(),s?.focus()):!t.shiftKey&&document.activeElement===s&&(t.preventDefault(),n?.focus())}}),navPanel&&navPanel.addEventListener("click",t=>{if(t.target===navPanel){e(!1),btnMenu.focus();return}t.target.closest("a")&&e(!1)});const t=window.matchMedia("(min-width: 1024px)"),n=()=>{e(!1)};n(t),typeof t.addEventListener=="function"?t.addEventListener("change",n):typeof t.addListener=="function"&&t.addListener(n)}const metaTheme=document.querySelector('meta[name="theme-color"]'),lightBg="#faf8f1".replace(/"/g,""),btnDark=document.querySelector(".btn-dark"),themeLabel=btnDark?.querySelector("[data-theme-label]"),setDark=e=>{metaTheme.setAttribute("content",e?"rgb(0 0 0 / 85%)":lightBg),htmlClass[e?"add":"remove"]("dark"),localStorage.setItem("dark",e),btnDark&&(btnDark.setAttribute("aria-pressed",e?"true":"false"),themeLabel&&(themeLabel.textContent=e?btnDark.dataset.labelLight:btnDark.dataset.labelDark))},darkScheme=window.matchMedia("(prefers-color-scheme: dark)");if(htmlClass.contains("dark"))setDark(!0);else{const e=localStorage.getItem("dark");setDark(e?e==="true":darkScheme.matches)}darkScheme.addEventListener("change",e=>{setDark(e.matches)}),btnDark&&btnDark.addEventListener("click",()=>{setDark(localStorage.getItem("dark")!=="true")})</script></header><main id=main-content tabindex=-1 class="site-main prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) pt-14 pb-16"><article class=journal-article><header class="article-heading mb-14"><a class=article-back href=/CV/blog/fr/posts/>← Tous les articles</a><div class=article-kicker><span class=article-kind-badge>Article</span></div><h1 id=single-post-title class="my-0! pb-2.5">Six shaders Shadertoy, lus ligne par ligne</h1><div class=article-meta><time datetime=2026-11-06>6 nov. 2026</time>
+<span class=article-reading-time>21 min de lecture</span></div><nav class=article-topic-badges id=article-tags aria-label=Sujets><a href=/CV/blog/fr/tags/glsl/>GLSL</a><a href=/CV/blog/fr/tags/shadertoy/>Shadertoy</a><a href=/CV/blog/fr/tags/shaders/>Shaders</a><a href=/CV/blog/fr/tags/graphics/>Graphics</a><a href=/CV/blog/fr/tags/procedural/>Procedural</a></nav></header><div class="single-post-surface single-post-body not-prose mb-10 min-w-0"><div class="single-post-prose prose prose-neutral max-w-none min-w-0 dark:prose-invert"><details class=article-contents data-article-toc><summary>Table des matières</summary><nav id=TableOfContents aria-label="Sur cette page"><ol><li><a href=#comment-un-shader-shadertoy-sexécute>Comment un shader Shadertoy s’exécute</a></li><li><a href=#1-domain-wrapping>1. Domain Wrapping</a><ol><li><a href=#bruit-de-valeur>Bruit de valeur</a></li><li><a href=#mouvement-brownien-fractal>Mouvement brownien fractal</a></li><li><a href=#déformer-le-domaine>Déformer le domaine</a></li><li><a href=#couleur>Couleur</a></li></ol></li><li><a href=#2-golden-number-spiral>2. Golden number spiral</a><ol><li><a href=#mappage-de-tons-et-suréchantillonnage>Mappage de tons et suréchantillonnage</a></li></ol></li><li><a href=#3-grid-line>3. Grid Line</a></li><li><a href=#4-sea-and-stars>4. Sea and Stars</a><ol><li><a href=#la-mer>La mer</a></li><li><a href=#changements-par-rapport-à-seascape>Changements par rapport à Seascape</a></li><li><a href=#le-ciel-et-les-étoiles>Le ciel et les étoiles</a></li><li><a href=#des-sphères-dans-leau>Des sphères dans l’eau</a></li></ol></li><li><a href=#5-sun-ray-clockwise>5. Sun Ray Clockwise</a></li><li><a href=#6-warping-mouse>6. Warping Mouse</a><ol><li><a href=#couleur-normale-et-lumière>Couleur, normale et lumière</a></li></ol></li><li><a href=#ce-que-je-retiens-de-ces-six-shaders>Ce que je retiens de ces six shaders</a></li></ol></nav></details><section class=single-post-content aria-labelledby=single-post-title><p>Entre janvier et février 2024, j’ai publié six shaders sur <a href=https://www.shadertoy.com/>Shadertoy</a><sup class=article-citation><a href=#source-1 aria-label="Référence 1">[1]</a></sup>. Certains sont mes propres expériences, d’autres partent de shaders connus que j’ai modifiés pour comprendre leur fonctionnement. Cet article lit chacun ligne par ligne : ce que le code calcule, d’où viennent les idées, et où le code fait autre chose que ce que disent ses commentaires.</p><p>Chaque intégration démarre en pause, pour que la page n’exécute pas six shaders à la fois. Appuyez sur lecture pour en lancer un.</p><h2 id=comment-un-shader-shadertoy-sexécute><span class=article-section-number>1.</span> Comment un shader Shadertoy s’exécute</h2><p>Un shader d’image Shadertoy est une seule fonction, <code>mainImage</code>, que le GPU appelle une fois par pixel, à chaque image. Elle reçoit la position du pixel <code>fragCoord</code> et écrit une couleur dans <code>fragColor</code>. Quelques variables uniformes viennent de la page :</p><ul><li><code>iResolution</code> : la taille du canevas en pixels.</li><li><code>iTime</code> : les secondes écoulées depuis le démarrage.</li><li><code>iMouse</code> : la position de la souris en pixels pendant qu’un bouton est enfoncé.</li></ul><p>Dans un shader à une seule passe, aucun état n’est conservé entre les pixels ni entre les images. Tout ce qu’on voit est une fonction pure de la position du pixel, du temps et de la souris. La plus grande partie du code ci-dessous sert à transformer <code>fragCoord</code> en coordonnée utile, puis cette coordonnée en couleur.</p><h2 id=1-domain-wrapping><span class=article-section-number>2.</span> 1. Domain Wrapping</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Domain Wrapping sur Shadertoy" src="https://www.shadertoy.com/embed/43f3z2?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><p>La technique s’appelle en général <em>domain warping</em>, ou déformation de domaine. Inigo Quilez la décrit dans son <a href=https://iquilezles.org/articles/warp/>article sur le warping</a><sup class=article-citation><a href=#source-2 aria-label="Référence 2">[2]</a></sup>, et ce shader reprend l’exemple de mouvement brownien fractal du chapitre 13 de <a href=https://thebookofshaders.com/13/>The Book of Shaders</a><sup class=article-citation><a href=#source-3 aria-label="Référence 3">[3]</a></sup> de Patricio Gonzalez Vivo, avec ses couleurs.</p><h3 id=bruit-de-valeur><span class=article-section-number>2.1.</span> Bruit de valeur</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>float</span> random(<span style=color:#66d9ef>vec2</span> co){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> fract(sin(dot(co.xy, <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>12.9898</span>, <span style=color:#ae81ff>78.233</span>))) <span style=color:#f92672>*</span> <span style=color:#ae81ff>43758.5453</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>float</span> noise(<span style=color:#66d9ef>in</span> <span style=color:#66d9ef>vec2</span> _st) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> i <span style=color:#f92672>=</span> floor(_st);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> f <span style=color:#f92672>=</span> fract(_st);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> a <span style=color:#f92672>=</span> random(i);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> b <span style=color:#f92672>=</span> random(i <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>0.0</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> c <span style=color:#f92672>=</span> random(i <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> d <span style=color:#f92672>=</span> random(i <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> u <span style=color:#f92672>=</span> f <span style=color:#f92672>*</span> f <span style=color:#f92672>*</span> (<span style=color:#ae81ff>3.0</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>2.0</span> <span style=color:#f92672>*</span> f);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> mix(a, b, u.x) <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>        (c <span style=color:#f92672>-</span> a) <span style=color:#f92672>*</span> u.y <span style=color:#f92672>*</span> (<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> u.x) <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>        (d <span style=color:#f92672>-</span> b) <span style=color:#f92672>*</span> u.x <span style=color:#f92672>*</span> u.y;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><code>random</code> est le hachage classique en une ligne. Il multiplie un sinus par un grand nombre et garde la partie fractionnaire, ce qui donne une valeur entre 0 et 1 qui a l’air aléatoire mais reste la même pour une même entrée.</p><p><code>noise</code> découpe le plan en cellules unitaires. <code>floor</code> donne la cellule et <code>fract</code> la position à l’intérieur. Chaque coin de la cellule reçoit une valeur aléatoire, et les quatre valeurs sont mélangées. Le poids du mélange est <code>u = f*f*(3 - 2f)</code>, la courbe cubique de smoothstep : la pente est nulle aux bords des cellules, qui se raccordent donc sans pli visible. La dernière expression est l’interpolation bilinéaire des quatre coins, écrite à la main.</p><h3 id=mouvement-brownien-fractal><span class=article-section-number>2.2.</span> Mouvement brownien fractal</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>float</span> fbm(<span style=color:#66d9ef>in</span> <span style=color:#66d9ef>vec2</span> _st) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> v <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> a <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.5</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> shift <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>100.0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>mat2</span> rot <span style=color:#f92672>=</span> <span style=color:#66d9ef>mat2</span>(cos(<span style=color:#ae81ff>0.5</span>), sin(<span style=color:#ae81ff>0.5</span>),
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>-</span>sin(<span style=color:#ae81ff>0.5</span>), cos(<span style=color:#ae81ff>0.50</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>5</span>; <span style=color:#f92672>++</span>i) {
+</span></span><span style=display:flex><span>        v <span style=color:#f92672>+=</span> a <span style=color:#f92672>*</span> noise(_st);
+</span></span><span style=display:flex><span>        _st <span style=color:#f92672>=</span> rot <span style=color:#f92672>*</span> _st <span style=color:#f92672>*</span> <span style=color:#ae81ff>2.0</span> <span style=color:#f92672>+</span> shift;
+</span></span><span style=display:flex><span>        a <span style=color:#f92672>*=</span> <span style=color:#ae81ff>0.5</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> v;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><code>fbm</code> additionne cinq couches de bruit, ou octaves. Chaque octave a deux fois la fréquence et la moitié de l’amplitude de la précédente, si bien que les grandes formes portent un détail fin. Avant chaque octave, la coordonnée tourne de 0,5 radian et se décale. Le bruit de valeur repose sur une grille carrée, et sans la rotation les lignes de la grille de chaque octave s’aligneraient en traînées horizontales et verticales.</p><h3 id=déformer-le-domaine><span class=article-section-number>2.3.</span> Déformer le domaine</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>vec2</span> st <span style=color:#f92672>=</span> gl_FragCoord.xy <span style=color:#f92672>/</span> iResolution.xy <span style=color:#f92672>*</span> <span style=color:#ae81ff>3.0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>vec2</span> q <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.</span>);
+</span></span><span style=display:flex><span>q.x <span style=color:#f92672>=</span> fbm( st <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.00</span><span style=color:#f92672>*</span>iTime);
+</span></span><span style=display:flex><span>q.y <span style=color:#f92672>=</span> fbm( st <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>vec2</span> r <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.</span>);
+</span></span><span style=display:flex><span>r.x <span style=color:#f92672>=</span> fbm( st <span style=color:#f92672>+</span> <span style=color:#ae81ff>1.0</span><span style=color:#f92672>*</span>q <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>1.7</span>,<span style=color:#ae81ff>9.2</span>)<span style=color:#f92672>+</span> <span style=color:#ae81ff>0.15</span><span style=color:#f92672>*</span>iTime );
+</span></span><span style=display:flex><span>r.y <span style=color:#f92672>=</span> fbm( st <span style=color:#f92672>+</span> <span style=color:#ae81ff>1.0</span><span style=color:#f92672>*</span>q <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>8.3</span>,<span style=color:#ae81ff>2.8</span>)<span style=color:#f92672>+</span> <span style=color:#ae81ff>0.126</span><span style=color:#f92672>*</span>iTime);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>float</span> f <span style=color:#f92672>=</span> fbm(st<span style=color:#f92672>+</span>r);
+</span></span></code></pre></div><p>C’est l’idée centrale. Au lieu de dessiner <code>fbm(st)</code>, le shader déforme la coordonnée d’entrée avec encore du bruit avant de l’échantillonner :</p><ul><li><code>q</code> est un vecteur 2D de bruit, un <code>fbm</code> par composante, décalé pour que les deux composantes diffèrent.</li><li><code>r</code> est du bruit échantillonné en <code>st + q</code>, donc déjà déformé une fois. Le temps le fait bouger, à une vitesse légèrement différente sur chaque axe.</li><li><code>f = fbm(st + r)</code> est la valeur finale, donc au total <code>f = fbm(st + fbm(st + fbm(st)))</code>.</li></ul><p>Chaque niveau d’imbrication plie davantage le motif, d’où les formes repliées et marbrées. Deux détails sont bons à savoir. <code>q</code> est multiplié par <code>0.00*iTime</code>, il ne bouge donc jamais et seul <code>r</code> est animé. Et la coordonnée est divisée par <code>iResolution.xy</code> sur les deux axes, si bien que le motif s’étire selon les proportions du canevas.</p><h3 id=couleur><span class=article-section-number>2.4.</span> Couleur</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>color <span style=color:#f92672>=</span> mix(<span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.101961</span>,<span style=color:#ae81ff>0.619608</span>,<span style=color:#ae81ff>0.666667</span>),
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.666667</span>,<span style=color:#ae81ff>0.666667</span>,<span style=color:#ae81ff>0.498039</span>),
+</span></span><span style=display:flex><span>            clamp((f<span style=color:#f92672>*</span>f)<span style=color:#f92672>*</span><span style=color:#ae81ff>4.0</span>,<span style=color:#ae81ff>0.0</span>,<span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>color <span style=color:#f92672>=</span> mix(color, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0.164706</span>), clamp(length(q),<span style=color:#ae81ff>0.0</span>,<span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>color <span style=color:#f92672>=</span> mix(color, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.666667</span>,<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>), clamp(length(r.x),<span style=color:#ae81ff>0.0</span>,<span style=color:#ae81ff>1.0</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fragColor <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec4</span>((f<span style=color:#f92672>*</span>f<span style=color:#f92672>*</span>f<span style=color:#f92672>+</span><span style=color:#ae81ff>.6</span><span style=color:#f92672>*</span>f<span style=color:#f92672>*</span>f<span style=color:#f92672>+</span><span style=color:#ae81ff>.5</span><span style=color:#f92672>*</span>f)<span style=color:#f92672>*</span>color,<span style=color:#ae81ff>1.</span>);
+</span></span></code></pre></div><p>La couleur se construit en trois mélanges. La valeur finale <code>f</code> choisit entre sarcelle et kaki. Puis les valeurs intermédiaires la teintent : la longueur de <code>q</code> la tire vers un bleu marine foncé, et <code>r.x</code> vers un cyan pâle. Comme <code>q</code> et <code>r</code> ne varient pas comme <code>f</code>, les couleurs suivent les plis de la déformation et pas seulement sa luminosité. La dernière ligne multiplie par la courbe <code>f³ + 0.6f² + 0.5f</code>, qui assombrit les faibles valeurs plus vite que les fortes et ajoute du contraste.</p><h2 id=2-golden-number-spiral><span class=article-section-number>3.</span> 2. Golden number spiral</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Golden number spiral sur Shadertoy" src="https://www.shadertoy.com/embed/lcjSR1?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><p>Celui-ci montre bien un shader dont les commentaires promettent plus que le code. Voici la fonction de couleur :</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>vec3</span> calculateColor(<span style=color:#66d9ef>vec2</span> uv, <span style=color:#66d9ef>float</span> time) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> angle <span style=color:#f92672>=</span> time <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.2</span>;
+</span></span><span style=display:flex><span>    uv <span style=color:#f92672>=</span> <span style=color:#66d9ef>mat2</span>(cos(angle), <span style=color:#f92672>-</span>sin(angle), sin(angle), cos(angle)) <span style=color:#f92672>*</span> uv;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> goldenAngle <span style=color:#f92672>=</span> radians(<span style=color:#ae81ff>137.508</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> r <span style=color:#f92672>=</span> length(uv) <span style=color:#f92672>*</span> <span style=color:#ae81ff>8.0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> theta <span style=color:#f92672>=</span> atan(uv.y, uv.x);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> z <span style=color:#f92672>=</span> mod(r, <span style=color:#ae81ff>10.0</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> phi <span style=color:#f92672>=</span> mod(theta, <span style=color:#ae81ff>2.0</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3.14</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> primeEffect <span style=color:#f92672>=</span> step(<span style=color:#ae81ff>0.5</span>, fract(sin(dot(uv, <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>12.9898</span>, <span style=color:#ae81ff>78.233</span>))) <span style=color:#f92672>*</span> <span style=color:#ae81ff>43758.5453</span>));
+</span></span><span style=display:flex><span>    primeEffect <span style=color:#f92672>=</span> smoothstep(<span style=color:#ae81ff>0.45</span>, <span style=color:#ae81ff>0.55</span>, primeEffect);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> oddEvenEffect <span style=color:#f92672>=</span> mod(r, <span style=color:#ae81ff>2.0</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> primeColor <span style=color:#f92672>=</span> mix(<span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.9</span>, <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>0.7</span>), <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.1</span>, <span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>0.6</span>), abs(sin(z) <span style=color:#f92672>+</span> cos(phi)));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> oddColor <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.7</span>, <span style=color:#ae81ff>0.3</span>, <span style=color:#ae81ff>0.5</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> evenColor <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.3</span>, <span style=color:#ae81ff>0.5</span>, <span style=color:#ae81ff>0.7</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> col;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (primeEffect <span style=color:#f92672>==</span> <span style=color:#ae81ff>1.0</span>) {
+</span></span><span style=display:flex><span>        col <span style=color:#f92672>=</span> primeColor;
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (oddEvenEffect <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span>) {
+</span></span><span style=display:flex><span>        col <span style=color:#f92672>=</span> oddColor;
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>        col <span style=color:#f92672>=</span> evenColor;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    col <span style=color:#f92672>*=</span> primeEffect <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.5</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> col;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Ce qu’elle calcule réellement :</p><ul><li><strong>Coordonnées polaires.</strong> <code>r</code> est la distance au centre et <code>theta</code> l’angle. Toute l’image tourne d’abord, mais d’un angle qui vient de la souris et non du temps : <code>mainImage</code> passe <code>iMouse.x / iResolution.x * 10</code> comme <code>time</code>.</li><li><strong>L’angle d’or n’est jamais utilisé.</strong> <code>goldenAngle</code> vaut 137,508°, mais aucune ligne ne le lit. La spirale du titre ne vient pas du nombre d’or.</li><li><strong>Les points « premiers » sont du bruit aléatoire.</strong> <code>primeEffect</code> hache la coordonnée et garde les valeurs au-dessus de 0,5, donc environ la moitié des points d’échantillonnage sont actifs, au hasard. Le <code>smoothstep</code> qui suit ne change rien, puisque son entrée vaut déjà 0 ou 1. Rien ici ne teste les nombres premiers.</li><li><strong>La branche impaire ne s’exécute jamais.</strong> <code>mod(r, 2.0)</code> est une valeur continue, presque jamais exactement <code>0.0</code>. En pratique, tout point qui n’est pas « premier » reçoit <code>evenColor</code>.</li><li><strong>La structure visible vient de <code>primeColor</code>.</strong> Elle mélange deux couleurs selon <code>abs(sin(z) + cos(phi))</code>. <code>sin(z)</code> dessine des anneaux autour du centre, et <code>cos(phi)</code> un dégradé autour du cercle. Leur somme atteint 2, donc <code>mix</code> dépasse sa deuxième couleur et pousse certains canaux hors de l’intervalle. Le mappage de tons plus bas les ramène.</li></ul><p>L’image est donc un mélange aléatoire moitié-moitié de deux sortes de points : la moitié montre les anneaux et le dégradé angulaire à pleine intensité, l’autre moitié est un bleu uni à demi-intensité. C’est une texture intéressante, mais pas une spirale d’or. Une vraie spirale est un motif de <a href=https://fr.wikipedia.org/wiki/Phyllotaxie>phyllotaxie</a><sup class=article-citation><a href=#source-4 aria-label="Référence 4">[4]</a></sup> : le point numéro <code>n</code> se trouve à l’angle <code>n × 137,508°</code> et au rayon <code>c × sqrt(n)</code>. Pour la dessiner, un shader peut parcourir les <code>n</code> proches et garder la distance au point le plus proche. Ce serait la correction naturelle si je reviens à ce shader.</p><h3 id=mappage-de-tons-et-suréchantillonnage><span class=article-section-number>3.1.</span> Mappage de tons et suréchantillonnage</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>vec3</span> aces_tonemap(<span style=color:#66d9ef>vec3</span> color) {
+</span></span><span style=display:flex><span>    mat3 m1 <span style=color:#f92672>=</span> mat3(<span style=color:#ae81ff>0.59719</span>, <span style=color:#ae81ff>0.07600</span>, <span style=color:#ae81ff>0.02840</span>,
+</span></span><span style=display:flex><span>                   <span style=color:#ae81ff>0.35458</span>, <span style=color:#ae81ff>0.90834</span>, <span style=color:#ae81ff>0.13383</span>,
+</span></span><span style=display:flex><span>                   <span style=color:#ae81ff>0.04823</span>, <span style=color:#ae81ff>0.01566</span>, <span style=color:#ae81ff>0.83777</span>);
+</span></span><span style=display:flex><span>    mat3 m2 <span style=color:#f92672>=</span> mat3(<span style=color:#ae81ff>1.60475</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.10208</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.00327</span>,
+</span></span><span style=display:flex><span>                   <span style=color:#f92672>-</span><span style=color:#ae81ff>0.53108</span>,  <span style=color:#ae81ff>1.10813</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.07276</span>,
+</span></span><span style=display:flex><span>                   <span style=color:#f92672>-</span><span style=color:#ae81ff>0.07367</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.00605</span>,  <span style=color:#ae81ff>1.07602</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> v <span style=color:#f92672>=</span> m1 <span style=color:#f92672>*</span> color;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> a <span style=color:#f92672>=</span> v <span style=color:#f92672>*</span> (v <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.0245786</span>) <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.000090537</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> b <span style=color:#f92672>=</span> v <span style=color:#f92672>*</span> (<span style=color:#ae81ff>0.983729</span> <span style=color:#f92672>*</span> v <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.4329510</span>) <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.238081</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> pow(clamp(m2 <span style=color:#f92672>*</span> (a <span style=color:#f92672>/</span> b), <span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>1.0</span>), <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2.2</span>));
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>C’est l’approximation très répandue du mappage de tons filmique ACES, par Stephen Hill, surtout connue par le projet <a href=https://github.com/TheRealMJP/BakingLab>BakingLab</a><sup class=article-citation><a href=#source-5 aria-label="Référence 5">[5]</a></sup> de Matt Pettineo. <code>m1</code> convertit la couleur dans l’espace de travail ACES, la fonction rationnelle <code>a / b</code> approche la courbe de réponse du film, et <code>m2</code> reconvertit. Le <code>pow(…, 1/2.2)</code> final est un encodage gamma pour l’écran.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>9</span>; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> ssCoord <span style=color:#f92672>=</span> fragCoord <span style=color:#f92672>+</span> offsets[i];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> uv <span style=color:#f92672>=</span> (ssCoord <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>*</span> iResolution.xy) <span style=color:#f92672>/</span> iResolution.y;
+</span></span><span style=display:flex><span>    uv <span style=color:#f92672>*=</span> <span style=color:#ae81ff>50.0</span> <span style=color:#f92672>*</span> iTime <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.01</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> col <span style=color:#f92672>=</span> calculateColor(uv,(iMouse.x <span style=color:#f92672>/</span> iResolution.x) <span style=color:#f92672>*</span> <span style=color:#ae81ff>10.0</span>);
+</span></span><span style=display:flex><span>    col <span style=color:#f92672>=</span> aces_tonemap(col);
+</span></span><span style=display:flex><span>    accumColor <span style=color:#f92672>+=</span> <span style=color:#66d9ef>vec4</span>(col, <span style=color:#ae81ff>1.0</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>fragColor <span style=color:#f92672>=</span> accumColor <span style=color:#f92672>/</span> <span style=color:#ae81ff>9.0</span>;
+</span></span></code></pre></div><p><code>mainImage</code> échantillonne chaque pixel neuf fois sur une grille 3 × 3 de décalages sous-pixel et fait la moyenne. C’est du suréchantillonnage, utile ici à cause du zoom : <code>uv</code> est multiplié par <code>0.5 × iTime</code>, donc la vue recule en continu. Avec le temps, les anneaux deviennent plus fins qu’un pixel, et la moyenne de neuf échantillons évite le moiré. Les points aléatoires sont moyennés eux aussi, ce qui les transforme en un grain plus fin.</p><h2 id=3-grid-line><span class=article-section-number>4.</span> 3. Grid Line</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Grid Line sur Shadertoy" src="https://www.shadertoy.com/embed/43X3z2?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>void</span> mainImage( <span style=color:#66d9ef>out</span> <span style=color:#66d9ef>vec4</span> fragColor, <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>vec2</span> fragCoord )
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> uv <span style=color:#f92672>=</span> fragCoord <span style=color:#f92672>/</span> iResolution.xy;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> gridSize <span style=color:#f92672>=</span> <span style=color:#ae81ff>30.0</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>10.0</span> <span style=color:#f92672>*</span> (iMouse.x <span style=color:#f92672>/</span> iResolution.x);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> grid <span style=color:#f92672>=</span> abs(fract(uv <span style=color:#f92672>*</span> gridSize <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.5</span>) <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.5</span>) <span style=color:#f92672>/</span> fwidth(uv <span style=color:#f92672>*</span> gridSize);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> line <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> min(grid.x, grid.y);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> bgCol <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>*</span> cos(iTime <span style=color:#f92672>+</span> uv.xyx <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>4</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> col <span style=color:#f92672>=</span> mix(bgCol, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>0.8</span>, <span style=color:#ae81ff>0.1</span>), line);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    fragColor <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec4</span>(col, <span style=color:#ae81ff>1.0</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Le plus court des six, et celui qui contient l’astuce la plus utile : une grille dont les lignes restent larges d’un pixel à toute échelle.</p><ul><li><code>uv * gridSize</code> compte les cellules. La souris choisit entre 30 et 40 cellules sur la largeur.</li><li><code>abs(fract(x - 0.5) - 0.5)</code> est la distance de <code>x</code> à l’entier le plus proche : 0 sur une ligne, 0,5 au milieu d’une cellule.</li><li><code>fwidth(x)</code> mesure de combien <code>x</code> change d’un pixel au suivant. Le GPU le calcule en comparant les pixels voisins. Diviser par cette valeur convertit la distance de « cellules » en « pixels ».</li><li><code>line = 1 - min(grid.x, grid.y)</code> vaut 1 sur une ligne et tombe à 0 à un pixel de distance. Le bord est une rampe d’un pixel, une forme d’anticrénelage peu coûteuse.</li></ul><p>Le fond est la palette de cosinus que Shadertoy place dans tout nouveau shader : trois cosinus déphasés de 0, 2 et 4 donnent une teinte qui change avec la position et le temps.</p><p>Il y a une particularité. Loin des lignes, <code>line</code> continue de descendre sous 0, jusqu’à environ −10 au milieu d’une cellule sur un canevas courant. <code>mix</code> avec un poids négatif ne s’arrête pas à la couleur de fond. Il s’éloigne du jaune, donc la plupart des canaux à l’intérieur des cellules dépassent 0 ou 1, et l’affichage les écrête en couleurs unies et saturées. Seuls les pixels voisins de chaque ligne montrent le dégradé. Écrire <code>line = 1.0 - min(min(grid.x, grid.y), 1.0)</code> garde le poids dans l’intervalle et montre tout le fond. Comme <code>uv</code> est divisé par la taille du canevas sur les deux axes, les cellules sont aussi un peu plus larges que hautes sur un canevas en paysage.</p><h2 id=4-sea-and-stars><span class=article-section-number>5.</span> 4. Sea and Stars</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Sea and Stars sur Shadertoy" src="https://www.shadertoy.com/embed/lcjXzh?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><p>Ce shader est un collage. J’ai combiné trois shaders Shadertoy connus avec la déformation de domaine du premier shader, et ajouté des sphères posées dans l’eau. Le mérite de chaque morceau revient à :</p><ul><li>La mer est <a href=https://www.shadertoy.com/view/Ms2SD1>Seascape</a><sup class=article-citation><a href=#source-6 aria-label="Référence 6">[6]</a></sup> d’Alexander Alekseev (TDM).</li><li>Le champ d’étoiles du ciel est <a href=https://www.shadertoy.com/view/XlfGRj>Star Nest</a><sup class=article-citation><a href=#source-7 aria-label="Référence 7">[7]</a></sup> de Pablo Román Andrioli (Kali).</li><li>Les nuages dans les sphères sont <a href=https://www.shadertoy.com/view/3l23Rh>Protean clouds</a><sup class=article-citation><a href=#source-8 aria-label="Référence 8">[8]</a></sup> de nimitz.</li></ul><p>Chaque original a sa propre licence, indiquée sur sa page, et ces conditions s’appliquent au code repris. Le code complet est sur la page Shadertoy ; les extraits ci-dessous montrent les parties importantes.</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>flowchart TD
+  P[&#34;Pixel&#34;] --&gt; C[&#34;Rayon de la caméra&#34;]
+  C --&gt; S{&#34;Le rayon touche une sphère ?&#34;}
+  S -- &#34;non&#34; --&gt; T[&#34;Tracer le champ de hauteur de la mer&#34;]
+  T --&gt; W[&#34;Couleur de la mer : réfraction, reflet du ciel, déformation&#34;]
+  W --&gt; K[&#34;Mélange avec le ciel au-dessus de l’horizon&#34;]
+  S -- &#34;oui&#34; --&gt; T2[&#34;Tracer la mer sous la sphère&#34;]
+  T2 --&gt; B[&#34;Mélange mer et nuages selon la hauteur au-dessus de l’eau&#34;]
+  CL[&#34;Marche volumétrique des nuages, 130 pas&#34;] --&gt; B
+  K --&gt; G[&#34;Gamma 0,65&#34;]
+  B --&gt; G
+</code></pre><h3 id=la-mer><span class=article-section-number>5.1.</span> La mer</h3><p>La mer est un champ de hauteur : pour chaque position <code>x, z</code>, <code>map</code> renvoie la hauteur d’un point au-dessus de l’eau.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>float</span> sea_octave(<span style=color:#66d9ef>vec2</span> uv, <span style=color:#66d9ef>float</span> choppy) {
+</span></span><span style=display:flex><span>    uv <span style=color:#f92672>+=</span> noise(uv);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> wv <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.0</span><span style=color:#f92672>-</span>abs(sin(uv));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> swv <span style=color:#f92672>=</span> abs(cos(uv));
+</span></span><span style=display:flex><span>    wv <span style=color:#f92672>=</span> mix(wv,swv,wv);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> pow(<span style=color:#ae81ff>1.0</span><span style=color:#f92672>-</span>pow(wv.x <span style=color:#f92672>*</span> wv.y,<span style=color:#ae81ff>0.65</span>),choppy);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>float</span> map(<span style=color:#66d9ef>vec3</span> p) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> freq <span style=color:#f92672>=</span> SEA_FREQ, amp <span style=color:#f92672>=</span> SEA_HEIGHT, choppy <span style=color:#f92672>=</span> SEA_CHOPPY;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> uv <span style=color:#f92672>=</span> p.xz; uv.x <span style=color:#f92672>*=</span> <span style=color:#ae81ff>0.75</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> d, h <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> ITER_GEOMETRY; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>        d <span style=color:#f92672>=</span> sea_octave((uv<span style=color:#f92672>+</span>SEA_TIME)<span style=color:#f92672>*</span>freq,choppy);
+</span></span><span style=display:flex><span>        d <span style=color:#f92672>+=</span> sea_octave((uv<span style=color:#f92672>-</span>SEA_TIME)<span style=color:#f92672>*</span>freq,choppy);
+</span></span><span style=display:flex><span>        h <span style=color:#f92672>+=</span> d <span style=color:#f92672>*</span> amp;
+</span></span><span style=display:flex><span>        uv <span style=color:#f92672>*=</span> octave_m; freq <span style=color:#f92672>*=</span> <span style=color:#ae81ff>1.9</span>; amp <span style=color:#f92672>*=</span> <span style=color:#ae81ff>0.22</span>;
+</span></span><span style=display:flex><span>        choppy <span style=color:#f92672>=</span> mix(choppy,<span style=color:#ae81ff>1.0</span>,<span style=color:#ae81ff>0.2</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> p.y <span style=color:#f92672>-</span> h;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Une <code>sea_octave</code> est une grille de bosses sinusoïdales, perturbée par du bruit et aiguisée par <code>pow(…, choppy)</code> pour que les crêtes soient pointues et les creux larges, comme de vraies vagues. Chaque octave est ajoutée deux fois, une fois en avançant dans le temps et une fois en reculant, pour que les vagues se croisent au lieu de glisser dans une seule direction. Entre les octaves, <code>octave_m</code> tourne et met à l’échelle la coordonnée, la fréquence monte de 1,9 et l’amplitude descend à 22 %. La fonction existe en deux versions : <code>map</code> avec 12 octaves pour trouver où le rayon touche l’eau, et <code>map_detailed</code> avec 20 octaves pour la normale de surface, là où le détail fin se voit.</p><p><code>heightMapTracing</code> trouve le point d’impact. Il n’avance pas le long du rayon par petits pas. Il part de deux points, un au-dessus et un sous l’eau, et affine huit fois entre eux en interpolant l’endroit où la hauteur passe par zéro, à la manière de la méthode de la sécante. <code>getNormal</code> prend ensuite la hauteur en deux points voisins et construit la normale à partir des différences.</p><h3 id=changements-par-rapport-à-seascape><span class=article-section-number>5.2.</span> Changements par rapport à Seascape</h3><p>L’éclairage est l’endroit où ma version s’écarte de l’original, et deux des changements désactivent des effets :</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>float</span> fresnel <span style=color:#f92672>=</span> clamp(<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> dot(n,<span style=color:#f92672>-</span>eye), <span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>1.0</span>);
+</span></span><span style=display:flex><span>fresnel <span style=color:#f92672>=</span> pow(fresnel, <span style=color:#ae81ff>20.</span>);
+</span></span><span style=display:flex><span>fresnel <span style=color:#f92672>=</span> min(pow(fresnel,<span style=color:#ae81ff>3.0</span>), <span style=color:#ae81ff>0.5</span>);
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>color <span style=color:#f92672>=</span> mix(color, <span style=color:#66d9ef>vec3</span>(specular(n,l,eye,<span style=color:#ae81ff>60.0</span>)), pow(smoothstep(<span style=color:#ae81ff>0.0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.02</span>, l.y), <span style=color:#ae81ff>0.2</span>));
+</span></span></code></pre></div><ul><li><strong>Reflet.</strong> Le terme de Fresnel décide quelle part du ciel l’eau reflète. L’original l’élève à la puissance 3. Cette version l’élève d’abord à la puissance 20, ce qui donne au total la puissance 60, proche de zéro sauf en incidence rasante. La mer ne reflète presque pas le ciel et paraît plus sombre et plus plate que Seascape.</li><li><strong>Reflet spéculaire.</strong> Le reflet est mélangé avec un poids qui dépend de la hauteur de la lumière, <code>l.y</code>. La lumière pointe vers le haut (<code>l.y</code> vaut environ 0,78), et <code>smoothstep(0.0, -0.02, l.y)</code> vaut 0 pour toute valeur positive. Le reflet spéculaire n’apparaît donc jamais.</li><li><strong>Déformation de domaine.</strong> À la fin de <code>getSeaColor</code>, le shader calcule la déformation du premier shader en espace écran et en mélange 25 % dans la couleur de l’eau. C’est ce qui donne à l’eau ses taches cyan et marine qui dérivent lentement.</li></ul><h3 id=le-ciel-et-les-étoiles><span class=article-section-number>5.3.</span> Le ciel et les étoiles</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>vec3</span> getSkyColor(<span style=color:#66d9ef>vec3</span> e) {
+</span></span><span style=display:flex><span>    e.y <span style=color:#f92672>=</span> (max(e.y,<span style=color:#ae81ff>0.0</span>)<span style=color:#f92672>*</span><span style=color:#ae81ff>0.8</span><span style=color:#f92672>+</span><span style=color:#ae81ff>0.2</span>)<span style=color:#f92672>*</span><span style=color:#ae81ff>0.8</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> color <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec3</span>(pow(<span style=color:#ae81ff>1.0</span><span style=color:#f92672>-</span>e.y,<span style=color:#ae81ff>2.0</span>), <span style=color:#ae81ff>1.0</span><span style=color:#f92672>-</span>e.y, <span style=color:#ae81ff>0.6</span><span style=color:#f92672>+</span>(<span style=color:#ae81ff>1.0</span><span style=color:#f92672>-</span>e.y)<span style=color:#f92672>*</span><span style=color:#ae81ff>0.4</span>) <span style=color:#f92672>*</span> <span style=color:#ae81ff>1.1</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> uv<span style=color:#f92672>=</span>gl_FragCoord.xy<span style=color:#f92672>/</span>iResolution.xy<span style=color:#f92672>-</span><span style=color:#ae81ff>.5</span>;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> r<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; r<span style=color:#f92672>&lt;</span>volsteps; r<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>vec3</span> p<span style=color:#f92672>=</span>s<span style=color:#f92672>*</span>dir<span style=color:#f92672>*</span><span style=color:#ae81ff>.5</span>;
+</span></span><span style=display:flex><span>        p <span style=color:#f92672>=</span> abs(<span style=color:#66d9ef>vec3</span>(tile)<span style=color:#f92672>-</span>mod(p,<span style=color:#66d9ef>vec3</span>(tile<span style=color:#f92672>*</span><span style=color:#ae81ff>2.</span>)));
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>iterations; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>            p<span style=color:#f92672>=</span>abs(p)<span style=color:#f92672>/</span>dot(p,p)<span style=color:#f92672>-</span>formuparam;
+</span></span><span style=display:flex><span>            a<span style=color:#f92672>+=</span>abs(length(p)<span style=color:#f92672>-</span>pa);
+</span></span><span style=display:flex><span>            pa<span style=color:#f92672>=</span>length(p);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        ...
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> color <span style=color:#f92672>*</span> v <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.01</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Les deux premières lignes sont le dégradé de ciel de Seascape, calculé à partir de la direction du rayon <code>e</code>. Le reste est Star Nest. Il avance de 20 pas le long d’un rayon, replie l’espace en tuiles répétées, puis itère <code>p = abs(p)/dot(p,p) - 0.53</code>. Cette formule fractale concentre l’énergie en petits points brillants, et la somme des variations de <code>p</code> donne les étoiles et la brume colorée.</p><p>Dans cette version, le champ d’étoiles utilise la position à l’écran (<code>gl_FragCoord</code>) et non la direction du rayon. Cela a deux conséquences. Les étoiles restent fixes à l’écran quand la caméra bouge, et le reflet dans la mer montre les étoiles du même pixel d’écran plutôt que la partie du ciel que l’eau refléterait. La variable <code>time</code> est calculée mais pas utilisée, donc le champ d’étoiles ne dérive pas comme dans Star Nest. La ligne <code>uv.y *= iResolution.y/iResolution.y</code> multiplie par 1, là où Star Nest corrige les proportions avec <code>iResolution.y/iResolution.x</code>.</p><h3 id=des-sphères-dans-leau><span class=article-section-number>5.4.</span> Des sphères dans l’eau</h3><p>C’est mon ajout. Trois sphères sont posées dans la mer, et chacune montre un tunnel de nuages au lieu d’une surface.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>3</span>; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> waterLevelAtSphere <span style=color:#f92672>=</span> map(<span style=color:#66d9ef>vec3</span>(sphereCenters[i].x, <span style=color:#ae81ff>0.0</span>, sphereCenters[i].z));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> adjustedSphereCenter <span style=color:#f92672>=</span> sphereCenters[i];
+</span></span><span style=display:flex><span>    adjustedSphereCenter.y <span style=color:#f92672>=</span> max(waterLevelAtSphere, sphereCenters[i].y);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> tSphere <span style=color:#f92672>=</span> raySphereIntersect(ori, dir, adjustedSphereCenter, sphereRadii[i]);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (tSphere <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0.0</span>) {
+</span></span><span style=display:flex><span>        hitSomething <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>vec3</span> spherePos <span style=color:#f92672>=</span> ori <span style=color:#f92672>+</span> dir <span style=color:#f92672>*</span> tSphere;
+</span></span><span style=display:flex><span>        ...
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>float</span> blendFactor <span style=color:#f92672>=</span> smoothstep(waterLevelAtSphere <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.6</span>, waterLevelAtSphere <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.3</span>, spherePos.y);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>vec3</span> sphereColor <span style=color:#f92672>=</span> calculateSphereColor(spherePos, sphereNormal, light, time <span style=color:#f92672>+</span> spherePos.x);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>vec3</span> seaColor <span style=color:#f92672>=</span> getSeaColor(p, n, light, dir, dist);
+</span></span><span style=display:flex><span>        color <span style=color:#f92672>=</span> mix(seaColor, sphereColor, blendFactor);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Pour chaque sphère, le code mesure la hauteur de l’eau sous son centre et remonte la sphère à ce niveau, pour qu’elle flotte à la surface. Là où le rayon touche une sphère, <code>blendFactor</code> compare le point d’impact au niveau de l’eau. Sous l’eau, on voit la couleur de la mer, au-dessus les nuages, et une bande de 0,9 unité mélange les deux. C’est ce qui donne l’impression de sphères à moitié immergées.</p><p><code>calculateSphereColor</code> rend les Protean clouds de nimitz : une marche volumétrique d’au plus 130 pas dans un tunnel de bruit tordu, avec brouillard et vignettage. Elle utilise la position à l’écran et sa propre caméra, pas la position ni la normale de la sphère. Chaque sphère est donc une fenêtre sur la même animation de nuages, et non une boule texturée.</p><p>Quelques points de cette partie sont utiles à connaître pour lire le code :</p><ul><li><strong>Pas de test de profondeur.</strong> La boucle garde la couleur de la dernière sphère touchée, pas de la plus proche. Là où deux sphères se chevauchent à l’écran, celle qui vient après dans le tableau l’emporte.</li><li><strong>Centres incohérents.</strong> <code>sphereNormal</code> utilise le centre d’origine à <code>y = -10</code>, pas le centre remonté.</li><li><strong>Code inutilisé.</strong> <code>island_octave</code>, <code>getSandColor</code>, <code>SAND_COLOR</code> et <code>zoom</code> sont définis mais jamais appelés. Ce sont les restes d’une idée d’îles de sable.</li><li><strong>Coût.</strong> Un pixel qui touche une sphère trace la mer, calcule une normale à 20 octaves, exécute la marche de 130 pas dans les nuages et évalue le champ d’étoiles. C’est de loin le plus lourd des six shaders.</li></ul><p>L’extrait collé utilise aussi des fonctions qu’il ne définit pas : <code>noise</code>, <code>fbm</code>, <code>fromEuler</code>, <code>raySphereIntersect</code>, <code>disp</code>, <code>rot</code>, <code>mag2</code>, <code>m3</code>, <code>linstep</code> et <code>iLerp</code>. Elles viennent des trois shaders sources et font partie du code complet sur Shadertoy.</p><h2 id=5-sun-ray-clockwise><span class=article-section-number>6.</span> 5. Sun Ray Clockwise</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Sun Ray Clockwise sur Shadertoy" src="https://www.shadertoy.com/embed/X3f3z2?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>void</span> mainImage( <span style=color:#66d9ef>out</span> <span style=color:#66d9ef>vec4</span> fragColor, <span style=color:#66d9ef>in</span> <span style=color:#66d9ef>vec2</span> fragCoord )
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> uv <span style=color:#f92672>=</span> (fragCoord.xy <span style=color:#f92672>-</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>*</span> iResolution.xy) <span style=color:#f92672>/</span> iResolution.y;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> angle <span style=color:#f92672>=</span> <span style=color:#ae81ff>360.0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> scale <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.9</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> offset <span style=color:#f92672>=</span> iTime <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.2</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> r <span style=color:#f92672>=</span> length(uv) <span style=color:#f92672>*</span> scale;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> theta <span style=color:#f92672>=</span> atan(uv.y, uv.x) <span style=color:#f92672>*</span> degrees(<span style=color:#ae81ff>1.0</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    theta <span style=color:#f92672>+=</span> angle <span style=color:#f92672>*</span> offset;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> pattern <span style=color:#f92672>=</span> mod(floor(theta <span style=color:#f92672>/</span> angle), <span style=color:#ae81ff>2.0</span>);
+</span></span><span style=display:flex><span>    pattern <span style=color:#f92672>*=</span> step(<span style=color:#ae81ff>0.5</span>, abs(sin(r <span style=color:#f92672>-</span> offset) <span style=color:#f92672>*</span> cos(theta <span style=color:#f92672>-</span> offset)));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec3</span> col <span style=color:#f92672>=</span> mix(<span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.2</span>, <span style=color:#ae81ff>0.3</span>, <span style=color:#ae81ff>0.6</span>), <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.8</span>, <span style=color:#ae81ff>0.7</span>, <span style=color:#ae81ff>0.4</span>), pattern);
+</span></span><span style=display:flex><span>    fragColor <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec4</span>(col,<span style=color:#ae81ff>1.0</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Les rayons de ce shader viennent d’un mélange entre degrés et radians, et le résultat est meilleur que l’intention.</p><ul><li><strong>Coordonnées centrées.</strong> Diviser par la hauteur seule garde les cercles ronds sur tout canevas.</li><li><strong>Angle en degrés.</strong> <code>atan</code> renvoie des radians, et <code>degrees(1.0)</code> vaut environ 57,3, donc <code>theta</code> va de −180 à 180.</li><li><strong>Rotation.</strong> <code>theta += 360 × 0.2 × iTime</code> fait tourner le motif de 72° par seconde. Une forme qui reste à <code>theta + 72t</code> constant se déplace vers les petits angles avec le temps, et à l’écran les petits angles sont dans le sens horaire. D’où le titre.</li><li><strong>Les rayons.</strong> <code>cos(theta - offset)</code> passe un angle en degrés à <code>cos</code>, qui attend des radians. Sur un tour complet, <code>theta</code> couvre 360 unités, donc le cosinus fait 360 / 2π, environ 57 cycles. La valeur absolue double ce nombre, et <code>step(0.5, …)</code> transforme chaque pic en bande à bords nets : plus d’une centaine de rayons fins autour du centre.</li><li><strong>Les anneaux.</strong> <code>sin(r - offset)</code> est proche de zéro près du centre, le produit reste donc sous 0,5 et aucun rayon n’y apparaît. Quand <code>offset</code> grandit, la bande où <code>sin</code> est grand traverse l’image, et les rayons pulsent.</li><li><strong>Les deux secteurs.</strong> <code>mod(floor(theta / 360), 2)</code> ne change de valeur qu’une fois par tour, il vaut donc 0 ou 1 sur de grandes parties de l’écran. Il bascule à deux endroits : le long de l’axe horizontal gauche, où <code>atan</code> saute de 180° à −180°, et le long d’une ligne qui tourne dans le sens horaire avec le motif. Les rayons apparaissent dans l’un des deux secteurs délimités par ces lignes, et l’autre est bleu uni. Les secteurs grandissent et rétrécissent pendant que la seconde ligne tourne.</li></ul><p>Si l’intention avait été quelques larges rayons, <code>cos(radians(theta) * 12.0)</code> en donnerait 12. C’est la confusion entre degrés et radians qui donne à ce shader son allure de soleil rayonnant.</p><h2 id=6-warping-mouse><span class=article-section-number>7.</span> 6. Warping Mouse</h2><div class="not-prose my-6 w-full overflow-hidden rounded-lg border border-black/10 dark:border-white/10"><iframe title="Warping Mouse sur Shadertoy" src="https://www.shadertoy.com/embed/McjSz1?gui=true&amp;t=10&amp;paused=true&amp;muted=false" style=width:100%;height:420px loading=lazy allowfullscreen></iframe></div><p>Ce shader part de « Warping - procedural 2 » d’Inigo Quilez, qui accompagne son <a href=https://iquilezles.org/articles/warp/>article sur le warping</a><sup class=article-citation><a href=#source-2 aria-label="Référence 2">[2]</a></sup>, et ajoute le contrôle à la souris. Il reprend l’idée du premier shader avec plus de soin : fbm à valeur vectorielle, éclairage tiré de la hauteur déformée et palette inversée.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>float</span> func(<span style=color:#66d9ef>vec2</span> q, <span style=color:#66d9ef>vec4</span> ron, <span style=color:#66d9ef>vec2</span> mouse) {
+</span></span><span style=display:flex><span>    q <span style=color:#f92672>+=</span> <span style=color:#ae81ff>0.03</span><span style=color:#f92672>*</span>sin( <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.27</span>,<span style=color:#ae81ff>0.23</span>)<span style=color:#f92672>*</span>iTime <span style=color:#f92672>+</span> length(q)<span style=color:#f92672>*</span><span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>4.1</span>,<span style=color:#ae81ff>4.3</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> o <span style=color:#f92672>=</span> fbm4_2( <span style=color:#ae81ff>0.9</span><span style=color:#f92672>*</span>q );
+</span></span><span style=display:flex><span>    q <span style=color:#f92672>+=</span> mouse <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.03</span>;
+</span></span><span style=display:flex><span>    o <span style=color:#f92672>+=</span> <span style=color:#ae81ff>0.04</span><span style=color:#f92672>*</span>sin( <span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.12</span>,<span style=color:#ae81ff>0.14</span>)<span style=color:#f92672>*</span>iTime <span style=color:#f92672>+</span> length(o));
+</span></span><span style=display:flex><span>    o <span style=color:#f92672>+=</span> mouse <span style=color:#f92672>*</span> <span style=color:#ae81ff>0.03</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>vec2</span> n <span style=color:#f92672>=</span> fbm6_2( <span style=color:#ae81ff>3.0</span><span style=color:#f92672>*</span>o );
+</span></span><span style=display:flex><span>    ron <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec4</span>( o, n );
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>float</span> f <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.5</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.5</span><span style=color:#f92672>*</span>fbm4( <span style=color:#ae81ff>1.8</span><span style=color:#f92672>*</span>q <span style=color:#f92672>+</span> <span style=color:#ae81ff>6.0</span><span style=color:#f92672>*</span>n );
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> mix( f, f<span style=color:#f92672>*</span>f<span style=color:#f92672>*</span>f<span style=color:#f92672>*</span><span style=color:#ae81ff>3.5</span>, f<span style=color:#f92672>*</span>abs(n.x) );
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><ul><li><strong>Deux niveaux de déformation.</strong> <code>fbm4_2</code> renvoie deux valeurs de fbm à la fois, sur 4 octaves, ce qui donne le vecteur de déformation <code>o</code>. <code>fbm6_2</code> déforme à nouveau sur 6 octaves et donne <code>n</code>. La valeur finale échantillonne un fbm à 4 octaves en <code>1.8q + 6n</code>.</li><li><strong>Mouvement lent.</strong> De petits termes sinusoïdaux sur <code>q</code> et <code>o</code> font respirer le motif, à des fréquences choisies pour que les deux axes ne s’alignent jamais.</li><li><strong>Contrôle à la souris.</strong> La souris, en unités de hauteur du canevas, s’ajoute à <code>q</code> après le calcul de <code>o</code>, et à <code>o</code> avant celui de <code>n</code>. Un balayage complet de la souris ne déplace les coordonnées que d’environ 0,05. Le motif dérive doucement au lieu de sauter.</li><li><strong>Contraste.</strong> La dernière ligne tire <code>f</code> vers <code>3.5 f³</code> là où <code>n.x</code> est grand, ce qui creuse les veines sombres.</li></ul><h3 id=couleur-normale-et-lumière><span class=article-section-number>7.1.</span> Couleur, normale et lumière</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#66d9ef>vec4</span> on <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec4</span>(<span style=color:#ae81ff>0.0</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>float</span> f <span style=color:#f92672>=</span> func(p, on, iMouse.xy<span style=color:#f92672>/</span>iResolution.y);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> mix( <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.2</span>,<span style=color:#ae81ff>0.1</span>,<span style=color:#ae81ff>0.4</span>), <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.3</span>,<span style=color:#ae81ff>0.05</span>,<span style=color:#ae81ff>0.05</span>), f );
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> mix( col, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.9</span>,<span style=color:#ae81ff>0.9</span>,<span style=color:#ae81ff>0.9</span>), dot(on.zw,on.zw) );
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> mix( col, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.4</span>,<span style=color:#ae81ff>0.3</span>,<span style=color:#ae81ff>0.3</span>), <span style=color:#ae81ff>0.2</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0.5</span><span style=color:#f92672>*</span>on.y<span style=color:#f92672>*</span>on.y );
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> mix( col, <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.0</span>,<span style=color:#ae81ff>0.2</span>,<span style=color:#ae81ff>0.4</span>), <span style=color:#ae81ff>0.5</span><span style=color:#f92672>*</span>smoothstep(<span style=color:#ae81ff>1.2</span>,<span style=color:#ae81ff>1.3</span>,abs(on.z)<span style=color:#f92672>+</span>abs(on.w)) );
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> clamp( col<span style=color:#f92672>*</span>f<span style=color:#f92672>*</span><span style=color:#ae81ff>2.0</span>, <span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>1.0</span> );
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>vec3</span> nor <span style=color:#f92672>=</span> normalize( <span style=color:#66d9ef>vec3</span>( func(p<span style=color:#f92672>+</span><span style=color:#66d9ef>vec2</span>(e,<span style=color:#ae81ff>0.0</span>),kk, <span style=color:#960050;background-color:#1e0010>…</span>)<span style=color:#f92672>-</span>f, <span style=color:#ae81ff>2.0</span><span style=color:#f92672>*</span>e, func(p<span style=color:#f92672>+</span><span style=color:#66d9ef>vec2</span>(<span style=color:#ae81ff>0.0</span>,e),kk, <span style=color:#960050;background-color:#1e0010>…</span>)<span style=color:#f92672>-</span>f ) );
+</span></span><span style=display:flex><span><span style=color:#66d9ef>vec3</span> lig <span style=color:#f92672>=</span> normalize( <span style=color:#66d9ef>vec3</span>( <span style=color:#ae81ff>0.9</span>, <span style=color:#ae81ff>0.2</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>0.4</span> ) );
+</span></span><span style=display:flex><span><span style=color:#66d9ef>float</span> dif <span style=color:#f92672>=</span> clamp( <span style=color:#ae81ff>0.3</span><span style=color:#f92672>+</span><span style=color:#ae81ff>0.7</span><span style=color:#f92672>*</span>dot( nor, lig ), <span style=color:#ae81ff>0.0</span>, <span style=color:#ae81ff>1.0</span> );
+</span></span><span style=display:flex><span><span style=color:#66d9ef>vec3</span> lin <span style=color:#f92672>=</span> <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.70</span>,<span style=color:#ae81ff>0.90</span>,<span style=color:#ae81ff>0.95</span>)<span style=color:#f92672>*</span>(nor.y<span style=color:#f92672>*</span><span style=color:#ae81ff>0.5</span><span style=color:#f92672>+</span><span style=color:#ae81ff>0.5</span>) <span style=color:#f92672>+</span> <span style=color:#66d9ef>vec3</span>(<span style=color:#ae81ff>0.15</span>,<span style=color:#ae81ff>0.10</span>,<span style=color:#ae81ff>0.05</span>)<span style=color:#f92672>*</span>dif;
+</span></span><span style=display:flex><span>col <span style=color:#f92672>*=</span> <span style=color:#ae81ff>1.2</span><span style=color:#f92672>*</span>lin;
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> col;
+</span></span><span style=display:flex><span>col <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.1</span><span style=color:#f92672>*</span>col<span style=color:#f92672>*</span>col;
+</span></span></code></pre></div><p>La couleur traite <code>f</code> comme une carte de hauteur. Le shader appelle <code>func</code> deux fois de plus, un pixel à droite et un pixel au-dessus, et construit une normale de surface à partir des différences, la même méthode de différences finies que pour la normale de la mer. La lumière combine un terme de ciel froid, qui dépend de l’orientation de la normale vers le haut, et un terme diffus chaud venant d’une direction. Puis la couleur est inversée et mise au carré, ce qui transforme la base violet foncé en un aspect pâle, proche du papier.</p><p>Un détail change le résultat. Dans l’original de Quilez, <code>ron</code> est déclaré <code>out vec4 ron</code>, si bien que <code>func</code> renvoie les vecteurs de déformation <code>o</code> et <code>n</code> à <code>mainImage</code>. Ici, c’est une simple entrée, donc <code>on</code> reste à zéro. Les quatre couches de teinte utilisent alors zéro au lieu des valeurs de déformation : pas de veines blanches, une teinte brune constante de 20 % et aucune zone bleue. La couleur ne dépend que de <code>f</code>. Ajouter <code>out</code> au paramètre rétablit toute la palette.</p><p>Comme pour Sea and Stars, l’extrait ne contient pas les fonctions <code>fbm4</code>, <code>fbm4_2</code> et <code>fbm6_2</code>. Elles sont dans le code complet sur Shadertoy.</p><h2 id=ce-que-je-retiens-de-ces-six-shaders><span class=article-section-number>8.</span> Ce que je retiens de ces six shaders</h2><ul><li><strong>Lire le code, pas les commentaires.</strong> Deux de ces shaders calculent autre chose que ce que promet leur nom, et l’un de ces accidents, la confusion entre degrés et radians, donne un meilleur résultat que le plan.</li><li><strong><code>mix</code> ne borne pas.</strong> Un poids hors de l’intervalle 0 à 1 extrapole, ce qui explique les cellules unies de Grid Line et les couleurs hors limites de la spirale.</li><li><strong>De petits changements dans du code repris désactivent des effets sans bruit.</strong> Un <code>pow</code> en trop a supprimé les reflets de Seascape, et un <code>out</code> manquant a supprimé la moitié de la palette de déformation.</li><li><strong>L’essentiel de la qualité visuelle vient de quelques idées :</strong> bruit lisse, octaves, déformation de domaine, normales par différences finies et courbe de tons. Une fois ces idées claires, la plupart du code Shadertoy devient lisible.</li></ul></section></div></div><section class=article-references aria-labelledby=article-references-heading><h2 id=article-references-heading>Références</h2><ol><li id=source-1><a href=https://www.shadertoy.com/><cite>Shadertoy</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>www.shadertoy.com.</span></li><li id=source-2><a href=https://iquilezles.org/articles/warp/><cite>article sur le warping</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>iquilezles.org.</span></li><li id=source-3><a href=https://thebookofshaders.com/13/><cite>The Book of Shaders</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>thebookofshaders.com.</span></li><li id=source-4><a href=https://fr.wikipedia.org/wiki/Phyllotaxie><cite>phyllotaxie</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>fr.wikipedia.org.</span></li><li id=source-5><span>TheRealMJP.</span> (<time datetime=2026-11-06>6 novembre 2026</time>). <a href=https://github.com/TheRealMJP/BakingLab><cite>BakingLab</cite></a>. <span class=reference-type>[Software repository]</span> <span>github.com.</span></li><li id=source-6><a href=https://www.shadertoy.com/view/Ms2SD1><cite>Seascape</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>www.shadertoy.com.</span></li><li id=source-7><a href=https://www.shadertoy.com/view/XlfGRj><cite>Star Nest</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>www.shadertoy.com.</span></li><li id=source-8><a href=https://www.shadertoy.com/view/3l23Rh><cite>Protean clouds</cite></a>. (<time datetime=2026-11-06>6 novembre 2026</time>). <span class=reference-type>[Web page]</span> <span>www.shadertoy.com.</span></li></ol><p class=reference-note>Les références utilisent la date de publication de cet article.</p></section><nav class="single-post-nav mt-24 flex overflow-hidden rounded-xl bg-black/[3%] text-lg leading-[1.2]! *:flex *:w-1/2 *:items-center *:p-5 *:font-medium *:no-underline dark:bg-white/[8%] [&>*:hover]:bg-black/[2%] dark:[&>*:hover]:bg-white/[3%]"><a class="justify-end pl-3 ltr:ml-auto rtl:mr-auto" href=https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/><span>Refonte du site avec Hugo (partie 2)</span><span class="ltr:ml-1.5 rtl:mr-1.5">→</span></a></nav><script type=module>
+  const frPage = document.documentElement.lang.startsWith('fr');
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('.terminal')?.querySelector('pre, code');
+      const text = block?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = frPage ? 'Copié' : 'Copied';
+        setTimeout(() => { button.textContent = frPage ? 'Copier' : 'Copy'; }, 1600);
+      } catch {
+        button.textContent = frPage ? 'Sélectionnez' : 'Select text';
+      }
+    });
+  });
+  document.querySelectorAll('[data-terminal]').forEach((term) => {
+    const panel = term.querySelector('[data-terminal-panel]');
+    const closed = term.querySelector('[data-terminal-closed]');
+    const toggle = term.querySelector('[data-terminal-toggle]');
+    const closeBtn = term.querySelector('[data-terminal-close]');
+    const expandBtn = term.querySelector('[data-terminal-expand]');
+    const restore = term.querySelector('[data-terminal-restore]');
+    const setCollapsed = (collapsed) => {
+      term.classList.toggle('is-collapsed', collapsed);
+      if (panel) panel.hidden = collapsed;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
+    };
+    const setClosed = (isClosed) => {
+      term.classList.toggle('is-closed', isClosed);
+      if (panel) panel.hidden = isClosed || term.classList.contains('is-collapsed');
+      if (closed) closed.hidden = !isClosed;
+      if (toggle) toggle.disabled = isClosed;
+      if (expandBtn) expandBtn.disabled = isClosed;
+    };
+    closeBtn?.addEventListener('click', () => setClosed(true));
+    restore?.addEventListener('click', () => { setClosed(false); setCollapsed(false); });
+    toggle?.addEventListener('click', () => setCollapsed(!term.classList.contains('is-collapsed')));
+    expandBtn?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === term) await document.exitFullscreen();
+        else await term.requestFullscreen();
+      } catch { term.classList.toggle('is-expanded'); }
+    });
+  });
+  const shell = document.querySelector('[data-repo-shell]');
+  const pageNavigation = shell?.querySelector('.repo-sidenav-disclosure');
+  if (pageNavigation) {
+    const compact = matchMedia('(max-width: 1099px)');
+    
+    
+    const adaptNavigation = () => { pageNavigation.open = !compact.matches; pageNavigation.dataset.navAdapted = 'true'; };
+    adaptNavigation();
+    compact.addEventListener('change', adaptNavigation);
+    pageNavigation.addEventListener('click', event => {
+      if (compact.matches && event.target.closest('a')) pageNavigation.open = false;
+    });
+  }
+  if (shell) {
+    const installTabs = shell.querySelectorAll('[data-install-tabs] [data-tab]');
+    if (installTabs.length) {
+      const showInstall = (name) => {
+        installTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === name)));
+        shell.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.tabPanel !== name;
+        });
+      };
+      showInstall('native');
+      installTabs.forEach((tab) => tab.addEventListener('click', () => showInstall(tab.dataset.tab)));
+    }
+    const archTabs = shell.querySelectorAll('[data-arch-tabs] [data-arch]');
+    if (archTabs.length) {
+      const showArch = (name) => {
+        archTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.arch === name)));
+        const titles = {
+          context: frPage ? 'Contexte système' : 'System context',
+          deployment: frPage ? 'Déploiement' : 'Deployment',
+        };
+        const title = shell.querySelector('[data-arch-title]');
+        if (title) title.textContent = titles[name] || titles.context;
+        shell.querySelectorAll('[data-arch-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.archPanel !== name;
+        });
+      };
+      showArch('context');
+      archTabs.forEach((tab) => tab.addEventListener('click', () => showArch(tab.dataset.arch)));
+    }
+    const workflow = shell.querySelector('[data-workflow]');
+    if (workflow) {
+      const raw = workflow.querySelector('[data-workflow-steps]')?.textContent || '[]';
+      let steps = [];
+      try {
+        steps = JSON.parse(raw);
+        if (typeof steps === 'string') steps = JSON.parse(steps);
+        if (!Array.isArray(steps)) steps = [];
+      } catch { steps = []; }
+      const langIndex = frPage ? 1 : 0;
+      let pos = 0;
+      const number = workflow.querySelector('[data-step-number]');
+      const title = workflow.querySelector('[data-step-title]');
+      const body = workflow.querySelector('[data-step-body]');
+      const dots = workflow.querySelector('[data-step-dots]');
+      const prev = workflow.querySelector('[data-step-prev]');
+      const next = workflow.querySelector('[data-step-next]');
+      const reset = workflow.querySelector('[data-step-reset]');
+      const paint = () => {
+        if (!steps.length) return;
+        const step = steps[pos];
+        number.textContent = (frPage ? 'ÉTAPE ' : 'STEP ') + (pos + 1) + (frPage ? ' SUR ' : ' OF ') + steps.length;
+        title.textContent = (step.title && step.title[langIndex]) || step.title?.[0] || '';
+        body.textContent = (step.body && step.body[langIndex]) || step.body?.[0] || '';
+        prev.disabled = pos === 0;
+        next.disabled = pos === steps.length - 1;
+        dots.innerHTML = steps.map((_, index) => `<span class="dot${index <= pos ? ' on' : ''}"></span>`).join('');
+      };
+      prev?.addEventListener('click', () => { if (pos > 0) { pos -= 1; paint(); } });
+      next?.addEventListener('click', () => { if (pos < steps.length - 1) { pos += 1; paint(); } });
+      reset?.addEventListener('click', () => { pos = 0; paint(); });
+      paint();
+    }
+    const navLinks = [...shell.querySelectorAll('.repo-sidenav a')];
+    const sections = navLinks
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter(Boolean);
+    if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!current) return;
+        navLinks.forEach((link) => link.classList.toggle('active', decodeURIComponent(link.hash) === `#${current.target.id}`));
+      }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.15, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+  for (const pre of document.querySelectorAll('.repo-note pre:not(.repo-mermaid-source), .repo-auto-docs pre:not(.repo-mermaid-source), .journal-article pre')) {
+    if (pre.dataset.copyReady || pre.querySelector('code.language-mermaid') || pre.closest('.terminal')) continue;
+    pre.dataset.copyReady = '1';
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'repo-copy';
+    control.textContent = frPage ? 'Copier' : 'Copy';
+    control.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        control.textContent = frPage ? 'Copié' : 'Copied';
+      } catch {
+        control.textContent = frPage ? 'Sélectionnez le texte' : 'Select the text';
+      }
+    });
+    pre.append(control);
+  }
+  const blocks = [...document.querySelectorAll('pre > code.language-mermaid')].map(block => {
+    const original = block.parentElement;
+    const sourceDisclosure = document.createElement('details');
+    sourceDisclosure.className = 'article-diagram-loading';
+    const summary = document.createElement('summary');
+    summary.textContent = frPage ? 'Chargement du diagramme · Voir la source' : 'Loading diagram · View source';
+    original.replaceWith(sourceDisclosure);
+    sourceDisclosure.append(summary, original);
+    return {
+      source: block.textContent,
+      original: sourceDisclosure,
+      lazyHost: original.closest('[data-mermaid-lazy]'),
+      imageFallback: original.closest('[data-mermaid-fallback]')?.querySelector('[data-mermaid-image-fallback]') || null,
+      figure: null,
+      container: null,
+      zoom: null,
+      painted: false,
+    };
+  });
+  
+  function makeInteractive(block, figure, downloadName) {
+    figure.className = 'post-diagram';
+    figure.tabIndex = 0;
+    figure.setAttribute('aria-label', document.documentElement.lang.startsWith('fr') ? 'Diagramme du projet' : 'Project diagram');
+    const fr = document.documentElement.lang.startsWith('fr');
+    const container = document.createElement('div');
+    container.className = 'diagram-interactive';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'diagram-tools';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', fr ? 'Commandes du diagramme' : 'Diagram controls');
+    const status = document.createElement('output');
+    status.setAttribute('aria-live', 'polite');
+    const svgElement = figure.querySelector('svg');
+    const natural = svgElement?.viewBox?.baseVal?.width || 800;
+    function resize(width, minimum = Math.min(160, natural)) {
+      block.zoom = Math.max(minimum, Math.min(Math.max(12000, natural), width));
+      svgElement.style.width = block.zoom + 'px';
+      svgElement.style.minWidth = '0';
+      svgElement.style.maxWidth = 'none';
+      svgElement.style.maxHeight = 'none';
+      status.textContent = Math.round(block.zoom / natural * 100) + '%';
+    }
+    function fit() {
+      const style = getComputedStyle(figure);
+      const available = figure.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (available <= 0) return;
+      resize(Math.min(natural, available), 1);
+      figure.scrollLeft = 0;
+      figure.scrollTop = 0;
+    }
+    function button(label, action, handler) {
+      const control = document.createElement('button');
+      control.type = 'button';
+      control.textContent = label;
+      control.dataset.diagramAction = action;
+      control.addEventListener('click', handler);
+      toolbar.append(control);
+      return control;
+    }
+    button(fr ? 'Réduire' : 'Zoom out', 'out', () => resize((block.zoom || natural) / 1.25));
+    button(fr ? 'Agrandir' : 'Zoom in', 'in', () => resize((block.zoom || natural) * 1.25));
+    button(fr ? 'Ajuster' : 'Fit', 'fit', fit);
+    button(fr ? '100 %' : '100%', 'actual', () => resize(natural));
+    button(fr ? 'Plein écran' : 'Fullscreen', 'full', async () => {
+      try {
+        if (document.fullscreenElement === container) await document.exitFullscreen();
+        else await container.requestFullscreen();
+      } catch {
+        status.textContent = fr ? 'Plein écran indisponible' : 'Fullscreen unavailable';
+      }
+    });
+    button(fr ? 'Exporter SVG' : 'Export SVG', 'export', () => {
+      const copy = svgElement.cloneNode(true);
+      copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      copy.setAttribute('width', String(natural));
+      copy.removeAttribute('style');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = downloadName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    toolbar.append(status);
+    container.append(toolbar, figure);
+    let drag = null;
+    let suppressClick = false;
+    figure.addEventListener('pointerdown', event => {
+      suppressClick = false;
+      if (!event.isPrimary) { stopPan(); return; }
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
+          !event.target.closest('svg') || event.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: figure.scrollLeft, top: figure.scrollTop, active: false };
+    });
+    figure.addEventListener('pointermove', event => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 6) return;
+        
+        if (event.pointerType === 'touch' && Math.abs(dy) >= Math.abs(dx)) { stopPan(); return; }
+        if (figure.scrollWidth <= figure.clientWidth &&
+            (event.pointerType === 'touch' || figure.scrollHeight <= figure.clientHeight)) { stopPan(); return; }
+        drag.active = true;
+        figure.setPointerCapture(event.pointerId);
+        figure.classList.add('is-panning');
+        figure.focus({ preventScroll: true });
+      }
+      event.preventDefault();
+      figure.scrollLeft = drag.left - dx;
+      if (event.pointerType !== 'touch') figure.scrollTop = drag.top - dy;
+    });
+    function stopPan(event) {
+      if (!drag || (event && event.pointerId !== drag.id)) return;
+      const previous = drag;
+      drag = null;
+      suppressClick = previous.active && (!event || event.type === 'pointerup');
+      figure.classList.remove('is-panning');
+      if (figure.hasPointerCapture(previous.id)) figure.releasePointerCapture(previous.id);
+    }
+    figure.addEventListener('pointerup', stopPan);
+    figure.addEventListener('pointercancel', stopPan);
+    figure.addEventListener('lostpointercapture', event => {
+      
+      
+      if (event.target === figure) stopPan(event);
+    });
+    figure.addEventListener('pointerleave', event => { if (!drag?.active) stopPan(event); });
+    figure.addEventListener('click', event => {
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    figure.addEventListener('keydown', event => {
+      if (event.target !== figure || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === '+' || event.key === '=') resize((block.zoom || natural) * 1.25);
+      else if (event.key === '-' || event.key === '_') resize((block.zoom || natural) / 1.25);
+      else if (event.key === '0') resize(natural);
+      else if (event.key === 'f' || event.key === 'F') fit();
+      else if (event.key.startsWith('Arrow')) {
+        const delta = 80;
+        if (event.key === 'ArrowLeft') figure.scrollLeft -= delta;
+        if (event.key === 'ArrowRight') figure.scrollLeft += delta;
+        if (event.key === 'ArrowUp') figure.scrollTop -= delta;
+        if (event.key === 'ArrowDown') figure.scrollTop += delta;
+      }
+      else return;
+      event.preventDefault();
+    });
+    const focusedAction = block.container?.contains(document.activeElement) ? document.activeElement.dataset.diagramAction : null;
+    (block.container || block.original).replaceWith(container);
+    block.container = container;
+    block.figure = figure;
+    block.painted = true;
+    if (block.imageFallback) block.imageFallback.hidden = true;
+    
+    requestAnimationFrame(() => fit());
+    if (focusedAction) toolbar.querySelector(`[data-diagram-action="${focusedAction}"]`)?.focus({ preventScroll: true });
+  }
+  
+  
+  const nearViewport = new WeakSet();
+  const proximity = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    let due = false;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      nearViewport.add(entry.target);
+      proximity.unobserve(entry.target);
+      due = true;
+    }
+    if (due) void paintDiagrams();
+  }, { rootMargin: '150% 0px' }) : null;
+  function blockReady(block) {
+    if (block.lazyHost && block.lazyHost.open !== true) return false;
+    if (!proximity) return true;
+    
+    if (block.container) return true;
+    if (nearViewport.has(block.original)) return true;
+    proximity.observe(block.original);
+    return false;
+  }
+  
+  
+  const umlBlocks = [...document.querySelectorAll('[data-uml-svg]')].map(host => ({
+    original: host, src: host.dataset.umlSvg, name: host.dataset.umlName || 'uml.svg',
+    lazyHost: host.closest('details'), container: null, zoom: null, painted: false, loading: false,
+  }));
+  let umlCount = 0;
+  async function paintUml() {
+    for (const block of umlBlocks) {
+      if (block.painted || block.loading || (block.lazyHost && !block.lazyHost.open)) continue;
+      block.loading = true;
+      try {
+        const response = await fetch(block.src);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const parsed = new DOMParser().parseFromString(await response.text(), 'image/svg+xml');
+        const svg = parsed.documentElement;
+        if (svg.nodeName !== 'svg') throw new Error('Not an SVG document');
+        svg.querySelectorAll('script, foreignObject').forEach(node => node.remove());
+        const prefix = `uml${++umlCount}-`;
+        for (const element of [svg, ...svg.querySelectorAll('*')]) {
+          for (const attribute of [...element.attributes]) {
+            if (/^on/i.test(attribute.name)) element.removeAttribute(attribute.name);
+            else if (attribute.name === 'id') element.id = prefix + attribute.value;
+            else if (/href$/i.test(attribute.name) && attribute.value.startsWith('#')) element.setAttribute(attribute.name, '#' + prefix + attribute.value.slice(1));
+            else if (attribute.value.includes('url(#')) element.setAttribute(attribute.name, attribute.value.replaceAll('url(#', `url(#${prefix}`));
+          }
+        }
+        
+        const natural = svg.viewBox?.baseVal?.width || parseFloat(svg.getAttribute('width')) || 800;
+        for (const name of ['style', 'width', 'height']) svg.removeAttribute(name);
+        svg.style.width = '100%';
+        
+        svg.style.setProperty('max-width', natural + 'px', 'important');
+        svg.style.height = 'auto';
+        const figure = document.createElement('figure');
+        figure.append(document.importNode(svg, true));
+        makeInteractive(block, figure, block.name);
+        figure.classList.add('uml-diagram');
+      } catch (error) {
+        console.warn('UML image remains available:', error);
+      } finally {
+        block.loading = false;
+      }
+    }
+  }
+  umlBlocks.forEach(block => block.lazyHost?.addEventListener('toggle', () => { if (block.lazyHost.open) void paintUml(); }));
+  void paintUml();
+  let paintDiagrams = async () => {};
+  try {
+    let mermaidMod = null;
+    let rendering = false;
+    let pending = false;
+    let revision = 0;
+    async function ensureMermaid() {
+      if (mermaidMod) return mermaidMod;
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+      mermaidMod = mermaid;
+      return mermaid;
+    }
+    paintDiagrams = async function paintDiagramsNow() {
+      const due = blocks.filter(blockReady);
+      if (!due.length) return;
+      pending = true;
+      if (rendering) return;
+      rendering = true;
+      try {
+        const mermaid = await ensureMermaid();
+        while (pending) {
+          pending = false;
+          const dark = document.documentElement.classList.contains('dark');
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            htmlLabels: false,
+            themeVariables: {
+              darkMode: dark,
+              fontFamily: 'system-ui, Segoe UI, sans-serif',
+              fontSize: '14px',
+              primaryColor: dark ? '#172637' : '#e9f3f4',
+              primaryTextColor: dark ? '#edf4fb' : '#192a3c',
+              primaryBorderColor: dark ? '#6fdbd0' : '#006a62',
+              lineColor: dark ? '#b5c4d2' : '#4e6070',
+              secondaryColor: dark ? '#111c2a' : '#f0f5fa',
+              tertiaryColor: dark ? '#1b3040' : '#eef5f8',
+              background: dark ? '#111c2a' : '#ffffff',
+              clusterBkg: dark ? '#0f1a26' : '#f4f8fb',
+              clusterBorder: dark ? '#3a4d63' : '#b0c2d3',
+              edgeLabelBackground: dark ? '#111c2a' : '#ffffff',
+              textColor: dark ? '#edf4fb' : '#192a3c',
+            },
+          });
+          revision += 1;
+          for (const [index, block] of blocks.entries()) {
+            if (!blockReady(block)) continue;
+            try {
+              const { svg } = await mermaid.render(`post-diagram-${revision}-${index}`, block.source);
+              const figure = document.createElement('figure');
+              figure.innerHTML = svg;
+              makeInteractive(block, figure, `diagram-${index + 1}.svg`);
+            } catch (error) { console.warn('Diagram source remains available:', error); }
+          }
+        }
+      } catch (error) {
+        document.querySelectorAll('.article-diagram-loading > summary').forEach(summary => {
+          summary.textContent = frPage ? 'Diagramme indisponible · Voir la source' : 'Diagram unavailable · View source';
+        });
+        console.warn('Diagram renderer unavailable:', error);
+      } finally { rendering = false; }
+    };
+    document.querySelectorAll('[data-mermaid-lazy]').forEach((host) => {
+      host.addEventListener('toggle', () => { if (host.open) void paintDiagrams(); });
+    });
+    await paintDiagrams();
+    let dark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+      const next = document.documentElement.classList.contains('dark');
+      if (next !== dark) {
+        dark = next;
+        for (const block of blocks) block.painted = false;
+        void paintDiagrams();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  } catch (error) { console.warn('Diagram renderer unavailable; showing source.', error); }
+</script><script src=/CV/blog/article-media.min.280ccddc3d66a34f5d6956038d275be46c42541bae810ad73e692f9f3b6d2b98.js integrity="sha256-KAzN3D1mo09daVYDjSdb5GxCVBuugQrXPmkvnzttK5g=" defer></script><script src=/CV/blog/article-toc.min.70d84cc30c94fd1ff54e584cd95e2a683717767f79d6f9ad51ac4c8580662ded.js integrity="sha256-cNhMwwyU/R/1TlhM2V4qaDcXdn951vmtUaxMhYBmLe0=" defer></script></article></main><div id=reader-tools class=reader-ui hidden data-copied="Lien copié" data-failed="Copie indisponible. Copiez l’adresse du navigateur." data-empty="Aucune section trouvée. Essayez un autre mot." data-results=résultats><div class=reader-progress aria-hidden=true><span></span></div><div class=reader-launch aria-label="Outils de lecture"><div class=reader-split><button type=button data-reader-search aria-haspopup=dialog><span aria-hidden=true>⌕</span> Explorer cette page <kbd>/</kbd></button>
+<button type=button data-reader-copy aria-describedby=reader-copy-tip aria-label="Copier le lien de cette page">↗</button>
+<span id=reader-copy-tip class=reader-tooltip role=tooltip>Copier le lien</span></div></div><button class=reader-fab popovertarget=reader-actions aria-label="Outils de la page"><span aria-hidden=true>☷</span><span>Outils</span></button><div id=reader-actions popover aria-label="Actions de la page"><strong>Sur cette page</strong>
+<button type=button data-reader-search>Rechercher une section <kbd>/</kbd></button>
+<button type=button data-reader-copy>Copier le lien</button>
+<button type=button data-reader-top>Retour en haut <span aria-hidden=true>↑</span></button><hr><label><input type=checkbox id=reader-expand> Développer les sections de texte</label><p>Les diagrammes restent à la demande.</p></div><dialog id=reader-search aria-labelledby=reader-search-title><header><div><small>NAVIGATION RAPIDE</small><h2 id=reader-search-title>Explorer cette page</h2></div><button type=button data-reader-close aria-label=Fermer>×</button></header><label for=reader-query>Rechercher un titre ou un diagramme</label><div class=reader-search-field><input type=search id=reader-query autocomplete=off placeholder="Architecture, tests, références…"><button type=button data-reader-clear>Effacer</button></div><div class=reader-segments role=group aria-label="Filtrer les résultats"><button type=button data-reader-filter=all aria-pressed=true>Tout</button><button type=button data-reader-filter=section aria-pressed=false>Sections</button><button type=button data-reader-filter=diagram aria-pressed=false>Diagrammes</button></div><p id=reader-result-count role=status></p><ul id=reader-results></ul></dialog><div id=reader-feedback role=status aria-live=polite aria-atomic=true hidden></div></div><footer class=site-footer aria-label="Pied de page"><div class=site-footer-grid><div class=site-footer-brand><a class=site-footer-name href=https://antoineboucher.info/CV/blog/fr/>Antoine Boucher</a><p>Ingénieur logiciel orienté plateforme et infographie ; articles sur Rust, systèmes et performance.</p><p class=site-footer-copy>&copy; 2026 Antoine Boucher · Montréal</p></div><nav class=site-footer-col aria-label=Sections><p class=site-footer-label>Explorer</p><a href=/CV/blog/fr/posts/>Articles</a>
+<a href=/CV/blog/fr/projects/>Projets</a>
+<a href=/CV/blog/fr/tags/conference/>Conférences</a>
+<a href=/CV/blog/fr/recipes/>Recettes</a>
+<a href=/CV/blog/fr/search/>Recherche</a>
+<a href=https://antoineboucher.info/CV/index-fr.html>CV</a></nav><nav class=site-footer-col aria-label=Profils><p class=site-footer-label>Profils</p><a href=https://github.com/antoinebou12 rel="me noopener" target=_blank>GitHub</a><a href=https://linkedin.com/in/antoineboucher12 rel="me noopener" target=_blank>LinkedIn</a>
+<a href=https://antoineboucher.info/CV/blog/index.xml rel=alternate type=application/rss+xml>RSS</a>
+<a href=https://cal.com/antoine-boucher-dev/30min rel=noopener target=_blank>Prendre rendez-vous</a></nav><nav class=site-footer-col aria-label="Pour les agents"><p class=site-footer-label>Lecture brute</p><a href=https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/index.md type=text/markdown>Cette page en Markdown</a>
+<a href=/CV/blog/llms.txt>llms.txt</a>
+<a href=/CV/blog/sitemap.xml>Sitemap</a>
+<a href=https://gohugo.io/ rel=noopener target=_blank>Propulsé par Hugo</a></nav></div></footer><script>(function(){"use strict";function n(e){for(var t=0,s=String(e),n=0;n<s.length;n++)t=Math.imul(31,t)+s.charCodeAt(n)|0;return(t%360+360)%360}function t(e){var t=n(e),s=document.documentElement.classList.contains("dark");return s?"background:hsl("+t+",22%,22%);color:hsl("+t+",12%,94%);border-color:hsl("+t+",18%,34%)":"background:hsl("+t+",28%,94%);color:hsl("+t+",35%,22%);border-color:hsl("+t+",22%,78%)"}function e(){document.querySelectorAll(".site-search-tag-chip, .post-list-tag-chip").forEach(function(e){if(e.getAttribute("data-skip-tag-paint")==="true")return;if(e.classList&&e.classList.contains("post-list-tag-chip--tutorial-solid"))return;var n=e.getAttribute("data-tag-name")||e.textContent.trim();e.setAttribute("style",t(n))})}window.SiteTagChipStyle=t,window.paintSiteTagChips=e,document.documentElement&&new MutationObserver(function(){e()}).observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),e()})()</script><script>(function(){if(!["antoineboucher.info","www.antoineboucher.info"].includes(location.hostname))return;if(document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]'))return;var e=document.createElement("script");e.defer=!0,e.src="https://static.cloudflareinsights.com/beacon.min.js",e.setAttribute("data-cf-beacon",'{"token":"3571e50d16184cd280a22a9dfe09622e"}'),document.body.appendChild(e)})()</script></body></html>

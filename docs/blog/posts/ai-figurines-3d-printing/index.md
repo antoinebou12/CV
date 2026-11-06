@@ -161,8 +161,8 @@ Check floating islands with the slicer or **[UVtools](https://github.com/sn4k3/U
 - Gao, Y., He, J., Liu, Z., Xie, Y., Zhang, J., Deng, Z., … & Li, Y. (2024). *Hi3DGen: High-quality text-to-3D generation with 2D diffusion prior and geometry consistency.* Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems. https://doi.org/10.1145/3641520.3665304
 - Stable-X. (2024). *Hi3DGen: High-quality text-to-3D generation with 2D diffusion prior and geometry consistency* [White paper]. https://stable-x.github.io/Hi3DGen/hi3dgen_paper.pdf
 - Tencent Hunyuan. (2024). *Hunyuan3D-2* [Computer software]. GitHub. https://github.com/Tencent-Hunyuan/Hunyuan3D-2
-- Stable-X. (n.d.). *Hi3DGen demo* [Interactive tool]. Hugging Face Spaces. https://huggingface.co/spaces/Stable-X/Hi3DGen
-- Hyper3D. (n.d.). *Hyper3D* [Website]. https://hyper3d.ai/
-- RodinHD. (n.d.). *RodinHD demo* [WebGL demo]. https://rodinhd.github.io/
-- Meshy. (n.d.). *Meshy AI* [3D content creation platform]. https://www.meshy.ai/
+- Stable-X. (2026, November 5). *Hi3DGen demo* [Interactive tool]. Hugging Face Spaces. https://huggingface.co/spaces/Stable-X/Hi3DGen
+- Hyper3D. (2026, November 5). *Hyper3D* [Website]. https://hyper3d.ai/
+- RodinHD. (2026, November 5). *RodinHD demo* [WebGL demo]. https://rodinhd.github.io/
+- Meshy. (2026, November 5). *Meshy AI* [3D content creation platform]. https://www.meshy.ai/
 - YouTube. (2024, March). *Hi3DGen: High-quality text-to-3D generation (demo video)* [Video]. https://www.youtube.com/watch?v=243Dpi8DKVM

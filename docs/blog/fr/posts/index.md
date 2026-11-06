@@ -8,6 +8,8 @@
 
 Chaque entrée renvoie à la page HTML et à sa vue Markdown (`index.md` ajouté à l’URL).
 
+- [Six shaders Shadertoy, lus ligne par ligne](https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/shadertoy-six-shaders/index.md) · 2026-11-06
+  Lecture du code de six shaders GLSL publiés sur Shadertoy en 2024 : déformation de domaine, spirale, grille anticrénelée, mer, rayons de soleil et déformation à la souris.
 - [Refonte du site avec Hugo (partie 2)](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/portfolio-hugo-website-refonte/index.md) · 2026-10-24
   Refonte du portfolio Hugo : identité commune, articles bilingues, skills de dépôt, diagrammes interactifs et publication locale.
 - [TrueMapData : des cartes mesurées aux ressources utilisables](https://antoineboucher.info/CV/blog/fr/posts/truemapdata-height-maps/) — [Markdown](https://antoineboucher.info/CV/blog/fr/posts/truemapdata-height-maps/index.md) · 2026-10-24
