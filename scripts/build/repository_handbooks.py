@@ -63,7 +63,6 @@ KINDS = {
         "sm64coopdx-switch-N3DS",
         "nxsand",
         "switch-wifi",
-        "NX-Activity-Log",
         "ESP32-7SEG",
         "HDR-10bpp-Display-Test",
         "Pan-Tilt-Controller",
