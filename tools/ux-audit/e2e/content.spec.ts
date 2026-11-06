@@ -72,7 +72,9 @@ async function audit(page: Page) {
       ['markdown-residue', /\*\*[^*\s][^*]{0,60}\*\*|(?:^|\s)#{2,6}\s\S|\]\((?:https?:|\/)[^)]*\)/g],
       ['template-residue', /\{\{[<%]?|ZgotmplZ|\bundefined\b|\bNaN\b|\[object Object\]/g],
       ['escaped-entity', /&(?:amp|lt|gt|quot|#\d+);/g],
-      ['doubled-word', /\b([A-Za-zÀ-ÿ]{3,})\s+\1\b/gi],
+      // Whole words only: in package lists "please-use-yarn yarn" or "redis redis-namespace" share a
+      // part of a hyphenated, dotted or scoped name, which is not a doubled word.
+      ['doubled-word', /(?<![\wÀ-ÿ\-./:@])([A-Za-zÀ-ÿ]{3,})\s+\1(?![\wÀ-ÿ\-/@]|[.:][\wÀ-ÿ])/gi],
       ['placeholder', /\b(?:TODO|TBD|FIXME|lorem ipsum)\b/gi],
     ];
     if (!fr) checks.push(['space-before-punctuation', /\w\s+[,.;:!?](?=\s|$)/g]);
