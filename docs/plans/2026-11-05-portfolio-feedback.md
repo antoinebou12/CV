@@ -68,13 +68,13 @@ Knowing this decides where each fix goes.
   - [ ] A Journey to AWS Certified Cloud Practitioner (`aws-certified-cloud-practitioner`)
   - [ ] Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together (`caddy-ec2-cloudwatch-lambda`)
   - [ ] Expérimentation des indicateurs techniques avec Python et Backtesting (`experimentation-indicateurs-backtesting`)
-- [ ] **B3. Shadertoy posts.** One post per shader, EN and FR, each with the embedded shader, the GLSL source walked through step by step, and the math behind it. Fetch the source with the Shadertoy API (shaders are `public + api`).
-  - [ ] Domain Wrapping, https://www.shadertoy.com/view/43f3z2 (2024-01-23)
-  - [ ] Golden number spiral, https://www.shadertoy.com/view/lcjSR1 (2024-02-11)
-  - [ ] Grid Line, https://www.shadertoy.com/view/43X3z2 (2024-02-11)
-  - [ ] Sea and Stars, https://www.shadertoy.com/view/lcjXzh (2024-01-23)
-  - [ ] Sun Ray Clockwise, https://www.shadertoy.com/view/X3f3z2 (2024-02-11)
-  - [ ] Warping Mouse, https://www.shadertoy.com/view/McjSz1 (2024-01-23)
+- [x] **B3. Shadertoy post.** Done as one EN/FR post covering all six, per the user (2026-11-06): `hugo/content/posts/shadertoy-six-shaders/`. Shadertoy blocks automated fetching behind a Cloudflare check, so the user pasted the sources; they are kept in `docs/plans/shader-sources/`. Sea and Stars and Warping Mouse were pasted without their helper functions, and the post says so.
+  - [x] Domain Wrapping, https://www.shadertoy.com/view/43f3z2 (2024-01-23)
+  - [x] Golden number spiral, https://www.shadertoy.com/view/lcjSR1 (2024-02-11)
+  - [x] Grid Line, https://www.shadertoy.com/view/43X3z2 (2024-02-11)
+  - [x] Sea and Stars, https://www.shadertoy.com/view/lcjXzh (2024-01-23)
+  - [x] Sun Ray Clockwise, https://www.shadertoy.com/view/X3f3z2 (2024-02-11)
+  - [x] Warping Mouse, https://www.shadertoy.com/view/McjSz1 (2024-01-23)
   - The URL-to-title pairing above follows the order given in the feedback. Confirm it against each shader's title when fetching.
 - [ ] **B4. Salary results post.** See C4.
 
