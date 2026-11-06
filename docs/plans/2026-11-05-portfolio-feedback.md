@@ -57,6 +57,10 @@ Knowing this decides where each fix goes.
 - [ ] **A9. Remove notes for repositories with no commits by the user.**
   - Plan: for each repo in `hugo/data/project_repositories.json` and `project_org_repositories.json`, query the GitHub commits API with `author=antoinebou12`. List repos with zero commits, confirm the list with the user, then remove their notes (EN and FR), data entries and catalog cards.
   - Needs a decision: forks where the user's work is in an upstream pull request (for example bloc) count as contributions only if the PR exists.
+  - List (2026-11-06, GitHub commits API with `author=antoinebou12` on every branch, plus contributors and pull-request search). Nothing removed yet; waiting for confirmation.
+    - No commits, no pull requests, nothing on any branch: `NX-Activity-Log` (fork of tallbl0nde/NX-Activity-Log), `donneesqc-mcp` (fork of Stefen-Taime/donneesqc-mcp), `BullETS` (AlgoETS, not a fork; not a listed contributor).
+    - Work only on a side branch plus an upstream pull request: `ChitUI` (5+ commits on branch `changes`, open upstream PR jangrewe/ChitUI#5) and `hydra` (1 commit on `agent/better-menu-controller-support`, upstream PRs hydralauncher/hydra#2690 open and #2689 closed). Keep them under the rule above unless the user says otherwise.
+    - Every other note repository has at least one commit by antoinebou12 on its default branch (bloc 10, nova-backtest 3, jsonresume-theme-kendall 1, Dimension 1).
 - [x] **A10. Interactive skill map** (screenshot 2).
   - Found: nodes overlap and are clipped at the edges ("Cloud and", "Backend and APIs" over ".NET", "Graphics and 3D" over "CUDA"). The component is not in this repository; it is most likely the JSON Resume rendering of `resume.json`. Confirm where it is served.
   - Plan: rebuild it as a SkillSet-style radial tree (https://jac21.github.io/SkillSet/) fed from `data/cv.yaml`, with categories as the inner ring and skills as leaves, labels that never overlap, and EN/FR parity. Use the `playwright-audit-fix` skill to verify both themes and phone width.
