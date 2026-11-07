@@ -67,22 +67,23 @@ Knowing this decides where each fix goes.
   - Plan: rebuild it as a SkillSet-style radial tree (https://jac21.github.io/SkillSet/) fed from `data/cv.yaml`, with categories as the inner ring and skills as leaves, labels that never overlap, and EN/FR parity. Use the `playwright-audit-fix` skill to verify both themes and phone width.
   - Where it was served: not found. Nothing in this repository, the live CV or the blog draws it, and registry.jsonresume.org has no profile for antoinebou12. Its labels ("Cloud and platform", "Backend and APIs", "Graphics and 3D") are the `skills` names in `resume.json`, so it is a third-party JSON Resume viewer. Still to confirm with the user.
   - Done: new page `/blog/skills/` and `/blog/fr/skills/` ("Skill map" / "Carte des compétences"). `scripts/build/generate_cv.py` writes `hugo/data/skill_tree.json` from the same `skill_groups` as the PDF Competences row (7 categories, 35 skills plus certifications, intermediate skills marked), and `--check` in CI now covers it. The `skill-map` shortcode draws a dependency-free SVG radial tree (`assets/skill-map.js`, `skill-map.css`): every visible skill gets an equal angular slot so leaf labels cannot collide, labels run along the radius and flip on the left half, the canvas is fitted to the measured labels so nothing is clipped, categories fold on click or Enter/Space, and a text version lists everything (also the no-JavaScript view). On phones the stage scrolls sideways at a readable size and opens centred. Checked in Playwright: light and dark, 1280 and 390 px, fold/unfold by mouse and keyboard, no-JS list. The script is not minified because Hugo's minifier turned a block-scoped variable into a "Cannot access before initialization" error.
-  - Not done: no link to the page yet from the CV or blog navigation, pending where the old map was linked from.
+  - Linked (2026-11-06): the Competences intro on `index-en.html` and `index-fr.html` ends with a link to the map.
 
 ## Group B: articles
 
-- [ ] **B1. Reverse proxy article hero image** (screenshot 1).
+- [x] **B1. Reverse proxy article hero image** (screenshot 1).
   - Found: `hugo/content/posts/reverse-proxy-infrastructure/images/featured.png` is an unrelated 3D room render.
   - Plan: replace it with an image of the actual setup, such as the article's Terraform, Ansible and health-check flow rendered as a figure. Update `images:` in both EN and FR front matter.
-- [ ] **B2. Medium articles.** All eight are already mirrored in `hugo/content/posts/` by `tools/medium-mirror`. One review task each: images present, code blocks intact, canonical link to Medium, FR version where one exists, tags.
-  - [ ] Predicting Stock Prices with Monte Carlo Simulations (`predicting-stock-prices-monte-carlo`)
-  - [ ] A Method to Install Python Packages for Add-ons & Plugins in Blender (`blender-python-packages`)
-  - [ ] Economics of LEGO Sets with Data Science (`economics-lego-data-science`)
-  - [ ] Multiple Technical Indicators Backtesting on Multiple Tickers (`multiple-indicators-backtesting`)
-  - [ ] Using Vector Databases to Find Similar Movies, Part 1 (`vector-databases-similar-movies`)
-  - [ ] A Journey to AWS Certified Cloud Practitioner (`aws-certified-cloud-practitioner`)
-  - [ ] Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together (`caddy-ec2-cloudwatch-lambda`)
-  - [ ] Expérimentation des indicateurs techniques avec Python et Backtesting (`experimentation-indicateurs-backtesting`)
+  - Done on `claude/hungry-hopper-89b905` (commit 8ce4d96c), published 2026-11-06.
+- [x] **B2. Medium articles.** All eight are already mirrored in `hugo/content/posts/` by `tools/medium-mirror`. One review task each: images present, code blocks intact, canonical link to Medium, FR version where one exists, tags. Done on `claude/hungry-hopper-89b905`, one commit per article, published 2026-11-06.
+  - [x] Predicting Stock Prices with Monte Carlo Simulations (`predicting-stock-prices-monte-carlo`)
+  - [x] A Method to Install Python Packages for Add-ons & Plugins in Blender (`blender-python-packages`)
+  - [x] Economics of LEGO Sets with Data Science (`economics-lego-data-science`)
+  - [x] Multiple Technical Indicators Backtesting on Multiple Tickers (`multiple-indicators-backtesting`)
+  - [x] Using Vector Databases to Find Similar Movies, Part 1 (`vector-databases-similar-movies`)
+  - [x] A Journey to AWS Certified Cloud Practitioner (`aws-certified-cloud-practitioner`)
+  - [x] Making Caddy, AWS EC2, CloudWatch, Step Functions, and Lambda Work Together (`caddy-ec2-cloudwatch-lambda`)
+  - [x] Expérimentation des indicateurs techniques avec Python et Backtesting (`experimentation-indicateurs-backtesting`)
 - [x] **B3. Shadertoy post.** Done as one EN/FR post covering all six, per the user (2026-11-06): `hugo/content/posts/shadertoy-six-shaders/`. Shadertoy blocks automated fetching behind a Cloudflare check, so the user pasted the sources; they are kept in `docs/plans/shader-sources/`. Sea and Stars and Warping Mouse were pasted without their helper functions, and the post says so.
   - [x] Domain Wrapping, https://www.shadertoy.com/view/43f3z2 (2024-01-23)
   - [x] Golden number spiral, https://www.shadertoy.com/view/lcjSR1 (2024-02-11)
