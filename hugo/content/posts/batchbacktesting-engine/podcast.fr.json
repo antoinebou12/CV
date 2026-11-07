@@ -1,0 +1,68 @@
+{
+  "title": "BatchBacktesting : lire les hypothèses, pas seulement les graphiques",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un piège classique en analyse de données : prendre le meilleur de chaque colonne et présenter ça comme un seul résultat. Sauf que cette ligne-là n'a jamais existé."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment est-ce que ça arrive ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Ça vient d'un projet Python, BatchBacktesting, du groupe AlgoETS. Antoine a lu le code source pour comprendre ce qu'il fait vraiment. Dans le script d'analyse, on regroupe par instrument et on prend le maximum. Chaque colonne a son maximum indépendant, donc la ligne obtenue peut mélanger rendement, baisse maximale et durée de runs différents."
+    },
+    {
+      "speaker": "B",
+      "text": "Il faut donc choisir une vraie ligne d'abord."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui, par exemple selon le rendement, et seulement ensuite parler de sa baisse. Antoine précise que c'est une observation de lecture de code, pas une mesure."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le moteur, il fait quoi concrètement ?"
+    },
+    {
+      "speaker": "A",
+      "text": "C'est un petit pipeline de données. On donne une liste d'instruments et une stratégie. Pour chaque instrument : récupération des prix, nettoyage, backtest, écriture des résultats. Le tout dans un pool de threads, avec quatre workers par défaut pour le mode une stratégie."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est une promesse de vitesse ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, et il le dit : ce sont des valeurs par défaut du code, pas un débit mesuré. Même chose pour les hypothèses : cent mille de capital de départ, zéro virgule deux pour cent de commission, ordres exclusifs. Elles sont dans le constructeur, donc à garder à côté de toute comparaison de rendements."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le slippage ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Pas couvert. Slippage, ventes à découvert, titres retirés de la cote, opérations sur titres : tout ça demande une revue à part. Autre détail : la stratégie EMA calcule trois moyennes, vingt, quatre-vingts et cent cinquante, mais les entrées ne comparent que les deux premières."
+    },
+    {
+      "speaker": "B",
+      "text": "Et quand ça plante ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un instrument en échec ne renvoie rien. Si tous échouent, l'étape suivante n'a plus rien à assembler. Et l'aide multi-stratégies imbrique des pools dans un pool, donc attention aux limites des API."
+    },
+    {
+      "speaker": "B",
+      "text": "Ce qu'on retient : lire les hypothèses avant les courbes."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. Antoine n'a relancé aucune simulation ni avancé de nouveaux chiffres de rendement. L'article complet a le diagramme et les liens vers le code."
+    }
+  ],
+  "source_hash": "8945fd2b6fcccd08",
+  "audio_hash": "0ed6cf8bf7101410",
+  "duration_seconds": 138
+}

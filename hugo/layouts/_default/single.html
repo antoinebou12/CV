@@ -37,6 +37,7 @@
     {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
+  {{ if not $isRepoNote }}{{ partial "podcast-player.html" $page }}{{ end }}
 
   {{- if and (not $isRepoNote) (ne .Params.show_hero false) -}}
   {{- with partial "featured-image-resource.html" $page -}}

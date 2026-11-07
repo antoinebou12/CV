@@ -1,0 +1,68 @@
+{
+  "title": "Un client Python pour un jeu de bourse",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imaginez un jeu de bourse où vous voulez qu'un script vérifie votre portefeuille chaque matin. Le site n'a pas d'API officielle. Vous faites quoi ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Du scraping en croisant les doigts ?"
+    },
+    {
+      "speaker": "A",
+      "text": "À peu près, mais proprement. Antoine voulait automatiser des tâches dans le jeu de bourse virtuel de MarketWatch. C'est du trading fictif, pas un vrai courtier. Il a donc publié un petit paquet Python sur PyPI, appelé marketwatch."
+    },
+    {
+      "speaker": "B",
+      "text": "Il couvre quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Les listes de surveillance, la liste des parties et leurs réglages, les positions et les ordres en attente, l'achat et la vente selon les règles du jeu, et le classement. On se connecte une fois avec une classe, puis on enchaîne les appels dans un script."
+    },
+    {
+      "speaker": "B",
+      "text": "Pourquoi pas des scripts curl dans un notebook ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Deux raisons. Le jeu a des cookies de session, des règles et des classements qui changent avec la session scolaire. Et il voulait quelque chose de documenté pour ses coéquipiers. Un gist partagé pourrit dès que le formulaire HTML change. Le paquet est volontairement petit : pas de couche base de données, pas de moteur de stratégies, juste du HTTP calqué sur le site."
+    },
+    {
+      "speaker": "B",
+      "text": "Des choix de conception à retenir ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une méthode explicite par point d'accès, facile à retrouver quand MarketWatch change un chemin. Une doc sur GitHub Pages, parce que la description PyPI est trop courte pour les cas de connexion. Et aucune stratégie incluse, pour que la bibliothèque reste neutre."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour s'en servir ?"
+    },
+    {
+      "speaker": "A",
+      "text": "On l'installe avec pip, on crée le client avec un nom d'utilisateur et un mot de passe, puis on appelle par exemple la liste des parties ou le prix d'un symbole."
+    },
+    {
+      "speaker": "B",
+      "text": "Et les avertissements ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Francs. C'est une API non officielle, donc fixez les versions et attendez-vous à des ruptures. L'automatisation peut aller contre les conditions du site : c'est pour apprendre, pas pour abuser. Et des gains fictifs ne valident pas une stratégie."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est pour qui, alors ?"
+    },
+    {
+      "speaker": "A",
+      "text": "De petits robots et du filtrage dans le jeu. Pas du trading haute fréquence, pas un courtier. L'article complet donne les liens vers la doc et le code source."
+    }
+  ],
+  "source_hash": "e7fd50bc12d9a415",
+  "audio_hash": "1d44f14541e25942",
+  "duration_seconds": 134
+}

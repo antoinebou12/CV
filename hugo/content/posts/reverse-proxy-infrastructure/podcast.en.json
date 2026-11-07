@@ -1,0 +1,64 @@
+{
+  "title": "A reverse proxy review: green checks that gate nothing",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A CI workflow that is always green, whatever happens. That's one of the things Antoine found when he reviewed his own reverse proxy."
+    },
+    {
+      "speaker": "B",
+      "text": "Wait, always green? How?"
+    },
+    {
+      "speaker": "A",
+      "text": "Every step has continue-on-error set to true. So it can't fail. It's reviewing code, though. He read it in October and November 2026 without running a deployment."
+    },
+    {
+      "speaker": "B",
+      "text": "What's the setup?"
+    },
+    {
+      "speaker": "A",
+      "text": "Caddy in Docker on a DigitalOcean server, with Cloudflare DNS in front. Terraform creates the server and records, Ansible configures everything else."
+    },
+    {
+      "speaker": "B",
+      "text": "So where does it get interesting?"
+    },
+    {
+      "speaker": "A",
+      "text": "The order of things. In the Caddy role, the new config is written straight to the live path, then the container goes down and up, and only after that does the validation run. So the real check comes after the config is already live."
+    },
+    {
+      "speaker": "B",
+      "text": "Ouch. What about health checks?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a health check file, but neither the role nor the playbook includes it. And even if it ran, most tasks can't fail, and the probes accept 404, 502 and 503. That proves the proxy answers, not that an application works."
+    },
+    {
+      "speaker": "B",
+      "text": "And rollback?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a backup and a rollback, but the rescue only protects the final metrics block. A bad config would actually fail earlier, so restoring is manual."
+    },
+    {
+      "speaker": "B",
+      "text": "There's also a command called just setup, presented as the first thing to run. It's an alias for reset with force, which destroys and recreates the server without asking."
+    },
+    {
+      "speaker": "A",
+      "text": "He ends with a ranked fix list: validate a copy before replacing the live file, widen the rollback, make CI fail for real. None is implemented yet."
+    },
+    {
+      "speaker": "B",
+      "text": "The full write-up has the diagram and the details."
+    }
+  ],
+  "source_hash": "ad2b8f21dca3619a",
+  "audio_hash": "8bb13ef62466d059",
+  "duration_seconds": 104
+}

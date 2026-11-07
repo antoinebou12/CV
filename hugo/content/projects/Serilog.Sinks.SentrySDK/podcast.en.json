@@ -1,0 +1,60 @@
+{
+  "title": "Sending Serilog events to Sentry",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "If your .NET app already logs with Serilog, how do you get the important errors in front of Sentry without rewriting everything?"
+    },
+    {
+      "speaker": "B",
+      "text": "I'd guess a plug-in of some kind."
+    },
+    {
+      "speaker": "A",
+      "text": "A sink, in Serilog's words. Serilog dot Sinks dot SentrySDK sends your log events to Sentry through the official Sentry SDK. Antoine's version is based on the serilog-contrib project."
+    },
+    {
+      "speaker": "B",
+      "text": "What do you need to set up?"
+    },
+    {
+      "speaker": "A",
+      "text": "Install the NuGet package with dotnet add package, add the Sentry sink to your logger configuration, and provide your Sentry DSN. You can also configure it from JSON, with options like environment, release and sample rates."
+    },
+    {
+      "speaker": "B",
+      "text": "Anything for sensitive data?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, data scrubbing. You provide your own scrubber when setting up the sink, so you can sanitize logs before they leave your app."
+    },
+    {
+      "speaker": "B",
+      "text": "And web apps?"
+    },
+    {
+      "speaker": "A",
+      "text": "A second package, the ASP.NET Core one, captures HTTP context. You add a custom destructuring policy to the logger and the Sentry context middleware, and logs then carry user, request body and header information."
+    },
+    {
+      "speaker": "B",
+      "text": "How would I know it's maintained?"
+    },
+    {
+      "speaker": "A",
+      "text": "The page shows badges for tests, continuous integration, CodeQL and code coverage, and the NuGet version for both packages."
+    },
+    {
+      "speaker": "B",
+      "text": "Where are the examples?"
+    },
+    {
+      "speaker": "A",
+      "text": "In the GitHub README. The written page has the package links and the configuration samples."
+    }
+  ],
+  "source_hash": "60ba139988bcb55d",
+  "audio_hash": "b98ddc167ab590e5",
+  "duration_seconds": 84
+}

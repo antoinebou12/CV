@@ -1,0 +1,60 @@
+{
+  "title": "Giving textures a memory of contact",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Real surfaces remember being rubbed. A simulation usually forgets it by the end of the timestep."
+    },
+    {
+      "speaker": "B",
+      "text": "Forgets how? The physics already knows there was contact."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the gap in Antoine's master's thesis at ÉTS, directed by Sheldon Andrews. The contact solver computes impulses, relative velocity, traction and dissipation, updates the rigid bodies, and stops. Meanwhile the material maps, like albedo, roughness and normals, stay fixed unless an artist paints the wear by hand."
+    },
+    {
+      "speaker": "B",
+      "text": "So the thesis connects the two."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The core idea is to give material maps a persistent local memory of contact. Sparse contacts get grouped into local patches and projected into texture atlases. Then on the GPU, they become tangential velocity, traction and frictional dissipation, which drive accumulated sliding distance, direction and wear."
+    },
+    {
+      "speaker": "B",
+      "text": "And the mesh doesn't change?"
+    },
+    {
+      "speaker": "A",
+      "text": "Right, no global remeshing. Only the maps update, progressively, exactly where contact happened. Body travel alone can't predict where wear shows up."
+    },
+    {
+      "speaker": "B",
+      "text": "How does he know it's realistic?"
+    },
+    {
+      "speaker": "A",
+      "text": "Validation uses a reciprocal abrasion bench and GelSight captures of measured surface microgeometry, which became a public dataset. In the tested scenarios, the written texels track cumulative wear more closely than body travel alone."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it run in real time?"
+    },
+    {
+      "speaker": "A",
+      "text": "A cube or a torus on a plane stays within an interactive budget. Cost rises sharply when several contact groups are processed together. And he's clear it's an appearance model, not a full tribology simulator."
+    },
+    {
+      "speaker": "B",
+      "text": "Where does the code live?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two codebases. WearPaper holds the thesis sources and slides, and isn't public. TextureFriction is the simulator, where the loop runs at interactive rates. The full write-up has the pipeline diagram."
+    }
+  ],
+  "source_hash": "336a7470fe71ad29",
+  "audio_hash": "f0f1caaea92eecb2",
+  "duration_seconds": 87
+}

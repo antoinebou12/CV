@@ -1,0 +1,60 @@
+{
+  "title": "Stop negotiating with ChatGPT about diagrams",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Ever asked ChatGPT to draw a sequence diagram and gotten back half-random syntax?"
+    },
+    {
+      "speaker": "B",
+      "text": "Constantly. You ask for a diagram and it picks a format for you, usually the wrong one."
+    },
+    {
+      "speaker": "A",
+      "text": "That's exactly what annoyed Antoine. So he used AIPRM, a browser extension where the prompt template lives in the browser, and he locked four fields: diagram type, elements, purpose, and tool."
+    },
+    {
+      "speaker": "B",
+      "text": "So the model stops guessing whether you want PlantUML, Mermaid, or notes for Draw.io."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. It turns a diagram request into something like filling out a form instead of negotiating with the model. He even published a prompt in the AIPRM library that others can start from."
+    },
+    {
+      "speaker": "B",
+      "text": "What does he use as the example?"
+    },
+    {
+      "speaker": "A",
+      "text": "A cached API stack. A user request goes through a React frontend to a FastAPI backend. Redis is the cache and MongoDB is the system of record. The page shows both a cache hit and a cache miss, in PlantUML and in Mermaid."
+    },
+    {
+      "speaker": "B",
+      "text": "And what about canvas tools like Draw.io or Lucidchart?"
+    },
+    {
+      "speaker": "A",
+      "text": "Those are canvas-first, so he generates PlantUML or Mermaid first. Then he either exports it as an image to use as a baseline layer, or asks for a numbered list of lifelines and messages and rebuilds it by hand. No blank-canvas syndrome."
+    },
+    {
+      "speaker": "B",
+      "text": "Any warnings?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two good ones. Models sometimes confuse cache-hit branches with database syntax, so always render the diagram locally before publishing. And copy the four template lines into your repo, so you're not tied to one extension version."
+    },
+    {
+      "speaker": "B",
+      "text": "So he still edits the output."
+    },
+    {
+      "speaker": "A",
+      "text": "He does, but the first draft usually lands in the right language, and reviews get faster. The full write-up has the template and both code listings."
+    }
+  ],
+  "source_hash": "ca3a0c697dfd48e2",
+  "audio_hash": "26235721a5b6e699",
+  "duration_seconds": 106
+}

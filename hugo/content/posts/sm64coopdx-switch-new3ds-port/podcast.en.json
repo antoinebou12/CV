@@ -1,0 +1,68 @@
+{
+  "title": "Porting Mario 64 co-op to two handhelds",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A Nintendo Switch and a New 3DS walk into a codebase. One engine has to run on both, without turning into a mess."
+    },
+    {
+      "speaker": "B",
+      "text": "Those two consoles couldn't be more different."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the challenge in this post. The project brings the Coop Deluxe engine for Super Mario 64 to both. The multiplayer engine and Lua mods come from upstream work, so Antoine's fork focuses on the console adapters: graphics, input, audio, threading and packaging."
+    },
+    {
+      "speaker": "B",
+      "text": "So where's the hard part?"
+    },
+    {
+      "speaker": "A",
+      "text": "On the New 3DS, it's a graphics translation problem. The renderer goes through Citro3D and the PICA200 GPU, translating common color combinations into the chip's own stages. When the GPU can't represent an effect, the backend reports it instead of pretending."
+    },
+    {
+      "speaker": "B",
+      "text": "I like that. Compiling isn't the same as looking right."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. And there are hardware details too. The top screen is four hundred by two forty, the bottom is three twenty by two forty. The Circle Pad handles movement, the C-Stick handles the camera, and audio uses bounded buffers."
+    },
+    {
+      "speaker": "B",
+      "text": "How do they keep two toolchains from tangling?"
+    },
+    {
+      "speaker": "A",
+      "text": "A firm rule: the New 3DS target must add no libctru, Citro3D or devkitARM dependencies to the desktop and Switch builds. There are separate Docker compose files and build folders too. And there are two New 3DS build paths, a small platform shell first, then the full game."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it actually play on a real 3DS?"
+    },
+    {
+      "speaker": "A",
+      "text": "Here the page is careful. There's a New 3DS release, but the port notes still say not to call it playable, and hardware gameplay is described as unverified. A release file doesn't prove stability or multiplayer compatibility."
+    },
+    {
+      "speaker": "B",
+      "text": "And the Switch side?"
+    },
+    {
+      "speaker": "A",
+      "text": "Documentation covers CoopNet, local wireless, an in-game keypad, crash diagnostics and packaging. Also, you need your own legally obtained North American ROM. No ROM comes with it."
+    },
+    {
+      "speaker": "B",
+      "text": "So the lesson is: keep the platform boundary small."
+    },
+    {
+      "speaker": "A",
+      "text": "And be honest about what's verified. The full write-up has the architecture diagram and links to the notes."
+    }
+  ],
+  "audio_hash": "8d2836ae1a05aa6d",
+  "duration_seconds": 132,
+  "source_hash": "e78c72328a7f1ebb"
+}

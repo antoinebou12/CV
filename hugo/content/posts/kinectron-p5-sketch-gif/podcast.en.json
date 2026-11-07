@@ -1,0 +1,60 @@
+{
+  "title": "Kinect gestures in p5.js, with GIF export",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "What happens if you clap in front of a Kinect and the screen answers with fireworks?"
+    },
+    {
+      "speaker": "B",
+      "text": "That's the sketch Antoine built for a creative-coding class. It streams Kinect v2 skeleton data from Kinectron into p5.js and draws every tracked joint as a dot."
+    },
+    {
+      "speaker": "A",
+      "text": "And the gestures?"
+    },
+    {
+      "speaker": "B",
+      "text": "Six of them, checked on every body frame. Clap and you get fireworks. Hand above the hips, bubbles rise. Hand below, stars fall."
+    },
+    {
+      "speaker": "A",
+      "text": "How does the code decide a clap happened?"
+    },
+    {
+      "speaker": "B",
+      "text": "Joint positions come normalized between zero and one, so every threshold is a fraction of the frame. A clap is just the two hands getting closer than a small distance."
+    },
+    {
+      "speaker": "A",
+      "text": "Is there a way to test without standing in front of the sensor?"
+    },
+    {
+      "speaker": "B",
+      "text": "Yes. A flag called liveData switches to a recorded skeleton file, and then Stop and Play buttons appear. A Save as GIF button works in both modes, and p5 handles the recording and download itself."
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine also lists the mistakes he made. Two copies of p5 in the page head. And a joint-map function named Kinectron that hid the library's own constructor."
+    },
+    {
+      "speaker": "B",
+      "text": "Oh, that's a sneaky one."
+    },
+    {
+      "speaker": "A",
+      "text": "There's more. His OK-sign check asks for joints that don't exist on Kinect v2, so that gesture never fires. And the clap flag resets on the next frame, so fireworks go off every other frame while hands stay together."
+    },
+    {
+      "speaker": "B",
+      "text": "There's even an optional side experiment where a clap toggles a smart device through a tiny local Node server."
+    },
+    {
+      "speaker": "A",
+      "text": "The takeaway: great for a class demo, not for production body tracking. The full write-up has every step and the pitfalls list."
+    }
+  ],
+  "source_hash": "d559b4551707e899",
+  "audio_hash": "daa2f907309b0eeb",
+  "duration_seconds": 99
+}

@@ -1,0 +1,68 @@
+{
+  "title": "Porter Mario 64 coop sur deux consoles portables",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Une Switch et une New 3DS dans la même base de code. Un seul moteur doit tourner sur les deux, sans que ça devienne le chaos."
+    },
+    {
+      "speaker": "B",
+      "text": "Deux consoles qui n'ont presque rien en commun."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est le défi du billet. Le projet adapte le moteur Coop Deluxe de Super Mario 64 aux deux. Le moteur multijoueur et les mods Lua viennent des projets en amont, donc le fork d'Antoine se concentre sur l'adaptation aux consoles : rendu, commandes, audio, threads et distribution."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est où que ça se corse ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Sur la New 3DS, c'est un problème de traduction graphique. Le rendu passe par Citro3D et le GPU PICA200, qui traduit les combinaisons de couleurs courantes vers ses propres étapes. Quand le GPU ne peut pas représenter un effet, le backend le signale au lieu de faire semblant."
+    },
+    {
+      "speaker": "B",
+      "text": "J'aime ça. Compiler, ce n'est pas la même chose que bien rendre."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Il y a aussi les détails matériels : l'écran du haut fait quatre cents par deux cent quarante, celui du bas trois cent vingt par deux cent quarante. Le Circle Pad sert au déplacement, le C-Stick à la caméra, et l'audio utilise des buffers bornés."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment éviter que les deux toolchains s'emmêlent ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Règle stricte : la cible New 3DS ne doit ajouter aucune dépendance libctru, Citro3D ou devkitARM aux builds PC et Switch. Il y a aussi des fichiers Docker Compose séparés et des répertoires de build distincts. Et deux chemins New 3DS : d'abord une petite application de démarrage, puis le jeu complet."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors, ça se joue sur une vraie 3DS ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Là, la page reste prudente. Il y a une release New 3DS, mais les notes demandent encore de ne pas présenter le port comme jouable, et le jeu sur appareil est décrit comme non vérifié. Un fichier de release ne prouve ni la stabilité, ni le multijoueur."
+    },
+    {
+      "speaker": "B",
+      "text": "Et côté Switch ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La documentation couvre CoopNet, le réseau local sans fil, le clavier en jeu, les diagnostics de crash et la distribution. Et il faut votre propre ROM nord-américaine, obtenue légalement. Aucune ROM n'est fournie."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc : garder la frontière entre plateformes la plus petite possible."
+    },
+    {
+      "speaker": "A",
+      "text": "Et dire honnêtement ce qui est vérifié. L'article complet a le schéma d'architecture et les liens vers les notes."
+    }
+  ],
+  "audio_hash": "c35d8d1c23f96159",
+  "duration_seconds": 142,
+  "source_hash": "c042d5fdefb7d308"
+}

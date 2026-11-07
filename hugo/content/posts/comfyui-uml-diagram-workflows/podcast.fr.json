@@ -1,0 +1,68 @@
+{
+  "title": "Des diagrammes sous forme de nœuds ComfyUI",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Une capture d'écran de diagramme, c'est une impasse. Impossible de corriger une faute, de la comparer à la version de la semaine dernière ou de la régénérer."
+    },
+    {
+      "speaker": "B",
+      "text": "Oui, on finit par tout redessiner."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est le point de départ de ComfyUI-UML, un projet qu'Antoine a décrit. ComfyUI sert surtout à générer des images, mais n'importe quel résultat intermédiaire peut sortir d'un nœud. Ici, du texte de diagramme entre, et une image, un fichier et un lien partageable en sortent."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la source du diagramme reste dans le workflow."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Une source Mermaid ou PlantUML se relit, se compare et se régénère, et elle voyage avec le reste du workflow au lieu de devenir une image sans explication. Le README annonce vingt-huit types de diagrammes via Kroki, avec les formats validés selon le type."
+    },
+    {
+      "speaker": "B",
+      "text": "Il faut un modèle d'IA pour écrire les diagrammes ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, c'est facultatif. Mais si un modèle en écrit un, le nœud fait le ménage. Il gère plusieurs formes de réponse, extrait les blocs de code et privilégie celui qui correspond au type choisi. Pratique quand le modèle ajoute des explications autour du Mermaid."
+    },
+    {
+      "speaker": "B",
+      "text": "Il valide aussi la syntaxe ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, et Antoine le dit clairement. Extraire un bloc, ce n'est pas le valider. Le moteur de rendu doit encore accepter le diagramme."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour ramener l'image dans ComfyUI ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une image matricielle passe par Pillow, elle est convertie en RGB, ramenée entre zéro et un, puis emballée dans un tenseur. Le SVG, c'est plus délicat. Le code tente une conversion avec CairoSVG, et sans succès il renvoie un minuscule tenseur de remplacement tout en gardant le fichier. Le fichier sauvegardé et l'aperçu peuvent donc différer."
+    },
+    {
+      "speaker": "B",
+      "text": "Pour essayer, on fait quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "On installe avec la commande comfy node, on redémarre ComfyUI et on ouvre l'exemple à un seul diagramme. Le nœud de diagramme vers un aperçu. Le visualiseur s'ajoute quand le rendu fonctionne."
+    },
+    {
+      "speaker": "B",
+      "text": "Un point de confidentialité ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le backend web envoie la source au service Kroki choisi. Pour une architecture sensible ou du travail hors ligne, des chemins locaux avec Mermaid et Graphviz sont documentés. L'article complet a le schéma et les liens vers le code."
+    }
+  ],
+  "source_hash": "932921dc94921898",
+  "audio_hash": "17c407b429b6ecaf",
+  "duration_seconds": 141
+}

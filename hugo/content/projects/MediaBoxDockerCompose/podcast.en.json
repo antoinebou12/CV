@@ -1,0 +1,64 @@
+{
+  "title": "A homelab media stack in Docker Compose",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Someone in the family asks for a movie. Soon after, it is in the library, named properly, with subtitles. Who did the work?"
+    },
+    {
+      "speaker": "B",
+      "text": "Not a person, I'm guessing."
+    },
+    {
+      "speaker": "A",
+      "text": "A pile of containers. That's Antoine's MediaBoxDockerCompose project, a Compose-first homelab stack for fetching, organizing and streaming media."
+    },
+    {
+      "speaker": "B",
+      "text": "How does the chain work?"
+    },
+    {
+      "speaker": "A",
+      "text": "A request app like Ombi or Jellyseerr takes the ask. The Arr apps, Sonarr for TV and Radarr for films, search the indexers, hand a release to a download client like Deluge or NZBGet, then import the file into a clean library."
+    },
+    {
+      "speaker": "B",
+      "text": "And who plays it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Plex or Jellyfin. They only read the library. Bazarr adds subtitles and Tdarr transcodes in place."
+    },
+    {
+      "speaker": "B",
+      "text": "What holds it all together?"
+    },
+    {
+      "speaker": "A",
+      "text": "One directory called ROOT, in the env file, plus the same user ID, group ID and time zone for every container. Downloads, finished libraries and each app's config all live under it."
+    },
+    {
+      "speaker": "B",
+      "text": "Is the setup easy?"
+    },
+    {
+      "speaker": "A",
+      "text": "Install Docker, edit the env file, then run docker compose up. After that you connect indexers and download clients in the web interfaces."
+    },
+    {
+      "speaker": "B",
+      "text": "There's a catch list too, right?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, honest bugs. The Sonarr mount has a stray colon and slash. NZBGet sees every other app's config. Lidarr may not find finished files. Portainer and Whisper both claim port 9000."
+    },
+    {
+      "speaker": "B",
+      "text": "There's also a companion repo with menu-driven bash installers, for hosts not ready for the full stack. The project page has the diagram and the full service table."
+    }
+  ],
+  "source_hash": "7c5e769c15d67e12",
+  "audio_hash": "5183e4efd2b1d411",
+  "duration_seconds": 101
+}

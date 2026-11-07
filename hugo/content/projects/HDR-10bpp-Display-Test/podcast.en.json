@@ -1,0 +1,52 @@
+{
+  "title": "Is your Linux display really showing 10-bit color?",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "You bought an HDR 4K monitor, plugged it into a Linux machine, and the settings say it's fine. But is it really showing ten bits per channel?"
+    },
+    {
+      "speaker": "B",
+      "text": "I'd have assumed so. How would you even check?"
+    },
+    {
+      "speaker": "A",
+      "text": "That's what Antoine's small project, HDR-10bpp-Display-Test, is for. It checks HDR 4K display on Linux, including ten bits per channel, so you can validate the graphics stack, the drivers and the monitor."
+    },
+    {
+      "speaker": "B",
+      "text": "What does the test involve?"
+    },
+    {
+      "speaker": "A",
+      "text": "You need an X server, Python 3, GTK 3, ImageJ for showing ten-bit images, and ImageIO for reading them. Then you stop the display manager and the X server, and restart X with a color depth of thirty."
+    },
+    {
+      "speaker": "B",
+      "text": "Thirty bits, so ten per channel."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. You confirm the depth with a quick check on the root window, launch the viewer, which has a version for video, and open an image in ImageJ. If the colors look accurate, the chain works."
+    },
+    {
+      "speaker": "B",
+      "text": "And if X won't start at thirty?"
+    },
+    {
+      "speaker": "A",
+      "text": "The page suggests trying a depth of twenty-four instead. That's a useful clue in itself, since it means something in the stack can't do ten bits."
+    },
+    {
+      "speaker": "B",
+      "text": "Is it licensed?"
+    },
+    {
+      "speaker": "A",
+      "text": "MIT. The full project page has the exact steps and the repository link."
+    }
+  ],
+  "source_hash": "8f7f6ff6e68572ac",
+  "audio_hash": "40e69991a810bb77",
+  "duration_seconds": 76
+}

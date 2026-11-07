@@ -1,0 +1,60 @@
+{
+  "title": "Finding similar movies with vectors",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Ask a computer for movies like The Matrix and it has to answer three different questions at once. Which one are you really asking?"
+    },
+    {
+      "speaker": "B",
+      "text": "Three questions? I'd have said one."
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine's teaching thread splits them: films that feel like a plot description, people who rated like you, and why these titles were picked. Mixing them without saying which kind of vector you used is, in his words, how demos lie."
+    },
+    {
+      "speaker": "B",
+      "text": "So where does it start?"
+    },
+    {
+      "speaker": "A",
+      "text": "Part one is PostgreSQL with pgvector. Combine title, year, genres, cast and summary, encode it with Sentence Transformers, and store the vector next to the normal columns. Nearest neighbours become a plain SQL ORDER BY with a LIMIT."
+    },
+    {
+      "speaker": "B",
+      "text": "And part two?"
+    },
+    {
+      "speaker": "A",
+      "text": "Qdrant with the MovieLens datasets, behind a FastAPI app. One path is dense search over title and genre text. The other is a sparse search on ratings: find the twenty nearest users and add up their ratings for movies you haven't seen."
+    },
+    {
+      "speaker": "B",
+      "text": "Was anything surprising when he reread the code?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The movie vectors don't contain plots at all, just titles plus genres or release dates. And the query uses raw one-to-five ratings while the stored ones are centered, so a one-star rating still pulls toward people who liked the movie."
+    },
+    {
+      "speaker": "B",
+      "text": "Ouch. And part three?"
+    },
+    {
+      "speaker": "A",
+      "text": "Retrieval-augmented generation with LangChain and a local Ollama model, grounded on the same rows. The saved notebook output fails politely: invalid SQL, warnings about vector columns, and timeouts on heavy models."
+    },
+    {
+      "speaker": "B",
+      "text": "So generators drift unless you constrain them."
+    },
+    {
+      "speaker": "A",
+      "text": "That's his takeaway. Embed, store, find neighbours, three times, with three meanings of neighbour. The full write-up has the diagram and the notebooks."
+    }
+  ],
+  "source_hash": "21608e5cad58b899",
+  "audio_hash": "6277ab360647f810",
+  "duration_seconds": 107
+}

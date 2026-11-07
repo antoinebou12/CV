@@ -1,0 +1,68 @@
+{
+  "title": "Breaking things on purpose: a homelab that grew in a closet",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A server with handwritten tape on the front as its inventory system, a nest of blue cables, and a weekend lost to one bad apt upgrade. That's the homelab Antoine tells the story of."
+    },
+    {
+      "speaker": "B",
+      "text": "That tape thing is painfully relatable. Why build a lab at home at all?"
+    },
+    {
+      "speaker": "A",
+      "text": "Cloud bills pushed him. University courses had covered IP, VPNs and routing on paper, but running services at home made the tradeoffs real: power, noise, backups, and who has SSH when the router dies. He wanted a place to break things without an invoice."
+    },
+    {
+      "speaker": "B",
+      "text": "So where did he start?"
+    },
+    {
+      "speaker": "A",
+      "text": "Docker. He matched free container stacks to jobs he was paying for in the cloud, like media and dashboards. The lesson that stuck was one compose file per concern. When Plex misbehaved, he recycled the volume instead of rebuilding the whole machine."
+    },
+    {
+      "speaker": "B",
+      "text": "Pets versus cattle, basically."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. Then the hardware: a cheap Dell, an older machine, and bash scripts to install Ubuntu, CentOS and Proxmox, so reinstalling after an experiment hurt less. Later came a Dell PowerEdge R710, with dual Xeons and twenty-four gigabytes of RAM, running headless next to acoustic foam."
+    },
+    {
+      "speaker": "B",
+      "text": "And how did he reach it from outside?"
+    },
+    {
+      "speaker": "A",
+      "text": "Caddy as a reverse proxy, with a public front on OVH so his home IP wasn't the only line of defense. Automatic HTTPS mattered more than he expected, fewer late-night certificate commands. WireGuard handled the VPN. Annoying to configure the first time, fast once it was up."
+    },
+    {
+      "speaker": "B",
+      "text": "What went wrong along the way?"
+    },
+    {
+      "speaker": "A",
+      "text": "Three things stuck. A single disk with no backup. Admin ports exposed to the internet, so now admin interfaces sit behind the VPN only. And the R710's fan noise, which made him think about thermals before putting a server near a bedroom."
+    },
+    {
+      "speaker": "B",
+      "text": "Real lessons, then."
+    },
+    {
+      "speaker": "A",
+      "text": "And he kept drawing the network on a wall diagram, since it's the explain-it-to-a-roommate version. Later he moved public sites to static hosting to cut always-on cost, and kept the lab for private services."
+    },
+    {
+      "speaker": "B",
+      "text": "So what's the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "A homelab is a sandbox for platform instincts: automate installs, document the topology, assume failure. The full post has the photos of the wall stack and the closet build."
+    }
+  ],
+  "source_hash": "3847921ce0efe67f",
+  "audio_hash": "4cb997d22dd76da2",
+  "duration_seconds": 139
+}

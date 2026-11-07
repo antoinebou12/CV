@@ -1,0 +1,68 @@
+{
+  "title": "A range, not a price",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "If someone tells you Apple will close at one exact price next year, don't believe them. Antoine's take: trading is about ranges, not one magic number."
+    },
+    {
+      "speaker": "B",
+      "text": "So how do you get a range?"
+    },
+    {
+      "speaker": "A",
+      "text": "Monte Carlo simulation. He took Apple's daily closing prices and estimated the average drift and volatility of the log returns, using only data before 2023. Then he simulated many possible price paths forward."
+    },
+    {
+      "speaker": "B",
+      "text": "And then you check it against what really happened."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. 2023 was the hold-out year. Did the real prices fall inside the band between the fifth and ninety-fifth percentile of the simulated paths?"
+    },
+    {
+      "speaker": "B",
+      "text": "How does the simulation work, in plain words?"
+    },
+    {
+      "speaker": "A",
+      "text": "Each day, draw a random shock from a normal distribution, scale it by the volatility, add the drift, and multiply the price by the exponential of that. There's a small correction, called the Itô correction, so the simulated average doesn't climb faster than history justifies."
+    },
+    {
+      "speaker": "B",
+      "text": "Give me a number."
+    },
+    {
+      "speaker": "A",
+      "text": "For Apple, the mean simulated price after three hundred and sixty-four days was two hundred and six dollars and sixty-three cents. The real close on the twenty-ninth of December, 2023 was one ninety-two fifty-three. A gap of fourteen dollars ten, or about seven percent."
+    },
+    {
+      "speaker": "B",
+      "text": "Not bad, but not magic."
+    },
+    {
+      "speaker": "A",
+      "text": "And a later run on Microsoft with 2024 closes missed by about fourteen percent. That's the reminder: a band built on past volatility says nothing about a company being re-rated."
+    },
+    {
+      "speaker": "B",
+      "text": "What does he say the model can't do?"
+    },
+    {
+      "speaker": "A",
+      "text": "Volatility isn't constant, there are no jumps like earnings gaps, and it ignores diversification. He also separates this from MCMC, which fits a distribution first. This one is the forward-simulation step."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "Monte Carlo measures how wide the model's risk is. Backtesting measures what a trading rule would have earned. Keep those questions apart. The full write-up has the code and the fan charts."
+    }
+  ],
+  "source_hash": "193df4a1cfd0f815",
+  "audio_hash": "7ceab5eb07d5e2ce",
+  "duration_seconds": 121
+}

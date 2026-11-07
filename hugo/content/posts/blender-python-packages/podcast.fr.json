@@ -1,0 +1,68 @@
+{
+  "title": "Pourquoi pip ne sert à rien dans Blender",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Tu écris un add-on Blender, tu fais pip install, tout se passe bien. Et dans Blender : module introuvable. Ça t'est déjà arrivé ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Non, mais je pense que j'aurais cru que pip était cassé. Qu'est-ce qui se passe vraiment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Blender embarque son propre Python. Le pip de ton système installe donc pour un autre interpréteur. Dès qu'un add-on a besoin de NumPy, de meshio ou de requests, il se cogne au même mur."
+    },
+    {
+      "speaker": "B",
+      "text": "Le paquet est bien installé, mais pas dans la bonne maison."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. Antoine a écrit un petit installateur, pour Blender 4.2 et plus sous Windows. Il lance pip avec l'interpréteur de Blender lui-même, et le paquet atterrit là où Blender va chercher."
+    },
+    {
+      "speaker": "B",
+      "text": "Et il met les fichiers où ? Je n'aime pas les add-ons qui demandent les droits administrateur."
+    },
+    {
+      "speaker": "A",
+      "text": "Aucun droit admin. Il écrit dans le dossier scripts modules de l'utilisateur, accessible en écriture, et conservé quand l'add-on est rechargé. Il saute aussi les paquets déjà importables, donc une deuxième exécution est rapide."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'interface qui fige pendant les téléchargements ?"
+    },
+    {
+      "speaker": "A",
+      "text": "C'est l'autre moitié du truc. L'installation tourne dans un thread d'arrière-plan, donc Blender reste réactif. Mais seule la boucle principale peut toucher l'interface : les fenêtres passent par les timers de Blender et s'affichent à la fin."
+    },
+    {
+      "speaker": "B",
+      "text": "Astucieux. On l'utilise comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Deux options. Tu colles le script dans l'espace Scripting et tu cliques sur Run Script, ou tu l'appelles dans le register de ton add-on pour livrer les dépendances avec lui."
+    },
+    {
+      "speaker": "B",
+      "text": "Des pièges ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Quelques-uns. Redémarrer Blender après la première installation, épingler les versions parce que le Python de Blender n'est pas le 3.12 de ton système, et sur les postes d'entreprise verrouillés, pip peut être bloqué : il faut alors fournir les wheels à la main."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc les utilisateurs arrêtent de demander quel Python utiliser."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est ça, l'idée. Tu maîtrises la liste des dépendances, eux n'ont qu'à cliquer. L'article complet a le script et le tableau de dépannage."
+    }
+  ],
+  "source_hash": "1324f44d9247f347",
+  "audio_hash": "2459cc4e46f5107b",
+  "duration_seconds": 131
+}

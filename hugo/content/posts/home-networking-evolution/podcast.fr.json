@@ -1,0 +1,68 @@
+{
+  "title": "Casser des choses exprès : un homelab né dans un placard",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un serveur avec du ruban adhésif écrit à la main sur la façade comme inventaire, un nid de câbles bleus, et un week-end perdu à cause d'un seul apt upgrade raté. Voilà le homelab qu'Antoine raconte."
+    },
+    {
+      "speaker": "B",
+      "text": "Le coup du ruban adhésif, je connais. Pourquoi monter un lab à la maison, au fait ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Les factures cloud l'ont poussé. À l'université, IP, VPN et routage, c'était sur papier. Faire tourner des services chez soi rend les compromis concrets : le courant, le bruit, les sauvegardes, et qui a un accès SSH quand le routeur lâche. Il voulait un endroit où casser des choses sans facture."
+    },
+    {
+      "speaker": "B",
+      "text": "Il a commencé par quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Docker. Il a mis en face de chaque service payé dans le cloud une pile de conteneurs gratuite, comme le média ou les tableaux de bord. La leçon qui est restée : un fichier compose par sujet. Quand Plex faisait des siennes, il recyclait le volume au lieu de reconstruire toute la machine."
+    },
+    {
+      "speaker": "B",
+      "text": "Des services remplaçables, pas un gros serveur qu'on chouchoute."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est ça. Côté matériel, un Dell pas cher, une machine plus ancienne, et des scripts bash pour installer Ubuntu, CentOS et Proxmox, pour que réinstaller après une expérience fasse moins mal. Plus tard est arrivé un Dell PowerEdge R710, deux Xeon et vingt-quatre gigaoctets de RAM, sans écran, à côté de mousse acoustique."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour y accéder de l'extérieur ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Caddy en reverse proxy, avec un frontal chez OVH pour que son adresse résidentielle ne soit pas la seule ligne de défense. Le HTTPS automatique a compté plus que prévu : moins de commandes de certificats tard le soir. Pour le VPN, WireGuard. Pénible à configurer la première fois, rapide ensuite."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qui a mal tourné ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Trois choses. Un seul disque sans sauvegarde. Des ports d'administration exposés, alors maintenant les interfaces d'admin restent derrière le VPN. Et le bruit du R710, qui l'a fait penser à la ventilation avant de mettre un serveur près d'une chambre."
+    },
+    {
+      "speaker": "B",
+      "text": "De vraies leçons."
+    },
+    {
+      "speaker": "A",
+      "text": "Il dessine aussi toujours le réseau sur un schéma mural, la version qu'on explique à un colocataire. Plus tard, il a déplacé ses sites publics vers l'hébergement statique pour réduire le coût du toujours-allumé, et le lab est resté pour les services privés."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors qu'est-ce qu'on retient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un homelab, c'est un bac à sable pour les réflexes de plateforme : automatiser les installations, documenter la topologie, supposer la panne. L'article complet a les photos de la pile murale et du placard."
+    }
+  ],
+  "source_hash": "bf9455c01c8195ea",
+  "audio_hash": "1306d54e81555d2e",
+  "duration_seconds": 159
+}

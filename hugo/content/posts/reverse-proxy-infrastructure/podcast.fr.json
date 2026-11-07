@@ -1,0 +1,64 @@
+{
+  "title": "Revue d'un reverse proxy : des vérifications vertes qui ne bloquent rien",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un workflow de CI toujours vert, quoi qu'il arrive. C'est l'une des découvertes d'Antoine en relisant son propre reverse proxy."
+    },
+    {
+      "speaker": "B",
+      "text": "Toujours vert ? Comment c'est possible ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Chaque étape a continue-on-error à vrai. Donc il ne peut pas échouer. Attention, il s'agit d'une lecture de code : il l'a relu en octobre et novembre 2026, sans lancer de déploiement."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a quoi comme installation ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Caddy dans Docker sur un serveur DigitalOcean, avec le DNS de Cloudflare devant. Terraform crée le serveur et les enregistrements, Ansible configure tout le reste."
+    },
+    {
+      "speaker": "B",
+      "text": "Où ça devient intéressant ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Dans l'ordre des opérations. Dans le rôle Caddy, la nouvelle configuration est écrite directement à l'emplacement actif, le conteneur est arrêté puis relancé, et la validation ne vient qu'après. Le vrai contrôle arrive donc quand la configuration est déjà en ligne."
+    },
+    {
+      "speaker": "B",
+      "text": "Aïe. Et les vérifications de santé ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il existe un fichier de health checks, mais ni le rôle ni le playbook ne l'inclut. Et même exécuté, la plupart des tâches ne peuvent pas échouer, et les sondes acceptent 404, 502 et 503. Ça montre que le proxy répond, pas qu'une application fonctionne."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le retour arrière ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a une sauvegarde et une restauration, mais la section rescue ne protège que le dernier bloc de métriques. Une mauvaise configuration échouerait plus tôt, donc la restauration se fait à la main."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a aussi une commande just setup, présentée comme la première à lancer. C'est un alias de reset avec force : elle détruit et recrée le serveur sans rien demander."
+    },
+    {
+      "speaker": "A",
+      "text": "Il termine par une liste de correctifs classés : valider une copie avant de remplacer le fichier actif, élargir la restauration, rendre la CI vraiment bloquante. Rien n'est encore implémenté."
+    },
+    {
+      "speaker": "B",
+      "text": "L'article complet a le schéma et tous les détails."
+    }
+  ],
+  "source_hash": "1b3e0280760a2135",
+  "audio_hash": "21946eef244d4c13",
+  "duration_seconds": 120
+}

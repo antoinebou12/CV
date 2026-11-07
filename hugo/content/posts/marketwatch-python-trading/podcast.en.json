@@ -1,0 +1,68 @@
+{
+  "title": "A Python client for a stock game",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imagine a stock-trading game where you want a script to check your portfolio every morning. The site has no official API. What do you do?"
+    },
+    {
+      "speaker": "B",
+      "text": "Scrape it and hope?"
+    },
+    {
+      "speaker": "A",
+      "text": "More or less, but tidily. Antoine wanted to automate chores in MarketWatch's virtual stock game. It's paper trading, not a real broker. So he shipped a small Python package on PyPI called marketwatch."
+    },
+    {
+      "speaker": "B",
+      "text": "What does it cover?"
+    },
+    {
+      "speaker": "A",
+      "text": "Watchlists, listing games and reading their settings, positions and pending orders, buying and selling inside the game rules, and the leaderboard. You log in once with a class, then make many calls in a script."
+    },
+    {
+      "speaker": "B",
+      "text": "Why not just use curl scripts in a notebook?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two reasons. The game has session cookies, rules and leaderboards that change with the semester. And he wanted something documented for teammates. A shared gist rots the moment the HTML form changes. The package is intentionally small: no database layer, no strategy engine, just HTTP shaped like the site."
+    },
+    {
+      "speaker": "B",
+      "text": "Any design choices worth noting?"
+    },
+    {
+      "speaker": "A",
+      "text": "One explicit method per endpoint, so it's easy to search when MarketWatch changes a path. Docs on GitHub Pages, because the PyPI description is too short for login edge cases. And no bundled strategies, so the library stays neutral."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you use it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Install it with pip, create the client with a username and password, then call something like get games or get price for a ticker."
+    },
+    {
+      "speaker": "B",
+      "text": "And the warnings?"
+    },
+    {
+      "speaker": "A",
+      "text": "Honest ones. It's an unofficial API, so pin versions and expect breakage. Automation may conflict with the site's terms, so it's for learning, not abuse. And paper gains don't validate a strategy."
+    },
+    {
+      "speaker": "B",
+      "text": "So who's it for?"
+    },
+    {
+      "speaker": "A",
+      "text": "Small bots and screening inside the game. Not high-frequency trading, not brokerage. The full write-up links the docs and the source."
+    }
+  ],
+  "source_hash": "65cb446cc6b5ea30",
+  "audio_hash": "0a050e7042e3e16c",
+  "duration_seconds": 117
+}

@@ -1,0 +1,72 @@
+{
+  "title": "From a news feed to a backtest",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A headline says a company is doing great. Another says it's in trouble. How do you know which one actually moved the stock, or whether either mattered?"
+    },
+    {
+      "speaker": "B",
+      "text": "That's a tough one. Is that what AINewsTracker is for?"
+    },
+    {
+      "speaker": "A",
+      "text": "Sort of. Antoine's write-up is about a FastAPI service that turns financial news into records you can search, analyse and compare with market data. It's not a magic predictor. It's plumbing that keeps things traceable."
+    },
+    {
+      "speaker": "B",
+      "text": "Okay, so how does a story travel through it?"
+    },
+    {
+      "speaker": "A",
+      "text": "A request starts a collection job. The news service pulls feed content and creates article records. A metrics service analyses the text, and the result is stored in MongoDB. Routes take the HTTP requests, services do the work, repositories hide the database. Redis handles caching."
+    },
+    {
+      "speaker": "B",
+      "text": "Neat separation. What does the analysis actually produce?"
+    },
+    {
+      "speaker": "A",
+      "text": "According to the documentation, a sentiment label and score, detected tickers, a summary and topic labels. And here's the part Antoine cares about: each article keeps its source, its URL, its publication date and its text next to those fields."
+    },
+    {
+      "speaker": "B",
+      "text": "So you can trace a sentiment label back to the publisher."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. And the ticker lets you connect mentions across articles without treating every spelling of a company name as a different business."
+    },
+    {
+      "speaker": "B",
+      "text": "Then there's the backtesting side. The strategy route sends requests to a trading module, so you can test strategies on history."
+    },
+    {
+      "speaker": "A",
+      "text": "But he's careful there, isn't he?"
+    },
+    {
+      "speaker": "B",
+      "text": "Very. He says he'd read the original text beside the outputs before using them. A summary can drop a condition, and a company mention doesn't mean there's a tradable event. Labels are inputs to an experiment. They don't prove a news item caused a market move, and a backtest doesn't guarantee future performance."
+    },
+    {
+      "speaker": "A",
+      "text": "He even gives a checklist: collection, text analysis, strategy input, backtest output. For each one, what to inspect. Like whether the data was actually available at the moment being tested."
+    },
+    {
+      "speaker": "B",
+      "text": "And the article says plainly that it presents no measured accuracy or trading returns."
+    },
+    {
+      "speaker": "A",
+      "text": "Good honesty. So the takeaway is keep the source attached to the analysis."
+    },
+    {
+      "speaker": "B",
+      "text": "Right. The full write-up has the architecture diagram, with every node linking to its source file."
+    }
+  ],
+  "source_hash": "c3a510a6cba37f23",
+  "audio_hash": "89480b19ba7b88ef",
+  "duration_seconds": 140
+}

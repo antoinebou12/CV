@@ -1,0 +1,68 @@
+{
+  "title": "Diagrams as nodes in ComfyUI",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A screenshot of a diagram is a dead end. Nobody can fix a typo in it, compare it to last week's version or regenerate it."
+    },
+    {
+      "speaker": "B",
+      "text": "True. You end up redrawing the whole thing."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the itch behind ComfyUI-UML, a project Antoine wrote up. ComfyUI is known for image generation, but any intermediate result can be a node output. Here, diagram text goes in, and an image, a saved file and a shareable link come out."
+    },
+    {
+      "speaker": "B",
+      "text": "So the diagram source stays in the workflow."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. Mermaid or PlantUML source is easy to inspect and regenerate, and it travels with the rest of the workflow instead of becoming an unexplained picture. The README documents twenty-eight diagram types through Kroki, with output formats validated per type."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it need an AI model to write the diagrams?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, that's optional. But if a model does write one, the node cleans it up. It handles several response shapes, pulls out fenced code blocks and prefers one matching the selected diagram type. Useful when the model wraps prose around the Mermaid code."
+    },
+    {
+      "speaker": "B",
+      "text": "So it checks the syntax too?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, and Antoine flags that. Extracting a clean block isn't validating it. The renderer still has to accept the diagram."
+    },
+    {
+      "speaker": "B",
+      "text": "What about getting an image back into ComfyUI?"
+    },
+    {
+      "speaker": "A",
+      "text": "Raster images go through Pillow, get converted to RGB, scaled between zero and one, and wrapped as a tensor with a batch of one. SVG is trickier. The code tries a CairoSVG conversion, and if that fails it returns a tiny placeholder while still keeping the saved file. So a saved SVG and its preview can differ."
+    },
+    {
+      "speaker": "B",
+      "text": "How would I start?"
+    },
+    {
+      "speaker": "A",
+      "text": "Install it with the comfy node command, restart ComfyUI, and load the single-diagram example. Two nodes, the diagram node into a preview. Add the viewer once rendering works."
+    },
+    {
+      "speaker": "B",
+      "text": "Any privacy catch?"
+    },
+    {
+      "speaker": "A",
+      "text": "The web backend sends your diagram source to the chosen Kroki service. For sensitive architecture or offline use, local Mermaid and Graphviz paths are documented. The full post has the flow diagram and links to the code."
+    }
+  ],
+  "source_hash": "8da1b4fe525f352d",
+  "audio_hash": "31d11bef4704afd2",
+  "duration_seconds": 132
+}

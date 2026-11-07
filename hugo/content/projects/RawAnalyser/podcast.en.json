@@ -1,0 +1,52 @@
+{
+  "title": "RawAnalyser: checking raw images in Python",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A camera sensor hands you a raw image. Before anyone makes it pretty, someone has to ask: is it clipped to black or white anywhere?"
+    },
+    {
+      "speaker": "B",
+      "text": "I never think about that step. Who checks it?"
+    },
+    {
+      "speaker": "A",
+      "text": "For one of Antoine's projects, a Python tool called RawAnalyser does. It detects black and white clipping, calculates gamma, and checks flatness with vignette detection, referencing Algolux."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you tell it where to look?"
+    },
+    {
+      "speaker": "A",
+      "text": "You give it a folder and a JSON file that marks the region of interest and the gray patches. A small GUI lets you select those on a raw or TIFF file, saves them to that JSON, and keeps watching the raw folder for new files."
+    },
+    {
+      "speaker": "B",
+      "text": "So you drop new images in and it checks them."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the idea. There's also a script that inspects a single pixel and uses the Bayer pattern to tell you its color."
+    },
+    {
+      "speaker": "B",
+      "text": "Anything oddly specific in there?"
+    },
+    {
+      "speaker": "A",
+      "text": "One script converts 20 megapixel images down to 5 megapixels for the OV20880 sensor."
+    },
+    {
+      "speaker": "B",
+      "text": "Where's the code?"
+    },
+    {
+      "speaker": "A",
+      "text": "On GitHub under antoinebou12. The project page lists each script and the libraries it needs."
+    }
+  ],
+  "source_hash": "480e6ef3dee8af33",
+  "audio_hash": "223557f65f3f32dc",
+  "duration_seconds": 69
+}

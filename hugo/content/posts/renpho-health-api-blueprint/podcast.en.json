@@ -1,0 +1,68 @@
+{
+  "title": "A scale, Home Assistant and a forecast",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Antoine's bathroom scale knew a lot more than his weight. Getting that data out of a phone app turned into a reverse-engineering side project."
+    },
+    {
+      "speaker": "B",
+      "text": "Wait, what else does a scale measure?"
+    },
+    {
+      "speaker": "A",
+      "text": "A Renpho bio-impedance scale gives BMI, BMR, body age, fat and muscle estimates, water, protein, visceral fat, and resistance readings per limb. His problem was that it all lived in a siloed app. He wanted it in Home Assistant, next to his other automations."
+    },
+    {
+      "speaker": "B",
+      "text": "So he built an integration?"
+    },
+    {
+      "speaker": "A",
+      "text": "He forked one. The community project hass-renpho had slowed down, and he needed more entities, so he forked it as hass_renpho. It logs into Renpho's cloud, polls on an interval, and exposes sensors. He picked six hundred seconds, partly because logging in can kick your phone out of the app."
+    },
+    {
+      "speaker": "B",
+      "text": "And the reverse engineering?"
+    },
+    {
+      "speaker": "A",
+      "text": "He ran APKLeaks on the Android app, which scans the package for hosts, paths and keys. He matched those to the fields already mapped and filled gaps when a dashboard showed unknown after an app update. He treats it as an unstable contract."
+    },
+    {
+      "speaker": "B",
+      "text": "There was a network twist too."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The integration failed even though the app worked on cellular. It looked like a broken integration but was really IP reputation. A VPN or a proxy setting fixed it. It burned an evening."
+    },
+    {
+      "speaker": "B",
+      "text": "Then the forecasting."
+    },
+    {
+      "speaker": "A",
+      "text": "A notebook with pandas, scikit-learn and Keras, modelling weight only. An LSTM tuned over five trials landed on fifty-two units. But he lists the flaws himself: random splits on a time series, and an input shape that means the LSTM never really reads a sequence."
+    },
+    {
+      "speaker": "B",
+      "text": "Honest. Anything about habits?"
+    },
+    {
+      "speaker": "A",
+      "text": "Same time of day, same clothes, and watch trends over weeks. A one kilo swing is normal noise."
+    },
+    {
+      "speaker": "B",
+      "text": "And it's not clinical."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. The full write-up has the dashboards and the caveats."
+    }
+  ],
+  "source_hash": "56fd1a40c1d390da",
+  "audio_hash": "9c6f239d632c37a3",
+  "duration_seconds": 120
+}

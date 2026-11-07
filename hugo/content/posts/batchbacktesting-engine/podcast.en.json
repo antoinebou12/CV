@@ -1,0 +1,68 @@
+{
+  "title": "Inside a batch backtesting engine",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Here's a small trap in data analysis: you take the best value of every column and call it one result. But that row might never have existed."
+    },
+    {
+      "speaker": "B",
+      "text": "Wait, how does that happen?"
+    },
+    {
+      "speaker": "A",
+      "text": "It comes from a Python project called BatchBacktesting, from the AlgoETS group. Antoine read its source and wrote up what the code really does. The trap is in the analysis helper: grouping by instrument and taking the max. Each column's maximum is picked on its own, so one row can mix return, drawdown and duration from different runs."
+    },
+    {
+      "speaker": "B",
+      "text": "So the fix is to pick a real row first."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. Select the row by return, then talk about its drawdown. Antoine is clear that this is something he noticed reading code, not something he measured."
+    },
+    {
+      "speaker": "B",
+      "text": "What does the engine actually do?"
+    },
+    {
+      "speaker": "A",
+      "text": "Think of a small data pipeline. You give it a list of instruments and a strategy. For each one it fetches prices, cleans them, runs a backtest, and writes results. It uses a thread pool, and the single-strategy runner defaults to four workers."
+    },
+    {
+      "speaker": "B",
+      "text": "Is that a speed claim?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, and he says so. Those are code defaults, not measured throughput. Same for the assumptions: a hundred thousand in starting cash, a zero point two percent commission, exclusive orders. They live in the constructor, so they should sit next to any comparison of returns."
+    },
+    {
+      "speaker": "B",
+      "text": "Nothing about slippage, then?"
+    },
+    {
+      "speaker": "A",
+      "text": "Right. Slippage, short availability, delisted stocks and corporate actions all need separate review. There's also an EMA strategy detail: it computes three moving averages, twenty, eighty and a hundred fifty, but entry decisions only compare the twenty and the eighty."
+    },
+    {
+      "speaker": "B",
+      "text": "What happens when things fail?"
+    },
+    {
+      "speaker": "A",
+      "text": "A failed instrument just returns nothing. If every instrument fails, the later step has no data to combine. And the multi-strategy helper nests thread pools inside a pool, so API rate limits deserve attention."
+    },
+    {
+      "speaker": "B",
+      "text": "The takeaway is to read the assumptions, not just the charts."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. Antoine didn't rerun any simulation or make new return claims. The full write-up has the flowchart and links to the source files."
+    }
+  ],
+  "source_hash": "725fdfca6c602677",
+  "audio_hash": "691f12215155f8c9",
+  "duration_seconds": 130
+}

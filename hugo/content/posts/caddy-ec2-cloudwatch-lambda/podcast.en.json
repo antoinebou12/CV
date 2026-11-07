@@ -1,0 +1,68 @@
+{
+  "title": "A nano server, a nightly script, and a query that always said one",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Antoine wrote a query to count distinct visitors to his reverse proxy, and every single row came back with the number one. Every row. That's the kind of result that should make you suspicious."
+    },
+    {
+      "speaker": "B",
+      "text": "Let me guess. The query was wrong, not the internet."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. But first, the setup. He runs Caddy, a web server that handles HTTPS automatically, on a tiny AWS EC2 instance called a t4g dot nano. It costs about ten cents a day. The goal was cheap visibility into a personal reverse proxy, not a big SaaS dashboard bill."
+    },
+    {
+      "speaker": "B",
+      "text": "So how do the logs get from the little box to somewhere useful?"
+    },
+    {
+      "speaker": "A",
+      "text": "Caddy writes JSON access logs, with rotation. Then a short Python script run by cron at midnight ships them to CloudWatch. After that, a Step Functions workflow calls two Lambda functions. One runs a Logs Insights query for the last twenty-four hours and returns the visitor IP addresses. The other looks each address up on ipinfo dot io and writes the location back into a second log group."
+    },
+    {
+      "speaker": "B",
+      "text": "Pay-per-run plumbing instead of a server doing analytics. I like that. And the dashboard sits on top?"
+    },
+    {
+      "speaker": "A",
+      "text": "Right. Traffic, error rates, CPU, network, and the geolocation results, all on one CloudWatch dashboard."
+    },
+    {
+      "speaker": "B",
+      "text": "Okay, back to the bug. Why was everything one?"
+    },
+    {
+      "speaker": "A",
+      "text": "His first query grouped by IP address, and then counted distinct IP addresses inside each group. Of course each group has exactly one. What he actually wanted was requests per IP, so he rewrote it to count requests and sort by that."
+    },
+    {
+      "speaker": "B",
+      "text": "That's the classic trap. The query runs fine, the numbers look plausible, and they're meaningless."
+    },
+    {
+      "speaker": "A",
+      "text": "He's also honest about other weak spots. The script sends one log line per call, though a single call can take up to ten thousand events. It can resend lines when it re-reads files. And he'd bind the Caddy admin API to localhost, not leave it listening everywhere."
+    },
+    {
+      "speaker": "B",
+      "text": "And where did the setup end up?"
+    },
+    {
+      "speaker": "A",
+      "text": "Today he runs Caddy in Docker on a VPS, set up with Terraform and Ansible, and he dropped the CloudWatch shipper. One lesson he kept: behind Cloudflare, the remote IP is a Cloudflare server unless Caddy is told to trust Cloudflare's ranges. Every IP query depends on that."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway is, check what your numbers actually count."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. Structured visibility doesn't need Datadog money, just some cron delay and a bit of Python glue. The full write-up has the architecture diagram, the screenshots and every query."
+    }
+  ],
+  "source_hash": "1714120b9b429b83",
+  "audio_hash": "30c11ecd74df9f42",
+  "duration_seconds": 158
+}

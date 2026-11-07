@@ -1,0 +1,60 @@
+{
+  "title": "Replaying a simulation without rerunning it",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imagine you've spent hours on a simulation, and then you realize the camera angle was wrong. Do you rerun everything?"
+    },
+    {
+      "speaker": "B",
+      "text": "I'd cry a little. Is there a way around that?"
+    },
+    {
+      "speaker": "A",
+      "text": "That's the idea behind MistubaVideo. It turns simulation exports into images and video with Mitsuba 3. Because it renders from a recording, you can change the camera or the lighting without repeating the simulation."
+    },
+    {
+      "speaker": "B",
+      "text": "What does it actually read?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two things. A batch renderer handles sequences of OBJ meshes, and FFmpeg stitches the frames into video or a GIF. Then there's a helper called mitsuba-video that replays recorded body poses and surface fields, like wear."
+    },
+    {
+      "speaker": "B",
+      "text": "So you can see where a surface got worn down."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. For each frame it applies the recorded poses, blends a base material and an affected material using the surface field, and renders the scene. It can add a heatmap, a panel showing the UV atlas, and a covered-area chart, then encode an MP4."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you avoid wasting render time?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's an inspect command to check the input and a preview command to check framing before the full render. Quality presets go from preview to draft to paper."
+    },
+    {
+      "speaker": "B",
+      "text": "Any catch when reading the results?"
+    },
+    {
+      "speaker": "A",
+      "text": "One good one. The chart measures the covered area of the recorded field, not the visible area of the object on screen. And if you compare videos, keep the heatmap range the same, or the same field can look different."
+    },
+    {
+      "speaker": "B",
+      "text": "Careful reading, then."
+    },
+    {
+      "speaker": "A",
+      "text": "Always. The full write-up has the pipeline table and the render images."
+    }
+  ],
+  "source_hash": "db281342de23c51b",
+  "audio_hash": "a6de1033715fe2cc",
+  "duration_seconds": 94
+}

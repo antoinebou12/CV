@@ -1,0 +1,60 @@
+{
+  "title": "Six shaders, et les bogues plus beaux que le plan",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un shader qui s'appelle Golden number spiral, et pas de spirale dorée dedans. L'angle d'or est bien défini dans le code, mais aucune ligne ne le lit."
+    },
+    {
+      "speaker": "B",
+      "text": "Le titre est faux, alors ?"
+    },
+    {
+      "speaker": "A",
+      "text": "À peu près. Antoine a publié six shaders sur Shadertoy début 2024, et dans cet article il les relit ligne par ligne : ce que le code calcule, d'où viennent les idées, et où il fait autre chose que ce que son nom promet."
+    },
+    {
+      "speaker": "B",
+      "text": "Pour ceux qui ne connaissent pas, un shader, ça tourne comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une seule fonction, appelée par le GPU pour chaque pixel, à chaque image. Elle reçoit la position du pixel, le temps et la souris. Aucune mémoire entre les pixels. Tout ce qu'on voit dépend uniquement de ces trois valeurs."
+    },
+    {
+      "speaker": "B",
+      "text": "Quelle est la meilleure astuce des six ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La grille. Ses lignes restent larges d'un pixel à n'importe quelle échelle, grâce à une fonction qui mesure de combien une valeur change d'un pixel à l'autre. Court et très utile. Il y a aussi un travers : un mélange avec un poids négatif pousse les couleurs hors limites, et les cases s'écrasent en aplats saturés."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'heureux accident ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Sun Ray Clockwise. Il passe un angle en degrés à un cosinus qui attend des radians. Au lieu de quelques larges rayons, on obtient plus d'une centaine de rayons fins, comme un soleil levant. L'erreur est plus belle que l'intention."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la scène de mer ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un collage. L'océan, les étoiles et les nuages viennent de trois shaders connus, crédités un par un, plus une déformation de domaine et des sphères qu'il a ajoutées. Une puissance en plus dans l'éclairage a presque éteint le reflet du ciel, et la lumière dirigée vers le haut empêche la tache spéculaire d'apparaître."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la leçon, c'est de lire le code, pas les commentaires."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est son premier constat. De petites retouches sur du code emprunté peuvent désactiver des effets sans prévenir. L'article complet a les démos, en pause tant qu'on n'appuie pas sur lecture."
+    }
+  ],
+  "source_hash": "75b6989ea3597089",
+  "audio_hash": "e1c45f28bec824f1",
+  "duration_seconds": 120
+}
