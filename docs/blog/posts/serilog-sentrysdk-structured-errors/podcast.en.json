@@ -1,0 +1,68 @@
+{
+  "title": "From a log line to a useful error",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A log line says something happened. It rarely says enough to fix it."
+    },
+    {
+      "speaker": "B",
+      "text": "Right, you get a message at three in the morning and no idea which release or environment it came from."
+    },
+    {
+      "speaker": "A",
+      "text": "That gap is what Serilog dot Sinks dot SentrySDK is for. It's a .NET library by Antoine that connects Serilog logging with Sentry error events, so an error carries its exception, release, environment and request context."
+    },
+    {
+      "speaker": "B",
+      "text": "Did he start from scratch?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, it's based on an existing community project, serilog-sinks-sentry. And Antoine points out that its GitHub stars measure interest in this repository only, not overall Serilog or Sentry adoption."
+    },
+    {
+      "speaker": "B",
+      "text": "How does it work inside?"
+    },
+    {
+      "speaker": "A",
+      "text": "A sink receives each Serilog event and hands it to a small wrapper around the official Sentry SDK. That wrapper handles messages, exceptions and transactions, and it also makes the SDK easy to swap out in tests."
+    },
+    {
+      "speaker": "B",
+      "text": "Any gotcha for people adopting it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, initialization. The sink sets up Sentry itself, and the README warns against calling Sentry's init a second time in the same process. In a web app that already initializes monitoring, decide who owns it first."
+    },
+    {
+      "speaker": "B",
+      "text": "What about request data? That sounds sensitive."
+    },
+    {
+      "speaker": "A",
+      "text": "It is. A companion ASP.NET Core package adds request context, but the post says to choose deliberately what leaves your app and to review personal data settings and filtering. There's also a before-send callback for filtering or enriching events."
+    },
+    {
+      "speaker": "B",
+      "text": "And what do we actually know about quality?"
+    },
+    {
+      "speaker": "A",
+      "text": "The README documents unit tests, coverage collection and formatting checks. Antoine doesn't claim to have rerun them, and he doesn't invent a coverage number. The package targets net six and net ten."
+    },
+    {
+      "speaker": "B",
+      "text": "Install is one command?"
+    },
+    {
+      "speaker": "A",
+      "text": "dotnet add package, yes. The full post has the architecture diagram and links to the demos."
+    }
+  ],
+  "source_hash": "d3a9c5fe15555894",
+  "audio_hash": "20c7b707755f063c",
+  "duration_seconds": 115
+}

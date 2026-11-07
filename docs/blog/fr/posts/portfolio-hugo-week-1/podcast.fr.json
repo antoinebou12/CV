@@ -1,0 +1,68 @@
+{
+  "title": "Semaine 1 d'un portfolio Hugo",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Quatre chaînes d'outils, et une seule se déployait toute seule. Voilà l'état de l'ancien dépôt d'Antoine juste avant son passage à Hugo, en janvier 2024."
+    },
+    {
+      "speaker": "B",
+      "text": "Quatre ? Pour un site personnel ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Un CV web construit avec npm, un CV PDF en LaTeX, une page de liens en Hugo, et un blogue dans un sous-module git. Seul le CV web avait un workflow GitHub Actions. Le dernier commit, une semaine avant le billet, supprimait l'ancien dossier du site."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la semaine 1, c'était une page blanche."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Il a choisi Hugo parce que c'est statique : hébergement peu coûteux, pas de base de données à corriger. Et les articles sont en Markdown dans git, donc le dépôt est la source de vérité. Une interface d'admin à la WordPress, dit-il, il l'aurait ignorée dès la deuxième semaine."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce que cette première page de liens lui a appris ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Plusieurs choses. Il avait copié le thème Lynx dans le site au lieu de l'importer comme module, et l'échafaudage de démo a suivi, avec des fichiers qui pointaient vers un dossier inexistant."
+    },
+    {
+      "speaker": "B",
+      "text": "Aïe. Rien de plus vicieux ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le Docker lançait le serveur de développement de Hugo, pas un build statique. Et le fichier Compose montait le projet dans un répertoire alors que l'image avait copié le site dans un autre : ses modifications n'atteignaient jamais le conteneur."
+    },
+    {
+      "speaker": "B",
+      "text": "Le grand classique. Et le thème qu'il a retenu ?"
+    },
+    {
+      "speaker": "A",
+      "text": "HBTheme. Il apportait les commentaires et les modules Hugo, donc pas de gabarits à refaire de zéro. Le compromis, c'est une structure imposée, qui coince quand on veut des types de contenu sur mesure."
+    },
+    {
+      "speaker": "B",
+      "text": "Et Substack, dans tout ça ?"
+    },
+    {
+      "speaker": "A",
+      "text": "En parallèle, pour les textes longs et l'envoi par courriel. Hugo reste la maison professionnelle de référence."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors, qu'est-ce qu'il referait autrement ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Importer les thèmes comme modules, construire du HTML statique en CI pour chaque pièce, et garder les fichiers de traduction complets. L'article complet détaille tout ça, avec le shortcode iframe."
+    }
+  ],
+  "source_hash": "23b5ecb0a07d364d",
+  "audio_hash": "904d04a1cf63449b",
+  "duration_seconds": 130
+}

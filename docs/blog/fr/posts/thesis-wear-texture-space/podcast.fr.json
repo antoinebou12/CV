@@ -1,0 +1,60 @@
+{
+  "title": "Donner aux textures la mémoire du contact",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Une surface réelle garde la trace du frottement. Une simulation, elle, l'oublie en général à la fin du pas de calcul."
+    },
+    {
+      "speaker": "B",
+      "text": "Elle l'oublie comment ? La physique sait bien qu'il y a eu contact."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est justement le décalage que vise le mémoire d'Antoine à l'ÉTS, sous la direction de Sheldon Andrews. Le solveur de contact calcule impulsions, vitesse relative, traction et dissipation, met à jour les corps rigides, puis s'arrête. Pendant ce temps, les cartes de matériau, albédo, rugosité, normales, restent fixes, sauf si un artiste peint l'usure à la main."
+    },
+    {
+      "speaker": "B",
+      "text": "Le mémoire relie les deux."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. L'idée centrale : donner aux cartes une mémoire locale persistante du contact. Les contacts épars sont regroupés en patchs, projetés dans des atlas de texture, puis reconstruits sur le GPU en vitesse tangentielle, traction et dissipation. Ça pilote l'accumulation du glissement, de la direction et de l'usure."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le maillage ne bouge pas ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Aucun remaillage global. Seules les cartes se mettent à jour, progressivement, là où le contact a eu lieu. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment sait-il que c'est réaliste ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La validation passe par un banc d'abrasion réciproque et des captures GelSight de la microgéométrie mesurée, publiées comme jeu de données. Dans les scénarios testés, les texels écrits suivent mieux l'usure cumulée que la trajectoire du corps seule."
+    },
+    {
+      "speaker": "B",
+      "text": "Ça tourne en temps réel ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un cube ou un tore sur un plan reste dans un budget interactif. Le coût grimpe vite quand plusieurs regroupements de contact sont traités ensemble. Et il précise que c'est un modèle d'apparence, pas une simulation tribologique complète."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le code, il est où ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Deux bases de code. WearPaper contient les sources du mémoire et les diapositives, et n'est pas public. TextureFriction est le simulateur, où la boucle tourne en interactif. L'article complet a le schéma du pipeline."
+    }
+  ],
+  "source_hash": "4ab1ff9ed30549fe",
+  "audio_hash": "d9155191a5f85358",
+  "duration_seconds": 127
+}

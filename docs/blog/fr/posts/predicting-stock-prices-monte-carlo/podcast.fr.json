@@ -1,0 +1,68 @@
+{
+  "title": "Une fourchette, pas un prix",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Si quelqu'un vous annonce qu'Apple clôturera à un prix précis l'an prochain, ne le croyez pas. Pour Antoine, le trading, c'est des fourchettes, pas un chiffre magique."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors comment on obtient une fourchette ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Avec une simulation de Monte-Carlo. Il a pris les clôtures quotidiennes d'Apple et estimé la dérive et la volatilité des rendements logarithmiques, en n'utilisant que les données d'avant 2023. Puis il a simulé plein de trajectoires de prix possibles."
+    },
+    {
+      "speaker": "B",
+      "text": "Et ensuite on compare à ce qui s'est vraiment passé."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. L'année 2023 servait de test. Les vrais prix sont-ils tombés dans la bande entre le cinquième et le quatre-vingt-quinzième centile des trajectoires simulées ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Comment marche la simulation, en mots simples ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Chaque jour, on tire un choc aléatoire d'une loi normale, on le multiplie par la volatilité, on ajoute la dérive, et on multiplie le prix par l'exponentielle de ça. Il y a une petite correction, dite d'Itô, pour que la moyenne simulée ne grimpe pas plus vite que ce que l'historique justifie."
+    },
+    {
+      "speaker": "B",
+      "text": "Donne-moi un chiffre."
+    },
+    {
+      "speaker": "A",
+      "text": "Pour Apple, le prix moyen simulé après trois cent soixante-quatre jours était de 206,63 dollars. La vraie clôture du 29 décembre 2023 : 192,53. Un écart de 14,10 dollars, soit environ 7 %."
+    },
+    {
+      "speaker": "B",
+      "text": "Pas mal, mais pas de la magie."
+    },
+    {
+      "speaker": "A",
+      "text": "Et un essai plus tard sur Microsoft, avec les clôtures de 2024, a raté d'environ 14 %. C'est le rappel : une bande bâtie sur la volatilité passée ne dit rien d'une entreprise qui se fait réévaluer."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce que le modèle ne sait pas faire, selon lui ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La volatilité n'est pas constante, il n'y a pas de sauts comme les annonces de résultats, et la diversification est ignorée. Il distingue aussi ça des MCMC, qui ajustent d'abord une distribution. Ici, c'est l'étape de simulation vers l'avant."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors, à retenir ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Monte-Carlo mesure la largeur du risque du modèle. Le backtesting mesure ce qu'une règle de trading aurait rapporté. Il faut séparer les deux questions. L'article complet a le code et les graphiques en éventail."
+    }
+  ],
+  "source_hash": "4c519242904a34c3",
+  "audio_hash": "825b00630ca89909",
+  "duration_seconds": 136
+}

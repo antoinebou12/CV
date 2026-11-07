@@ -1,0 +1,68 @@
+{
+  "title": "Week one of a Hugo portfolio",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Four toolchains, and only one of them deployed automatically. That's what Antoine's old site repository looked like right before he moved to Hugo in January 2024."
+    },
+    {
+      "speaker": "B",
+      "text": "Four? For a personal site?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. A web résumé built with npm, a PDF CV in LaTeX, a links page in Hugo, and a blog living in a git submodule. Only the web résumé had a GitHub Actions workflow. The last commit, a week before the post, deleted the old site folder."
+    },
+    {
+      "speaker": "B",
+      "text": "So week one was a clean slate."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. He picked Hugo because it's static, so hosting is cheap and there's no database to patch. And posts are Markdown in git, so the repo is the source of truth. A WordPress-style admin, he says, he'd have ignored by week two."
+    },
+    {
+      "speaker": "B",
+      "text": "What did he learn from that first links page?"
+    },
+    {
+      "speaker": "A",
+      "text": "A few good lessons. He'd copied the Lynx theme into the site instead of using it as a module, so demo scaffolding came along that pointed at a folder that didn't exist."
+    },
+    {
+      "speaker": "B",
+      "text": "Ouch. Anything sneakier?"
+    },
+    {
+      "speaker": "A",
+      "text": "The Docker setup ran Hugo's development server, not a static build. And the Compose file mounted the project in one folder while the image had copied the site into another, so edits on his machine never reached the running container."
+    },
+    {
+      "speaker": "B",
+      "text": "The classic. What about the theme he actually chose?"
+    },
+    {
+      "speaker": "A",
+      "text": "HBTheme. It came with comments and Hugo modules, so no layouts from zero. The tradeoff is an opinionated structure, which gets awkward when you want custom content types."
+    },
+    {
+      "speaker": "B",
+      "text": "And Substack?"
+    },
+    {
+      "speaker": "A",
+      "text": "It runs in parallel for longer essays and email delivery. Hugo stays the canonical professional home."
+    },
+    {
+      "speaker": "B",
+      "text": "So what would he do differently?"
+    },
+    {
+      "speaker": "A",
+      "text": "Pull themes as modules, build static HTML in CI for every piece, and keep translation files complete. The full write-up has the details, plus the iframe shortcode."
+    }
+  ],
+  "source_hash": "1543a2bf880ef2bd",
+  "audio_hash": "5e800f0bf0bdf8e2",
+  "duration_seconds": 113
+}

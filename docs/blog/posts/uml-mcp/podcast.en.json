@@ -1,0 +1,72 @@
+{
+  "title": "Diagrams from chat with uml-mcp",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "You ask a chat assistant for a sequence diagram, and instead of pasting text you can't read, you get a real rendered image. How?"
+    },
+    {
+      "speaker": "B",
+      "text": "I'm guessing there's a tool behind it."
+    },
+    {
+      "speaker": "A",
+      "text": "There is. It's uml-mcp, an open-source M C P server by Antoine. The assistant sends Mermaid, PlantUML or another supported diagram source, and the server returns the rendered output plus useful links."
+    },
+    {
+      "speaker": "B",
+      "text": "Why M C P instead of templates?"
+    },
+    {
+      "speaker": "A",
+      "text": "He started with ChatGPT plugins and prompt templates. Both worked, but editors wanted native tools: enable a server once, call it from the agent, and save the source and the S V G beside the post."
+    },
+    {
+      "speaker": "B",
+      "text": "So the plugin idea, on a different host."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. The repository documents five tools and around thirty-seven Kroki-backed diagram types. Antoine notes those are counts of the interface, not a benchmark."
+    },
+    {
+      "speaker": "B",
+      "text": "What's the clever bit?"
+    },
+    {
+      "speaker": "A",
+      "text": "One module builds a JSON state, compresses it with zlib and encodes it as URL-safe base64. That gives both an image link and an editable mermaid dot live link."
+    },
+    {
+      "speaker": "B",
+      "text": "And a gotcha?"
+    },
+    {
+      "speaker": "A",
+      "text": "The code separates S V G from PNG, J P E G and WebP endpoints. Hit the wrong one and a perfectly valid diagram breaks before the syntax is even the problem."
+    },
+    {
+      "speaker": "B",
+      "text": "Setup?"
+    },
+    {
+      "speaker": "A",
+      "text": "Add the server to Cursor's M C P settings, then ask for a diagram type explicitly. There's a hosted endpoint too."
+    },
+    {
+      "speaker": "B",
+      "text": "Any warnings?"
+    },
+    {
+      "speaker": "A",
+      "text": "Models still invent syntax sometimes, so render before publishing. And keep secrets out of prompts."
+    },
+    {
+      "speaker": "B",
+      "text": "The full write-up has the sequence diagram and install steps."
+    }
+  ],
+  "source_hash": "bb547974b745e57e",
+  "audio_hash": "4a55870e2b9c1034",
+  "duration_seconds": 104
+}

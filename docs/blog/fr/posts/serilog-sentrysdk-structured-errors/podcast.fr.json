@@ -1,0 +1,68 @@
+{
+  "title": "D'une ligne de log à une erreur exploitable",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Une ligne de log dit qu'il s'est passé quelque chose. Elle en dit rarement assez pour corriger le problème."
+    },
+    {
+      "speaker": "B",
+      "text": "Oui, on reçoit un message à trois heures du matin, sans savoir de quelle version ni de quel environnement il vient."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est ce trou que comble Serilog point Sinks point SentrySDK. C'est une bibliothèque dot NET d'Antoine qui relie les logs Serilog aux événements d'erreur de Sentry, pour qu'une erreur arrive avec son exception, sa version, son environnement et le contexte de la requête."
+    },
+    {
+      "speaker": "B",
+      "text": "Il est parti de zéro ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, le projet s'inspire d'un projet communautaire existant, serilog-sinks-sentry. Et Antoine précise que les étoiles GitHub mesurent l'intérêt pour ce dépôt, pas l'adoption globale de Serilog ou de Sentry."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment ça marche à l'intérieur ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un sink reçoit chaque événement Serilog et le passe à un petit adaptateur autour du SDK officiel de Sentry. Cet adaptateur gère les messages, les exceptions et les transactions, et il rend le SDK facile à remplacer dans les tests."
+    },
+    {
+      "speaker": "B",
+      "text": "Un piège pour ceux qui l'adoptent ?"
+    },
+    {
+      "speaker": "A",
+      "text": "L'initialisation. Le sink configure Sentry lui-même, et le README déconseille d'appeler l'init de Sentry une deuxième fois dans le même processus. Dans une application web qui initialise déjà son monitoring, il faut décider qui en est responsable."
+    },
+    {
+      "speaker": "B",
+      "text": "Et les données de requête ? Ça peut être sensible."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Un paquet ASP.NET Core complémentaire ajoute le contexte de requête, mais l'article insiste : choisir ce qui quitte l'application, et vérifier les réglages de données personnelles et le filtrage. Il y a aussi un callback avant envoi pour filtrer ou enrichir les événements."
+    },
+    {
+      "speaker": "B",
+      "text": "Et côté qualité ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le README documente des tests unitaires, la couverture et des contrôles de formatage. Antoine ne prétend pas les avoir relancés et n'invente aucun pourcentage. Les paquets ciblent net six et net dix."
+    },
+    {
+      "speaker": "B",
+      "text": "L'installation tient en une commande ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un dotnet add package, oui. L'article complet a le schéma d'architecture et les liens vers les exemples."
+    }
+  ],
+  "source_hash": "76ae9f1905b302a7",
+  "audio_hash": "10dfcdc551b46b3c",
+  "duration_seconds": 127
+}

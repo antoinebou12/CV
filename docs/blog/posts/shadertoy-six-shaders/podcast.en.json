@@ -1,0 +1,60 @@
+{
+  "title": "Six shaders, and the bugs that look better than the plan",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A shader called Golden number spiral has no golden spiral in it. The golden angle is defined in the code, and nothing ever reads it."
+    },
+    {
+      "speaker": "B",
+      "text": "Wait, so the title is wrong?"
+    },
+    {
+      "speaker": "A",
+      "text": "Pretty much. Antoine published six shaders on Shadertoy in early 2024, and for this post he read each one line by line. What they compute, where the ideas come from, and where the code does something other than what its name promises."
+    },
+    {
+      "speaker": "B",
+      "text": "For anyone who hasn't touched Shadertoy, how does a shader run?"
+    },
+    {
+      "speaker": "A",
+      "text": "One function, called by the GPU for every pixel, every frame. It gets the pixel position, the time, and the mouse. No memory between pixels. Everything you see is a pure function of those three things."
+    },
+    {
+      "speaker": "B",
+      "text": "So what's the favorite trick in the six?"
+    },
+    {
+      "speaker": "A",
+      "text": "The grid. It keeps lines exactly one pixel wide at any scale, using a function that measures how much a value changes from one pixel to the next. Short code, very useful. It also has a quirk: a mix with a negative weight pushes colors out of range, so the cells clip to flat, saturated colors."
+    },
+    {
+      "speaker": "B",
+      "text": "And the happy accident?"
+    },
+    {
+      "speaker": "A",
+      "text": "Sun Ray Clockwise. He passes an angle in degrees to a cosine that expects radians. Instead of a few wide rays, you get over a hundred thin ones, like a sunburst. The mistake looks better than the intent."
+    },
+    {
+      "speaker": "B",
+      "text": "What about the sea scene?"
+    },
+    {
+      "speaker": "A",
+      "text": "A collage. The ocean, the stars and the clouds come from three well-known shaders, credited by name, plus a domain warp and floating spheres he added. One extra power in the lighting turned off almost all the sky reflection, and a light pointing upward means the specular highlight never shows."
+    },
+    {
+      "speaker": "B",
+      "text": "So the lesson is, read the code, not the comments."
+    },
+    {
+      "speaker": "A",
+      "text": "That's his first takeaway. Small changes to borrowed code can silently switch things off. The full write-up has the embeds, paused until you press play."
+    }
+  ],
+  "source_hash": "930fc23475aeab0a",
+  "audio_hash": "1149ca4c0f6acaaf",
+  "duration_seconds": 114
+}

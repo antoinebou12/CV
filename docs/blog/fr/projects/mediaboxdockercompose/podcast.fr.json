@@ -1,0 +1,64 @@
+{
+  "title": "Une pile média de laboratoire maison avec Docker Compose",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Quelqu'un de la famille demande un film. Peu après, il est dans la bibliothèque, bien nommé, avec ses sous-titres. Qui a fait le travail ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Pas une personne, je suppose."
+    },
+    {
+      "speaker": "A",
+      "text": "Une pile de conteneurs. C'est le projet MediaBoxDockerCompose d'Antoine, une pile de laboratoire maison construite autour de Compose pour récupérer, ranger et diffuser des médias."
+    },
+    {
+      "speaker": "B",
+      "text": "La chaîne fonctionne comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une application de requêtes comme Ombi ou Jellyseerr reçoit la demande. Les applications Arr, Sonarr pour les séries et Radarr pour les films, cherchent dans les indexeurs, passent une version à un client de téléchargement comme Deluge ou NZBGet, puis importent le fichier dans une bibliothèque propre."
+    },
+    {
+      "speaker": "B",
+      "text": "Et qui le lit ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Plex ou Jellyfin. Ils ne font que lire la bibliothèque. Bazarr ajoute les sous-titres et Tdarr transcode sur place."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qui tient le tout ensemble ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un seul répertoire, ROOT, défini dans le fichier d'environnement, avec les mêmes identifiants d'utilisateur, de groupe et le même fuseau horaire pour chaque conteneur. Les téléchargements, les bibliothèques finies et la configuration de chaque application vivent dessous."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est simple à installer ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Tu installes Docker, tu modifies le fichier d'environnement, puis docker compose up. Ensuite, tu relies indexeurs et clients de téléchargement dans les interfaces web."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a aussi une liste de bémols, non ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui, des défauts assumés. Le montage de Sonarr a un deux-points et une barre oblique en trop. NZBGet voit la configuration de toutes les autres applications. Lidarr peut ne pas trouver les fichiers terminés. Portainer et Whisper réclament tous deux le port 9000."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a aussi un dépôt compagnon avec des installateurs bash à menus, pour les machines pas encore prêtes pour la pile complète. La page du projet a le schéma et le tableau complet des services."
+    }
+  ],
+  "source_hash": "19b4b1e8bbdaee70",
+  "audio_hash": "79bbf6dfc6267aaf",
+  "duration_seconds": 119
+}

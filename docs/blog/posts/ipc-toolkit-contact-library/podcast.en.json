@@ -1,0 +1,60 @@
+{
+  "title": "IPC Toolkit and the friction that depends on direction",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "When two objects touch in a simulation, somebody has to work out when they collide and how much they rub. That's a lot of math to get right."
+    },
+    {
+      "speaker": "B",
+      "text": "So is IPC Toolkit the thing that does that?"
+    },
+    {
+      "speaker": "A",
+      "text": "It's a C plus plus library for exactly that. It does collision detection, distance derivatives, and friction potentials. But it's not a full physics engine. The application still owns the time-stepping loop and the solver."
+    },
+    {
+      "speaker": "B",
+      "text": "So the library answers questions, and the simulation drives."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. The simulation hands over collision geometry and how the vertices moved. The library runs a broad phase to find candidate pairs, then a narrow phase with continuous collision detection, and sends the result back."
+    },
+    {
+      "speaker": "B",
+      "text": "Where does Antoine come in?"
+    },
+    {
+      "speaker": "A",
+      "text": "He contributes upstream, staging changes on his own fork first. Two of his pull requests were merged in 2026. One adds anisotropic friction, and another lets you pass parameters to the Scalable CCD narrow phase."
+    },
+    {
+      "speaker": "B",
+      "text": "Anisotropic friction. Say that in plain words."
+    },
+    {
+      "speaker": "A",
+      "text": "Friction that depends on direction and on which two materials are touching. Think of dragging something along the grain of wood versus across it. His thesis work on surface wear needed exactly that from the contact model."
+    },
+    {
+      "speaker": "B",
+      "text": "And the other pull request?"
+    },
+    {
+      "speaker": "A",
+      "text": "That one is about the GPU path for continuous collision detection. An earlier fix to the Windows CUDA build in the Scalable CCD project, plus the parameter pass-through, helped unblock it."
+    },
+    {
+      "speaker": "B",
+      "text": "Were all of them accepted?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, a couple were closed without merge, and the page lists them honestly. The full write-up has the diagram and the whole table."
+    }
+  ],
+  "source_hash": "1f4c072386fff06b",
+  "audio_hash": "c0f2b2b5935a8716",
+  "duration_seconds": 102
+}

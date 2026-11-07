@@ -1,0 +1,68 @@
+{
+  "title": "D'une surface mesurée à une ressource utilisable",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un scanner mesure une toute petite surface, et le résultat est une grille de hauteurs. Qu'est-ce qu'on en fait ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Une jolie image ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Entre autres, mais le billet va plus loin. TrueMapData est la bibliothèque Python d'Antoine pour lire les captures TrueMap et GelSight. Elle expose les hauteurs sous forme de tableaux NumPy, avec des outils d'analyse et d'export graphique."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qu'il y a dans un fichier de capture ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un en-tête, des métadonnées spatiales et la grille, en échantillons float32. Les métadonnées comptent : une texture de jeu peut s'étirer sur n'importe quelle plage, mais une surface mesurée doit garder son pas d'échantillonnage pour conserver son échelle physique."
+    },
+    {
+      "speaker": "B",
+      "text": "La taille reste donc attachée aux données."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Et avant d'exporter, il examine la surface : carte de chaleur, vue 3D, profils par ligne ou colonne, contours. Ensuite on peut dériver une carte normale pour l'éclairage, une carte de déplacement qui porte la hauteur, ou même un maillage en STL, OBJ ou glTF."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'échelle compte encore quand on pave une texture sur un maillage ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Le parcours apply-on-mesh utilise les bornes du modèle, la valeur en millimètres par pixel et les dimensions de la capture pour fixer le pavage. La taille du scan reste liée à la surface qui reçoit la texture."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'usure, là-dedans ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La rugosité décrit une surface à un instant donné, avec les paramètres ISO 25178 via un paquet séparé, Surfalize. L'usure compare des captures dans le temps. Avant de soustraire les hauteurs, les images doivent partager la même grille et la même région, donc la bibliothèque les recale d'abord."
+    },
+    {
+      "speaker": "B",
+      "text": "La perte se définit comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Hauteur de référence moins hauteur courante. Une perte positive veut dire que la surface actuelle est plus basse. Pour un volume physique, il faut aussi le pas des pixels dans les deux directions, et une erreur de recalage ou des unités mélangées changeraient le résultat."
+    },
+    {
+      "speaker": "B",
+      "text": "Les figures du billet ne sont donc pas des données de son mémoire."
+    },
+    {
+      "speaker": "A",
+      "text": "Exact, elles viennent du README du dépôt. L'article complet a les schémas et les commandes."
+    }
+  ],
+  "source_hash": "efed41269374f045",
+  "audio_hash": "ae6da5d133cccc40",
+  "duration_seconds": 134
+}

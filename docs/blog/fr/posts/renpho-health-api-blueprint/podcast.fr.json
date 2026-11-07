@@ -1,0 +1,68 @@
+{
+  "title": "Une balance, Home Assistant et une prévision",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "La balance d'Antoine en savait bien plus que son poids. Sortir ces données d'une app mobile est devenu un projet de rétro-ingénierie."
+    },
+    {
+      "speaker": "B",
+      "text": "Attends, une balance mesure quoi d'autre ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une Renpho à bio-impédance donne l'IMC, le métabolisme de base, l'âge corporel, des estimations de graisse et de muscle, l'eau, les protéines, la graisse viscérale, et des résistances par membre. Son souci : tout ça vivait dans une app isolée. Il voulait les chiffres dans Home Assistant, à côté de ses autres automations."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc il a écrit une intégration ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il a forké celle de la communauté. Le projet hass-renpho ralentissait et il lui fallait plus d'entités, alors il a créé hass_renpho. Elle se connecte au cloud Renpho, interroge à intervalle fixe et expose des capteurs. Il a choisi six cents secondes, notamment parce que la connexion peut déconnecter le téléphone de l'app."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la rétro-ingénierie ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il a passé APKLeaks sur l'app Android, qui cherche dans le paquet les hôtes, chemins et clés. Il a recoupé avec les champs déjà gérés et comblé les manques quand un tableau affichait inconnu après une mise à jour. Pour lui, c'est un contrat instable."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a eu un piège côté réseau aussi."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. L'intégration échouait alors que l'app marchait en données cellulaires. On aurait cru une intégration cassée, c'était la réputation de l'adresse IP. Un VPN ou un proxy a réglé ça. Ça lui a coûté une soirée."
+    },
+    {
+      "speaker": "B",
+      "text": "Puis la prévision."
+    },
+    {
+      "speaker": "A",
+      "text": "Un notebook avec pandas, scikit-learn et Keras, qui modélise le poids seulement. Un LSTM réglé sur cinq essais a retenu cinquante-deux unités. Mais il liste lui-même les défauts : des découpages aléatoires sur une série temporelle, et une forme d'entrée qui empêche le LSTM de vraiment lire une séquence."
+    },
+    {
+      "speaker": "B",
+      "text": "Franc. Et les habitudes ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Même heure, mêmes vêtements, et regarder les tendances sur des semaines. Un écart d'un kilo, c'est du bruit normal."
+    },
+    {
+      "speaker": "B",
+      "text": "Et ce n'est pas clinique."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. L'article complet a les tableaux de bord et les réserves."
+    }
+  ],
+  "source_hash": "36644c8f9361cab5",
+  "audio_hash": "3dae03c58fd7581f",
+  "duration_seconds": 131
+}

@@ -1,0 +1,60 @@
+{
+  "title": "RetroArch Web Games: a retro arcade in Docker",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imagine opening a browser tab and playing a Game Boy classic, served from your own machine."
+    },
+    {
+      "speaker": "B",
+      "text": "Nice. How does that work?"
+    },
+    {
+      "speaker": "A",
+      "text": "It's retroarch-web-games, a Docker image by Antoine that runs RetroArch in the browser with games already packed in. It covers NES, SNES, Genesis and Game Boy titles. You self-host the web player and deploy with Docker or Docker Compose."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you start it?"
+    },
+    {
+      "speaker": "A",
+      "text": "One command: docker compose up with the detach flag. The image is also published on Docker Hub."
+    },
+    {
+      "speaker": "B",
+      "text": "What's the catch?"
+    },
+    {
+      "speaker": "A",
+      "text": "Size. The page warns that the image is about ten gigabytes, because of all the games it includes."
+    },
+    {
+      "speaker": "B",
+      "text": "How do the games get there?"
+    },
+    {
+      "speaker": "A",
+      "text": "Scripts in the image download game archives and sort them. A bash function and a Python script fetch the archives from several sources, rename the files and put them in directories so RetroArch can list them cleanly. Downloads run in parallel, and failures get reported instead of disappearing."
+    },
+    {
+      "speaker": "B",
+      "text": "Is it built from scratch?"
+    },
+    {
+      "speaker": "A",
+      "text": "No. It's based on an existing RetroArch web Docker setup and RetroArch's own Emscripten package, and it's MIT licensed. Antoine also links a related project called FlashGames, a small collection of old Flash games that run in modern browsers with Ruffle."
+    },
+    {
+      "speaker": "B",
+      "text": "A pocket arcade, then."
+    },
+    {
+      "speaker": "A",
+      "text": "Pretty much. The project page has the links and the script notes."
+    }
+  ],
+  "source_hash": "ed27536fd3a315d8",
+  "audio_hash": "57ccc556a90f6379",
+  "duration_seconds": 87
+}

@@ -1,0 +1,68 @@
+{
+  "title": "DasherControl : dompter les onglets du homelab",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Trop d'onglets de navigateur, un par service de votre homelab. Antoine en avait assez."
+    },
+    {
+      "speaker": "B",
+      "text": "Je connais. Douze onglets, et impossible de retrouver le bon."
+    },
+    {
+      "speaker": "A",
+      "text": "Alors il a lancé DasherControl. L'idée : un espace de travail fait d'applets, des favoris et des applications intégrées dans un tableau de bord, avec quelques commandes Docker à portée de main."
+    },
+    {
+      "speaker": "B",
+      "text": "Et techniquement ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un frontend Vue, et côté serveur Rust avec Rocket et Diesel. Le point intéressant, c'est qu'il y a deux parcours séparés. Sauvegarder une disposition passe par les routes des espaces et la base de données. Redémarrer un conteneur passe par un adaptateur, Shiplift, vers Docker."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la base de données ne touche pas à Docker."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà, et une applet n'est pas un conteneur non plus. Cette séparation aide à comprendre les permissions comme les erreurs."
+    },
+    {
+      "speaker": "B",
+      "text": "Parlons permissions : à qui appartient un espace de travail ?"
+    },
+    {
+      "speaker": "A",
+      "text": "À un utilisateur. La liste des espaces utilise l'identifiant du compte présent dans un jeton, et la route qui retourne les applets vérifie d'abord le propriétaire de l'espace. Mais Antoine le dit franchement : le fichier contient aussi d'anciennes routes de création et de suppression avec des vérifications différentes. Il faudrait revoir les autorisations de chaque opération avant d'en faire un service partagé."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est donc une expérience, pas un produit audité."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Et il y a un piège d'interface. Les fonctions de liste Docker retournent une liste vide après une erreur. Un écran vide veut dire soit qu'aucun conteneur ne tourne, soit que Docker est inaccessible. Dans une nouvelle version, il distinguerait les deux états."
+    },
+    {
+      "speaker": "B",
+      "text": "Des soucis pour intégrer des applications ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Le README mentionne des échecs de connexion dans les iframes, parce que certaines applications interdisent l'intégration. Il faut prévoir un lien externe."
+    },
+    {
+      "speaker": "B",
+      "text": "Et c'est un vieux projet : la capture et le GIF montrent l'interface d'époque, sans prouver la compatibilité avec les dépendances actuelles."
+    },
+    {
+      "speaker": "A",
+      "text": "L'article complet a le schéma et les liens vers le code."
+    }
+  ],
+  "source_hash": "08d497b746f6219a",
+  "audio_hash": "f4e0209d0e0cef4e",
+  "duration_seconds": 133
+}

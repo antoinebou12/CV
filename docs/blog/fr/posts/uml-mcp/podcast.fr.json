@@ -1,0 +1,72 @@
+{
+  "title": "Des diagrammes depuis le chat avec uml-mcp",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Vous demandez un diagramme de séquence à un assistant, et au lieu d'un bloc de texte illisible, vous recevez une vraie image. Comment ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Je suppose qu'il y a un outil derrière."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui : uml-mcp, un serveur M C P open source d'Antoine. L'assistant transmet une source Mermaid, PlantUML ou un autre format pris en charge, et le serveur renvoie le rendu avec des liens utiles."
+    },
+    {
+      "speaker": "B",
+      "text": "Pourquoi M C P plutôt que des gabarits ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il avait commencé avec des plugins ChatGPT et des gabarits de prompts. Les deux marchaient, mais les éditeurs voulaient des outils natifs : activer un serveur une fois, l'appeler depuis l'agent, et sauvegarder la source et le S V G à côté de l'article."
+    },
+    {
+      "speaker": "B",
+      "text": "La même idée que le plugin, sur un autre hôte."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Le dépôt documente cinq outils et environ trente-sept types de diagrammes via Kroki. Antoine précise que ce sont des chiffres sur l'interface, pas un benchmark."
+    },
+    {
+      "speaker": "B",
+      "text": "Où est le truc malin ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un module construit un état JSON, le compresse avec zlib et l'encode en base64 compatible avec les URL. Ça donne à la fois un lien d'image et un lien d'édition mermaid point live."
+    },
+    {
+      "speaker": "B",
+      "text": "Et un piège ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le code distingue le S V G des images PNG, J P E G et WebP, qui passent par un autre chemin. Se tromper de chemin peut casser un diagramme parfaitement valide, avant même que la syntaxe soit en cause."
+    },
+    {
+      "speaker": "B",
+      "text": "L'installation ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Ajouter le serveur dans les réglages M C P de Cursor, puis demander explicitement le type de diagramme. Il existe aussi un point d'accès hébergé."
+    },
+    {
+      "speaker": "B",
+      "text": "Des mises en garde ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le modèle invente encore parfois la syntaxe, donc on valide le rendu avant de publier. Et on garde les secrets hors des prompts."
+    },
+    {
+      "speaker": "B",
+      "text": "L'article complet a le diagramme de séquence et les étapes d'installation."
+    }
+  ],
+  "source_hash": "5fe9dcc9fc1a459d",
+  "audio_hash": "4bda2dab7648e1c2",
+  "duration_seconds": 114
+}

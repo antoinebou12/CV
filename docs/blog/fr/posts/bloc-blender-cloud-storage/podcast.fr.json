@@ -1,0 +1,68 @@
+{
+  "title": "Parcourir S3 depuis Blender",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imaginez une artiste dans Blender qui a besoin d'un maillage rangé dans un bucket cloud. Faut-il vraiment sortir de l'appli, télécharger, puis importer à la main ?"
+    },
+    {
+      "speaker": "B",
+      "text": "C'est ce qu'on fait tous. Il y a mieux ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine a un fork nommé bloc qui explore justement ça : un panneau Blender pour parcourir des ressources dans AWS S3 et MinIO. C'est le fork d'une extension existante, et il garde le crédit de l'auteur d'origine."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment le panneau sait à quel stockage parler ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Grâce aux connexions. Chacune a un fournisseur, un point d'accès, un bucket et une région. Les préférences en contiennent plusieurs, une seule est active, et l'initialisation choisit le client S3 ou MinIO en conséquence."
+    },
+    {
+      "speaker": "B",
+      "text": "Le stockage objet n'a pas vraiment de dossiers, non ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, il a des clés. L'extension les découpe sur la barre oblique et construit une arborescence imbriquée. Le panneau affiche une hiérarchie sans faire semblant que c'est un disque local."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour retrouver un fichier ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a une recherche approximative avec RapidFuzz. Elle compare les noms et les segments de chemin, privilégie les correspondances directes et filtre par scènes, maillages, images ou matériaux."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'import, c'est juste télécharger et c'est réglé ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Pas tout à fait, et c'est le détail qu'Antoine souligne. Télécharger et importer, ce sont deux étapes. Après le téléchargement, un chargeur choisit un importeur pour STL, OBJ, PLY ou les variantes USD. Le reste est refusé avec un message."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la liste peut marcher pendant que l'import échoue."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Il note aussi une limite : le code fait un seul appel de listage S3, donc les très gros buckets demanderaient de la pagination."
+    },
+    {
+      "speaker": "B",
+      "text": "J'aime qu'il montre les bords du projet."
+    },
+    {
+      "speaker": "A",
+      "text": "Pareil pour la portée : 10 commits d'avance et 5 de retard sur l'original au moment de la comparaison, ce qui ne veut pas dire que l'original a accepté quoi que ce soit. Le billet complet a le schéma des chemins de navigation et d'import."
+    }
+  ],
+  "audio_hash": "08bab2e7ee35a247",
+  "duration_seconds": 127,
+  "source_hash": "c8476e2e93279549"
+}

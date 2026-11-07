@@ -1,0 +1,72 @@
+{
+  "title": "Du flux d'actualités au backtest",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un titre dit qu'une entreprise va très bien. Un autre dit qu'elle va mal. Lequel a vraiment fait bouger l'action, si l'un des deux l'a fait ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Bonne question, et pas simple. C'est le genre de problème auquel s'attaque AINewsTracker ?"
+    },
+    {
+      "speaker": "A",
+      "text": "En quelque sorte. Antoine décrit un service FastAPI qui transforme les actualités financières en données qu'on peut chercher, analyser et comparer aux données de marché. Ce n'est pas une boule de cristal. C'est de la tuyauterie qui garde tout traçable."
+    },
+    {
+      "speaker": "B",
+      "text": "D'accord. Et un article, il passe par où ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une requête lance la collecte. Le service d'actualités récupère le contenu des flux et crée les articles. Un service de mesures analyse le texte, et le résultat est enregistré dans MongoDB. Les routes reçoivent les requêtes, les services font le travail, les dépôts isolent la base. Redis s'occupe du cache."
+    },
+    {
+      "speaker": "B",
+      "text": "Séparation propre. Et l'analyse produit quoi, au juste ?"
+    },
+    {
+      "speaker": "A",
+      "text": "D'après la documentation, un sentiment avec son score, des symboles boursiers détectés, un résumé et des sujets. Et ce qui compte pour Antoine, c'est que l'article garde sa source, son URL, sa date et son texte à côté de ces champs."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc on peut remonter d'un sentiment jusqu'à l'éditeur."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Et le symbole boursier permet de rapprocher les mentions d'une entreprise sans traiter chaque variante de son nom comme une société différente."
+    },
+    {
+      "speaker": "B",
+      "text": "Ensuite il y a le backtesting : la route de stratégie transmet les demandes à un module de négociation, pour tester des stratégies sur l'historique."
+    },
+    {
+      "speaker": "A",
+      "text": "Mais il reste prudent, non ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Très. Il dit qu'il comparerait les résultats au texte original avant de s'en servir. Un résumé peut omettre une condition, et la mention d'une entreprise ne prouve pas qu'il y a un événement exploitable. Ces étiquettes sont des entrées d'expérience. Elles ne prouvent pas qu'une nouvelle a causé un mouvement, et un backtest ne garantit rien pour la suite."
+    },
+    {
+      "speaker": "A",
+      "text": "Il propose même une grille : collecte, analyse du texte, entrée de stratégie, résultat. Pour chaque étape, quoi vérifier. Par exemple, si l'information était vraiment disponible au moment testé."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'article précise qu'il ne donne aucune mesure de précision ni de rendement."
+    },
+    {
+      "speaker": "A",
+      "text": "Honnête. Donc à retenir : garder la source attachée à l'analyse."
+    },
+    {
+      "speaker": "B",
+      "text": "Voilà. L'article complet a le schéma d'architecture, où chaque nœud renvoie à son fichier source."
+    }
+  ],
+  "source_hash": "42601fae4f968b09",
+  "audio_hash": "5d8c4fba69c9fff7",
+  "duration_seconds": 154
+}

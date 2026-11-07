@@ -1,0 +1,60 @@
+{
+  "title": "IPC Toolkit et la friction qui dépend de la direction",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Quand deux objets se touchent dans une simulation, quelqu'un doit calculer quand ils entrent en collision, et à quel point ils frottent. Ça fait beaucoup de maths."
+    },
+    {
+      "speaker": "B",
+      "text": "Et c'est ça, IPC Toolkit ?"
+    },
+    {
+      "speaker": "A",
+      "text": "C'est une bibliothèque C plus plus pour ces calculs de contact : détection de collisions, dérivées de distance, potentiels de friction. Mais ce n'est pas un moteur physique complet. L'application garde la boucle de temps et le solveur."
+    },
+    {
+      "speaker": "B",
+      "text": "La bibliothèque répond aux questions, et c'est la simulation qui conduit."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. La simulation donne la géométrie et le mouvement des sommets. La bibliothèque trouve les candidats en phase large, passe à une détection continue en phase étroite, et renvoie le résultat."
+    },
+    {
+      "speaker": "B",
+      "text": "Et Antoine, là-dedans ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il contribue au projet amont, en préparant ses changements sur son propre fork. Deux de ses demandes de fusion ont été acceptées en 2026. L'une ajoute la friction anisotrope, l'autre permet de transmettre des paramètres à la phase fine de Scalable CCD."
+    },
+    {
+      "speaker": "B",
+      "text": "Friction anisotrope, en français courant ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une friction qui dépend de la direction et de la paire de matériaux. Comme tirer un objet dans le sens du grain du bois ou à travers. Son travail de mémoire sur l'usure de surface avait besoin de ça dans le modèle de contact."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'autre demande ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Elle touche la détection continue sur GPU. Un correctif plus ancien sur la compilation CUDA Windows de Scalable CCD, plus la transmission des paramètres, ont aidé à débloquer ce chemin."
+    },
+    {
+      "speaker": "B",
+      "text": "Tout a été accepté ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, quelques-unes ont été fermées sans fusion, et la page les liste honnêtement. L'article complet a le schéma et le tableau."
+    }
+  ],
+  "source_hash": "9dd9d532f87b0d04",
+  "audio_hash": "f80a56254aabc9d8",
+  "duration_seconds": 106
+}

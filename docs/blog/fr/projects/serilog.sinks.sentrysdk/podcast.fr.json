@@ -1,0 +1,60 @@
+{
+  "title": "Envoyer les événements Serilog vers Sentry",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Si ton application dot NET journalise déjà avec Serilog, comment faire arriver les erreurs importantes dans Sentry sans tout réécrire ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Je dirais un plugin quelconque."
+    },
+    {
+      "speaker": "A",
+      "text": "Un sink, dans le vocabulaire de Serilog. Serilog point Sinks point SentrySDK envoie les événements vers Sentry via le SDK officiel. La version d'Antoine s'inspire du projet serilog-contrib."
+    },
+    {
+      "speaker": "B",
+      "text": "Il faut configurer quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Installer le paquet NuGet avec dotnet add package, ajouter le sink Sentry à la configuration du logger, et fournir le DSN de Sentry. On peut aussi tout configurer en JSON, avec des options comme l'environnement et la version."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour les données sensibles ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a le nettoyage de données. Tu fournis ton propre nettoyeur à la configuration du sink, pour assainir les logs avant qu'ils quittent l'application."
+    },
+    {
+      "speaker": "B",
+      "text": "Côté applications web ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un second paquet, celui d'ASP.NET Core, capte le contexte HTTP. On ajoute une politique de déstructuration au logger et le middleware de contexte Sentry, et les logs portent alors l'utilisateur, le corps de la requête et les en-têtes."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment savoir si c'est suivi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La page affiche des badges pour les tests, l'intégration continue, CodeQL et la couverture de code, plus la version NuGet des deux paquets."
+    },
+    {
+      "speaker": "B",
+      "text": "Où sont les exemples ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Dans le README anglais sur GitHub. La page écrite a les liens vers les paquets."
+    }
+  ],
+  "source_hash": "a4ed5f01669b7713",
+  "audio_hash": "dc6d0f0bb1bf73a9",
+  "duration_seconds": 90
+}

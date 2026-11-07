@@ -1,0 +1,68 @@
+{
+  "title": "DasherControl: taming the homelab tabs",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Too many browser tabs, one for every service in your homelab. Antoine got tired of exactly that."
+    },
+    {
+      "speaker": "B",
+      "text": "I know that pain. Twelve tabs, and you still can't find the right one."
+    },
+    {
+      "speaker": "A",
+      "text": "So he started DasherControl. The idea is a workspace of applets: bookmarks and embedded apps arranged on a dashboard, with a few Docker controls close by."
+    },
+    {
+      "speaker": "B",
+      "text": "What's under the hood?"
+    },
+    {
+      "speaker": "A",
+      "text": "A Vue frontend, and on the backend Rust with Rocket and Diesel. The interesting part is that the dashboard has two separate paths. Saving a layout goes through workspace handlers and database records. Restarting a container goes through an adapter called Shiplift to Docker."
+    },
+    {
+      "speaker": "B",
+      "text": "So the database doesn't touch Docker at all."
+    },
+    {
+      "speaker": "A",
+      "text": "Right, and an applet isn't a running container either. Keeping those paths apart helps explain both permissions and failure states."
+    },
+    {
+      "speaker": "B",
+      "text": "Speaking of permissions, who owns a workspace?"
+    },
+    {
+      "speaker": "A",
+      "text": "A user does. The list handler reads the tenant identifier from a token, and the handler that returns applets checks the workspace's tenant first. But Antoine is honest that the file also has older create and delete paths with different checks. So you'd review authorization on every operation before using it as a shared service."
+    },
+    {
+      "speaker": "B",
+      "text": "So it's an experiment, not a security-reviewed product."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. And there's a UI gotcha too. The Docker list helpers return an empty list after an error, so an empty dashboard could mean nothing is running, or that Docker couldn't be reached. In a new version he'd make those two states look different."
+    },
+    {
+      "speaker": "B",
+      "text": "Any trouble with embedding apps?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The README records iframe login failures, because some apps restrict embedding. A dashboard like this needs an external link as a fallback."
+    },
+    {
+      "speaker": "B",
+      "text": "It's also an older project, so the screenshot and demo GIF show the interface as it was, not compatibility with current dependencies."
+    },
+    {
+      "speaker": "A",
+      "text": "The full write-up has the diagram and links to the source."
+    }
+  ],
+  "source_hash": "1619644c8a07238f",
+  "audio_hash": "d4c5a856f79646d2",
+  "duration_seconds": 116
+}

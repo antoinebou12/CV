@@ -1,0 +1,68 @@
+{
+  "title": "Qui détient le GPU ?",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Voici un test pour toute plateforme de ML : peut-on dire en moins d'une minute qui détient le GPU en ce moment ? Sinon, dit Antoine, on n'a pas une plateforme de production, on a un hôte SSH partagé avec des étapes en plus."
+    },
+    {
+      "speaker": "B",
+      "text": "Aïe. D'où ça vient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "D'un webinaire Run:ai de septembre 2022 sur l'exécution et la mise à l'échelle automatique de l'inférence ML sur AWS. Antoine l'a suivi en plein dans ses cours et projets perso, et ce sont les notes qu'il a gardées pour du travail de plateforme plus tard."
+    },
+    {
+      "speaker": "B",
+      "text": "Pourquoi l'inférence compte plus que l'entraînement ici ?"
+    },
+    {
+      "speaker": "A",
+      "text": "L'entraînement a la gloire, mais l'inférence paie les factures chaque heure où le service est en ligne. La séance présentait ça comme un problème d'ordonnancement et de capacité, pas seulement d'export de modèle."
+    },
+    {
+      "speaker": "B",
+      "text": "Run:ai fait quoi, concrètement ?"
+    },
+    {
+      "speaker": "A",
+      "text": "C'est une couche de contrôle au-dessus de Kubernetes pour des grappes GPU partagées. Des files équitables, de la visibilité sur qui a consommé quoi, et des politiques pour que l'inférence ne soit pas affamée par l'entraînement, ou l'inverse. Le tableau de bord montre les tâches et surtout l'écart entre le temps GPU alloué et utilisé. C'est là que l'argent fuit."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la mise à l'échelle ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un service de modèle logique avec plusieurs réplicas derrière, piloté par la profondeur de file, des objectifs de latence ou un horaire. Antoine a noté des questions en marge : les démarrages à froid quand les poids viennent du stockage, la fragmentation des GPU qui plafonne les réplicas, et si la réduction attend les requêtes en cours."
+    },
+    {
+      "speaker": "B",
+      "text": "Quelle partie était la plus franche ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La diapo des défis. Faible utilisation des GPU. Voisins bruyants, où les pics d'entraînement affament l'inférence. Démarrage lent des nœuds GPU. Et l'attribution des coûts, parce que la finance demandera qui a dépensé quoi."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qu'il ferait autrement aujourd'hui ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Quatre choses. Séparer des groupes de nœuds pour l'inférence avant de les mélanger à l'entraînement. Définir les objectifs de latence d'abord, puis choisir les signaux de l'autoscaler. Ajouter dès le premier jour des étiquettes de refacturation comme équipe, modèle et environnement. Et traiter le partage de GPU comme une décision de produit."
+    },
+    {
+      "speaker": "B",
+      "text": "Il a déployé Run:ai ensuite ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, il le dit franchement. L'article complet a les diapos et le tableau des défis."
+    }
+  ],
+  "source_hash": "f571fd5875703e9f",
+  "audio_hash": "90a047c6591eab55",
+  "duration_seconds": 147
+}

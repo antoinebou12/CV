@@ -1,0 +1,68 @@
+{
+  "title": "Drawing diagrams from a ChatGPT thread",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A teammate describes a flow in chat. Ten minutes later you need a sequence diagram sitting in the repo. What do you do?"
+    },
+    {
+      "speaker": "B",
+      "text": "Photograph the whiteboard? Or retype PlantUML from memory and hope."
+    },
+    {
+      "speaker": "A",
+      "text": "Both were Antoine's old options, and he didn't love either. So he built D2C, a ChatGPT plugin that turns the conversation into PlantUML, Mermaid or D2 diagrams without leaving the thread."
+    },
+    {
+      "speaker": "B",
+      "text": "Why not just use screenshots?"
+    },
+    {
+      "speaker": "A",
+      "text": "Because a whiteboard photo doesn't paste into a Markdown repo. He wanted text-native diagrams he could drop into Hugo posts, GitHub READMEs and design reviews."
+    },
+    {
+      "speaker": "B",
+      "text": "So how does it work in practice?"
+    },
+    {
+      "speaker": "A",
+      "text": "In the original workflow, the request named the diagram type. Say, a PlantUML sequence for React, an API, Redis and a database. The model writes the syntax, the plugin renders it, and he pastes the result into Markdown."
+    },
+    {
+      "speaker": "B",
+      "text": "And what did it support?"
+    },
+    {
+      "speaker": "A",
+      "text": "PlantUML for UML sequences, classes and deployments. Mermaid for diagrams GitHub shows natively. And D2 for modern declarative system sketches."
+    },
+    {
+      "speaker": "B",
+      "text": "Does the AI get the syntax right every time?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, and the page is honest about that. The model still hallucinates syntax sometimes. The plugin's job is to route to the right renderer, not to guarantee perfect UML. So always render locally before you publish."
+    },
+    {
+      "speaker": "B",
+      "text": "Is it still the way to do this?"
+    },
+    {
+      "speaker": "A",
+      "text": "Not really. OpenAI's plugin story moved on, so treat it as historical tooling. The successor-style work for editors is uml-mcp, for Cursor and other M C P hosts."
+    },
+    {
+      "speaker": "B",
+      "text": "Same loop, different host."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. The full write-up has the demo animation and the example prompts."
+    }
+  ],
+  "source_hash": "15bf4bffaf78714d",
+  "audio_hash": "b3f5c4ea34fff20e",
+  "duration_seconds": 109
+}

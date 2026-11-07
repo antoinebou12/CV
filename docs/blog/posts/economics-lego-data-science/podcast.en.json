@@ -1,0 +1,68 @@
+{
+  "title": "Can a LEGO set's price be forecast?",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "There's a LEGO set from 1965 whose resale price people actually plot on a chart. So naturally Antoine asked: can a simple model predict where it goes next?"
+    },
+    {
+      "speaker": "B",
+      "text": "A forecast for a pile of plastic bricks. I like where this is going."
+    },
+    {
+      "speaker": "A",
+      "text": "He's a collector who writes Python. So he combined two sources. Rebrickable, which publishes the catalog: sets, themes, parts, colors. And BrickEconomy, which has resale values, but no download button."
+    },
+    {
+      "speaker": "B",
+      "text": "So he scraped it."
+    },
+    {
+      "speaker": "A",
+      "text": "With Playwright, yes. And here's a fun detail: the price history isn't in the page's visible table. It sits in an inline script that feeds a chart, so his code reads the script tags and parses the rows out of them."
+    },
+    {
+      "speaker": "B",
+      "text": "Sneaky. What did the catalog data show?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two trends. The number of sets per year climbs steeply after the late nineteen-nineties and passes a thousand in recent years. And the average part count rises too, from under a hundred for most of the seventies and eighties to around three hundred at the peak. Star Wars leads the themes by a wide margin."
+    },
+    {
+      "speaker": "B",
+      "text": "Now the test case. The set from 1965?"
+    },
+    {
+      "speaker": "A",
+      "text": "Set 001-1, the Samsonite Gears set. Long history, enough resale activity to plot. He cleaned the data, stripped currency symbols, dropped zero values, and fit a plain linear regression of value against date, projected out to 2030."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it work?"
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine is honest about it. It's not a trading signal. It's a way to ask simple questions, like whether the trend dominates or how far off the recent spikes above six hundred are. He also warns that the prices were shown in Canadian dollars even though a column was named USD."
+    },
+    {
+      "speaker": "B",
+      "text": "What else should you distrust?"
+    },
+    {
+      "speaker": "A",
+      "text": "A broken scraper makes missing months look like price crashes. Discontinued sets skew the counts. And a linear model on hype sets falls apart."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "Great practice for pandas and async scraping, and a reminder that resale prices are sentiment plus plastic. The code is in the LegosTracker repo, and the full write-up has all the charts."
+    }
+  ],
+  "source_hash": "4d797f912b990c93",
+  "audio_hash": "b1e144ee2c62963c",
+  "duration_seconds": 130
+}

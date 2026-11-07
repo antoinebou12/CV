@@ -1,0 +1,68 @@
+{
+  "title": "Quatre champs pour que ChatGPT arrête de deviner",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Vous demandez à ChatGPT un diagramme de séquence, et vous recevez une syntaxe un peu au hasard. C'était du PlantUML ? Du Mermaid ? Autre chose ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Ah, ce fil de discussion-là, je le connais. On finit par se battre avec les crochets."
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine en a eu assez aussi. Sa solution : un gabarit de prompt, utilisé avec l'extension de navigateur AIPRM, qui verrouille quatre champs. Le type de diagramme, le type d'éléments, l'objectif et l'outil de dessin. Une fois ces champs fixés, le modèle arrête de deviner."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc moins un prompt malin qu'un formulaire à remplir."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est ça. Et on n'a même pas besoin d'AIPRM : on peut coller les quatre lignes dans ChatGPT et changer les valeurs. Son exemple demande un diagramme de séquence entre un frontend React, un backend FastAPI, un cache Redis et une base MongoDB, en PlantUML."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qu'il montre, ce diagramme ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une requête utilisateur qui traverse la pile, avec deux branches. En cas de cache hit, FastAPI interroge Redis, trouve la donnée et répond directement. En cas de cache miss, il va chercher dans MongoDB, enregistre le résultat dans Redis, puis répond. La page donne le même scénario en PlantUML et en Mermaid."
+    },
+    {
+      "speaker": "B",
+      "text": "Et si mon équipe utilise plutôt Draw.io ou Lucidchart ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Ce sont des outils où l'on dessine sur un canevas. Antoine propose donc de générer d'abord du PlantUML ou du Mermaid. Ensuite, soit on exporte en SVG ou en PNG pour l'importer comme calque de base, soit on demande à ChatGPT une liste numérotée de lignes de vie et de messages, qu'on refait avec des formes."
+    },
+    {
+      "speaker": "B",
+      "text": "Mieux qu'une page blanche, en fait."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement, c'est l'idée : éviter le syndrome de la page blanche tout en gardant un diagramme modifiable."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a des pièges ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Quelques-uns. Les modèles mélangent parfois les branches de cache avec la syntaxe de base de données, donc on rend toujours le diagramme en local avant de publier. Et il conseille de copier les quatre lignes du gabarit dans le README du dépôt, pour ne pas dépendre d'une version d'extension."
+    },
+    {
+      "speaker": "B",
+      "text": "Et puis un diagramme en texte, ça se compare très bien dans git."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà pourquoi il le recommande pour les revues d'architecture réglementées. L'article complet a le gabarit, les deux listings et le schéma du cache."
+    }
+  ],
+  "audio_hash": "e731b56c2390b208",
+  "duration_seconds": 145,
+  "source_hash": "a87dbb770721ac19"
+}

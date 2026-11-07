@@ -1,0 +1,60 @@
+{
+  "title": "Gestes Kinect dans p5.js, avec export GIF",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Que se passe-t-il quand tu tapes des mains devant une Kinect et que l'écran répond par un feu d'artifice ?"
+    },
+    {
+      "speaker": "B",
+      "text": "C'est le croquis qu'Antoine a construit pour un cours de création numérique. Il fait passer les squelettes de la Kinect v2 par Kinectron jusque dans p5.js, et dessine chaque articulation suivie sous forme de point."
+    },
+    {
+      "speaker": "A",
+      "text": "Et les gestes ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Six gestes, vérifiés à chaque image du corps. Tu tapes des mains, ça lance un feu d'artifice. Une main au-dessus des hanches, des bulles montent. Une main en dessous, des étoiles tombent."
+    },
+    {
+      "speaker": "A",
+      "text": "Comment le code sait qu'on a applaudi ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Les positions des articulations sont normalisées entre zéro et un, donc chaque seuil est une fraction de l'image. Un applaudissement, c'est simplement deux mains qui passent sous une petite distance."
+    },
+    {
+      "speaker": "A",
+      "text": "On peut tester sans se tenir devant le capteur ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Oui. Un drapeau, liveData, bascule vers un fichier de squelette enregistré, et des boutons Stop et Play apparaissent. Le bouton Save as GIF marche dans les deux modes, et p5 s'occupe lui-même de l'enregistrement et du téléchargement."
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine liste aussi ses erreurs. Deux copies de p5 dans l'en-tête de la page. Et une fonction de table des articulations nommée Kinectron, qui masquait le constructeur de la bibliothèque."
+    },
+    {
+      "speaker": "B",
+      "text": "Ah, celle-là est vicieuse."
+    },
+    {
+      "speaker": "A",
+      "text": "Il y en a d'autres. Son geste du OK demande des articulations qui n'existent pas sur la Kinect v2, donc il ne se déclenche jamais. Et le drapeau de l'applaudissement se remet à zéro à l'image suivante : les feux d'artifice partent une image sur deux tant que les mains restent jointes."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a même une expérience facultative où un applaudissement allume ou éteint un appareil connecté, via un petit serveur Node local."
+    },
+    {
+      "speaker": "A",
+      "text": "Parfait pour une démo de cours, pas pour du suivi corporel en production. L'article complet détaille chaque étape et les pièges."
+    }
+  ],
+  "source_hash": "b35a3f17fdd31634",
+  "audio_hash": "53f6c9b034435044",
+  "duration_seconds": 117
+}
