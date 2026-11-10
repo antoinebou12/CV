@@ -63,6 +63,18 @@ def test_excerpt_removes_html_commands_and_credentials():
     assert "Read configuration first." in value
 
 
+def test_excerpt_drops_reference_link_definitions():
+    value = docs.excerpt(
+        [
+            "[d]: javascript:alert(document.domain)",
+            "",
+            "Install the package, then read the [docs][d].",
+        ]
+    )
+    assert "javascript:" not in value
+    assert "Install the package" in value
+
+
 def test_document_candidates_exclude_symlinks_and_dependency_trees():
     entry = {
         "type": "blob",

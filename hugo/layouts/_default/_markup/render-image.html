@@ -4,6 +4,9 @@
   remote images pass through untouched. A title becomes a <figure> caption.
 */ -}}
 {{- $dest := .Destination -}}
+{{- /* Remote sources are emitted with safeURL below, so only allow web schemes. */ -}}
+{{- $probe := lower (replaceRE `[\x00-\x20]` "" $dest) -}}
+{{- if and (findRE `^[a-z][a-z0-9+.-]*:` $probe) (not (findRE `^https?:` $probe)) -}}{{- $dest = "" -}}{{- end -}}
 {{- $alt := .Text | plainify -}}
 {{- $res := "" -}}
 {{- if not (or (hasPrefix $dest "http") (hasPrefix $dest "//")) -}}

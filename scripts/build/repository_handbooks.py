@@ -161,6 +161,8 @@ def excerpt(lines):
         if line.strip()
         # A bare "#" renders as an empty heading once the excerpt goes through Markdown.
         and not re.fullmatch(r"#+", line.strip())
+        # Reference definitions ("[id]: url") would carry a link target past the inline-link rule.
+        and not re.match(r"\s*\[[^\]]+\]:", line)
         and not re.search(
             r"https?://|token\s*[=:]|password\s*[=:]|secret\s*[=:]|yourusername",
             line,

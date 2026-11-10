@@ -37,7 +37,7 @@
       <section class="repo-source-excerpt">
         <h3><a href="{{ .url }}">{{ .title }}</a></h3>
         <p class="repo-excerpt-file"><code>{{ .file }}</code></p>
-        <div class="repo-source-markdown">{{ .text | markdownify | replaceRE "<h[1-6]([^>]*)>" "<h4$1>" | replaceRE "</h[1-6]>" "</h4>" | safeHTML }}</div>
+        <div class="repo-source-markdown">{{ .text | htmlEscape | markdownify | replaceRE "<h[1-6]([^>]*)>" "<h4$1>" | replaceRE "</h[1-6]>" "</h4>" | safeHTML }}</div>
         <a class="repo-guide-context" href="{{ .url }}">{{ if $fr }}Lire les instructions complètes{{ else }}Read the full instructions{{ end }} ↗</a>
       </section>
       {{ end }}

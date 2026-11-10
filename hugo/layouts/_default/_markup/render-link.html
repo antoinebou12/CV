@@ -15,6 +15,10 @@
     {{- with index (split $dest "#") 1 }}{{ $href = printf "%s#%s" $href . }}{{ end -}}
   {{- end -}}
 {{- end -}}
+{{- /* safeURL below turns off Hugo's scheme filter, so only allow web, mail and phone schemes.
+       Browsers ignore whitespace and control characters inside a scheme, so test without them. */ -}}
+{{- $probe := lower (replaceRE `[\x00-\x20]` "" $href) -}}
+{{- if and (findRE `^[a-z][a-z0-9+.-]*:` $probe) (not (findRE `^(https?|mailto|tel):` $probe)) -}}{{- $href = "#" -}}{{- end -}}
 <a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- if and (eq .Page.Section "posts") .Page.File -}}
   {{- $url := .Destination -}}
