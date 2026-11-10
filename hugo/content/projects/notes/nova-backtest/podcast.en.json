@@ -1,0 +1,59 @@
+{
+  "title": "nova-backtest: simulating trades without a loop",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Backtesting a trading strategy usually means walking through candles one at a time. nova-backtest does it differently: it works on whole columns at once."
+    },
+    {
+      "speaker": "B",
+      "text": "Start from the beginning. What is it?"
+    },
+    {
+      "speaker": "A",
+      "text": "A Python library for backtesting crypto strategies, published on PyPI. It downloads historical candles from exchanges like Binance, Bybit and OKX, runs your strategy over many pairs together and reports profit and drawdown stats."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you write a strategy?"
+    },
+    {
+      "speaker": "A",
+      "text": "You subclass one class and fill three methods. One adds indicators to a pandas table of candles. One sets the entry signal, the take profit, the stop loss and the position size. One sets the exit."
+    },
+    {
+      "speaker": "B",
+      "text": "And the trick?"
+    },
+    {
+      "speaker": "A",
+      "text": "A signal on one candle is filled at the next candle's open, so the strategy can't trade on a price it just used to decide. Then the code builds, for each candle ahead, a column saying when the stop or target was touched, and picks the earliest exit."
+    },
+    {
+      "speaker": "B",
+      "text": "What if both are touched in the same candle?"
+    },
+    {
+      "speaker": "A",
+      "text": "It counts that as a stop, which is the cautious reading. Fees are included too. Binance is 0.02 percent in the table."
+    },
+    {
+      "speaker": "B",
+      "text": "And the whole portfolio?"
+    },
+    {
+      "speaker": "A",
+      "text": "Trades from all pairs are merged, and ones that would exceed the maximum number of open positions are dropped, as a real account couldn't take them. Results land in a CSV and a JSON file."
+    },
+    {
+      "speaker": "B",
+      "text": "Fast and honest, then."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the spirit. The written page has the worked MACD example, step by step."
+    }
+  ],
+  "audio_hash": "543784216a5aa02b",
+  "duration_seconds": 94
+}

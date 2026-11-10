@@ -29,4 +29,4 @@ python scripts/build/generate_podcasts.py --check
 - `--only <bundle-folder>` limits a run to one page; repeatable.
 
 Hand edits to a script are fine: run `--audio` afterwards to re-render it.
-Repository notes under `projects/notes/` are not included.
+Repository notes under `projects/notes/` are included; their text is read from the built page in `docs/blog` because the body is a shortcode.

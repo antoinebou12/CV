@@ -1,0 +1,59 @@
+{
+  "title": "AINewsTracker : l'actualité financière, notée",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Imaginez un analyste quantitatif avec cent onglets de nouvelles financières ouverts. AINewsTracker lit tout ça à sa place, et donne une note de sentiment à chaque article."
+    },
+    {
+      "speaker": "B",
+      "text": "Un lecteur de nouvelles qui a des opinions, donc ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un peu. C'est un service FastAPI d'AlgoÉTS. Il va chercher les nouvelles chez Financial Modeling Prep, chez GNews ou dans un flux nommé, télécharge le texte complet de chaque article et l'enregistre dans MongoDB."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la notation, elle vient d'où ?"
+    },
+    {
+      "speaker": "A",
+      "text": "D'un modèle de langage qui s'appelle FinBERT, qui donne le sentiment de chaque article. Un deuxième modèle repère les tickers boursiers cités, et un troisième écrit un petit résumé. Dans la note d'Antoine, on voit qu'une seule requête suffit pour récupérer la note d'un article enregistré."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour démarrer ?"
+    },
+    {
+      "speaker": "A",
+      "text": "C'est simple. On copie le fichier d'environnement d'exemple, on ajoute une clé d'API et on lance Docker Compose. Ça démarre l'API avec MongoDB et Redis, et on tombe sur une documentation interactive dans le navigateur. Deux appels de chargement remplissent sociétés et nouvelles en tâche de fond."
+    },
+    {
+      "speaker": "B",
+      "text": "On peut chercher par entreprise ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Les tickers sont enregistrés, donc on peut demander tous les articles liés à une société, ou à une liste de sociétés."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour qui est-ce vraiment construit ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a une seconde porte, que j'aime bien. Un service de backtest peut appeler un point d'accès d'articles versionné avec un jeton de service, filtrer par symboles et par période, et parcourir les résultats avec un curseur. Chaque article arrive avec son étiquette de sentiment, ses probabilités et le nom du modèle."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc d'un côté les nouvelles, de l'autre les stratégies, bien séparées."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. On collecte et on note d'un côté, on sert des données propres de l'autre. L'article complet a le schéma d'architecture et toute la liste des routes."
+    }
+  ],
+  "audio_hash": "e916e0cccd541586",
+  "duration_seconds": 118
+}

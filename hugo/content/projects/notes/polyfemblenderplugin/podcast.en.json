@@ -1,0 +1,39 @@
+{
+  "title": "PolyFEMBlenderPlugin: physics simulation without leaving Blender",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "You model a scene in Blender, but to simulate how it deforms you'd normally juggle files and command lines. This add-on keeps it all in one place."
+    },
+    {
+      "speaker": "B",
+      "text": "So it connects Blender to a physics solver?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. It's an experimental Blender extension that turns selected objects, materials and contact settings into a setup file for PolyFEM, a finite-element solver, then runs the simulation. Antoine wrote it for simulation work at the ÉTS lab."
+    },
+    {
+      "speaker": "B",
+      "text": "What do I do inside Blender?"
+    },
+    {
+      "speaker": "A",
+      "text": "A PolyFEM panel in the Physics tab lets you pick a material preset like steel or aluminium, set contact, time and boundary conditions, then create the setup file. Meshes are exported, and TetWild can turn them into tetrahedral meshes."
+    },
+    {
+      "speaker": "B",
+      "text": "And the solving?"
+    },
+    {
+      "speaker": "A",
+      "text": "It runs PolyFEM in the background, using a Docker image or a local program. When it finishes, a Render Animation button imports each step as a mesh and keyframes them, so you play the result back as an animation."
+    },
+    {
+      "speaker": "B",
+      "text": "A neat loop from scene to simulation to playback. It needs Blender four point two or later, and the write-up has the full workflow."
+    }
+  ],
+  "audio_hash": "7fa4999e3c23daaa",
+  "duration_seconds": 69
+}

@@ -1,0 +1,51 @@
+{
+  "title": "Simuler le cours d'Apple",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Peut-on tester une stratégie d'investissement sur des prix qui n'existent pas encore ? C'est la question derrière MarkokChainMonteCarlo, un dépôt de recherche d'AlgoÉTS."
+    },
+    {
+      "speaker": "B",
+      "text": "Des prix qui n'existent pas encore ? Comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "En les simulant. Les carnets téléchargent tout l'historique quotidien d'Apple et le coupent au début de 2023 : une partie ancienne pour apprendre, une partie récente mise de côté."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la simulation ?"
+    },
+    {
+      "speaker": "A",
+      "text": "De deux façons. Un modèle Monte Carlo estime la dérive et la volatilité à partir des rendements passés, puis tire des chocs aléatoires pour produire plein de trajectoires possibles. Les carnets projettent sur 364 jours, avec des milliers de trajectoires."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la deuxième ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une chaîne de Markov. Les prix sont découpés en tranches de dix dollars, le carnet compte à quelle fréquence on passe d'une tranche à l'autre, puis tire une séquence selon ces probabilités."
+    },
+    {
+      "speaker": "B",
+      "text": "Et ces simulations, on en fait quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "On les utilise dans une stratégie. Elle achète quand le dernier état simulé est zéro, et sort sur un stop loss de cinq pour cent ou un prix cible tiré d'une trajectoire simulée. Elle est comparée à l'achat-conservation, avec dix mille dollars au départ."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc une boucle complète, des données jusqu'au backtest."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui, le tout dans des carnets Python avec backtesting point py. La page écrite détaille chaque étape."
+    }
+  ],
+  "audio_hash": "44a1e104ee54e255",
+  "duration_seconds": 86
+}

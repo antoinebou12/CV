@@ -1,0 +1,59 @@
+{
+  "title": "AINewsTracker: financial news, scored",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Picture a quant analyst with a hundred browser tabs of financial headlines. AINewsTracker is a small service that reads them for you and puts a sentiment score on each one."
+    },
+    {
+      "speaker": "B",
+      "text": "So it's a news reader with opinions?"
+    },
+    {
+      "speaker": "A",
+      "text": "Kind of. It's a FastAPI service from AlgoÉTS. It pulls news from the Financial Modeling Prep feed, from GNews, or from any named feed, downloads the full text of each article and saves it in MongoDB."
+    },
+    {
+      "speaker": "B",
+      "text": "And the scoring part?"
+    },
+    {
+      "speaker": "A",
+      "text": "That's a language model called FinBERT, which labels each article's sentiment. Another model spots the stock tickers mentioned, and a third writes a short summary. Antoine's note points out that you can ask for any stored article's score with a single request."
+    },
+    {
+      "speaker": "B",
+      "text": "How do you get started with it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Pretty painlessly. You copy the example environment file, add one API key, and run Docker Compose. That starts the API with MongoDB and Redis, and you land on interactive docs in your browser. Two seed calls load companies and news in the background."
+    },
+    {
+      "speaker": "B",
+      "text": "Can you look things up by company?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. Tickers are stored, so you can ask for every article linked to one company or to a list of them."
+    },
+    {
+      "speaker": "B",
+      "text": "Who's the service really built for?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a second door, and I like it. A backtesting service can call a versioned articles endpoint with a service token, filter by symbols and time window, and page through results with a cursor. Each article comes back with its sentiment label, the probabilities and the model name."
+    },
+    {
+      "speaker": "B",
+      "text": "So the news side and the trading-strategy side stay cleanly separated."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. Collect and score on one side, serve tidy data on the other. The full write-up has the architecture diagram and the whole list of routes."
+    }
+  ],
+  "audio_hash": "02656786a6d40abf",
+  "duration_seconds": 106
+}

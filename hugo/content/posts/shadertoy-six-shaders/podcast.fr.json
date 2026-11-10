@@ -1,60 +1,67 @@
 {
-  "title": "Six shaders, et les bogues plus beaux que le plan",
+  "title": "Six shaders, un pixel à la fois",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un shader qui s'appelle Golden number spiral, et pas de spirale dorée dedans. L'angle d'or est bien défini dans le code, mais aucune ligne ne le lit."
+      "text": "Imaginez un petit programme qui tourne des millions de fois par seconde, une fois pour chaque pixel de l'écran, sans jamais savoir ce que font ses voisins. C'est un shader. Début 2024, Antoine en a publié six sur Shadertoy, et dans cet article il les explique ligne par ligne."
     },
     {
       "speaker": "B",
-      "text": "Le titre est faux, alors ?"
+      "text": "On commence par la base : un shader Shadertoy, ça fonctionne comment ?"
     },
     {
       "speaker": "A",
-      "text": "À peu près. Antoine a publié six shaders sur Shadertoy début 2024, et dans cet article il les relit ligne par ligne : ce que le code calcule, d'où viennent les idées, et où il fait autre chose que ce que son nom promet."
+      "text": "C'est une seule fonction. Le GPU l'appelle pour chaque pixel, à chaque image. Elle reçoit trois choses : la position du pixel, le temps et la souris. Elle renvoie une couleur. Tout ce qu'on voit est construit à partir de ces trois valeurs."
     },
     {
       "speaker": "B",
-      "text": "Pour ceux qui ne connaissent pas, un shader, ça tourne comment ?"
+      "text": "Et comment on obtient un effet de marbre ou de fumée avec ça ?"
     },
     {
       "speaker": "A",
-      "text": "Une seule fonction, appelée par le GPU pour chaque pixel, à chaque image. Elle reçoit la position du pixel, le temps et la souris. Aucune mémoire entre les pixels. Tout ce qu'on voit dépend uniquement de ces trois valeurs."
+      "text": "C'est le premier shader, Domain Wrapping. On part d'un bruit : une grille de valeurs aléatoires, mélangées en douceur. On en empile cinq couches, chacune deux fois plus fine et deux fois moins forte, pour que les grandes formes portent du détail. Ensuite, l'astuce : on déforme les coordonnées avec encore du bruit avant de lire la valeur. Du bruit dans du bruit dans du bruit. Chaque niveau replie le motif, et on obtient ces formes marbrées qui tourbillonnent."
     },
     {
       "speaker": "B",
-      "text": "Quelle est la meilleure astuce des six ?"
+      "text": "Et les couleurs suivent les plis ?"
     },
     {
       "speaker": "A",
-      "text": "La grille. Ses lignes restent larges d'un pixel à n'importe quelle échelle, grâce à une fonction qui mesure de combien une valeur change d'un pixel à l'autre. Court et très utile. Il y a aussi un travers : un mélange avec un poids négatif pousse les couleurs hors limites, et les cases s'écrasent en aplats saturés."
+      "text": "Oui. La valeur finale choisit entre un bleu-vert et un kaki, et les valeurs intermédiaires teintent le tout vers le bleu marine ou le cyan pâle. La couleur dessine la forme de la déformation."
     },
     {
       "speaker": "B",
-      "text": "Et l'heureux accident ?"
+      "text": "Quelle est l'astuce la plus utile des six ?"
     },
     {
       "speaker": "A",
-      "text": "Sun Ray Clockwise. Il passe un angle en degrés à un cosinus qui attend des radians. Au lieu de quelques larges rayons, on obtient plus d'une centaine de rayons fins, comme un soleil levant. L'erreur est plus belle que l'intention."
+      "text": "Grid Line, le plus court. Il dessine une grille dont les lignes font toujours exactement un pixel de large, peu importe le zoom. Il mesure de combien une valeur change d'un pixel à l'autre et s'en sert pour convertir les distances en pixels. En prime, ce bord d'un pixel sert d'anticrénelage presque gratuit."
     },
     {
       "speaker": "B",
-      "text": "Et la scène de mer ?"
+      "text": "Et celui en forme de soleil ?"
     },
     {
       "speaker": "A",
-      "text": "Un collage. L'océan, les étoiles et les nuages viennent de trois shaders connus, crédités un par un, plus une déformation de domaine et des sphères qu'il a ajoutées. Une puissance en plus dans l'éclairage a presque éteint le reflet du ciel, et la lumière dirigée vers le haut empêche la tache spéculaire d'apparaître."
+      "text": "Sun Ray Clockwise. Il travaille en coordonnées polaires : un angle et une distance au centre. L'angle, en degrés, passe directement dans un cosinus, ce qui transforme un tour complet en plus d'une centaine de rayons fins. Une rotation de soixante-douze degrés par seconde les fait tourner dans le sens horaire, et un terme en anneaux les fait pulser."
     },
     {
       "speaker": "B",
-      "text": "Donc la leçon, c'est de lire le code, pas les commentaires."
+      "text": "Il y a aussi une mer, non ?"
     },
     {
       "speaker": "A",
-      "text": "C'est son premier constat. De petites retouches sur du code emprunté peuvent désactiver des effets sans prévenir. L'article complet a les démos, en pause tant qu'on n'appuie pas sur lecture."
+      "text": "Sea and Stars. C'est un collage de trois shaders connus, chacun crédité : un océan, un champ d'étoiles et des nuages, avec des sphères flottantes ajoutées par Antoine. Et le dernier, Warping Mouse, part du travail d'Inigo Quilez sur la déformation : deux niveaux de distorsion, un éclairage calculé comme si le motif était un relief, et la souris qui le guide doucement."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors, ce qu'on retient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Quelques idées simples, le bruit, les couches et les jeux de coordonnées, mènent très loin. L'article complet intègre chaque shader, en pause jusqu'à ce qu'on appuie sur lecture, avec le code expliqué à côté."
     }
   ],
-  "source_hash": "75b6989ea3597089",
-  "audio_hash": "e1c45f28bec824f1",
-  "duration_seconds": 120
+  "audio_hash": "d0de73c420b46195",
+  "duration_seconds": 172
 }

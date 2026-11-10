@@ -129,6 +129,7 @@
           </div>
         </div>
       </header>
+      {{ partial "podcast-player.html" .Page }}
 
       <dl class="repo-snapshot-cards" aria-label="{{ if $fr }}Le dépôt en bref{{ else }}Repository at a glance{{ end }}">
         <div><dt>{{ if $fr }}Langages{{ else }}Languages{{ end }}</dt><dd><span class="repo-snapshot-value">{{ len $analysis.languages }}</span><a href="#languages-panel">{{ if $fr }}Répartition du code{{ else }}Code breakdown{{ end }} <span aria-hidden="true">↗</span></a></dd></div>

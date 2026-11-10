@@ -1,0 +1,51 @@
+{
+  "title": "Simulating Apple's stock price",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Can you test an investment strategy on prices that haven't happened yet? That's the question behind MarkokChainMonteCarlo, a research repository from AlgoÉTS."
+    },
+    {
+      "speaker": "B",
+      "text": "Prices that haven't happened? How?"
+    },
+    {
+      "speaker": "A",
+      "text": "By simulating them. The notebooks download Apple's full daily price history, and split it at the start of 2023: an earlier part to learn from, a later part to hold back."
+    },
+    {
+      "speaker": "B",
+      "text": "And the simulation?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two ways. A Monte Carlo model estimates the drift and volatility from past returns, then draws random shocks to build many possible price paths. The notebooks run 364 days ahead, with thousands of paths."
+    },
+    {
+      "speaker": "B",
+      "text": "And the second?"
+    },
+    {
+      "speaker": "A",
+      "text": "A Markov chain. Prices are cut into ten-dollar bins, the notebook counts how often the price moves from one bin to another, and then samples a sequence from those odds."
+    },
+    {
+      "speaker": "B",
+      "text": "What do you do with the simulations?"
+    },
+    {
+      "speaker": "A",
+      "text": "Use them inside a strategy. It buys when the last simulated state is zero, and exits on a five percent stop loss or a take-profit price taken from a simulated path. It's compared with plain buy and hold, starting from ten thousand in cash."
+    },
+    {
+      "speaker": "B",
+      "text": "So a full loop, from data to backtest."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, all in Python notebooks with backtesting dot py. The written page walks through each step."
+    }
+  ],
+  "audio_hash": "73e5b38112e3d240",
+  "duration_seconds": 80
+}

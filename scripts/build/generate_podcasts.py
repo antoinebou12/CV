@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import hashlib
+import html
 import json
 import os
 import re
@@ -51,13 +52,29 @@ API_URL = os.environ.get("PODCAST_API_URL", "https://api.anthropic.com/v1/messag
 
 
 def bundles() -> list[Path]:
-    """Post bundles plus top-level project pages (repository notes excluded)."""
+    """Post bundles, top-level project pages and repository notes."""
     found = []
-    for section in ("posts", "projects"):
-        for d in sorted((CONTENT / section).iterdir()):
+    for parent in (CONTENT / "posts", CONTENT / "projects", CONTENT / "projects" / "notes"):
+        for d in sorted(parent.iterdir()):
             if d.is_dir() and d.name != "notes" and (d / "index.md").exists():
                 found.append(d)
     return found
+
+
+def built_text(bundle: Path, lang: str) -> str:
+    """Readable text of the built page in docs/blog, for pages whose body is a shortcode."""
+    rel = bundle.relative_to(CONTENT).as_posix().lower()
+    page = ROOT / "docs" / "blog" / ("fr/" if lang == "fr" else "") / rel / "index.html"
+    if not page.exists():
+        return ""
+    h = page.read_text(encoding="utf-8")
+    m = re.search(r"<article class=repo-doc.*?</article>", h, re.S) or re.search(r"<main.*?</main>", h, re.S)
+    h = m.group(0) if m else h
+    h = re.sub(r"<(script|style|svg|pre|nav|button|figure)\b.*?</\1>", " ", h, flags=re.S)
+    h = re.sub(r"<(h[1-6]|p|li|tr|div|section|dt|dd)\b[^>]*>", "\n", h)
+    t = html.unescape(re.sub(r"<[^>]+>", " ", h))
+    t = re.sub(r"[ \t]+", " ", t)
+    return re.sub(r"\n\s*\n+", "\n", t).strip()[:14000]
 
 
 def sha(text: str) -> str:
@@ -152,8 +169,11 @@ def do_scripts(targets: list[Path], refresh_stale: bool) -> int:
             if data and (data["source_hash"] == h or not refresh_stale):
                 continue
             rel = out.relative_to(ROOT)
+            source = page_text(md)
+            if len(source.split()) < 120:  # repository notes render their body from a shortcode
+                source = built_text(d, lang) or source
             try:
-                new = call_claude(lang, page_text(md))
+                new = call_claude(lang, source)
             except Exception as exc:  # noqa: BLE001 - report and keep going
                 print(f"  ! {rel}: {exc}", file=sys.stderr)
                 failures += 1
