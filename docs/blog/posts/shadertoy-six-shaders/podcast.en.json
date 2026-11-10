@@ -1,60 +1,67 @@
 {
-  "title": "Six shaders, and the bugs that look better than the plan",
+  "title": "Six shaders, one pixel at a time",
   "lines": [
     {
       "speaker": "A",
-      "text": "A shader called Golden number spiral has no golden spiral in it. The golden angle is defined in the code, and nothing ever reads it."
+      "text": "Picture a tiny program that runs millions of times a second, once for every pixel on your screen, and has no idea what its neighbours are doing. That's a shader. In early 2024, Antoine published six of them on Shadertoy, and in this post he walks through each one, line by line."
     },
     {
       "speaker": "B",
-      "text": "Wait, so the title is wrong?"
+      "text": "Start with the basics. How does a Shadertoy shader actually run?"
     },
     {
       "speaker": "A",
-      "text": "Pretty much. Antoine published six shaders on Shadertoy in early 2024, and for this post he read each one line by line. What they compute, where the ideas come from, and where the code does something other than what its name promises."
+      "text": "It's one function. The GPU calls it for every pixel, every frame. It gets three things: the pixel's position, the time, and the mouse. It returns a colour. Everything you see is built from just those inputs."
     },
     {
       "speaker": "B",
-      "text": "For anyone who hasn't touched Shadertoy, how does a shader run?"
+      "text": "So how do you get something that looks like marble or smoke out of that?"
     },
     {
       "speaker": "A",
-      "text": "One function, called by the GPU for every pixel, every frame. It gets the pixel position, the time, and the mouse. No memory between pixels. Everything you see is a pure function of those three things."
+      "text": "That's the first shader, Domain Wrapping. It starts with noise: a grid of random values, smoothly blended. Then it stacks five layers of it, each one twice as fine and half as strong, so big shapes carry small detail. The trick is to bend the coordinates with more noise before sampling. Noise of noise of noise. Each level folds the pattern further, and you get those swirling, marbled shapes."
     },
     {
       "speaker": "B",
-      "text": "So what's the favorite trick in the six?"
+      "text": "And the colours follow the folds?"
     },
     {
       "speaker": "A",
-      "text": "The grid. It keeps lines exactly one pixel wide at any scale, using a function that measures how much a value changes from one pixel to the next. Short code, very useful. It also has a quirk: a mix with a negative weight pushes colors out of range, so the cells clip to flat, saturated colors."
+      "text": "Exactly. The final value picks between teal and khaki, and the in-between values tint it toward navy or pale cyan. So the colour traces the shape of the warp."
     },
     {
       "speaker": "B",
-      "text": "And the happy accident?"
+      "text": "What's the most useful trick of the six?"
     },
     {
       "speaker": "A",
-      "text": "Sun Ray Clockwise. He passes an angle in degrees to a cosine that expects radians. Instead of a few wide rays, you get over a hundred thin ones, like a sunburst. The mistake looks better than the intent."
+      "text": "Grid Line, the shortest one. It draws a grid whose lines stay exactly one pixel wide, however far you zoom. It measures how much a value changes from one pixel to the next, and uses that to convert distances into pixels. As a bonus, the one-pixel edge acts as cheap anti-aliasing."
     },
     {
       "speaker": "B",
-      "text": "What about the sea scene?"
+      "text": "And the sunburst one?"
     },
     {
       "speaker": "A",
-      "text": "A collage. The ocean, the stars and the clouds come from three well-known shaders, credited by name, plus a domain warp and floating spheres he added. One extra power in the lighting turned off almost all the sky reflection, and a light pointing upward means the specular highlight never shows."
+      "text": "Sun Ray Clockwise. It works in polar coordinates, an angle and a distance from the centre. The angle is in degrees and feeds straight into a cosine, which turns one full circle into more than a hundred thin rays. A rotation of seventy-two degrees per second spins them clockwise, and a ring term makes them pulse in and out."
     },
     {
       "speaker": "B",
-      "text": "So the lesson is, read the code, not the comments."
+      "text": "There's also an ocean, right?"
     },
     {
       "speaker": "A",
-      "text": "That's his first takeaway. Small changes to borrowed code can silently switch things off. The full write-up has the embeds, paused until you press play."
+      "text": "Sea and Stars. It's a collage of three well-known shaders, each credited: an ocean, a star field and clouds, plus floating spheres Antoine added. And the last one, Warping Mouse, builds on Inigo Quilez's warping work, with two levels of warp, light computed from the pattern as if it were a height map, and the mouse gently steering it."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "A handful of simple ideas, noise, layering and coordinate tricks, go a very long way. The full write-up has every shader embedded, paused until you press play, with the code explained next to it."
     }
   ],
-  "source_hash": "930fc23475aeab0a",
-  "audio_hash": "1149ca4c0f6acaaf",
-  "duration_seconds": 114
+  "audio_hash": "8364ed908ca7aa28",
+  "duration_seconds": 162
 }

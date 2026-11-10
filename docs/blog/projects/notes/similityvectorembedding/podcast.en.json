@@ -1,0 +1,51 @@
+{
+  "title": "Finding films that feel alike",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "You liked The Matrix. How would a computer find other films that feel like it, without just matching titles?"
+    },
+    {
+      "speaker": "B",
+      "text": "Some kind of similarity score?"
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. SimilityVectorEmbedding is a set of Jupyter notebooks from AlgoÉTS that turn a movie catalog into embeddings, which are lists of numbers capturing meaning, and then search them."
+    },
+    {
+      "speaker": "B",
+      "text": "What goes into each film?"
+    },
+    {
+      "speaker": "A",
+      "text": "One text per film: title, year, genres, actors, director and summary. A sentence-transformer model encodes it into a vector, and the vectors are stored in PostgreSQL with pgvector. The saved run loads 631 films."
+    },
+    {
+      "speaker": "B",
+      "text": "And then the search?"
+    },
+    {
+      "speaker": "A",
+      "text": "You type a title, it's matched even if you're a little off, and the rest of the catalog is ranked by cosine similarity. There's also a Gradio page where you can try one title, several, or rated ones."
+    },
+    {
+      "speaker": "B",
+      "text": "Only one database?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, that's the fun part. Each folder pairs a notebook with another approach: Qdrant for vectors, BM25 for keywords, Neo4j for a graph of genres and people, and even a local language model through Ollama."
+    },
+    {
+      "speaker": "B",
+      "text": "So you can compare how each one sees the same catalog."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. The article and the written page have the details."
+    }
+  ],
+  "audio_hash": "a9e75e45f857800b",
+  "duration_seconds": 77
+}

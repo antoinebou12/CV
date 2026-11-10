@@ -1,0 +1,59 @@
+{
+  "title": "nova-backtest : simuler les trades sans boucle",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Tester une stratégie de trading oblige souvent à parcourir les bougies une par une. nova-backtest fait autrement : il travaille sur des colonnes entières d'un coup."
+    },
+    {
+      "speaker": "B",
+      "text": "Reprenons au début. C'est quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Une bibliothèque Python de backtest de stratégies crypto, publiée sur PyPI. Elle télécharge les bougies historiques de bourses comme Binance, Bybit et OKX, exécute la stratégie sur plusieurs paires en même temps et sort des statistiques de profit et de drawdown."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment on écrit une stratégie ?"
+    },
+    {
+      "speaker": "A",
+      "text": "On crée une sous-classe et on remplit trois méthodes. Une ajoute des indicateurs à un tableau pandas de bougies. Une fixe le signal d'entrée, le take profit, le stop loss et la taille de position. Une fixe la sortie."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l'astuce ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un signal sur une bougie est exécuté à l'ouverture de la suivante, donc la stratégie ne peut pas trader sur un prix qu'elle vient d'utiliser pour décider. Ensuite, le code construit, pour chaque bougie à venir, une colonne qui dit quand le stop ou la cible a été touché, et prend la sortie la plus proche."
+    },
+    {
+      "speaker": "B",
+      "text": "Et si les deux sont touchés dans la même bougie ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il compte un stop, ce qui est la lecture prudente. Les frais sont inclus aussi : 0,02 pour cent pour Binance dans la table."
+    },
+    {
+      "speaker": "B",
+      "text": "Et le portefeuille ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Les trades de toutes les paires sont fusionnés, et ceux qui dépasseraient le nombre maximal de positions ouvertes sont retirés, car un vrai compte ne pourrait pas les prendre. Les résultats finissent dans un CSV et un JSON."
+    },
+    {
+      "speaker": "B",
+      "text": "Rapide et honnête, donc."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est l'esprit. La page écrite contient l'exemple MACD détaillé, étape par étape."
+    }
+  ],
+  "audio_hash": "492975a25e4b501e",
+  "duration_seconds": 103
+}

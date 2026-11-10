@@ -1,0 +1,47 @@
+{
+  "title": "Une API de fichiers qui fait plus que téléverser",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Un service de téléversement qui peut aussi redémarrer tes conteneurs Docker. C'est SpringBootFilesUploader."
+    },
+    {
+      "speaker": "B",
+      "text": "C'est une API REST en Kotlin sur Spring Boot. Son premier rôle est dans le nom : recevoir un fichier, ranger les octets dans un espace compatible S3, garder la description dans MongoDB et renvoyer le fichier par son identifiant."
+    },
+    {
+      "speaker": "A",
+      "text": "Et le reste ?"
+    },
+    {
+      "speaker": "B",
+      "text": "La même application liste et contrôle des conteneurs Docker, interroge un serveur Caddy et peut exécuter des commandes par SSH. Avec quelques extras côté administration."
+    },
+    {
+      "speaker": "A",
+      "text": "Ça fait beaucoup de pouvoir. Pour qui ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Tout passe par une connexion JWT avec trois rôles. Toute personne connectée peut télécharger, modérateurs et administrateurs peuvent téléverser et gérer les conteneurs, et seuls les administrateurs ont la commande SSH."
+    },
+    {
+      "speaker": "A",
+      "text": "Donc les rôles décident de ce que chacun peut toucher."
+    },
+    {
+      "speaker": "B",
+      "text": "Oui. Un téléversement vérifie l'extension, écrit les octets sous un identifiant unique, puis enregistre les métadonnées. Un téléchargement lit cette fiche, récupère l'objet et le renvoie avec son type et sa taille."
+    },
+    {
+      "speaker": "A",
+      "text": "Un backend compact avec une vraie étendue."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la documentation de l'API est servie par Swagger. La page complète liste toutes les routes."
+    }
+  ],
+  "audio_hash": "c015619dcf2417f8",
+  "duration_seconds": 81
+}

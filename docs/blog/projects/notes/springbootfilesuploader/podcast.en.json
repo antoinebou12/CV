@@ -1,0 +1,47 @@
+{
+  "title": "A file API that does more than upload",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "A file uploader that can also restart your Docker containers. That's SpringBootFilesUploader."
+    },
+    {
+      "speaker": "B",
+      "text": "It's a Kotlin REST API on Spring Boot. Its first job is in the name: accept an upload, store the bytes in an S3-compatible bucket, keep the description in MongoDB, and serve the file back by its id."
+    },
+    {
+      "speaker": "A",
+      "text": "And the extras?"
+    },
+    {
+      "speaker": "B",
+      "text": "The same application lists and controls Docker containers, pings a Caddy server and can run commands over SSH. Plus a few other bits for the admin side."
+    },
+    {
+      "speaker": "A",
+      "text": "That sounds like a lot of power. Who gets it?"
+    },
+    {
+      "speaker": "B",
+      "text": "Everything sits behind JWT login with three roles. Anyone signed in can download, moderators and admins can upload and manage containers, and only admins get the SSH command endpoint."
+    },
+    {
+      "speaker": "A",
+      "text": "So roles decide what each person can touch."
+    },
+    {
+      "speaker": "B",
+      "text": "Right. An upload checks the file extension, writes the bytes under a unique id, then records the metadata. A download reads that record, fetches the object and returns it with its type and size."
+    },
+    {
+      "speaker": "A",
+      "text": "A compact backend with real range."
+    },
+    {
+      "speaker": "B",
+      "text": "And the API docs are served by Swagger. The full page lists every route."
+    }
+  ],
+  "audio_hash": "3036eef642322c67",
+  "duration_seconds": 74
+}

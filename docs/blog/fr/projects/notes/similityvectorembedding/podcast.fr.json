@@ -1,0 +1,51 @@
+{
+  "title": "Trouver des films qui se ressemblent",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "Tu as aimé Matrix. Comment un ordinateur trouve-t-il d'autres films du même genre, sans simplement comparer des titres ?"
+    },
+    {
+      "speaker": "B",
+      "text": "Avec une sorte de score de similarité ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. SimilityVectorEmbedding regroupe des carnets Jupyter d'AlgoÉTS qui transforment un catalogue de films en vecteurs, des listes de nombres qui captent le sens, puis les parcourent."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qu'on met pour chaque film ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un texte par film : titre, année, genres, acteurs, réalisateur et synopsis. Un modèle sentence-transformers l'encode en vecteur, stocké dans PostgreSQL avec pgvector. L'exécution enregistrée charge 631 films."
+    },
+    {
+      "speaker": "B",
+      "text": "Et la recherche ?"
+    },
+    {
+      "speaker": "A",
+      "text": "On tape un titre, il est reconnu même approximatif, et le reste du catalogue est classé par similarité cosinus. Il y a aussi une page Gradio pour essayer un titre, plusieurs, ou des titres notés."
+    },
+    {
+      "speaker": "B",
+      "text": "Une seule base de données ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, et c'est ce qui est intéressant. Chaque dossier associe un carnet à une autre approche : Qdrant pour les vecteurs, BM25 pour les mots-clés, Neo4j pour un graphe de genres et de personnes, et même un modèle de langage local avec Ollama."
+    },
+    {
+      "speaker": "B",
+      "text": "On compare donc comment chacune voit le même catalogue."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. L'article et la page écrite donnent le détail."
+    }
+  ],
+  "audio_hash": "7f4c4279ab66d979",
+  "duration_seconds": 83
+}

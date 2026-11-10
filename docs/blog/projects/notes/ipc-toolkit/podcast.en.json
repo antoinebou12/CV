@@ -1,0 +1,51 @@
+{
+  "title": "ipc-toolkit: the collision part of a simulator",
+  "lines": [
+    {
+      "speaker": "A",
+      "text": "When two objects touch in a physics simulation, somebody has to figure out exactly where and how. ipc-toolkit is the library that answers that."
+    },
+    {
+      "speaker": "B",
+      "text": "Is it a whole simulator?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, and that's the design. It provides geometric building blocks for contact-aware simulation. Your own simulation keeps control of time stepping and the solve loop, and calls the library for collision questions."
+    },
+    {
+      "speaker": "B",
+      "text": "What kind of questions?"
+    },
+    {
+      "speaker": "A",
+      "text": "It handles collision meshes, a broad-phase step that quickly finds which pieces might touch, and continuous collision detection, which catches a hit that happens between two frames. It also provides contact-related energies and friction."
+    },
+    {
+      "speaker": "B",
+      "text": "Why does that matter?"
+    },
+    {
+      "speaker": "A",
+      "text": "The project describes itself as a friction and contact toolkit for robust computer graphics and finite element simulation. Clean boundaries make it easy to drop into someone else's solver."
+    },
+    {
+      "speaker": "B",
+      "text": "What's Antoine's connection?"
+    },
+    {
+      "speaker": "A",
+      "text": "This is a fork, with the upstream project credited. It's mostly C plus plus, built with CMake, with a Python layer and tests in Catch2."
+    },
+    {
+      "speaker": "B",
+      "text": "A focused library, then."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The full page lays out the library boundary in more detail."
+    }
+  ],
+  "audio_hash": "5883329be7172954",
+  "duration_seconds": 72
+}
