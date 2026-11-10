@@ -27,7 +27,7 @@ REMOTE = re.compile(
 # Corrections applied before download: a logo that 404s or names the wrong product.
 REPLACE = {
     # Simple Icons has no Karma logo; devicon does.
-    "https://cdn.simpleicons.org/karma": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/karma/karma-original.svg",
+    "https://cdn.simpleicons.org/karma": "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.18.0/icons/karma/karma-original.svg",
 }
 
 

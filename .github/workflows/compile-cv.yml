@@ -28,13 +28,15 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          # Keep the token out of .git/config: pip packages and the TeX container run
+          # before the commit step, which receives the token on its own.
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.14'
           cache: 'pip'
@@ -45,7 +47,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
 
       - name: Verify Docker is running
         run: |
@@ -74,7 +76,7 @@ jobs:
 
       - name: Check links in CV sources
         id: lychee
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
         with:
           fail: false
           failIfEmpty: false
@@ -142,9 +144,9 @@ jobs:
 
       - name: Build cover letters (XeLaTeX)
         run: |
-          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/en texlive/texlive:latest \
+          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/en texlive/texlive:latest@sha256:07e8062637249c4f780ca59f42cc2ed592bc2dc1db4320769406aee3f98aa70e \
             latexmk -xelatex -interaction=nonstopmode -halt-on-error cover-letter.tex
-          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/fr texlive/texlive:latest \
+          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work/letters/fr texlive/texlive:latest@sha256:07e8062637249c4f780ca59f42cc2ed592bc2dc1db4320769406aee3f98aa70e \
             latexmk -xelatex -interaction=nonstopmode -halt-on-error cover-letter.tex
 
       - name: Verify cover letter PDFs
@@ -164,6 +166,8 @@ jobs:
 
       - name: Commit PDFs
         if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -175,13 +179,13 @@ jobs:
             echo "No changes to commit - PDFs are up to date"
           else
             git commit -m "Auto-compile CV and cover letter PDFs [skip ci]"
-            git push
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}"
             echo "PDFs committed successfully"
           fi
 
       - name: Upload PDFs as artifacts
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: cv-pdfs
           path: |

@@ -29,8 +29,6 @@ Le README donne l’objectif et les composants : un banc GelSight, des gabarits 
 
 La visionneuse ci-dessous charge les fichiers STL du dépôt, convertis en un seul GLB pour le navigateur. Faites glisser pour tourner, faites défiler ou pincez pour zoomer. Chaque famille a sa couleur et sa rangée : pièces du rail en bleu, porte-poids en orange, porte-échantillons GelSight en vert. Les pièces sont posées à plat côte à côte, pas assemblées ; le dessin d’ensemble plus bas montre comment elles s’emboîtent. L’écrou de vis T8 est laissé de côté : c’est une pièce du commerce, et son STL pèse à lui seul 6,7 Mo.
 
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-
 {{< modelviewer src="../../../../projects/notes/wearmachine/models/wearmachine-parts.glb" title="Pièces imprimées de WearMachine, tirées des STL du dépôt : pièces du rail (bleu), porte-poids de 10 à 1000 g (orange) et porte-échantillons GelSight (vert)" height="460" >}}
 
 Les pièces et leurs dimensions, lues dans les boîtes englobantes des STL (millimètres), avec leur rôle déduit des dessins :

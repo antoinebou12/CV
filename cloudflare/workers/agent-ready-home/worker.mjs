@@ -8,7 +8,7 @@
 /** Always set — production currently lacks CSP. Keep in sync with hugo/static/_headers. */
 const FORCE_SECURITY_HEADERS = {
   "Content-Security-Policy":
-    "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com; img-src 'self' data: blob: https:; media-src 'self' https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://graphquon.github.io https://lens.snap.com; connect-src 'self' https://static.cloudflareinsights.com https://mapmyvisitors.com https://cdn.clustrmaps.com; worker-src 'self' blob:",
+    "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com; img-src 'self' data: blob: https:; media-src 'self' https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://graphquon.github.io https://lens.snap.com; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://mapmyvisitors.com https://cdn.clustrmaps.com; worker-src 'self' blob:",
 };
 
 /** Set only when the origin/CDN did not already send them. */
@@ -21,8 +21,10 @@ const FILL_SECURITY_HEADERS = {
   "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
 };
 
-function withSecurityHeaders(response) {
+function withSecurityHeaders(response, { varyAccept = false } = {}) {
   const headers = new Headers(response.headers);
+  // "/" has an HTML and a Markdown representation; shared caches must key on Accept.
+  if (varyAccept) headers.append("Vary", "Accept");
   for (const [key, value] of Object.entries(FORCE_SECURITY_HEADERS)) {
     headers.set(key, value);
   }
@@ -38,7 +40,11 @@ function withSecurityHeaders(response) {
 
 async function originFetch(request, env, targetUrl) {
   const method = request.method === "HEAD" ? "HEAD" : "GET";
-  const req = new Request(targetUrl.toString(), { method, headers: request.headers });
+  const headers = new Headers(request.headers);
+  // A partial (206) body must never be re-served as a full document.
+  headers.delete("Range");
+  headers.delete("If-Range");
+  const req = new Request(targetUrl.toString(), { method, headers });
   if (env.ASSETS && typeof env.ASSETS.fetch === "function") {
     return env.ASSETS.fetch(req);
   }
@@ -72,11 +78,12 @@ export default {
 
       for (const target of candidates) {
         const mdRes = await originFetch(request, env, target);
-        if (mdRes.ok) {
+        if (mdRes.status === 200) {
           const body = await mdRes.text();
           const headers = new Headers({
             "Content-Type": "text/markdown; charset=utf-8",
             "Cache-Control": "public, max-age=300",
+            Vary: "Accept",
           });
           for (const [key, value] of Object.entries(FORCE_SECURITY_HEADERS)) {
             headers.set(key, value);
@@ -90,9 +97,10 @@ export default {
     }
 
     // Pages: bind the static deployment as `ASSETS`. Otherwise forward to the origin fetch().
+    const varyAccept = url.pathname === "/";
     if (env.ASSETS && typeof env.ASSETS.fetch === "function") {
-      return withSecurityHeaders(await env.ASSETS.fetch(request));
+      return withSecurityHeaders(await env.ASSETS.fetch(request), { varyAccept });
     }
-    return withSecurityHeaders(await fetch(request));
+    return withSecurityHeaders(await fetch(request), { varyAccept });
   },
 };

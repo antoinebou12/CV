@@ -52,7 +52,7 @@ docker build -f Dockerfile.cv -t cv-builder .
 
 #### cv-site
 - **Image**: Built from `Dockerfile.nginx`
-- **Port**: 8080:80
+- **Port**: 127.0.0.1:8080:80
 - **Volumes**:
   - `./:/usr/share/nginx/html:ro` - Static files
   - `./configs/nginx/cv-site.conf:/etc/nginx/conf.d/cv-site.conf:ro` - Config
@@ -61,7 +61,7 @@ docker build -f Dockerfile.cv -t cv-builder .
 
 #### linktree-site
 - **Image**: Built from `Dockerfile.nginx`
-- **Port**: 8081:80
+- **Port**: 127.0.0.1:8081:80
 - **Volumes**:
   - `./:/usr/share/nginx/html:ro` - Static files
   - `./configs/nginx/linktree-site.conf:/etc/nginx/conf.d/linktree-site.conf:ro` - Config
@@ -70,7 +70,7 @@ docker build -f Dockerfile.cv -t cv-builder .
 
 #### traefik
 - **Image**: `traefik:v2.10`
-- **Ports**: 80:80, 8080:8080
+- **Ports**: 127.0.0.1:80:80, 127.0.0.1:8090:8080
 - **Volumes**:
   - `/var/run/docker.sock:/var/run/docker.sock:ro` - Docker socket
   - `./configs/traefik/traefik.yml:/etc/traefik/traefik.yml:ro` - Config

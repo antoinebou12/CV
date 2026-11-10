@@ -31,7 +31,7 @@ This will:
 
 - **CV Site**: http://localhost:8080
 - **Linktree**: http://localhost:8081
-- **Traefik Dashboard**: http://localhost:8080/api
+- **Traefik Dashboard**: http://localhost:8090/dashboard/
 
 ### 3. Stop Services
 
@@ -52,7 +52,7 @@ docker-compose down
 - **Content**: `linktree/` directory
 
 ### Traefik
-- **Port**: 80 (main), 8080 (dashboard)
+- **Port**: 80 (main), 8090 (dashboard); all ports bind to 127.0.0.1
 - **Config**: `configs/traefik/`
 - **Purpose**: Reverse proxy and routing
 

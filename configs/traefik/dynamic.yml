@@ -19,13 +19,8 @@ http:
         - linktree-stripprefix
       priority: 20
 
-    # Traefik API Router
-    traefik-api:
-      rule: "Host(`localhost`) && PathPrefix(`/api`)"
-      entryPoints:
-        - web
-      service: api@internal
-      priority: 50
+    # The Traefik API and dashboard stay on their own loopback-only port (8090);
+    # they are not routed through the public "web" entrypoint.
 
   services:
     cv-site:

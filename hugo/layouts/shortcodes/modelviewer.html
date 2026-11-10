@@ -7,7 +7,8 @@
 {{- $poster := .Get "poster" -}}
 {{- if not (.Page.Scratch.Get "modelviewer-script") -}}
   {{- .Page.Scratch.Set "modelviewer-script" true -}}
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  {{- /* jsDelivr is already allowed by the site CSP; the hash pins the exact 3.5.0 build. */ -}}
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js" integrity="sha384-Ftcjj/GNLxPvzNDftO/oryXB9aGxsGZY9JGqsXG0uUKgQDl9RfDgsx9NJ/4IVNPe" crossorigin="anonymous"></script>
 {{- end -}}
 <div class="modelviewer-wrap" style="max-width:100%;margin:1.25rem 0;">
   <model-viewer

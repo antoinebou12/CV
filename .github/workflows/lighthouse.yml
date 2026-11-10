@@ -32,23 +32,23 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           submodules: recursive
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.14"
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
         with:
           hugo-version: "0.160.1"
           extended: true
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
           cache: npm
@@ -74,7 +74,7 @@ jobs:
           hugo --gc --minify -s hugo -d "_site/${REPO}/blog" -b "http://localhost/${REPO}/blog/"
 
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           configPath: ./lighthouserc.json
           uploadArtifacts: true

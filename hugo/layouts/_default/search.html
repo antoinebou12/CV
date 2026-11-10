@@ -185,7 +185,7 @@
   hidden
 ></div>
 
-<script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.0/dist/umd/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.0/dist/umd/index.min.js" integrity="sha384-FBqOLaALKTX79HDe6PVpQ5AnzOLxiVydERTHb6rlAv3NE+uD6Cu8d6FDNhSDihaq" crossorigin="anonymous" defer></script>
 <script defer>
   (function () {
     const cfg = document.getElementById("site-search-config");
@@ -226,7 +226,8 @@
     function esc(s) {
       const d = document.createElement("div");
       d.textContent = s;
-      return d.innerHTML;
+      // innerHTML leaves quotes alone, and these strings also land in quoted attributes.
+      return d.innerHTML.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
 
     function chipStyle(name) {

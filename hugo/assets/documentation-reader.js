@@ -35,12 +35,17 @@
     if (!button || !host) return;
     button.addEventListener('click', () => {
       if (host.querySelector('iframe')) { host.hidden = !host.hidden; button.setAttribute('aria-expanded', String(!host.hidden)); return; }
+      let demo;
+      try { demo = new URL(panel.dataset.demoSrc, location.href); } catch { return; }
+      if (demo.protocol !== 'https:') return;
       const frame = document.createElement('iframe');
-      frame.src = panel.dataset.demoSrc;
+      frame.src = demo.href;
       frame.title = panel.dataset.demoTitle || 'Live demo';
       frame.loading = 'lazy';
       frame.referrerPolicy = 'no-referrer';
-      frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock');
+      // allow-scripts with allow-same-origin only isolates a demo hosted on another origin.
+      const sameOrigin = demo.origin === location.origin ? '' : ' allow-same-origin';
+      frame.setAttribute('sandbox', `allow-scripts${sameOrigin} allow-popups allow-forms allow-pointer-lock`);
       frame.setAttribute('allow', 'fullscreen; gamepad; autoplay');
       frame.setAttribute('allowfullscreen', '');
       host.append(frame);

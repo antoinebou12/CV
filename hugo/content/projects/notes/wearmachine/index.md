@@ -29,8 +29,6 @@ The README states the goal and the components: a GelSight bench, custom fixtures
 
 The viewer below loads the repository's own STL files, converted to a single GLB for the browser. Drag to orbit, scroll or pinch to zoom. Each family has its own colour and its own row: rail parts in blue, weight holders in orange, GelSight sample holders in green. The parts are laid flat side by side, not assembled; the assembly drawing further down shows how they fit together. The T8 lead-screw nut is left out because it is a stock part and its STL alone weighs 6.7 MB.
 
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-
 {{< modelviewer src="models/wearmachine-parts.glb" title="WearMachine printed parts from the repository's STL files: rail parts (blue), weight holders from 10 to 1000 g (orange) and GelSight sample holders (green)" height="460" >}}
 
 The parts and their sizes, read from the STL bounding boxes (millimetres), with roles inferred from the drawings:

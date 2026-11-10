@@ -10,7 +10,8 @@ services:
       - ./:/usr/share/nginx/html:ro
       - ./configs/nginx/cv-site.conf:/etc/nginx/conf.d/cv-site.conf:ro
     ports:
-      - "8080:80"
+      # Local-only stack (routes match Host(`localhost`)); do not publish on other interfaces.
+      - "127.0.0.1:8080:80"
     networks:
       - cv-network
     depends_on:
@@ -31,7 +32,7 @@ services:
       - ./:/usr/share/nginx/html:ro
       - ./configs/nginx/linktree-site.conf:/etc/nginx/conf.d/linktree-site.conf:ro
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
     networks:
       - cv-network
     depends_on:
@@ -57,8 +58,8 @@ services:
       - "--metrics.prometheus=true"
       - "--accesslog=true"
     ports:
-      - "80:80"
-      - "8080:8080"  # Traefik dashboard
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:8090:8080"  # Traefik dashboard (8080 is the CV site)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./configs/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
@@ -66,11 +67,6 @@ services:
     networks:
       - cv-network
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`localhost`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.traefik.entrypoints=web"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
 networks:
   cv-network:
