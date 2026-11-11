@@ -1,64 +1,76 @@
 {
-  "title": "A reverse proxy review: green checks that gate nothing",
+  "title": "One front door for every site: a reverse proxy",
   "lines": [
     {
       "speaker": "A",
-      "text": "A CI workflow that is always green, whatever happens. That's one of the things Antoine found when he reviewed his own reverse proxy."
+      "text": "Think of a hotel front desk. Every guest comes through one door, and the desk decides which room they go to. Antoine runs a front desk like that for his websites, using Caddy."
     },
     {
       "speaker": "B",
-      "text": "Wait, always green? How?"
+      "text": "So Caddy is the front desk?"
     },
     {
       "speaker": "A",
-      "text": "Every step has continue-on-error set to true. So it can't fail. It's reviewing code, though. He read it in October and November 2026 without running a deployment."
+      "text": "Right. It's a reverse proxy running in Docker on a small DigitalOcean server, with Cloudflare DNS in front. Visitors hit one address, and Caddy routes each hostname to the right application."
     },
     {
       "speaker": "B",
-      "text": "What's the setup?"
+      "text": "How does the server get built?"
     },
     {
       "speaker": "A",
-      "text": "Caddy in Docker on a DigitalOcean server, with Cloudflare DNS in front. Terraform creates the server and records, Ansible configures everything else."
+      "text": "In two layers. Terraform creates the infrastructure: the server, its cloud firewall, and the Cloudflare DNS records for the main domain and a wildcard. Then Ansible configures everything on the machine."
     },
     {
       "speaker": "B",
-      "text": "So where does it get interesting?"
+      "text": "How do those two talk to each other?"
     },
     {
       "speaker": "A",
-      "text": "The order of things. In the Caddy role, the new config is written straight to the live path, then the container goes down and up, and only after that does the validation run. So the real check comes after the config is already live."
+      "text": "Terraform writes its results to a file, and the Ansible playbook reads it. There's even a flag that says Terraform owns the DNS records, so there's one clear owner per record."
     },
     {
       "speaker": "B",
-      "text": "Ouch. What about health checks?"
+      "text": "And what does Ansible set up?"
     },
     {
       "speaker": "A",
-      "text": "There's a health check file, but neither the role nor the playbook includes it. And even if it ran, most tasks can't fail, and the probes accept 404, 502 and 503. That proves the proxy answers, not that an application works."
+      "text": "In order: system basics like firewall and fail2ban, a CrowdSec security engine, then the Caddy container itself. Before each new configuration goes in, the current Caddyfile is backed up with a timestamp, and the newest five are kept. Afterwards, Caddy validates the file using the same custom image that runs in production."
     },
     {
       "speaker": "B",
-      "text": "And rollback?"
+      "text": "What's in the Caddy configuration?"
     },
     {
       "speaker": "A",
-      "text": "There's a backup and a rollback, but the rescue only protects the final metrics block. A bad config would actually fail earlier, so restoring is manual."
+      "text": "Reusable snippets. One writes a rotated JSON log per site. One adds security headers and compression. One returns a quick 404 for scanner favourites like dot env, dot git and WordPress paths, before they ever reach an application."
     },
     {
       "speaker": "B",
-      "text": "There's also a command called just setup, presented as the first thing to run. It's an alias for reset with force, which destroys and recreates the server without asking."
+      "text": "Any neat tricks?"
     },
     {
       "speaker": "A",
-      "text": "He ends with a ranked fix list: validate a copy before replacing the live file, widen the rollback, make CI fail for real. None is implemented yet."
+      "text": "Two. First, several hostnames front static GitHub Pages projects, with a snippet that rewrites paths and headers. Second, Docker normally bypasses the UFW firewall for published ports, so a small systemd unit adds rules in the DOCKER-USER chain to keep only the intended ports open."
     },
     {
       "speaker": "B",
-      "text": "The full write-up has the diagram and the details."
+      "text": "What about checking on it afterwards?"
+    },
+    {
+      "speaker": "A",
+      "text": "A single command downloads the Caddy logs, and a Python script turns the JSON access logs into a PDF report with status codes, latency percentiles and hourly traffic."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "Split the job: Terraform for what exists, Ansible for how it's set up, Caddy for who goes where. The full write-up has the deployment diagram."
     }
   ],
   "source_hash": "ad2b8f21dca3619a",
-  "audio_hash": "8bb13ef62466d059",
-  "duration_seconds": 104
+  "audio_hash": "75287b14d98a5de3",
+  "duration_seconds": 141
 }

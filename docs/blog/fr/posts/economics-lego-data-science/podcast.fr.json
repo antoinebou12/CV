@@ -1,68 +1,68 @@
 {
-  "title": "Peut-on prévoir le prix d'une boîte LEGO ?",
+  "title": "Ce que les données disent des LEGO et de leurs prix",
   "lines": [
     {
       "speaker": "A",
-      "text": "Il existe une boîte LEGO de 1965 dont on peut tracer le prix de revente sur un graphique. Alors Antoine s'est demandé : est-ce qu'un modèle simple peut prédire la suite ?"
+      "text": "Et si tu pouvais voir des décennies de boîtes LEGO sur un seul graphique, puis vérifier à combien se revend une boîte de 1965 ?"
     },
     {
       "speaker": "B",
-      "text": "Une prévision pour des briques en plastique. J'aime bien où ça va."
+      "text": "Ça m'intéresse. On commence par où ?"
     },
     {
       "speaker": "A",
-      "text": "Il collectionne les LEGO et il écrit du Python. Il a donc croisé deux sources. Rebrickable, qui publie le catalogue : boîtes, thèmes, pièces, couleurs. Et BrickEconomy, qui a les valeurs de revente, mais pas de bouton de téléchargement."
+      "text": "Antoine collectionne les LEGO et écrit du Python, alors il a croisé deux sources. Les exports Rebrickable disent ce qui existe : boîtes, thèmes, pièces, couleurs. Un scraper sur BrickEconomy dit ce que les gens paient sur le marché de la revente."
     },
     {
       "speaker": "B",
-      "text": "Donc il a scrapé le site."
+      "text": "Que montre le catalogue ?"
     },
     {
       "speaker": "A",
-      "text": "Avec Playwright, oui. Et petit détail amusant : l'historique des prix n'est pas dans le tableau visible de la page. Il est dans un script intégré qui alimente un graphique, alors son code lit les balises script et en extrait les lignes."
+      "text": "Deux tendances. Le nombre de boîtes publiées chaque année grimpe fortement à partir de la fin des années 1990 et dépasse mille ces dernières années. Et le nombre moyen de pièces passe de moins de cent dans les années 1970 et 1980 à environ trois cents au sommet."
     },
     {
       "speaker": "B",
-      "text": "Malin. Et le catalogue, il montre quoi ?"
+      "text": "Quels thèmes dominent ?"
     },
     {
       "speaker": "A",
-      "text": "Deux tendances. Le nombre de boîtes par année grimpe fortement à partir de la fin des années 1990 et dépasse mille ces dernières années. Le nombre moyen de pièces monte aussi : moins de cent presque toutes les années 1970 et 1980, autour de trois cents au sommet. Star Wars domine les thèmes, et de loin."
+      "text": "Star Wars arrive loin devant, puis Friends, Gear, Ninjago, Bionicle et Technic. Pour y arriver, il compte les boîtes par thème, joint la table des thèmes et garde les dix plus gros thèmes de premier niveau."
     },
     {
       "speaker": "B",
-      "text": "Et le cas d'essai, la boîte de 1965 ?"
+      "text": "Et le scraper ? Les prix sont sur une page web, ça doit être simple."
     },
     {
       "speaker": "A",
-      "text": "La 001-1, la boîte Samsonite Gears. Un long historique et assez de reventes pour tracer une courbe. Il a nettoyé les données, retiré les symboles de devise, écarté les valeurs nulles, puis ajusté une régression linéaire de la valeur selon la date, projetée jusqu'en 2030."
+      "text": "Pas tout à fait. L'historique des prix n'est pas dans un tableau HTML. Il se cache dans un script qui alimente un tableau Google Charts, alors son analyseur lit les balises script et en extrait les lignes. Il l'a construit avec Playwright et du Python asynchrone."
     },
     {
       "speaker": "B",
-      "text": "Et ça marche ?"
+      "text": "Donc on lit les indications de mise en scène plutôt que la pièce."
     },
     {
       "speaker": "A",
-      "text": "Antoine est franc : ce n'est pas un signal de trading. C'est une façon de poser des questions simples, par exemple si la tendance domine ou à quel point les pointes récentes au-dessus de six cents s'écartent du modèle. Il prévient aussi que les prix étaient en dollars canadiens, même si une colonne s'appelle USD."
+      "text": "Voilà. Pour l'essai, il a choisi la boîte 001-1, la Samsonite Gears de 1965 : un long historique et assez de reventes pour tracer une courbe. Le scraper écrit deux fichiers : des valeurs datées avec des annotations, comme la sortie, et des fourchettes mensuelles pour les boîtes scellées."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'il faut encore surveiller ?"
+      "text": "Puis il a nettoyé et ajusté un modèle ?"
     },
     {
       "speaker": "A",
-      "text": "Un scraper cassé fait passer des mois manquants pour des chutes de prix. Les boîtes retirées du catalogue faussent les comptes. Et un modèle linéaire sur des boîtes à la mode part en vrille."
+      "text": "Oui. Pandas retire les doublons, enlève les symboles monétaires et convertit les dates. Ensuite, une simple régression linéaire de la valeur selon la date, prolongée jusqu'en 2030, donne une tendance de référence : où se situent les pics récents par rapport à elle ?"
     },
     {
       "speaker": "B",
-      "text": "Alors, à retenir ?"
+      "text": "Alors, l'idée à retenir ?"
     },
     {
       "speaker": "A",
-      "text": "Un super exercice de pandas et de scraping asynchrone, et un rappel que le prix de revente, c'est du sentiment plus du plastique. Le code est dans le dépôt LegosTracker, et l'article complet a tous les graphiques."
+      "text": "Les données LEGO sont un terrain de jeu idéal pour pratiquer pandas, le scraping asynchrone et les graphiques. L'article complet a tous les graphiques, et le code est dans le dépôt LegosTracker."
     }
   ],
   "source_hash": "d59a242b76df99db",
-  "audio_hash": "79ea5b18944962d3",
-  "duration_seconds": 147
+  "audio_hash": "4a0bade80d9721ef",
+  "duration_seconds": 143
 }

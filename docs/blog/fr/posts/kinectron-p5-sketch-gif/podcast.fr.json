@@ -1,60 +1,76 @@
 {
-  "title": "Gestes Kinect dans p5.js, avec export GIF",
+  "title": "Un clap, et des feux d'artifice apparaissent",
   "lines": [
     {
       "speaker": "A",
-      "text": "Que se passe-t-il quand tu tapes des mains devant une Kinect et que l'écran répond par un feu d'artifice ?"
+      "text": "On applaudit devant un capteur et des feux d'artifice éclatent à l'écran. On lève la main et des bulles montent. C'est le sketch qu'Antoine a construit pour un cours de creative coding."
     },
     {
       "speaker": "B",
-      "text": "C'est le croquis qu'Antoine a construit pour un cours de création numérique. Il fait passer les squelettes de la Kinect v2 par Kinectron jusque dans p5.js, et dessine chaque articulation suivie sous forme de point."
+      "text": "Comment l'ordinateur sait-il qu'on a applaudi ?"
     },
     {
       "speaker": "A",
-      "text": "Et les gestes ?"
+      "text": "Une caméra Kinect v2 suit le corps comme un squelette de vingt-cinq articulations. Un outil nommé Kinectron envoie ces articulations dans le navigateur, où p5 point js dessine chacune sous forme de point."
     },
     {
       "speaker": "B",
-      "text": "Six gestes, vérifiés à chaque image du corps. Tu tapes des mains, ça lance un feu d'artifice. Une main au-dessus des hanches, des bulles montent. Une main en dessous, des étoiles tombent."
+      "text": "Un bonhomme en pointillés, en somme."
     },
     {
       "speaker": "A",
-      "text": "Comment le code sait qu'on a applaudi ?"
+      "text": "Exactement. Et à chaque image, le sketch pose six questions simples : les mains se touchent-elles, la main est-elle au-dessus des hanches, les deux mains sont-elles au-dessus de la tête, etc. Chaque question est une petite fonction qui compare des positions d'articulations."
     },
     {
       "speaker": "B",
-      "text": "Les positions des articulations sont normalisées entre zéro et un, donc chaque seuil est une fraction de l'image. Un applaudissement, c'est simplement deux mains qui passent sous une petite distance."
+      "text": "Un clap, ça ressemble à quoi pour un ordinateur ?"
     },
     {
       "speaker": "A",
-      "text": "On peut tester sans se tenir devant le capteur ?"
+      "text": "À une simple distance. Les positions sont des nombres entre zéro et un. Quand les deux mains se rapprochent à moins d'une petite fraction de l'image, c'est un clap, et cinquante particules de feu d'artifice jaillissent de la main droite."
     },
     {
       "speaker": "B",
-      "text": "Oui. Un drapeau, liveData, bascule vers un fichier de squelette enregistré, et des boutons Stop et Play apparaissent. Le bouton Save as GIF marche dans les deux modes, et p5 s'occupe lui-même de l'enregistrement et du téléchargement."
+      "text": "Et les autres gestes ?"
     },
     {
       "speaker": "A",
-      "text": "Antoine liste aussi ses erreurs. Deux copies de p5 dans l'en-tête de la page. Et une fonction de table des articulations nommée Kinectron, qui masquait le constructeur de la bibliothèque."
+      "text": "Une main au-dessus des hanches libère des bulles qui montent. Une main en dessous fait tomber des étoiles. Le sketch affiche même le nom des gestes détectés en haut du canevas, ce qui rend la démo très parlante."
     },
     {
       "speaker": "B",
-      "text": "Ah, celle-là est vicieuse."
+      "text": "Et sans Kinect sous la main ?"
     },
     {
       "speaker": "A",
-      "text": "Il y en a d'autres. Son geste du OK demande des articulations qui n'existent pas sur la Kinect v2, donc il ne se déclenche jamais. Et le drapeau de l'applaudissement se remet à zéro à l'image suivante : les feux d'artifice partent une image sur deux tant que les mains restent jointes."
+      "text": "Il y a un mode enregistré. Le sketch rejoue un fichier de squelette image par image, avec des boutons Stop et Play, pour faire la démo n'importe où."
     },
     {
       "speaker": "B",
-      "text": "Il y a même une expérience facultative où un applaudissement allume ou éteint un appareil connecté, via un petit serveur Node local."
+      "text": "Et la partie GIF ?"
     },
     {
       "speaker": "A",
-      "text": "Parfait pour une démo de cours, pas pour du suivi corporel en production. L'article complet détaille chaque étape et les pièges."
+      "text": "Un bouton appelle saveGif : cinq secondes du canevas sont enregistrées et téléchargées en GIF. Idéal pour partager un projet de cours."
+    },
+    {
+      "speaker": "B",
+      "text": "On m'a parlé d'un appareil connecté."
+    },
+    {
+      "speaker": "A",
+      "text": "Une petite expérience en bonus. Un clap peut envoyer une requête à un mini serveur Node qui, avec une bibliothèque nommée tuyapi, allume ou éteint un appareil du réseau local. Clap pour allumer, clap pour éteindre."
+    },
+    {
+      "speaker": "B",
+      "text": "Alors, ce qu'on retient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Des données de squelette et quelques règles simples suffisent pour monter vite une pièce interactive. Le tutoriel complet détaille chaque étape et le code."
     }
   ],
   "source_hash": "b35a3f17fdd31634",
-  "audio_hash": "53f6c9b034435044",
-  "duration_seconds": 117
+  "audio_hash": "3f322ed32b7eae26",
+  "duration_seconds": 131
 }

@@ -3,66 +3,66 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Imagine a stock-trading game where you want a script to check your portfolio every morning. The site has no official API. What do you do?"
+      "text": "What if you could run a stock-trading game from a Python script, with no real money at stake? That's what Antoine's small package, marketwatch, lets you do."
     },
     {
       "speaker": "B",
-      "text": "Scrape it and hope?"
+      "text": "A stock game? Like paper trading?"
     },
     {
       "speaker": "A",
-      "text": "More or less, but tidily. Antoine wanted to automate chores in MarketWatch's virtual stock game. It's paper trading, not a real broker. So he shipped a small Python package on PyPI called marketwatch."
+      "text": "Exactly. MarketWatch runs a virtual stock game, and Antoine wanted to automate the chores in it. So he published a client on PyPI. Install it with pip, log in with your username and password, and you can list your games, check a price like Apple's, and more."
     },
     {
       "speaker": "B",
-      "text": "What does it cover?"
+      "text": "What can it actually do?"
     },
     {
       "speaker": "A",
-      "text": "Watchlists, listing games and reading their settings, positions and pending orders, buying and selling inside the game rules, and the leaderboard. You log in once with a class, then make many calls in a script."
+      "text": "It covers watchlists, where you create, list and update symbols. It reads games and their settings. It shows your portfolio, with positions and pending orders. It places buys and sells inside the game's rules. And it can fetch the leaderboard for a game."
     },
     {
       "speaker": "B",
-      "text": "Why not just use curl scripts in a notebook?"
+      "text": "Why not just poke the site with curl?"
     },
     {
       "speaker": "A",
-      "text": "Two reasons. The game has session cookies, rules and leaderboards that change with the semester. And he wanted something documented for teammates. A shared gist rots the moment the HTML form changes. The package is intentionally small: no database layer, no strategy engine, just HTTP shaped like the site."
+      "text": "Because the game uses session cookies, game rules and leaderboards that change with the semester. A thin Python wrapper handles that in one place. Think of it as a remote control for the site: one login, then many buttons."
     },
     {
       "speaker": "B",
-      "text": "Any design choices worth noting?"
+      "text": "And the design is intentionally small."
     },
     {
       "speaker": "A",
-      "text": "One explicit method per endpoint, so it's easy to search when MarketWatch changes a path. Docs on GitHub Pages, because the PyPI description is too short for login edge cases. And no bundled strategies, so the library stays neutral."
+      "text": "Right. It's a class-based client, so one login serves many calls in a script. Each endpoint gets its own explicit method, which makes the code easy to search. There's no database layer and no strategy engine, just HTTP shaped like the site. Strategies belong in your own repo."
     },
     {
       "speaker": "B",
-      "text": "How do you use it?"
+      "text": "Why did he want it documented?"
     },
     {
       "speaker": "A",
-      "text": "Install it with pip, create the client with a username and password, then call something like get games or get price for a ticker."
+      "text": "So teammates have a clear surface: here's how you list games, instead of passing around a script that breaks. The docs live on GitHub Pages, with the login details covered."
     },
     {
       "speaker": "B",
-      "text": "And the warnings?"
+      "text": "Where does it fit with his other work?"
     },
     {
       "speaker": "A",
-      "text": "Honest ones. It's an unofficial API, so pin versions and expect breakage. Automation may conflict with the site's terms, so it's for learning, not abuse. And paper gains don't validate a strategy."
+      "text": "It pairs naturally with his backtesting projects. BatchBacktesting runs strategies on historical data, and this client lets you try ideas inside a live game, handy for small bots and screening."
     },
     {
       "speaker": "B",
-      "text": "So who's it for?"
+      "text": "So the takeaway is a tidy wrapper that turns a game into something scriptable."
     },
     {
       "speaker": "A",
-      "text": "Small bots and screening inside the game. Not high-frequency trading, not brokerage. The full write-up links the docs and the source."
+      "text": "That's it. The write-up has the links to PyPI, the docs and the source on GitHub."
     }
   ],
   "source_hash": "65cb446cc6b5ea30",
-  "audio_hash": "0a050e7042e3e16c",
-  "duration_seconds": 117
+  "audio_hash": "b4377caa27c1f9a5",
+  "duration_seconds": 122
 }

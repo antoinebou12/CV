@@ -1,72 +1,76 @@
 {
-  "title": "Des diagrammes depuis le chat avec uml-mcp",
+  "title": "uml-mcp : demandez un diagramme à votre assistant",
   "lines": [
     {
       "speaker": "A",
-      "text": "Vous demandez un diagramme de séquence à un assistant, et au lieu d'un bloc de texte illisible, vous recevez une vraie image. Comment ?"
+      "text": "On écrit une phrase dans le chat, et un diagramme de séquence propre apparaît. C'est ce que permet uml-mcp, le projet libre d'Antoine."
     },
     {
       "speaker": "B",
-      "text": "Je suppose qu'il y a un outil derrière."
+      "text": "Comment l'assistant dessine-t-il des diagrammes ?"
     },
     {
       "speaker": "A",
-      "text": "Oui : uml-mcp, un serveur M C P open source d'Antoine. L'assistant transmet une source Mermaid, PlantUML ou un autre format pris en charge, et le serveur renvoie le rendu avec des liens utiles."
+      "text": "Par MCP, le Model Context Protocol, qui permet à un assistant d'appeler de vrais outils. uml-mcp est un serveur d'outils de diagrammes : l'assistant écrit la source en Mermaid, PlantUML ou un autre format pris en charge, et le serveur renvoie une image et des liens utiles."
     },
     {
       "speaker": "B",
-      "text": "Pourquoi M C P plutôt que des gabarits ?"
+      "text": "L'assistant est l'architecte et uml-mcp l'imprimerie."
     },
     {
       "speaker": "A",
-      "text": "Il avait commencé avec des plugins ChatGPT et des gabarits de prompts. Les deux marchaient, mais les éditeurs voulaient des outils natifs : activer un serveur une fois, l'appeler depuis l'agent, et sauvegarder la source et le S V G à côté de l'article."
+      "text": "Image parfaite. L'architecte remet un croquis sous forme de texte, et l'imprimerie rend le plan."
     },
     {
       "speaker": "B",
-      "text": "La même idée que le plugin, sur un autre hôte."
+      "text": "Il y a quoi à l'intérieur ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Le dépôt documente cinq outils et environ trente-sept types de diagrammes via Kroki. Antoine précise que ce sont des chiffres sur l'interface, pas un benchmark."
+      "text": "Cinq outils documentés : générer un diagramme, générer une image, valider la source, lister les types disponibles et en rendre plusieurs d'un coup. Avec Kroki, ça couvre environ trente-sept types."
     },
     {
       "speaker": "B",
-      "text": "Où est le truc malin ?"
+      "text": "Comment fonctionnent les liens modifiables ?"
     },
     {
       "speaker": "A",
-      "text": "Un module construit un état JSON, le compresse avec zlib et l'encode en base64 compatible avec les URL. Ça donne à la fois un lien d'image et un lien d'édition mermaid point live."
+      "text": "Pour Mermaid, le code construit un petit état JSON, le compresse avec zlib et l'encode en base64 compatible URL. Cet état alimente à la fois un lien d'image et un lien modifiable mermaid point live. Il choisit aussi le bon point d'accès pour le SVG ou pour le PNG, le JPEG et le WebP."
     },
     {
       "speaker": "B",
-      "text": "Et un piège ?"
+      "text": "Pourquoi MCP plutôt que les outils précédents ?"
     },
     {
       "speaker": "A",
-      "text": "Le code distingue le S V G des images PNG, J P E G et WebP, qui passent par un autre chemin. Se tromper de chemin peut casser un diagramme parfaitement valide, avant même que la syntaxe soit en cause."
+      "text": "Antoine avait commencé avec un plugin de diagrammes pour ChatGPT et des modèles AIPRM. Les deux fonctionnent, mais il voulait des outils natifs : activer un serveur une fois, appeler generate UML depuis l'agent, et enregistrer le fichier Mermaid et le SVG à côté d'un article. MCP est cette couche. Même idée que le plugin, autre hôte."
     },
     {
       "speaker": "B",
-      "text": "L'installation ?"
+      "text": "Et l'installation dans Cursor ?"
     },
     {
       "speaker": "A",
-      "text": "Ajouter le serveur dans les réglages M C P de Cursor, puis demander explicitement le type de diagramme. Il existe aussi un point d'accès hébergé."
+      "text": "On installe depuis le dépôt GitHub, on ajoute le serveur aux paramètres MCP de Cursor, puis on demande un type précis, par exemple une séquence Mermaid avec un utilisateur, React, FastAPI et Postgres. Il y a aussi un point d'accès hébergé et un site de documentation."
     },
     {
       "speaker": "B",
-      "text": "Des mises en garde ?"
+      "text": "Quelque chose pour l'exploitation ?"
     },
     {
       "speaker": "A",
-      "text": "Le modèle invente encore parfois la syntaxe, donc on valide le rendu avant de publier. Et on garde les secrets hors des prompts."
+      "text": "Une commande admin, des métriques et un bac à sable Kroki, pour voir facilement ce que fait le moteur de rendu."
     },
     {
       "speaker": "B",
-      "text": "L'article complet a le diagramme de séquence et les étapes d'installation."
+      "text": "Où est-il utilisé ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine s'en sert dans tout son blog pour les schémas de pipelines et de parcours. L'article complet a un diagramme de séquence du flux et un lien vers la page du projet."
     }
   ],
   "source_hash": "5fe9dcc9fc1a459d",
-  "audio_hash": "4bda2dab7648e1c2",
-  "duration_seconds": 114
+  "audio_hash": "1ac6c2e3d0db5ade",
+  "duration_seconds": 145
 }

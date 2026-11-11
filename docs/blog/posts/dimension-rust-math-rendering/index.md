@@ -27,6 +27,17 @@ The application supplies geometry and transforms. The scene layer organizes enti
 
 [Open the component-by-component code walkthrough](https://antoineboucher.info/CV/blog/projects/notes/dimension/).
 
+## Try it in the browser
+
+The same crates compile to WebAssembly, and the repository publishes each demo as a static page. Pick one below and press start: it runs in your browser, with nothing to install.
+
+Render | https://antoinebou12.github.io/Dimension/render/ | A cube, a tetrahedron and a cylinder drawn by the wgpu renderer, with a transform gizmo and object picking.
+Geometry | https://antoinebou12.github.io/Dimension/geometry/ | Mesh demos from the geometry crate.
+Mathlib | https://antoinebou12.github.io/Dimension/mathlib/ | Linear algebra, graphs, optimization, noise, transforms and camera maths from mathlib.
+Embeddings | https://antoinebou12.github.io/Dimension/mathlib/recommendation/ | Text embeddings reduced to 3D with PCA. Click a point to see similar documents.
+
+The repository also publishes a [kinematics demo](https://antoinebou12.github.io/Dimension/kinematics/) (a three-joint arm solved with inverse kinematics) and a [physics demo](https://antoinebou12.github.io/Dimension/physics/) (rigid bodies with XPBD). Both need a browser with WebGPU and open in their own tab.
+
 ## Start with the storage
 
 [`mathlib/src/lib.rs`](https://github.com/antoinebou12/Dimension/blob/main/mathlib/src/lib.rs) exports dense storage alongside sparse formats such as CRS and CCS. The public API also includes matrix and vector types, matrix views and submatrices. Those choices matter before a renderer draws anything: they determine how a caller represents and passes its data.

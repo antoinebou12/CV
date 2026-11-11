@@ -1,68 +1,60 @@
 {
-  "title": "Une balance, Home Assistant et une prévision",
+  "title": "D'une balance de salle de bain à une prévision de poids",
   "lines": [
     {
       "speaker": "A",
-      "text": "La balance d'Antoine en savait bien plus que son poids. Sortir ces données d'une app mobile est devenu un projet de rétro-ingénierie."
+      "text": "Une balance connectée mesure bien plus que le poids. Gras corporel, muscle, eau, et même la résistance de chaque membre. Le hic, c'est que tout ça reste d'habitude enfermé dans une seule appli de téléphone."
     },
     {
       "speaker": "B",
-      "text": "Attends, une balance mesure quoi d'autre ?"
+      "text": "Et Antoine voulait le voir à côté du reste de sa maison."
     },
     {
       "speaker": "A",
-      "text": "Une Renpho à bio-impédance donne l'IMC, le métabolisme de base, l'âge corporel, des estimations de graisse et de muscle, l'eau, les protéines, la graisse viscérale, et des résistances par membre. Son souci : tout ça vivait dans une app isolée. Il voulait les chiffres dans Home Assistant, à côté de ses autres automations."
+      "text": "Exactement. Il voulait les mesures de la balance dans Home Assistant, avec les autres automatisations de son appartement. Il a donc fait un fork de hass_renpho, une intégration communautaire qui récupère les données du nuage Renpho, et il l'a fait avancer."
     },
     {
       "speaker": "B",
-      "text": "Donc il a écrit une intégration ?"
+      "text": "Ça marche comment ?"
     },
     {
       "speaker": "A",
-      "text": "Il a forké celle de la communauté. Le projet hass-renpho ralentissait et il lui fallait plus d'entités, alors il a créé hass_renpho. Elle se connecte au cloud Renpho, interroge à intervalle fixe et expose des capteurs. Il a choisi six cents secondes, notamment parce que la connexion peut déconnecter le téléphone de l'app."
+      "text": "L'intégration se connecte au nuage Renpho avec le même compte que l'appli, puis interroge à intervalle régulier, six cents secondes dans sa configuration. Elle expose ensuite des capteurs : poids, composition, estimations métaboliques, infos sur l'appareil. Si la connexion de la maison est bloquée, il y a un réglage de proxy optionnel."
     },
     {
       "speaker": "B",
-      "text": "Et la rétro-ingénierie ?"
+      "text": "Comment a-t-il trouvé les champs de données ?"
     },
     {
       "speaker": "A",
-      "text": "Il a passé APKLeaks sur l'app Android, qui cherche dans le paquet les hôtes, chemins et clés. Il a recoupé avec les champs déjà gérés et comblé les manques quand un tableau affichait inconnu après une mise à jour. Pour lui, c'est un contrat instable."
+      "text": "Par rétro-ingénierie. Il a passé l'outil APKLeaks sur l'appli Android, qui parcourt le paquet pour sortir les hôtes, les chemins et les noms de paramètres, un peu comme lire l'étiquette de chaque tiroir d'une armoire. Il a ensuite fait correspondre ces noms aux champs déjà connus de l'intégration et comblé les trous."
     },
     {
       "speaker": "B",
-      "text": "Il y a eu un piège côté réseau aussi."
+      "text": "Et au bout du compte, on obtient quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. L'intégration échouait alors que l'app marchait en données cellulaires. On aurait cru une intégration cassée, c'était la réputation de l'adresse IP. Un VPN ou un proxy a réglé ça. Ça lui a coûté une soirée."
+      "text": "Des tableaux de bord Lovelace dans Home Assistant : un historique du poids avec des jauges de composition, et une seconde vue pour les tours de taille et les objectifs. Antoine l'ouvre quand l'entraînement ou le sommeil change."
     },
     {
       "speaker": "B",
-      "text": "Puis la prévision."
+      "text": "Le titre parle d'une prévision."
     },
     {
       "speaker": "A",
-      "text": "Un notebook avec pandas, scikit-learn et Keras, qui modélise le poids seulement. Un LSTM réglé sur cinq essais a retenu cinquante-deux unités. Mais il liste lui-même les défauts : des découpages aléatoires sur une série temporelle, et une forme d'entrée qui empêche le LSTM de vraiment lire une séquence."
+      "text": "Oui. Une fois l'historique sorti de l'appli, il a monté un notebook avec pandas et Keras. D'abord une droite de tendance prolongée de trente jours, puis une forêt aléatoire, puis un réseau LSTM qui lit une fenêtre glissante de mesures passées pour prédire la suivante. Un outil de réglage a exploré le nombre d'unités et le taux d'apprentissage, et le meilleur essai utilisait cinquante-deux unités."
     },
     {
       "speaker": "B",
-      "text": "Franc. Et les habitudes ?"
+      "text": "Des habitudes qui rendent les données plus utiles ?"
     },
     {
       "speaker": "A",
-      "text": "Même heure, mêmes vêtements, et regarder les tendances sur des semaines. Un écart d'un kilo, c'est du bruit normal."
-    },
-    {
-      "speaker": "B",
-      "text": "Et ce n'est pas clinique."
-    },
-    {
-      "speaker": "A",
-      "text": "Voilà. L'article complet a les tableaux de bord et les réserves."
+      "text": "Trois, toutes simples. Se peser à la même heure, garder les mêmes vêtements, et suivre les tendances sur des semaines plutôt qu'un seul matin. C'est ce qui garde la courbe parlante. L'article complet a les tableaux de bord, la liste des capteurs et le détail du notebook."
     }
   ],
   "source_hash": "36644c8f9361cab5",
-  "audio_hash": "3dae03c58fd7581f",
-  "duration_seconds": 131
+  "audio_hash": "9531e028f7b30bda",
+  "duration_seconds": 141
 }

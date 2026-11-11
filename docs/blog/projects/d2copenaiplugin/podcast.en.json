@@ -1,60 +1,48 @@
 {
-  "title": "D2C: a ChatGPT plugin that draws diagrams",
+  "title": "Diagrams from a ChatGPT conversation",
   "lines": [
     {
       "speaker": "A",
-      "text": "Remember when ChatGPT plugins were a thing? Antoine built one that turned a conversation into a diagram."
+      "text": "What if you could just describe a diagram in a chat, and have it drawn for you?"
     },
     {
       "speaker": "B",
-      "text": "I do remember. What did it draw?"
+      "text": "That would save me a lot of fiddling with boxes."
     },
     {
       "speaker": "A",
-      "text": "Diagrams written in PlantUML or Mermaid. You describe a system in the chat, and the plugin generates the diagram from it. It's called D2COpenAIPlugin."
+      "text": "That was the idea behind D2COpenAIPlugin, an earlier ChatGPT plugin by Antoine. It generates diagrams with PlantUML or Mermaid straight from the conversation."
     },
     {
       "speaker": "B",
-      "text": "And it was a proper plugin, not a script on the side?"
+      "text": "What's the difference between those two?"
     },
     {
       "speaker": "A",
-      "text": "A proper ChatGPT plugin, with a diagram-oriented interface. The page is clear that it's a historical project, though."
+      "text": "Both are text-based diagram languages. You write a few lines describing the boxes and arrows, and the tool draws the picture. The plugin lets ChatGPT write those lines and get back the rendered diagram."
     },
     {
       "speaker": "B",
-      "text": "How did you run it?"
+      "text": "So how does ChatGPT talk to it?"
     },
     {
       "speaker": "A",
-      "text": "It's a Python app built on FastAPI. The original setup was Python, a virtual environment through poetry, installing the dependencies, and starting a local server on port fifty-three oh three."
+      "text": "The plugin is a small Python service built with FastAPI and run with uvicorn. ChatGPT calls its routes, and a manifest tells ChatGPT what the plugin can do. The repository has the details of the routes and setup."
     },
     {
       "speaker": "B",
-      "text": "So the instructions might be out of date."
+      "text": "Sounds like a stepping stone."
     },
     {
       "speaker": "A",
-      "text": "That's the caveat. The page labels them as the original plugin environment, and the manifest and configuration stay in the source repository."
+      "text": "It is. It sits on the path toward uml-mcp, Antoine's open-source M C P server for diagrams, which does the same job in Cursor and through a custom GPT."
     },
     {
       "speaker": "B",
-      "text": "Where would someone look for more?"
-    },
-    {
-      "speaker": "A",
-      "text": "The project documentation covers the implementation and API routes, and the GitHub repository has the original code. It's worth reading as an early example of diagrams-from-chat, the idea behind Antoine's later diagram work."
-    },
-    {
-      "speaker": "B",
-      "text": "Short and sweet."
-    },
-    {
-      "speaker": "A",
-      "text": "The written page has the links."
+      "text": "The project page has a demo animation of it at work."
     }
   ],
   "source_hash": "a71c69b1498d8317",
-  "audio_hash": "86b27f7a3c407b4c",
-  "duration_seconds": 77
+  "audio_hash": "c2fa1f021acf1124",
+  "duration_seconds": 67
 }

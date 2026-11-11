@@ -3,66 +3,58 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "A scanner measures a tiny surface, and the result is a grid of heights. What do you do with that grid?"
+      "text": "Imagine scanning a metal surface so finely that you can see every scratch as a tiny hill or valley. What do you do with all those heights?"
     },
     {
       "speaker": "B",
-      "text": "Make a pretty picture?"
+      "text": "Look at them, I suppose. Maybe turn them into a 3D model."
     },
     {
       "speaker": "A",
-      "text": "That's one thing, but the post is about going further. TrueMapData is Antoine's Python library for reading captures from TrueMap and GelSight. It exposes the heights as NumPy arrays and gives you tools for analysis and graphics export."
+      "text": "Both, and that's TrueMapData. This Python library reads surface captures from TrueMap and GelSight, exposes their heights as NumPy arrays, and gives you tools for analysis and graphics export from the same representation."
     },
     {
       "speaker": "B",
-      "text": "What's inside a capture file?"
+      "text": "What's inside one of these capture files?"
     },
     {
       "speaker": "A",
-      "text": "A header, spatial metadata, and the grid itself, stored as float32 samples. The metadata matters, because a game texture can stretch over any range, but a measured surface needs its sample spacing to keep its real physical scale."
+      "text": "A dot t m d file holds a header, spatial metadata and a grid of heights stored as float32 values, row by row. It reads both the older v1 format and the TrueMap v6-style v2 format. The metadata keeps the physical scan size, so the grid never loses its real-world scale."
     },
     {
       "speaker": "B",
-      "text": "So size stays attached to the data."
+      "text": "So it's like a topographic map of a tiny patch of material."
     },
     {
       "speaker": "A",
-      "text": "Yes. And before exporting anything, he inspects the surface: a heatmap, a three-D view, profiles along a row or column, contours. Then you can derive a normal map for shading, a displacement map that carries height, or even a mesh in formats like STL, OBJ or glTF."
+      "text": "Exactly that. And you can explore it: a 2D heatmap, a 3D surface, row and column profiles, contour lines, and comparisons between files. Matplotlib makes static plots, Plotly saves an interactive HTML view, and optional Polyscope opens a 3D inspection window."
     },
     {
       "speaker": "B",
-      "text": "And the scale still matters when you tile a texture on a mesh?"
+      "text": "Then where do the graphics assets come in?"
     },
     {
       "speaker": "A",
-      "text": "Right. The apply-on-mesh path uses the template's bounds, the millimeters-per-pixel value and the capture's dimensions to set the tiling, so the scan's size connects to the surface receiving it."
+      "text": "From the same height grid, it derives normal maps, which describe local orientation for lighting, and displacement maps, which carry the height itself. It can also export meshes in formats like STL, OBJ, glTF and USD, and apply textures to a template model using the scan's millimeters per pixel to set the tiling."
     },
     {
       "speaker": "B",
-      "text": "Where does wear come in?"
+      "text": "And the metrology side?"
     },
     {
       "speaker": "A",
-      "text": "Roughness describes a surface at one moment, using ISO 25178 parameters through a separate package called Surfalize. Wear compares captures over time. Before subtracting heights, the frames must share the same grid and region, so the library aligns them first."
+      "text": "Roughness analysis uses Surfalize for the ISO 25178 areal parameters. Wear analysis compares captures over time: it aligns frames with translation or OpenCV and SIFT registration, subtracts the heights, and reports volume loss, scratch evolution and roughness trajectories."
     },
     {
       "speaker": "B",
-      "text": "How's loss defined?"
+      "text": "So one library, from raw scan to a game-ready mesh or a wear report."
     },
     {
       "speaker": "A",
-      "text": "Reference height minus current height. A positive loss means the current surface is lower. To get a physical volume, you also need the pixel spacing in both directions, and registration errors or mixed units would change the answer."
-    },
-    {
-      "speaker": "B",
-      "text": "So the figures in the post are examples, not thesis data."
-    },
-    {
-      "speaker": "A",
-      "text": "Correct, they come from the repository README. The full write-up has the diagrams and commands."
+      "text": "Yes. The surface and profile figures in the post come from the project's own README examples. The full write-up has the diagram, the commands to try, and links to the guides."
     }
   ],
   "source_hash": "645f4fc3f84f4f7b",
-  "audio_hash": "f77433762be04c96",
-  "duration_seconds": 125
+  "audio_hash": "ec80e181c5b19ca0",
+  "duration_seconds": 133
 }

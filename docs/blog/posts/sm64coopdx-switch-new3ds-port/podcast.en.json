@@ -1,49 +1,49 @@
 {
-  "title": "Porting Mario 64 co-op to two handhelds",
+  "title": "One Mario 64 engine, two handhelds",
   "lines": [
     {
       "speaker": "A",
-      "text": "A Nintendo Switch and a New 3DS walk into a codebase. One engine has to run on both, without turning into a mess."
+      "text": "Taking one game engine and teaching it to run on two very different handheld consoles sounds like it needs a huge rewrite. Antoine's approach was the opposite: keep the part that touches each console as small as possible."
     },
     {
       "speaker": "B",
-      "text": "Those two consoles couldn't be more different."
+      "text": "Which game are we talking about?"
     },
     {
       "speaker": "A",
-      "text": "That's the challenge in this post. The project brings the Coop Deluxe engine for Super Mario 64 to both. The multiplayer engine and Lua mods come from upstream work, so Antoine's fork focuses on the console adapters: graphics, input, audio, threading and packaging."
+      "text": "Super Mario 64, in its Coop Deluxe multiplayer version, sm64coopdx. Antoine's fork, sm64coopdx-switch-N3DS, brings it to the Nintendo Switch and the New 3DS. The multiplayer engine and Lua mods come from the Coop Deluxe Team, and his work is the console adapters around it."
     },
     {
       "speaker": "B",
-      "text": "So where's the hard part?"
+      "text": "What does an adapter actually do?"
     },
     {
       "speaker": "A",
-      "text": "On the New 3DS, it's a graphics translation problem. The renderer goes through Citro3D and the PICA200 GPU, translating common color combinations into the chip's own stages. When the GPU can't represent an effect, the backend reports it instead of pretending."
+      "text": "Think of travel plugs. The game plays the same tune, and each console gets a plug that fits its own socket. The shared engine calls a set of platform functions, and each target fills them in for graphics, input, audio, threading and packaging."
     },
     {
       "speaker": "B",
-      "text": "I like that. Compiling isn't the same as looking right."
+      "text": "The New 3DS sounds like the harder one."
     },
     {
       "speaker": "A",
-      "text": "Exactly. And there are hardware details too. The top screen is four hundred by two forty, the bottom is three twenty by two forty. The Circle Pad handles movement, the C-Stick handles the camera, and audio uses bounded buffers."
+      "text": "It's a graphics translation job. The backend implements the game's rendering API with Citro3D on the PICA200 chip, mapping common color combinations to the chip's own stages and handling textures, depth, blending and fog. It also reports the cases where the chip can't match an effect exactly."
     },
     {
       "speaker": "B",
-      "text": "How do they keep two toolchains from tangling?"
+      "text": "And the controls?"
     },
     {
       "speaker": "A",
-      "text": "A firm rule: the New 3DS target must add no libctru, Citro3D or devkitARM dependencies to the desktop and Switch builds. There are separate Docker compose files and build folders too. And there are two New 3DS build paths, a small platform shell first, then the full game."
+      "text": "They're native. The Circle Pad moves Mario, the C-Stick moves the camera, and the touch screen works too. The top screen is four hundred by two forty and the bottom one is three twenty by two forty. Audio runs through NDSP with bounded buffers."
     },
     {
       "speaker": "B",
-      "text": "Does it actually play on a real 3DS?"
+      "text": "Is there a rule that keeps the two ports from tangling?"
     },
     {
       "speaker": "A",
-      "text": "Here the page is careful. There's a New 3DS release, but the port notes still say not to call it playable, and hardware gameplay is described as unverified. A release file doesn't prove stability or multiplayer compatibility."
+      "text": "Yes, a neat one. The New 3DS target must add no libctru, Citro3D or devkitARM dependency to the desktop or Switch builds. Separate Docker compose files and build folders keep the toolchains apart. There are even small smoke builds, one for the platform shell and one for the full game."
     },
     {
       "speaker": "B",
@@ -51,18 +51,10 @@
     },
     {
       "speaker": "A",
-      "text": "Documentation covers CoopNet, local wireless, an in-game keypad, crash diagnostics and packaging. Also, you need your own legally obtained North American ROM. No ROM comes with it."
-    },
-    {
-      "speaker": "B",
-      "text": "So the lesson is: keep the platform boundary small."
-    },
-    {
-      "speaker": "A",
-      "text": "And be honest about what's verified. The full write-up has the architecture diagram and links to the notes."
+      "text": "It covers CoopNet, local wireless, an in-game keypad, crash diagnostics and packaging. You bring your own legally obtained North American ROM. The takeaway is a clean design habit: share the engine, shrink the platform layer. The full write-up has the diagram and the source links."
     }
   ],
-  "audio_hash": "8d2836ae1a05aa6d",
-  "duration_seconds": 132,
-  "source_hash": "e78c72328a7f1ebb"
+  "source_hash": "e78c72328a7f1ebb",
+  "audio_hash": "4bc9405f589293e1",
+  "duration_seconds": 137
 }

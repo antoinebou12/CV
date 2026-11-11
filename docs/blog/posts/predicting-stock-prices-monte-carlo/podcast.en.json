@@ -1,68 +1,68 @@
 {
-  "title": "A range, not a price",
+  "title": "Price ranges with Monte Carlo, not one magic number",
   "lines": [
     {
       "speaker": "A",
-      "text": "If someone tells you Apple will close at one exact price next year, don't believe them. Antoine's take: trading is about ranges, not one magic number."
+      "text": "Nobody can say what Apple's stock will close at next year. But can you say how far it could reasonably swing?"
     },
     {
       "speaker": "B",
-      "text": "So how do you get a range?"
+      "text": "That sounds more honest than a single prediction. How do you do it?"
     },
     {
       "speaker": "A",
-      "text": "Monte Carlo simulation. He took Apple's daily closing prices and estimated the average drift and volatility of the log returns, using only data before 2023. Then he simulated many possible price paths forward."
+      "text": "With a Monte Carlo simulation. Antoine took Apple's daily closes and split them at the first of January 2023. Everything before that is training data. Everything after is the hold-out."
     },
     {
       "speaker": "B",
-      "text": "And then you check it against what really happened."
+      "text": "What does he learn from the training part?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. 2023 was the hold-out year. Did the real prices fall inside the band between the fifth and ninety-fifth percentile of the simulated paths?"
+      "text": "Daily log returns. From those he gets an average drift and a volatility, which is just how much the price tends to wiggle."
     },
     {
       "speaker": "B",
-      "text": "How does the simulation work, in plain words?"
+      "text": "Then he rolls the dice?"
     },
     {
       "speaker": "A",
-      "text": "Each day, draw a random shock from a normal distribution, scale it by the volatility, add the drift, and multiply the price by the exponential of that. There's a small correction, called the Itô correction, so the simulated average doesn't climb faster than history justifies."
+      "text": "Thousands of times. Each simulated path draws a random shock every day, using the drift and the volatility, and pushes the price forward. There's a small correction term so the simulated average doesn't climb faster than real history justifies."
     },
     {
       "speaker": "B",
-      "text": "Give me a number."
+      "text": "Think of it as releasing a crowd of tiny paper boats on a river and watching where they end up."
     },
     {
       "speaker": "A",
-      "text": "For Apple, the mean simulated price after three hundred and sixty-four days was two hundred and six dollars and sixty-three cents. The real close on the twenty-ninth of December, 2023 was one ninety-two fifty-three. A gap of fourteen dollars ten, or about seven percent."
+      "text": "Nice. Then you read the fan of paths. The median and mean show the center. The fifth to ninety-fifth percentile gives a band for where the price might land. And the real hold-out prices show up as dots to compare."
     },
     {
       "speaker": "B",
-      "text": "Not bad, but not magic."
+      "text": "Did he get numbers?"
     },
     {
       "speaker": "A",
-      "text": "And a later run on Microsoft with 2024 closes missed by about fourteen percent. That's the reminder: a band built on past volatility says nothing about a company being re-rated."
+      "text": "For Apple, the mean simulated price after 364 days was about two hundred six dollars sixty-three, against a real close of one ninety-two fifty-three on the twenty-ninth of December 2023. That's a gap of about seven percent. He repeated it for Microsoft and for Apple again with 2024 closes."
     },
     {
       "speaker": "B",
-      "text": "What does he say the model can't do?"
+      "text": "Where does MCMC come in?"
     },
     {
       "speaker": "A",
-      "text": "Volatility isn't constant, there are no jumps like earnings gaps, and it ignores diversification. He also separates this from MCMC, which fits a distribution first. This one is the forward-simulation step."
+      "text": "It answers a different question: which distribution fits the observed prices before simulating. The two combine well. This post covers the forward step."
     },
     {
       "speaker": "B",
-      "text": "So the takeaway?"
+      "text": "So what's the takeaway?"
     },
     {
       "speaker": "A",
-      "text": "Monte Carlo measures how wide the model's risk is. Backtesting measures what a trading rule would have earned. Keep those questions apart. The full write-up has the code and the fan charts."
+      "text": "Monte Carlo gives you the width of a range, and backtesting tests a trading rule. Keeping those questions separate keeps the thinking clear. The full write-up has the code and every fan chart."
     }
   ],
   "source_hash": "193df4a1cfd0f815",
-  "audio_hash": "7ceab5eb07d5e2ce",
-  "duration_seconds": 121
+  "audio_hash": "fb67e45d15d16ea7",
+  "duration_seconds": 118
 }

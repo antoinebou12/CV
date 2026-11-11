@@ -1,68 +1,68 @@
 {
-  "title": "Un client Python pour un jeu de bourse",
+  "title": "Un client Python pour un jeu boursier",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imaginez un jeu de bourse où vous voulez qu'un script vérifie votre portefeuille chaque matin. Le site n'a pas d'API officielle. Vous faites quoi ?"
+      "text": "Et si vous pouviez piloter un jeu de bourse depuis un script Python, sans risquer un sou ? C'est ce que permet marketwatch, le petit paquet d'Antoine."
     },
     {
       "speaker": "B",
-      "text": "Du scraping en croisant les doigts ?"
+      "text": "Un jeu de bourse ? Du trading virtuel ?"
     },
     {
       "speaker": "A",
-      "text": "À peu près, mais proprement. Antoine voulait automatiser des tâches dans le jeu de bourse virtuel de MarketWatch. C'est du trading fictif, pas un vrai courtier. Il a donc publié un petit paquet Python sur PyPI, appelé marketwatch."
+      "text": "Exactement. MarketWatch propose un jeu boursier virtuel, et Antoine voulait en automatiser certaines tâches. Il a donc publié un client sur PyPI. On l'installe avec pip, on se connecte avec son nom d'utilisateur et son mot de passe, et on peut lister ses parties, consulter un prix, comme celui d'Apple, et plus encore."
     },
     {
       "speaker": "B",
-      "text": "Il couvre quoi ?"
+      "text": "Concrètement, il fait quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Les listes de surveillance, la liste des parties et leurs réglages, les positions et les ordres en attente, l'achat et la vente selon les règles du jeu, et le classement. On se connecte une fois avec une classe, puis on enchaîne les appels dans un script."
+      "text": "Il gère les listes de suivi : créer, lister, mettre à jour des symboles. Il lit les parties et leurs paramètres. Il affiche le portefeuille, avec les positions et les ordres en attente. Il passe des achats et des ventes dans les règles du jeu. Et il récupère le classement d'une partie."
     },
     {
       "speaker": "B",
-      "text": "Pourquoi pas des scripts curl dans un notebook ?"
+      "text": "Pourquoi ne pas simplement utiliser curl ?"
     },
     {
       "speaker": "A",
-      "text": "Deux raisons. Le jeu a des cookies de session, des règles et des classements qui changent avec la session scolaire. Et il voulait quelque chose de documenté pour ses coéquipiers. Un gist partagé pourrit dès que le formulaire HTML change. Le paquet est volontairement petit : pas de couche base de données, pas de moteur de stratégies, juste du HTTP calqué sur le site."
+      "text": "Parce que le jeu repose sur des cookies de session, des règles de partie et des classements qui changent. Un petit wrapper Python règle ça au même endroit. C'est comme une télécommande pour le site : une seule connexion, puis plein de boutons."
     },
     {
       "speaker": "B",
-      "text": "Des choix de conception à retenir ?"
+      "text": "Et la conception reste volontairement légère."
     },
     {
       "speaker": "A",
-      "text": "Une méthode explicite par point d'accès, facile à retrouver quand MarketWatch change un chemin. Une doc sur GitHub Pages, parce que la description PyPI est trop courte pour les cas de connexion. Et aucune stratégie incluse, pour que la bibliothèque reste neutre."
+      "text": "Oui. C'est un client sous forme de classe, donc une connexion sert à plusieurs appels dans un script. Chaque point d'accès a sa méthode explicite, facile à retrouver dans le code. Pas de couche base de données, pas de moteur de stratégie : juste du HTTP qui épouse le site. Les stratégies restent dans votre propre dépôt."
     },
     {
       "speaker": "B",
-      "text": "Et pour s'en servir ?"
+      "text": "Pourquoi tenir à la documentation ?"
     },
     {
       "speaker": "A",
-      "text": "On l'installe avec pip, on crée le client avec un nom d'utilisateur et un mot de passe, puis on appelle par exemple la liste des parties ou le prix d'un symbole."
+      "text": "Pour que les coéquipiers aient une surface claire : voici comment lister les parties, plutôt qu'un script qu'on se passe de main en main. La doc est sur GitHub Pages, avec les détails de connexion."
     },
     {
       "speaker": "B",
-      "text": "Et les avertissements ?"
+      "text": "Ça se place où dans ses autres travaux ?"
     },
     {
       "speaker": "A",
-      "text": "Francs. C'est une API non officielle, donc fixez les versions et attendez-vous à des ruptures. L'automatisation peut aller contre les conditions du site : c'est pour apprendre, pas pour abuser. Et des gains fictifs ne valident pas une stratégie."
+      "text": "Ça va bien avec ses projets de backtesting. BatchBacktesting teste des stratégies sur des données historiques, et ce client permet d'essayer des idées dans une vraie partie, pratique pour de petits bots et du criblage."
     },
     {
       "speaker": "B",
-      "text": "C'est pour qui, alors ?"
+      "text": "Donc on retient un wrapper bien rangé qui rend un jeu scriptable."
     },
     {
       "speaker": "A",
-      "text": "De petits robots et du filtrage dans le jeu. Pas du trading haute fréquence, pas un courtier. L'article complet donne les liens vers la doc et le code source."
+      "text": "Voilà. L'article donne les liens vers PyPI, la documentation et le code source sur GitHub."
     }
   ],
   "source_hash": "e7fd50bc12d9a415",
-  "audio_hash": "1d44f14541e25942",
-  "duration_seconds": 134
+  "audio_hash": "79c6a40ee4b3fa55",
+  "duration_seconds": 141
 }

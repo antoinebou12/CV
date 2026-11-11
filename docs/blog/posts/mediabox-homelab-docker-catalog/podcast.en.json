@@ -1,68 +1,68 @@
 {
-  "title": "From a port list to a compose file: how MediaBox started",
+  "title": "From a port list to a homelab in Docker",
   "lines": [
     {
       "speaker": "A",
-      "text": "Antoine kept forgetting what was running on port eight thousand ninety-six. So he started writing a list. That list grew into a GitHub project called MediaBoxDockerCompose."
+      "text": "Ever set up a server and forget which app lives on port eight-oh-nine-six?"
     },
     {
       "speaker": "B",
-      "text": "A to-do list of apps that turns into a repo. What's actually in it?"
+      "text": "Constantly. I've got sticky notes with port numbers on them."
     },
     {
       "speaker": "A",
-      "text": "One docker compose file, shared storage paths on disk, and lessons from breaking things at home. He uses it when he wants one host, many containers, shared volumes. So Jellyfin next to Deluge next to FreshRSS, without a new container per hobby."
+      "text": "Antoine had the same problem. He kept a private list of self-hosted apps to try, mostly to stop handing out random ports. That list grew into MediaBoxDockerCompose on GitHub."
     },
     {
       "speaker": "B",
-      "text": "Why Jellyfin, and not Plex?"
+      "text": "So what is it, concretely?"
     },
     {
       "speaker": "A",
-      "text": "He says it gives library playback without the Plex account drama. And Plex, Sonarr and Radarr are still bookmarks, not in the compose file today."
+      "text": "One Docker Compose file, shared paths on disk, and a lot of lessons from trying things at home. The idea is one host, many containers, shared volumes. Jellyfin sits next to a torrent client and an RSS reader, without a new virtual machine for each hobby."
     },
     {
       "speaker": "B",
-      "text": "What else made the cut?"
+      "text": "What did he actually wire up?"
     },
     {
       "speaker": "A",
-      "text": "Things he actually kept. Netdata, for the is-the-disk-full-again glance. Guacamole, for remote desktop in a browser tab. BookStack for homelab docs. Gitea for git experiments before pushing to GitHub. And he picked ports in families starting with eight hundred, which made life easier behind Caddy."
+      "text": "Jellyfin for playback, Airsonic for music, Piwigo for family photos. For operations there's Netdata for disk and load at a glance, and Guacamole for remote desktops in a browser. For notes there's BookStack, FreshRSS and Gitea, and draw.io for diagrams."
     },
     {
       "speaker": "B",
-      "text": "And what if compose isn't the right shape?"
+      "text": "And a trick on the ports?"
     },
     {
       "speaker": "A",
-      "text": "Then he uses the Proxmox VE Helper-Scripts. They're community one-liners you paste into the Proxmox shell, and you get a container plus a post-install menu for updates. He's run compose on one VM and separate containers from those scripts on the same rack, depending on whether he wanted shared volumes or hard isolation."
+      "text": "He plans them in families, mostly the eight-thousand range. That kept his firewall rules and his reverse proxy simple."
     },
     {
       "speaker": "B",
-      "text": "So no religion about it."
+      "text": "What if Compose isn't the right shape?"
     },
     {
       "speaker": "A",
-      "text": "No. His line is to pick compose or Proxmox scripts for the shape of the problem, not because a blog post said one is cooler."
+      "text": "Then he uses Proxmox helper scripts. They're community one-liners: paste one into the Proxmox shell, choose default or advanced, and you get a container plus an update menu. Compose suits shared volumes. Separate containers suit hard isolation."
     },
     {
       "speaker": "B",
-      "text": "And the famous list? How long did it get?"
+      "text": "Like choosing between an open-plan office and separate rooms."
     },
     {
       "speaker": "A",
-      "text": "The original sheet had eighty-six Docker names, plus dozens never wired up. He doesn't paste it, because it ages badly and reads like a status dashboard."
+      "text": "Exactly. He's run both on the same rack. And the original wish list had eighty-six Docker names; the repo README holds the ports and install steps."
     },
     {
       "speaker": "B",
-      "text": "What's the other takeaway?"
+      "text": "Where does a listener go next?"
     },
     {
       "speaker": "A",
-      "text": "Plan ports in families, and remember that running something once isn't the same as operating it. The README in the repo is the real manual, and the full post has the service tables."
+      "text": "The full write-up has the photo of the wall stack and the service tables, and the README acts as the manual."
     }
   ],
   "source_hash": "a6053460f73825c4",
-  "audio_hash": "7ccb9d830318f876",
-  "duration_seconds": 122
+  "audio_hash": "0646b4ab4b9459a4",
+  "duration_seconds": 109
 }

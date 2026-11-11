@@ -1,36 +1,44 @@
 {
-  "title": "Dimension and mathlib",
+  "title": "Dimension and its math library",
   "lines": [
     {
       "speaker": "A",
-      "text": "Linear algebra in the browser, written in Rust. That's the pitch behind a repo of Antoine's called Dimension."
+      "text": "Every 3D game, physics simulation and data tool leans on the same quiet ingredient: linear algebra. Antoine's Dimension project puts it at the center."
     },
     {
       "speaker": "B",
-      "text": "Rust in a browser? How?"
+      "text": "Linear algebra. That's the matrices-and-vectors stuff, right?"
     },
     {
       "speaker": "A",
-      "text": "WebAssembly. The heart of the repo is a Rust crate called mathlib, and it ships with WebAssembly demos so you can try it on a web page."
+      "text": "Right. The heart of the repository is mathlib, a Rust crate for dense and sparse linear algebra, matrix decompositions, 3D math, clustering, graph algorithms and transforms."
     },
     {
       "speaker": "B",
-      "text": "What can mathlib do?"
+      "text": "Why both dense and sparse?"
     },
     {
       "speaker": "A",
-      "text": "Dense and sparse linear algebra, matrix decompositions, 3D math, clustering, graph algorithms and transforms. It also has optional SIMD and GPU features if you want more speed."
+      "text": "A dense matrix stores every number. A sparse one stores only the non-zero entries, like a seating chart that lists just the occupied seats. That saves a lot of space when most of the grid is empty."
     },
     {
       "speaker": "B",
-      "text": "So it's a math toolbox."
+      "text": "And it runs in the browser too?"
     },
     {
       "speaker": "A",
-      "text": "Right, and the Dimension repo wraps it with kinematics, physics, rendering experiments and documentation. To try it, you build and test from the mathlib folder with cargo. The full page links the repo, the crate docs and the architecture notes."
+      "text": "It does. There are WebAssembly demos, plus optional SIMD and GPU features for speed. The wider Dimension repository wraps the crate with kinematics, physics, rendering experiments and documentation."
+    },
+    {
+      "speaker": "B",
+      "text": "How would I try it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Two commands from the mathlib folder: cargo build, then cargo test. The README and the docs folder cover the architecture and examples, and mathlib is published on docs dot r s. The project page has the links."
     }
   ],
-  "source_hash": "96f4906eba3f3979",
-  "audio_hash": "253d371a5264ede0",
-  "duration_seconds": 50
+  "source_hash": "f3daffa2f773f30e",
+  "audio_hash": "47fe8a33fa91672b",
+  "duration_seconds": 73
 }

@@ -1,68 +1,68 @@
 {
-  "title": "Who's holding the GPU?",
+  "title": "Sharing GPUs for machine learning inference",
   "lines": [
     {
       "speaker": "A",
-      "text": "Here's a test for any ML platform: can you tell, in under a minute, who is holding the GPU right now? If not, Antoine says you don't have a production platform, you have a shared SSH host with extra steps."
+      "text": "Training a model gets the glory. But inference, answering real requests all day, is what keeps the meter running. How do you run that well on shared GPUs?"
     },
     {
       "speaker": "B",
-      "text": "Ouch. Where does that come from?"
+      "text": "I'd guess it's a scheduling question, not just a model question."
     },
     {
       "speaker": "A",
-      "text": "A Run:ai webinar from September 2022 about running and autoscaling ML inference on AWS. Antoine watched it while deep in coursework and side projects, and these are the notes he kept for later platform work."
+      "text": "That's exactly how a Run:ai webinar framed it, and Antoine kept notes. Run:ai is a control layer on top of Kubernetes for shared GPU clusters, with fair queues, visibility and policies."
     },
     {
       "speaker": "B",
-      "text": "Why does inference matter more than training here?"
+      "text": "What did the dashboard show?"
     },
     {
       "speaker": "A",
-      "text": "Training gets the glamour, but inference pays the bills every hour the endpoint is up. The session framed it as a scheduling and capacity problem, not just a model-export problem."
+      "text": "Jobs, queues and utilization. The useful gap is between allocated GPU time and used GPU time, because that's where money leaks. Inference replicas show up as real objects, not just anonymous pods. His takeaway: you should be able to answer who's holding the GPU right now in under a minute."
     },
     {
       "speaker": "B",
-      "text": "What does Run:ai actually do?"
+      "text": "And the command line?"
     },
     {
       "speaker": "A",
-      "text": "It sits on top of Kubernetes as a control plane for shared GPU clusters. Fair queues, visibility into who used what, and policies so inference doesn't get starved by training jobs, or the reverse. The dashboard shows jobs and, above all, the gap between allocated and used GPU time. That's where the money leaks."
+      "text": "It mirrors the interface: submit workloads, inspect queues, plug into pipelines. A typical flow is that CI builds a container, then the CLI registers an inference workload with CPU, GPU and memory bounds. Autoscaling then follows queue depth, latency targets, or a schedule that scales down nights and weekends."
     },
     {
       "speaker": "B",
-      "text": "And scaling?"
+      "text": "What about scaling a model up?"
     },
     {
       "speaker": "A",
-      "text": "One logical model service with many replicas behind it, tied to signals like queue depth, latency targets or a schedule. Antoine wrote questions in the margin: cold starts when weights load from storage, GPU fragmentation capping replicas, and whether scale-down waits for in-flight requests."
+      "text": "The model view treats one service as many replicas behind it. That's the difference between one pod on one machine and a service that survives losing a node. The multi-instance slide covers duplicating workers across nodes while watching GPU memory."
     },
     {
       "speaker": "B",
-      "text": "What was the honest part?"
+      "text": "And ten teams sharing eight GPUs?"
     },
     {
       "speaker": "A",
-      "text": "The challenges slide. Low GPU utilization. Noisy neighbors, where training spikes starve inference. Slow GPU node startup. And cost attribution, because finance will ask who spent what."
+      "text": "That's where the workload policies come in: per-team caps, priorities and preemption rules. Inference wants a steady baseline with bursts. Training wants long blocks. A good platform shows queue position so nobody waits blindly."
     },
     {
       "speaker": "B",
-      "text": "What would he do differently now?"
+      "text": "What did he keep for later?"
     },
     {
       "speaker": "A",
-      "text": "Four things. Separate inference node pools before mixing with training. Define latency targets first, then pick the autoscaler signals. Add chargeback labels like team, model and environment on day one. And treat GPU sharing as a product decision."
+      "text": "A short plan. Separate node pools for inference. Define latency targets first, then choose autoscaling signals. Put team, model and environment labels on from day one, so cost conversations are easy."
     },
     {
       "speaker": "B",
-      "text": "Did he deploy Run:ai afterward?"
+      "text": "That's a handy checklist."
     },
     {
       "speaker": "A",
-      "text": "No, he says so plainly. The full write-up has the slides and the table of challenges."
+      "text": "It is. The full write-up has the dashboard, CLI and scaling screenshots from the session."
     }
   ],
   "source_hash": "a312d3f2b3966a8b",
-  "audio_hash": "56cfbe297585a565",
-  "duration_seconds": 129
+  "audio_hash": "9b195e64720b984d",
+  "duration_seconds": 133
 }

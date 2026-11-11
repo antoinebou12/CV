@@ -15,6 +15,14 @@
 
 **mathlib** is a Rust crate for dense and sparse linear algebra, decompositions, 3D math, clustering, graph algorithms, transforms, and more—with **WebAssembly** demos and optional **SIMD** / **GPU** features. The Dimension repo wraps that crate alongside kinematics, physics, rendering experiments, and documentation.
 
+## Live demos
+
+Render | https://antoinebou12.github.io/Dimension/render/ | A cube, a tetrahedron and a cylinder drawn by the wgpu renderer, with a transform gizmo and object picking.
+Geometry | https://antoinebou12.github.io/Dimension/geometry/ | Mesh demos from the geometry crate.
+Mathlib | https://antoinebou12.github.io/Dimension/mathlib/ | Linear algebra, graphs, optimization, noise, transforms and camera maths from mathlib.
+
+The repository also publishes a [kinematics demo](https://antoinebou12.github.io/Dimension/kinematics/) (a three-joint arm solved with inverse kinematics) and a [physics demo](https://antoinebou12.github.io/Dimension/physics/) (rigid bodies with XPBD). Both need a browser with WebGPU and open in their own tab.
+
 ## Quick start
 
 ```bash

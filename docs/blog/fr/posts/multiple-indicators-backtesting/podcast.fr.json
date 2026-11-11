@@ -1,72 +1,68 @@
 {
-  "title": "Ne vous fiez pas à un seul ticker",
+  "title": "Tester une règle de trading sur des centaines de tickers",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imaginez une règle de trading qui rapporte près de deux cents pour cent sur une crypto, alors que la simple détention perd environ quatre-vingts. Bonne règle ?"
+      "text": "Voici un résultat étonnant. Une règle de trading a fait gagner environ 200 % sur la crypto OMGUSD, alors que la simple détention perdait autour de 80 %. Comment une règle fait ça ?"
     },
     {
       "speaker": "B",
-      "text": "Ça a l'air génial. Mais je parie que ce n'est pas si simple."
+      "text": "En pariant sur la chute, j'imagine. D'où vient ce résultat ?"
     },
     {
       "speaker": "A",
-      "text": "Non. Dans cet article, Antoine fait passer son moteur BatchBacktesting à l'échelle : beaucoup de tickers, actions et cryptos, deux stratégies, puis une lecture honnête des classements."
+      "text": "Du moteur BatchBacktesting d'Antoine, utilisé à l'échelle d'un portefeuille. Au lieu de tester une seule action, il lance une règle sur tout le S and P 500 et sur toutes les paires crypto, puis compare les résultats."
     },
     {
       "speaker": "B",
-      "text": "Pourquoi autant de tickers ?"
+      "text": "Pourquoi autant de tickers ? Un seul, c'est plus simple à lire."
     },
     {
       "speaker": "A",
-      "text": "Parce qu'un backtest sur un seul titre flatte toujours. Une grille répond à d'autres questions : la règle ne marche-t-elle que sur un symbole héroïque ? Les désastres se concentrent-ils dans un secteur ou une période ? Les cryptos dominent-elles parce que la volatilité n'a pas de limite dans la simulation ?"
+      "text": "Parce qu'un seul ticker dit si la règle a marché une fois. Une grande grille montre si elle tient d'un secteur à l'autre, d'une période à l'autre, et où elle casse. C'est tester une recette dans cent cuisines plutôt qu'une."
     },
     {
       "speaker": "B",
-      "text": "Et les deux stratégies ?"
+      "text": "Quelles règles sont testées ?"
     },
     {
       "speaker": "A",
-      "text": "Un croisement d'E M A : achat quand la moyenne sur vingt périodes passe au-dessus de celle sur quatre-vingts, avec un stop loss de dix pour cent et une prise de profit de vingt-cinq pour cent. Et un croisement MACD, sans stop ni prise de profit. Les deux utilisent backtesting point py."
+      "text": "Deux classiques, construites avec backtesting point py et pandas T A. D'abord un croisement d'EMA : achat quand la moyenne sur 20 périodes passe au-dessus de celle sur 80, vente au croisement inverse, avec un stop loss de 10 % et une prise de profit de 25 %. Ensuite le MACD : achat quand la ligne MACD passe au-dessus de son signal, vente à l'inverse."
     },
     {
       "speaker": "B",
-      "text": "Et le classement ?"
+      "text": "Et la mécanique pour tout lancer ?"
     },
     {
       "speaker": "A",
-      "text": "Le meilleur résultat EMA, c'est BTCBUSD, environ deux cent quatre-vingt-quatorze pour cent. Le pire, BTTBUSD, à moins quatre-vingt-dix-neuf virgule neuf pour cent. Compagnies aériennes et croisières figurent parmi les perdants."
+      "text": "Des adaptateurs récupèrent les prix chez Financial Modeling Prep et Binance. Des objets de stratégie portent les paramètres. Un exécuteur répartit le travail sur un pool de threads, douze dans son exemple, et écrit des fichiers CSV et des graphiques en option."
     },
     {
       "speaker": "B",
-      "text": "Et cette crypto qui bat le buy-and-hold ?"
+      "text": "Le classement, ça donnait quoi ?"
     },
     {
       "speaker": "A",
-      "text": "OMGUSD. Environ deux cents pour cent avec la règle, alors que le buy-and-hold perdait autour de quatre-vingts. La règle a gagné en restant vendeuse pendant l'effondrement. BTCBUSD, elle, a monté dans les deux cas, ce qui en dit plus sur la période que sur la règle."
+      "text": "Pour la règle EMA, les cinq meilleurs vont d'environ 194 % à 294 %, avec BTCBUSD en tête à peu près à 294. À côté de chaque résultat, les graphiques montrent le buy-and-hold du même instrument, et c'est cette comparaison qui donne du sens aux chiffres."
     },
     {
       "speaker": "B",
-      "text": "Donc un gros rendement peut venir de la chance ou d'une longue hausse."
+      "text": "Donc le cas OMGUSD est le plus intéressant."
     },
     {
       "speaker": "A",
-      "text": "Exactement. Et avant de dire que MACD bat EMA, il faut comparer le rendement médian sur tous les tickers, pas seulement les cinq premiers."
+      "text": "Exactement. La règle a gagné en restant vendeuse pendant l'effondrement, alors que Bitcoin et ALB montaient dans les deux cas. C'est ce qu'un grand lot révèle : ce qui vient de la règle et ce qui vient de la période."
     },
     {
       "speaker": "B",
-      "text": "Alors c'est utile à quoi ?"
+      "text": "Et pour comparer les deux stratégies honnêtement ?"
     },
     {
       "speaker": "A",
-      "text": "À des tests de fumée : trouver où une règle casse, pas où placer son capital. Ce n'est pas un conseil financier, et les frais, les suspensions et la qualité des données comptent."
-    },
-    {
-      "speaker": "B",
-      "text": "L'article complet a les graphiques et le code."
+      "text": "On regarde le rendement médian sur tous les tickers, pas seulement les cinq premiers. C'est un repère bien plus solide. Ce qu'on retient : un test multi-tickers est un excellent test de fumée pour une règle. L'article complet a le code des deux stratégies et les classements."
     }
   ],
   "source_hash": "4d1d90901cb5709a",
-  "audio_hash": "f469248b8decff34",
-  "duration_seconds": 133
+  "audio_hash": "ba337a4f6a3a93f0",
+  "duration_seconds": 151
 }

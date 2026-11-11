@@ -3,66 +3,74 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Quatre chaînes d'outils, et une seule se déployait toute seule. Voilà l'état de l'ancien dépôt d'Antoine juste avant son passage à Hugo, en janvier 2024."
+      "text": "Imaginez un site personnel fait de simples fichiers texte dans git, et une page web qui apparaît quand on pousse. C'est l'idée qu'Antoine a poursuivie pendant la première semaine de la migration de son portfolio vers Hugo, en janvier 2024."
     },
     {
       "speaker": "B",
-      "text": "Quatre ? Pour un site personnel ?"
+      "text": "Alors pourquoi Hugo plutôt qu'un CMS classique ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Un CV web construit avec npm, un CV PDF en LaTeX, une page de liens en Hugo, et un blogue dans un sous-module git. Seul le CV web avait un workflow GitHub Actions. Le dernier commit, une semaine avant le billet, supprimait l'ancien dossier du site."
+      "text": "Trois raisons sur sa page. La génération statique donne un hébergement peu coûteux, des builds rapides et aucune base de données à corriger. Les sources Markdown vivent dans git, avec des diffs relisibles. Et les modules Hugo récupèrent un thème sans tout copier dans le dépôt. En tant qu'ingénieur, il voulait que le dépôt soit la source de vérité : Markdown en entrée, HTML en sortie."
     },
     {
       "speaker": "B",
-      "text": "Donc la semaine 1, c'était une page blanche."
+      "text": "Il partait de quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Il a choisi Hugo parce que c'est statique : hébergement peu coûteux, pas de base de données à corriger. Et les articles sont en Markdown dans git, donc le dépôt est la source de vérité. Une interface d'admin à la WordPress, dit-il, il l'aurait ignorée dès la deuxième semaine."
+      "text": "D'un dépôt avec plusieurs pièces séparées : un CV web fait avec JSON Resume, un CV PDF en LaTeX, deux articles de recherche, une page de liens Hugo et un thème de blogue. Donc quatre chaînes d'outils : npm, LaTeX, Hugo et Docker."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce que cette première page de liens lui a appris ?"
+      "text": "Et la page de liens est venue en premier ?"
     },
     {
       "speaker": "A",
-      "text": "Plusieurs choses. Il avait copié le thème Lynx dans le site au lieu de l'importer comme module, et l'échafaudage de démo a suivi, avec des fichiers qui pointaient vers un dossier inexistant."
+      "text": "C'était son premier vrai site Hugo. Une page d'accueil, un gabarit avec lien de retour, et deux fichiers de traduction pour l'anglais et le français. Les liens forment une simple liste dans la configuration, et une clé comme github choisit à la fois l'icône et le libellé. Tailwind génère le CSS, donc Hugo standard peut l'assembler sans outil de plus."
     },
     {
       "speaker": "B",
-      "text": "Aïe. Rien de plus vicieux ?"
+      "text": "Et pour le nouveau site, côté thème ?"
     },
     {
       "speaker": "A",
-      "text": "Le Docker lançait le serveur de développement de Hugo, pas un build statique. Et le fichier Compose montait le projet dans un répertoire alors que l'image avait copié le site dans un autre : ses modifications n'atteignaient jamais le conteneur."
+      "text": "HBTheme. Il apportait les commentaires, des assets compatibles npm et les modules Hugo, donc pas besoin de refaire les gabarits de zéro. Un thème tout compris, ça fait avancer vite dès la première semaine."
     },
     {
       "speaker": "B",
-      "text": "Le grand classique. Et le thème qu'il a retenu ?"
+      "text": "Il y a autre chose que des billets ?"
     },
     {
       "speaker": "A",
-      "text": "HBTheme. Il apportait les commentaires et les modules Hugo, donc pas de gabarits à refaire de zéro. Le compromis, c'est une structure imposée, qui coince quand on veut des types de contenu sur mesure."
+      "text": "Il a intégré une étude sur les vols de voitures à Montréal, tirée du Substack d'un ami, pour montrer que le site pouvait porter des graphiques et des textes longs. C'est là que Substack trouve sa place : Hugo reste la maison professionnelle, Substack un canal facultatif pour les essais et l'infolettre."
     },
     {
       "speaker": "B",
-      "text": "Et Substack, dans tout ça ?"
+      "text": "Et le shortcode iframe ?"
     },
     {
       "speaker": "A",
-      "text": "En parallèle, pour les textes longs et l'envoi par courriel. Hugo reste la maison professionnelle de référence."
+      "text": "Un shortcode réutilisable permet d'intégrer une page HTTPS dans un article, avec un titre et une hauteur. L'exemple, c'est une vieille démo FlashGames, toujours sur GitHub Pages, enveloppée dans une URL stable et la typographie du site."
     },
     {
       "speaker": "B",
-      "text": "Alors, qu'est-ce qu'il referait autrement ?"
+      "text": "Et la suite ?"
     },
     {
       "speaker": "A",
-      "text": "Importer les thèmes comme modules, construire du HTML statique en CI pour chaque pièce, et garder les fichiers de traduction complets. L'article complet détaille tout ça, avec le shortcode iframe."
+      "text": "Le site a gagné des modules, des articles bilingues et des notes de conférence. Le billet de la partie deux raconte ça."
+    },
+    {
+      "speaker": "B",
+      "text": "Un bon aperçu de la façon dont un portfolio démarre petit puis grandit."
+    },
+    {
+      "speaker": "A",
+      "text": "L'article complet a les tableaux et les extraits de configuration."
     }
   ],
   "source_hash": "23b5ecb0a07d364d",
-  "audio_hash": "904d04a1cf63449b",
-  "duration_seconds": 130
+  "audio_hash": "ec5c6f68b1f73adb",
+  "duration_seconds": 158
 }

@@ -1,72 +1,68 @@
 {
-  "title": "Don't trust one ticker",
+  "title": "Testing one trading rule on hundreds of tickers",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imagine a trading rule that returned nearly two hundred percent on one coin, while simply holding it lost about eighty. Is that a great rule?"
+      "text": "Here's a strange result. A trading rule turned a coin called OMGUSD into about a 200 percent gain, while simply holding it lost around 80 percent. How does a rule do that?"
     },
     {
       "speaker": "B",
-      "text": "It sounds amazing. But I'm guessing it's not that simple."
+      "text": "By betting against the fall, I'd guess. Where does this come from?"
     },
     {
       "speaker": "A",
-      "text": "Right. Antoine's post scales up his BatchBacktesting engine to many tickers at once, stocks and crypto, with two strategies, and then reads the leaderboards honestly."
+      "text": "From Antoine's BatchBacktesting engine, run at portfolio scale. Instead of testing one stock, he runs a rule across the whole S and P 500 and every crypto pair, and compares the results."
     },
     {
       "speaker": "B",
-      "text": "Why many tickers?"
+      "text": "Why bother with so many? One ticker is easier to read."
     },
     {
       "speaker": "A",
-      "text": "Because a single-ticker backtest flatters you. A big grid tells you whether a rule only works on one heroic symbol, whether disasters cluster in a sector or era, and whether crypto dominates just because volatility is unbounded in the simulation."
+      "text": "Because one ticker tells you whether the rule worked once. A big grid shows whether it works across sectors and eras, and where it falls apart. It's like testing a recipe in a hundred kitchens instead of one."
     },
     {
       "speaker": "B",
-      "text": "What are the two strategies?"
+      "text": "What are the rules?"
     },
     {
       "speaker": "A",
-      "text": "An E M A crossover, buying when the twenty-period average crosses above the eighty-period one, with a ten percent stop loss and a twenty-five percent take profit. And a MACD crossover with no stop or take profit. Both use backtesting dot py."
+      "text": "Two classics, built with backtesting dot py and pandas T A. The first is an EMA crossover: buy when the 20-period average crosses above the 80-period one, sell on the opposite cross, with a ten percent stop loss and a twenty-five percent take profit. The second is MACD: buy when the MACD line crosses above its signal line, sell on the reverse."
     },
     {
       "speaker": "B",
-      "text": "And the leaderboard?"
+      "text": "And the machinery to run all of that?"
     },
     {
       "speaker": "A",
-      "text": "The top EMA result was BTCBUSD at about two hundred ninety-four percent. The worst was BTTBUSD at minus ninety-nine point nine percent. Airlines and cruise lines showed up among the losers."
+      "text": "Data adapters pull prices from Financial Modeling Prep and Binance. Strategy objects hold the parameters. A runner fans the work across a thread pool, twelve threads in his example, and writes CSV files and optional charts."
     },
     {
       "speaker": "B",
-      "text": "And that coin that beat buy-and-hold?"
+      "text": "What did the leaderboard look like?"
     },
     {
       "speaker": "A",
-      "text": "OMGUSD. About two hundred percent with the rule, while buy-and-hold lost around eighty. The rule won by being short through a collapse. Meanwhile BTCBUSD went up under both, which says more about the period than the rule."
+      "text": "For the EMA rule, the top five ranged from about 194 percent up to 294 percent, with BTCBUSD in first place at roughly 294. Next to each result, the charts show buy-and-hold for the same instrument, which is the comparison that makes the numbers meaningful."
     },
     {
       "speaker": "B",
-      "text": "So high returns can just be luck or a long bull run."
+      "text": "So the OMGUSD case is the interesting one."
     },
     {
       "speaker": "A",
-      "text": "Exactly. And before saying MACD beats EMA, he says compare the median return across all tickers, not only the top five."
+      "text": "Exactly. The rule made money by being short through a collapse, while Bitcoin and ALB rose under both approaches. That's what a wide run reveals: which gains come from the rule and which come from the period."
     },
     {
       "speaker": "B",
-      "text": "So what's it good for?"
+      "text": "And how do you compare the two strategies fairly?"
     },
     {
       "speaker": "A",
-      "text": "Smoke tests. Find where a rule breaks, not where to put your money. It's not financial advice, and fees, halts and data quality all matter."
-    },
-    {
-      "speaker": "B",
-      "text": "The full write-up has the charts and the code."
+      "text": "Look at the median return across all tickers, not just the top five. That's a sturdier yardstick. The takeaway: a multi-ticker run is a great smoke test for a rule. The full write-up has both strategies' code and the leaderboards."
     }
   ],
   "source_hash": "80439eec0c811683",
-  "audio_hash": "70745e28d6cb11d7",
-  "duration_seconds": 115
+  "audio_hash": "eeede5ab8528c5e1",
+  "duration_seconds": 141
 }

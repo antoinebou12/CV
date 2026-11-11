@@ -1,68 +1,60 @@
 {
-  "title": "Parcourir S3 depuis Blender",
+  "title": "Parcourir le cloud depuis Blender",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imaginez une artiste dans Blender qui a besoin d'un maillage rangé dans un bucket cloud. Faut-il vraiment sortir de l'appli, télécharger, puis importer à la main ?"
+      "text": "Vous modélisez dans Blender, et toute votre bibliothèque de ressources dort dans un bucket cloud. Et si vous pouviez la parcourir comme un dossier, sans quitter le logiciel ?"
     },
     {
       "speaker": "B",
-      "text": "C'est ce qu'on fait tous. Il y a mieux ?"
+      "text": "Ça serait pratique. C'est ce qu'Antoine a fait ?"
     },
     {
       "speaker": "A",
-      "text": "Antoine a un fork nommé bloc qui explore justement ça : un panneau Blender pour parcourir des ressources dans AWS S3 et MinIO. C'est le fork d'une extension existante, et il garde le crédit de l'auteur d'origine."
+      "text": "Il est parti d'une extension existante, en gardant le crédit de l'auteur d'origine, et il l'a explorée dans son fork nommé bloc. Elle ajoute un panneau dans Blender pour parcourir des fichiers sur Amazon S3 ou sur MinIO, l'équivalent auto-hébergé."
     },
     {
       "speaker": "B",
-      "text": "Comment le panneau sait à quel stockage parler ?"
+      "text": "Mais le stockage cloud n'a pas vraiment de dossiers, non ?"
     },
     {
       "speaker": "A",
-      "text": "Grâce aux connexions. Chacune a un fournisseur, un point d'accès, un bucket et une région. Les préférences en contiennent plusieurs, une seule est active, et l'initialisation choisit le client S3 ou MinIO en conséquence."
+      "text": "Non, il n'a que de longs noms, qu'on appelle des clés. Pensez à un nom comme modèles barre chaises barre chêne point O B J. L'extension coupe ce nom sur les barres et construit une arborescence, et le panneau montre des dossiers qu'on ouvre et qu'on ferme."
     },
     {
       "speaker": "B",
-      "text": "Le stockage objet n'a pas vraiment de dossiers, non ?"
+      "text": "Astucieux. Et comment on choisit à quel cloud se connecter ?"
     },
     {
       "speaker": "A",
-      "text": "Non, il a des clés. L'extension les découpe sur la barre oblique et construit une arborescence imbriquée. Le panneau affiche une hiérarchie sans faire semblant que c'est un disque local."
+      "text": "Un objet de connexion contient le fournisseur, le point d'accès, le bucket et la région. On peut enregistrer plusieurs connexions dans les préférences et changer l'active. L'artiste reste dans Blender, et l'extension traduit chaque clic en requête de stockage."
     },
     {
       "speaker": "B",
-      "text": "Et pour retrouver un fichier ?"
+      "text": "Et pour retrouver un fichier dans une grosse bibliothèque ?"
     },
     {
       "speaker": "A",
-      "text": "Il y a une recherche approximative avec RapidFuzz. Elle compare les noms et les segments de chemin, privilégie les correspondances directes et filtre par scènes, maillages, images ou matériaux."
+      "text": "Il y a une recherche approximative. Elle compare les noms et les morceaux de chemin, met les correspondances directes en premier, et offre des filtres pour les scènes, maillages, images et matériaux. Même avec une faute de frappe, on retrouve son fichier."
     },
     {
       "speaker": "B",
-      "text": "Et l'import, c'est juste télécharger et c'est réglé ?"
+      "text": "Et quand on clique sur une ressource ?"
     },
     {
       "speaker": "A",
-      "text": "Pas tout à fait, et c'est le détail qu'Antoine souligne. Télécharger et importer, ce sont deux étapes. Après le téléchargement, un chargeur choisit un importeur pour STL, OBJ, PLY ou les variantes USD. Le reste est refusé avec un message."
+      "text": "Elle est téléchargée dans un emplacement temporaire, puis l'importeur de Blender l'ouvre. Les formats S T L, O B J, P L Y et U S D sont pris en charge. On peut aussi renvoyer le fichier blend courant vers le bucket."
     },
     {
       "speaker": "B",
-      "text": "Donc la liste peut marcher pendant que l'import échoue."
+      "text": "Un pont entre un outil graphique et un service de plateforme."
     },
     {
       "speaker": "A",
-      "text": "Exactement. Il note aussi une limite : le code fait un seul appel de listage S3, donc les très gros buckets demanderaient de la pagination."
-    },
-    {
-      "speaker": "B",
-      "text": "J'aime qu'il montre les bords du projet."
-    },
-    {
-      "speaker": "A",
-      "text": "Pareil pour la portée : 10 commits d'avance et 5 de retard sur l'original au moment de la comparaison, ce qui ne veut pas dire que l'original a accepté quoi que ce soit. Le billet complet a le schéma des chemins de navigation et d'import."
+      "text": "Exactement le mélange qu'Antoine aime. L'article complet a le schéma des chemins de navigation et d'import."
     }
   ],
-  "audio_hash": "08bab2e7ee35a247",
-  "duration_seconds": 127,
-  "source_hash": "c8476e2e93279549"
+  "source_hash": "c8476e2e93279549",
+  "audio_hash": "66a1be9a57a01591",
+  "duration_seconds": 118
 }

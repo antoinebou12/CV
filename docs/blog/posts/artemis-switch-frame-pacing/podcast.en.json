@@ -1,68 +1,67 @@
 {
-  "title": "Where did this frame wait?",
+  "title": "Following a frame from the network to the screen",
   "lines": [
     {
       "speaker": "A",
-      "text": "A game stream can report a perfectly healthy bitrate and still feel late. So what's actually going on?"
+      "text": "Picture a video stream with a perfectly healthy bitrate that still feels late. The numbers look fine, and your thumbs disagree. So where did the time go?"
     },
     {
       "speaker": "B",
-      "text": "I'd guess the network. It's always the network."
+      "text": "That's a sneaky one. If the speed looks fine, where do you even start looking?"
     },
     {
       "speaker": "A",
-      "text": "Not always. Antoine's project, Artemis Switch, is his fork of Moonlight-Switch for the Nintendo Switch, and it focuses on one thing: the path between receiving a frame and putting it on screen. The question isn't how fast the decoder is. It's where each frame waited."
+      "text": "That's the question behind Artemis Switch, Antoine's fork of Moonlight-Switch, a game streaming client for the Nintendo Switch. He focuses on the short trip between receiving a frame and putting it on screen, and asks where each frame waited."
     },
     {
       "speaker": "B",
-      "text": "Okay, so what does the pipeline look like?"
+      "text": "So the PC does the heavy lifting, and the Switch just shows the result?"
     },
     {
       "speaker": "A",
-      "text": "A PC host, Sunshine or Apollo, sends video over the Moonlight protocol. The Switch decodes it with FFmpeg and NVDEC, drops it in a queue, picks a frame, and presents it with deko3d. And that split matters. A wrong virtual display mode is a host problem. A decoded-frame queue that keeps growing is a client problem."
+      "text": "Exactly. A PC running Sunshine or Apollo sends the game over the Moonlight protocol. On the Switch, the video is decoded with FFmpeg and NVDEC, lands in a small queue, and a graphics layer called deko3d presents it. The client owns everything from that queue onward, so it's easy to tell whose job a hiccup is."
     },
     {
       "speaker": "B",
-      "text": "That's a handy way to know who to blame."
+      "text": "Like a restaurant kitchen. Plates come out, wait at the pass, then a server carries them to the table."
     },
     {
       "speaker": "A",
-      "text": "It is. Now here's the subtle part. When the queue has a backlog, the code throws away old frames to favor freshness. But it checks the oldest frame's deadline first, before jumping to the newest one."
+      "text": "Great picture, and the pass is where Antoine's clever part lives. When frames pile up, the client decides which to keep. It checks the deadline of the oldest frame first, and once the queue is ready, it drops older frames and shows the freshest."
     },
     {
       "speaker": "B",
-      "text": "Why does that order matter?"
+      "text": "Why the oldest frame instead of just the newest?"
     },
     {
       "speaker": "A",
-      "text": "Picture a bouncer who resets the wait time every time someone new walks in. If the gate follows the newest frame, its deadline keeps moving forward. Frames keep arriving, but nothing ever gets shown. Keeping the oldest deadline avoids that starvation."
+      "text": "If the gate chased the newest arrival, its deadline would keep sliding forward. Frames would keep coming in, but nothing would be shown. Anchoring on the oldest deadline keeps the screen moving, and a backlog can skip the usual wait so a slow renderer catches up."
     },
     {
       "speaker": "B",
-      "text": "Huh. That's a tiny rule with a big effect."
+      "text": "And how do you know it's working?"
     },
     {
       "speaker": "A",
-      "text": "And there's a telemetry class that measures each stage separately: decode time, queue wait, render cost, GPU submission, real video bitrate. Antoine is careful about what it covers, though. The client pipeline starts after the network finishes. It doesn't include host encoding, display scanout or controller delay."
+      "text": "A small telemetry piece times each stage separately: decode, queue wait, render, GPU submission, the real video bitrate, and milestones like first packet and first presented frame. It uses a monotonic clock, so timings stay steady."
     },
     {
       "speaker": "B",
-      "text": "So no magic latency number."
+      "text": "So instead of one vague latency number, you get a timeline for each frame."
     },
     {
       "speaker": "A",
-      "text": "No. His advice for testing on hardware is to keep the host, scene, resolution and network fixed, change one pacing option at a time, and test handheld and docked separately. A lower average with worse spikes can feel worse."
+      "text": "Yes. The app also offers Fit, Fill and Stretch modes, FSR-style upscaling with sharpening, named stream profiles and a performance overlay. Keep the host, scene and network fixed, change one option at a time, and compare queue wait and present intervals, handheld and docked separately."
     },
     {
       "speaker": "B",
-      "text": "And compiling isn't the same as playing well, I assume."
+      "text": "A neat habit for any pipeline."
     },
     {
       "speaker": "A",
-      "text": "Exactly. The README itself separates portable tests and release builds from real device validation. The takeaway: measure where the frame waits, not just how fast things decode. The full write-up has the pipeline diagram and links to the two source files."
+      "text": "Exactly: don't ask how fast the decoder is, ask where each frame waited. The full write-up has the pipeline diagram and the source links."
     }
   ],
-  "source_hash": "20b9a82793c3fd18",
-  "audio_hash": "525f39a6cd2b025b",
-  "duration_seconds": 146
+  "audio_hash": "a49adc71e195ecb3",
+  "duration_seconds": 140
 }

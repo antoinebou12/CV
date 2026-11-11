@@ -1,72 +1,76 @@
 {
-  "title": "From a news feed to a backtest",
+  "title": "Turning financial news into data you can test",
   "lines": [
     {
       "speaker": "A",
-      "text": "A headline says a company is doing great. Another says it's in trouble. How do you know which one actually moved the stock, or whether either mattered?"
+      "text": "A headline lands, and within minutes it's mentioned in a thousand places. How do you turn that endless stream into something you can search, compare with market data, and test an idea on?"
     },
     {
       "speaker": "B",
-      "text": "That's a tough one. Is that what AINewsTracker is for?"
+      "text": "That sounds like drinking from a fire hose. Is that the job here?"
     },
     {
       "speaker": "A",
-      "text": "Sort of. Antoine's write-up is about a FastAPI service that turns financial news into records you can search, analyse and compare with market data. It's not a magic predictor. It's plumbing that keeps things traceable."
+      "text": "It is. Antoine's project, AINewsTracker, is a FastAPI service that turns financial news into records you can search, analyze and line up with prices."
     },
     {
       "speaker": "B",
-      "text": "Okay, so how does a story travel through it?"
+      "text": "So what happens when a request comes in?"
     },
     {
       "speaker": "A",
-      "text": "A request starts a collection job. The news service pulls feed content and creates article records. A metrics service analyses the text, and the result is stored in MongoDB. Routes take the HTTP requests, services do the work, repositories hide the database. Redis handles caching."
+      "text": "Picture an assembly line with four stations. A request reaches the news route and starts a collection job. The news service pulls the feed and creates article records. A metrics service reads the text. Then a repository stores the result in MongoDB."
     },
     {
       "speaker": "B",
-      "text": "Neat separation. What does the analysis actually produce?"
+      "text": "Four stations, one job each."
     },
     {
       "speaker": "A",
-      "text": "According to the documentation, a sentiment label and score, detected tickers, a summary and topic labels. And here's the part Antoine cares about: each article keeps its source, its URL, its publication date and its text next to those fields."
+      "text": "Right, and that's what keeps it tidy. Routes talk HTTP, models describe the data, services do the news work, and repositories keep database access in one place. Redis sits on top for caching."
     },
     {
       "speaker": "B",
-      "text": "So you can trace a sentiment label back to the publisher."
+      "text": "What does a stored article actually hold?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. And the ticker lets you connect mentions across articles without treating every spelling of a company name as a different business."
+      "text": "Its URL, publication date and text, next to the analysis fields. The documentation links four kinds of records: a news source, its articles, comments on an article, and companies. A source carries language and country. A company's ticker ties mentions together, so different spellings of a name still point to one business."
     },
     {
       "speaker": "B",
-      "text": "Then there's the backtesting side. The strategy route sends requests to a trading module, so you can test strategies on history."
+      "text": "And the analysis part?"
     },
     {
       "speaker": "A",
-      "text": "But he's careful there, isn't he?"
+      "text": "The documented outputs are a sentiment label and score, detected tickers, a short summary and topic labels. Each answers a different question: which company is this about, what does it say, and how is it written."
     },
     {
       "speaker": "B",
-      "text": "Very. He says he'd read the original text beside the outputs before using them. A summary can drop a condition, and a company mention doesn't mean there's a tradable event. Labels are inputs to an experiment. They don't prove a news item caused a market move, and a backtest doesn't guarantee future performance."
+      "text": "Then comes the trading side."
     },
     {
       "speaker": "A",
-      "text": "He even gives a checklist: collection, text analysis, strategy input, backtest output. For each one, what to inspect. Like whether the data was actually available at the moment being tested."
+      "text": "Yes. A strategy route hands backtest requests to a trading module. The labels become inputs to an experiment: pick a period, give the strategy the news that was available at that moment, and read what it reports back."
     },
     {
       "speaker": "B",
-      "text": "And the article says plainly that it presents no measured accuracy or trading returns."
+      "text": "So the source stays attached the whole way."
     },
     {
       "speaker": "A",
-      "text": "Good honesty. So the takeaway is keep the source attached to the analysis."
+      "text": "That's the neat part. A sentiment label traces back to its article and its publisher, and the date tells you when it was known. That makes every step easy to inspect."
     },
     {
       "speaker": "B",
-      "text": "Right. The full write-up has the architecture diagram, with every node linking to its source file."
+      "text": "So what should a listener take away?"
+    },
+    {
+      "speaker": "A",
+      "text": "That you can build a clean path from raw feed to historical experiment, with each piece doing one job. The full write-up has the architecture diagram, and every box in it links to its source file."
     }
   ],
   "source_hash": "c3a510a6cba37f23",
-  "audio_hash": "89480b19ba7b88ef",
-  "duration_seconds": 140
+  "audio_hash": "ce8ccb65b69ca84f",
+  "duration_seconds": 142
 }

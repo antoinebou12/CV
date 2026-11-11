@@ -27,6 +27,17 @@ L’application fournit la géométrie et les transformations. La scène organis
 
 [Lire le parcours du code, composant par composant](https://antoineboucher.info/CV/blog/fr/projects/notes/dimension/).
 
+## L’essayer dans le navigateur
+
+Les mêmes crates se compilent en WebAssembly, et le dépôt publie chaque démo comme une page statique. Choisissez-en une ci-dessous et lancez-la : elle tourne dans votre navigateur, sans rien installer.
+
+Rendu | https://antoinebou12.github.io/Dimension/render/ | Un cube, un tétraèdre et un cylindre dessinés par le moteur wgpu, avec un gizmo de transformation et la sélection d’objets.
+Géométrie | https://antoinebou12.github.io/Dimension/geometry/ | Démos de maillages de la crate geometry.
+Mathlib | https://antoinebou12.github.io/Dimension/mathlib/ | Algèbre linéaire, graphes, optimisation, bruit, transformations et calculs de caméra de mathlib.
+Plongements | https://antoinebou12.github.io/Dimension/mathlib/recommendation/ | Des plongements de texte réduits en 3D par ACP. Cliquez sur un point pour voir les documents proches.
+
+Le dépôt publie aussi une [démo de cinématique](https://antoinebou12.github.io/Dimension/kinematics/) (un bras à trois articulations résolu par cinématique inverse) et une [démo de physique](https://antoinebou12.github.io/Dimension/physics/) (corps rigides avec XPBD). Elles demandent un navigateur avec WebGPU et s’ouvrent dans leur propre onglet.
+
 ## Commencer par le stockage
 
 [`mathlib/src/lib.rs`](https://github.com/antoinebou12/Dimension/blob/main/mathlib/src/lib.rs) expose du stockage dense et des formats creux comme CRS et CCS. L’API comprend aussi des matrices, des vecteurs, des vues et des sous-matrices. Ces choix interviennent avant le premier dessin : ils déterminent comment le code représente et transmet ses données.

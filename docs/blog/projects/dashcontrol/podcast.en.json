@@ -1,52 +1,68 @@
 {
-  "title": "One dashboard instead of ten tabs",
+  "title": "One dashboard for a whole homelab",
   "lines": [
     {
       "speaker": "A",
-      "text": "Ten browser tabs open for ten homelab apps. Antoine's computer was not happy about it, and he joked about his RAM."
+      "text": "Ten browser tabs open: one for your media server, one for your downloader, one for your container manager. Your RAM is crying. What if they all lived on one page?"
     },
     {
       "speaker": "B",
-      "text": "So he built a dashboard?"
+      "text": "That sounds like a dream for anyone with a homelab. Is that what this is?"
     },
     {
       "speaker": "A",
-      "text": "DasherControl, built with Vue on the front and Rust with Rocket on the back. Everything in his homelab is a web app in a Docker container, like Sonarr and Jellyfin, and he wanted them all in one place."
+      "text": "It is. DasherControl is Antoine's dashboard for dockerized web apps, built with Vue on the front and Rust with Rocket on the back. Think of a desktop of widgets, like Windows Vista gadgets, but on the web and saved in a database."
     },
     {
       "speaker": "B",
-      "text": "How does it show them?"
+      "text": "So how do the apps show up?"
     },
     {
       "speaker": "A",
-      "text": "A configurable grid. Each item can be an iframe or a bookmark, and the layout is saved as workspaces in a database that you can switch between. He wanted something like Windows Vista gadgets, but on the web."
+      "text": "Each widget is a grid item, and he calls them applets. An applet can wrap a site in an iframe, hold a bookmark, or do a daily homelab task. Apps like Sonarr and Jellyfin sit side by side on one screen."
     },
     {
       "speaker": "B",
-      "text": "And Docker?"
+      "text": "Can you organize them?"
     },
     {
       "speaker": "A",
-      "text": "There's a basic container controller to start and manage containers. The long-term idea is applets that do the daily homelab chores, since setting up a reverse proxy with SSL through Portainer or the Docker CLI takes a while."
+      "text": "Yes. You can save a workspace, switch between workspaces, and manage your applets. There's also user authentication, so the dashboard has a front door."
     },
     {
       "speaker": "B",
-      "text": "What's finished?"
+      "text": "And it talks to Docker?"
     },
     {
       "speaker": "A",
-      "text": "Iframe applets, saved workspaces, applet management, simple container start and management, CI/CD, user auth and install with Docker or Docker Compose. Still in progress: themes, logging, canvas applets, a web SSH terminal and tests."
+      "text": "It has a simple container controller, so you can start and manage Docker containers from the same place. The whole thing installs with Docker or Docker Compose, in keeping with the idea that everything is a web app in a container."
     },
     {
       "speaker": "B",
-      "text": "Any catches?"
+      "text": "What was the motivation?"
     },
     {
       "speaker": "A",
-      "text": "Yes. Some sites' logins won't work inside an iframe because of CSRF tokens or other restrictions. And the install was only tested on Ubuntu 20.04. The repo has the roadmap and previews."
+      "text": "Tools like Portainer or the Docker command line work, but putting a reverse proxy with SSL in front of everything takes time. Antoine wanted small applets for the things he does every day when managing his homelab."
+    },
+    {
+      "speaker": "B",
+      "text": "Anything planned next?"
+    },
+    {
+      "speaker": "A",
+      "text": "The roadmap lists theme and background customization, canvas applets, a web SSH terminal, OAuth login with GitHub, and a Caddy config generator for reverse proxy and SSL. Floating windows are on the list too."
+    },
+    {
+      "speaker": "B",
+      "text": "A lot of ideas for one dashboard."
+    },
+    {
+      "speaker": "A",
+      "text": "It is a playground for his homelab ideas. The project page has a demo animation, and the GitHub repository has the full roadmap and install steps."
     }
   ],
   "source_hash": "61423f47ef5c0faf",
-  "audio_hash": "c014953848b26d93",
-  "duration_seconds": 88
+  "audio_hash": "b6d6386c4e605fa8",
+  "duration_seconds": 117
 }

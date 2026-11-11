@@ -3,66 +3,74 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Une capture d'écran de diagramme, c'est une impasse. Impossible de corriger une faute, de la comparer à la version de la semaine dernière ou de la régénérer."
+      "text": "Et si, dans ton workflow d'images, un diagramme n'était pas une capture d'écran mais un texte que tu peux relire, modifier et régénérer ?"
     },
     {
       "speaker": "B",
-      "text": "Oui, on finit par tout redessiner."
+      "text": "Comme une recette plutôt qu'une photo du gâteau."
     },
     {
       "speaker": "A",
-      "text": "C'est le point de départ de ComfyUI-UML, un projet qu'Antoine a décrit. ComfyUI sert surtout à générer des images, mais n'importe quel résultat intermédiaire peut sortir d'un nœud. Ici, du texte de diagramme entre, et une image, un fichier et un lien partageable en sortent."
+      "text": "Exactement. Antoine a construit ComfyUI-UML, un nœud personnalisé pour ComfyUI. Du texte entre, et il en sort une image, un fichier et un lien à partager."
     },
     {
       "speaker": "B",
-      "text": "Donc la source du diagramme reste dans le workflow."
+      "text": "Quel genre de texte ? Un format spécial ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Une source Mermaid ou PlantUML se relit, se compare et se régénère, et elle voyage avec le reste du workflow au lieu de devenir une image sans explication. Le README annonce vingt-huit types de diagrammes via Kroki, avec les formats validés selon le type."
+      "text": "Du Mermaid ou du PlantUML, les langages de diagrammes les plus courants. Le README annonce 28 types de diagrammes via un service appelé Kroki, avec les formats de sortie validés selon le type. Comme la source reste dans le workflow, on peut la relire, la comparer et la relancer."
     },
     {
       "speaker": "B",
-      "text": "Il faut un modèle d'IA pour écrire les diagrammes ?"
+      "text": "Et le dessin, il se fait où ?"
     },
     {
       "speaker": "A",
-      "text": "Non, c'est facultatif. Mais si un modèle en écrit un, le nœud fait le ménage. Il gère plusieurs formes de réponse, extrait les blocs de code et privilégie celui qui correspond au type choisi. Pratique quand le modèle ajoute des explications autour du Mermaid."
+      "text": "Par défaut, le nœud envoie la source à un service Kroki en ligne. Pour travailler hors ligne, ou sur une architecture sensible, le dépôt documente aussi des chemins locaux avec Mermaid et Graphviz."
     },
     {
       "speaker": "B",
-      "text": "Il valide aussi la syntaxe ?"
+      "text": "On dit que les modèles de langage savent écrire ces diagrammes. C'est géré ?"
     },
     {
       "speaker": "A",
-      "text": "Non, et Antoine le dit clairement. Extraire un bloc, ce n'est pas le valider. Le moteur de rendu doit encore accepter le diagramme."
+      "text": "Oui, en option. Un modèle entoure souvent son diagramme d'explications. Le nœud normalise plusieurs formes de réponse, extrait le bloc de code et privilégie celui qui correspond au type choisi. Mais un modèle n'est pas obligatoire."
     },
     {
       "speaker": "B",
-      "text": "Et pour ramener l'image dans ComfyUI ?"
+      "text": "Et comment l'image arrive dans ComfyUI ?"
     },
     {
       "speaker": "A",
-      "text": "Une image matricielle passe par Pillow, elle est convertie en RGB, ramenée entre zéro et un, puis emballée dans un tenseur. Le SVG, c'est plus délicat. Le code tente une conversion avec CairoSVG, et sans succès il renvoie un minuscule tenseur de remplacement tout en gardant le fichier. Le fichier sauvegardé et l'aperçu peuvent donc différer."
+      "text": "Pour une image classique, le code l'ouvre avec Pillow, la convertit en RGB, ramène les valeurs entre zéro et un, et construit un tenseur que ComfyUI comprend. Pour le SVG, il tente une conversion CairoSVG pour l'aperçu, et le fichier est conservé dans tous les cas."
     },
     {
       "speaker": "B",
-      "text": "Pour essayer, on fait quoi ?"
+      "text": "Donc on a un aperçu et le vrai fichier."
     },
     {
       "speaker": "A",
-      "text": "On installe avec la commande comfy node, on redémarre ComfyUI et on ouvre l'exemple à un seul diagramme. Le nœud de diagramme vers un aperçu. Le visualiseur s'ajoute quand le rendu fonctionne."
+      "text": "Oui, plus une adresse de visualisation si on veut partager le résultat."
     },
     {
       "speaker": "B",
-      "text": "Un point de confidentialité ?"
+      "text": "Comment l'essayer ?"
     },
     {
       "speaker": "A",
-      "text": "Le backend web envoie la source au service Kroki choisi. Pour une architecture sensible ou du travail hors ligne, des chemins locaux avec Mermaid et Graphviz sont documentés. L'article complet a le schéma et les liens vers le code."
+      "text": "On l'installe avec la commande comfy node install, on redémarre ComfyUI, puis on ouvre le workflow d'exemple uml single diagram only. Deux nœuds seulement : un nœud de diagramme qui alimente un aperçu. Il y a aussi des exemples Mermaid, PlantUML et Ollama."
+    },
+    {
+      "speaker": "B",
+      "text": "On commence petit, puis on enrichit."
+    },
+    {
+      "speaker": "A",
+      "text": "C'est ça. Le diagramme devient un nœud de plus dans le workflow. L'article complet a le schéma et les liens vers le code du nœud."
     }
   ],
   "source_hash": "932921dc94921898",
-  "audio_hash": "17c407b429b6ecaf",
-  "duration_seconds": 141
+  "audio_hash": "59ad85cf61730f93",
+  "duration_seconds": 140
 }

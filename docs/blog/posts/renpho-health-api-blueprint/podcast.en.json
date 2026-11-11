@@ -1,68 +1,60 @@
 {
-  "title": "A scale, Home Assistant and a forecast",
+  "title": "From a bathroom scale to a weight forecast",
   "lines": [
     {
       "speaker": "A",
-      "text": "Antoine's bathroom scale knew a lot more than his weight. Getting that data out of a phone app turned into a reverse-engineering side project."
+      "text": "A smart scale measures far more than your weight. Body fat, muscle, water, even resistance in each limb. The catch is that all of it usually sits locked inside one phone app."
     },
     {
       "speaker": "B",
-      "text": "Wait, what else does a scale measure?"
+      "text": "And Antoine wanted it next to everything else at home."
     },
     {
       "speaker": "A",
-      "text": "A Renpho bio-impedance scale gives BMI, BMR, body age, fat and muscle estimates, water, protein, visceral fat, and resistance readings per limb. His problem was that it all lived in a siloed app. He wanted it in Home Assistant, next to his other automations."
+      "text": "Right. He wanted scale readings in Home Assistant, beside the rest of his apartment automations. So he forked hass_renpho, a community integration that pulls data from the Renpho cloud, and kept it going."
     },
     {
       "speaker": "B",
-      "text": "So he built an integration?"
+      "text": "How does it work?"
     },
     {
       "speaker": "A",
-      "text": "He forked one. The community project hass-renpho had slowed down, and he needed more entities, so he forked it as hass_renpho. It logs into Renpho's cloud, polls on an interval, and exposes sensors. He picked six hundred seconds, partly because logging in can kick your phone out of the app."
+      "text": "It logs into Renpho's cloud with the same account as the phone app and polls on an interval, six hundred seconds in his setup. Then it exposes sensors for weight, composition, metabolic estimates and device details. If a home connection gets blocked, there's an optional proxy setting."
     },
     {
       "speaker": "B",
-      "text": "And the reverse engineering?"
+      "text": "How did he figure out the data fields?"
     },
     {
       "speaker": "A",
-      "text": "He ran APKLeaks on the Android app, which scans the package for hosts, paths and keys. He matched those to the fields already mapped and filled gaps when a dashboard showed unknown after an app update. He treats it as an unstable contract."
+      "text": "By reverse engineering. He ran a tool called APKLeaks over the Android app, which scans the package for hosts, paths and parameter names, a bit like reading the labels on every drawer in a cabinet. Then he matched those to the fields the integration already knew and filled the gaps."
     },
     {
       "speaker": "B",
-      "text": "There was a network twist too."
+      "text": "And what do you get at the end?"
     },
     {
       "speaker": "A",
-      "text": "Yes. The integration failed even though the app worked on cellular. It looked like a broken integration but was really IP reputation. A VPN or a proxy setting fixed it. It burned an evening."
+      "text": "Lovelace dashboards in Home Assistant: a weight history with composition gauges, and a second view for girth measurements and goals. Antoine opens it when training or sleep changes."
     },
     {
       "speaker": "B",
-      "text": "Then the forecasting."
+      "text": "The title mentions a forecast."
     },
     {
       "speaker": "A",
-      "text": "A notebook with pandas, scikit-learn and Keras, modelling weight only. An LSTM tuned over five trials landed on fifty-two units. But he lists the flaws himself: random splits on a time series, and an input shape that means the LSTM never really reads a sequence."
+      "text": "Yes. Once the history was out of the app, he built a notebook with pandas and Keras. It starts with a linear trend line extended thirty days, then a random forest, then an LSTM neural network that reads a sliding window of past readings to predict the next one. A tuner searched unit counts and learning rates, and the best run used fifty-two units."
     },
     {
       "speaker": "B",
-      "text": "Honest. Anything about habits?"
+      "text": "Any habits that make the data nicer?"
     },
     {
       "speaker": "A",
-      "text": "Same time of day, same clothes, and watch trends over weeks. A one kilo swing is normal noise."
-    },
-    {
-      "speaker": "B",
-      "text": "And it's not clinical."
-    },
-    {
-      "speaker": "A",
-      "text": "Right. The full write-up has the dashboards and the caveats."
+      "text": "Three simple ones. Weigh at the same time of day, keep clothing constant, and watch trends over weeks instead of one morning. That's what keeps the curve meaningful. The full write-up has the dashboards, the sensor table and the notebook details."
     }
   ],
   "source_hash": "56fd1a40c1d390da",
-  "audio_hash": "9c6f239d632c37a3",
-  "duration_seconds": 120
+  "audio_hash": "03a81ed674b2c1dc",
+  "duration_seconds": 122
 }

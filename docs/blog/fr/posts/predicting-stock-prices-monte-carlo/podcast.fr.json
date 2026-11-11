@@ -1,68 +1,68 @@
 {
-  "title": "Une fourchette, pas un prix",
+  "title": "Des fourchettes de prix avec Monte Carlo",
   "lines": [
     {
       "speaker": "A",
-      "text": "Si quelqu'un vous annonce qu'Apple clôturera à un prix précis l'an prochain, ne le croyez pas. Pour Antoine, le trading, c'est des fourchettes, pas un chiffre magique."
+      "text": "Personne ne sait à quel prix Apple clôturera dans un an. Mais peut-on dire de combien le cours pourrait raisonnablement varier ?"
     },
     {
       "speaker": "B",
-      "text": "Alors comment on obtient une fourchette ?"
+      "text": "Ça paraît plus honnête qu'une prédiction unique. Comment on fait ?"
     },
     {
       "speaker": "A",
-      "text": "Avec une simulation de Monte-Carlo. Il a pris les clôtures quotidiennes d'Apple et estimé la dérive et la volatilité des rendements logarithmiques, en n'utilisant que les données d'avant 2023. Puis il a simulé plein de trajectoires de prix possibles."
+      "text": "Avec une simulation Monte Carlo. Antoine a pris les clôtures quotidiennes d'Apple et coupé au premier janvier 2023. Avant, ce sont les données d'entraînement. Après, c'est la période de contrôle."
     },
     {
       "speaker": "B",
-      "text": "Et ensuite on compare à ce qui s'est vraiment passé."
+      "text": "Qu'est-ce qu'il tire de la partie entraînement ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. L'année 2023 servait de test. Les vrais prix sont-ils tombés dans la bande entre le cinquième et le quatre-vingt-quinzième centile des trajectoires simulées ?"
+      "text": "Les rendements logarithmiques quotidiens. Il en déduit une dérive moyenne et une volatilité, c'est-à-dire à quel point le prix a tendance à bouger."
     },
     {
       "speaker": "B",
-      "text": "Comment marche la simulation, en mots simples ?"
+      "text": "Ensuite il lance les dés ?"
     },
     {
       "speaker": "A",
-      "text": "Chaque jour, on tire un choc aléatoire d'une loi normale, on le multiplie par la volatilité, on ajoute la dérive, et on multiplie le prix par l'exponentielle de ça. Il y a une petite correction, dite d'Itô, pour que la moyenne simulée ne grimpe pas plus vite que ce que l'historique justifie."
+      "text": "Un grand nombre de fois. Chaque trajectoire simulée tire un choc aléatoire chaque jour, selon la dérive et la volatilité, et fait avancer le prix. Un petit terme correctif évite que la moyenne simulée monte plus vite que l'historique."
     },
     {
       "speaker": "B",
-      "text": "Donne-moi un chiffre."
+      "text": "Imagine un banc de petits bateaux en papier lâchés sur une rivière, qu'on regarde finir leur course."
     },
     {
       "speaker": "A",
-      "text": "Pour Apple, le prix moyen simulé après trois cent soixante-quatre jours était de 206,63 dollars. La vraie clôture du 29 décembre 2023 : 192,53. Un écart de 14,10 dollars, soit environ 7 %."
+      "text": "Joli. On lit ensuite l'éventail de trajectoires. La médiane et la moyenne donnent le centre. Le percentile 5 à 95 trace une bande où le prix pourrait atterrir. Et les vrais prix de la période de contrôle apparaissent comme des points à comparer."
     },
     {
       "speaker": "B",
-      "text": "Pas mal, mais pas de la magie."
+      "text": "Il a des chiffres ?"
     },
     {
       "speaker": "A",
-      "text": "Et un essai plus tard sur Microsoft, avec les clôtures de 2024, a raté d'environ 14 %. C'est le rappel : une bande bâtie sur la volatilité passée ne dit rien d'une entreprise qui se fait réévaluer."
+      "text": "Pour Apple, le prix moyen simulé après 364 jours était d'environ 206,63 dollars, contre une vraie clôture de 192,53 le 29 décembre 2023. Un écart d'à peu près sept pour cent. Un essai plus tardif sur Apple et Microsoft, vérifié sur les clôtures de 2024, donne des éventails plus larges."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce que le modèle ne sait pas faire, selon lui ?"
+      "text": "Et MCMC, dans tout ça ?"
     },
     {
       "speaker": "A",
-      "text": "La volatilité n'est pas constante, il n'y a pas de sauts comme les annonces de résultats, et la diversification est ignorée. Il distingue aussi ça des MCMC, qui ajustent d'abord une distribution. Ici, c'est l'étape de simulation vers l'avant."
+      "text": "Il répond à une autre question : quelle distribution colle aux prix observés avant de simuler. Les deux se combinent bien. Cet article couvre l'étape forward."
     },
     {
       "speaker": "B",
-      "text": "Alors, à retenir ?"
+      "text": "Donc l'idée à retenir ?"
     },
     {
       "speaker": "A",
-      "text": "Monte-Carlo mesure la largeur du risque du modèle. Le backtesting mesure ce qu'une règle de trading aurait rapporté. Il faut séparer les deux questions. L'article complet a le code et les graphiques en éventail."
+      "text": "Monte Carlo donne la largeur d'une fourchette, et le backtesting teste une règle de trading. Garder ces questions séparées clarifie la réflexion. L'article complet a le code et tous les graphiques en éventail."
     }
   ],
   "source_hash": "4c519242904a34c3",
-  "audio_hash": "825b00630ca89909",
-  "duration_seconds": 136
+  "audio_hash": "e59e4c9b15e378b7",
+  "duration_seconds": 134
 }

@@ -1,68 +1,68 @@
 {
-  "title": "DasherControl : dompter les onglets du homelab",
+  "title": "DasherControl : un seul tableau de bord pour son homelab",
   "lines": [
     {
       "speaker": "A",
-      "text": "Trop d'onglets de navigateur, un par service de votre homelab. Antoine en avait assez."
+      "text": "Douze onglets ouverts, un par service du homelab, et impossible de retrouver le bon. C'est pour ça qu'Antoine a créé DasherControl."
     },
     {
       "speaker": "B",
-      "text": "Je connais. Douze onglets, et impossible de retrouver le bon."
+      "text": "Un tableau de bord, donc ?"
     },
     {
       "speaker": "A",
-      "text": "Alors il a lancé DasherControl. L'idée : un espace de travail fait d'applets, des favoris et des applications intégrées dans un tableau de bord, avec quelques commandes Docker à portée de main."
+      "text": "Un tableau de bord organisé en espaces de travail. Un espace, c'est comme un bureau : on y dispose des applets, c'est-à-dire des favoris et des applications intégrées, avec quelques commandes Docker à portée de main."
     },
     {
       "speaker": "B",
-      "text": "Et techniquement ?"
+      "text": "Il est fait avec quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Un frontend Vue, et côté serveur Rust avec Rocket et Diesel. Le point intéressant, c'est qu'il y a deux parcours séparés. Sauvegarder une disposition passe par les routes des espaces et la base de données. Redémarrer un conteneur passe par un adaptateur, Shiplift, vers Docker."
+      "text": "Vue côté interface, et Rust avec Rocket et Diesel côté serveur. Derrière le tableau de bord, il y a deux parcours bien séparés. Sauvegarder une disposition passe par les routes des espaces vers la base de données."
     },
     {
       "speaker": "B",
-      "text": "Donc la base de données ne touche pas à Docker."
+      "text": "Et le deuxième ?"
     },
     {
       "speaker": "A",
-      "text": "Voilà, et une applet n'est pas un conteneur non plus. Cette séparation aide à comprendre les permissions comme les erreurs."
+      "text": "Les actions sur les conteneurs. Quand on redémarre un conteneur, la demande passe par un adaptateur nommé Shiplift jusqu'à Docker. La base de données n'exécute jamais d'action Docker, et une applet n'est pas un conteneur. Cette séparation rend la conception facile à comprendre."
     },
     {
       "speaker": "B",
-      "text": "Parlons permissions : à qui appartient un espace de travail ?"
+      "text": "Comment un espace sait-il à qui il appartient ?"
     },
     {
       "speaker": "A",
-      "text": "À un utilisateur. La liste des espaces utilise l'identifiant du compte présent dans un jeton, et la route qui retourne les applets vérifie d'abord le propriétaire de l'espace. Mais Antoine le dit franchement : le fichier contient aussi d'anciennes routes de création et de suppression avec des vérifications différentes. Il faudrait revoir les autorisations de chaque opération avant d'en faire un service partagé."
+      "text": "Chaque espace a un propriétaire. La route lit l'identifiant du compte dans un jeton, liste les espaces de cette personne, et vérifie le propriétaire avant de renvoyer les applets. Une disposition sauvegardée appartient donc à un utilisateur, et chaque applet à un espace."
     },
     {
       "speaker": "B",
-      "text": "C'est donc une expérience, pas un produit audité."
+      "text": "Et côté Docker ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Et il y a un piège d'interface. Les fonctions de liste Docker retournent une liste vide après une erreur. Un écran vide veut dire soit qu'aucun conteneur ne tourne, soit que Docker est inaccessible. Dans une nouvelle version, il distinguerait les deux états."
+      "text": "Un fichier regroupe les appels Shiplift : lister les conteneurs et les images, télécharger des images, créer, arrêter ou redémarrer des conteneurs. Les opérations Docker restent ainsi à part du modèle des espaces."
     },
     {
       "speaker": "B",
-      "text": "Des soucis pour intégrer des applications ?"
+      "text": "On peut intégrer n'importe quelle application web dans une applet ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Le README mentionne des échecs de connexion dans les iframes, parce que certaines applications interdisent l'intégration. Il faut prévoir un lien externe."
+      "text": "Beaucoup, via des iframes. Certaines applications limitent l'intégration, alors un simple lien externe est prévu à côté."
     },
     {
       "speaker": "B",
-      "text": "Et c'est un vieux projet : la capture et le GIF montrent l'interface d'époque, sans prouver la compatibilité avec les dépendances actuelles."
+      "text": "Il y a une démo ?"
     },
     {
       "speaker": "A",
-      "text": "L'article complet a le schéma et les liens vers le code."
+      "text": "Oui. La page propose une capture et l'enregistrement d'origine avec les espaces et les applets en action. La note d'architecture et le code sont liés dans l'article."
     }
   ],
   "source_hash": "08d497b746f6219a",
-  "audio_hash": "f4e0209d0e0cef4e",
-  "duration_seconds": 133
+  "audio_hash": "600f9e050762d9e6",
+  "duration_seconds": 123
 }

@@ -3,23 +3,23 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Here's a trick. Take a photo, and a few steps later you're holding a little vinyl-style figure of it, printed in resin."
+      "text": "Picture a photo of your dog, and a few steps later a little glossy vinyl-style figure of that dog sitting on your desk. That's the pipeline Antoine wrote up, and it runs on four simple steps."
     },
     {
       "speaker": "B",
-      "text": "Okay, that sounds like it should be harder than it is. How does it actually work?"
+      "text": "Four steps? Okay, walk me through them. Where does a photo even begin to turn into something you can hold?"
     },
     {
       "speaker": "A",
-      "text": "Antoine wrote it up as a four-step pipeline. First, a reference photo, a clear side or front view. Second, turn it into a chibi vinyl toy image. Third, an image-to-3D model builds the mesh. Fourth, you print."
+      "text": "Step one is a clear reference photo, side or front view. Step two turns it into a chibi vinyl toy image: a smooth plastic character with a big head, one subject, white background, a pose that can stand on a base. ChatGPT or Midjourney can do that, or you can do it inside ComfyUI with a model called OmniGen2."
     },
     {
       "speaker": "B",
-      "text": "So the AI does two jobs. It restyles the picture, then it builds the 3D shape."
+      "text": "So the photo becomes a cartoon toy first. Why not go straight to 3D?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. For the toy image he uses ChatGPT, Midjourney, or ComfyUI with a model called OmniGen2. The prompt is simple: a vinyl chibi figurine, smooth plastic, white background, one character, in a pose that can stand on a base."
+      "text": "Think of it like a sculptor's sketch. A clean, simple 2D toy image gives the image-to-3D model a clear silhouette to follow. Antoine's page makes the point that a clear toy picture matters more than which 3D tool you pick."
     },
     {
       "speaker": "B",
@@ -27,34 +27,34 @@
     },
     {
       "speaker": "A",
-      "text": "Hunyuan3D version 2. In his ComfyUI workflow, one graph does both stages. The first stage makes the chibi picture, the second outputs two mesh files at slightly different thresholds. And if your graphics card only has eight to twelve gigabytes of memory, he says to lower a couple of resolution settings."
+      "text": "Step three is the mesh. Hunyuan3D version 2 reads the toy image and builds a 3D model. Antoine packaged the whole thing as one ComfyUI graph you can load. Stage A runs OmniGen2 to make the chibi picture, and stage B runs Hunyuan3D to export two 3D files, at thresholds of point seven and point six, so you can compare them."
     },
     {
       "speaker": "B",
-      "text": "Does it matter much which 3D tool you pick?"
+      "text": "Nice, two versions to choose from. And if you don't have a beefy computer?"
     },
     {
       "speaker": "A",
-      "text": "Less than you'd think. The page says the clarity of the toy image matters more than the brand of the generator. Mesh tools amplify a bad silhouette, so a blurry start gives you a mushy figure."
+      "text": "The page lists hosted options too, like RodinHD, Hi3DGen, Meshy and Tripo3D. You upload the toy picture, preview the result, and tune face count, symmetry and remeshing before you export."
     },
     {
       "speaker": "B",
-      "text": "Fair. And printing?"
+      "text": "Then comes the printer."
     },
     {
       "speaker": "A",
-      "text": "Resin, for small parts. Tilt overhangs toward the plate, keep supports light on things like hair and capes, and check for floating islands in the slicer or in UVtools. Skip that check and a failed print can waste hours."
+      "text": "Right. Step four is resin printing, which suits small parts. You tilt overhangs toward the build plate, add light supports on things like hair and capes, and check for floating islands in the slicer or in a free tool called UVtools. The page shows the finished figurines."
     },
     {
       "speaker": "B",
-      "text": "So the takeaway is: spend your effort on the 2D image."
+      "text": "There's even a handy guide. A gift figurine from a pet photo? Use a chatbot toy image, then a hosted mesh tool. A repeatable local batch? Use the ComfyUI file. Teaching a class? Use the slide deck."
     },
     {
       "speaker": "A",
-      "text": "Yes. Get the picture right, and the rest of the pipeline mostly follows. The full write-up has the diagram, the prompts, the workflow file and the slide deck."
+      "text": "That's the takeaway. Start with a clean toy image, let the model build the mesh, print in resin, and you've gone from photo to object. The full write-up has the diagram, the slide deck, the ComfyUI file and the finished prints."
     }
   ],
   "source_hash": "d2524285f6459685",
-  "audio_hash": "884bab13abe9da01",
-  "duration_seconds": 116
+  "audio_hash": "c88d77150a238db4",
+  "duration_seconds": 149
 }

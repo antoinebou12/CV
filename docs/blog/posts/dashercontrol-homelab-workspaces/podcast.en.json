@@ -1,68 +1,68 @@
 {
-  "title": "DasherControl: taming the homelab tabs",
+  "title": "DasherControl: one dashboard for your homelab",
   "lines": [
     {
       "speaker": "A",
-      "text": "Too many browser tabs, one for every service in your homelab. Antoine got tired of exactly that."
+      "text": "Twelve browser tabs, one for every service in your homelab, and you still can't find the right one. Antoine built DasherControl to fix exactly that."
     },
     {
       "speaker": "B",
-      "text": "I know that pain. Twelve tabs, and you still can't find the right one."
+      "text": "So it's a dashboard?"
     },
     {
       "speaker": "A",
-      "text": "So he started DasherControl. The idea is a workspace of applets: bookmarks and embedded apps arranged on a dashboard, with a few Docker controls close by."
+      "text": "A dashboard organized around workspaces. A workspace is like a desk: you arrange applets on it, which are bookmarks and embedded applications, and keep a few Docker controls within reach."
     },
     {
       "speaker": "B",
-      "text": "What's under the hood?"
+      "text": "What's it built with?"
     },
     {
       "speaker": "A",
-      "text": "A Vue frontend, and on the backend Rust with Rocket and Diesel. The interesting part is that the dashboard has two separate paths. Saving a layout goes through workspace handlers and database records. Restarting a container goes through an adapter called Shiplift to Docker."
+      "text": "Vue on the front, and Rust with Rocket and Diesel on the back. Behind the dashboard there are two clean paths. Saving a layout goes through workspace handlers into database records."
     },
     {
       "speaker": "B",
-      "text": "So the database doesn't touch Docker at all."
+      "text": "And the second path?"
     },
     {
       "speaker": "A",
-      "text": "Right, and an applet isn't a running container either. Keeping those paths apart helps explain both permissions and failure states."
+      "text": "Container actions. When you restart a container, the request goes through an adapter called Shiplift straight to Docker. The database never touches Docker, and an applet isn't a running container. Keeping those paths apart makes the design easy to reason about."
     },
     {
       "speaker": "B",
-      "text": "Speaking of permissions, who owns a workspace?"
+      "text": "How do workspaces know who they belong to?"
     },
     {
       "speaker": "A",
-      "text": "A user does. The list handler reads the tenant identifier from a token, and the handler that returns applets checks the workspace's tenant first. But Antoine is honest that the file also has older create and delete paths with different checks. So you'd review authorization on every operation before using it as a shared service."
+      "text": "Each workspace has an owner. The handler reads the user's identifier from a token, lists that person's workspaces, and checks the owner before returning the applets inside. So a saved layout belongs to a user, and every applet belongs to a workspace."
     },
     {
       "speaker": "B",
-      "text": "So it's an experiment, not a security-reviewed product."
+      "text": "And Docker?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. And there's a UI gotcha too. The Docker list helpers return an empty list after an error, so an empty dashboard could mean nothing is running, or that Docker couldn't be reached. In a new version he'd make those two states look different."
+      "text": "One file wraps the Shiplift calls: list containers and images, pull images, create containers, stop or restart them. That keeps the workspace model separate from Docker operations."
     },
     {
       "speaker": "B",
-      "text": "Any trouble with embedding apps?"
+      "text": "Can you embed any web app in an applet?"
     },
     {
       "speaker": "A",
-      "text": "Yes. The README records iframe login failures, because some apps restrict embedding. A dashboard like this needs an external link as a fallback."
+      "text": "Many, through iframes. Some apps restrict embedding, so a plain external link sits alongside for those."
     },
     {
       "speaker": "B",
-      "text": "It's also an older project, so the screenshot and demo GIF show the interface as it was, not compatibility with current dependencies."
+      "text": "Is there a demo?"
     },
     {
       "speaker": "A",
-      "text": "The full write-up has the diagram and links to the source."
+      "text": "Yes. The page has a screenshot and the original demo recording showing workspaces and applets in action. The architecture note and the source are linked from the write-up."
     }
   ],
   "source_hash": "1619644c8a07238f",
-  "audio_hash": "d4c5a856f79646d2",
-  "duration_seconds": 116
+  "audio_hash": "54faf36c45e2cd63",
+  "duration_seconds": 110
 }

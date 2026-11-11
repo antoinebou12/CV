@@ -1,60 +1,48 @@
 {
-  "title": "RetroArch Web Games: a retro arcade in Docker",
+  "title": "Retro games in your browser",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imagine opening a browser tab and playing a Game Boy classic, served from your own machine."
+      "text": "Imagine opening a browser tab and playing a classic NES or Super Nintendo game, from a server you run yourself. That's RetroArch Web Games."
     },
     {
       "speaker": "B",
-      "text": "Nice. How does that work?"
+      "text": "So the whole arcade, hosted at home?"
     },
     {
       "speaker": "A",
-      "text": "It's retroarch-web-games, a Docker image by Antoine that runs RetroArch in the browser with games already packed in. It covers NES, SNES, Genesis and Game Boy titles. You self-host the web player and deploy with Docker or Docker Compose."
+      "text": "Pretty much. Antoine packaged RetroArch, the emulator frontend, running in the browser, together with games for NES, SNES, Genesis and Game Boy in a single Docker image. You start it with docker compose up, and you've got a self-hosted web player."
     },
     {
       "speaker": "B",
-      "text": "How do you start it?"
+      "text": "And the games come with it?"
     },
     {
       "speaker": "A",
-      "text": "One command: docker compose up with the detach flag. The image is also published on Docker Hub."
+      "text": "Yes, pre-loaded. Scripts inside the image do the legwork: a bash function and a Python script download the game archives from several sources, then bash and Python rename the files and sort them into folders so RetroArch can list them cleanly. Downloads run in parallel with threads, and failures are reported instead of passing silently. It's like a librarian who fetches the books and shelves them for you."
     },
     {
       "speaker": "B",
-      "text": "What's the catch?"
+      "text": "Where does the image come from?"
     },
     {
       "speaker": "A",
-      "text": "Size. The page warns that the image is about ten gigabytes, because of all the games it includes."
+      "text": "It builds on the retroarch-web work from Inglebard's Dockerfiles and the Emscripten package from the RetroArch project. It's published on Docker Hub under the MIT license."
     },
     {
       "speaker": "B",
-      "text": "How do the games get there?"
+      "text": "Is there a related project?"
     },
     {
       "speaker": "A",
-      "text": "Scripts in the image download game archives and sort them. A bash function and a Python script fetch the archives from several sources, rename the files and put them in directories so RetroArch can list them cleanly. Downloads run in parallel, and failures get reported instead of disappearing."
+      "text": "FlashGames, a small collection of legacy Flash games preserved for modern browsers with Ruffle."
     },
     {
       "speaker": "B",
-      "text": "Is it built from scratch?"
-    },
-    {
-      "speaker": "A",
-      "text": "No. It's based on an existing RetroArch web Docker setup and RetroArch's own Emscripten package, and it's MIT licensed. Antoine also links a related project called FlashGames, a small collection of old Flash games that run in modern browsers with Ruffle."
-    },
-    {
-      "speaker": "B",
-      "text": "A pocket arcade, then."
-    },
-    {
-      "speaker": "A",
-      "text": "Pretty much. The project page has the links and the script notes."
+      "text": "Browser-based retro gaming, in one command. The project page has the details and the links."
     }
   ],
   "source_hash": "ed27536fd3a315d8",
-  "audio_hash": "57ccc556a90f6379",
-  "duration_seconds": 87
+  "audio_hash": "5b3afc5159e1c406",
+  "duration_seconds": 82
 }

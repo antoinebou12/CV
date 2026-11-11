@@ -1,64 +1,76 @@
 {
-  "title": "A homelab media stack in Docker Compose",
+  "title": "A whole media center from one compose file",
   "lines": [
     {
       "speaker": "A",
-      "text": "Someone in the family asks for a movie. Soon after, it is in the library, named properly, with subtitles. Who did the work?"
+      "text": "Picture a home server that finds a show, downloads it, names it neatly, grabs subtitles, and serves it on your TV, all without you touching a file. That's MediaBoxDockerCompose."
     },
     {
       "speaker": "B",
-      "text": "Not a person, I'm guessing."
+      "text": "That's a lot of moving parts for one box."
     },
     {
       "speaker": "A",
-      "text": "A pile of containers. That's Antoine's MediaBoxDockerCompose project, a Compose-first homelab stack for fetching, organizing and streaming media."
+      "text": "It is, and Docker Compose keeps them together. Everything hangs off one folder called ROOT, and every container shares the same user, group and time zone settings. Downloads land in one place, finished libraries in another, and each app keeps its own settings in its own folder."
     },
     {
       "speaker": "B",
-      "text": "How does the chain work?"
+      "text": "So who does the actual finding?"
     },
     {
       "speaker": "A",
-      "text": "A request app like Ombi or Jellyseerr takes the ask. The Arr apps, Sonarr for TV and Radarr for films, search the indexers, hand a release to a download client like Deluge or NZBGet, then import the file into a clean library."
+      "text": "The Arr apps, the stars of the stack. Sonarr handles TV, Radarr movies, Lidarr music and Readarr books. They watch for what you want, ask indexer tools like Prowlarr or Jackett for a matching release, and hand it to a download client such as Deluge for torrents or NZBGet for Usenet."
     },
     {
       "speaker": "B",
-      "text": "And who plays it?"
+      "text": "And after the download?"
     },
     {
       "speaker": "A",
-      "text": "Plex or Jellyfin. They only read the library. Bazarr adds subtitles and Tdarr transcodes in place."
+      "text": "The Arr app imports the finished file into the library with a clean name. Bazarr adds subtitles, Tdarr can transcode files in batches, and Plex or Jellyfin simply read the library and stream it. Tautulli shows Plex stats."
     },
     {
       "speaker": "B",
-      "text": "What holds it all together?"
+      "text": "How do the people in the house ask for things?"
     },
     {
       "speaker": "A",
-      "text": "One directory called ROOT, in the env file, plus the same user ID, group ID and time zone for every container. Downloads, finished libraries and each app's config all live under it."
+      "text": "Through request portals. Ombi works for Plex users, and Jellyseerr for Jellyfin users. Plus Netdata for live host metrics, and Dashmachine as a start page linking to every app."
     },
     {
       "speaker": "B",
-      "text": "Is the setup easy?"
+      "text": "Is there more than the main file?"
     },
     {
       "speaker": "A",
-      "text": "Install Docker, edit the env file, then run docker compose up. After that you connect indexers and download clients in the web interfaces."
+      "text": "Optional stacks start separately. Samba shares the library on the network, a WireGuard server gives VPN access with a web interface, Portainer manages containers, and a Caddy file puts each service on its own address."
     },
     {
       "speaker": "B",
-      "text": "There's a catch list too, right?"
+      "text": "A tip for the disk?"
     },
     {
       "speaker": "A",
-      "text": "Yes, honest bugs. The Sonarr mount has a stray colon and slash. NZBGet sees every other app's config. Lidarr may not find finished files. Portainer and Whisper both claim port 9000."
+      "text": "Keep downloads and libraries on the same filesystem, so the Arr apps can move files instead of copying them."
     },
     {
       "speaker": "B",
-      "text": "There's also a companion repo with menu-driven bash installers, for hosts not ready for the full stack. The project page has the diagram and the full service table."
+      "text": "And for a fresh machine?"
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine's companion repo, another-install-script, gives a menu-driven installer. It can set up Docker, then add containers one at a time from a list of 92, and open the matching firewall ports."
+    },
+    {
+      "speaker": "B",
+      "text": "So the quick start is just clone, edit the settings, and run docker compose up."
+    },
+    {
+      "speaker": "A",
+      "text": "That's it. The page has the full diagram and a service table."
     }
   ],
   "source_hash": "7c5e769c15d67e12",
-  "audio_hash": "5183e4efd2b1d411",
-  "duration_seconds": 101
+  "audio_hash": "528fd81a6e97ceb5",
+  "duration_seconds": 133
 }

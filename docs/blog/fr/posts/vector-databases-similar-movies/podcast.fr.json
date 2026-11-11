@@ -1,60 +1,60 @@
 {
-  "title": "Trouver des films semblables avec des vecteurs",
+  "title": "Trouver des films qui se ressemblent",
   "lines": [
     {
       "speaker": "A",
-      "text": "Demande à un ordinateur des films comme Matrix et il doit répondre à trois questions différentes en même temps. Laquelle poses-tu vraiment ?"
+      "text": "Vous avez aimé un film et vous en voulez d'autres dans le même esprit. Comment un ordinateur sait-il lesquels se ressemblent ? Antoine l'a enseigné en trois parties, et ça commence par transformer les films en nombres."
     },
     {
       "speaker": "B",
-      "text": "Trois questions ? J'aurais dit une seule."
+      "text": "En nombres ? Comment on fait ça ?"
     },
     {
       "speaker": "A",
-      "text": "Dans le fil d'enseignement d'Antoine, elles sont séparées : des films qui ressemblent à une description d'intrigue, des gens qui ont noté comme toi, et pourquoi ces titres. Les mélanger sans dire quel type de vecteur on utilise, c'est, selon lui, comme ça que les démos mentent."
+      "text": "Avec des embeddings. Il combine le titre, l'année, les genres, la distribution, le réalisateur et le résumé d'un film en un texte, et un encodeur le transforme en une liste de nombres, un vecteur. Les films semblables se retrouvent proches. Pense à une carte où les films sur le même sujet forment des quartiers."
     },
     {
       "speaker": "B",
-      "text": "Ça commence où ?"
+      "text": "Et c'est la partie 1 ?"
     },
     {
       "speaker": "A",
-      "text": "La première partie, c'est PostgreSQL avec pgvector. On combine titre, année, genres, distribution et résumé, on l'encode avec Sentence Transformers, et on stocke le vecteur à côté des colonnes habituelles. Les plus proches voisins deviennent un simple ORDER BY avec un LIMIT."
+      "text": "Oui, dans PostgreSQL avec pgvector. Les vecteurs sont à côté des colonnes habituelles, et chercher les plus proches voisins devient du SQL simple : trier par distance, limiter à dix. Antoine a comparé cinq modèles, BART, GTE, MiniLM, RoBERTa et e5-large, ainsi que la distance cosinus et la distance euclidienne. Le cosinus compare l'angle entre les vecteurs, donc un texte court et un texte long sur le même sujet restent proches."
     },
     {
       "speaker": "B",
-      "text": "Et la deuxième ?"
+      "text": "La partie 2 change d'outil ?"
     },
     {
       "speaker": "A",
-      "text": "Qdrant avec les jeux de données MovieLens, derrière une application FastAPI. Un chemin fait une recherche dense sur le titre et les genres. L'autre, une recherche creuse sur les notes : trouver les vingt utilisateurs les plus proches et additionner leurs notes pour des films que tu n'as pas vus."
+      "text": "Elle passe à Qdrant avec MovieLens, derrière une application FastAPI. Il y a deux sortes de vecteurs. Les vecteurs denses, de 384 nombres, encodent le titre et les genres, pour répondre à des titres qui ressemblent à la requête. Les vecteurs creux encodent les notes de chaque utilisateur, pour trouver des gens aux goûts proches."
     },
     {
       "speaker": "B",
-      "text": "Il a été surpris en relisant le code ?"
+      "text": "Comment ça recommande ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Les vecteurs de films ne contiennent pas les intrigues, seulement le titre avec les genres ou la date de sortie. Et la requête envoie des notes brutes de un à cinq, alors que celles stockées sont centrées : une note d'une étoile attire quand même vers ceux qui ont aimé le film."
+      "text": "Vos notes deviennent une requête creuse. Qdrant trouve les vingt utilisateurs les plus proches, et l'application additionne leurs notes pour les films que vous n'avez pas vus. Les cinq meilleurs sont vos recommandations. C'est comme demander à vingt personnes qui ont vos goûts ce qu'elles ont adoré. L'application permet de choisir le jeu de données, MovieLens cent mille ou un million, et un mode, par notes ou par titre et genre."
     },
     {
       "speaker": "B",
-      "text": "Aïe. Et la troisième partie ?"
+      "text": "Et la partie 3 ?"
     },
     {
       "speaker": "A",
-      "text": "Du RAG avec LangChain et un modèle Ollama local, appuyé sur les mêmes lignes. La sortie sauvegardée du carnet échoue poliment : du SQL invalide, des avertissements sur les colonnes vectorielles et des délais dépassés avec les gros modèles."
+      "text": "La récupération plus un modèle de langage local. Les lignes pgvector servent de preuves. On encode la question, une requête de plus proches voisins sort les meilleurs films, puis un prompt donne ces lignes à un modèle Ollama via LangChain, pour que la réponse s'appuie sur le même catalogue."
     },
     {
       "speaker": "B",
-      "text": "Donc un générateur dérive si on ne le contraint pas."
+      "text": "Donc trois questions, trois outils."
     },
     {
       "speaker": "A",
-      "text": "C'est sa conclusion. Encoder, stocker, chercher les voisins, trois fois, avec trois sens du mot voisin. L'article complet a le schéma et les carnets."
+      "text": "Exactement : le langage des synopsis, le chevauchement des goûts, et l'explication. Les notebooks et les animations sont dans le dépôt AlgoETS, et l'article a les schémas."
     }
   ],
   "source_hash": "0188b553c897f917",
-  "audio_hash": "9446c5f526fd5e14",
-  "duration_seconds": 119
+  "audio_hash": "838d71d74211472b",
+  "duration_seconds": 151
 }

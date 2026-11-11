@@ -1,52 +1,44 @@
 {
-  "title": "Votre écran Linux affiche-t-il vraiment du 10 bits ?",
+  "title": "Tester un écran HDR en 10 bits",
   "lines": [
     {
       "speaker": "A",
-      "text": "Tu as un écran HDR 4K branché à une machine Linux, et tout a l'air en règle. Mais est-ce qu'il affiche vraiment dix bits par canal ?"
+      "text": "Comment savoir si votre écran affiche vraiment dix bits par canal de couleur sous Linux ? Antoine a un petit projet pour ça."
     },
     {
       "speaker": "B",
-      "text": "Je supposerais que oui. Comment on le vérifie ?"
+      "text": "Dix bits par canal, c'est la différence entre des dégradés doux et des bandes visibles, non ?"
     },
     {
       "speaker": "A",
-      "text": "C'est à ça que sert le petit projet d'Antoine, HDR-10bpp-Display-Test. Il vérifie l'affichage HDR 4K sous Linux, notamment la profondeur de dix bits par canal. Utile pour valider la chaîne graphique, les pilotes et l'écran."
+      "text": "C'est l'idée. HDR-10bpp-Display-Test vérifie un affichage HDR 4K avec une profondeur de couleur de dix bits, et c'est pratique pour valider toute la chaîne : la pile graphique, les pilotes et l'écran."
     },
     {
       "speaker": "B",
-      "text": "Il faut quoi, côté prérequis ?"
+      "text": "Et concrètement ?"
     },
     {
       "speaker": "A",
-      "text": "Un serveur X, Python 3, GTK 3, ImageJ pour afficher des images en dix bits, et ImageIO. Les procédures détaillées sont dans le README du dépôt, en anglais."
+      "text": "C'est un visualiseur écrit en Python avec GTK 3. On démarre le serveur X avec une profondeur de trente bits, on confirme la profondeur avec une commande rapide, puis on lance le visualiseur. Un deuxième visualiseur gère la vidéo. Pour vérifier une image, on l'ouvre dans ImageJ, qui sait afficher le dix bits, et on regarde si les couleurs sont justes."
     },
     {
       "speaker": "B",
-      "text": "Et le principe du test ?"
+      "text": "Qu'est-ce qu'il faut installer ?"
     },
     {
       "speaker": "A",
-      "text": "Le README décrit un démarrage du serveur X avec une profondeur de couleur de trente, donc dix bits par canal. Ensuite on lance le visualiseur et on ouvre une image pour vérifier que les couleurs sont justes."
+      "text": "Un serveur X, Python 3, GTK 3, ImageJ et ImageIO, avec une commande apt sous Ubuntu ou Debian pour tout obtenir. Si la profondeur trente ne démarre pas, il y a une solution de repli en profondeur vingt-quatre."
     },
     {
       "speaker": "B",
-      "text": "Et si ça ne passe pas ?"
+      "text": "Un test simple pour un problème très précis."
     },
     {
       "speaker": "A",
-      "text": "Alors on sait que quelque part dans la chaîne, le pilote, l'écran ou la pile graphique, le dix bits ne passe pas. Le dépôt GitHub contient les détails."
-    },
-    {
-      "speaker": "B",
-      "text": "Un outil modeste, mais pratique."
-    },
-    {
-      "speaker": "A",
-      "text": "Exactement. La page du projet a le lien vers le dépôt."
+      "text": "Exactement. Le projet est open source sous licence MIT, et la page du projet donne toutes les étapes et le lien GitHub."
     }
   ],
   "source_hash": "da71a8793b05f926",
-  "audio_hash": "9e9f8b7bd9516122",
-  "duration_seconds": 78
+  "audio_hash": "c484e2fe83df8b6e",
+  "duration_seconds": 81
 }
