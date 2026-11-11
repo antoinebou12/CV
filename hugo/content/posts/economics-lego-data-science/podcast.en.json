@@ -1,68 +1,68 @@
 {
-  "title": "Can a LEGO set's price be forecast?",
+  "title": "What data says about LEGO sets and their prices",
   "lines": [
     {
       "speaker": "A",
-      "text": "There's a LEGO set from 1965 whose resale price people actually plot on a chart. So naturally Antoine asked: can a simple model predict where it goes next?"
+      "text": "What if you could look at decades of LEGO sets in one chart, and then check what a 1965 set sells for today?"
     },
     {
       "speaker": "B",
-      "text": "A forecast for a pile of plastic bricks. I like where this is going."
+      "text": "Okay, I'm in. How do you even start?"
     },
     {
       "speaker": "A",
-      "text": "He's a collector who writes Python. So he combined two sources. Rebrickable, which publishes the catalog: sets, themes, parts, colors. And BrickEconomy, which has resale values, but no download button."
+      "text": "Antoine collects LEGO and writes Python, so he combined two sources. Rebrickable's exports tell you what exists: sets, themes, parts and colors. A scraper on BrickEconomy tells you what people pay on the resale market."
     },
     {
       "speaker": "B",
-      "text": "So he scraped it."
+      "text": "What did the catalog show?"
     },
     {
       "speaker": "A",
-      "text": "With Playwright, yes. And here's a fun detail: the price history isn't in the page's visible table. It sits in an inline script that feeds a chart, so his code reads the script tags and parses the rows out of them."
+      "text": "Two trends. The number of sets released each year climbs steeply after the late nineties and passes a thousand in recent years. And the average part count per set rises from under a hundred in the seventies and eighties to around three hundred at the peak."
     },
     {
       "speaker": "B",
-      "text": "Sneaky. What did the catalog data show?"
+      "text": "Which themes dominate?"
     },
     {
       "speaker": "A",
-      "text": "Two trends. The number of sets per year climbs steeply after the late nineteen-nineties and passes a thousand in recent years. And the average part count rises too, from under a hundred for most of the seventies and eighties to around three hundred at the peak. Star Wars leads the themes by a wide margin."
+      "text": "Star Wars leads by a wide margin, then Friends, Gear, Ninjago, Bionicle and Technic. He got there by counting sets per theme, joining the themes table and keeping the ten biggest top-level themes."
     },
     {
       "speaker": "B",
-      "text": "Now the test case. The set from 1965?"
+      "text": "And the scraper? Prices are on a web page, so that sounds easy."
     },
     {
       "speaker": "A",
-      "text": "Set 001-1, the Samsonite Gears set. Long history, enough resale activity to plot. He cleaned the data, stripped currency symbols, dropped zero values, and fit a plain linear regression of value against date, projected out to 2030."
+      "text": "Not quite. The price history isn't in an HTML table. It sits in an inline script that feeds a Google Charts table, so his parser reads the script tags and pulls the rows out. He built it with Playwright and async Python."
     },
     {
       "speaker": "B",
-      "text": "Does it work?"
+      "text": "Think of it as reading the stage directions instead of watching the play."
     },
     {
       "speaker": "A",
-      "text": "Antoine is honest about it. It's not a trading signal. It's a way to ask simple questions, like whether the trend dominates or how far off the recent spikes above six hundred are. He also warns that the prices were shown in Canadian dollars even though a column was named USD."
+      "text": "Ha, right. For the test case he picked set 001-1, the 1965 Samsonite Gears set, with a long history and enough resale activity to plot. The scraper writes two files: dated values with annotations like the release, and monthly ranges for sealed copies."
     },
     {
       "speaker": "B",
-      "text": "What else should you distrust?"
+      "text": "Then he cleaned it and fit a model?"
     },
     {
       "speaker": "A",
-      "text": "A broken scraper makes missing months look like price crashes. Discontinued sets skew the counts. And a linear model on hype sets falls apart."
+      "text": "Yes. Pandas removes duplicates, strips currency symbols and parses dates. Then a plain linear regression of value against date, projected to 2030, gives a simple trend line to ask questions of: where do the recent spikes sit against it?"
     },
     {
       "speaker": "B",
-      "text": "So the takeaway?"
+      "text": "What's the fun takeaway?"
     },
     {
       "speaker": "A",
-      "text": "Great practice for pandas and async scraping, and a reminder that resale prices are sentiment plus plastic. The code is in the LegosTracker repo, and the full write-up has all the charts."
+      "text": "LEGO data is a friendly way to practice pandas, async scraping and charting. The full write-up has every chart, and the code lives in the LegosTracker repository."
     }
   ],
   "source_hash": "4d797f912b990c93",
-  "audio_hash": "b1e144ee2c62963c",
-  "duration_seconds": 130
+  "audio_hash": "3883ad41a448f7cd",
+  "duration_seconds": 128
 }

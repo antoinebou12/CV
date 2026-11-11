@@ -3,66 +3,58 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Un scanner mesure une toute petite surface, et le résultat est une grille de hauteurs. Qu'est-ce qu'on en fait ?"
+      "text": "Imagine qu'on scanne une surface métallique si finement que chaque rayure apparaît comme une minuscule colline ou une vallée. Qu'est-ce qu'on fait de toutes ces hauteurs ?"
     },
     {
       "speaker": "B",
-      "text": "Une jolie image ?"
+      "text": "On les regarde, j'imagine. Ou on en fait un modèle 3D."
     },
     {
       "speaker": "A",
-      "text": "Entre autres, mais le billet va plus loin. TrueMapData est la bibliothèque Python d'Antoine pour lire les captures TrueMap et GelSight. Elle expose les hauteurs sous forme de tableaux NumPy, avec des outils d'analyse et d'export graphique."
+      "text": "Les deux, et c'est TrueMapData. Cette bibliothèque Python lit les captures de surface TrueMap et GelSight, expose leurs hauteurs sous forme de tableaux NumPy, et offre des outils d'analyse et d'export graphique à partir de la même représentation."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'il y a dans un fichier de capture ?"
+      "text": "Qu'est-ce qu'il y a dans un de ces fichiers de capture ?"
     },
     {
       "speaker": "A",
-      "text": "Un en-tête, des métadonnées spatiales et la grille, en échantillons float32. Les métadonnées comptent : une texture de jeu peut s'étirer sur n'importe quelle plage, mais une surface mesurée doit garder son pas d'échantillonnage pour conserver son échelle physique."
+      "text": "Un fichier point t m d contient un en-tête, des métadonnées spatiales et une grille de hauteurs en float32, rangées ligne par ligne. La bibliothèque lit l'ancien format v1 et le format v2 de type TrueMap v6. Les métadonnées gardent la taille physique du scan, donc la grille conserve son échelle réelle."
     },
     {
       "speaker": "B",
-      "text": "La taille reste donc attachée aux données."
+      "text": "Comme une carte topographique d'un tout petit morceau de matériau."
     },
     {
       "speaker": "A",
-      "text": "Oui. Et avant d'exporter, il examine la surface : carte de chaleur, vue 3D, profils par ligne ou colonne, contours. Ensuite on peut dériver une carte normale pour l'éclairage, une carte de déplacement qui porte la hauteur, ou même un maillage en STL, OBJ ou glTF."
+      "text": "Tout à fait. Et on peut l'explorer : carte de chaleur 2D, surface 3D, profils par ligne ou colonne, courbes de niveau et comparaisons entre fichiers. Matplotlib produit des figures statiques, Plotly enregistre une vue HTML interactive, et Polyscope, en option, ouvre une fenêtre d'inspection 3D."
     },
     {
       "speaker": "B",
-      "text": "Et l'échelle compte encore quand on pave une texture sur un maillage ?"
+      "text": "Et les ressources graphiques, elles arrivent d'où ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Le parcours apply-on-mesh utilise les bornes du modèle, la valeur en millimètres par pixel et les dimensions de la capture pour fixer le pavage. La taille du scan reste liée à la surface qui reçoit la texture."
+      "text": "De la même grille de hauteurs, on dérive des cartes normales, qui décrivent l'orientation locale pour l'éclairage, et des cartes de déplacement, qui portent la hauteur elle-même. On peut aussi exporter des maillages en STL, OBJ, glTF ou USD, et appliquer les textures sur un modèle gabarit, en utilisant les millimètres par pixel du scan pour régler le pavage."
     },
     {
       "speaker": "B",
-      "text": "Et l'usure, là-dedans ?"
+      "text": "Et le côté métrologie ?"
     },
     {
       "speaker": "A",
-      "text": "La rugosité décrit une surface à un instant donné, avec les paramètres ISO 25178 via un paquet séparé, Surfalize. L'usure compare des captures dans le temps. Avant de soustraire les hauteurs, les images doivent partager la même grille et la même région, donc la bibliothèque les recale d'abord."
+      "text": "La rugosité passe par Surfalize pour les paramètres surfaciques ISO 25178. L'analyse d'usure compare des captures dans le temps : elle aligne les images par translation ou par recalage OpenCV et SIFT, soustrait les hauteurs, puis donne la perte de volume, l'évolution des rayures et les trajectoires de rugosité."
     },
     {
       "speaker": "B",
-      "text": "La perte se définit comment ?"
+      "text": "Une seule bibliothèque, du scan brut au maillage prêt pour un jeu ou au rapport d'usure."
     },
     {
       "speaker": "A",
-      "text": "Hauteur de référence moins hauteur courante. Une perte positive veut dire que la surface actuelle est plus basse. Pour un volume physique, il faut aussi le pas des pixels dans les deux directions, et une erreur de recalage ou des unités mélangées changeraient le résultat."
-    },
-    {
-      "speaker": "B",
-      "text": "Les figures du billet ne sont donc pas des données de son mémoire."
-    },
-    {
-      "speaker": "A",
-      "text": "Exact, elles viennent du README du dépôt. L'article complet a les schémas et les commandes."
+      "text": "Oui. Les figures de surface et de profil de l'article viennent des exemples du README du projet. L'article complet a le schéma, les commandes à essayer et les liens vers les guides."
     }
   ],
   "source_hash": "efed41269374f045",
-  "audio_hash": "ae6da5d133cccc40",
-  "duration_seconds": 134
+  "audio_hash": "57e6ba082ea6a260",
+  "duration_seconds": 138
 }

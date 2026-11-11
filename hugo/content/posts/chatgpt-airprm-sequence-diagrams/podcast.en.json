@@ -1,60 +1,68 @@
 {
-  "title": "Stop negotiating with ChatGPT about diagrams",
+  "title": "Diagram prompts that actually work",
   "lines": [
     {
       "speaker": "A",
-      "text": "Ever asked ChatGPT to draw a sequence diagram and gotten back half-random syntax?"
+      "text": "Ask a chatbot to draw a sequence diagram and you often get a mix of syntaxes. Antoine's fix is a four-line template, and it turns the request into filling out a form."
     },
     {
       "speaker": "B",
-      "text": "Constantly. You ask for a diagram and it picks a format for you, usually the wrong one."
+      "text": "Four lines? What's on them?"
     },
     {
       "speaker": "A",
-      "text": "That's exactly what annoyed Antoine. So he used AIPRM, a browser extension where the prompt template lives in the browser, and he locked four fields: diagram type, elements, purpose, and tool."
+      "text": "Diagram type, element type, purpose and tool. So for example: sequence diagram, messages, communication between a React frontend, a FastAPI backend, a Redis cache and a MongoDB database, using PlantUML. Once the model knows the tool, it stops guessing whether you want PlantUML, Mermaid or something else."
     },
     {
       "speaker": "B",
-      "text": "So the model stops guessing whether you want PlantUML, Mermaid, or notes for Draw.io."
+      "text": "And where does AIPRM come in?"
     },
     {
       "speaker": "A",
-      "text": "Right. It turns a diagram request into something like filling out a form instead of negotiating with the model. He even published a prompt in the AIPRM library that others can start from."
+      "text": "AIPRM is a browser extension that keeps your prompt template ready to use. Antoine published his prompt in the AIPRM library, and you can also paste the same four lines into ChatGPT directly and edit the values."
     },
     {
       "speaker": "B",
-      "text": "What does he use as the example?"
+      "text": "What does the result look like?"
     },
     {
       "speaker": "A",
-      "text": "A cached API stack. A user request goes through a React frontend to a FastAPI backend. Redis is the cache and MongoDB is the system of record. The page shows both a cache hit and a cache miss, in PlantUML and in Mermaid."
+      "text": "The example on the page is a cached API. A user sends a request, React forwards it to FastAPI, and FastAPI checks Redis. On a cache hit, Redis returns the data and the response goes straight back. On a miss, FastAPI asks MongoDB, saves the answer in Redis, then responds. It's like checking your pocket for your keys before going back to the house."
     },
     {
       "speaker": "B",
-      "text": "And what about canvas tools like Draw.io or Lucidchart?"
+      "text": "So the page has the diagram in both languages of diagrams."
     },
     {
       "speaker": "A",
-      "text": "Those are canvas-first, so he generates PlantUML or Mermaid first. Then he either exports it as an image to use as a baseline layer, or asks for a numbered list of lifelines and messages and rebuilds it by hand. No blank-canvas syndrome."
+      "text": "It does: the full PlantUML source and the Mermaid version, each with the hit and miss branches. Sequence diagrams show how parts of a system pass messages over time, which is great for onboarding and design reviews."
     },
     {
       "speaker": "B",
-      "text": "Any warnings?"
+      "text": "What if my team uses Draw.io or Lucidchart?"
     },
     {
       "speaker": "A",
-      "text": "Two good ones. Models sometimes confuse cache-hit branches with database syntax, so always render the diagram locally before publishing. And copy the four template lines into your repo, so you're not tied to one extension version."
+      "text": "Those are canvas tools, so Antoine suggests generating PlantUML or Mermaid first. Then either export it to SVG or PNG and import it as a base layer, or ask for a numbered list of lifelines and messages and rebuild them with the tool's shapes. No blank-page problem, and you keep control over styling."
     },
     {
       "speaker": "B",
-      "text": "So he still edits the output."
+      "text": "Any rule of thumb on when to use it?"
     },
     {
       "speaker": "A",
-      "text": "He does, but the first draft usually lands in the right language, and reviews get faster. The full write-up has the template and both code listings."
+      "text": "It's a good fit for teaching a stack pattern to every cohort with the same template, and for reviews where text diagrams can be tracked in git. For executive slides, export to SVG and polish in Draw.io."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway is name the type and the tool, and the first draft arrives in the right language."
+    },
+    {
+      "speaker": "A",
+      "text": "That's it. The full write-up has the template and both code listings to copy."
     }
   ],
   "source_hash": "ca3a0c697dfd48e2",
-  "audio_hash": "26235721a5b6e699",
-  "duration_seconds": 106
+  "audio_hash": "e484cc79c68fa054",
+  "duration_seconds": 145
 }

@@ -1,68 +1,80 @@
 {
-  "title": "D'une ligne de log à une erreur exploitable",
+  "title": "Quand une ligne de log devient un rapport d'erreur",
   "lines": [
     {
       "speaker": "A",
-      "text": "Une ligne de log dit qu'il s'est passé quelque chose. Elle en dit rarement assez pour corriger le problème."
+      "text": "Un log dit qu'un événement a eu lieu. Mais pour corriger une erreur, il faut aussi l'exception, la version, l'environnement et le contexte de la requête. Comment réunir tout ça au même endroit ?"
     },
     {
       "speaker": "B",
-      "text": "Oui, on reçoit un message à trois heures du matin, sans savoir de quelle version ni de quel environnement il vient."
+      "text": "Je dirais qu'on branche sa journalisation sur son outil de suivi d'erreurs."
     },
     {
       "speaker": "A",
-      "text": "C'est ce trou que comble Serilog point Sinks point SentrySDK. C'est une bibliothèque dot NET d'Antoine qui relie les logs Serilog aux événements d'erreur de Sentry, pour qu'une erreur arrive avec son exception, sa version, son environnement et le contexte de la requête."
+      "text": "Exactement, et c'est Serilog.Sinks.SentrySDK, un paquet .NET d'Antoine. Il s'appuie sur un sink existant de la communauté Serilog, et relie la journalisation Serilog au suivi d'erreurs de Sentry."
     },
     {
       "speaker": "B",
-      "text": "Il est parti de zéro ?"
+      "text": "C'est quoi, un sink, dans ce monde ?"
     },
     {
       "speaker": "A",
-      "text": "Non, le projet s'inspire d'un projet communautaire existant, serilog-sinks-sentry. Et Antoine précise que les étoiles GitHub mesurent l'intérêt pour ce dépôt, pas l'adoption globale de Serilog ou de Sentry."
+      "text": "L'endroit où les logs aboutissent. Imaginez Serilog comme une rivière d'événements, et un sink comme un canal qui les mène quelque part. Ici, le canal mène à Sentry."
     },
     {
       "speaker": "B",
-      "text": "Comment ça marche à l'intérieur ?"
+      "text": "Et c'est construit comment ?"
     },
     {
       "speaker": "A",
-      "text": "Un sink reçoit chaque événement Serilog et le passe à un petit adaptateur autour du SDK officiel de Sentry. Cet adaptateur gère les messages, les exceptions et les transactions, et il rend le SDK facile à remplacer dans les tests."
+      "text": "Le sink reçoit chaque événement et le passe à une petite enveloppe autour du SDK Sentry. Elle couvre trois tâches : capturer des messages, capturer des exceptions et créer des transactions. Comme cette frontière est petite, elle se remplace facilement dans les tests."
     },
     {
       "speaker": "B",
-      "text": "Un piège pour ceux qui l'adoptent ?"
+      "text": "Quelque chose à savoir pour la configuration ?"
     },
     {
       "speaker": "A",
-      "text": "L'initialisation. Le sink configure Sentry lui-même, et le README déconseille d'appeler l'init de Sentry une deuxième fois dans le même processus. Dans une application web qui initialise déjà son monitoring, il faut décider qui en est responsable."
+      "text": "Le sink démarre Sentry lui-même, donc on décide une fois qui est propriétaire de l'initialisation, et il faut un vrai D S N. On l'installe avec dotnet add package, et le dépôt a des exemples console et ASP.NET Core à reprendre."
     },
     {
       "speaker": "B",
-      "text": "Et les données de requête ? Ça peut être sensible."
+      "text": "Et pour les applications web ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Un paquet ASP.NET Core complémentaire ajoute le contexte de requête, mais l'article insiste : choisir ce qui quitte l'application, et vérifier les réglages de données personnelles et le filtrage. Il y a aussi un callback avant envoi pour filtrer ou enrichir les événements."
+      "text": "Un projet compagnon apporte le contexte de la requête. Il contient un adaptateur de requête, une politique de déstructuration, des extensions d'exception et un middleware, pour que les erreurs arrivent avec les détails utiles à l'enquête."
     },
     {
       "speaker": "B",
-      "text": "Et côté qualité ?"
+      "text": "On peut ajuster ce qui est envoyé ?"
     },
     {
       "speaker": "A",
-      "text": "Le README documente des tests unitaires, la couverture et des contrôles de formatage. Antoine ne prétend pas les avoir relancés et n'invente aucun pourcentage. Les paquets ciblent net six et net dix."
+      "text": "Oui. Il y a des options avancées et un callback beforeSend pour filtrer ou enrichir les événements, et le code documente comment il s'articule avec le mapping d'événements du sink."
     },
     {
       "speaker": "B",
-      "text": "L'installation tient en une commande ?"
+      "text": "Quelles versions sont couvertes ?"
     },
     {
       "speaker": "A",
-      "text": "Un dotnet add package, oui. L'article complet a le schéma d'architecture et les liens vers les exemples."
+      "text": "Deux paquets principaux ciblent net6 et net10, avec des variantes distinctes. Un badge NuGet en direct affiche le nombre de téléchargements."
+    },
+    {
+      "speaker": "B",
+      "text": "Et c'est vérifié ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le README documente des tests xUnit, la couverture et des contrôles de formatage."
+    },
+    {
+      "speaker": "B",
+      "text": "Les logs et les erreurs racontent enfin la même histoire. L'article complet a le schéma de l'adaptateur."
     }
   ],
   "source_hash": "76ae9f1905b302a7",
-  "audio_hash": "10dfcdc551b46b3c",
-  "duration_seconds": 127
+  "audio_hash": "a77c330dc276fb53",
+  "duration_seconds": 140
 }

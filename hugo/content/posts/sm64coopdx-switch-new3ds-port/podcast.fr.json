@@ -1,49 +1,49 @@
 {
-  "title": "Porter Mario 64 coop sur deux consoles portables",
+  "title": "Un moteur Mario 64, deux consoles portables",
   "lines": [
     {
       "speaker": "A",
-      "text": "Une Switch et une New 3DS dans la même base de code. Un seul moteur doit tourner sur les deux, sans que ça devienne le chaos."
+      "text": "Faire tourner un même moteur de jeu sur deux consoles portables très différentes, ça fait penser à une grosse réécriture. L'approche d'Antoine, c'est l'inverse : garder le plus petit possible ce qui touche chaque console."
     },
     {
       "speaker": "B",
-      "text": "Deux consoles qui n'ont presque rien en commun."
+      "text": "De quel jeu on parle ?"
     },
     {
       "speaker": "A",
-      "text": "C'est le défi du billet. Le projet adapte le moteur Coop Deluxe de Super Mario 64 aux deux. Le moteur multijoueur et les mods Lua viennent des projets en amont, donc le fork d'Antoine se concentre sur l'adaptation aux consoles : rendu, commandes, audio, threads et distribution."
+      "text": "Super Mario 64, dans sa version multijoueur Coop Deluxe, sm64coopdx. Le fork d'Antoine, sm64coopdx-switch-N3DS, l'amène sur la Nintendo Switch et la New 3DS. Le moteur multijoueur et les mods Lua viennent de la Coop Deluxe Team, et son travail, c'est les adaptateurs pour les consoles."
     },
     {
       "speaker": "B",
-      "text": "C'est où que ça se corse ?"
+      "text": "Un adaptateur, ça fait quoi au juste ?"
     },
     {
       "speaker": "A",
-      "text": "Sur la New 3DS, c'est un problème de traduction graphique. Le rendu passe par Citro3D et le GPU PICA200, qui traduit les combinaisons de couleurs courantes vers ses propres étapes. Quand le GPU ne peut pas représenter un effet, le backend le signale au lieu de faire semblant."
+      "text": "Pense aux prises de voyage. Le jeu joue la même musique, et chaque console reçoit une prise qui va dans sa propre fiche. Le moteur partagé appelle des fonctions de plateforme, et chaque cible les remplit pour le rendu, les commandes, l'audio, les threads et la distribution."
     },
     {
       "speaker": "B",
-      "text": "J'aime ça. Compiler, ce n'est pas la même chose que bien rendre."
+      "text": "La New 3DS a l'air plus corsée."
     },
     {
       "speaker": "A",
-      "text": "Exactement. Il y a aussi les détails matériels : l'écran du haut fait quatre cents par deux cent quarante, celui du bas trois cent vingt par deux cent quarante. Le Circle Pad sert au déplacement, le C-Stick à la caméra, et l'audio utilise des buffers bornés."
+      "text": "C'est un travail de traduction graphique. Le backend implémente l'API de rendu du jeu avec Citro3D sur la puce PICA200 : il traduit les combinaisons de couleurs courantes vers les étapes propres à la puce, et gère textures, profondeur, mélange et brouillard. Il signale aussi les cas où la puce ne peut pas reproduire exactement un effet."
     },
     {
       "speaker": "B",
-      "text": "Comment éviter que les deux toolchains s'emmêlent ?"
+      "text": "Et les commandes ?"
     },
     {
       "speaker": "A",
-      "text": "Règle stricte : la cible New 3DS ne doit ajouter aucune dépendance libctru, Citro3D ou devkitARM aux builds PC et Switch. Il y a aussi des fichiers Docker Compose séparés et des répertoires de build distincts. Et deux chemins New 3DS : d'abord une petite application de démarrage, puis le jeu complet."
+      "text": "Elles sont natives. Le Circle Pad déplace Mario, le C-Stick la caméra, et l'écran tactile est aussi utilisé. L'écran du haut fait quatre cents par deux cent quarante, celui du bas trois cent vingt par deux cent quarante. L'audio passe par NDSP avec des buffers bornés."
     },
     {
       "speaker": "B",
-      "text": "Alors, ça se joue sur une vraie 3DS ?"
+      "text": "Y a-t-il une règle pour éviter que les deux ports s'emmêlent ?"
     },
     {
       "speaker": "A",
-      "text": "Là, la page reste prudente. Il y a une release New 3DS, mais les notes demandent encore de ne pas présenter le port comme jouable, et le jeu sur appareil est décrit comme non vérifié. Un fichier de release ne prouve ni la stabilité, ni le multijoueur."
+      "text": "Oui, une belle. La cible New 3DS ne doit ajouter aucune dépendance libctru, Citro3D ou devkitARM aux builds PC et Switch. Des fichiers Docker Compose et des dossiers de build séparés gardent les toolchains à part. Il y a même de petits builds de validation, un pour la base de la plateforme et un pour le jeu complet."
     },
     {
       "speaker": "B",
@@ -51,18 +51,10 @@
     },
     {
       "speaker": "A",
-      "text": "La documentation couvre CoopNet, le réseau local sans fil, le clavier en jeu, les diagnostics de crash et la distribution. Et il faut votre propre ROM nord-américaine, obtenue légalement. Aucune ROM n'est fournie."
-    },
-    {
-      "speaker": "B",
-      "text": "Donc : garder la frontière entre plateformes la plus petite possible."
-    },
-    {
-      "speaker": "A",
-      "text": "Et dire honnêtement ce qui est vérifié. L'article complet a le schéma d'architecture et les liens vers les notes."
+      "text": "Il y a CoopNet, le réseau local sans fil, un clavier en jeu, des diagnostics de crash et la distribution. Il faut sa propre ROM nord-américaine obtenue légalement. Ce qu'on retient, c'est une bonne habitude de conception : partager le moteur, réduire la couche plateforme. L'article complet a le schéma et les liens vers le code."
     }
   ],
-  "audio_hash": "c35d8d1c23f96159",
-  "duration_seconds": 142,
-  "source_hash": "c042d5fdefb7d308"
+  "source_hash": "c042d5fdefb7d308",
+  "audio_hash": "fbcd8a2f7acc0d56",
+  "duration_seconds": 147
 }

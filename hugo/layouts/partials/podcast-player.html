@@ -22,6 +22,10 @@
   <audio class="podcast-player__audio" controls preload="none" src="{{ $mp3.RelPermalink }}">
     <a href="{{ $mp3.RelPermalink }}">{{ if $fr }}Télécharger l’audio{{ else }}Download the audio{{ end }}</a>
   </audio>
+  <div class="podcast-player__tools">
+    <button type="button" class="podcast-player__speed" data-podcast-speed aria-label="{{ if $fr }}Vitesse de lecture{{ else }}Playback speed{{ end }}" hidden>1×</button>
+    <a class="podcast-player__download" href="{{ $mp3.RelPermalink }}" download>{{ if $fr }}Télécharger le MP3{{ else }}Download MP3{{ end }}</a>
+  </div>
   {{- with $data.lines -}}
   <details class="podcast-player__transcript">
     <summary>{{ if $fr }}Transcription{{ else }}Transcript{{ end }}</summary>
@@ -31,4 +35,6 @@
   </details>
   {{- end -}}
 </section>
+{{- $js := resources.Get "podcast-player.js" | minify | fingerprint }}
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 {{- end -}}

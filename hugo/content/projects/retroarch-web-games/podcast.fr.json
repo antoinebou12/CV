@@ -3,34 +3,46 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Une console rétro, mais sans console, sans émulateur à installer. Juste un onglet de navigateur."
+      "text": "Imaginez ouvrir un onglet et jouer à un classique de la NES ou de la Super Nintendo, depuis un serveur que vous hébergez vous-même. C'est RetroArch Web Games."
     },
     {
       "speaker": "B",
-      "text": "Et ça vient d'où ?"
+      "text": "Donc toute la salle d'arcade, hébergée à la maison ?"
     },
     {
       "speaker": "A",
-      "text": "D'un projet d'Antoine, retroarch-web-games. C'est RetroArch qui tourne dans le navigateur, empaqueté avec Docker, avec des jeux NES, SNES, Mega Drive et Game Boy déjà inclus dans l'image."
+      "text": "À peu près. Antoine a empaqueté RetroArch, le frontal d'émulation qui tourne dans le navigateur, avec des jeux NES, SNES, Mega Drive et Game Boy, dans une seule image Docker. On la démarre avec docker compose up, et on a un lecteur web auto-hébergé."
     },
     {
       "speaker": "B",
-      "text": "Donc on l'héberge soi-même."
+      "text": "Et les jeux sont inclus ?"
     },
     {
       "speaker": "A",
-      "text": "Oui, un lecteur web auto-hébergé. Le déploiement est simple avec Docker ou Docker Compose : une commande pour tout lancer."
+      "text": "Oui, pré-téléchargés. Des scripts dans l'image font le travail : une fonction bash et un script Python téléchargent les archives de jeux depuis plusieurs sources, puis bash et Python renomment les fichiers et les rangent dans des dossiers pour que RetroArch les liste proprement. Les téléchargements se font en parallèle avec des threads, et les échecs sont signalés au lieu de passer en silence. C'est comme un bibliothécaire qui va chercher les livres et les range pour vous."
     },
     {
       "speaker": "B",
-      "text": "Il y a un projet cousin ?"
+      "text": "D'où vient l'image ?"
     },
     {
       "speaker": "A",
-      "text": "FlashGames, une petite collection de jeux Flash historiques, préservés pour les navigateurs modernes grâce à Ruffle. La page complète a les liens vers le dépôt, l'image Docker et FlashGames."
+      "text": "Elle s'appuie sur le travail retroarch-web des Dockerfiles d'Inglebard et sur le paquet Emscripten du projet RetroArch. Elle est publiée sur Docker Hub, sous licence MIT."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a un projet connexe ?"
+    },
+    {
+      "speaker": "A",
+      "text": "FlashGames, une petite collection de jeux Flash historiques préservés pour les navigateurs modernes avec Ruffle."
+    },
+    {
+      "speaker": "B",
+      "text": "Du jeu rétro dans le navigateur, en une commande. La page du projet a les détails et les liens."
     }
   ],
   "source_hash": "6c6c907e27ce6d8d",
-  "audio_hash": "98f19a738a0b069b",
-  "duration_seconds": 48
+  "audio_hash": "cef028ad5205deff",
+  "duration_seconds": 89
 }

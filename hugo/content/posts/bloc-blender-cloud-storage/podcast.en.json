@@ -1,68 +1,60 @@
 {
-  "title": "Browsing S3 from inside Blender",
+  "title": "Browsing the cloud from inside Blender",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imagine an artist in Blender who needs a mesh that lives in a cloud bucket. Do they really have to leave the app, download it, and import it by hand?"
+      "text": "Imagine you're modeling in Blender, and your whole asset library lives in a cloud bucket. What if you could browse it like a folder, without leaving the program?"
     },
     {
       "speaker": "B",
-      "text": "That's what most of us do. Is there a better way?"
+      "text": "That sounds handy. Is that what Antoine built?"
     },
     {
       "speaker": "A",
-      "text": "Antoine has a fork called bloc that explores exactly that: a Blender panel for browsing assets in AWS S3 and MinIO. It's a fork of an existing add-on by another author, and he keeps that credit."
+      "text": "He took an existing add-on, credited the original author, and explored it in his fork called bloc. It adds a panel inside Blender for browsing files stored in Amazon S3 or MinIO, which is a self-hosted alternative."
     },
     {
       "speaker": "B",
-      "text": "So how does the panel know which storage to talk to?"
+      "text": "Okay, but cloud storage doesn't really have folders, right?"
     },
     {
       "speaker": "A",
-      "text": "Through connections. Each one has a provider, an endpoint, a bucket and a region. Preferences can hold several of them, with one marked active, and the client setup picks the S3 or MinIO path from that choice."
+      "text": "Right, it only has long names, called keys. Think of a name like models slash chairs slash oak dot O B J. The add-on splits that name on the slashes and builds a nested tree, so the panel shows real-looking folders you can open and close."
     },
     {
       "speaker": "B",
-      "text": "And object storage doesn't really have folders, right?"
+      "text": "Clever. And how do you pick which cloud to talk to?"
     },
     {
       "speaker": "A",
-      "text": "Right, it has keys. The add-on splits those keys on the slash and builds a nested structure, so the panel can show a hierarchy without pretending it's a local file system."
+      "text": "A connection object holds the provider, the endpoint, the bucket and the region. You can save several connections in the preferences and switch the active one. The artist stays in Blender, and the add-on turns each click into the right storage request."
     },
     {
       "speaker": "B",
-      "text": "What about finding things?"
+      "text": "What about finding things in a big library?"
     },
     {
       "speaker": "A",
-      "text": "There's fuzzy search with RapidFuzz. It scores file names and path pieces, favors direct matches, and filters for scenes, meshes, images and materials."
+      "text": "There's fuzzy search. It scores file names and path pieces, puts exact matches first, and has filters for scenes, meshes, images and materials. Typos still find your file."
     },
     {
       "speaker": "B",
-      "text": "Okay. And import is just download and done?"
+      "text": "And when you click an asset?"
     },
     {
       "speaker": "A",
-      "text": "Not quite, and this is the detail Antoine stresses. Downloading and importing are two different steps. After the download, a loader picks an importer for STL, OBJ, PLY or USD variants. Anything else gets rejected with a message."
+      "text": "It downloads to a temporary spot, then Blender's own importer opens it. Formats like S T L, O B J, P L Y and U S D are supported. There's also an option to upload the current blend file back to the bucket."
     },
     {
       "speaker": "B",
-      "text": "So the listing can work while the import fails."
+      "text": "So it's a bridge between a graphics tool and a platform service."
     },
     {
       "speaker": "A",
-      "text": "Exactly. He also notes a limit: the code uses one S3 listing request, so very large buckets would need pagination."
-    },
-    {
-      "speaker": "B",
-      "text": "I like that he's upfront about the edges."
-    },
-    {
-      "speaker": "A",
-      "text": "Same for scope. The fork was ten commits ahead and five behind upstream when he checked, and that doesn't mean upstream accepted anything. The full write-up has the diagram of the browse and import paths."
+      "text": "Exactly the mix Antoine enjoys. The full write-up has the diagram of the browse and import paths."
     }
   ],
-  "audio_hash": "f40e1e327f8834fc",
-  "duration_seconds": 117,
-  "source_hash": "37e0f8d302b9eed7"
+  "source_hash": "37e0f8d302b9eed7",
+  "audio_hash": "03b9397782c61f4f",
+  "duration_seconds": 106
 }

@@ -1,52 +1,56 @@
 {
-  "title": "Un petit afficheur, un minuteur et une page web dans l'appareil",
+  "title": "ESP32-7SEG : un minuteur de poche piloté depuis un navigateur",
   "lines": [
     {
       "speaker": "A",
-      "text": "Et si un afficheur sept segments, celui d'un vieux réveil, avait sa propre page web ? C'est ESP32-7SEG, un petit projet de firmware d'Antoine."
+      "text": "Un minuscule afficheur sept segments qui montre un chronomètre ou un compte à rebours, et qu'on pilote depuis une page web sur son téléphone. Voilà ESP32-7SEG."
     },
     {
       "speaker": "B",
-      "text": "Un serveur web dans l'horloge elle-même ?"
+      "text": "Comment une petite puce peut-elle servir une page web ?"
     },
     {
       "speaker": "A",
-      "text": "En gros, oui. Le firmware tourne sur une carte ESP32 FireBeetle et pilote un afficheur sept segments Adafruit en I2C. Il sert aussi une interface web locale, donc on contrôle l'afficheur depuis un navigateur sur le même réseau."
+      "text": "Le firmware tourne sur une carte ESP32 FireBeetle, qui a le WiFi intégré. Il pilote un afficheur sept segments Adafruit en I2C et fait fonctionner un petit serveur web sur le même réseau."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'on peut faire depuis cette page ?"
+      "text": "On voit quoi dans le navigateur ?"
     },
     {
       "speaker": "A",
-      "text": "C'est un panneau Timer Control. On choisit le mode chronomètre ou compte à rebours. Il y a des raccourcis de dix, cinq et une minute, ou on tape soi-même les minutes et les secondes avant d'appuyer sur start. Et un bouton pour réinitialiser le WiFi, qui efface les identifiants stockés pour reconfigurer l'appareil."
+      "text": "Un panneau Timer Control. On choisit chronomètre ou compte à rebours, on touche un raccourci de dix, cinq ou une minute, ou on saisit ses propres minutes et secondes, puis on appuie sur Start."
     },
     {
       "speaker": "B",
-      "text": "Le matériel, c'est compliqué ?"
+      "text": "Et si on change de réseau ?"
     },
     {
       "speaker": "A",
-      "text": "Plutôt simple. La carte, l'afficheur avec son backpack, une platine d'essai et quatre fils : SCL, SDA, alimentation et masse."
+      "text": "Un bouton Reset WiFi efface les identifiants enregistrés pour pouvoir reconfigurer l'appareil."
     },
     {
       "speaker": "B",
-      "text": "Et pour le faire démarrer ?"
+      "text": "Côté matériel, ça donne quoi ?"
     },
     {
       "speaker": "A",
-      "text": "C'est un projet PlatformIO. On clone le dépôt, on compile et on flashe l'ESP32. Après le démarrage, on lit l'adresse IP de l'appareil dans le moniteur série et on l'ouvre dans un navigateur. Le dépôt contient aussi des sous-projets Android et firmware pour une stack plus complète autour du même matériel."
+      "text": "Seulement la carte, l'afficheur et son backpack, une platine d'essai et quatre fils : SCL, SDA, alimentation et masse."
     },
     {
       "speaker": "B",
-      "text": "Un chouette petit montage, alors."
+      "text": "Et le logiciel ?"
     },
     {
       "speaker": "A",
-      "text": "Il est sous licence MIT, et la page du projet renvoie vers le dépôt."
+      "text": "Un projet PlatformIO, avec des sous-projets Android et firmware pour une pile plus complète autour du même appareil. On clone le dépôt, on compile, on flashe l'ESP32, on lit l'adresse IP dans le moniteur série et on l'ouvre dans un navigateur."
+    },
+    {
+      "speaker": "B",
+      "text": "Un petit montage avec un résultat satisfaisant. Le dépôt contient le code et la licence MIT."
     }
   ],
   "source_hash": "8074ce312bf3315e",
-  "audio_hash": "b7704c028edf0f0c",
-  "duration_seconds": 95
+  "audio_hash": "b437bd68997fdcca",
+  "duration_seconds": 87
 }

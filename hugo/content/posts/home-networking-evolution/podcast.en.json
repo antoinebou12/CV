@@ -1,68 +1,64 @@
 {
-  "title": "Breaking things on purpose: a homelab that grew in a closet",
+  "title": "From closet servers to a home lab",
   "lines": [
     {
       "speaker": "A",
-      "text": "A server with handwritten tape on the front as its inventory system, a nest of blue cables, and a weekend lost to one bad apt upgrade. That's the homelab Antoine tells the story of."
+      "text": "Cloud bills can push you to do something unusual: build your own data center in a closet. That's how Antoine's home lab got started."
     },
     {
       "speaker": "B",
-      "text": "That tape thing is painfully relatable. Why build a lab at home at all?"
+      "text": "A real server closet? At home?"
     },
     {
       "speaker": "A",
-      "text": "Cloud bills pushed him. University courses had covered IP, VPNs and routing on paper, but running services at home made the tradeoffs real: power, noise, backups, and who has SSH when the router dies. He wanted a place to break things without an invoice."
+      "text": "Yes. University courses covered IP, VPNs and routing on paper, but running real services at home made it concrete. He wanted a place to experiment without an invoice, and a story to tell that goes beyond using AWS once."
     },
     {
       "speaker": "B",
-      "text": "So where did he start?"
+      "text": "So where did he begin?"
     },
     {
       "speaker": "A",
-      "text": "Docker. He matched free container stacks to jobs he was paying for in the cloud, like media and dashboards. The lesson that stuck was one compose file per concern. When Plex misbehaved, he recycled the volume instead of rebuilding the whole machine."
+      "text": "With Docker. He matched free container stacks to jobs he was paying for in the cloud, like media and dashboards. The rule that stuck was one compose file per concern, so if Plex acted up, he recycled one volume instead of rebuilding the machine."
     },
     {
       "speaker": "B",
-      "text": "Pets versus cattle, basically."
+      "text": "Smart. And the hardware?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. Then the hardware: a cheap Dell, an older machine, and bash scripts to install Ubuntu, CentOS and Proxmox, so reinstalling after an experiment hurt less. Later came a Dell PowerEdge R710, with dual Xeons and twenty-four gigabytes of RAM, running headless next to acoustic foam."
+      "text": "A Dell PowerEdge R710 with two Xeon processors and 24 gigabytes of RAM, plus an older machine. Bash scripts install Ubuntu, CentOS or Proxmox, so reinstalling after an experiment is painless. Proxmox lets him snapshot before trying something bold."
     },
     {
       "speaker": "B",
-      "text": "And how did he reach it from outside?"
+      "text": "Like saving a video game before the boss fight."
     },
     {
       "speaker": "A",
-      "text": "Caddy as a reverse proxy, with a public front on OVH so his home IP wasn't the only line of defense. Automatic HTTPS mattered more than he expected, fewer late-night certificate commands. WireGuard handled the VPN. Annoying to configure the first time, fast once it was up."
+      "text": "Ha, exactly. For reaching things from outside, Caddy is the reverse proxy, and it gets HTTPS certificates automatically. WireGuard is the V P N, and Antoine contributed small setup helpers so friends could connect without a week of reading manuals."
     },
     {
       "speaker": "B",
-      "text": "What went wrong along the way?"
+      "text": "Did the setup grow over time?"
     },
     {
       "speaker": "A",
-      "text": "Three things stuck. A single disk with no backup. Admin ports exposed to the internet, so now admin interfaces sit behind the VPN only. And the R710's fan noise, which made him think about thermals before putting a server near a bedroom."
+      "text": "After a move, he added VLANs and Proxmox virtual machines for club projects, drew the network in Lucidchart and in a C4 style for explaining it, and moved public sites to static hosting, keeping the lab for private services."
     },
     {
       "speaker": "B",
-      "text": "Real lessons, then."
+      "text": "What's the big takeaway?"
     },
     {
       "speaker": "A",
-      "text": "And he kept drawing the network on a wall diagram, since it's the explain-it-to-a-roommate version. Later he moved public sites to static hosting to cut always-on cost, and kept the lab for private services."
+      "text": "A home lab is a sandbox for platform instincts: automate installs, document the layout, and plan for failure. It leads straight to his MediaBox Docker Compose project."
     },
     {
       "speaker": "B",
-      "text": "So what's the takeaway?"
-    },
-    {
-      "speaker": "A",
-      "text": "A homelab is a sandbox for platform instincts: automate installs, document the topology, assume failure. The full post has the photos of the wall stack and the closet build."
+      "text": "The full post has photos of the real wall of cables."
     }
   ],
   "source_hash": "3847921ce0efe67f",
-  "audio_hash": "4cb997d22dd76da2",
-  "duration_seconds": 139
+  "audio_hash": "419292322d718438",
+  "duration_seconds": 115
 }

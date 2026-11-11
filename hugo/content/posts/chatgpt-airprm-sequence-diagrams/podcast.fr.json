@@ -1,68 +1,68 @@
 {
-  "title": "Quatre champs pour que ChatGPT arrête de deviner",
+  "title": "Des prompts de diagrammes qui marchent",
   "lines": [
     {
       "speaker": "A",
-      "text": "Vous demandez à ChatGPT un diagramme de séquence, et vous recevez une syntaxe un peu au hasard. C'était du PlantUML ? Du Mermaid ? Autre chose ?"
+      "text": "Demandez à un chatbot de dessiner un diagramme de séquence et vous recevez souvent un mélange de syntaxes. La solution d'Antoine tient en quatre lignes, et la demande devient aussi simple que remplir un formulaire."
     },
     {
       "speaker": "B",
-      "text": "Ah, ce fil de discussion-là, je le connais. On finit par se battre avec les crochets."
+      "text": "Quatre lignes ? Qu'est-ce qu'il y a dedans ?"
     },
     {
       "speaker": "A",
-      "text": "Antoine en a eu assez aussi. Sa solution : un gabarit de prompt, utilisé avec l'extension de navigateur AIPRM, qui verrouille quatre champs. Le type de diagramme, le type d'éléments, l'objectif et l'outil de dessin. Une fois ces champs fixés, le modèle arrête de deviner."
+      "text": "Le type de diagramme, le type d'éléments, l'objectif et l'outil. Par exemple : séquence, messages, communication entre un front React, un back FastAPI, un cache Redis et une base MongoDB, en PlantUML. Dès que le modèle connaît l'outil, il arrête de deviner entre PlantUML, Mermaid ou autre chose."
     },
     {
       "speaker": "B",
-      "text": "Donc moins un prompt malin qu'un formulaire à remplir."
+      "text": "Et AIPRM dans tout ça ?"
     },
     {
       "speaker": "A",
-      "text": "C'est ça. Et on n'a même pas besoin d'AIPRM : on peut coller les quatre lignes dans ChatGPT et changer les valeurs. Son exemple demande un diagramme de séquence entre un frontend React, un backend FastAPI, un cache Redis et une base MongoDB, en PlantUML."
+      "text": "AIPRM est une extension de navigateur qui garde le gabarit de prompt à portée de main. Antoine a publié son prompt dans la bibliothèque AIPRM, et on peut aussi coller les mêmes quatre lignes directement dans ChatGPT et changer les valeurs."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'il montre, ce diagramme ?"
+      "text": "Et ça donne quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Une requête utilisateur qui traverse la pile, avec deux branches. En cas de cache hit, FastAPI interroge Redis, trouve la donnée et répond directement. En cas de cache miss, il va chercher dans MongoDB, enregistre le résultat dans Redis, puis répond. La page donne le même scénario en PlantUML et en Mermaid."
+      "text": "L'exemple de la page, c'est une API avec cache. L'utilisateur envoie une requête, React la transmet à FastAPI, qui interroge Redis. Si la donnée y est, Redis la renvoie et la réponse repart tout de suite. Sinon, FastAPI va voir MongoDB, enregistre le résultat dans Redis, puis répond. C'est comme regarder dans sa poche avant de retourner chercher ses clés à la maison."
     },
     {
       "speaker": "B",
-      "text": "Et si mon équipe utilise plutôt Draw.io ou Lucidchart ?"
+      "text": "Donc la page contient le diagramme dans les deux langages."
     },
     {
       "speaker": "A",
-      "text": "Ce sont des outils où l'on dessine sur un canevas. Antoine propose donc de générer d'abord du PlantUML ou du Mermaid. Ensuite, soit on exporte en SVG ou en PNG pour l'importer comme calque de base, soit on demande à ChatGPT une liste numérotée de lignes de vie et de messages, qu'on refait avec des formes."
+      "text": "Oui : le code PlantUML complet et la version Mermaid, chacun avec les branches où la donnée est dans le cache ou non. Un diagramme de séquence montre comment les composants s'échangent des messages dans le temps. C'est très utile pour intégrer une équipe ou pour une revue de conception."
     },
     {
       "speaker": "B",
-      "text": "Mieux qu'une page blanche, en fait."
+      "text": "Et si l'équipe utilise Draw.io ou Lucidchart ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement, c'est l'idée : éviter le syndrome de la page blanche tout en gardant un diagramme modifiable."
+      "text": "Ce sont des outils à canevas, alors Antoine propose de générer d'abord du PlantUML ou du Mermaid. On l'exporte en SVG ou PNG et on l'importe comme calque de base, ou on demande une liste numérotée des lignes de vie et des messages pour les refaire avec les formes de l'outil. Plus de page blanche, et on garde la main sur le style."
     },
     {
       "speaker": "B",
-      "text": "Il y a des pièges ?"
+      "text": "Une règle simple pour savoir quand l'utiliser ?"
     },
     {
       "speaker": "A",
-      "text": "Quelques-uns. Les modèles mélangent parfois les branches de cache avec la syntaxe de base de données, donc on rend toujours le diagramme en local avant de publier. Et il conseille de copier les quatre lignes du gabarit dans le README du dépôt, pour ne pas dépendre d'une version d'extension."
+      "text": "C'est idéal pour enseigner un patron d'architecture avec le même gabarit à chaque cohorte, ou pour des revues où les diagrammes en texte se suivent dans git. Pour des diapos de direction, on exporte en SVG et on peaufine dans Draw.io."
     },
     {
       "speaker": "B",
-      "text": "Et puis un diagramme en texte, ça se compare très bien dans git."
+      "text": "Donc on retient : nommer le type et l'outil, et le premier jet arrive dans le bon langage."
     },
     {
       "speaker": "A",
-      "text": "Voilà pourquoi il le recommande pour les revues d'architecture réglementées. L'article complet a le gabarit, les deux listings et le schéma du cache."
+      "text": "Exactement. L'article complet donne le gabarit et les deux codes à copier."
     }
   ],
-  "audio_hash": "e731b56c2390b208",
-  "duration_seconds": 145,
-  "source_hash": "a87dbb770721ac19"
+  "source_hash": "a87dbb770721ac19",
+  "audio_hash": "2638276fc00055f3",
+  "duration_seconds": 152
 }

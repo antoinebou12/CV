@@ -78,6 +78,14 @@
           datetime="{{ $p.Date.Format "2006-01-02" }}"
           >{{- $p.Date | time.Format ":date_medium" -}}</time
         >
+        {{- if $p.Resources.GetMatch (printf "podcast.%s.mp3" $p.Lang) -}}
+        {{- $secs := 0 -}}
+        {{- with $p.Resources.GetMatch (printf "podcast.%s.json" $p.Lang) }}{{ $secs = int ((.Content | transform.Unmarshal).duration_seconds | default 0) }}{{ end -}}
+        <span class="post-list-card-audio">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="2.5" y="14" width="5" height="7" rx="1.5"/><rect x="16.5" y="14" width="5" height="7" rx="1.5"/></svg>
+          {{- if eq $p.Lang "fr" }}Version audio{{ else }}Audio story{{ end }}{{ if gt $secs 0 }} · {{ div $secs 60 }}:{{ printf "%02d" (mod $secs 60) }}{{ end -}}
+        </span>
+        {{- end -}}
         {{- with $teaser -}}
         <p
           class="post-list-card-desc mt-1 text-sm leading-relaxed text-black/70 dark:text-white/70"

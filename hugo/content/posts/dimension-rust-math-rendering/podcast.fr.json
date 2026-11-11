@@ -1,76 +1,68 @@
 {
-  "title": "Dimension : des maths en Rust jusqu'au rendu",
+  "title": "Des maths en Rust jusqu'aux pixels",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un moteur de rendu ne vaut que ce que valent les maths en dessous. Avant qu'un seul triangle s'affiche, il faut décider comment on stocke et on passe les matrices."
+      "text": "Comment passe-t-on de quelques nombres dans une matrice à un cube qui tourne à l'écran ? C'est ce que le projet Rust d'Antoine, Dimension, explique, couche par couche."
     },
     {
       "speaker": "B",
-      "text": "Alors, par où Antoine commence dans son projet Rust, Dimension ?"
+      "text": "D'accord, par où commence un projet comme ça ?"
     },
     {
       "speaker": "A",
-      "text": "Par une crate qui s'appelle mathlib. Elle expose le stockage dense, des formats creux comme CRS et CCS, des types de vecteurs et de matrices, des vues et des sous-matrices. On y trouve aussi les décompositions LU, Cholesky et SVD, la recherche de racines et l'intégration numérique."
+      "text": "Par la bibliothèque de maths, mathlib. Elle stocke les matrices en format dense et en formats creux, et offre des vecteurs, des vues et des sous-matrices. Par-dessus, on trouve des outils numériques classiques : décompositions LU, Cholesky et SVD, recherche de racines et intégration numérique."
     },
     {
       "speaker": "B",
-      "text": "Beaucoup d'algèbre linéaire pour un projet de graphisme."
+      "text": "On dirait un manuel d'algèbre linéaire."
     },
     {
       "speaker": "A",
-      "text": "C'est un espace de travail d'expériences en mathématiques et en graphisme, donc les deux se rejoignent. La crate de rendu s'appuie sur mathlib pour les transformations CPU et les calculs de caméra, puis un moteur wgpu prépare le travail GPU."
+      "text": "Un peu, oui, et c'est voulu. Le moteur de rendu réutilise ces mêmes briques côté CPU pour les transformations et les calculs de caméra. Les maths ne sont pas une expérience à part : elles alimentent le dessin."
     },
     {
       "speaker": "B",
-      "text": "Et la scène, elle ressemble à quoi ?"
+      "text": "Et le dessin, comment ça marche ?"
     },
     {
       "speaker": "A",
-      "text": "À un arbre. Les entités ont des relations parent-enfant : une transformation locale vit dans une hiérarchie. Si on déplace un parent, on change le contexte dans lequel ses enfants sont dessinés. La crate exporte aussi des caméras et des cibles de rendu."
+      "text": "Imagine un parcours : la géométrie passe par les transformations CPU, puis par une scène avec des caméras, puis par un moteur de rendu basé sur wgpu. Le résultat s'affiche dans une fenêtre native ou dans un canevas web grâce à WebAssembly."
     },
     {
       "speaker": "B",
-      "text": "Et ça tourne où ?"
+      "text": "Qu'est-ce qu'il y a dans la scène ?"
     },
     {
       "speaker": "A",
-      "text": "Dans une fenêtre native ou sur un canevas web, via WebAssembly. Antoine sépare le code de plateforme du code de scène et du code numérique, donc les deux cibles partagent les mêmes briques."
+      "text": "Un monde d'entités, chacune avec une transformation, plus des caméras et des cibles de rendu. La scène est un arbre de parents et d'enfants. Pense à une main qui tient une tasse : tu bouges la main, la tasse suit, parce que sa position est décrite par rapport à la main."
     },
     {
       "speaker": "B",
-      "text": "Ça veut dire que ça se comporte pareil partout ?"
+      "text": "Bien vu. Et séparer le natif du web ?"
     },
     {
       "speaker": "A",
-      "text": "Il reste prudent. Ça donne des briques communes, mais ça ne prouve pas un comportement identique sur tous les GPU ou navigateurs. Même précaution côté GPU : le schéma montre le chemin de rendu, pas une affirmation que tous les calculs numériques passent par là."
+      "text": "Le code de plateforme a sa propre couche, à part de la scène et des calculs, donc les deux cibles partagent les mêmes briques. Il y a aussi une sérialisation optionnelle avec la fonctionnalité serde, et des fonctions GPU optionnelles derrière un drapeau."
     },
     {
       "speaker": "B",
-      "text": "Des chiffres de performance ?"
+      "text": "C'est seulement des maths et du rendu ?"
     },
     {
       "speaker": "A",
-      "text": "Aucun, volontairement. Il y a une abstraction d'exécuteur et une option GPU, mais c'est un choix de conception, pas un gain mesuré. Pour comparer, il faudrait un benchmark reproductible, avec une taille d'entrée et un matériel précis."
+      "text": "Le workspace est plus large. Le manifeste d'Antoine liste des crates pour la géométrie, les collisions, la cinématique, la physique, le réseau, le parsing et le calcul neuronal, à côté de mathlib. Il s'appuie sur ce manifeste et sur les points d'entrée des modules pour voir comment tout s'assemble."
     },
     {
       "speaker": "B",
-      "text": "Il y a quoi d'autre dans le projet ?"
+      "text": "Donc on retient un chemin clair des matrices aux pixels."
     },
     {
       "speaker": "A",
-      "text": "Le manifeste racine liste des crates pour la géométrie, les collisions, la cinématique, la physique, le réseau, le parsing et le réseau de neurones. Le README parle surtout de la crate de maths, alors il lit le manifeste et les points d'entrée des modules."
-    },
-    {
-      "speaker": "B",
-      "text": "Donc on lit l'espace de travail, pas seulement le README."
-    },
-    {
-      "speaker": "A",
-      "text": "Oui, et on garde en tête que c'est du code exploratoire. L'article complet a le schéma d'architecture et un lien vers la visite du code."
+      "text": "Oui : stockage, transformations, scène, rendu. L'article complet a le schéma d'architecture et les liens vers chaque fichier source."
     }
   ],
-  "audio_hash": "f1dd47dce3e3b607",
-  "duration_seconds": 153,
-  "source_hash": "05d3c85fbe126d64"
+  "source_hash": "a852ecc2ba0c751d",
+  "audio_hash": "1c3fd0657fcdadd5",
+  "duration_seconds": 139
 }

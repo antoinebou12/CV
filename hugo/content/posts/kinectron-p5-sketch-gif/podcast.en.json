@@ -1,60 +1,76 @@
 {
-  "title": "Kinect gestures in p5.js, with GIF export",
+  "title": "Clap your hands and fireworks appear",
   "lines": [
     {
       "speaker": "A",
-      "text": "What happens if you clap in front of a Kinect and the screen answers with fireworks?"
+      "text": "Clap your hands in front of a sensor and fireworks burst on screen. Raise a hand and bubbles float up. That's the sketch Antoine built for a creative-coding class."
     },
     {
       "speaker": "B",
-      "text": "That's the sketch Antoine built for a creative-coding class. It streams Kinect v2 skeleton data from Kinectron into p5.js and draws every tracked joint as a dot."
+      "text": "How does the computer know you clapped?"
     },
     {
       "speaker": "A",
-      "text": "And the gestures?"
+      "text": "A Kinect v2 camera tracks your body as a skeleton of twenty-five joints. A tool called Kinectron streams those joints into the browser, where p5 dot js draws each joint as a dot."
     },
     {
       "speaker": "B",
-      "text": "Six of them, checked on every body frame. Clap and you get fireworks. Hand above the hips, bubbles rise. Hand below, stars fall."
+      "text": "So it's like a stick figure made of dots."
     },
     {
       "speaker": "A",
-      "text": "How does the code decide a clap happened?"
+      "text": "Exactly. And every frame, the sketch asks six simple questions: are the hands clapping, is the hand above the hips, are both hands above the head, and so on. Each question is a tiny function that compares joint positions."
     },
     {
       "speaker": "B",
-      "text": "Joint positions come normalized between zero and one, so every threshold is a fraction of the frame. A clap is just the two hands getting closer than a small distance."
+      "text": "What does clapping look like to a computer?"
     },
     {
       "speaker": "A",
-      "text": "Is there a way to test without standing in front of the sensor?"
+      "text": "Just distance. Positions come in as numbers between zero and one, so when the two hands get closer than a small fraction of the frame, that's a clap, and fifty firework particles pop out at the right hand."
     },
     {
       "speaker": "B",
-      "text": "Yes. A flag called liveData switches to a recorded skeleton file, and then Stop and Play buttons appear. A Save as GIF button works in both modes, and p5 handles the recording and download itself."
+      "text": "What about the other gestures?"
     },
     {
       "speaker": "A",
-      "text": "Antoine also lists the mistakes he made. Two copies of p5 in the page head. And a joint-map function named Kinectron that hid the library's own constructor."
+      "text": "A hand above the hips releases bubbles that rise. A hand below sends stars falling. The sketch even prints the names of the gestures it detects at the top of the canvas, which makes a great live demo."
     },
     {
       "speaker": "B",
-      "text": "Oh, that's a sneaky one."
+      "text": "And no Kinect on hand?"
     },
     {
       "speaker": "A",
-      "text": "There's more. His OK-sign check asks for joints that don't exist on Kinect v2, so that gesture never fires. And the clap flag resets on the next frame, so fireworks go off every other frame while hands stay together."
+      "text": "There's a recorded mode. The sketch replays a saved skeleton file frame by frame, and adds Stop and Play buttons, so you can demo it anywhere."
     },
     {
       "speaker": "B",
-      "text": "There's even an optional side experiment where a clap toggles a smart device through a tiny local Node server."
+      "text": "Then there's the GIF part."
     },
     {
       "speaker": "A",
-      "text": "The takeaway: great for a class demo, not for production body tracking. The full write-up has every step and the pitfalls list."
+      "text": "One button calls saveGif, which records five seconds of the canvas and downloads it as a GIF. Perfect for sharing a class project."
+    },
+    {
+      "speaker": "B",
+      "text": "I heard something about a smart device."
+    },
+    {
+      "speaker": "A",
+      "text": "A fun side experiment. A clap can send a request to a small Node server that uses a library called tuyapi to switch a smart device on the local network on or off. Clap on, clap off."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway?"
+    },
+    {
+      "speaker": "A",
+      "text": "Skeleton data plus a handful of simple rules gets you an interactive piece quickly. The full tutorial has every step and the code."
     }
   ],
   "source_hash": "d559b4551707e899",
-  "audio_hash": "daa2f907309b0eeb",
-  "duration_seconds": 99
+  "audio_hash": "a9df695ba8e4cd0f",
+  "duration_seconds": 118
 }

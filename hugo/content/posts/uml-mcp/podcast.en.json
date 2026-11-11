@@ -1,72 +1,76 @@
 {
-  "title": "Diagrams from chat with uml-mcp",
+  "title": "uml-mcp: ask your assistant for a diagram",
   "lines": [
     {
       "speaker": "A",
-      "text": "You ask a chat assistant for a sequence diagram, and instead of pasting text you can't read, you get a real rendered image. How?"
+      "text": "You type a sentence in chat, and a clean sequence diagram appears. That's what Antoine's open source project, uml-mcp, makes possible."
     },
     {
       "speaker": "B",
-      "text": "I'm guessing there's a tool behind it."
+      "text": "How does the assistant draw diagrams?"
     },
     {
       "speaker": "A",
-      "text": "There is. It's uml-mcp, an open-source M C P server by Antoine. The assistant sends Mermaid, PlantUML or another supported diagram source, and the server returns the rendered output plus useful links."
+      "text": "Through MCP, the Model Context Protocol, which lets an assistant call real tools. uml-mcp is a server with diagram tools: the assistant writes the diagram source in Mermaid, PlantUML or another supported format, and the server sends back a rendered image and useful links."
     },
     {
       "speaker": "B",
-      "text": "Why M C P instead of templates?"
+      "text": "Think of the assistant as an architect and uml-mcp as the printing shop."
     },
     {
       "speaker": "A",
-      "text": "He started with ChatGPT plugins and prompt templates. Both worked, but editors wanted native tools: enable a server once, call it from the agent, and save the source and the S V G beside the post."
+      "text": "Perfect picture. The architect hands over a sketch in text form, and the shop returns the blueprint."
     },
     {
       "speaker": "B",
-      "text": "So the plugin idea, on a different host."
+      "text": "What's inside?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. The repository documents five tools and around thirty-seven Kroki-backed diagram types. Antoine notes those are counts of the interface, not a benchmark."
+      "text": "Five documented tools: generate a diagram, generate an image, validate the source, list the available diagram types, and render several at once. Through Kroki it covers around thirty-seven types."
     },
     {
       "speaker": "B",
-      "text": "What's the clever bit?"
+      "text": "How do the editable links work?"
     },
     {
       "speaker": "A",
-      "text": "One module builds a JSON state, compresses it with zlib and encodes it as URL-safe base64. That gives both an image link and an editable mermaid dot live link."
+      "text": "For Mermaid, the code builds a small JSON state, compresses it with zlib and encodes it in URL-safe base64. That one state powers both an image link and an editable mermaid dot live link. It also picks the right endpoint for SVG versus PNG, JPEG or WebP."
     },
     {
       "speaker": "B",
-      "text": "And a gotcha?"
+      "text": "Why MCP rather than the earlier tools?"
     },
     {
       "speaker": "A",
-      "text": "The code separates S V G from PNG, J P E G and WebP endpoints. Hit the wrong one and a perfectly valid diagram breaks before the syntax is even the problem."
+      "text": "Antoine started with a ChatGPT diagram plugin and AIPRM sequence templates. Both work, but he wanted native tools: enable a server once, call generate UML from the agent, and save the Mermaid file and SVG beside a blog post. MCP is that layer. The plugin idea is the same, but the host is different."
     },
     {
       "speaker": "B",
-      "text": "Setup?"
+      "text": "How do you set it up in Cursor?"
     },
     {
       "speaker": "A",
-      "text": "Add the server to Cursor's M C P settings, then ask for a diagram type explicitly. There's a hosted endpoint too."
+      "text": "Install from the GitHub repository, add the server to Cursor's MCP settings, then ask for a specific type, like a Mermaid sequence with a user, React, FastAPI and Postgres. There's also a hosted endpoint and a docs site."
     },
     {
       "speaker": "B",
-      "text": "Any warnings?"
+      "text": "Anything for the operator?"
     },
     {
       "speaker": "A",
-      "text": "Models still invent syntax sometimes, so render before publishing. And keep secrets out of prompts."
+      "text": "An admin command, metrics, and a Kroki playground that make it easy to see what the renderer is doing."
     },
     {
       "speaker": "B",
-      "text": "The full write-up has the sequence diagram and install steps."
+      "text": "Where is it used?"
+    },
+    {
+      "speaker": "A",
+      "text": "Antoine uses it across his blog for pipeline and career diagrams. The full post has a sequence diagram of the flow and links to the project page."
     }
   ],
   "source_hash": "bb547974b745e57e",
-  "audio_hash": "4a55870e2b9c1034",
-  "duration_seconds": 104
+  "audio_hash": "178ce24d7832df7a",
+  "duration_seconds": 141
 }

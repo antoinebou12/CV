@@ -43,8 +43,9 @@
   <!---->
   {{- $editorial := resources.Get "editorial.css" -}}
   {{- $chrome := resources.Get "site-chrome.css" -}}
+  {{- $ui := resources.Get "ui.css" -}}
   {{- $motionCSS := resources.Get "motion.css" -}}
-  {{- $css := slice $fonts $tokens $main $custom $editorial $chrome $motionCSS | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
+  {{- $css := slice $fonts $tokens $main $custom $editorial $chrome $ui $motionCSS | resources.Concat (cond (eq .Params.repository_note nil) "main.css" "main-notes-bundle.css") | minify | fingerprint -}}
   <link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
   {{- if eq .Section "projects" -}}

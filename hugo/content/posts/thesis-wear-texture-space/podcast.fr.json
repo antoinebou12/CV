@@ -1,60 +1,68 @@
 {
-  "title": "Donner aux textures la mémoire du contact",
+  "title": "Donner aux surfaces une mémoire du contact",
   "lines": [
     {
       "speaker": "A",
-      "text": "Une surface réelle garde la trace du frottement. Une simulation, elle, l'oublie en général à la fin du pas de calcul."
+      "text": "Pense à une marche de pierre usée au milieu. Personne ne l'a peinte comme ça : ce sont des milliers de pas qui ont glissé au même endroit. Comment une simulation ou un jeu pourrait-il reproduire ça ?"
     },
     {
       "speaker": "B",
-      "text": "Elle l'oublie comment ? La physique sait bien qu'il y a eu contact."
+      "text": "En général, un artiste peint les éraflures à la main, non ?"
     },
     {
       "speaker": "A",
-      "text": "C'est justement le décalage que vise le mémoire d'Antoine à l'ÉTS, sous la direction de Sheldon Andrews. Le solveur de contact calcule impulsions, vitesse relative, traction et dissipation, met à jour les corps rigides, puis s'arrête. Pendant ce temps, les cartes de matériau, albédo, rugosité, normales, restent fixes, sauf si un artiste peint l'usure à la main."
+      "text": "C'est justement le décalage que traite le mémoire d'Antoine à l'ÉTS, dirigé par Sheldon Andrews et soutenu le 14 août 2026. Le solveur de contact d'un simulateur calcule déjà impulsions, vitesse de glissement et frottement. Puis il déplace les objets et oublie tout ça."
     },
     {
       "speaker": "B",
-      "text": "Le mémoire relie les deux."
+      "text": "Le mémoire garde cette information."
     },
     {
       "speaker": "A",
-      "text": "Oui. L'idée centrale : donner aux cartes une mémoire locale persistante du contact. Les contacts épars sont regroupés en patchs, projetés dans des atlas de texture, puis reconstruits sur le GPU en vitesse tangentielle, traction et dissipation. Ça pilote l'accumulation du glissement, de la direction et de l'usure."
+      "text": "Oui. L'idée : donner aux cartes de matériau, comme la couleur, la rugosité et les normales, une mémoire locale persistante du contact. La mécanique du contact alimente la texture, exactement là où le contact a eu lieu."
     },
     {
       "speaker": "B",
-      "text": "Et le maillage ne bouge pas ?"
+      "text": "Ça marche comment, étape par étape ?"
     },
     {
       "speaker": "A",
-      "text": "Aucun remaillage global. Seules les cartes se mettent à jour, progressivement, là où le contact a eu lieu. La distance parcourue par le corps ne suffit pas à prédire où l'usure apparaît."
+      "text": "Les contacts épars sont regroupés en petits patchs locaux, puis projetés dans des atlas de texture. Sur une grille GPU, le système reconstruit la vitesse tangentielle, la traction et la dissipation par frottement. Ces champs pilotent l'accumulation du glissement, de la direction dominante et de l'usure, et les cartes se mettent à jour progressivement, sans remailler le modèle."
     },
     {
       "speaker": "B",
-      "text": "Comment sait-il que c'est réaliste ?"
+      "text": "Il y a trois contributions, c'est ça ?"
     },
     {
       "speaker": "A",
-      "text": "La validation passe par un banc d'abrasion réciproque et des captures GelSight de la microgéométrie mesurée, publiées comme jeu de données. Dans les scénarios testés, les texels écrits suivent mieux l'usure cumulée que la trajectoire du corps seule."
+      "text": "Oui. D'abord, une accumulation locale de l'usure fondée sur la dissipation. Ensuite, une architecture qui projette les contacts vers les atlas et garde la mémoire sur un maillage fixe. Enfin, des mesures GelSight sur un banc d'usure contrôlé, qui servent à construire le jeu de données Wear Surface Texture Datasets et à comparer les motifs simulés à la microgéométrie mesurée."
     },
     {
       "speaker": "B",
-      "text": "Ça tourne en temps réel ?"
+      "text": "Et côté logiciel ?"
     },
     {
       "speaker": "A",
-      "text": "Un cube ou un tore sur un plan reste dans un budget interactif. Le coût grimpe vite quand plusieurs regroupements de contact sont traités ensemble. Et il précise que c'est un modèle d'apparence, pas une simulation tribologique complète."
+      "text": "Deux bases de code. WearPaper contient les sources du mémoire, l'article, les diapositives de soutenance et la bibliographie. TextureFriction est le simulateur interactif, en Qt six et OpenGL, avec la résolution de contact, les passes GPU et les atlas d'usure en temps réel."
     },
     {
       "speaker": "B",
-      "text": "Et le code, il est où ?"
+      "text": "Et les résultats ?"
     },
     {
       "speaker": "A",
-      "text": "Deux bases de code. WearPaper contient les sources du mémoire et les diapositives, et n'est pas public. TextureFriction est le simulateur, où la boucle tourne en interactif. L'article complet a le schéma du pipeline."
+      "text": "Dans les scénarios testés, les texels écrits suivent mieux l'usure cumulée que la simple distance parcourue par le corps, et la forme du contact change le motif. Un cube ou un tore sur un plan reste dans un budget interactif."
+    },
+    {
+      "speaker": "B",
+      "text": "Où voir les mesures ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le jeu de données public est sur GitHub, sous WearSurfacesDatasets. L'article complet a le schéma du pipeline et le lien vers la présentation GraphQuon."
     }
   ],
   "source_hash": "4ab1ff9ed30549fe",
-  "audio_hash": "d9155191a5f85358",
-  "duration_seconds": 127
+  "audio_hash": "e1dfb4bc5d4ccfa0",
+  "duration_seconds": 153
 }

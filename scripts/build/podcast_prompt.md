@@ -28,7 +28,8 @@ reading the page.
 ## Rules
 
 - 320 to 450 words in total, 10 to 18 lines. Each line is 1 to 4 sentences.
-- Explain what the work does and how it works. Do not dwell on bugs,
+- Explain what the work does and how it works, as a story a non-expert can
+  follow. Do not dwell on bugs,
   mistakes, flaws or "what's wrong" with it, even when the page discusses
   them. Lead and close on what it does well.
 - Only use facts that are in the source page. Do not invent dates, numbers,

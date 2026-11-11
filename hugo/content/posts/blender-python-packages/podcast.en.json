@@ -1,68 +1,72 @@
 {
-  "title": "Why pip does nothing inside Blender",
+  "title": "Making pip work inside Blender",
   "lines": [
     {
       "speaker": "A",
-      "text": "Picture this. You write a Blender add-on, you type pip install, it works fine, and then Blender says it has never heard of the module. Annoying, right?"
+      "text": "Picture this. You write a Blender add-on that needs NumPy, you type pip install, and Blender still says it has never heard of the module. What's going on?"
     },
     {
       "speaker": "B",
-      "text": "Honestly yes. I'd assume pip was broken. What's actually going on?"
+      "text": "I'd have blamed pip. What's the real reason?"
     },
     {
       "speaker": "A",
-      "text": "Blender ships its own Python. So the pip on your system installs packages for a completely different interpreter. Add-ons that need NumPy, meshio or requests all hit that same wall."
+      "text": "Blender ships its own Python. The pip on your system installs for a completely different interpreter. So Antoine wrote a small installer that talks to Blender's own Python instead."
     },
     {
       "speaker": "B",
-      "text": "So the package is installed, just in the wrong house."
+      "text": "How does it find the right one?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. Antoine wrote a small installer for this, for Blender 4.2 and up on Windows. It calls pip through Blender's own interpreter, so the package lands where Blender will actually look."
+      "text": "Inside Blender, the system executable value points at Blender's bundled interpreter. The script runs pip through that, so packages are installed for the Python that will actually import them. It works on Windows with Blender 4.2 and up."
     },
     {
       "speaker": "B",
-      "text": "And where does it put the files? I don't love add-ons that need admin rights."
+      "text": "And where do the packages go?"
     },
     {
       "speaker": "A",
-      "text": "No admin needed. It uses a per-user scripts modules folder that's writable, and it survives add-on reloads. It also skips packages that already import, so a second run is quick."
+      "text": "Into a per-user modules folder that Blender itself can name. It's writable without admin rights, and it survives add-on reloads. Then the script adds that folder to the import path, so the next import just works."
     },
     {
       "speaker": "B",
-      "text": "What about the interface freezing while pip downloads things?"
+      "text": "Think of it as a delivery driver who always uses the building's own side door rather than the front desk of a different building."
     },
     {
       "speaker": "A",
-      "text": "That's the other half of the trick. The install runs in a background thread, so Blender stays responsive. But only the main thread may touch the interface, so the popups go through Blender's timers and show up when it's done."
+      "text": "Nice. What about waiting for downloads? Doesn't Blender freeze?"
     },
     {
       "speaker": "B",
-      "text": "Smart. How do people run it?"
+      "text": "That's the other trick. The install runs in a background thread, with a progress bar, so the interface stays responsive. Blender only lets the main thread touch the UI, so popups go through a timer that runs on the main side. You get a message when everything is installed."
     },
     {
       "speaker": "A",
-      "text": "Two ways. Paste it into the Scripting workspace and hit Run Script, or call it from your add-on's register function so dependencies ship with the add-on."
+      "text": "Does it reinstall everything each time?"
     },
     {
       "speaker": "B",
-      "text": "Any gotchas?"
+      "text": "No. It tries to import each package first and skips the ones already there, so a second run is quick. The list lives in one dictionary at the top, with pinned versions like meshio and requests."
     },
     {
       "speaker": "A",
-      "text": "A few. Restart Blender after the first install, pin your versions because Blender's Python isn't your system's 3.12, and on locked-down corporate PCs pip may be blocked, so you'd bundle wheels by hand."
+      "text": "How do you use it?"
     },
     {
       "speaker": "B",
-      "text": "So users stop asking which Python to use."
+      "text": "Two ways. Paste it into the Scripting workspace, press Run Script and wait for the popup. Or call it from the add-on's register function, so the dependencies arrive with the add-on and users never have to guess which Python to use."
     },
     {
       "speaker": "A",
-      "text": "That's the takeaway. You own the dependency list, and users just click. The full write-up has the script and the troubleshooting table."
+      "text": "That sounds like fewer support emails."
+    },
+    {
+      "speaker": "B",
+      "text": "Exactly. You own the package list in one place. The full write-up has the complete script and a screenshot of the Scripting workspace, if you want to copy it."
     }
   ],
   "source_hash": "1908bc938ffdc4d7",
-  "audio_hash": "9f84838ae0fb4254",
-  "duration_seconds": 114
+  "audio_hash": "48c15dd6a8f2b48c",
+  "duration_seconds": 127
 }

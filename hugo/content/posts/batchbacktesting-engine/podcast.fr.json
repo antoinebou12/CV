@@ -1,68 +1,68 @@
 {
-  "title": "BatchBacktesting : lire les hypothèses, pas seulement les graphiques",
+  "title": "Dans le moteur BatchBacktesting",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un piège classique en analyse de données : prendre le meilleur de chaque colonne et présenter ça comme un seul résultat. Sauf que cette ligne-là n'a jamais existé."
+      "text": "Vous avez une idée de stratégie et cinquante actions pour la tester. Les passer une par une serait long. Comment tout tester et comparer les résultats proprement ?"
     },
     {
       "speaker": "B",
-      "text": "Comment est-ce que ça arrive ?"
+      "text": "Je suppose que c'est le travail de BatchBacktesting ?"
     },
     {
       "speaker": "A",
-      "text": "Ça vient d'un projet Python, BatchBacktesting, du groupe AlgoETS. Antoine a lu le code source pour comprendre ce qu'il fait vraiment. Dans le script d'analyse, on regroupe par instrument et on prend le maximum. Chaque colonne a son maximum indépendant, donc la ligne obtenue peut mélanger rendement, baisse maximale et durée de runs différents."
+      "text": "Tout à fait. Antoine a lu le moteur Python du groupe AlgoETS et en a fait un article. Son angle me plaît : un backtest par lots, c'est un petit pipeline de données. On choisit les instruments, on récupère les prix, on les nettoie, on lance une stratégie et on garde des résultats comparables."
     },
     {
       "speaker": "B",
-      "text": "Il faut donc choisir une vraie ligne d'abord."
+      "text": "Par où ça commence ?"
     },
     {
       "speaker": "A",
-      "text": "Oui, par exemple selon le rendement, et seulement ensuite parler de sa baisse. Antoine précise que c'est une observation de lecture de code, pas une mesure."
+      "text": "Par un seul instrument. Une fonction, process_instrument, choisit la source de prix pour une action ou une crypto, nettoie les données et construit un backtest. Elle ajoute ensuite le nom de l'instrument et de la stratégie au résultat, pour qu'on sache toujours de quelle ligne il s'agit."
     },
     {
       "speaker": "B",
-      "text": "Et le moteur, il fait quoi concrètement ?"
+      "text": "Et le côté par lots, c'est la même chose en boucle ?"
     },
     {
       "speaker": "A",
-      "text": "C'est un petit pipeline de données. On donne une liste d'instruments et une stratégie. Pour chaque instrument : récupération des prix, nettoyage, backtest, écriture des résultats. Le tout dans un pool de threads, avec quatre workers par défaut pour le mode une stratégie."
+      "text": "En parallèle, plutôt. Un pool de threads traite plusieurs instruments à la fois, et le runner à une stratégie utilise quatre workers par défaut. C'est comme quatre caisses ouvertes au lieu d'une seule."
     },
     {
       "speaker": "B",
-      "text": "C'est une promesse de vitesse ?"
+      "text": "Et côté argent, quelles hypothèses ?"
     },
     {
       "speaker": "A",
-      "text": "Non, et il le dit : ce sont des valeurs par défaut du code, pas un débit mesuré. Même chose pour les hypothèses : cent mille de capital de départ, zéro virgule deux pour cent de commission, ordres exclusifs. Elles sont dans le constructeur, donc à garder à côté de toute comparaison de rendements."
+      "text": "Cent mille de capital de départ, une commission de zéro virgule deux pour cent, et des ordres exclusifs. Ces paramètres sont dans le constructeur, donc juste à côté de tout rendement qu'on compare."
     },
     {
       "speaker": "B",
-      "text": "Et le slippage ?"
+      "text": "Un exemple de stratégie ?"
     },
     {
       "speaker": "A",
-      "text": "Pas couvert. Slippage, ventes à découvert, titres retirés de la cote, opérations sur titres : tout ça demande une revue à part. Autre détail : la stratégie EMA calcule trois moyennes, vingt, quatre-vingts et cent cinquante, mais les entrées ne comparent que les deux premières."
+      "text": "La stratégie EMA calcule trois moyennes mobiles, sur vingt, quatre-vingts et cent cinquante périodes. Les entrées comparent les courbes vingt et quatre-vingts. À l'achat, elle ferme la position précédente, puis place un stop à quatre-vingt-dix pour cent du prix et une cible à cent vingt-cinq pour cent."
     },
     {
       "speaker": "B",
-      "text": "Et quand ça plante ?"
+      "text": "Et qu'est-ce qui sort à la fin ?"
     },
     {
       "speaker": "A",
-      "text": "Un instrument en échec ne renvoie rien. Si tous échouent, l'étape suivante n'a plus rien à assembler. Et l'aide multi-stratégies imbrique des pools dans un pool, donc attention aux limites des API."
+      "text": "Un CSV par instrument, un CSV agrégé par stratégie, et des graphiques HTML facultatifs. Le README renvoie à un exemple publié sur l'action Apple, d'avril 2018 à avril 2023. Pour l'agrégat, Antoine conseille de choisir une vraie ligne selon son rendement, pour que le drawdown et la durée viennent de la même simulation."
     },
     {
       "speaker": "B",
-      "text": "Ce qu'on retient : lire les hypothèses avant les courbes."
+      "text": "Donc on retient un moteur qui garde ses hypothèses visibles et ses résultats comparables."
     },
     {
       "speaker": "A",
-      "text": "Voilà. Antoine n'a relancé aucune simulation ni avancé de nouveaux chiffres de rendement. L'article complet a le diagramme et les liens vers le code."
+      "text": "Voilà. L'article complet a le schéma du flux et les liens vers le code source."
     }
   ],
   "source_hash": "8945fd2b6fcccd08",
-  "audio_hash": "0ed6cf8bf7101410",
-  "duration_seconds": 138
+  "audio_hash": "db40a539ec1afeec",
+  "duration_seconds": 139
 }

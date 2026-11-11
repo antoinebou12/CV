@@ -1,68 +1,68 @@
 {
-  "title": "Un serveur nano, un script de nuit et une requête qui répondait toujours un",
+  "title": "Un petit serveur qui surveille son propre trafic",
   "lines": [
     {
       "speaker": "A",
-      "text": "Antoine voulait compter les visiteurs distincts de son reverse proxy. Résultat : chaque ligne affichait le chiffre un. Toutes les lignes. Quand un résultat est aussi uniforme, il y a un loup."
+      "text": "Et si tu pouvais voir qui visite ton site perso, de quels pays ils viennent, pour environ dix cents par jour ?"
     },
     {
       "speaker": "B",
-      "text": "Je parie que ce n'est pas Internet qui a un problème, mais la requête."
+      "text": "Dix cents ? Certains tableaux de bord facturent plus que ça juste pour la page de connexion."
     },
     {
       "speaker": "A",
-      "text": "Tout juste. Mais plantons d'abord le décor. Il fait tourner Caddy, un serveur web qui gère le HTTPS tout seul, sur une toute petite instance EC2 d'AWS, une t4g point nano. Ça coûte à peu près dix cents par jour. Le but, c'était une visibilité bon marché sur un reverse proxy personnel, pas une facture de tableau de bord SaaS."
+      "text": "C'était l'objectif d'Antoine. Il faisait déjà tourner Caddy à la maison pour Home Assistant, alors il a monté une version AWS : une minuscule instance EC2 t4g nano qui joue le rôle de reverse proxy, avec HTTPS automatique, et une petite chaîne de services cloud pour surveiller les journaux."
     },
     {
       "speaker": "B",
-      "text": "Et les journaux, comment ils vont de la petite machine jusqu'à un endroit utile ?"
+      "text": "Petit rappel : un reverse proxy, c'est la porte d'entrée qui redirige les visiteurs vers le vrai site ?"
     },
     {
       "speaker": "A",
-      "text": "Caddy écrit des journaux d'accès en JSON, avec rotation. Un court script Python lancé par cron à minuit les envoie à CloudWatch. Ensuite, un workflow Step Functions appelle deux fonctions Lambda. La première lance une requête Logs Insights sur les vingt-quatre dernières heures et renvoie les adresses IP. La seconde interroge ipinfo point io pour chaque adresse et range le résultat dans un deuxième groupe de journaux."
+      "text": "Voilà, comme une réceptionniste. Les visiteurs parlent à Caddy, et Caddy les envoie au bon endroit. Sa première version, vers 2021, c'était un petit VPS relié à un serveur à la maison par un tunnel WireGuard. L'installation EC2 en est la suite."
     },
     {
       "speaker": "B",
-      "text": "Donc de la plomberie qu'on paie à l'exécution, plutôt qu'un serveur qui fait de l'analyse. Et un tableau de bord par-dessus ?"
+      "text": "Et les journaux, dans tout ça ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Trafic, taux d'erreurs, processeur, réseau et géolocalisation, tout sur un même tableau de bord CloudWatch."
+      "text": "Caddy écrit chaque requête en une ligne JSON, un fichier par site, avec rotation à dix mégaoctets, cinq fichiers gardés pendant sept jours. Chaque nuit, un court script Python avec boto3 lit ces fichiers et les envoie dans un groupe de journaux CloudWatch nommé reverse proxy."
     },
     {
       "speaker": "B",
-      "text": "D'accord, revenons au bogue. Pourquoi des un partout ?"
+      "text": "Donc CloudWatch devient le classeur."
     },
     {
       "speaker": "A",
-      "text": "Sa première requête regroupait par adresse IP, puis comptait les adresses IP distinctes dans chaque groupe. Forcément, chaque groupe n'en contient qu'une. Ce qu'il voulait vraiment, c'était le nombre de requêtes par adresse, alors il l'a réécrite pour compter les requêtes et trier là-dessus."
+      "text": "Exact, et c'est là que ça devient intéressant. Un flux Step Functions lance deux fonctions Lambda à la suite. La première, QueryLogsInsights, demande à CloudWatch Logs Insights les adresses des visiteurs des dernières vingt-quatre heures."
     },
     {
       "speaker": "B",
-      "text": "Le piège classique. La requête passe, les chiffres ont l'air crédibles, et ils ne veulent rien dire."
+      "text": "Et la deuxième ?"
     },
     {
       "speaker": "A",
-      "text": "Il pointe aussi d'autres faiblesses. Le script envoie une ligne par appel, alors qu'un appel peut en prendre dix mille. Il peut renvoyer des lignes en relisant les fichiers. Et il lierait l'API d'administration de Caddy à localhost plutôt que de la laisser ouverte partout."
+      "text": "GetGeolocation. Elle prend cette liste d'adresses, interroge ipinfo point io pour chacune, et écrit la ville, la région, le pays, les coordonnées et l'organisation dans un autre groupe de journaux, geoip."
     },
     {
       "speaker": "B",
-      "text": "Et aujourd'hui, où en est le montage ?"
+      "text": "Une adresse devient donc un endroit sur la carte."
     },
     {
       "speaker": "A",
-      "text": "Il utilise Caddy dans Docker sur un VPS, avec Terraform et Ansible, et il a abandonné l'envoi vers CloudWatch. Une leçon reste : derrière Cloudflare, l'adresse distante est celle d'un serveur Cloudflare, tant que Caddy ne fait pas confiance à ses plages. Toutes les requêtes par IP en dépendent."
+      "text": "Oui. Un tableau de bord CloudWatch rassemble le tout : le trafic, les taux d'erreur, le processeur et le réseau de l'instance, et les résultats de géolocalisation. Comme tout se paie à l'exécution, ça reste économique, ce qui convient à un trafic personnel."
     },
     {
       "speaker": "B",
-      "text": "Alors à retenir : vérifier ce que nos chiffres comptent vraiment."
+      "text": "Et l'installation a évolué ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Une visibilité structurée ne demande pas un budget Datadog, juste un délai de cron et un peu de Python. L'article complet a le schéma, les captures et toutes les requêtes."
+      "text": "Oui. Aujourd'hui, Antoine fait tourner Caddy dans Docker sur un VPS, provisionné avec Terraform et configuré avec Ansible, en gardant la même recette de journaux JSON par site. À retenir : avec un peu de Python et quelques services managés, on obtient une vraie visibilité sur son trafic sans grosse facture. L'article complet a les schémas et le code."
     }
   ],
   "source_hash": "6e78d815d18019b3",
-  "audio_hash": "e37556173c7be9c2",
-  "duration_seconds": 171
+  "audio_hash": "ae4f6d998941aecd",
+  "duration_seconds": 154
 }

@@ -1,68 +1,67 @@
 {
-  "title": "Où cette image a-t-elle attendu ?",
+  "title": "Suivre une image du réseau jusqu'à l'écran",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un stream peut afficher un très bon débit et pourtant donner l'impression d'être en retard. Ça vous est déjà arrivé ?"
+      "text": "Imagine un stream avec un très bon débit, mais qui donne quand même l'impression d'arriver en retard. Les chiffres sont beaux, et tes pouces ne sont pas d'accord. Alors, où est passé le temps ?"
     },
     {
       "speaker": "B",
-      "text": "Oui, et je blâme toujours le réseau."
+      "text": "Celui-là est vicieux. Si tout a l'air rapide, par où commencer ?"
     },
     {
       "speaker": "A",
-      "text": "Pas si vite. Artemis Switch, c'est le fork de Moonlight-Switch d'Antoine pour la Nintendo Switch. Il s'intéresse au trajet entre la réception d'une image et son affichage. La vraie question n'est pas la vitesse du décodeur, c'est : où cette image a-t-elle attendu ?"
+      "text": "C'est la question derrière Artemis Switch, le fork de Moonlight-Switch d'Antoine pour la Nintendo Switch. Il s'intéresse au trajet entre la réception d'une image et son affichage : où cette image a-t-elle attendu ?"
     },
     {
       "speaker": "B",
-      "text": "Et ce trajet, il ressemble à quoi ?"
+      "text": "Donc le PC fait le gros du travail, et la Switch montre le résultat ?"
     },
     {
       "speaker": "A",
-      "text": "Un PC, Sunshine ou Apollo, envoie la vidéo avec le protocole Moonlight. La Switch la décode avec FFmpeg et NVDEC, la met dans une file, choisit une image, puis l'affiche avec deko3d. Et cette séparation aide à déboguer : un mauvais mode d'écran virtuel, c'est le serveur. Une file d'images décodées qui grossit, c'est le client."
+      "text": "Voilà. Un PC avec Sunshine ou Apollo envoie le jeu via le protocole Moonlight. Sur la Switch, la vidéo est décodée avec FFmpeg et NVDEC, arrive dans une file d'images, puis deko3d, la couche graphique, l'affiche. Tout ce qui suit cette file relève du client, ce qui aide à savoir à qui appartient un accroc."
     },
     {
       "speaker": "B",
-      "text": "Au moins on sait qui accuser."
+      "text": "C'est comme une cuisine de resto : les plats sortent, patientent au passe, puis le serveur les amène à table."
     },
     {
       "speaker": "A",
-      "text": "Voilà. Maintenant le détail subtil. Quand la file prend du retard, le code jette les vieilles images pour privilégier la fraîcheur. Mais il vérifie d'abord l'échéance de la plus ancienne image, avant de passer à la plus récente."
+      "text": "Bonne image, et le passe, c'est là que se joue la partie astucieuse. Quand les images s'accumulent, le client choisit lesquelles garder. Il vérifie d'abord l'échéance de la plus ancienne. Une fois l'affichage autorisé, il libère les anciennes et montre la plus récente."
     },
     {
       "speaker": "B",
-      "text": "Pourquoi cet ordre ?"
+      "text": "Pourquoi la plus ancienne plutôt que la plus récente ?"
     },
     {
       "speaker": "A",
-      "text": "Imagine un vigile qui remet le compteur à zéro chaque fois qu'un nouveau client entre. Si l'échéance suit la dernière image arrivée, elle recule sans cesse. La file reçoit des images, mais n'en montre jamais. En gardant l'échéance de la plus ancienne, on évite ça."
+      "text": "Si l'échéance suivait toujours la dernière arrivée, elle reculerait sans arrêt : les images entreraient, mais aucune ne serait présentée. En gardant celle de la plus ancienne, l'écran continue d'avancer, et un retard accumulé permet de contourner l'attente."
     },
     {
       "speaker": "B",
-      "text": "Une petite règle, mais qui change tout."
+      "text": "Et comment on sait que ça marche ?"
     },
     {
       "speaker": "A",
-      "text": "Il y a aussi une classe de télémétrie qui mesure chaque étape : décodage, attente en file, rendu, soumission au GPU, débit réel. Antoine précise bien ses limites. Le pipeline client commence après la réception réseau. Il ne couvre ni l'encodage sur le PC, ni le balayage de l'écran, ni les commandes de la manette."
+      "text": "Un module de télémétrie mesure chaque étape : le décodage, l'attente en file, le rendu, la soumission GPU, le débit réel et le temps jusqu'aux premières étapes du stream. Une horloge monotone encadre ces mesures."
     },
     {
       "speaker": "B",
-      "text": "Donc pas de chiffre magique de latence."
+      "text": "Au lieu d'un seul chiffre de latence flou, on a une chronologie par image."
     },
     {
       "speaker": "A",
-      "text": "Non. Pour tester sur console, il garde le même serveur, la même scène, la même résolution, le même réseau, change une option à la fois, et sépare les essais en mode portable et docké. Une moyenne plus basse avec des pics pires peut sembler plus lente."
+      "text": "Exactement. Le README décrit aussi les modes Fit, Fill et Stretch, un agrandissement de type FSR, RCAS, des profils nommés et des panneaux de diagnostic. On garde le même serveur, la même scène et le même réseau, on change une option à la fois, et on compare l'attente et les intervalles, en portable puis en docké."
     },
     {
       "speaker": "B",
-      "text": "Et compiler, ce n'est pas la même chose que bien jouer."
+      "text": "Une bonne habitude pour n'importe quel pipeline."
     },
     {
       "speaker": "A",
-      "text": "Exactement. Le README distingue lui-même les tests et les builds de la validation sur appareil. À retenir : mesurer où l'image attend, pas seulement la vitesse du décodage. L'article complet a le schéma du trajet et les liens vers les deux fichiers source."
+      "text": "Oui : plutôt que de demander si le décodeur est rapide, on demande où chaque image a attendu. L'article complet a le schéma et les liens vers le code."
     }
   ],
-  "source_hash": "50e1d56a5fcdbbec",
-  "audio_hash": "5a4634b2cf8285d4",
+  "audio_hash": "dfe967527ed351bc",
   "duration_seconds": 153
 }

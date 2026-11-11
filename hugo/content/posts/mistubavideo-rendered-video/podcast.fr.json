@@ -1,60 +1,80 @@
 {
-  "title": "Rejouer une simulation sans la relancer",
+  "title": "De la simulation à la vidéo",
   "lines": [
     {
       "speaker": "A",
-      "text": "Tu viens de passer des heures sur une simulation, et tu réalises que l'angle de caméra était mauvais. Tu relances tout ?"
+      "text": "Une simulation physique produit des nombres : où les corps se sont déplacés, quelles zones d'une surface ont changé. Comment en faire un film qu'on peut regarder ?"
     },
     {
       "speaker": "B",
-      "text": "Je pleure un peu d'abord. Il y a une solution ?"
+      "text": "Je suppose qu'il faut quelque chose qui dessine tout ça."
     },
     {
       "speaker": "A",
-      "text": "C'est l'idée de MistubaVideo. Il transforme les sorties d'une simulation en images et en vidéo avec Mitsuba 3. Comme le rendu part d'un enregistrement, on change la caméra ou l'éclairage sans refaire la simulation."
+      "text": "C'est MistubaVideo. Il prend les exports d'une simulation et les transforme en images et en vidéo avec Mitsuba 3, un moteur de rendu qui suit les chemins de la lumière pour des images réalistes."
     },
     {
       "speaker": "B",
-      "text": "Concrètement, il lit quoi ?"
+      "text": "Pourquoi séparer le dessin de la simulation ?"
     },
     {
       "speaker": "A",
-      "text": "Deux choses. Un moteur par lots traite des séquences de maillages OBJ, et FFmpeg assemble les images en vidéo ou en GIF. Ensuite, un module qui s'appelle mitsuba-video rejoue les poses des corps et les champs de surface enregistrés, comme l'usure."
+      "text": "Parce qu'une fois la simulation enregistrée, on peut changer la caméra ou l'éclairage sans la relancer. C'est comme filmer une pièce une fois, puis monter depuis tous les angles."
     },
     {
       "speaker": "B",
-      "text": "On voit donc où la surface s'est usée."
+      "text": "Qu'est-ce qu'on lui donne ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Pour chaque image, il applique les poses, mélange un matériau de base et un matériau affecté selon le champ de surface, puis fait le rendu. Il peut ajouter une carte de chaleur, un panneau d'atlas UV et une courbe de surface couverte, avant d'encoder un MP4."
+      "text": "Deux voies. Un moteur par lots traite une séquence de fichiers de maillage O B J, et FFmpeg assemble les images en vidéo ou en GIF. La deuxième voie, c'est un module nommé mitsuba-video, qui rejoue les poses enregistrées des corps et les champs de surface, comme l'usure d'un matériau."
     },
     {
       "speaker": "B",
-      "text": "Et pour ne pas perdre de temps de calcul ?"
+      "text": "C'est quoi, un champ de surface ?"
     },
     {
       "speaker": "A",
-      "text": "Il y a une commande pour vérifier les entrées, et une autre pour vérifier le cadrage avant le rendu complet. Les préréglages de qualité vont d'aperçu à brouillon, puis à qualité article."
+      "text": "Une image posée sur la surface, dépliée dans un atlas à plat, qui dit à quel point chaque région a changé. Le module lit un manifeste, un petit fichier qui liste corps, maillages, matériaux, poses et images de champs. Un autre simulateur peut écrire ce même format."
     },
     {
       "speaker": "B",
-      "text": "Un piège à la lecture des résultats ?"
+      "text": "Et pour chaque image ?"
     },
     {
       "speaker": "A",
-      "text": "Un bon. La courbe mesure la surface couverte du champ enregistré, pas la surface visible de l'objet à l'écran. Et pour comparer deux vidéos, garde la même échelle de carte de chaleur, sinon le même champ n'a pas la même allure."
+      "text": "Il applique les poses enregistrées, mélange le matériau de base avec le matériau affecté selon le champ, puis fait le rendu. Il peut ajouter une carte de chaleur, un panneau d'atlas et une courbe de surface couverte, puis encoder un MP4."
     },
     {
       "speaker": "B",
-      "text": "Donc on lit avec méthode."
+      "text": "C'est simple à essayer ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. L'article complet a le tableau du pipeline et les images de rendu."
+      "text": "Trois commandes. Inspect vérifie les entrées, preview vérifie le cadrage, et render produit les images. Il y a des préréglages de qualité nommés preview, draft et paper."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu'est-ce qu'on obtient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Les images de la scène, des images composites, un C S V de surface couverte, et un fichier de configuration avec les paramètres et les temps de calcul, pour refaire une vidéo plus tard. Les images E X R linéaires sont optionnelles."
+    },
+    {
+      "speaker": "B",
+      "text": "Et c'est testé ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le paquet a des tests pytest pour les transformations, le mélange de matériaux, les lecteurs O B J et M T L, et le manifeste."
+    },
+    {
+      "speaker": "B",
+      "text": "Un enregistrement devient donc une vidéo claire et reproductible. L'article complet a le schéma du pipeline."
     }
   ],
   "source_hash": "a323fc43e7b7e461",
-  "audio_hash": "53f0a612a79d7127",
-  "duration_seconds": 105
+  "audio_hash": "abceec9d512abacb",
+  "duration_seconds": 146
 }

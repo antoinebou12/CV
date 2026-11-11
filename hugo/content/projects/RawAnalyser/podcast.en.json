@@ -1,17 +1,17 @@
 {
-  "title": "RawAnalyser: checking raw images in Python",
+  "title": "Looking inside a raw camera image",
   "lines": [
     {
       "speaker": "A",
-      "text": "A camera sensor hands you a raw image. Before anyone makes it pretty, someone has to ask: is it clipped to black or white anywhere?"
+      "text": "A photo from your phone is polished. A raw image straight off a camera sensor is the unpolished data underneath. RawAnalyser is a Python tool that lets Antoine look right into it."
     },
     {
       "speaker": "B",
-      "text": "I never think about that step. Who checks it?"
+      "text": "What does it look for?"
     },
     {
       "speaker": "A",
-      "text": "For one of Antoine's projects, a Python tool called RawAnalyser does. It detects black and white clipping, calculates gamma, and checks flatness with vignette detection, referencing Algolux."
+      "text": "Three main things. Black and white clipping, meaning whether the darkest and brightest values are cut off. Gamma. And flatness, including vignette detection, which is how much the image darkens toward the corners. The vignette idea comes from Algolux."
     },
     {
       "speaker": "B",
@@ -19,34 +19,34 @@
     },
     {
       "speaker": "A",
-      "text": "You give it a folder and a JSON file that marks the region of interest and the gray patches. A small GUI lets you select those on a raw or TIFF file, saves them to that JSON, and keeps watching the raw folder for new files."
+      "text": "With a small JSON file that marks the region of interest and the gray patches, those neutral squares used for measuring. You give the script a folder of raw images plus that file, and choose which analyses to run: clipping, gamma, vignette or histograms."
     },
     {
       "speaker": "B",
-      "text": "So you drop new images in and it checks them."
+      "text": "Drawing coordinates by hand sounds painful."
     },
     {
       "speaker": "A",
-      "text": "That's the idea. There's also a script that inspects a single pixel and uses the Bayer pattern to tell you its color."
+      "text": "That's what the GUI is for. It lets you select the region and gray patches on a raw or TIFF file, saves them to the JSON file, and keeps watching the folder for new images as they arrive."
     },
     {
       "speaker": "B",
-      "text": "Anything oddly specific in there?"
+      "text": "Any pixel-level tools?"
     },
     {
       "speaker": "A",
-      "text": "One script converts 20 megapixel images down to 5 megapixels for the OV20880 sensor."
+      "text": "Yes, a small script called RawPixel. Give it a file and coordinates, and it tells you the pixel's value and its color according to the Bayer pattern, the checkerboard of red, green and blue filters on a sensor. There's also a helper that converts twenty megapixel images to five for a particular sensor."
     },
     {
       "speaker": "B",
-      "text": "Where's the code?"
+      "text": "Is there an example of the sensor info?"
     },
     {
       "speaker": "A",
-      "text": "On GitHub under antoinebou12. The project page lists each script and the libraries it needs."
+      "text": "The page shows one: an OV2740 camera, ten-bit sensor values, and a B G G R Bayer pattern. The GitHub repository has all the options and usage examples."
     }
   ],
   "source_hash": "480e6ef3dee8af33",
-  "audio_hash": "223557f65f3f32dc",
-  "duration_seconds": 69
+  "audio_hash": "47d62b2e8be94220",
+  "duration_seconds": 96
 }

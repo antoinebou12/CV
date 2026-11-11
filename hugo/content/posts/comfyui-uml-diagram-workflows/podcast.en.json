@@ -1,68 +1,76 @@
 {
-  "title": "Diagrams as nodes in ComfyUI",
+  "title": "Diagrams as ComfyUI nodes",
   "lines": [
     {
       "speaker": "A",
-      "text": "A screenshot of a diagram is a dead end. Nobody can fix a typo in it, compare it to last week's version or regenerate it."
+      "text": "Here's a small idea: what if a diagram in your AI image workflow wasn't a screenshot, but text you could read, edit and regenerate?"
     },
     {
       "speaker": "B",
-      "text": "True. You end up redrawing the whole thing."
+      "text": "Like a recipe instead of a photo of the cake."
     },
     {
       "speaker": "A",
-      "text": "That's the itch behind ComfyUI-UML, a project Antoine wrote up. ComfyUI is known for image generation, but any intermediate result can be a node output. Here, diagram text goes in, and an image, a saved file and a shareable link come out."
+      "text": "That's exactly it. Antoine built ComfyUI-UML, a custom node for ComfyUI. Text in, and out come an image, a saved file, and a shareable link."
     },
     {
       "speaker": "B",
-      "text": "So the diagram source stays in the workflow."
+      "text": "What kind of text? Is it some special format?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. Mermaid or PlantUML source is easy to inspect and regenerate, and it travels with the rest of the workflow instead of becoming an unexplained picture. The README documents twenty-eight diagram types through Kroki, with output formats validated per type."
+      "text": "Mermaid or PlantUML, the popular diagram languages. The README documents 28 diagram types through a service called Kroki, with output formats checked for each type. Because the source stays inside the workflow, you can inspect it, compare versions and re-run it."
     },
     {
       "speaker": "B",
-      "text": "Does it need an AI model to write the diagrams?"
+      "text": "And where does the drawing happen?"
     },
     {
       "speaker": "A",
-      "text": "No, that's optional. But if a model does write one, the node cleans it up. It handles several response shapes, pulls out fenced code blocks and prefers one matching the selected diagram type. Useful when the model wraps prose around the Mermaid code."
+      "text": "By default the node sends the source to a Kroki renderer on the web. If you'd rather stay offline, or you're working on a sensitive architecture, the repository documents local Mermaid and Graphviz paths too."
     },
     {
       "speaker": "B",
-      "text": "So it checks the syntax too?"
+      "text": "I heard language models can write these diagrams. Does it handle that?"
     },
     {
       "speaker": "A",
-      "text": "No, and Antoine flags that. Extracting a clean block isn't validating it. The renderer still has to accept the diagram."
+      "text": "It does, as an option. Models often wrap a diagram in a chatty explanation. The node cleans up several response shapes, pulls out the fenced code block, and prefers the one matching the diagram type you chose. A language model isn't required, though."
     },
     {
       "speaker": "B",
-      "text": "What about getting an image back into ComfyUI?"
+      "text": "Then how does a picture show up inside ComfyUI?"
     },
     {
       "speaker": "A",
-      "text": "Raster images go through Pillow, get converted to RGB, scaled between zero and one, and wrapped as a tensor with a batch of one. SVG is trickier. The code tries a CairoSVG conversion, and if that fails it returns a tiny placeholder while still keeping the saved file. So a saved SVG and its preview can differ."
+      "text": "For a regular image, it opens the bytes with Pillow, converts to RGB, scales values between zero and one, and wraps them as a tensor ComfyUI understands. For SVG, it tries a CairoSVG conversion for the preview, and the saved file is kept either way."
     },
     {
       "speaker": "B",
-      "text": "How would I start?"
+      "text": "So you get both a preview and the real file."
     },
     {
       "speaker": "A",
-      "text": "Install it with the comfy node command, restart ComfyUI, and load the single-diagram example. Two nodes, the diagram node into a preview. Add the viewer once rendering works."
+      "text": "Yes. And there's a viewer URL if you want to share the result."
     },
     {
       "speaker": "B",
-      "text": "Any privacy catch?"
+      "text": "How would someone try it?"
     },
     {
       "speaker": "A",
-      "text": "The web backend sends your diagram source to the chosen Kroki service. For sensitive architecture or offline use, local Mermaid and Graphviz paths are documented. The full post has the flow diagram and links to the code."
+      "text": "Install it with the comfy node install command, restart ComfyUI, and open the example workflow called uml single diagram only. It's just two nodes, a diagram node feeding a preview. There are also examples for Mermaid, PlantUML and Ollama."
+    },
+    {
+      "speaker": "B",
+      "text": "So you start with the smallest thing and grow from there."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. Diagrams become one more node in your workflow. The full write-up has the flow diagram and links to the node's source code."
     }
   ],
   "source_hash": "8da1b4fe525f352d",
-  "audio_hash": "31d11bef4704afd2",
-  "duration_seconds": 132
+  "audio_hash": "31b214cf592397f1",
+  "duration_seconds": 135
 }

@@ -1,76 +1,68 @@
 {
-  "title": "Dimension: Rust math that feeds a renderer",
+  "title": "From Rust math to pixels",
   "lines": [
     {
       "speaker": "A",
-      "text": "A renderer is only as good as the math under it. Before a single triangle shows up on screen, something has to decide how matrices are stored and passed around."
+      "text": "What does it take to turn a few numbers in a matrix into a cube spinning on your screen? Antoine's Rust project Dimension answers that, one layer at a time."
     },
     {
       "speaker": "B",
-      "text": "So where does Antoine start in his Rust project called Dimension?"
+      "text": "Okay, so where does a project like that start?"
     },
     {
       "speaker": "A",
-      "text": "With a crate called mathlib. It exposes dense matrix storage, sparse formats like CRS and CCS, vector types, matrix views and submatrices. It also has LU, Cholesky and SVD decompositions, plus root finding and numerical integration."
+      "text": "With the math library, called mathlib. It stores matrices in dense form and in sparse formats, and gives you vectors, views and submatrices. On top of that it offers classic numerical tools: LU, Cholesky and SVD decompositions, root finding and numerical integration."
     },
     {
       "speaker": "B",
-      "text": "That's a lot of linear algebra for a graphics project."
+      "text": "That sounds like a linear algebra textbook."
     },
     {
       "speaker": "A",
-      "text": "It's a workspace for mathematics and graphics experiments, so the two meet in the middle. The rendering crate uses mathlib for CPU transforms and camera math, and then a wgpu renderer prepares the GPU work."
+      "text": "A bit, yes, and that's the point. The renderer reuses those same pieces on the CPU for transforms and camera math. So the math isn't a separate experiment, it feeds the drawing."
     },
     {
       "speaker": "B",
-      "text": "What does the scene look like?"
+      "text": "How does the drawing part work?"
     },
     {
       "speaker": "A",
-      "text": "A tree. Entities have parent-child relationships, so a local transform lives inside a hierarchy. Move a parent and you change the context in which its children are drawn. The render crate also exports cameras and render targets."
+      "text": "Picture a flow: geometry goes into CPU transforms, then into a scene with cameras, then into a renderer built on wgpu. That renderer can show the result in a native window or in a web canvas through WebAssembly."
     },
     {
       "speaker": "B",
-      "text": "And where does it run?"
+      "text": "What's in the scene?"
     },
     {
       "speaker": "A",
-      "text": "In a native window or on a web canvas through WebAssembly. Antoine keeps platform code apart from scene and numerical code, so both targets share the same building blocks."
+      "text": "A world of entities, each with a transform, plus cameras and render targets. The scene is a tree of parents and children. Think of a hand holding a cup: move the hand, and the cup moves with it, because the cup's position is described relative to the hand."
     },
     {
       "speaker": "B",
-      "text": "Does that mean it behaves the same everywhere?"
+      "text": "That's neat. And keeping native and web separate?"
     },
     {
       "speaker": "A",
-      "text": "He's careful there. It gives shared building blocks, but it doesn't prove identical behavior on every GPU or browser. Same caution about the GPU: the diagram shows the rendering path, not a claim that every numerical operation runs on it."
+      "text": "Platform code lives in its own layer, apart from the scene and the numerical code, so both targets share the same building blocks. There's also optional serialization through the serde feature, and optional GPU functionality behind a feature flag."
     },
     {
       "speaker": "B",
-      "text": "Any speed numbers?"
+      "text": "Is it only math and rendering?"
     },
     {
       "speaker": "A",
-      "text": "None, on purpose. There's an executor abstraction and an optional GPU feature, but that's a design choice, not a measured speedup. He says real comparisons would need a reproducible benchmark with an input size and target hardware."
+      "text": "The workspace is wider. Antoine's manifest lists crates for geometry, collision, kinematics, physics, networking, parsing and neural work next to mathlib. He reads the manifest and module entry points to see how it all fits together."
     },
     {
       "speaker": "B",
-      "text": "What else is in the workspace?"
+      "text": "So the takeaway is a clean path from matrices to pixels."
     },
     {
       "speaker": "A",
-      "text": "The root manifest lists crates for geometry, collision, kinematics, physics, networking, parsing and neural work. The README still focuses on the math crate, so he reads the manifest and module entry points to see the real structure."
-    },
-    {
-      "speaker": "B",
-      "text": "So the takeaway is to read the workspace, not just the README."
-    },
-    {
-      "speaker": "A",
-      "text": "Yes, and treat it as exploratory code. The full write-up has the architecture diagram and a link to the code walkthrough."
+      "text": "Yes: storage, transforms, scene, renderer. The full write-up has the architecture diagram and links to each source file."
     }
   ],
-  "audio_hash": "8a5bd85cc908fb60",
-  "duration_seconds": 139,
-  "source_hash": "4f2ba587b3170a74"
+  "source_hash": "1550cdc2803789a0",
+  "audio_hash": "3231e8ffc4e88863",
+  "duration_seconds": 128
 }

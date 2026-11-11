@@ -1,68 +1,80 @@
 {
-  "title": "From a log line to a useful error",
+  "title": "When a log line becomes an error report",
   "lines": [
     {
       "speaker": "A",
-      "text": "A log line says something happened. It rarely says enough to fix it."
+      "text": "A log line says something happened. But to fix an error, you also need the exception, the release, the environment and what the request looked like. How do you get both in one place?"
     },
     {
       "speaker": "B",
-      "text": "Right, you get a message at three in the morning and no idea which release or environment it came from."
+      "text": "I'd guess you wire your logging to your error tracker."
     },
     {
       "speaker": "A",
-      "text": "That gap is what Serilog dot Sinks dot SentrySDK is for. It's a .NET library by Antoine that connects Serilog logging with Sentry error events, so an error carries its exception, release, environment and request context."
+      "text": "Exactly, and that's Serilog.Sinks.SentrySDK, a .NET package from Antoine. It's based on an existing sink from the Serilog community, and it connects Serilog logging to Sentry error reporting."
     },
     {
       "speaker": "B",
-      "text": "Did he start from scratch?"
+      "text": "What's a sink, in this world?"
     },
     {
       "speaker": "A",
-      "text": "No, it's based on an existing community project, serilog-sinks-sentry. And Antoine points out that its GitHub stars measure interest in this repository only, not overall Serilog or Sentry adoption."
+      "text": "The place logs flow into. Think of Serilog as a river of log events, and a sink as a channel that carries them somewhere. Here, the channel leads to Sentry."
     },
     {
       "speaker": "B",
-      "text": "How does it work inside?"
+      "text": "So how is it built?"
     },
     {
       "speaker": "A",
-      "text": "A sink receives each Serilog event and hands it to a small wrapper around the official Sentry SDK. That wrapper handles messages, exceptions and transactions, and it also makes the SDK easy to swap out in tests."
+      "text": "The sink receives each log event and hands it to a small wrapper around the Sentry SDK. The wrapper covers three jobs: capturing messages, capturing exceptions, and creating transactions. Because that boundary is small, it's easy to swap out in tests."
     },
     {
       "speaker": "B",
-      "text": "Any gotcha for people adopting it?"
+      "text": "Anything to know about setup?"
     },
     {
       "speaker": "A",
-      "text": "Yes, initialization. The sink sets up Sentry itself, and the README warns against calling Sentry's init a second time in the same process. In a web app that already initializes monitoring, decide who owns it first."
+      "text": "The sink starts Sentry itself, so you decide once who owns initialization, and it needs a real D S N. Install it with dotnet add package, and the repo has console and ASP.NET Core demos to copy from."
     },
     {
       "speaker": "B",
-      "text": "What about request data? That sounds sensitive."
+      "text": "And for web apps?"
     },
     {
       "speaker": "A",
-      "text": "It is. A companion ASP.NET Core package adds request context, but the post says to choose deliberately what leaves your app and to review personal data settings and filtering. There's also a before-send callback for filtering or enriching events."
+      "text": "A companion project brings request context. It has a request adapter, a destructuring policy, exception extensions and middleware, so errors arrive with the details that help you investigate."
     },
     {
       "speaker": "B",
-      "text": "And what do we actually know about quality?"
+      "text": "Can you tweak what's sent?"
     },
     {
       "speaker": "A",
-      "text": "The README documents unit tests, coverage collection and formatting checks. Antoine doesn't claim to have rerun them, and he doesn't invent a coverage number. The package targets net six and net ten."
+      "text": "Yes. There are advanced options and a beforeSend callback to filter or enrich events, and the code documents how that fits with the sink's own event mapping."
     },
     {
       "speaker": "B",
-      "text": "Install is one command?"
+      "text": "Which versions does it support?"
     },
     {
       "speaker": "A",
-      "text": "dotnet add package, yes. The full post has the architecture diagram and links to the demos."
+      "text": "Two main packages target net6 and net10, plus separate variants for each. A live NuGet badge shows the download count."
+    },
+    {
+      "speaker": "B",
+      "text": "And it's checked?"
+    },
+    {
+      "speaker": "A",
+      "text": "The README documents xUnit tests, coverage collection and formatting checks."
+    },
+    {
+      "speaker": "B",
+      "text": "So logs and errors finally tell one story. The full write-up has the diagram of the adapter."
     }
   ],
   "source_hash": "d3a9c5fe15555894",
-  "audio_hash": "20c7b707755f063c",
-  "duration_seconds": 115
+  "audio_hash": "bcc727db0d37b1ad",
+  "duration_seconds": 124
 }

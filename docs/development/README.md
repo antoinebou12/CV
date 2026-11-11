@@ -35,6 +35,12 @@ The [`hugo/`](../../hugo/) site uses a customized Paper theme header (menus, lan
 
 **Theme CSS (Tailwind):** After editing [`hugo/themes/paper/assets/app.css`](../../hugo/themes/paper/assets/app.css) or templates under `hugo/layouts/`, rebuild the compiled bundle so new utility classes are included: from [`hugo/`](../../hugo/), run `npm ci` then `npm run build:css` (writes `themes/paper/assets/main.css`). The lockfile is [`hugo/package-lock.json`](../../hugo/package-lock.json) in the main repo (the Paper theme is a submodule). GitHub Actions runs this before `hugo` on deploy.
 
+**Audio stories:** every post, project page and project note has a two-host audio episode in English and French. See **[Audio stories](./podcasts.md)** to add, edit or re-render one.
+
+**Live demos and 3D models:** the `demos` and `modelviewer` shortcodes put a running web demo or a rotatable 3D model inside a page. See **[Live demos and 3D models](./blog-embeds.md)**.
+
+**Shared components:** buttons, chips, stats and the home hero live in `hugo/assets/ui.css`. See **[UI library](./ui-library.md)** before adding a new style or a third-party widget.
+
 ## GitHub Actions Workflows
 
 Continuous integration checks the sources; publication is a local step (`scripts/deploy/publish_site.py --publish` builds `docs/` and pushes `main`).

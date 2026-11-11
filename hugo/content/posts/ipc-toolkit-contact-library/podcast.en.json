@@ -1,60 +1,68 @@
 {
-  "title": "IPC Toolkit and the friction that depends on direction",
+  "title": "The contact engine inside a simulation",
   "lines": [
     {
       "speaker": "A",
-      "text": "When two objects touch in a simulation, somebody has to work out when they collide and how much they rub. That's a lot of math to get right."
+      "text": "Imagine a simulation where two surfaces slide against each other, and the program has to know exactly when they touch and how much they resist. Someone has to do that math. In many projects, it's IPC Toolkit."
     },
     {
       "speaker": "B",
-      "text": "So is IPC Toolkit the thing that does that?"
+      "text": "So it's a physics engine?"
     },
     {
       "speaker": "A",
-      "text": "It's a C plus plus library for exactly that. It does collision detection, distance derivatives, and friction potentials. But it's not a full physics engine. The application still owns the time-stepping loop and the solver."
+      "text": "Not a full one. It's a C plus plus library focused only on contact. Your application keeps the time-stepping loop and the solver, and calls the library whenever it needs contact answers."
     },
     {
       "speaker": "B",
-      "text": "So the library answers questions, and the simulation drives."
+      "text": "Like a specialist you phone for one hard question."
     },
     {
       "speaker": "A",
-      "text": "Right. The simulation hands over collision geometry and how the vertices moved. The library runs a broad phase to find candidate pairs, then a narrow phase with continuous collision detection, and sends the result back."
+      "text": "That's a good picture. The simulation passes in collision geometry and how the vertices move. The library first picks candidate pairs in a broad phase, then checks them precisely with continuous collision detection, and hands the result back."
     },
     {
       "speaker": "B",
-      "text": "Where does Antoine come in?"
+      "text": "What does it compute?"
     },
     {
       "speaker": "A",
-      "text": "He contributes upstream, staging changes on his own fork first. Two of his pull requests were merged in 2026. One adds anisotropic friction, and another lets you pass parameters to the Scalable CCD narrow phase."
+      "text": "Four families. Collision detection, in broad and narrow phases. Distance derivatives for edges and triangles. Contact barriers, meaning functions that keep surfaces from passing through each other, including adaptive stiffness. And friction potentials, smooth or lagged."
     },
     {
       "speaker": "B",
-      "text": "Anisotropic friction. Say that in plain words."
+      "text": "And what's Antoine's part in it?"
     },
     {
       "speaker": "A",
-      "text": "Friction that depends on direction and on which two materials are touching. Think of dragging something along the grain of wood versus across it. His thesis work on surface wear needed exactly that from the contact model."
+      "text": "He contributes to it as open source. His fork is where he stages changes before proposing them to the upstream project. One merged contribution adds anisotropic friction, where grip depends on direction. Another merged one lets you pass parameters to the Scalable CCD narrow phase."
     },
     {
       "speaker": "B",
-      "text": "And the other pull request?"
+      "text": "Anything beyond friction?"
     },
     {
       "speaker": "A",
-      "text": "That one is about the GPU path for continuous collision detection. An earlier fix to the Windows CUDA build in the Scalable CCD project, plus the parameter pass-through, helped unblock it."
+      "text": "He also drafted adhesion documentation that was merged, and fixed a Windows CUDA build issue in the Scalable CCD project, the GPU collision detection path."
     },
     {
       "speaker": "B",
-      "text": "Were all of them accepted?"
+      "text": "Is there a common thread?"
     },
     {
       "speaker": "A",
-      "text": "No, a couple were closed without merge, and the page lists them honestly. The full write-up has the diagram and the whole table."
+      "text": "Yes. Friction that depends on direction and material pair, which is exactly what his thesis work on surface wear needed from the contact model. Plus the GPU collision path, which the Windows build and parameter pass-through opened up."
+    },
+    {
+      "speaker": "B",
+      "text": "So the library and his research feed each other."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. If you want to see complete simulations using it, the upstream project points to PolyFEM and Rigid IPC. The full write-up has the architecture diagram and the list of pull requests."
     }
   ],
   "source_hash": "1f4c072386fff06b",
-  "audio_hash": "c0f2b2b5935a8716",
-  "duration_seconds": 102
+  "audio_hash": "dcffa73152c2aa4d",
+  "duration_seconds": 130
 }

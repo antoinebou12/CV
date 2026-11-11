@@ -1,60 +1,48 @@
 {
-  "title": "D2C : une extension ChatGPT qui dessine des diagrammes",
+  "title": "Des diagrammes depuis une conversation ChatGPT",
   "lines": [
     {
       "speaker": "A",
-      "text": "Tu te souviens quand les extensions ChatGPT existaient ? Antoine en a construit une qui transformait une conversation en diagramme."
+      "text": "Et si on pouvait décrire un diagramme dans un chat, et le voir dessiné tout de suite ?"
     },
     {
       "speaker": "B",
-      "text": "Je m'en souviens. Elle dessinait quoi ?"
+      "text": "Ça m'éviterait pas mal de manipulations de boîtes."
     },
     {
       "speaker": "A",
-      "text": "Des diagrammes PlantUML ou Mermaid. Tu décris un système dans la conversation, et l'extension génère le schéma. Elle s'appelle D2COpenAIPlugin."
+      "text": "C'était l'idée derrière D2COpenAIPlugin, une ancienne extension ChatGPT d'Antoine. Elle génère des diagrammes PlantUML ou Mermaid directement depuis la conversation."
     },
     {
       "speaker": "B",
-      "text": "Une vraie extension, pas juste un script à côté ?"
+      "text": "Quelle différence entre les deux ?"
     },
     {
       "speaker": "A",
-      "text": "Une vraie extension ChatGPT, avec une interface orientée création de schémas. La page précise toutefois que c'est un projet historique."
+      "text": "Ce sont deux langages de diagrammes en texte. On écrit quelques lignes qui décrivent les boîtes et les flèches, et l'outil dessine l'image. L'extension laisse ChatGPT écrire ces lignes et récupérer le diagramme rendu."
     },
     {
       "speaker": "B",
-      "text": "Comment on la lançait ?"
+      "text": "Et comment ChatGPT lui parle ?"
     },
     {
       "speaker": "A",
-      "text": "C'est une application Python avec FastAPI. L'installation d'origine : Python, installer les dépendances avec poetry ou un fichier de requirements, configurer les variables d'environnement et un jeton, puis lancer le serveur en local sur le port cinq mille trois."
+      "text": "L'extension est un petit service Python construit avec FastAPI et lancé avec uvicorn. ChatGPT appelle ses routes, et un manifeste lui dit ce que l'extension sait faire. Le dépôt détaille les routes et l'installation."
     },
     {
       "speaker": "B",
-      "text": "Donc ces consignes ont peut-être vieilli."
+      "text": "On dirait une étape vers autre chose."
     },
     {
       "speaker": "A",
-      "text": "C'est la réserve. Elles décrivent l'environnement d'origine, et le manifeste reste dans le dépôt source."
+      "text": "Oui. Elle mène à uml-mcp, le serveur M C P open source d'Antoine pour les diagrammes, qui fait le même travail dans Cursor et via un GPT personnalisé."
     },
     {
       "speaker": "B",
-      "text": "Pour en savoir plus ?"
-    },
-    {
-      "speaker": "A",
-      "text": "La documentation du projet détaille l'implémentation et les routes d'API, et le dépôt GitHub garde le code d'origine. C'est un bon exemple précoce de diagrammes générés depuis une conversation."
-    },
-    {
-      "speaker": "B",
-      "text": "Court et clair."
-    },
-    {
-      "speaker": "A",
-      "text": "La page écrite a les liens."
+      "text": "La page du projet montre une animation de démonstration."
     }
   ],
   "source_hash": "df38454ffe1ec446",
-  "audio_hash": "df6e13e925e3c9b3",
-  "duration_seconds": 83
+  "audio_hash": "8aa1113ef2f07405",
+  "duration_seconds": 71
 }

@@ -1,68 +1,68 @@
 {
-  "title": "A nano server, a nightly script, and a query that always said one",
+  "title": "A tiny server that watches its own traffic",
   "lines": [
     {
       "speaker": "A",
-      "text": "Antoine wrote a query to count distinct visitors to his reverse proxy, and every single row came back with the number one. Every row. That's the kind of result that should make you suspicious."
+      "text": "What if you could see who visits your personal website, which countries they come from, and pay about ten cents a day for the privilege?"
     },
     {
       "speaker": "B",
-      "text": "Let me guess. The query was wrong, not the internet."
+      "text": "Ten cents? Most dashboards charge more than that for a login screen."
     },
     {
       "speaker": "A",
-      "text": "Exactly. But first, the setup. He runs Caddy, a web server that handles HTTPS automatically, on a tiny AWS EC2 instance called a t4g dot nano. It costs about ten cents a day. The goal was cheap visibility into a personal reverse proxy, not a big SaaS dashboard bill."
+      "text": "That was Antoine's goal. He already ran Caddy at home for Home Assistant, so he built an AWS version: a tiny t4g nano EC2 instance acting as a reverse proxy, with automatic HTTPS, and a small chain of cloud services watching the logs."
     },
     {
       "speaker": "B",
-      "text": "So how do the logs get from the little box to somewhere useful?"
+      "text": "Quick refresher. A reverse proxy is the front door that forwards visitors to the real site?"
     },
     {
       "speaker": "A",
-      "text": "Caddy writes JSON access logs, with rotation. Then a short Python script run by cron at midnight ships them to CloudWatch. After that, a Step Functions workflow calls two Lambda functions. One runs a Logs Insights query for the last twenty-four hours and returns the visitor IP addresses. The other looks each address up on ipinfo dot io and writes the location back into a second log group."
+      "text": "Exactly, like a receptionist. Visitors talk to Caddy, and Caddy hands them to the right place. His first version, around 2021, was a small VPS linked to a server at home through a WireGuard tunnel. The EC2 setup grew from that."
     },
     {
       "speaker": "B",
-      "text": "Pay-per-run plumbing instead of a server doing analytics. I like that. And the dashboard sits on top?"
+      "text": "And where do the logs come in?"
     },
     {
       "speaker": "A",
-      "text": "Right. Traffic, error rates, CPU, network, and the geolocation results, all on one CloudWatch dashboard."
+      "text": "Caddy writes every request as a JSON line, one file per site, rotated at ten megabytes with five files kept for seven days. Every night, a short Python script using boto3 reads those files and ships them to a CloudWatch log group called reverse proxy."
     },
     {
       "speaker": "B",
-      "text": "Okay, back to the bug. Why was everything one?"
+      "text": "So CloudWatch becomes the filing cabinet."
     },
     {
       "speaker": "A",
-      "text": "His first query grouped by IP address, and then counted distinct IP addresses inside each group. Of course each group has exactly one. What he actually wanted was requests per IP, so he rewrote it to count requests and sort by that."
+      "text": "Right, and then the interesting part starts. A Step Functions workflow runs two Lambda functions in order. The first one, QueryLogsInsights, asks CloudWatch Logs Insights for the visitor addresses from the last twenty-four hours."
     },
     {
       "speaker": "B",
-      "text": "That's the classic trap. The query runs fine, the numbers look plausible, and they're meaningless."
+      "text": "And the second one?"
     },
     {
       "speaker": "A",
-      "text": "He's also honest about other weak spots. The script sends one log line per call, though a single call can take up to ten thousand events. It can resend lines when it re-reads files. And he'd bind the Caddy admin API to localhost, not leave it listening everywhere."
+      "text": "GetGeolocation. It takes that list of addresses, looks each one up on ipinfo dot io, and writes city, region, country, coordinates and organization into a separate geoip log group."
     },
     {
       "speaker": "B",
-      "text": "And where did the setup end up?"
+      "text": "So an address turns into a place on a map."
     },
     {
       "speaker": "A",
-      "text": "Today he runs Caddy in Docker on a VPS, set up with Terraform and Ansible, and he dropped the CloudWatch shipper. One lesson he kept: behind Cloudflare, the remote IP is a Cloudflare server unless Caddy is told to trust Cloudflare's ranges. Every IP query depends on that."
+      "text": "Yes. A CloudWatch dashboard then puts it all side by side: traffic, error rates, instance CPU and network, and the geolocation results. And since everything is pay-per-run, the whole thing stays cheap, which suits personal-scale traffic."
     },
     {
       "speaker": "B",
-      "text": "So the takeaway is, check what your numbers actually count."
+      "text": "Did the setup evolve?"
     },
     {
       "speaker": "A",
-      "text": "Yes. Structured visibility doesn't need Datadog money, just some cron delay and a bit of Python glue. The full write-up has the architecture diagram, the screenshots and every query."
+      "text": "It did. Today Antoine runs Caddy in Docker on a VPS, provisioned with Terraform and configured with Ansible, and he kept the same per-site JSON logging recipe. The takeaway: with a little Python glue and a few managed services, you get real visibility into your own traffic without a big monitoring bill. The full write-up has the diagrams and the code."
     }
   ],
   "source_hash": "1714120b9b429b83",
-  "audio_hash": "30c11ecd74df9f42",
-  "duration_seconds": 158
+  "audio_hash": "0d7f36fec0918b51",
+  "duration_seconds": 145
 }

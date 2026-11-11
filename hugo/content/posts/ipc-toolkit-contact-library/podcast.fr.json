@@ -1,60 +1,68 @@
 {
-  "title": "IPC Toolkit et la friction qui dépend de la direction",
+  "title": "Le moteur de contact au cœur d'une simulation",
   "lines": [
     {
       "speaker": "A",
-      "text": "Quand deux objets se touchent dans une simulation, quelqu'un doit calculer quand ils entrent en collision, et à quel point ils frottent. Ça fait beaucoup de maths."
+      "text": "Imagine une simulation où deux surfaces glissent l'une sur l'autre, et où le programme doit savoir exactement quand elles se touchent et à quel point elles résistent. Quelqu'un doit faire ce calcul. Dans beaucoup de projets, c'est IPC Toolkit."
     },
     {
       "speaker": "B",
-      "text": "Et c'est ça, IPC Toolkit ?"
+      "text": "Donc un moteur physique ?"
     },
     {
       "speaker": "A",
-      "text": "C'est une bibliothèque C plus plus pour ces calculs de contact : détection de collisions, dérivées de distance, potentiels de friction. Mais ce n'est pas un moteur physique complet. L'application garde la boucle de temps et le solveur."
+      "text": "Pas un moteur complet. C'est une bibliothèque C plus plus centrée sur le contact. L'application garde la boucle temporelle et le solveur, et appelle la bibliothèque dès qu'elle a besoin de réponses sur les contacts."
     },
     {
       "speaker": "B",
-      "text": "La bibliothèque répond aux questions, et c'est la simulation qui conduit."
+      "text": "Un spécialiste qu'on appelle pour une question difficile."
     },
     {
       "speaker": "A",
-      "text": "Voilà. La simulation donne la géométrie et le mouvement des sommets. La bibliothèque trouve les candidats en phase large, passe à une détection continue en phase étroite, et renvoie le résultat."
+      "text": "Bonne image. La simulation envoie la géométrie de collision et le mouvement des sommets. La bibliothèque choisit d'abord des paires candidates en phase large, les vérifie précisément avec la détection continue de collisions, puis renvoie le résultat."
     },
     {
       "speaker": "B",
-      "text": "Et Antoine, là-dedans ?"
+      "text": "Elle calcule quoi, au juste ?"
     },
     {
       "speaker": "A",
-      "text": "Il contribue au projet amont, en préparant ses changements sur son propre fork. Deux de ses demandes de fusion ont été acceptées en 2026. L'une ajoute la friction anisotrope, l'autre permet de transmettre des paramètres à la phase fine de Scalable CCD."
+      "text": "Quatre familles. La détection de collisions, en phases large et étroite. Les dérivées de distance pour les arêtes et les triangles. Les barrières de contact, des fonctions qui empêchent les surfaces de se traverser, avec une raideur adaptative. Et les potentiels de friction, lisse ou retardée."
     },
     {
       "speaker": "B",
-      "text": "Friction anisotrope, en français courant ?"
+      "text": "Et la part d'Antoine ?"
     },
     {
       "speaker": "A",
-      "text": "Une friction qui dépend de la direction et de la paire de matériaux. Comme tirer un objet dans le sens du grain du bois ou à travers. Son travail de mémoire sur l'usure de surface avait besoin de ça dans le modèle de contact."
+      "text": "Il contribue au projet en open source. Son fork lui sert à préparer les changements avant de les proposer en amont. Une contribution fusionnée ajoute la friction anisotrope, où l'adhérence dépend de la direction. Une autre permet de transmettre des paramètres à la phase fine de Scalable CCD."
     },
     {
       "speaker": "B",
-      "text": "Et l'autre demande ?"
+      "text": "Autre chose que la friction ?"
     },
     {
       "speaker": "A",
-      "text": "Elle touche la détection continue sur GPU. Un correctif plus ancien sur la compilation CUDA Windows de Scalable CCD, plus la transmission des paramètres, ont aidé à débloquer ce chemin."
+      "text": "Il a aussi rédigé une documentation sur l'adhésion, fusionnée, et corrigé la compilation CUDA sous Windows dans Scalable CCD, le chemin de détection de collisions sur GPU."
     },
     {
       "speaker": "B",
-      "text": "Tout a été accepté ?"
+      "text": "Y a-t-il un fil conducteur ?"
     },
     {
       "speaker": "A",
-      "text": "Non, quelques-unes ont été fermées sans fusion, et la page les liste honnêtement. L'article complet a le schéma et le tableau."
+      "text": "Oui. Une friction qui dépend de la direction et de la paire de matériaux, exactement ce que son mémoire sur l'usure de surface demandait au modèle de contact. Et le chemin GPU, que la compilation Windows et la transmission des paramètres ont ouvert."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc la bibliothèque et sa recherche s'alimentent l'une l'autre."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Pour voir des simulations complètes qui l'utilisent, le projet amont cite PolyFEM et Rigid IPC. L'article complet a le schéma d'architecture et la liste des demandes de fusion."
     }
   ],
   "source_hash": "9dd9d532f87b0d04",
-  "audio_hash": "f80a56254aabc9d8",
-  "duration_seconds": 106
+  "audio_hash": "7a79c9e3b1aa29f1",
+  "duration_seconds": 142
 }

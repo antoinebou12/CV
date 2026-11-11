@@ -1,0 +1,58 @@
+{{- /*
+  Tabbed live demos that load only when the reader presses start (no third-party request on
+  page load). One demo per line in the body: Label | https://url | short description.
+
+  {{< demos title="Dimension in the browser" height="620" >}}
+  Render | https://antoinebou12.github.io/Dimension/render/ | Cube, tetrahedron and cylinder
+  {{< /demos >}}
+*/ -}}
+{{- $fr := eq .Page.Lang "fr" -}}
+{{- $title := .Get "title" | default (cond $fr "Démos en direct" "Live demos") -}}
+{{- $h := .Get "height" | default "600" | replaceRE `[^0-9]` "" -}}
+{{- $height := cond (eq $h "") "600" $h -}}
+{{- $items := slice -}}
+{{- range split (trim .Inner "\n ") "\n" -}}
+  {{- $parts := split . "|" -}}
+  {{- if ge (len $parts) 2 -}}
+    {{- $url := trim (index $parts 1) " \t\r" -}}
+    {{- if not (hasPrefix $url "https://") -}}{{- errorf "shortcode demos: url must use https:// (got %q) in %s" $url $.Position -}}{{- end -}}
+    {{- $desc := "" -}}{{- if ge (len $parts) 3 }}{{ $desc = trim (index $parts 2) " \t\r" }}{{ end -}}
+    {{- $items = $items | append (dict "label" (trim (index $parts 0) " \t\r") "url" $url "desc" $desc) -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $items -}}{{- errorf "shortcode demos: no demo lines in %s" .Position -}}{{- end -}}
+{{- $first := index $items 0 -}}
+{{- $host := (urls.Parse $first.url).Host -}}
+{{- $id := printf "live-demos-%d" .Ordinal -}}
+<section class="live-demos not-prose" data-live-demos aria-labelledby="{{ $id }}-title">
+  <div class="live-demos__head">
+    <span class="live-demos__badge"><span class="live-demos__dot" aria-hidden="true"></span>{{ if $fr }}Démo en direct{{ else }}Live demo{{ end }}</span>
+    <p class="live-demos__title" id="{{ $id }}-title">{{ $title }}</p>
+  </div>
+  <div class="live-demos__tabs" role="tablist" aria-label="{{ if $fr }}Choisir une démo{{ else }}Choose a demo{{ end }}">
+    {{- range $n, $item := $items }}
+    <button type="button" role="tab" class="live-demos__tab" id="{{ $id }}-tab-{{ $n }}" aria-controls="{{ $id }}-stage" aria-selected="{{ if eq $n 0 }}true{{ else }}false{{ end }}"{{ if ne $n 0 }} tabindex="-1"{{ end }} data-demo-url="{{ $item.url }}" data-demo-desc="{{ $item.desc }}">{{ $item.label }}</button>
+    {{- end }}
+  </div>
+  <div class="live-demos__stage" id="{{ $id }}-stage" role="tabpanel" aria-labelledby="{{ $id }}-tab-0" data-stage style="--live-demo-height: {{ $height }}px">
+    <div class="live-demos__placeholder" data-placeholder>
+      <p class="live-demos__desc" data-desc>{{ $first.desc }}</p>
+      <button type="button" class="live-demos__start" data-start>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
+        <span>{{ if $fr }}Lancer la démo{{ else }}Start the demo{{ end }}</span>
+      </button>
+      <p class="live-demos__note">{{ if $fr }}Se charge depuis {{ $host }} seulement quand vous cliquez. WebAssembly ; les démos 3D demandent un navigateur avec WebGPU.{{ else }}Loads from {{ $host }} only when you press start. WebAssembly; the 3D demos need a browser with WebGPU.{{ end }}</p>
+    </div>
+  </div>
+  <div class="live-demos__foot">
+    <a class="live-demos__link" data-open href="{{ $first.url }}" target="_blank" rel="noopener">{{ if $fr }}Ouvrir dans un nouvel onglet{{ else }}Open in a new tab{{ end }} <span aria-hidden="true">↗</span></a>
+    <span class="live-demos__spacer"></span>
+    <button type="button" class="live-demos__action" data-fullscreen hidden>{{ if $fr }}Plein écran{{ else }}Fullscreen{{ end }}</button>
+    <button type="button" class="live-demos__action" data-stop hidden>{{ if $fr }}Arrêter{{ else }}Stop{{ end }}</button>
+  </div>
+</section>
+{{- if not (.Page.Scratch.Get "live-demos-script") -}}
+  {{- .Page.Scratch.Set "live-demos-script" true -}}
+  {{- $js := resources.Get "live-demos.js" | minify | fingerprint }}
+  <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- end -}}

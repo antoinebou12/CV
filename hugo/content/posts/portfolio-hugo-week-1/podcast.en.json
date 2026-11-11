@@ -3,66 +3,74 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Four toolchains, and only one of them deployed automatically. That's what Antoine's old site repository looked like right before he moved to Hugo in January 2024."
+      "text": "Imagine you want a personal site that's just text files in git, and a web page appears when you push. That's the idea Antoine chased in the first week of moving his portfolio to Hugo, in January 2024."
     },
     {
       "speaker": "B",
-      "text": "Four? For a personal site?"
+      "text": "So why Hugo and not a regular CMS?"
     },
     {
       "speaker": "A",
-      "text": "Yes. A web résumé built with npm, a PDF CV in LaTeX, a links page in Hugo, and a blog living in a git submodule. Only the web résumé had a GitHub Actions workflow. The last commit, a week before the post, deleted the old site folder."
+      "text": "Three reasons on his page. Static generation means cheap hosting, fast builds and no database to patch. Markdown sources live in git, so changes are reviewable diffs. And Hugo modules pull in a theme without copying everything into the repo. As an engineer, he wanted the repository to be the source of truth: Markdown in, HTML out."
     },
     {
       "speaker": "B",
-      "text": "So week one was a clean slate."
+      "text": "What did he start from?"
     },
     {
       "speaker": "A",
-      "text": "Right. He picked Hugo because it's static, so hosting is cheap and there's no database to patch. And posts are Markdown in git, so the repo is the source of truth. A WordPress-style admin, he says, he'd have ignored by week two."
+      "text": "A repository with several separate pieces: a web résumé built from JSON Resume, a PDF CV in LaTeX, two research papers, a Hugo links page and a blog theme. That's four toolchains: npm, LaTeX, Hugo and Docker."
     },
     {
       "speaker": "B",
-      "text": "What did he learn from that first links page?"
+      "text": "And the links page came first?"
     },
     {
       "speaker": "A",
-      "text": "A few good lessons. He'd copied the Lynx theme into the site instead of using it as a module, so demo scaffolding came along that pointed at a folder that didn't exist."
+      "text": "It was his first real Hugo site. One home page, a back link layout, and two translation files for English and French. The links are a simple list in the config, and the key like github picks both the icon and the label. Tailwind builds the CSS, so plain Hugo can bundle it without extra tools."
     },
     {
       "speaker": "B",
-      "text": "Ouch. Anything sneakier?"
+      "text": "What about the theme for the new site?"
     },
     {
       "speaker": "A",
-      "text": "The Docker setup ran Hugo's development server, not a static build. And the Compose file mounted the project in one folder while the image had copied the site into another, so edits on his machine never reached the running container."
+      "text": "HBTheme. It brought comments, npm-friendly assets and Hugo modules, so he didn't rebuild layouts from zero. A batteries-included theme gets you moving fast in week one."
     },
     {
       "speaker": "B",
-      "text": "The classic. What about the theme he actually chose?"
+      "text": "Anything beyond posts?"
     },
     {
       "speaker": "A",
-      "text": "HBTheme. It came with comments and Hugo modules, so no layouts from zero. The tradeoff is an opinionated structure, which gets awkward when you want custom content types."
+      "text": "He embedded a Montreal car-theft data study from a friend's Substack, to prove the site could carry charts and long reads. That's where Substack fits: Hugo is the professional home, Substack is an optional channel for long essays and newsletters."
     },
     {
       "speaker": "B",
-      "text": "And Substack?"
+      "text": "And the iframe shortcode?"
     },
     {
       "speaker": "A",
-      "text": "It runs in parallel for longer essays and email delivery. Hugo stays the canonical professional home."
+      "text": "A reusable shortcode lets a post embed an HTTPS page, with a title and height. The example is an old FlashGames demo, still on GitHub Pages, now wrapped in a stable URL and the site's typography."
     },
     {
       "speaker": "B",
-      "text": "So what would he do differently?"
+      "text": "So where did it go next?"
     },
     {
       "speaker": "A",
-      "text": "Pull themes as modules, build static HTML in CI for every piece, and keep translation files complete. The full write-up has the details, plus the iframe shortcode."
+      "text": "The site grew modules, bilingual posts and conference notes. The part two post tells that story."
+    },
+    {
+      "speaker": "B",
+      "text": "A good picture of how a portfolio starts small and grows."
+    },
+    {
+      "speaker": "A",
+      "text": "The full write-up has the tables and the config snippets."
     }
   ],
   "source_hash": "1543a2bf880ef2bd",
-  "audio_hash": "5e800f0bf0bdf8e2",
-  "duration_seconds": 113
+  "audio_hash": "5f74449d83f0dd97",
+  "duration_seconds": 143
 }

@@ -1,68 +1,68 @@
 {
-  "title": "D'une liste de ports à un fichier compose : la naissance de MediaBox",
+  "title": "D'une liste de ports à un homelab sous Docker",
   "lines": [
     {
       "speaker": "A",
-      "text": "Antoine n'arrêtait pas d'oublier ce qui tournait sur le port huit mille quatre-vingt-seize. Alors il a commencé une liste. Cette liste est devenue un projet GitHub, MediaBoxDockerCompose."
+      "text": "Ça t'est déjà arrivé de monter un serveur et d'oublier quelle appli vit sur le port huit mille quatre-vingt-seize ?"
     },
     {
       "speaker": "B",
-      "text": "Une liste d'apps qui devient un dépôt. Il y a quoi dedans, concrètement ?"
+      "text": "Tout le temps. J'ai des papillons collés avec des numéros de ports."
     },
     {
       "speaker": "A",
-      "text": "Un seul fichier docker compose, des chemins de stockage partagés sur disque, et des leçons apprises en cassant des choses chez lui. Il s'en sert quand il veut un hôte, plusieurs conteneurs, des volumes communs. Donc Jellyfin à côté de Deluge à côté de FreshRSS, sans un conteneur de plus pour chaque passe-temps."
+      "text": "Antoine avait le même problème. Il gardait une liste perso d'applis auto-hébergées à essayer, surtout pour arrêter d'attribuer des ports au hasard. Cette liste est devenue MediaBoxDockerCompose sur GitHub."
     },
     {
       "speaker": "B",
-      "text": "Pourquoi Jellyfin plutôt que Plex ?"
+      "text": "C'est quoi, concrètement ?"
     },
     {
       "speaker": "A",
-      "text": "Il dit que ça donne la lecture de sa bibliothèque sans le drame du compte Plex. Et Plex, Sonarr et Radarr restent des signets, pas dans son compose aujourd'hui."
+      "text": "Un seul fichier Docker Compose, des chemins partagés sur disque, et pas mal de leçons apprises à la maison. L'idée : un hôte, plusieurs conteneurs, des volumes communs. Jellyfin à côté d'un client torrent et d'un lecteur RSS, sans machine virtuelle pour chaque passe-temps."
     },
     {
       "speaker": "B",
-      "text": "Quoi d'autre a survécu ?"
+      "text": "Qu'est-ce qu'il a câblé ?"
     },
     {
       "speaker": "A",
-      "text": "Ce qu'il a vraiment gardé. Netdata, pour voir d'un coup d'œil si le disque est encore plein. Guacamole, pour un bureau à distance dans un onglet. BookStack pour la doc du homelab. Gitea pour des essais git avant GitHub. Et des ports rangés en familles autour de huit cents, ce qui simplifie tout derrière Caddy."
+      "text": "Jellyfin pour la lecture, Airsonic pour la musique, Piwigo pour les photos de famille. Côté exploitation, Netdata pour voir disque et charge d'un coup d'œil, et Guacamole pour des bureaux à distance dans le navigateur. Pour les notes, BookStack, FreshRSS et Gitea, et draw.io pour les schémas."
     },
     {
       "speaker": "B",
-      "text": "Et quand le compose n'est pas le bon format ?"
+      "text": "Une astuce sur les ports ?"
     },
     {
       "speaker": "A",
-      "text": "Il prend les Proxmox VE Helper-Scripts. Ce sont des commandes d'une ligne maintenues par la communauté, qu'on colle dans le shell Proxmox, et on obtient un conteneur avec un menu post-installation pour les mises à jour. Il a eu du compose sur une VM et des conteneurs séparés via ces scripts sur le même rack, selon qu'il voulait des volumes partagés ou une isolation stricte."
+      "text": "Il les planifie en familles, surtout dans la plage des huit mille. Ça a gardé ses règles de pare-feu et son proxy inverse simples."
     },
     {
       "speaker": "B",
-      "text": "Donc pas de dogme."
+      "text": "Et quand Compose n'est pas le bon format ?"
     },
     {
       "speaker": "A",
-      "text": "Non. Sa règle : choisir compose ou les scripts Proxmox selon la forme du problème, pas selon la mode du moment."
+      "text": "Il utilise les scripts d'aide Proxmox, des commandes communautaires : tu en colles une dans le terminal Proxmox, tu choisis par défaut ou avancé, et tu obtiens un conteneur avec un menu de mise à jour. Compose convient aux volumes partagés, les conteneurs séparés à l'isolation stricte."
     },
     {
       "speaker": "B",
-      "text": "Et la fameuse liste, elle a grossi jusqu'où ?"
+      "text": "Un peu comme choisir entre un bureau à aire ouverte et des pièces séparées."
     },
     {
       "speaker": "A",
-      "text": "Le tableur d'origine avait quatre-vingt-six noms Docker, plus des dizaines jamais câblés. Il ne le colle pas ici, parce que ça vieillit mal et ça ressemble à un tableau de bord de statut."
+      "text": "Exactement. Il a fait les deux sur la même baie. Et la liste de départ comptait quatre-vingt-six noms Docker ; le README du dépôt contient les ports et les étapes d'installation."
     },
     {
       "speaker": "B",
-      "text": "Et l'autre leçon ?"
+      "text": "On va où ensuite ?"
     },
     {
       "speaker": "A",
-      "text": "Planifier les ports en familles, et se rappeler que faire tourner quelque chose une fois, ce n'est pas l'exploiter. Le README du dépôt est le vrai manuel, et l'article complet a les tableaux de services."
+      "text": "L'article complet a la photo du mur d'équipement et les tableaux de services, et le README sert de manuel."
     }
   ],
   "source_hash": "a3916a830b4cc51b",
-  "audio_hash": "1d6a7e6d3c1f56c5",
-  "duration_seconds": 135
+  "audio_hash": "6fa0b23da0da6022",
+  "duration_seconds": 120
 }

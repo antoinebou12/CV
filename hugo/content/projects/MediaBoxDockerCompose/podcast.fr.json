@@ -1,64 +1,76 @@
 {
-  "title": "Une pile média de laboratoire maison avec Docker Compose",
+  "title": "Un centre multimédia dans un seul fichier compose",
   "lines": [
     {
       "speaker": "A",
-      "text": "Quelqu'un de la famille demande un film. Peu après, il est dans la bibliothèque, bien nommé, avec ses sous-titres. Qui a fait le travail ?"
+      "text": "Imaginez un serveur maison qui trouve une série, la télécharge, la nomme proprement, va chercher les sous-titres et la diffuse sur votre télé, sans que vous touchiez un fichier. C'est MediaBoxDockerCompose."
     },
     {
       "speaker": "B",
-      "text": "Pas une personne, je suppose."
+      "text": "Ça fait beaucoup de pièces pour une seule machine."
     },
     {
       "speaker": "A",
-      "text": "Une pile de conteneurs. C'est le projet MediaBoxDockerCompose d'Antoine, une pile de laboratoire maison construite autour de Compose pour récupérer, ranger et diffuser des médias."
+      "text": "Oui, et Docker Compose les garde ensemble. Tout part d'un seul dossier nommé ROOT, et chaque conteneur partage le même utilisateur, groupe et fuseau horaire. Les téléchargements arrivent à un endroit, les bibliothèques terminées à un autre, et chaque application garde ses réglages dans son propre dossier."
     },
     {
       "speaker": "B",
-      "text": "La chaîne fonctionne comment ?"
+      "text": "Et qui fait la recherche ?"
     },
     {
       "speaker": "A",
-      "text": "Une application de requêtes comme Ombi ou Jellyseerr reçoit la demande. Les applications Arr, Sonarr pour les séries et Radarr pour les films, cherchent dans les indexeurs, passent une version à un client de téléchargement comme Deluge ou NZBGet, puis importent le fichier dans une bibliothèque propre."
+      "text": "Les applications Arr, les vedettes de la pile. Sonarr s'occupe des séries, Radarr des films, Lidarr de la musique et Readarr des livres. Elles surveillent ce que vous voulez, demandent à des outils d'indexeurs comme Prowlarr ou Jackett une version correspondante, et la confient à un client de téléchargement, Deluge pour les torrents ou NZBGet pour Usenet."
     },
     {
       "speaker": "B",
-      "text": "Et qui le lit ?"
+      "text": "Et après le téléchargement ?"
     },
     {
       "speaker": "A",
-      "text": "Plex ou Jellyfin. Ils ne font que lire la bibliothèque. Bazarr ajoute les sous-titres et Tdarr transcode sur place."
+      "text": "L'application Arr importe le fichier terminé dans la bibliothèque sous un nom propre. Bazarr ajoute les sous-titres, Tdarr peut transcoder par lots, et Plex ou Jellyfin lisent simplement la bibliothèque et la diffusent. Tautulli montre les statistiques de Plex."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qui tient le tout ensemble ?"
+      "text": "Comment les gens de la maison font leurs demandes ?"
     },
     {
       "speaker": "A",
-      "text": "Un seul répertoire, ROOT, défini dans le fichier d'environnement, avec les mêmes identifiants d'utilisateur, de groupe et le même fuseau horaire pour chaque conteneur. Les téléchargements, les bibliothèques finies et la configuration de chaque application vivent dessous."
+      "text": "Par des portails de demandes. Ombi pour les utilisateurs de Plex, et Jellyseerr pour ceux de Jellyfin. Avec Netdata pour les métriques de l'hôte en direct, et Dashmachine comme page d'accueil qui renvoie vers chaque application."
     },
     {
       "speaker": "B",
-      "text": "C'est simple à installer ?"
+      "text": "Il y a plus que le fichier principal ?"
     },
     {
       "speaker": "A",
-      "text": "Tu installes Docker, tu modifies le fichier d'environnement, puis docker compose up. Ensuite, tu relies indexeurs et clients de téléchargement dans les interfaces web."
+      "text": "Des piles optionnelles démarrent à part. Samba partage la bibliothèque sur le réseau, un serveur WireGuard offre un accès VPN avec une interface web, Portainer gère les conteneurs, et un fichier Caddy donne à chaque service sa propre adresse."
     },
     {
       "speaker": "B",
-      "text": "Il y a aussi une liste de bémols, non ?"
+      "text": "Un conseil pour le disque ?"
     },
     {
       "speaker": "A",
-      "text": "Oui, des défauts assumés. Le montage de Sonarr a un deux-points et une barre oblique en trop. NZBGet voit la configuration de toutes les autres applications. Lidarr peut ne pas trouver les fichiers terminés. Portainer et Whisper réclament tous deux le port 9000."
+      "text": "Garder téléchargements et bibliothèques sur le même système de fichiers, pour que les Arr déplacent les fichiers au lieu de les copier."
     },
     {
       "speaker": "B",
-      "text": "Il y a aussi un dépôt compagnon avec des installateurs bash à menus, pour les machines pas encore prêtes pour la pile complète. La page du projet a le schéma et le tableau complet des services."
+      "text": "Et pour une machine neuve ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Le dépôt compagnon d'Antoine, another-install-script, offre un installateur à menu. Il peut installer Docker, puis ajouter des conteneurs un à un parmi 92, et ouvrir les ports du pare-feu correspondants."
+    },
+    {
+      "speaker": "B",
+      "text": "Le démarrage rapide, c'est donc cloner, modifier les réglages et lancer docker compose up."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. La page a le schéma complet et un tableau des services."
     }
   ],
   "source_hash": "19b4b1e8bbdaee70",
-  "audio_hash": "79bbf6dfc6267aaf",
-  "duration_seconds": 119
+  "audio_hash": "eb3b4d03574e92a5",
+  "duration_seconds": 148
 }

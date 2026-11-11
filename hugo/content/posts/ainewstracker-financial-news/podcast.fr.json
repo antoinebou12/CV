@@ -1,72 +1,76 @@
 {
-  "title": "Du flux d'actualités au backtest",
+  "title": "De l'actualité financière aux données testables",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un titre dit qu'une entreprise va très bien. Un autre dit qu'elle va mal. Lequel a vraiment fait bouger l'action, si l'un des deux l'a fait ?"
+      "text": "Une nouvelle tombe, et quelques minutes plus tard elle est reprise partout. Comment transformer ce flux sans fin en quelque chose qu'on peut chercher, comparer aux données de marché et tester ?"
     },
     {
       "speaker": "B",
-      "text": "Bonne question, et pas simple. C'est le genre de problème auquel s'attaque AINewsTracker ?"
+      "text": "Ça ressemble à boire à un tuyau d'incendie. C'est le but du projet ?"
     },
     {
       "speaker": "A",
-      "text": "En quelque sorte. Antoine décrit un service FastAPI qui transforme les actualités financières en données qu'on peut chercher, analyser et comparer aux données de marché. Ce n'est pas une boule de cristal. C'est de la tuyauterie qui garde tout traçable."
+      "text": "Oui. AINewsTracker, c'est un service FastAPI d'Antoine qui transforme les actualités financières en données consultables, analysables et comparables aux prix."
     },
     {
       "speaker": "B",
-      "text": "D'accord. Et un article, il passe par où ?"
+      "text": "Concrètement, que se passe-t-il quand une requête arrive ?"
     },
     {
       "speaker": "A",
-      "text": "Une requête lance la collecte. Le service d'actualités récupère le contenu des flux et crée les articles. Un service de mesures analyse le texte, et le résultat est enregistré dans MongoDB. Les routes reçoivent les requêtes, les services font le travail, les dépôts isolent la base. Redis s'occupe du cache."
+      "text": "Imagine une chaîne de montage à quatre postes. La requête arrive sur la route des actualités et lance une collecte. Le service d'actualités récupère le flux et crée des articles. Un service de mesures analyse le texte. Puis un dépôt enregistre le résultat dans MongoDB."
     },
     {
       "speaker": "B",
-      "text": "Séparation propre. Et l'analyse produit quoi, au juste ?"
+      "text": "Quatre postes, un rôle chacun."
     },
     {
       "speaker": "A",
-      "text": "D'après la documentation, un sentiment avec son score, des symboles boursiers détectés, un résumé et des sujets. Et ce qui compte pour Antoine, c'est que l'article garde sa source, son URL, sa date et son texte à côté de ces champs."
+      "text": "C'est ce qui garde le tout propre. Les routes parlent HTTP, les modèles décrivent les données, les services font le travail, et les dépôts isolent l'accès à la base. Redis s'occupe du cache."
     },
     {
       "speaker": "B",
-      "text": "Donc on peut remonter d'un sentiment jusqu'à l'éditeur."
+      "text": "Et un article stocké, il contient quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. Et le symbole boursier permet de rapprocher les mentions d'une entreprise sans traiter chaque variante de son nom comme une société différente."
+      "text": "Son URL, sa date de publication et son texte, avec les champs d'analyse. La documentation relie quatre objets : une source d'actualités, ses articles, les commentaires d'un article et les entreprises. La source porte la langue et le pays. Le symbole boursier relie les mentions d'une entreprise, même quand son nom s'écrit de plusieurs façons."
     },
     {
       "speaker": "B",
-      "text": "Ensuite il y a le backtesting : la route de stratégie transmet les demandes à un module de négociation, pour tester des stratégies sur l'historique."
+      "text": "Et l'analyse de texte ?"
     },
     {
       "speaker": "A",
-      "text": "Mais il reste prudent, non ?"
+      "text": "La documentation décrit un sentiment avec son score, des symboles boursiers détectés, un résumé et des sujets. Chaque champ répond à une question : de quelle entreprise parle-t-on, que dit l'article, et comment est-il écrit ?"
     },
     {
       "speaker": "B",
-      "text": "Très. Il dit qu'il comparerait les résultats au texte original avant de s'en servir. Un résumé peut omettre une condition, et la mention d'une entreprise ne prouve pas qu'il y a un événement exploitable. Ces étiquettes sont des entrées d'expérience. Elles ne prouvent pas qu'une nouvelle a causé un mouvement, et un backtest ne garantit rien pour la suite."
+      "text": "Ensuite vient le côté stratégie."
     },
     {
       "speaker": "A",
-      "text": "Il propose même une grille : collecte, analyse du texte, entrée de stratégie, résultat. Pour chaque étape, quoi vérifier. Par exemple, si l'information était vraiment disponible au moment testé."
+      "text": "Oui. Une route de stratégie transmet les demandes de backtest à un module de négociation. Les étiquettes deviennent les entrées d'une expérience : on choisit une période, on donne à la stratégie les nouvelles disponibles à ce moment-là, et on lit ce qu'elle rapporte."
     },
     {
       "speaker": "B",
-      "text": "Et l'article précise qu'il ne donne aucune mesure de précision ni de rendement."
+      "text": "Donc la source reste attachée à chaque étape."
     },
     {
       "speaker": "A",
-      "text": "Honnête. Donc à retenir : garder la source attachée à l'analyse."
+      "text": "C'est le point fort. Un sentiment remonte à son article et à son éditeur, et la date dit quand l'information était connue. Chaque étape se vérifie facilement."
     },
     {
       "speaker": "B",
-      "text": "Voilà. L'article complet a le schéma d'architecture, où chaque nœud renvoie à son fichier source."
+      "text": "Qu'est-ce qu'on retient ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Qu'on peut construire un chemin net, du flux brut à l'expérience historique, où chaque pièce a un seul rôle. L'article complet a le schéma d'architecture, avec un lien vers le fichier source de chaque boîte."
     }
   ],
   "source_hash": "42601fae4f968b09",
-  "audio_hash": "5d8c4fba69c9fff7",
-  "duration_seconds": 154
+  "audio_hash": "81d45c84df75b6ba",
+  "duration_seconds": 153
 }

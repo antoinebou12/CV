@@ -1,0 +1,52 @@
+{{- /* Blog home hero: headline, two actions, three counted facts and the newest post.
+       Built from the shared UI classes in assets/ui.css. One standout only: the latest-post
+       panel. Everything else stays quiet (see docs/development/ui-library.md). */ -}}
+{{- $fr := eq .Lang "fr" -}}
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+{{- $latest := index (first 1 (sort $posts "Date" "desc")) 0 -}}
+{{- $notes := where (where site.RegularPages "Section" "projects") "Params.repository_note" "!=" nil -}}
+{{- $audio := 0 -}}
+{{- range site.RegularPages -}}
+  {{- if .Resources.GetMatch (printf "podcast.%s.mp3" .Lang) }}{{ $audio = add $audio 1 }}{{ end -}}
+{{- end -}}
+<header class="home-hero not-prose">
+  <div class="home-hero__copy">
+    <p class="journal-eyebrow">{{ if $fr }}Le carnet technique{{ else }}Engineering notebook{{ end }}</p>
+    <h1 class="home-hero__title">{{ if $fr }}Des projets, et comment ils fonctionnent.{{ else }}Projects, and how they work.{{ end }}</h1>
+    <p class="home-hero__lede">{{ if $fr }}Plateforme, infographie et projets ouverts. Des notes de terrain, du code et les décisions derrière chaque projet.{{ else }}Platform, graphics, and open-source projects. Field notes, working code, and the decisions behind each project.{{ end }}</p>
+    <div class="home-hero__actions">
+      {{ with site.GetPage "/projects" }}<a class="ui-btn ui-btn--primary" href="{{ .RelPermalink }}">{{ if $fr }}Parcourir les projets{{ else }}Browse projects{{ end }}</a>{{ end }}
+      {{ with site.GetPage "/posts" }}<a class="ui-btn" href="{{ .RelPermalink }}">{{ if $fr }}Lire les articles{{ else }}Read the posts{{ end }}</a>{{ end }}
+    </div>
+    <dl class="ui-stats" data-count-group>
+      <div class="ui-stat"><dt>{{ if $fr }}Articles{{ else }}Posts{{ end }}</dt><dd data-count="{{ len $posts }}">{{ len $posts }}</dd></div>
+      <div class="ui-stat"><dt>{{ if $fr }}Projets documentés{{ else }}Documented projects{{ end }}</dt><dd data-count="{{ len $notes }}">{{ len $notes }}</dd></div>
+      {{ if gt $audio 0 }}<div class="ui-stat"><dt>{{ if $fr }}Versions audio{{ else }}Audio stories{{ end }}</dt><dd data-count="{{ $audio }}">{{ $audio }}</dd></div>{{ end }}
+    </dl>
+  </div>
+  {{- with $latest }}
+  {{- $thumb := partial "post-list-thumb-url.html" . -}}
+  {{- $secs := 0 -}}
+  {{- $hasAudio := .Resources.GetMatch (printf "podcast.%s.mp3" .Lang) -}}
+  {{- with .Resources.GetMatch (printf "podcast.%s.json" .Lang) }}{{ $secs = int ((.Content | transform.Unmarshal).duration_seconds | default 0) }}{{ end -}}
+  <a class="home-hero__latest" href="{{ .RelPermalink }}">
+    {{- /* Only a real cover: the generic per-kind placeholder says nothing about the post. */ -}}
+    {{ if .Params.cover_code }}<span class="post-code-cover" aria-hidden="true"><span>{{ .Params.cover_label }}</span><strong>{{ .Params.cover_code }}</strong></span>
+    {{ else if and $thumb (not .Params.cover_none) (not (strings.Contains $thumb "post-kind-")) }}<span class="home-hero__media"><img src="{{ $thumb }}" alt="" width="960" height="540" decoding="async" fetchpriority="high" /></span>{{ end }}
+    <span class="home-hero__latest-body">
+      <span class="home-hero__latest-meta">
+        <span class="ui-chip ui-chip--accent">{{ if $fr }}Dernier article{{ else }}Latest post{{ end }}</span>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+      </span>
+      <strong class="home-hero__latest-title">{{ .Title }}</strong>
+      {{ with .Description }}<span class="home-hero__latest-desc">{{ . | truncate 150 }}</span>{{ end }}
+      <span class="home-hero__latest-foot">
+        {{ if $hasAudio }}<span class="ui-chip">{{ if $fr }}Version audio{{ else }}Audio story{{ end }}{{ if gt $secs 0 }} · {{ div $secs 60 }}:{{ printf "%02d" (mod $secs 60) }}{{ end }}</span>{{ end }}
+        <span class="home-hero__latest-go">{{ if $fr }}Lire{{ else }}Read{{ end }} <span aria-hidden="true">→</span></span>
+      </span>
+    </span>
+  </a>
+  {{- end }}
+</header>
+{{- $js := resources.Get "ui.js" | minify | fingerprint -}}
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
