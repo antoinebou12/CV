@@ -43,4 +43,14 @@ Django stock-market game where admins run scripted scenarios and teams trade sim
 | CSS | 0.17 |
 | Shell | 0.16 |
 
+## Getting started (repository commands, not run here)
+
+### README.md · Run the Complete System
+
+```bash
+docker compose --profile all down
+docker compose --profile all up -d --build
+```
+
+
 

@@ -43,4 +43,14 @@ Jeu boursier Django : les admins lancent des scénarios scriptés et les équipe
 | CSS | 0.17 |
 | Shell | 0.16 |
 
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Run the Complete System
+
+```bash
+docker compose --profile all down
+docker compose --profile all up -d --build
+```
+
+
 

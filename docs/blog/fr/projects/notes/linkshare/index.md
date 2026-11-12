@@ -16,7 +16,7 @@
 
 linkshare est un projet Rails archivé pour partager des liens, commenter et voter. Les pages sont rendues sur le serveur, avec une gestion des comptes et une interface administrative.
 
-**Pourquoi il existe:** Plateforme Ruby on Rails avec extraction asynchrone de métadonnées OpenGraph.
+**Pourquoi il existe:** Site social Ruby on Rails où les membres partagent des liens ou des fichiers, votent, commentent et voient des cartes d’aperçu Embedly.
 
 **Cas d’usage:** Partage social et organisation de liens avec prévisualisation riche.
 
@@ -47,6 +47,16 @@ Un site social Ruby on Rails 4.1 où les membres partagent liens ou fichiers, vo
 | CSS | 13.28 |
 | JavaScript | 11.56 |
 | CoffeeScript | 0.32 |
+
+## Démarrage (commandes du dépôt, non exécutées ici)
+
+### README.md · Testing
+
+```bash
+bash --login -c rvm use 2.2>/dev/null 2>&1; rails server -p 8080 -b 0.0.0.0
+redis-server
+```
+
 
 ## Fonctions et composants
 
