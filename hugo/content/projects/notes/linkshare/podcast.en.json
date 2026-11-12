@@ -1,32 +1,67 @@
 {
-  "title": "linkshare: a Rails app for shared links",
+  "title": "linkshare: a small social network for links",
   "lines": [
     {
       "speaker": "A",
-      "text": "Post a link, and a nice preview card appears. How does the site know what to show?"
+      "text": "Picture a feed where friends drop the articles they're reading. You hover over a title, and a preview card pops up with the page, the votes and the comments. That's linkshare."
     },
     {
       "speaker": "B",
-      "text": "That's linkshare, a Ruby on Rails project where people share links, comment and vote."
+      "text": "And who built it?"
     },
     {
       "speaker": "A",
-      "text": "So it fetches the title and picture itself?"
+      "text": "Antoine. It's a Ruby on Rails app, version 4.1. He started from an online tutorial, then added his own pieces: a link previewer, an admin page and more ways for members to interact."
     },
     {
       "speaker": "B",
-      "text": "Yes. It pulls OpenGraph metadata in the background, so the page doesn't wait, and then shows a card preview."
+      "text": "So what can a member actually do?"
     },
     {
       "speaker": "A",
-      "text": "What else is in the app?"
+      "text": "Sign up with a name and an avatar picture, then post a link with a title and a description. The same form can carry a file instead of a link, so people can share documents too."
     },
     {
       "speaker": "B",
-      "text": "Pages are rendered on the server, and there are user accounts and an administrative interface. It has Minitest tests too. It was a learning project, and it covers a full web app from accounts to moderation. The written page has more."
+      "text": "And the preview card, where does that come from?"
+    },
+    {
+      "speaker": "A",
+      "text": "From a service called Embedly. The feed marks each link as an Embedly card, and a small script in the browser asks Embedly to draw the preview. The app doesn't have to fetch and parse the page itself."
+    },
+    {
+      "speaker": "B",
+      "text": "Clever. What about the social part, the votes and comments?"
+    },
+    {
+      "speaker": "A",
+      "text": "Every link has a like and a dislike button, handled by a Rails voting library. Comments hang off each link, so the discussion stays next to the thing being discussed."
+    },
+    {
+      "speaker": "B",
+      "text": "And when the feed gets long?"
+    },
+    {
+      "speaker": "A",
+      "text": "It shows five links per page, and there's a search that matches link titles or member names. Member cards even show a little online indicator."
+    },
+    {
+      "speaker": "B",
+      "text": "Someone has to keep it tidy, though."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the admin side. Accounts have an admin flag, and a ready-made admin panel lives under slash admin, where an administrator can manage links, comments and users."
+    },
+    {
+      "speaker": "B",
+      "text": "So in one small project you get accounts, uploads, previews, voting, comments, search and moderation."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly, a full tour of a classic server-rendered Rails app. The written page walks through the routes, the data model and the steps to run it."
     }
   ],
-  "audio_hash": "fdd4d13fcbcaa725",
-  "duration_seconds": 37,
-  "source_hash": "95a6c3cf87c35fae"
+  "audio_hash": "b008f675a95bd906",
+  "duration_seconds": 107
 }

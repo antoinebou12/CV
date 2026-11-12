@@ -121,6 +121,22 @@ def test_installation_fences_keep_their_context_and_do_not_consume_prose():
     assert blocks[0]["line"] == 3
 
 
+def test_indented_prompt_commands_are_extracted():
+    source = "# linkshare\nText.\n\n# Testing\n\t $ rails server -p 8080 -b 0.0.0.0 \n\t $ redis-server\n\nmade with cloud9 IDE\n"
+    blocks = docs.install_blocks("README.md", source)
+    assert blocks == [{"file": "README.md", "line": 5, "heading": "Testing",
+                       "commands": "rails server -p 8080 -b 0.0.0.0\nredis-server"}]
+
+
+def test_indented_prompt_commands_outside_setup_headings_are_ignored():
+    assert docs.install_blocks("README.md", "# History\n    $ git log\n") == []
+
+
+def test_indented_prompt_secrets_are_not_republished():
+    source = "# Setup\n    $ export API_KEY=abc\n    $ npm start\n"
+    assert docs.install_blocks("README.md", source) == []
+
+
 def test_secret_assignments_and_remote_shell_recipes_are_not_republished():
     source = "# Installation\n```sh\nTOKEN=secret\npython app.py\n```\n```sh\ncurl https://example.com/a | bash\n```"
     assert docs.install_blocks("README.md", source) == []

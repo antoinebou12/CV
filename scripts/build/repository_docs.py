@@ -508,16 +508,43 @@ def install_blocks(path, text):
         if match:
             heading = match[2]
             headings = headings[: len(match[1]) - 1] + [heading]
-        if not line.startswith("```"):
+        section_ok = re.search(
+            r"install|setup|quick.?start|getting.?started|build|running|\brun\b|usage|utilis|compil|testing|lancer|démarr",
+            " / ".join(headings),
+            re.IGNORECASE,
+        )
+        # Older READMEs indent commands with a shell prompt instead of fencing them.
+        prompt = re.compile(r"^(?:\t| {4})\s*\$\s+\S")
+        indented = not line.startswith("```") and prompt.match(line)
+        if not line.startswith("```") and not indented:
             i += 1
             continue
         start = i
+        if indented:
+            allowed = bool(section_ok)
+            commands = []
+            excluded = False
+            while i < len(lines) and (prompt.match(lines[i]) or not lines[i].strip()):
+                value = re.sub(r"^\s*\$\s+", "", lines[i]).rstrip() if lines[i].strip() else ""
+                i += 1
+                if not value:
+                    if i < len(lines) and prompt.match(lines[i]):
+                        continue
+                    break
+                if re.search(
+                    r"(?:token|secret|password|api.?key|credential)\s*[:=]|(?:curl|wget).*\|",
+                    value,
+                    re.IGNORECASE,
+                ):
+                    excluded = True
+                    continue
+                commands.append(value)
+            if allowed and commands and not excluded:
+                result.append({"file": path, "line": start + 1, "heading": heading,
+                               "commands": "\n".join(commands[:12])})
+            continue
         allowed = bool(
-            re.search(
-                r"install|setup|quick.?start|getting.?started|build|running|usage|utilis|compil",
-                " / ".join(headings),
-                re.IGNORECASE,
-            )
+            section_ok
             and re.match(r"^```(?:bash|sh|shell|console|powershell|ps1|zsh)?\s*$", line)
         )
         commands = []

@@ -1,32 +1,67 @@
 {
-  "title": "linkshare : une application Rails de partage de liens",
+  "title": "linkshare : un petit réseau social pour les liens",
   "lines": [
     {
       "speaker": "A",
-      "text": "On colle un lien, et une jolie carte d'aperçu apparaît. Comment le site sait-il quoi afficher ?"
+      "text": "Imagine un fil où des amis déposent les articles qu’ils lisent. Tu passes la souris sur un titre, et une carte d’aperçu s’ouvre avec la page, les votes et les commentaires. C’est linkshare."
     },
     {
       "speaker": "B",
-      "text": "C'est linkshare, un projet Ruby on Rails où l'on partage des liens, commente et vote."
+      "text": "Et qui l’a construit ?"
     },
     {
       "speaker": "A",
-      "text": "Il va chercher lui-même le titre et l'image ?"
+      "text": "Antoine. C’est une application Ruby on Rails, version 4.1. Il est parti d’un tutoriel en ligne, puis il a ajouté ses propres morceaux : un aperçu des liens, une page d’administration et plus d’interactions entre les membres."
     },
     {
       "speaker": "B",
-      "text": "Oui. Il extrait les métadonnées OpenGraph en arrière-plan, sans faire attendre la page, puis affiche une carte d'aperçu."
+      "text": "Concrètement, un membre peut faire quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Et le reste de l'application ?"
+      "text": "S’inscrire avec un nom et une photo de profil, puis publier un lien avec un titre et une description. Le même formulaire accepte aussi un fichier, donc on peut partager des documents."
     },
     {
       "speaker": "B",
-      "text": "Les pages sont rendues côté serveur, avec des comptes utilisateurs et une interface d'administration, plus des tests Minitest. C'était un projet d'apprentissage qui couvre une application web complète, des comptes à la modération. L'article en dit plus."
+      "text": "Et la carte d’aperçu, elle vient d’où ?"
+    },
+    {
+      "speaker": "A",
+      "text": "D’un service qui s’appelle Embedly. Le fil marque chaque lien comme une carte Embedly, et un petit script dans le navigateur demande à Embedly de dessiner l’aperçu. L’application n’a pas à aller lire la page elle-même."
+    },
+    {
+      "speaker": "B",
+      "text": "Pas bête. Et le côté social, les votes, les commentaires ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Chaque lien a un bouton j’aime et je n’aime pas, gérés par une bibliothèque de votes pour Rails. Les commentaires sont rattachés à chaque lien, donc la discussion reste à côté de ce dont on parle."
+    },
+    {
+      "speaker": "B",
+      "text": "Et quand le fil devient long ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il affiche cinq liens par page, et une recherche trouve les titres de liens ou les noms des membres. Les fiches des membres montrent même un petit voyant de présence en ligne."
+    },
+    {
+      "speaker": "B",
+      "text": "Il faut quand même quelqu’un pour faire le ménage."
+    },
+    {
+      "speaker": "A",
+      "text": "C’est le rôle de l’administration. Les comptes ont un indicateur d’administrateur, et un panneau d’administration tout prêt se trouve sous barre oblique admin, pour gérer les liens, les commentaires et les membres."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc, dans un petit projet, on a les comptes, les fichiers, les aperçus, les votes, les commentaires, la recherche et la modération."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement : un tour complet d’une application Rails classique rendue côté serveur. La page écrite détaille les routes, le modèle de données et les étapes pour la lancer."
     }
   ],
-  "audio_hash": "a566ccd3c4edea42",
-  "duration_seconds": 43,
-  "source_hash": "23adfb4f12868941"
+  "audio_hash": "27697ca0467291b5",
+  "duration_seconds": 125
 }
