@@ -38,6 +38,14 @@
 {{- with $profile.services -}}{{- if gt (len .) 0 -}}{{- $hasComposeServices = true -}}{{- end -}}{{- end -}}
 {{- $showMermaid := true -}}
 {{- $relatedArticles := index (hugo.Data.repository_article_index.repositories | default dict) $note.repo | default slice -}}
+{{- /* Getting started falls back to the README's setup chapter, then to manifest scripts. */ -}}
+{{- $manifestTasks := slice -}}
+{{- range $analysis.manifests }}{{ if .scripts }}{{ $manifestTasks = $manifestTasks | append . }}{{ end }}{{ end -}}
+{{- $setupChapter := dict -}}
+{{- $useSetup := false -}}
+{{- if and (not $analysis.installation) (not $profile.docker_commands) -}}
+  {{- with where ($guide.chapters | default slice) "id" "setup" }}{{ $setupChapter = index . 0 }}{{ $useSetup = true }}{{ end -}}
+{{- end -}}
 <div class="repo-note" data-repo-shell>
   <div class="repo-shell-layout">
     <details class="repo-sidenav-disclosure" open>
@@ -259,20 +267,25 @@
               {{ range $analysis.installation }}
               {{ partial "repository-terminal.html" (dict "fr" $fr "title" (printf "%s · %s" .file .heading) "commands" .commands "foot_url" (printf "%s%s#L%d" $analysis.source_url .file (int .line))) }}
               {{ end }}
-            {{ else }}
+            {{ else if $useSetup }}
+              {{- /* No command block, but the README has a setup section: show it here, as written. */ -}}
+              <p class="repo-evidence-label">{{ if $fr }}La documentation du dépôt ne donne pas de bloc de commandes. Voici ses consignes d’installation, telles qu’écrites.{{ else }}The repository’s documentation has no command block. Here are its setup instructions, as written.{{ end }}</p>
+              {{ partial "repository-excerpts.html" (dict "entries" $setupChapter.entries "fr" $fr) }}
+            {{ else if not $manifestTasks }}
               <aside class="repo-admonition info">
-                <p class="repo-admonition-title">{{ if $fr }}Installation non extraite{{ else }}Installation not extracted{{ end }}</p>
-                <p>{{ if $fr }}Aucune recette d’installation réutilisable n’a été extraite de ce dépôt.{{ else }}No reusable installation recipe was extracted from this repository.{{ end }}</p>
-                <p><a class="btn ghost" href="{{ $note.url }}#readme">{{ if $fr }}Ouvrir le README{{ else }}Open the README{{ end }}</a></p>
+                <p class="repo-admonition-title">{{ if $fr }}Pas d’étapes d’installation dans le README{{ else }}No setup steps in the README{{ end }}</p>
+                <p>{{ if $fr }}Le dépôt n’explique pas comment l’installer ou le lancer. Commencez par le README, puis par les fichiers listés plus bas.{{ else }}The repository does not explain how to install or run it. Start with the README, then the files listed further down.{{ end }}</p>
+                <p class="repo-admonition-actions"><a class="btn ghost" href="{{ $note.url }}#readme">{{ if $fr }}Ouvrir le README{{ else }}Open the README{{ end }}</a> <a class="btn ghost" href="#source-files">{{ if $fr }}Fichiers à lire{{ else }}Files to read{{ end }}</a></p>
               </aside>
             {{ end }}
           {{ else }}
             <p>{{ if $fr }}Voir l’onglet Docker pour les commandes de ce dépôt.{{ else }}See the Docker tab for this repository’s commands.{{ end }}</p>
           {{ end }}
-          {{ with $analysis.manifests }}
-          <details class="repo-manifest-tasks"><summary>{{ if $fr }}Commandes déclarées dans les manifestes{{ else }}Tasks declared in manifests{{ end }}</summary>
-            {{ range . }}{{ if .scripts }}<h3><a href="{{ $analysis.source_url }}{{ .file }}"><code>{{ .file }}</code></a></h3>
-            <dl class="repo-deflist">{{ range .scripts }}<div><dt><code>{{ .name }}</code></dt><dd><code>{{ .command }}</code></dd></div>{{ end }}</dl>{{ end }}{{ end }}
+          {{ with $manifestTasks }}
+          {{- /* Open when these are the only commands the page can show. */ -}}
+          <details class="repo-manifest-tasks"{{ if not $analysis.installation }} open{{ end }}><summary>{{ if $fr }}Commandes déclarées dans les manifestes{{ else }}Tasks declared in manifests{{ end }}</summary>
+            {{ range . }}<h3><a href="{{ $analysis.source_url }}{{ .file }}"><code>{{ .file }}</code></a></h3>
+            <dl class="repo-deflist">{{ range .scripts }}<div><dt><code>{{ .name }}</code></dt><dd><code>{{ .command }}</code></dd></div>{{ end }}</dl>{{ end }}
           </details>
           {{ end }}
         </div>
@@ -291,7 +304,7 @@
         {{ end }}
       </section>
 
-      {{ partial "repository-handbook.html" (dict "note" $note "page" .Page "mode" "chapters") }}
+      {{ partial "repository-handbook.html" (dict "note" $note "page" .Page "mode" "chapters" "skip" (cond $useSetup "setup" "")) }}
 
       <section class="doc" data-reveal aria-labelledby="features" id="features">
         <h2>{{ if $fr }}Fonctions et composants{{ else }}Features and components{{ end }} <span class="repo-count">{{ len $note.parts }}</span></h2>
@@ -339,7 +352,7 @@
           {{ partial "repository-diagram.html" (dict "note" $note "lang" .Page.Lang "profile" $profile "prefer_compose" false) }}
         </details>
         {{ end }}
-        <details class="repo-trace">
+        <details class="repo-trace" open>
           <summary>{{ if $fr }}Suivre un parcours dans le code{{ else }}Follow one path through the code{{ end }}</summary>
           <p>{{ index $note.trace $i }}</p>
         </details>

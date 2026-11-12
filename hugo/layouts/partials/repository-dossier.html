@@ -428,7 +428,7 @@
   {{ if gt (len .) 6 }}
   <p class="repo-dossier-missing">{{ if $fr }}Les sources disponibles ne documentent pas les autres sections.{{ else }}The available sources do not document the remaining sections.{{ end }}</p>
   {{ else }}
-  <p class="repo-dossier-missing">{{ if $fr }}Rien trouvé pour: {{ else }}Nothing found for: {{ end }}{{ delimit . ", " }}.</p>
+  <p class="repo-dossier-missing">{{ if $fr }}Sections sans code correspondant dans ce dépôt : {{ else }}Sections with no matching code in this repository: {{ end }}{{ delimit . ", " }}.</p>
   {{ end }}
   {{ end }}
 </section>

@@ -24,26 +24,20 @@
 {{- else -}}
 <section class="repo-reader-guide" aria-labelledby="repository-references">
   <h2 id="repository-references">{{ if $fr }}Références du dépôt{{ else }}Repository references{{ end }}</h2>
-  {{ if $guide.chapters }}
+  {{ if where ($guide.chapters | default slice) "id" "!=" (.skip | default "") }}
   <p class="repo-evidence-label">{{ if $fr }}Extraits des guides du dépôt, dans leur langue d’origine. Les liens ouvrent la version du code consultée.{{ else }}Excerpts from the repository’s guides, in their original language. Links open the inspected source revision.{{ end }}</p>
   {{ else }}
   <p>{{ if $fr }}Le dépôt ne fournit pas de guide détaillé pour ces étapes. Commencez par le README et les fichiers commentés ci-dessus.{{ else }}The repository does not provide a detailed guide for these steps. Start with its README and the source walkthrough above.{{ end }}</p>
   {{ end }}
   <div class="repo-guide-chapters">
-    {{ range $guide.chapters }}
-    <details class="repo-guide-chapter">
+    {{- /* Chapters are the repository's own how-to text: show them open. A setup chapter already
+           shown under Getting started (.skip) is not repeated. */ -}}
+    {{ range $guide.chapters }}{{ if ne .id $.skip }}
+    <details class="repo-guide-chapter" open>
       <summary><span>{{ index .title $i }}</span></summary>
-      {{ range .entries }}
-      <section class="repo-source-excerpt">
-        <h3><a href="{{ .url }}">{{ .title }}</a></h3>
-        <p class="repo-excerpt-file"><code>{{ .file }}</code></p>
-        {{- /* Shell-prompt lines stay verbatim in a code block: Markdown would turn "--login" into a dash. */ -}}
-        <div class="repo-source-markdown">{{ .text | htmlEscape | replaceRE `(?m)((?:^\$ .*(?:\n|$))+)` "<pre><code>$1</code></pre>\n\n" | markdownify | replaceRE "<h[1-6]([^>]*)>" "<h4$1>" | replaceRE "</h[1-6]>" "</h4>" | safeHTML }}</div>
-        <a class="repo-guide-context" href="{{ .url }}">{{ if $fr }}Lire les instructions complètes{{ else }}Read the full instructions{{ end }} ↗</a>
-      </section>
-      {{ end }}
+      {{ partial "repository-excerpts.html" (dict "entries" .entries "fr" $fr) }}
     </details>
-    {{ end }}
+    {{ end }}{{ end }}
   <details class="repo-guide-chapter">
     <summary>{{ if $fr }}Documentation source{{ else }}Source documentation{{ end }}</summary>
     <ul class="repo-guide-files" role="list">{{ range $guide.documents }}<li><a href="{{ .url }}"><code>{{ .path }}</code></a></li>{{ end }}</ul>
