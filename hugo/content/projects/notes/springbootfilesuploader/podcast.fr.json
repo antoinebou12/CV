@@ -3,46 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Un service de téléversement qui peut aussi redémarrer tes conteneurs Docker. C'est SpringBootFilesUploader."
+      "text": "Certains projets portent le nom de leur première tâche, puis grandissent en douce. SpringBootFilesUploader a commencé comme un moyen de téléverser des fichiers, et il est devenu une petite console de contrôle pour un serveur."
     },
     {
       "speaker": "B",
-      "text": "C'est une API REST en Kotlin sur Spring Boot. Son premier rôle est dans le nom : recevoir un fichier, ranger les octets dans un espace compatible S3, garder la description dans MongoDB et renvoyer le fichier par son identifiant."
+      "text": "Commençons par le début. Que fait la partie téléversement ?"
     },
     {
       "speaker": "A",
-      "text": "Et le reste ?"
+      "text": "C’est une API en Kotlin, construite sur Spring Boot. Tu lui envoies un fichier, elle en place les octets dans un compartiment compatible S3, par exemple MinIO, et elle range sa description dans MongoDB. Plus tard, tu redemandes le fichier par son identifiant et elle te le rend."
     },
     {
       "speaker": "B",
-      "text": "La même application liste et contrôle des conteneurs Docker, interroge un serveur Caddy et peut exécuter des commandes par SSH. Avec quelques extras côté administration."
+      "text": "Pourquoi séparer ça en deux endroits ?"
     },
     {
       "speaker": "A",
-      "text": "Ça fait beaucoup de pouvoir. Pour qui ?"
+      "text": "Chaque stockage fait ce qu’il fait de mieux. Le compartiment garde le contenu lourd sous un nom de dossier unique, et la base de données garde l’information légère : nom, extension, type de contenu et taille. Les recherches restent rapides et les téléchargements simples."
     },
     {
       "speaker": "B",
-      "text": "Tout passe par une connexion JWT avec trois rôles. Toute personne connectée peut télécharger, modérateurs et administrateurs peuvent téléverser et gérer les conteneurs, et seuls les administrateurs ont la commande SSH."
+      "text": "Et qui a le droit de téléverser ?"
     },
     {
       "speaker": "A",
-      "text": "Donc les rôles décident de ce que chacun peut toucher."
+      "text": "Tout est derrière une authentification JWT à trois rôles. Les modérateurs et les administrateurs peuvent téléverser, tout utilisateur connecté peut télécharger, et seul un administrateur peut créer un autre compte administrateur. Le téléversement vérifie aussi l’extension du fichier selon une liste qui couvre les chiffriers, les documents Word, les PDF, les images courantes, la vidéo, l’audio et les archives."
     },
     {
       "speaker": "B",
-      "text": "Oui. Un téléversement vérifie l'extension, écrit les octets sous un identifiant unique, puis enregistre les métadonnées. Un téléchargement lit cette fiche, récupère l'objet et le renvoie avec son type et sa taille."
+      "text": "Tu disais que ça dépasse le téléversement. Comment ça ?"
     },
     {
       "speaker": "A",
-      "text": "Un backend compact avec une vraie étendue."
+      "text": "La même application pilote aussi Docker. Par le moteur Docker, elle peut lister des conteneurs, en créer, les démarrer, les arrêter, les redémarrer et les renommer. Modérateurs et administrateurs en font la plus grande partie, mais créer et renommer sont réservés aux administrateurs."
     },
     {
       "speaker": "B",
-      "text": "Et la documentation de l'API est servie par Swagger. La page complète liste toutes les routes."
+      "text": "Donc une requête web peut démarrer un conteneur ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Elle interroge aussi un serveur Caddy par son interface d’administration, et elle peut exécuter des commandes sur des machines distantes par SSH, ce qui est réservé aux administrateurs. Le tout est décrit dans une page OpenAPI générée automatiquement, ce qui permet d’explorer les points d’accès."
+    },
+    {
+      "speaker": "B",
+      "text": "On dirait un couteau suisse pour serveur maison."
+    },
+    {
+      "speaker": "A",
+      "text": "L’image est juste. Le code est bien rangé en couches, avec des contrôleurs, des services et des dépôts, et la page énumère les six contrôleurs avec ce que chacun a le droit de faire."
+    },
+    {
+      "speaker": "B",
+      "text": "Où trouve-t-on les détails ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Dans l’article écrit. Il contient un schéma du parcours complet d’un téléversement et d’un téléchargement, la structure du projet et les services externes attendus, avec leurs adresses par défaut."
     }
   ],
-  "audio_hash": "c015619dcf2417f8",
-  "duration_seconds": 81,
-  "source_hash": "b5672ea72a622872"
+  "audio_hash": "45bbcff7ab48e314",
+  "duration_seconds": 156
 }

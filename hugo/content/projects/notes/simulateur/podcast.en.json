@@ -1,44 +1,67 @@
 {
-  "title": "Simulateur: a stock-market game with a live market",
+  "title": "A stock market you can play with friends",
   "lines": [
     {
       "speaker": "A",
-      "text": "Picture a classroom of teams, all trading fictional stocks while prices flicker in real time. That's Simulateur."
+      "text": "Imagine a stock market where the companies are made up, the news is scripted, and a team of friends is trading against yours while the prices move in front of you. That's Simulateur."
     },
     {
       "speaker": "B",
-      "text": "A stock-market game. Who sets it up?"
+      "text": "A trading game, basically. Who's it for?"
     },
     {
       "speaker": "A",
-      "text": "An admin. In a five-step dashboard they define the settings, create fictional companies and stocks, build teams, add news and events, and review the scenario. It's built with Django for AlgoÉTS, for groups who want to play a market game together."
+      "text": "Groups that want to run a market game together. It's an AlgoÉTS project built with Django. An admin prepares a scenario with fictional companies, news and events, and then teams of players trade the simulated stocks."
     },
     {
       "speaker": "B",
-      "text": "And how do prices move if the companies aren't real?"
+      "text": "Where do the prices come from, if the companies aren't real?"
     },
     {
       "speaker": "A",
-      "text": "A price engine generates a new candle for every stock at each time step, using a chosen noise model like Brownian motion, Perlin noise or Monte Carlo. Each candle is saved and pushed to the players over a live WebSocket connection."
+      "text": "From a price engine. Every tick, it takes the last price of each stock and asks a noise model for a new candle: open, high, low and close. The admin picks the model, like Brownian motion, which is a random wander, or Perlin noise, which drifts in smooth waves, or a Monte Carlo model that averages a hundred simulated paths."
     },
     {
       "speaker": "B",
-      "text": "What can players do?"
+      "text": "And the players see those candles live?"
     },
     {
       "speaker": "A",
-      "text": "Join a team with a link, buy and sell at the latest price, follow their holdings and watch leaderboards. The admin can even have a local Ollama language model draft news, events or whole scenarios."
+      "text": "Yes. Each candle is saved, then pushed over WebSockets through Django Channels and Redis to the game dashboard, along with news, events and triggers. The chart redraws as the data arrives, and there's a feed of transactions next to it."
     },
     {
       "speaker": "B",
-      "text": "There's also a backtesting app on the side. And a single run script installs everything and starts the demo."
+      "text": "What can a player do?"
     },
     {
       "speaker": "A",
-      "text": "The full write-up explains the price models in detail."
+      "text": "Buy and sell within a portfolio balance, then follow holdings and performance. There are leaderboards for players and teams, and team captains can invite others with a join link."
+    },
+    {
+      "speaker": "B",
+      "text": "And the person running the game?"
+    },
+    {
+      "speaker": "A",
+      "text": "They get an admin dashboard that walks through five steps: settings, companies and stocks, teams, events and a final review. A simulation moves through states, from created and published to ongoing, and the admin can pause, resume or end it with a button."
+    },
+    {
+      "speaker": "B",
+      "text": "Writing all those companies and news items sounds like work."
+    },
+    {
+      "speaker": "A",
+      "text": "It can be drafted for you. A local Ollama language model can write news, events, triggers, companies or even whole scenarios. Players can sign in with local accounts or with Google, GitHub, Microsoft and Notion."
+    },
+    {
+      "speaker": "B",
+      "text": "So it's a whole little market in a box."
+    },
+    {
+      "speaker": "A",
+      "text": "That's a good way to put it. The full write-up has the diagrams of the price models and the live updates, plus screenshots of each dashboard."
     }
   ],
-  "audio_hash": "cf7939a71b973fed",
-  "duration_seconds": 68,
-  "source_hash": "267c3fe40c402762"
+  "audio_hash": "6b6cad46748ae787",
+  "duration_seconds": 128
 }

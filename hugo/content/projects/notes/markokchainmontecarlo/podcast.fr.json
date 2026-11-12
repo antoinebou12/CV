@@ -1,52 +1,67 @@
 {
-  "title": "Simuler le cours d'Apple",
+  "title": "Simuler le cours d’Apple",
   "lines": [
     {
       "speaker": "A",
-      "text": "Peut-on tester une stratégie d'investissement sur des prix qui n'existent pas encore ? C'est la question derrière MarkokChainMonteCarlo, un dépôt de recherche d'AlgoÉTS."
+      "text": "Peut-on tester une stratégie d’investissement sur des prix qui n’existent pas encore ? C’est la question derrière MarkokChainMonteCarlo, un dépôt de recherche d’AlgoÉTS."
     },
     {
       "speaker": "B",
-      "text": "Des prix qui n'existent pas encore ? Comment ?"
+      "text": "Des prix qui n’existent pas encore ? Comment ça marche ?"
     },
     {
       "speaker": "A",
-      "text": "En les simulant. Les carnets téléchargent tout l'historique quotidien d'Apple et le coupent au début de 2023 : une partie ancienne pour apprendre, une partie récente mise de côté."
+      "text": "En les simulant. Les carnets téléchargent tout l’historique quotidien d’Apple et le coupent au début de 2023. La partie ancienne sert à apprendre, la partie récente est mise de côté."
     },
     {
       "speaker": "B",
-      "text": "Et la simulation ?"
+      "text": "Et la simulation elle-même ?"
     },
     {
       "speaker": "A",
-      "text": "De deux façons. Un modèle Monte Carlo estime la dérive et la volatilité à partir des rendements passés, puis tire des chocs aléatoires pour produire plein de trajectoires possibles. Les carnets projettent sur 364 jours, avec des milliers de trajectoires."
+      "text": "Il y en a deux. La première est un modèle Monte Carlo. Il regarde les rendements logarithmiques quotidiens des données d’entraînement, estime une dérive et une volatilité, puis fait avancer le prix jour après jour avec des chocs aléatoires. En répétant l’opération, on obtient un éventail de trajectoires possibles."
     },
     {
       "speaker": "B",
-      "text": "Et la deuxième ?"
+      "text": "Combien de trajectoires ?"
     },
     {
       "speaker": "A",
-      "text": "Une chaîne de Markov. Les prix sont découpés en tranches de dix dollars, le carnet compte à quelle fréquence on passe d'une tranche à l'autre, puis tire une séquence selon ces probabilités."
+      "text": "Les carnets projettent sur trois cent soixante-quatre jours, avec mille ou dix mille trajectoires. Il y a aussi des variantes, avec une volatilité glissante et des mouvements extrêmes occasionnels."
     },
     {
       "speaker": "B",
-      "text": "Et ces simulations, on en fait quoi ?"
+      "text": "Et la deuxième simulation ?"
     },
     {
       "speaker": "A",
-      "text": "On les utilise dans une stratégie. Elle achète quand le dernier état simulé est zéro, et sort sur un stop loss de cinq pour cent ou un prix cible tiré d'une trajectoire simulée. Elle est comparée à l'achat-conservation, avec dix mille dollars au départ."
+      "text": "Une chaîne de Markov. Les prix d’entraînement sont découpés en tranches de dix dollars. Le carnet compte combien de fois un prix d’une tranche est suivi d’un prix d’une autre, et en fait des probabilités. Ensuite, il parcourt la chaîne en tirant le prochain état selon la ligne de l’état courant."
     },
     {
       "speaker": "B",
-      "text": "Donc une boucle complète, des données jusqu'au backtest."
+      "text": "Tu as un petit exemple ?"
     },
     {
       "speaker": "A",
-      "text": "Oui, le tout dans des carnets Python avec backtesting point py. La page écrite détaille chaque étape."
+      "text": "Prenons six clôtures réparties dans deux tranches, l’une de cent quarante à cent cinquante dollars, l’autre juste au-dessus. On compte les cinq passages de l’une à l’autre, on divise par les totaux, et on obtient les chances de rester sur place ou de bouger. C’est toute l’idée."
+    },
+    {
+      "speaker": "B",
+      "text": "Et tout ça sert à quoi ?"
+    },
+    {
+      "speaker": "A",
+      "text": "À alimenter une stratégie construite avec backtesting point py. Elle achète selon un état simulé, et sort sur un stop de cinq pour cent ou sur un prix cible tiré d’une trajectoire simulée. On la compare à l’achat-conservation, les deux partant de dix mille en encaisse avec une commission de deux dixièmes de un pour cent."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc une boucle complète, des données brutes jusqu’à une stratégie évaluée."
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. La partie Monte Carlo a aussi son propre article pas à pas, et la page écrite détaille les formules."
     }
   ],
-  "audio_hash": "44a1e104ee54e255",
-  "duration_seconds": 86,
-  "source_hash": "da9a9853f7ea2b39"
+  "audio_hash": "d7c8da93f098b016",
+  "duration_seconds": 134
 }

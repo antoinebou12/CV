@@ -1,40 +1,67 @@
 {
-  "title": "LegosTracker : les sets LEGO comme un marché",
+  "title": "LegosTracker : les sets LEGO comme un marché",
   "lines": [
     {
       "speaker": "A",
-      "text": "Un set LEGO de 1965 aurait-il été un bon placement ? Le projet d'Antoine traite LEGO comme un marché pour le savoir."
+      "text": "Un set LEGO de 1965 aurait-il été un bon placement ? LegosTracker regarde les ensembles LEGO comme on regarde un marché, justement pour le savoir."
     },
     {
       "speaker": "B",
-      "text": "Ha. D'où viennent les données ?"
+      "text": "Ha, j’aime ça. D’où viennent les données ?"
     },
     {
       "speaker": "A",
-      "text": "De deux endroits. Le catalogue Rebrickable dit quels sets, pièces et thèmes existent, et un collecteur ajoute les prix atteints au fil du temps depuis BrickEconomy."
+      "text": "De deux endroits. Le catalogue Rebrickable dit quels sets, pièces et thèmes existent, et un collecteur ajoute les prix atteints par ces sets au fil du temps, depuis BrickEconomy. C’est un projet de données d’AlgoÉTS, entièrement en Python et en carnets Jupyter."
     },
     {
       "speaker": "B",
-      "text": "Comment fonctionne le collecteur ?"
+      "text": "Comment fonctionne le collecteur ?"
     },
     {
       "speaker": "A",
-      "text": "Il lit une liste de numéros de sets, pilote une fenêtre Chromium visible avec Playwright et ouvre la page de chaque set. Il extrait les données des graphiques et enregistre l'historique de valeur et les bandes de prix en CSV, puis les détails comme les prix et les prédictions dans un tableau."
+      "text": "Il lit une liste de numéros de sets et pilote une fenêtre Chromium visible avec Playwright. Pour chaque set, il cherche sur BrickEconomy, ouvre la bonne page et en extrait les données de graphique cachées dans le script de la page."
     },
     {
       "speaker": "B",
-      "text": "Et la partie science des données ?"
+      "text": "Et il enregistre quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Des carnets explorent le catalogue, ajustent des régressions sur l'historique de prix du set zéro zéro un tiret un, le projettent jusqu'en 2030 et lancent une simulation Monte Carlo. Un autre carnet met à jour la valeur de ta propre collection."
+      "text": "L’historique de valeur va dans un fichier par set, et s’il existe une série à quatre bandes de prix, elle a aussi son fichier. Ensuite, il lit les panneaux de détails, de prix, d’achat rapide, de prédictions et de faits dans des modèles structurés, et ajoute le tout à un grand tableau."
     },
     {
       "speaker": "B",
-      "text": "C'est pour les collectionneurs et les curieux de données. L'article du blog raconte la démarche avec des graphiques."
+      "text": "Ça, c’est la collecte. Et l’analyse ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un carnet explore les tables de Rebrickable, couleurs, pièces, sets et thèmes, et trace des décomptes. Un autre nettoie les prix collectés et se concentre sur le set zéro zéro un tiret un, celui de 1965. Il ajuste un modèle linéaire et un modèle de gradient boosting sur son historique de prix, puis projette les deux jusqu’en 2030."
+    },
+    {
+      "speaker": "B",
+      "text": "C’est la seule prévision ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a aussi une simulation Monte Carlo sur les rendements logarithmiques, et des graphiques des gains annuels et des quatre bandes de prix. C’est une belle petite visite de différentes façons de penser une même courbe de prix."
+    },
+    {
+      "speaker": "B",
+      "text": "Et ça marche pour ses propres briques ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Un troisième carnet part d’un fichier de collection personnelle, cherche le prix de détail et la valeur actuelle de chaque set sur BrickEconomy, puis écrit un fichier mis à jour."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc collectionneurs et curieux de données y trouvent leur compte."
+    },
+    {
+      "speaker": "A",
+      "text": "C’est l’idée. L’article du blog raconte la démarche avec des graphiques, et la page du projet liste chaque carnet."
     }
   ],
-  "audio_hash": "fadf3f6f21954d82",
-  "duration_seconds": 65,
-  "source_hash": "99d3f2fa3ee07cb5"
+  "audio_hash": "929891cf2cb52047",
+  "duration_seconds": 131
 }

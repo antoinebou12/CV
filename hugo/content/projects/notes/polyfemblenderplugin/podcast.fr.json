@@ -1,40 +1,67 @@
 {
-  "title": "PolyFEMBlenderPlugin : simuler de la physique sans quitter Blender",
+  "title": "D’une scène Blender à une simulation physique",
   "lines": [
     {
       "speaker": "A",
-      "text": "Tu modélises une scène dans Blender, mais pour simuler sa déformation, il faut d'habitude jongler avec des fichiers et des lignes de commande. Ce module garde tout au même endroit."
+      "text": "Imagine une scène construite dans Blender : un bloc souple, une plaque de métal, un peu de contact entre les deux. Tu veux savoir comment tout ça se déforme pour vrai. D’habitude, il faut quitter Blender et jongler avec des fichiers et des lignes de commande."
     },
     {
       "speaker": "B",
-      "text": "Il relie donc Blender à un solveur de physique ?"
+      "text": "Ça fait beaucoup d’allers-retours entre les outils. Il y a un raccourci ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. C'est une extension Blender expérimentale qui transforme les objets, les matériaux et les réglages de contact en fichier de configuration pour PolyFEM, un solveur par éléments finis, puis lance la simulation. Antoine l'a écrite pour le travail de simulation du laboratoire de l'ÉTS."
+      "text": "C’est justement le rôle de PolyFEMBlenderPlugin. C’est une extension Blender expérimentale qui transforme les objets sélectionnés, leurs matériaux et les réglages de contact en configuration pour PolyFEM, un solveur par éléments finis. Ensuite, elle lance la simulation sans que tu quittes Blender."
     },
     {
       "speaker": "B",
-      "text": "Que fait-on dans Blender ?"
+      "text": "Pourquoi Antoine l’a-t-il créée ?"
     },
     {
       "speaker": "A",
-      "text": "Un panneau PolyFEM dans l'onglet Physique permet de choisir un matériau prédéfini comme l'acier ou l'aluminium, de régler le contact, le temps et les conditions aux limites, puis de créer le fichier. Les maillages sont exportés, et TetWild peut les convertir en maillages tétraédriques."
+      "text": "Il l’a écrite pour les travaux de simulation du laboratoire de l’ÉTS. Elle s’adresse à ceux qui préparent leurs scènes dans Blender mais les résolvent avec PolyFEM. Elle est publiée sur GitHub, sous ETSim."
     },
     {
       "speaker": "B",
-      "text": "Et le calcul ?"
+      "text": "Concrètement, qu’est-ce qu’on voit dans Blender ?"
     },
     {
       "speaker": "A",
-      "text": "PolyFEM tourne en arrière-plan, avec une image Docker ou un programme local. À la fin, un bouton Render Animation importe chaque étape comme un maillage et pose les images clés, pour rejouer le résultat en animation."
+      "text": "Un panneau PolyFEM dans l’onglet Physics. Tu choisis les objets et tu leur donnes des propriétés élastiques, soit avec des préréglages comme l’acier, le cuivre ou l’aluminium, soit avec tes propres valeurs. Il y a ensuite des sections repliables pour le contact, le temps, les conditions aux limites, le solveur et les sorties."
     },
     {
       "speaker": "B",
-      "text": "Une belle boucle de la scène à la simulation puis à la lecture. Il faut Blender quatre point deux ou plus, et l'article détaille le flux complet."
+      "text": "Et les maillages ? Un solveur a besoin d’un format précis, non ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. L’extension exporte chaque maillage en STL ou en OBJ, ou alors elle le remplit de tétraèdres avec TetWild et l’enregistre en MSH. Elle écrit ensuite le fichier de configuration PolyFEM complet, et tu peux même n’exporter que les objets sélectionnés."
+    },
+    {
+      "speaker": "B",
+      "text": "Est-ce que Blender se fige pendant le calcul ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non. PolyFEM tourne dans un fil d’arrière-plan, avec Docker ou avec un programme local, donc l’interface reste utilisable. Docker est le mode par défaut, ce qui t’évite d’installer le solveur toi-même."
+    },
+    {
+      "speaker": "B",
+      "text": "Et une fois terminé, on récupère les résultats dans la scène ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui, et c’est la belle partie. Un bouton Render Animation lit chaque pas de temps, le convertit en maillage et les anime, de sorte que la déformation se joue comme une animation directement dans Blender."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc toute la boucle, scène, solveur et relecture, reste au même endroit."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. Il faut Blender 4.2 ou plus récent, et l’article écrit détaille l’installation et la structure du dépôt si tu veux l’essayer."
     }
   ],
-  "audio_hash": "fa075ac230731497",
-  "duration_seconds": 77,
-  "source_hash": "6153fa4359073c67"
+  "audio_hash": "55ae88cbd31962a9",
+  "duration_seconds": 148
 }

@@ -1,40 +1,67 @@
 {
-  "title": "MistubaVideo : transformer une simulation en vidéo",
+  "title": "MistubaVideo : de la simulation au film",
   "lines": [
     {
       "speaker": "A",
-      "text": "Une simulation donne des chiffres. Comment en faire un film à montrer en présentation ?"
+      "text": "Une simulation calcule où les corps ont bougé et comment une surface a changé. Mais des chiffres, ça ne fait pas une bonne présentation. Comment en faire un film ?"
     },
     {
       "speaker": "B",
-      "text": "C'est MistubaVideo, des outils du projet ETSim construits sur Mitsuba 3, un moteur de lancer de rayons."
+      "text": "Je devine que c’est là que MistubaVideo entre en scène."
     },
     {
       "speaker": "A",
-      "text": "Qu'est-ce qu'on lui donne ?"
+      "text": "Exactement. C’est un dépôt du projet ETSim qui fait le rendu de sorties de simulation avec Mitsuba 3, un moteur de lancer de chemins. Il y a une commande par lots pour des séquences de maillages OBJ, et un module, mitsuba-video, pour les enregistrements plus riches."
     },
     {
       "speaker": "B",
-      "text": "Des suites de modèles 3D, ou des poses de corps et des champs d'usure enregistrés pendant une simulation. Les outils rendent chaque image puis encodent un MP4 ou un GIF avec FFmpeg."
+      "text": "Qu’est-ce que ce module lit ?"
     },
     {
       "speaker": "A",
-      "text": "Pourquoi rendre après coup ?"
+      "text": "Des poses de corps et des champs de surface enregistrés, grâce à ce qu’il appelle des adaptateurs de source. L’un lit un manifeste versionné qui liste les corps, les maillages, les matériaux, les poses et les images de champ. L’autre lit un enregistrement de l’outil TextureFriction."
     },
     {
       "speaker": "B",
-      "text": "Parce qu'on peut changer la caméra ou l'éclairage sans relancer la simulation. On choisit la vue de face, de dessus ou en perspective, on débruite sur le GPU, et on produit des cartes de chaleur avec un panneau d'atlas de la surface."
+      "text": "Et si j’utilise un autre simulateur ?"
     },
     {
       "speaker": "A",
-      "text": "Il y a un format d'entrée standard ?"
+      "text": "Une petite classe d’écriture permet à un autre simulateur d’exporter ce même format de manifeste. Le moteur de rendu n’est donc pas lié à une seule source."
     },
     {
       "speaker": "B",
-      "text": "Oui. Tout projet peut écrire un manifeste versionné, que l'outil valide. Une commande de démonstration crée même un exemple synthétique. L'article donne le pas à pas."
+      "text": "Que se passe-t-il une fois les données chargées ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il applique les poses enregistrées, puis mélange un matériau de base et un matériau affecté selon le champ de surface : on voit littéralement l’usure apparaître. Mitsuba 3 trace la lumière, et on peut ajouter une carte de chaleur, un panneau d’atlas UV à plat et une courbe de la surface couverte."
+    },
+    {
+      "speaker": "B",
+      "text": "Pourquoi rendre après coup plutôt que pendant la simulation ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Parce qu’on peut changer la caméra ou l’éclairage sans refaire la simulation. C’est tout l’attrait."
+    },
+    {
+      "speaker": "B",
+      "text": "Et on le pilote comment ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Avec quelques commandes. Inspect vérifie les données d’entrée, preview vérifie la caméra et le cadrage, render produit les images avec des préréglages de qualité nommés preview, draft et paper. Ensuite, FFmpeg encode les images en MP4."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc des images, des cartes de chaleur et de la vidéo pour des rapports et des présentations."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. La page écrite contient le schéma du pipeline."
     }
   ],
-  "audio_hash": "db397cb3de7b17bd",
-  "duration_seconds": 60,
-  "source_hash": "0fc19f90cadd2ea5"
+  "audio_hash": "03c9b6ebbf7078e7",
+  "duration_seconds": 124
 }

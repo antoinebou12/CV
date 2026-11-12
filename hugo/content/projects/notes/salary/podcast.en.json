@@ -1,48 +1,67 @@
 {
-  "title": "Reading Canadian salary guides with Python",
+  "title": "What Canadian salary guides say, once you read the tables",
   "lines": [
     {
       "speaker": "A",
-      "text": "What does a cloud architect earn in Quebec City compared to Montreal? The answers sit locked inside PDF salary guides."
+      "text": "What does a full stack developer earn in Montréal compared to Calgary? The answer exists, but it's locked inside PDF salary guides that nobody wants to read line by line."
     },
     {
       "speaker": "B",
-      "text": "That's the puzzle behind Salary, a data project from the AlgoÉTS club. It turns recruitment-firm salary guides and federal wage tables into data frames."
+      "text": "Locked in a PDF. So how do you get it out?"
     },
     {
       "speaker": "A",
-      "text": "How do you get numbers out of a PDF?"
+      "text": "That's the idea behind Salary, a data project from the AlgoÉTS club. It takes recruitment-firm salary guides and federal wage tables and turns them into data frames you can actually compare, by job, province, region and experience level."
     },
     {
       "speaker": "B",
-      "text": "One script per guide edition. It reads the PDF, tracks the current province and region, then splits each line into a job title and three ranges: entry, mid and senior. The result is saved for analysis."
+      "text": "What does the PDF side look like?"
     },
     {
       "speaker": "A",
-      "text": "And the wage tables?"
+      "text": "One script per guide edition. It follows the current province and region as it reads, then splits each line into a job title and three salary ranges: entry, mid and senior. The result is saved so notebooks can pick it up."
     },
     {
       "speaker": "B",
-      "text": "Those are CSV files from the federal Job Bank, covering 2012 to 2022. A Polars script harmonizes the columns across years and prints the best-paid jobs for each one."
+      "text": "And the federal data?"
     },
     {
       "speaker": "A",
-      "text": "Then the fun part, comparing."
+      "text": "Those are the Job Bank wage files, one per year from 2012 to 2022. A script lines up the columns across years, combines everything into one table, and prints the best-paid jobs for each year."
     },
     {
       "speaker": "B",
-      "text": "Yes. In notebooks you can rank jobs, filter engineering roles, compare one job across provinces and regions, and find the biggest regional gaps. A small FastAPI app also serves the guides as JSON."
+      "text": "So what do the numbers say?"
     },
     {
       "speaker": "A",
-      "text": "So it's useful for salary curiosity and for anyone pulling tables from PDFs."
+      "text": "The page reads the 2023 guide, with amounts in thousands of dollars a year. The median mid-level pay is about 76 thousand, with entry around 66 and senior around 87. The step between levels is remarkably regular: senior is about 1.3 times entry for the median job."
     },
     {
       "speaker": "B",
-      "text": "Exactly. The full write-up has the results from the 2023 guide."
+      "text": "And by field?"
+    },
+    {
+      "speaker": "A",
+      "text": "Technology roles lead the job families at 97.2 thousand at mid level, roughly 15 thousand above engineering and marketing. Among provinces, Alberta has the highest median mid-level pay at 85.2 thousand."
+    },
+    {
+      "speaker": "B",
+      "text": "Does a city make a big difference for the same job?"
+    },
+    {
+      "speaker": "A",
+      "text": "For developers, not much. A mid-level full stack developer is at 112.4 thousand in Montréal, 120.2 in Greater Toronto, 115.1 in Greater Vancouver and 111.7 in Calgary, all within about ten percent."
+    },
+    {
+      "speaker": "B",
+      "text": "That's reassuring for developers. Anything else people can do with it?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a small FastAPI app that serves the extracted guides as JSON, and the notebooks let you rank jobs and find the widest regional gaps. The full write-up has the charts, and it's a handy starting point if you ever need tables out of a PDF."
     }
   ],
-  "audio_hash": "c6ed5c200be91122",
-  "duration_seconds": 75,
-  "source_hash": "15dc8bc401e671d9"
+  "audio_hash": "4d3ee355e21cdad2",
+  "duration_seconds": 137
 }

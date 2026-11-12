@@ -3,38 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "How does a piece of cardboard look after it's been rubbed with sandpaper for two and a half meters? This dataset has the measured answer."
+      "text": "Rub a piece of cardboard with sandpaper a little more each time, and scan it between rounds. After a while, you have a film of a surface slowly changing."
     },
     {
       "speaker": "B",
-      "text": "Real measurements, not simulated?"
+      "text": "That sounds a bit like a flipbook of damage."
     },
     {
       "speaker": "A",
-      "text": "Real ones. It publishes surface textures captured during controlled wear tests, organized by material, abrasive grit, load and sliding distance. It's the public dataset from Antoine's ÉTS master's research on wear in texture space, for graphics and tribology researchers."
+      "text": "It is, and that's what WearSurfacesDatasets publishes. It's the public dataset from Antoine's master's research at ÉTS on wear in texture space: surface textures captured by a GelSight sensor during controlled wear tests, sorted by material, abrasive grit, load and sliding distance."
     },
     {
       "speaker": "B",
-      "text": "What's in a sample?"
+      "text": "Who needs something like this?"
     },
     {
       "speaker": "A",
-      "text": "Each measured state stores a set of maps, like height, bump and normal maps, as images inside a Parquet file. The page lists twenty wear timelines, from cardboard at five different loads to foam, MDF, PLA and soft wood."
+      "text": "Graphics and tribology researchers who want real wear progressions. In the research, it's used to compare simulated wear patterns with measured microgeometry."
     },
     {
       "speaker": "B",
-      "text": "And the tools on top?"
+      "text": "What's actually inside?"
     },
     {
       "speaker": "A",
-      "text": "Scripts to pack and extract the data, and an alignment pipeline that registers each sequence, adds interpolated steps and extrapolates future normal maps. There's also a WebGPU viewer in the browser where you scrub through the distance or press play to watch the wear progress."
+      "text": "Each measured state stores several maps of the surface: height, normal, bump, displacement, ambient occlusion and hillshade. They come in two formats, Parquet files for browsing and WebDataset archives for streaming. The index lists twenty wear timelines."
     },
     {
       "speaker": "B",
-      "text": "The full write-up has the viewer walkthrough."
+      "text": "Twenty timelines of what?"
+    },
+    {
+      "speaker": "A",
+      "text": "Cardboard at five loads from ten to two hundred grams, foam, MDF with circle and line paths, PLA at several grits, soft wood, and unworn sandpaper references running from grit forty to two forty."
+    },
+    {
+      "speaker": "B",
+      "text": "But scans taken between rounds won't line up perfectly, will they?"
+    },
+    {
+      "speaker": "A",
+      "text": "That's why the repository includes alignment tools. They register each sequence in two passes, crop the region all frames share, and can add in-between frames by interpolation. They can even extrapolate future normal maps with a model, though those are model output, not measurements."
+    },
+    {
+      "speaker": "B",
+      "text": "And can I look at it without installing anything?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a WebGPU viewer that reads the Parquet files right in the browser. You pick a sequence, load it, optionally align it, then scrub the sliding distance or press Play and watch the surface change."
+    },
+    {
+      "speaker": "B",
+      "text": "So it's a time-lapse of wear you can scrub through."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. There are also command line tools to rebuild, extract and describe the dataset, and a PowerPoint deck for each test series. The scans come from the sliding bench shared in WearMachine, so the bench makes the wear and this dataset keeps it. The written page has the full layout of the data."
     }
   ],
-  "audio_hash": "b3c0d184e3182b15",
-  "duration_seconds": 67,
-  "source_hash": "039b1b59d9b39262"
+  "audio_hash": "9958be335cb584cb",
+  "duration_seconds": 133
 }

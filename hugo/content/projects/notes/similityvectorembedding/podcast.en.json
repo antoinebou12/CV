@@ -3,50 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "You liked The Matrix. How would a computer find other films that feel like it, without just matching titles?"
+      "text": "You just watched The Matrix and you want something that feels similar. Not the same genre tag, the same feeling. How would a computer find that?"
     },
     {
       "speaker": "B",
-      "text": "Some kind of similarity score?"
+      "text": "I'd guess it compares keywords. Is that it?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. SimilityVectorEmbedding is a set of Jupyter notebooks from AlgoÉTS that turn a movie catalog into embeddings, which are lists of numbers capturing meaning, and then search them."
+      "text": "That's one way, and the project tries it too. But the main idea is different. SimilityVectorEmbedding is a set of Jupyter notebooks from AlgoÉTS that turn a movie catalog into embeddings, which are lists of numbers where similar films end up close together."
     },
     {
       "speaker": "B",
-      "text": "What goes into each film?"
+      "text": "How do you get a film down to numbers?"
     },
     {
       "speaker": "A",
-      "text": "One text per film: title, year, genres, actors, director and summary. A sentence-transformer model encodes it into a vector, and the vectors are stored in PostgreSQL with pgvector. The saved run loads 631 films."
+      "text": "First it builds one piece of text per film: the title, year, genres, actors, director, summary, country, language and writers. In the saved run there are 631 films. A small model called MiniLM reads that text and produces a vector of 384 numbers."
     },
     {
       "speaker": "B",
-      "text": "And then the search?"
+      "text": "And then they sit in a database?"
     },
     {
       "speaker": "A",
-      "text": "You type a title, it's matched even if you're a little off, and the rest of the catalog is ranked by cosine similarity. There's also a Gradio page where you can try one title, several, or rated ones."
+      "text": "Yes, in PostgreSQL with the pgvector extension. When you type a title, even loosely, it finds the closest real title by comparing three-letter chunks. Then it ranks every other film by cosine similarity, which is basically how much two vectors point the same way."
     },
     {
       "speaker": "B",
-      "text": "Only one database?"
+      "text": "What do you get for The Matrix?"
     },
     {
       "speaker": "A",
-      "text": "No, that's the fun part. Each folder pairs a notebook with another approach: Qdrant for vectors, BM25 for keywords, Neo4j for a graph of genres and people, and even a local language model through Ollama."
+      "text": "The two sequels come out on top, at about 75 and 73 percent. Then The Mummy, Speed and Con Air show up in the mid-fifties. Nine films pass the fifty percent cut-off."
     },
     {
       "speaker": "B",
-      "text": "So you can compare how each one sees the same catalog."
+      "text": "Can you search with more than one movie?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. The article and the written page have the details."
+      "text": "You can. Give it several titles and it averages their vectors, so a trilogy pulls the search toward what the three share. You can also rate the titles, and the ratings weight the mix. With The Matrix and Toy Story 2 rated high and The Lion King rated one, the query is mostly the first two."
+    },
+    {
+      "speaker": "B",
+      "text": "Is it all PostgreSQL, or does it explore other tools?"
+    },
+    {
+      "speaker": "A",
+      "text": "It compares several. The same idea runs on Qdrant, there's a keyword version with BM25, and a Neo4j graph that links films through shared genres and people. There's also a local language model you can ask questions in plain words, and a Gradio page showing posters and scores."
+    },
+    {
+      "speaker": "B",
+      "text": "So it's a tour of how similarity search can work."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. The companion article tells it as a story, with the original demo animations."
     }
   ],
-  "audio_hash": "a9e75e45f857800b",
-  "duration_seconds": 77,
-  "source_hash": "b0a5b23f13cc3e5d"
+  "audio_hash": "e8618fbacb1c8bb1",
+  "duration_seconds": 133
 }

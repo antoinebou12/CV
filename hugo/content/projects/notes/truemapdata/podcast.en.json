@@ -3,38 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "A microscope measures a surface down to tiny bumps. How do you reuse that in a game engine or a lab report?"
+      "text": "A scanner measures a coin down to its tiniest bumps. Now how do you use that same measurement in a lab report and in a game engine?"
     },
     {
       "speaker": "B",
-      "text": "That's TrueMapData, a Python library and command line tool Antoine maintains under ETSim."
+      "text": "That sounds like two different worlds. Is there one answer for both?"
     },
     {
       "speaker": "A",
-      "text": "What does it read?"
+      "text": "That's the idea behind TrueMapData. It's a Python library and a command line tool, maintained under ETSim, for height maps from TrueMap and GelSight captures. It reads them as NumPy arrays, so one representation serves both metrology and graphics."
     },
     {
       "speaker": "B",
-      "text": "Height maps from TrueMap and GelSight scanners, as NumPy arrays. So one representation serves both metrology and graphics."
+      "text": "What's a height map, exactly?"
     },
     {
       "speaker": "A",
-      "text": "What can you do with it?"
+      "text": "A grid where each cell stores how high the surface is at that spot, plus the spacing between cells. So you keep the physical scale. The library's own file format is just a small header, that spatial information, and the grid of heights."
     },
     {
       "speaker": "B",
-      "text": "Export normal maps, displacement maps or meshes in formats like STL, OBJ and glTF, keeping the physical scale. Measure roughness, and plot surfaces and profiles."
+      "text": "And once it's loaded, what can you do with it?"
     },
     {
       "speaker": "A",
-      "text": "And it tracks wear too?"
+      "text": "Look at it first. A 2D heatmap, a 3D surface, profiles along a row or a column, contours, even comparisons between files. Then you can derive things for graphics, like normal maps and displacement maps, or export a mesh, all with the scale preserved."
     },
     {
       "speaker": "B",
-      "text": "Yes. Given aligned scans of a worn sample, it computes bearing curves and the volume lost between frames. The written page has an example comparing two captures."
+      "text": "Is it only for pictures, though? You mentioned metrology."
+    },
+    {
+      "speaker": "A",
+      "text": "No, it also measures. There's an optional roughness add-on that follows the ISO 25178 standard for areal roughness. And a second command, called tmd-wear, compares captures of the same surface over time."
+    },
+    {
+      "speaker": "B",
+      "text": "Wear, like a surface slowly getting scuffed?"
+    },
+    {
+      "speaker": "A",
+      "text": "Right. The repository ships three GelSight captures taken after zero, one hundred fifty and three hundred millimetres of sliding at one hundred grams. One command compares them and reports how much material was lost compared with the first capture."
+    },
+    {
+      "speaker": "B",
+      "text": "How would I try it?"
+    },
+    {
+      "speaker": "A",
+      "text": "It's on PyPI under the name truemapdata, with an MIT licence. You install it with pip, and the page has a short script that builds a two hundred by two hundred height map in memory, saves it, loads it back and crops it, so you don't even need a capture file."
+    },
+    {
+      "speaker": "B",
+      "text": "So the takeaway is one surface format that goes from a microscope to a render."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the idea. The full write-up has the example figures and the list of extras."
     }
   ],
-  "audio_hash": "9f0965bc663ef5e5",
-  "duration_seconds": 53,
-  "source_hash": "8c5df2466ec81509"
+  "audio_hash": "978c5dba063c8c6f",
+  "duration_seconds": 128
 }

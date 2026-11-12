@@ -3,7 +3,15 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Two betting sites give odds on the same match. Sometimes their disagreement is big enough that you can bet on opposite outcomes at both and lock in a profit. Sport-Arbitrage tells you when."
+      "text": "Two betting sites, one match, and slightly different opinions about who will win. Is there a way to bet on both sides and come out ahead whatever happens?"
+    },
+    {
+      "speaker": "B",
+      "text": "That sounds too good to be true. Is it?"
+    },
+    {
+      "speaker": "A",
+      "text": "Sometimes the math really does work, and that's what Sport-Arbitrage checks. It's a small calculator from AlgoÉTS. You type in the odds two sites give for the same match, and it tells you whether betting on opposite outcomes at both sites locks in a profit, and how to split your money."
     },
     {
       "speaker": "B",
@@ -11,42 +19,49 @@
     },
     {
       "speaker": "A",
-      "text": "Simple maths. For each odd, take its inverse. Add them up across the outcomes. If the sum is below one, there's an arbitrage opportunity."
+      "text": "It uses a simple idea. A decimal odd of two means a winning bet pays double, so the bet breaks even at a one-in-two chance. That's the implied probability, one divided by the odd. At a single site, those add up to more than one, and the extra is the site's margin."
     },
     {
       "speaker": "B",
-      "text": "Can you give an example?"
+      "text": "And across two sites?"
     },
     {
       "speaker": "A",
-      "text": "The note has one. Site one offers 2.10 on a win, site two offers 2.05 on a loss. Their inverses add up to about 0.964. With 1,000 dollars, the stakes work out to about 494 on the win and 506 on the loss."
+      "text": "If you take the best price for each outcome from different sites, the total can fall below one. That's the arbitrage condition. Then you size each stake in proportion to its implied probability, so every outcome pays the same amount."
     },
     {
       "speaker": "B",
-      "text": "And the payout?"
+      "text": "Can you give a real example?"
     },
     {
       "speaker": "A",
-      "text": "Either way you get back about 1,037 dollars, so the guaranteed profit is around 37 dollars. The stake split is proportional to each inverse odd, which makes every outcome pay the same."
+      "text": "The page walks through one. Site one offers 2.10 on a win, site two offers 2.05 on a loss. Together, their inverses add up to 0.964. With a thousand dollars, you put about 494 on the win and 506 on the loss."
     },
     {
       "speaker": "B",
-      "text": "How do you use it?"
+      "text": "And what comes back?"
     },
     {
       "speaker": "A",
-      "text": "It's a single web page with a form: pick two or three outcomes, enter the odds from both sites and your total investment, and click Calculate. A Python notebook runs the same formulas, so you can double-check the numbers."
+      "text": "About 1,037 dollars whichever side wins, so a guaranteed profit of roughly 37 dollars, or 3.73 percent of the money staked."
     },
     {
       "speaker": "B",
-      "text": "Nothing to build."
+      "text": "Does it handle draws too?"
     },
     {
       "speaker": "A",
-      "text": "Nothing at all. Just open the page. The written page walks through the three-outcome case too."
+      "text": "Yes, there's a three-outcome mode with win, loss and draw, using the same formulas. The result appears as a card for each opportunity it finds."
+    },
+    {
+      "speaker": "B",
+      "text": "Do I need to install anything?"
+    },
+    {
+      "speaker": "A",
+      "text": "No. It's a single HTML page with a bit of JavaScript, so you just open it in a browser. There's also a Python notebook running the same math if you want to check it. The full write-up has the flowchart and the step-by-step table."
     }
   ],
-  "audio_hash": "b4c6110247eb3665",
-  "duration_seconds": 82,
-  "source_hash": "9343fb3111fd2914"
+  "audio_hash": "0465a30a695019f7",
+  "duration_seconds": 125
 }

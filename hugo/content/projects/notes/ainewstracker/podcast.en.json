@@ -1,60 +1,67 @@
 {
-  "title": "AINewsTracker: financial news, scored",
+  "title": "AINewsTracker: from headline to backtest",
   "lines": [
     {
       "speaker": "A",
-      "text": "Picture a quant analyst with a hundred browser tabs of financial headlines. AINewsTracker is a small service that reads them for you and puts a sentiment score on each one."
+      "text": "A financial headline lands, and a few seconds later somebody wants to know what it means for a stock. AINewsTracker is a Python service built around that moment, from collecting the news to testing strategies against it."
     },
     {
       "speaker": "B",
-      "text": "So it's a news reader with opinions?"
+      "text": "So it's a news reader that thinks a little?"
     },
     {
       "speaker": "A",
-      "text": "Kind of. It's a FastAPI service from AlgoÉTS. It pulls news from the Financial Modeling Prep feed, from GNews, or from any named feed, downloads the full text of each article and saves it in MongoDB."
+      "text": "Sort of. It's a web application from AlgoÉTS, built with FastAPI. It collects financial news, analyses the text of each article and exposes what it finds through an API."
     },
     {
       "speaker": "B",
-      "text": "And the scoring part?"
+      "text": "Where does the news come from?"
     },
     {
       "speaker": "A",
-      "text": "That's a language model called FinBERT, which labels each article's sentiment. Another model spots the stock tickers mentioned, and a third writes a short summary. Antoine's note points out that you can ask for any stored article's score with a single request."
+      "text": "From RSS feeds, from GNews and from other feeds you configure. There's also a seeding step that loads company data and news from outside sources, so the service has material to work with."
     },
     {
       "speaker": "B",
-      "text": "How do you get started with it?"
+      "text": "And what does analysing the text actually give you?"
     },
     {
       "speaker": "A",
-      "text": "Pretty painlessly. You copy the example environment file, add one API key, and run Docker Compose. That starts the API with MongoDB and Redis, and you land on interactive docs in your browser. Two seed calls load companies and news in the background."
+      "text": "Sentiment, topics, and an allocation of tickers, so you know which companies an article is about. Articles end up in MongoDB, and Redis handles caching."
     },
     {
       "speaker": "B",
-      "text": "Can you look things up by company?"
+      "text": "How is it organised inside?"
     },
     {
       "speaker": "A",
-      "text": "Yes. Tickers are stored, so you can ask for every article linked to one company or to a list of them."
+      "text": "Quite cleanly. One main file assembles the service and registers the route groups: news, articles, companies, users, seeding and strategies. News goes through a processing service, then text metrics, then a repository layer before it reaches the database."
     },
     {
       "speaker": "B",
-      "text": "Who's the service really built for?"
+      "text": "You said strategies. Where do those fit?"
     },
     {
       "speaker": "A",
-      "text": "There's a second door, and I like it. A backtesting service can call a versioned articles endpoint with a service token, filter by symbols and time window, and page through results with a cursor. Each article comes back with its sentiment label, the probabilities and the model name."
+      "text": "That's the second half of the story. A separate path takes the stored information and runs historical backtests. You can ask for a strategy to run for a single company, or for a whole list of them."
     },
     {
       "speaker": "B",
-      "text": "So the news side and the trading-strategy side stay cleanly separated."
+      "text": "So the news side and the trading side share the same data."
     },
     {
       "speaker": "A",
-      "text": "Exactly. Collect and score on one side, serve tidy data on the other. The full write-up has the architecture diagram and the whole list of routes."
+      "text": "Exactly. You can create and read articles, look a company up by its ticker, even read an article's score. And it runs either through Poetry or with Docker Compose, with FastAPI generating a documentation page for every route."
+    },
+    {
+      "speaker": "B",
+      "text": "Is there more to see in the written version?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The full page has the architecture diagram, and a companion article follows one piece of news from an incoming feed all the way to a stored article. Worth a read if you like seeing the plumbing."
     }
   ],
-  "audio_hash": "02656786a6d40abf",
-  "duration_seconds": 106,
-  "source_hash": "7b5b7f863e49c206"
+  "audio_hash": "b3dc1dc11d71ff8b",
+  "duration_seconds": 120
 }

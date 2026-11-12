@@ -1,40 +1,67 @@
 {
-  "title": "PolyFEMBlenderPlugin: physics simulation without leaving Blender",
+  "title": "From a Blender scene to a physics simulation",
   "lines": [
     {
       "speaker": "A",
-      "text": "You model a scene in Blender, but to simulate how it deforms you'd normally juggle files and command lines. This add-on keeps it all in one place."
+      "text": "Picture a scene you've built in Blender: a soft block, a metal plate, a little contact between them. You want to know how it actually deforms. Normally that means leaving Blender and juggling files and command lines."
     },
     {
       "speaker": "B",
-      "text": "So it connects Blender to a physics solver?"
+      "text": "Which sounds like a lot of switching between tools. Is there a shortcut?"
     },
     {
       "speaker": "A",
-      "text": "Yes. It's an experimental Blender extension that turns selected objects, materials and contact settings into a setup file for PolyFEM, a finite-element solver, then runs the simulation. Antoine wrote it for simulation work at the ÉTS lab."
+      "text": "That's exactly what PolyFEMBlenderPlugin is for. It's an experimental Blender extension that turns your selected objects, their materials and the contact settings into a setup file for PolyFEM, a finite-element solver. Then it runs the simulation without you leaving Blender."
     },
     {
       "speaker": "B",
-      "text": "What do I do inside Blender?"
+      "text": "Why did Antoine build it?"
     },
     {
       "speaker": "A",
-      "text": "A PolyFEM panel in the Physics tab lets you pick a material preset like steel or aluminium, set contact, time and boundary conditions, then create the setup file. Meshes are exported, and TetWild can turn them into tetrahedral meshes."
+      "text": "He wrote it for the simulation work at the ÉTS lab. It's meant for people who prepare their scenes in Blender but solve them with PolyFEM. It's published under the ETSim group on GitHub."
     },
     {
       "speaker": "B",
-      "text": "And the solving?"
+      "text": "So what do I actually see inside Blender?"
     },
     {
       "speaker": "A",
-      "text": "It runs PolyFEM in the background, using a Docker image or a local program. When it finishes, a Render Animation button imports each step as a mesh and keyframes them, so you play the result back as an animation."
+      "text": "A PolyFEM panel in the Physics tab. You pick the objects, give each one elastic properties, either from presets like steel, copper or aluminium, or with your own values. Then there are collapsible sections for contact, time, boundary conditions, the solver and the output."
     },
     {
       "speaker": "B",
-      "text": "A neat loop from scene to simulation to playback. It needs Blender four point two or later, and the write-up has the full workflow."
+      "text": "And the meshes themselves? A solver needs a particular kind."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. The add-on exports each mesh as STL or OBJ, or it can fill it with tetrahedra using TetWild and save it as an MSH file. Then it writes the full PolyFEM setup file, and you can even export only the objects you've selected."
+    },
+    {
+      "speaker": "B",
+      "text": "Does Blender freeze while the simulation runs?"
+    },
+    {
+      "speaker": "A",
+      "text": "No. PolyFEM runs in a background thread, either through Docker or as a local program, so the interface stays usable. Docker is the default, which means you don't have to install the solver yourself."
+    },
+    {
+      "speaker": "B",
+      "text": "And when it's done, do you get the results back in the scene?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, and that's the nice part. A Render Animation button reads each time step, converts it to a mesh, and keyframes them so the deformation plays back as an animation right in Blender."
+    },
+    {
+      "speaker": "B",
+      "text": "So the whole loop, scene, solver and playback, lives in one place."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactly. It needs Blender 4.2 or later, and the written page walks through the installation and the repository layout if you want to try it."
     }
   ],
-  "audio_hash": "7fa4999e3c23daaa",
-  "duration_seconds": 69,
-  "source_hash": "bc5a0d5aef4b90a2"
+  "audio_hash": "39a8eda06c2b1770",
+  "duration_seconds": 131
 }

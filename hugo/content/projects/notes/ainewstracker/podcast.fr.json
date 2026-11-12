@@ -1,60 +1,67 @@
 {
-  "title": "AINewsTracker : l'actualité financière, notée",
+  "title": "AINewsTracker : de la manchette au backtest",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imaginez un analyste quantitatif avec cent onglets de nouvelles financières ouverts. AINewsTracker lit tout ça à sa place, et donne une note de sentiment à chaque article."
+      "text": "Une manchette financière tombe, et quelques secondes plus tard, quelqu’un veut savoir ce que ça change pour une action. AINewsTracker est un service Python construit autour de ce moment : de la collecte des nouvelles jusqu’au test de stratégies."
     },
     {
       "speaker": "B",
-      "text": "Un lecteur de nouvelles qui a des opinions, donc ?"
+      "text": "Donc c’est un lecteur de nouvelles qui réfléchit un peu ?"
     },
     {
       "speaker": "A",
-      "text": "Un peu. C'est un service FastAPI d'AlgoÉTS. Il va chercher les nouvelles chez Financial Modeling Prep, chez GNews ou dans un flux nommé, télécharge le texte complet de chaque article et l'enregistre dans MongoDB."
+      "text": "En quelque sorte. C’est une application web, construite avec FastAPI. Elle collecte des actualités financières, analyse le texte de chaque article et expose le résultat par une API."
     },
     {
       "speaker": "B",
-      "text": "Et la notation, elle vient d'où ?"
+      "text": "D’où viennent les nouvelles ?"
     },
     {
       "speaker": "A",
-      "text": "D'un modèle de langage qui s'appelle FinBERT, qui donne le sentiment de chaque article. Un deuxième modèle repère les tickers boursiers cités, et un troisième écrit un petit résumé. Dans la note d'Antoine, on voit qu'une seule requête suffit pour récupérer la note d'un article enregistré."
+      "text": "De flux RSS, de GNews et d’autres flux qu’on configure. Il y a aussi une étape d’amorçage qui charge des entreprises et des actualités depuis des sources externes, pour que le service ait de quoi travailler."
     },
     {
       "speaker": "B",
-      "text": "Et pour démarrer ?"
+      "text": "Et qu’est-ce que l’analyse du texte apporte, concrètement ?"
     },
     {
       "speaker": "A",
-      "text": "C'est simple. On copie le fichier d'environnement d'exemple, on ajoute une clé d'API et on lance Docker Compose. Ça démarre l'API avec MongoDB et Redis, et on tombe sur une documentation interactive dans le navigateur. Deux appels de chargement remplissent sociétés et nouvelles en tâche de fond."
+      "text": "Le sentiment, les sujets, et l’attribution de tickers, donc on sait de quelles entreprises parle un article. Les articles sont enregistrés dans MongoDB, et Redis s’occupe du cache."
     },
     {
       "speaker": "B",
-      "text": "On peut chercher par entreprise ?"
+      "text": "Comment c’est organisé à l’intérieur ?"
     },
     {
       "speaker": "A",
-      "text": "Oui. Les tickers sont enregistrés, donc on peut demander tous les articles liés à une société, ou à une liste de sociétés."
+      "text": "Très proprement. Un fichier principal assemble le service et enregistre les groupes de routes : actualités, articles, entreprises, utilisateurs, amorçage et stratégies. Les nouvelles passent par un service de traitement, puis par des mesures de texte, puis par une couche de dépôts avant d’arriver à la base de données."
     },
     {
       "speaker": "B",
-      "text": "Et pour qui est-ce vraiment construit ?"
+      "text": "Tu parles de stratégies. Elles arrivent où dans l’histoire ?"
     },
     {
       "speaker": "A",
-      "text": "Il y a une seconde porte, que j'aime bien. Un service de backtest peut appeler un point d'accès d'articles versionné avec un jeton de service, filtrer par symboles et par période, et parcourir les résultats avec un curseur. Chaque article arrive avec son étiquette de sentiment, ses probabilités et le nom du modèle."
+      "text": "C’est la deuxième moitié. Un parcours distinct prend les informations enregistrées et lance des backtests historiques. On peut demander l’exécution d’une stratégie pour une seule entreprise, ou pour toute une liste."
     },
     {
       "speaker": "B",
-      "text": "Donc d'un côté les nouvelles, de l'autre les stratégies, bien séparées."
+      "text": "Donc le côté nouvelles et le côté trading partagent les mêmes données."
     },
     {
       "speaker": "A",
-      "text": "Voilà. On collecte et on note d'un côté, on sert des données propres de l'autre. L'article complet a le schéma d'architecture et toute la liste des routes."
+      "text": "Exactement. On peut créer et lire des articles, chercher une entreprise par son ticker, et même consulter le score d’un article. Le tout fonctionne avec Poetry ou avec Docker Compose, et FastAPI génère une page de documentation pour les routes."
+    },
+    {
+      "speaker": "B",
+      "text": "Il y a autre chose à voir dans la version écrite ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. La page complète contient le diagramme d’architecture, et un article associé suit une nouvelle depuis le flux entrant jusqu’à l’article enregistré. À lire si on aime voir la tuyauterie."
     }
   ],
-  "audio_hash": "e916e0cccd541586",
-  "duration_seconds": 118,
-  "source_hash": "a69aba01bea16d4e"
+  "audio_hash": "f28d3dd6d4a54853",
+  "duration_seconds": 137
 }

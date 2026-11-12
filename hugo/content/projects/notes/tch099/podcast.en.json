@@ -3,50 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "How do you teach students a whole web stack without drowning them in a framework? Antoine's answer is TCH099, a small PHP demo app."
+      "text": "How much of a web framework do you actually need to build a login system? TCH099 answers with two files doing the routing and a handful of scripts doing the work."
     },
     {
       "speaker": "B",
-      "text": "What does the app do?"
+      "text": "No framework at all? What is TCH099, exactly?"
     },
     {
       "speaker": "A",
-      "text": "It serves a few pages and a JSON API for sign-up, login, logout and user details, plus an admin page that lists the accounts. An Android app talks to the same API."
+      "text": "It's a small PHP web application built as a demo to deploy on Azure. It serves a few HTML pages, a JSON API for sign-up, login, logout and user details, and an admin page that lists every account. An Android app talks to the same API."
     },
     {
       "speaker": "B",
-      "text": "And no framework at all?"
+      "text": "So who is it for?"
     },
     {
       "speaker": "A",
-      "text": "None. Two files handle the routing, a handful of scripts do the work, and one table in MariaDB holds the accounts. Because it's so small, you can read all of it."
+      "text": "Students starting a team project. It has its own documentation site, written in French, with user stories, the API reference, a primer on the browser's developer tools, the Android setup and the Azure deployment steps."
     },
     {
       "speaker": "B",
-      "text": "How does it run?"
+      "text": "How does that hand-written router work?"
     },
     {
       "speaker": "A",
-      "text": "Docker locally, with Apache. On Azure App Service it goes behind nginx, and a GitHub Actions workflow deploys it when you push to main."
+      "text": "One file lists every route as a simple call, like get login or post api login. When a request arrives, the router checks the method, splits the address into segments, and the first route that matches runs its page or script, then stops. A segment starting with a dollar sign captures a value from the address."
     },
     {
       "speaker": "B",
-      "text": "Is the code the only teaching material?"
+      "text": "Can you give an example?"
     },
     {
       "speaker": "A",
-      "text": "No. There's a documentation site in French for teams starting a project: user stories, the API reference, a tour of the browser DevTools, the Android setup and the Azure deployment steps, with sequence diagrams for each call."
+      "text": "Send a hello-world request with a language code in the address, and the code is captured as a variable. Send the code es and the answer comes back as Hola Mundo with the person's name. It's a neat way to see routing without any magic."
     },
     {
       "speaker": "B",
-      "text": "A full learning path built on a tiny app."
+      "text": "What about login and roles?"
     },
     {
       "speaker": "A",
-      "text": "Exactly. The written page has the diagrams."
+      "text": "The login script checks the username against the database, verifies the password hash, and stores the user's details in the session. There are two roles, admin and client, and the admin page shows a forbidden page to clients. Passwords are hashed and every query uses prepared statements."
+    },
+    {
+      "speaker": "B",
+      "text": "And the Android app stays logged in?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes, because it keeps one HTTP client with a cookie jar, so the session cookie from PHP survives between calls."
+    },
+    {
+      "speaker": "B",
+      "text": "How does it get to Azure?"
+    },
+    {
+      "speaker": "A",
+      "text": "Every push to the main branch triggers a GitHub Actions workflow that zips the PHP app and deploys it to an Azure Web App. A second workflow publishes the documentation to GitHub Pages. The full write-up has the diagrams for the router and the login flow."
     }
   ],
-  "audio_hash": "5dd3ad0a18c28c82",
-  "duration_seconds": 71,
-  "source_hash": "c60401bbd348dcb7"
+  "audio_hash": "7f50f0364c5e3926",
+  "duration_seconds": 133
 }

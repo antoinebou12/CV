@@ -1,60 +1,67 @@
 {
-  "title": "nova-backtest : simuler les trades sans boucle",
+  "title": "nova-backtest : des transactions sans boucle",
   "lines": [
     {
       "speaker": "A",
-      "text": "Tester une stratégie de trading oblige souvent à parcourir les bougies une par une. nova-backtest fait autrement : il travaille sur des colonnes entières d'un coup."
+      "text": "Tester une stratégie oblige souvent à parcourir les bougies une par une. nova-backtest fait plus malin : il travaille sur des colonnes entières d’un coup, et trouve quand même exactement où chaque transaction se termine."
     },
     {
       "speaker": "B",
-      "text": "Reprenons au début. C'est quoi ?"
+      "text": "Reprenons du début. C’est quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Une bibliothèque Python de backtest de stratégies crypto, publiée sur PyPI. Elle télécharge les bougies historiques de bourses comme Binance, Bybit et OKX, exécute la stratégie sur plusieurs paires en même temps et sort des statistiques de profit et de drawdown."
+      "text": "Une bibliothèque Python de backtesting de stratégies de trading crypto, publiée sur PyPI. Elle télécharge les bougies historiques de huit plateformes, dont Binance, Bybit et OKX, applique une stratégie à de nombreuses paires à la fois et produit des statistiques. Ce dépôt est un fork du projet NovaLabs."
     },
     {
       "speaker": "B",
-      "text": "Comment on écrit une stratégie ?"
+      "text": "Comment écrit-on une stratégie ?"
     },
     {
       "speaker": "A",
-      "text": "On crée une sous-classe et on remplit trois méthodes. Une ajoute des indicateurs à un tableau pandas de bougies. Une fixe le signal d'entrée, le take profit, le stop loss et la taille de position. Une fixe la sortie."
+      "text": "On hérite d’une classe et on remplit trois méthodes sur un tableau de bougies. La première ajoute des indicateurs. La deuxième marque les signaux d’entrée, avec un objectif, un stop et une taille de position. La troisième fixe le signal de sortie."
     },
     {
       "speaker": "B",
-      "text": "Et l'astuce ?"
+      "text": "Et où est la partie astucieuse ?"
     },
     {
       "speaker": "A",
-      "text": "Un signal sur une bougie est exécuté à l'ouverture de la suivante, donc la stratégie ne peut pas trader sur un prix qu'elle vient d'utiliser pour décider. Ensuite, le code construit, pour chaque bougie à venir, une colonne qui dit quand le stop ou la cible a été touché, et prend la sortie la plus proche."
+      "text": "Dans la recherche de la sortie. Un signal sur une bougie est exécuté à l’ouverture de la suivante, donc la stratégie ne négocie jamais au prix qui vient de la faire décider. Ensuite, le code repère quand le stop ou l’objectif est touché dans les bougies à venir, et retient la sortie la plus tôt."
     },
     {
       "speaker": "B",
-      "text": "Et si les deux sont touchés dans la même bougie ?"
+      "text": "Tu peux dérouler une transaction ?"
     },
     {
       "speaker": "A",
-      "text": "Il compte un stop, ce qui est la lecture prudente. Les frais sont inclus aussi : 0,02 pour cent pour Binance dans la table."
+      "text": "Bien sûr. Disons que la stratégie achète à cent, avec un objectif et un stop à cinq pour cent : l’objectif est à cent cinq et le stop à quatre-vingt-quinze. Deux bougies plus tard, rien ne se passe. À la troisième, le plus haut atteint cent cinq et le plus bas reste au-dessus du stop. La transaction sort à cent cinq, soit un gain de cinq pour cent."
     },
     {
       "speaker": "B",
-      "text": "Et le portefeuille ?"
+      "text": "Et les frais ?"
     },
     {
       "speaker": "A",
-      "text": "Les trades de toutes les paires sont fusionnés, et ceux qui dépasseraient le nombre maximal de positions ouvertes sont retirés, car un vrai compte ne pourrait pas les prendre. Les résultats finissent dans un CSV et un JSON."
+      "text": "Ils sont facturés à l’entrée et à la sortie, au taux maker de la plateforme. Sur Binance, à zéro virgule zéro deux pour cent, cette transaction coûte environ quatre centièmes sur un nominal de cent, ce qui laisse un résultat proche de quatre virgule neuf six."
     },
     {
       "speaker": "B",
-      "text": "Rapide et honnête, donc."
+      "text": "Et quand plusieurs paires travaillent ensemble ?"
     },
     {
       "speaker": "A",
-      "text": "C'est l'esprit. La page écrite contient l'exemple MACD détaillé, étape par étape."
+      "text": "Les transactions de toutes les paires sont fusionnées et triées par heure de sortie. Celles qui dépasseraient le nombre maximal de positions ouvertes sont retirées, parce qu’un vrai compte n’aurait pas pu les prendre."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu’est-ce qui sort à la fin ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un CSV de statistiques par paire, un JSON de statistiques globales et un graphique Plotly de la courbe de capital. La page écrite a le diagramme complet du flux."
     }
   ],
-  "audio_hash": "492975a25e4b501e",
-  "duration_seconds": 103,
-  "source_hash": "b2d73e5d22009890"
+  "audio_hash": "2f60cd86b5a0e3df",
+  "duration_seconds": 144
 }

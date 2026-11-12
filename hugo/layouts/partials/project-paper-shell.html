@@ -33,5 +33,5 @@
   {{- with findRESubmatch `(?s)^(<h2\b.*?)(<h2\b.*)$` $body 1 -}}{{- $body = printf "%s%s%s" (index (index . 0) 1) $useCases (index (index . 0) 2) -}}{{- else -}}{{- $body = printf "%s%s" $body $useCases -}}{{- end -}}
 {{- end -}}
 {{- $toc := cond $fr "Table des matières" "Table of contents" -}}
-{{- $shell := printf `<div class="repo-note repo-note--prose" data-repo-shell><div class="repo-shell-layout"><details class="repo-sidenav-disclosure" open><summary>%s</summary><nav class="repo-sidenav"></nav></details><div class="repo-shell-main"><header class="repo-hero"><div class="repo-hero-panel">%s%s<div class="repo-actions">%s</div></div></header><div class="repo-prose-body">%s</div></div></div></div>` $toc $hero $updated $actions $body -}}
+{{- $shell := printf `<div class="repo-note repo-note--prose" data-repo-shell><div class="repo-shell-layout"><details class="repo-sidenav-disclosure" open><summary>%s</summary><nav class="repo-sidenav"></nav></details><div class="repo-shell-main"><header class="repo-hero"><div class="repo-hero-panel">%s%s<div class="repo-actions">%s</div></div></header>%s<div class="repo-prose-body">%s</div></div></div></div>` $toc $hero $updated $actions (partial "podcast-player.html" $page) $body -}}
 {{- return $shell -}}

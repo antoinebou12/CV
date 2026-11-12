@@ -3,46 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Scratched paint, worn edges, grime in the corners. Artists fake all of it. But how?"
+      "text": "Look at any good game prop. The paint is chipped on the corners, there are fine scratches across the top, and you never saw an artist paint each one by hand. So how is it done?"
     },
     {
       "speaker": "B",
-      "text": "WearBlender is a set of Blender scenes that teach exactly that. It's published under ETSim, for learning and teaching."
+      "text": "I always assumed it was a lot of patient brushwork."
     },
     {
       "speaker": "A",
-      "text": "What's inside?"
+      "text": "Often it's node setups instead. That's what WearBlender collects: a set of Blender scenes, published under ETSim, for learning and teaching how artists usually fake wear. Worn edges, scratches, rotated normal maps, painted marks, and proximity effects."
     },
     {
       "speaker": "B",
-      "text": "Just Blender files, a README and an MIT license. Each scene takes apart one trick. One builds a worn-edge mask from bevel and geometry nodes. Another draws micro-scratches on the Suzanne monkey head with Voronoi and noise textures."
+      "text": "What's actually in the repository?"
     },
     {
       "speaker": "A",
-      "text": "What else?"
+      "text": "Just Blender files, a README and an MIT licence. You clone it, open any scene, and look inside. The README says the scenes were tested in Blender 4.5 LTS."
     },
     {
       "speaker": "B",
-      "text": "One rotates the vectors of a normal map. Another reads painted data through geometry nodes to decide where wear shows. A flowmap scene pushes a texture along a flow image, and one more projects a texture from a second camera."
+      "text": "Walk me through a couple of them."
     },
     {
       "speaker": "A",
-      "text": "How would a learner use it?"
+      "text": "The edge wear scene builds a mask from Bevel and Geometry nodes, then feeds it through a color ramp, so the corners of an object look worn while the flat faces stay clean. The scratched scene puts procedural micro-scratches on the Suzanne monkey head, using Voronoi and Noise textures and bump nodes."
     },
     {
       "speaker": "B",
-      "text": "Open the edge-wear scene in Blender four point five, follow the nodes into the color ramp, move the ramp stops, and watch the worn edges grow or shrink."
+      "text": "And normal maps? That one sounds trickier."
     },
     {
       "speaker": "A",
-      "text": "Then copy the setup into your own material."
+      "text": "A normal map stores surface detail as directions. In the normal rotation scene, those directions get turned with Vector Rotate and Vector Math nodes, so the detail can change dynamically."
     },
     {
       "speaker": "B",
-      "text": "Right. It also sits beside Antoine's master's research on wear in texture space, where wear comes from simulated contact. The full write-up has the scene list."
+      "text": "Does anything let you paint the wear yourself?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The weight painting scene uses geometry nodes that read a painted attribute, and a material that mixes shaders based on it. So you paint where the wear goes and the material responds."
+    },
+    {
+      "speaker": "B",
+      "text": "Anything about movement?"
+    },
+    {
+      "speaker": "A",
+      "text": "The flow map scene pushes a texture along a flow image by splitting and recombining coordinates. And there's a camera projection scene, with a second camera, that projects a texture onto a surface."
+    },
+    {
+      "speaker": "B",
+      "text": "So there's a toolbox of tricks, each in its own file."
+    },
+    {
+      "speaker": "A",
+      "text": "Right, and you can reuse the node setups in your own materials. The repository sits beside Antoine's master's research at ÉTS on wear in texture space, where wear comes from simulated contact instead of hand-built masks. The written page lists every scene and the nodes it uses."
     }
   ],
-  "audio_hash": "93fb3f5fa9474729",
-  "duration_seconds": 75,
-  "source_hash": "ca76875bbdc47062"
+  "audio_hash": "6f1bcbe8db170c44",
+  "duration_seconds": 130
 }

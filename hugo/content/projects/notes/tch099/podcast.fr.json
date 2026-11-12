@@ -3,50 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Comment enseigner toute une pile web sans noyer les étudiants dans un cadriciel ? La réponse d'Antoine, c'est TCH099, une petite appli de démonstration en PHP."
+      "text": "De quelle partie d’un cadriciel web a-t-on vraiment besoin pour faire un système de connexion ? TCH099 répond avec deux fichiers pour le routage et une poignée de scripts pour le travail."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'elle fait ?"
+      "text": "Pas de cadriciel du tout ? C’est quoi, au juste, TCH099 ?"
     },
     {
       "speaker": "A",
-      "text": "Elle sert quelques pages et une API JSON pour l'inscription, la connexion, la déconnexion et les détails de l'utilisateur, plus une page d'administration qui liste les comptes. Une application Android parle à la même API."
+      "text": "C’est une petite application web en PHP, conçue comme démonstration à déployer sur Azure. Elle sert quelques pages HTML, une API JSON pour l’inscription, la connexion, la déconnexion et les détails de l’utilisateur, et une page d’administration qui liste tous les comptes. Une application Android parle à la même API."
     },
     {
       "speaker": "B",
-      "text": "Et aucun cadriciel ?"
+      "text": "Et elle s’adresse à qui ?"
     },
     {
       "speaker": "A",
-      "text": "Aucun. Deux fichiers font le routage, quelques scripts font le travail et une seule table MariaDB contient les comptes. Comme c'est petit, on peut tout lire."
+      "text": "Aux étudiants qui commencent un projet d’équipe. Elle a son propre site de documentation, avec des histoires utilisateur, la référence de l’API, une initiation aux outils de développement du navigateur, la configuration d’Android et les étapes de déploiement sur Azure."
     },
     {
       "speaker": "B",
-      "text": "Ça tourne comment ?"
+      "text": "Comment fonctionne ce routeur écrit à la main ?"
     },
     {
       "speaker": "A",
-      "text": "Avec Docker en local, sous Apache. Sur Azure App Service, derrière nginx, et un workflow GitHub Actions la déploie à chaque envoi sur main."
+      "text": "Un fichier liste chaque route sous forme d’appel simple, comme get login ou post api login. Quand une requête arrive, le routeur vérifie la méthode, découpe l’adresse en segments, et la première route qui correspond exécute sa page ou son script, puis tout s’arrête. Un segment qui commence par un signe de dollar capte une valeur dans l’adresse."
     },
     {
       "speaker": "B",
-      "text": "Le code est le seul support de cours ?"
+      "text": "Tu as un exemple ?"
     },
     {
       "speaker": "A",
-      "text": "Non. Il y a un site de documentation en français pour les équipes qui démarrent un projet : histoires utilisateur, référence de l'API, visite des DevTools du navigateur, configuration Android et étapes de déploiement Azure, avec des diagrammes de séquence pour chaque appel."
+      "text": "Tu envoies une requête hello-world avec un code de langue dans l’adresse, et ce code devient une variable. Avec le code es, la réponse arrive sous la forme Hola Mundo suivi du nom de la personne."
     },
     {
       "speaker": "B",
-      "text": "Tout un parcours d'apprentissage sur une toute petite appli."
+      "text": "Et la connexion, les rôles ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. La page écrite a les schémas."
+      "text": "Le script de connexion cherche le nom d’utilisateur dans la base, vérifie l’empreinte du mot de passe et range les détails de l’utilisateur dans la session. Il y a deux rôles, administrateur et client, et la page d’administration renvoie une page d’accès refusé aux clients. Les mots de passe sont hachés et chaque requête utilise une requête préparée."
+    },
+    {
+      "speaker": "B",
+      "text": "Et l’appli Android reste connectée ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui, parce qu’elle garde un seul client HTTP avec un gestionnaire de témoins, de sorte que le témoin de session PHP survit d’un appel à l’autre."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment ça arrive sur Azure ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Chaque envoi vers la branche principale déclenche un flux GitHub Actions qui compresse l’application PHP et la déploie sur une application web Azure. Un second flux publie la documentation sur GitHub Pages. L’article complet a les schémas du routeur et du parcours de connexion."
     }
   ],
-  "audio_hash": "9a4b8bc18e527e22",
-  "duration_seconds": 81,
-  "source_hash": "1110d9d7406c98ce"
+  "audio_hash": "848f950caeeaae69",
+  "duration_seconds": 149
 }

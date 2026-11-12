@@ -39,8 +39,9 @@
     {{ end }}
     {{/* Front matter description: keep for Open Graph / Twitter; do not repeat as visible lead (duplicated article intro). */}}
   </header>
-  {{- /* Notes built by the repository-note shortcode place the player themselves; hand-written notes get it here. */ -}}
-  {{ if or (not $isRepoNote) (not (in .RawContent "{{< repository-note")) }}{{ partial "podcast-player.html" $page }}{{ end }}
+  {{- /* Project notes place the player under their own title block: repository-note.html for
+         generated notes, project-paper-shell.html for hand-written ones. */ -}}
+  {{ if not $isRepoNote }}{{ partial "podcast-player.html" $page }}{{ end }}
 
   {{- if and (not $isRepoNote) (ne .Params.show_hero false) -}}
   {{- with partial "featured-image-resource.html" $page -}}

@@ -1,48 +1,67 @@
 {
-  "title": "Simuler l'usure dans Blender, scène par scène",
+  "title": "Simuler l’usure dans Blender, scène par scène",
   "lines": [
     {
       "speaker": "A",
-      "text": "Peinture rayée, arêtes usées, saleté dans les coins. Les artistes simulent tout ça. Mais comment ?"
+      "text": "Regardez un bon accessoire de jeu vidéo. La peinture est écaillée aux coins, de fines rayures courent sur le dessus, et personne n’a peint chacune à la main. Alors comment on s’y prend ?"
     },
     {
       "speaker": "B",
-      "text": "WearBlender est un ensemble de scènes Blender qui l'enseignent. Il est publié sous ETSim, pour apprendre et enseigner."
+      "text": "J’ai toujours imaginé beaucoup de coups de pinceau patients."
     },
     {
       "speaker": "A",
-      "text": "Qu'y a-t-il dedans ?"
+      "text": "Souvent, ce sont plutôt des montages de nœuds. C’est ce que rassemble WearBlender : un ensemble de scènes Blender, publié sous ETSim, pour apprendre et enseigner les façons habituelles de simuler l’usure à la main. Arêtes usées, rayures, normal maps pivotées, marques peintes et effets de proximité."
     },
     {
       "speaker": "B",
-      "text": "Seulement des fichiers Blender, un README et une licence MIT. Chaque scène décortique une astuce. L'une construit un masque d'arêtes usées avec les nœuds Bevel et Geometry. Une autre dessine des micro-rayures sur la tête de singe Suzanne avec des textures Voronoi et Noise."
+      "text": "Qu’est-ce qu’il y a dans le dépôt, concrètement ?"
     },
     {
       "speaker": "A",
-      "text": "Et les autres ?"
+      "text": "Seulement des fichiers Blender, un README et une licence MIT. On clone, on ouvre une scène et on regarde à l’intérieur."
     },
     {
       "speaker": "B",
-      "text": "Une fait pivoter les vecteurs d'une normal map. Une autre lit des données peintes avec des geometry nodes pour décider où l'usure apparaît. Une scène de flowmap pousse une texture selon une image de flux, et une dernière projette une texture depuis une seconde caméra."
+      "text": "Décris-m’en quelques-unes."
     },
     {
       "speaker": "A",
-      "text": "Comment un apprenant s'en sert ?"
+      "text": "La scène d’usure des arêtes construit un masque avec les nœuds Bevel et Geometry, puis le passe dans une rampe de couleur : les coins de l’objet paraissent usés pendant que les faces plates restent propres. La scène des rayures met des micro-rayures procédurales sur la tête de singe Suzanne, avec des textures Voronoi et Noise et des nœuds Bump."
     },
     {
       "speaker": "B",
-      "text": "Il ouvre la scène d'usure des arêtes dans Blender quatre point cinq, suit les nœuds jusqu'à la rampe de couleur, déplace les repères, et regarde les arêtes usées grandir ou rétrécir."
+      "text": "Et les normal maps ? Ça, ça me paraît plus délicat."
     },
     {
       "speaker": "A",
-      "text": "Puis il copie le montage dans son propre matériau."
+      "text": "Une normal map stocke le détail d’une surface sous forme de directions. Dans la scène de rotation de normales, ces directions sont tournées avec les nœuds Vector Rotate et Vector Math, donc le détail peut changer de façon dynamique."
     },
     {
       "speaker": "B",
-      "text": "Voilà. Le projet accompagne aussi la recherche de maîtrise d'Antoine sur l'usure dans l'espace texture, où l'usure vient du contact simulé. L'article complet liste les scènes."
+      "text": "Est-ce qu’on peut peindre l’usure soi-même ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. La scène de weight painting utilise des geometry nodes qui lisent un attribut peint, et un matériau qui mélange des shaders à partir de cet attribut. On peint où va l’usure, et le matériau suit."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour le mouvement ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La scène de flowmap fait glisser une texture le long d’une image de flux en séparant puis en recombinant les coordonnées. Et il y a une scène de projection par caméra, avec une seconde caméra, qui projette une texture sur une surface."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc une boîte à astuces, avec un fichier par astuce."
+    },
+    {
+      "speaker": "A",
+      "text": "C’est ça, et on peut réutiliser les montages de nœuds dans ses propres matériaux. Le dépôt accompagne la recherche de maîtrise d’Antoine à l’ÉTS sur l’usure dans l’espace texture, où l’usure découle du contact simulé plutôt que de masques construits à la main. La page écrite liste chaque scène et les nœuds qu’elle utilise."
     }
   ],
-  "audio_hash": "b9de2d179afd916b",
-  "duration_seconds": 83,
-  "source_hash": "2abbfbd83b694662"
+  "audio_hash": "4a032127e3760d9b",
+  "duration_seconds": 139
 }
