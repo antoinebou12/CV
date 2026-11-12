@@ -1,56 +1,67 @@
 {
-  "title": "Backtester tout un marché d'un seul coup",
+  "title": "BatchBacktesting : une stratégie, plusieurs instruments",
   "lines": [
     {
       "speaker": "A",
-      "text": "Vous avez une idée de stratégie. Marche-t-elle sur une action, ou sur cinq cents ?"
+      "text": "Imaginez que vous avez une idée de stratégie et que vous voulez savoir comment elle se comporte sur une douzaine d’instruments, pas seulement sur le premier essayé. À la main, c’est long. BatchBacktesting en fait un traitement reproductible."
     },
     {
       "speaker": "B",
-      "text": "BatchBacktesting répond à ça. Le projet du club AlgoÉTS transforme un backtest en traitement reproductible."
+      "text": "Reproductible comment ? C’est quoi la recette ?"
     },
     {
       "speaker": "A",
-      "text": "Comment ça se passe ?"
+      "text": "Quatre étapes. On choisit les instruments, on obtient et on nettoie leurs prix, on exécute une stratégie sur chacun, puis on garde des résultats comparables. C’est un dépôt d’AlgoÉTS, en Python, et chaque étape reste visible au lieu d’être cachée derrière un tableau de bord."
     },
     {
       "speaker": "B",
-      "text": "On choisit ses instruments, par exemple la liste du S et P cinq cents lue sur Wikipédia, ou des paires crypto. Le projet télécharge les cours quotidiens, les nettoie, puis lance une stratégie sur chaque titre."
+      "text": "Et le travail se fait où ?"
     },
     {
       "speaker": "A",
-      "text": "Sur chaque titre, en même temps ?"
+      "text": "Dans un runner. Pour chaque instrument, il choisit un adaptateur de prix, actions ou crypto, nettoie les données et construit un backtest. Les instruments tournent en parallèle grâce à un pool de workers, quatre par défaut."
     },
     {
       "speaker": "B",
-      "text": "En parallèle, avec un pool de fils. Pour chacun, il enregistre un CSV de résultats et, si on veut, un graphique HTML interactif des transactions."
+      "text": "Et tous les essais partent des mêmes hypothèses ?"
     },
     {
       "speaker": "A",
-      "text": "Et côté stratégies ?"
+      "text": "C’est tout l’intérêt. Par défaut, on a cent mille en capital de départ et une commission de deux dixièmes de un pour cent. Chaque résultat est étiqueté avec l’instrument et la stratégie, donc la comparaison reste juste."
     },
     {
       "speaker": "B",
-      "text": "Vingt-trois au total, des croisements de moyennes mobiles au R S I, au MACD et aux bandes de Bollinger. Par défaut, c'est un croisement d'EMA : une moyenne rapide qui croise une lente déclenche une transaction, avec un stop et un objectif."
+      "text": "À quoi ressemble une stratégie ?"
     },
     {
       "speaker": "A",
-      "text": "Et ensuite, on compare ?"
+      "text": "Celle par défaut est un croisement de moyennes mobiles. Une moyenne rapide sur vingt périodes, une lente sur quatre-vingts. Quand la rapide passe au-dessus de la lente, la stratégie ferme toute position et achète, avec un stop dix pour cent plus bas et un objectif vingt-cinq pour cent plus haut. Dans l’autre sens, elle vend à découvert."
     },
     {
       "speaker": "B",
-      "text": "Un carnet classe les instruments selon le rendement et trace les cinq meilleurs face au simple achat-conservation."
+      "text": "Il n’y en a qu’une seule ?"
     },
     {
       "speaker": "A",
-      "text": "Chaque étape reste donc visible en Python, pas cachée derrière un tableau de bord."
+      "text": "Non, le fichier des stratégies en définit vingt-trois, fondées sur des indicateurs comme le RSI, les bandes de Bollinger ou le MACD. La plupart suivent le même modèle, donc en changer est facile."
     },
     {
       "speaker": "B",
-      "text": "C'est son charme. L'article complet déroule tout ça."
+      "text": "Qu’est-ce qu’on obtient à la fin ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un CSV par instrument, un CSV agrégé par stratégie, et un graphique HTML en option. Des outils permettent de classer les instruments, et un graphique d’exemple est publié pour Apple, sur cinq ans, d’avril 2018 à avril 2023."
+    },
+    {
+      "speaker": "B",
+      "text": "Et pour quelqu’un qui débute ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il existe des carnets d’initiation, Workshop1, qui mènent droit à ce runner. La page écrite contient le schéma du flux et le détail des calculs du croisement."
     }
   ],
-  "audio_hash": "6f023d3179124ec6",
-  "duration_seconds": 81,
-  "source_hash": "79737deb55681a89"
+  "audio_hash": "51670e4d870ed1ff",
+  "duration_seconds": 137
 }

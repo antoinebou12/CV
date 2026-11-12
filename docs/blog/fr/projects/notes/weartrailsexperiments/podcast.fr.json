@@ -1,40 +1,67 @@
 {
-  "title": "WearTrails : voir l'usure apparaître sur le sol",
+  "title": "WearTrails : voir l’usure apparaître sur le sol",
   "lines": [
     {
       "speaker": "A",
-      "text": "On glisse un bloc sur le sol, il laisse une trace. Un navigateur pourrait-il dessiner cette trace pendant qu'elle se forme ?"
+      "text": "Posez un cube sur un plancher et poussez-le. Dans la vraie vie, il laisserait une éraflure. Et si un navigateur pouvait la dessiner, exactement là où le cube a touché, et seulement là ?"
     },
     {
       "speaker": "B",
-      "text": "C'est WearTrailsExperiments. Antoine a construit des prototypes web qui transforment contact et glissement en cartes persistantes d'usure et de flux."
+      "text": "Dans un navigateur, sans logiciel spécial ?"
     },
     {
       "speaker": "A",
-      "text": "D'où vient l'idée ?"
+      "text": "C’est WearTrailsExperiments. Ce sont des prototypes web, publiés sous ETSim, qui transforment le contact entre un corps qui glisse et le sol en cartes persistantes d’usure et de flux. Ils explorent en JavaScript l’idée de la recherche de maîtrise d’Antoine à l’ÉTS sur l’usure dans l’espace texture."
     },
     {
       "speaker": "B",
-      "text": "De sa recherche de maîtrise à l'ÉTS sur l'usure dans l'espace texture. Sans simulateur lourd, le contact, la vitesse de glissement et la traction s'écrivent directement dans une texture, là où le contact a eu lieu."
+      "text": "C’est quoi, l’idée de base ?"
     },
     {
       "speaker": "A",
-      "text": "Donc on lâche une forme et on regarde ?"
+      "text": "Les zones de contact, la vitesse tangentielle et la traction sont écrites dans une texture, là où le contact a réellement eu lieu. L’usure découle donc du contact simulé lui-même, pas d’un masque peint par quelqu’un."
     },
     {
       "speaker": "B",
-      "text": "Oui. Un cube, une sphère, un palet, un cône ou votre propre modèle tombe sur un plan, avec la gravité, le frottement et la vitesse de votre choix. Huit petites vues montrent la zone de contact, la vitesse et la traction, et le sol enregistre peu à peu l'usure."
+      "text": "Qu’est-ce qu’on peut laisser tomber sur le sol ?"
     },
     {
       "speaker": "A",
-      "text": "Et on peut garder le résultat ?"
+      "text": "Un cube, un cube mou volumique, une sphère, un palet torique, un palet cylindrique, un cône, ou son propre modèle GLB. On règle la gravité, le frottement, la restitution, la vitesse et la force, on appuie sur Start, et le moteur physique Ammo.js fait le calcul pendant que three.js dessine."
     },
     {
       "speaker": "B",
-      "text": "On peut exporter la carte d'usure en image. Ça tourne avec three.js et un moteur physique, avec neuf expériences en une seule page. C'est ouvert, pour les chercheurs en rendu qui veulent essayer ces idées. L'article donne les détails."
+      "text": "Et comment on voit l’usure ?"
+    },
+    {
+      "speaker": "A",
+      "text": "La page affiche huit petites vignettes en même temps. Masques de contact, vitesse tangentielle, traction instantanée, distance de glissement cumulée, usure locale, et d’autres. L’usure s’accumule au sol comme traction fois vitesse, avec une direction de glissement lissée dans le temps."
+    },
+    {
+      "speaker": "B",
+      "text": "Ça fait juste une tache grise ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Non, ça peut aussi piloter l’aspect du sol. Un sol GLB avec des variantes de matériaux est mélangé selon la carte d’usure, et les textures pivotent dans le sens du flux. On peut aussi exporter les cartes d’usure et les tampons en PNG."
+    },
+    {
+      "speaker": "B",
+      "text": "Tout ça dans une seule application ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il y a l’application modulaire, plus neuf pages d’expériences autonomes. Masques de contact, traces UV, champs vectoriels de glissement, peinture multicouche et mélange avec des champs de flux."
+    },
+    {
+      "speaker": "B",
+      "text": "Et il ne faut rien de natif ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Seulement un serveur web local, puisque les pages utilisent des modules ES, et une connexion Internet pour les bibliothèques. C’est justement le but : les chercheurs en rendu peuvent essayer ces idées sans construire de simulateur natif. La page écrite détaille chaque module et chacune des huit vues."
     }
   ],
-  "audio_hash": "be2b74e755477e2d",
-  "duration_seconds": 72,
-  "source_hash": "72c10fb495276073"
+  "audio_hash": "7a3394c41cf1bc28",
+  "duration_seconds": 145
 }

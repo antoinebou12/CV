@@ -1,44 +1,67 @@
 {
-  "title": "TradingViewBuilder : des règles de trading lisibles en Pine Script",
+  "title": "TradingViewBuilder : des scripts de graphiques prêts à coller",
   "lines": [
     {
       "speaker": "A",
-      "text": "Moyennes mobiles, RSI, bandes de Bollinger : à quoi ressemblent ces règles classiques une fois écrites en code ?"
+      "text": "Imaginez que vous voulez voir où deux moyennes mobiles se croisent sur le graphique d’une action. Vous pouvez passer une soirée à écrire le script, ou en coller un qui existe déjà."
     },
     {
       "speaker": "B",
-      "text": "Je suppose qu'elles se cachent dans de longs scripts."
+      "text": "Je prendrais la deuxième option. Où est-ce que je le trouve ?"
     },
     {
       "speaker": "A",
-      "text": "Ce dépôt fait l'inverse. C'est une collection d'indicateurs et de stratégies TradingView en Pine Script, un fichier par technique, assez courts pour se lire d'une traite. C'est un projet d'AlgoÉTS."
+      "text": "Dans TradingViewBuilder. C’est une collection de scripts TradingView écrits en Pine Script, un fichier par technique. C’est un dépôt AlgoÉTS, pour les traders qui veulent des points de départ lisibles à ajuster."
     },
     {
       "speaker": "B",
-      "text": "Quelle différence entre un indicateur et une stratégie ?"
+      "text": "Quelles techniques, au juste ?"
     },
     {
       "speaker": "A",
-      "text": "Un indicateur trace seulement des valeurs sur le graphique. Une stratégie ajoute des ordres d'entrée. Par exemple, la stratégie RSI prend une position longue quand le RSI sur quatorze périodes passe au-dessus de trente, et courte quand il passe sous soixante-dix."
+      "text": "Les classiques. Croisements de moyennes mobiles, MACD, RSI, bandes de Bollinger, régression linéaire, Relative Vigor Index et bandes d’écart-type. Huit techniques en tout."
     },
     {
       "speaker": "B",
-      "text": "Et pour l'utiliser ?"
+      "text": "Et chaque fichier sert à afficher quelque chose, ou à passer des ordres ?"
     },
     {
       "speaker": "A",
-      "text": "Rien à installer. On colle un fichier dans l'éditeur Pine de TradingView, on l'ajoute au graphique, et on change les longueurs et les niveaux depuis l'engrenage pour comparer les transactions."
+      "text": "Les deux, pour la plupart. Un indicateur trace seulement des valeurs sur le graphique. Une stratégie ajoute des règles d’entrée, par exemple acheter quand une moyenne courte passe au-dessus d’une plus longue, et vendre à découvert au croisement inverse."
     },
     {
       "speaker": "B",
-      "text": "Huit techniques classiques sont couvertes, plus un brouillon d'idée de momentum de séries temporelles sur soixante contrats à terme."
+      "text": "Donc l’indicateur, c’est l’image, et la stratégie, c’est l’image plus la décision."
     },
     {
       "speaker": "A",
-      "text": "La page écrite liste chaque technique et sa règle."
+      "text": "Exactement. Celle du RSI achète quand l’indice repasse au-dessus de 30 et vend quand il passe sous 70. Celle de Bollinger surveille la clôture par rapport à des bandes à deux écarts-types sur vingt barres."
+    },
+    {
+      "speaker": "B",
+      "text": "Qu’est-ce qu’il faut installer ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Rien. On se connecte à TradingView, on ouvre le Pine Editor sous un graphique, on colle un fichier et on clique sur Add to Chart. On peut enregistrer le script sous un nom pour le garder."
+    },
+    {
+      "speaker": "B",
+      "text": "Je peux changer les chiffres sans toucher au code ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Chaque période, chaque multiplicateur et chaque seuil est un paramètre. L’engrenage à côté du nom du script permet de modifier périodes, sources, niveaux et couleurs, et les bandes, moyennes et lignes de signal s’affichent directement sur le graphique."
+    },
+    {
+      "speaker": "B",
+      "text": "Y a-t-il quelque chose de plus ambitieux dans le lot ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Un fichier esquisse une idée de momentum en séries temporelles. Il liste soixante contrats à terme, mesure le rendement de chacun sur douze fois vingt et une barres, achète les gagnants, vend à découvert les perdants, et dimensionne les positions avec une cible de volatilité et un plafond de levier. C’est ça. La page écrite a le tableau complet des techniques et les étapes de démarrage si vous voulez en essayer une."
     }
   ],
-  "audio_hash": "ffe1ccbf3c01df31",
-  "duration_seconds": 67,
-  "source_hash": "b83f067948bb3b32"
+  "audio_hash": "1bf56d3da068658f",
+  "duration_seconds": 145
 }

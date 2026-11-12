@@ -1,17 +1,17 @@
 {
-  "title": "nova-backtest: simulating trades without a loop",
+  "title": "nova-backtest: trades without a loop",
   "lines": [
     {
       "speaker": "A",
-      "text": "Backtesting a trading strategy usually means walking through candles one at a time. nova-backtest does it differently: it works on whole columns at once."
+      "text": "Backtesting a strategy usually means walking through candles one at a time. nova-backtest does something smarter: it works on whole columns of data at once, and still finds exactly where each trade ends."
     },
     {
       "speaker": "B",
-      "text": "Start from the beginning. What is it?"
+      "text": "Start from the top. What is it?"
     },
     {
       "speaker": "A",
-      "text": "A Python library for backtesting crypto strategies, published on PyPI. It downloads historical candles from exchanges like Binance, Bybit and OKX, runs your strategy over many pairs together and reports profit and drawdown stats."
+      "text": "A Python library for backtesting crypto trading strategies, published on PyPI. It downloads historical candles from eight exchanges, including Binance, Bybit and OKX, runs a strategy over many pairs at once and reports statistics. This repository is a fork of the NovaLabs project."
     },
     {
       "speaker": "B",
@@ -19,42 +19,49 @@
     },
     {
       "speaker": "A",
-      "text": "You subclass one class and fill three methods. One adds indicators to a pandas table of candles. One sets the entry signal, the take profit, the stop loss and the position size. One sets the exit."
+      "text": "You subclass one class and fill three methods on a table of candles. The first adds indicators. The second marks entry signals, with a take profit, a stop loss and a position size. The third sets the exit signal."
     },
     {
       "speaker": "B",
-      "text": "And the trick?"
+      "text": "And where's the clever part?"
     },
     {
       "speaker": "A",
-      "text": "A signal on one candle is filled at the next candle's open, so the strategy can't trade on a price it just used to decide. Then the code builds, for each candle ahead, a column saying when the stop or target was touched, and picks the earliest exit."
+      "text": "In how it finds the exit. A signal on one candle is filled at the next candle's open, so the strategy can't trade on a price it just used to decide. Then, for each candle ahead, the code builds a column saying when the stop or the target was touched, and takes the earliest exit among the stop, the target, a maximum holding time and an exit signal."
     },
     {
       "speaker": "B",
-      "text": "What if both are touched in the same candle?"
+      "text": "Can you walk through a trade?"
     },
     {
       "speaker": "A",
-      "text": "It counts that as a stop, which is the cautious reading. Fees are included too. Binance is 0.02 percent in the table."
+      "text": "Sure. Say the strategy buys at one hundred with a five percent target and stop, so the target is one oh five and the stop ninety-five. Two candles later nothing happens. On the third, the high reaches one oh five and the low stays above the stop. The trade exits at one oh five, a plus five percent move."
     },
     {
       "speaker": "B",
-      "text": "And the whole portfolio?"
+      "text": "What about fees?"
     },
     {
       "speaker": "A",
-      "text": "Trades from all pairs are merged, and ones that would exceed the maximum number of open positions are dropped, as a real account couldn't take them. Results land in a CSV and a JSON file."
+      "text": "They're charged on the way in and on the way out, at the exchange's maker rate. On Binance, at point oh two percent, that trade costs about four hundredths on a notional of a hundred, leaving a profit near four point nine six."
     },
     {
       "speaker": "B",
-      "text": "Fast and honest, then."
+      "text": "And with many pairs trading together?"
     },
     {
       "speaker": "A",
-      "text": "That's the spirit. The written page has the worked MACD example, step by step."
+      "text": "The trades from every pair are merged and sorted by exit time, and anything that would open beyond the maximum number of positions is dropped, because a real account couldn't have taken it. Each position gets a share of the bankroll based on leverage."
+    },
+    {
+      "speaker": "B",
+      "text": "What comes out at the end?"
+    },
+    {
+      "speaker": "A",
+      "text": "A CSV of per-pair statistics, a JSON file of overall statistics and a Plotly equity graph. The written page has the full flow diagram and the code's formulas."
     }
   ],
-  "audio_hash": "543784216a5aa02b",
-  "duration_seconds": 94,
-  "source_hash": "4c39c63cddc317b0"
+  "audio_hash": "45685d34db550fbb",
+  "duration_seconds": 141
 }

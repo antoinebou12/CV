@@ -3,38 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Slide a block across the floor, and it leaves a mark. Could a browser draw that mark as it forms?"
+      "text": "Drop a cube on a floor and push it. In real life, it would leave a scuff behind. What if a browser could draw that scuff, exactly where the cube touched, and only there?"
     },
     {
       "speaker": "B",
-      "text": "That's WearTrailsExperiments. Antoine built browser prototypes that turn contact and sliding into persistent wear and flow maps."
+      "text": "In a browser, with no special software?"
     },
     {
       "speaker": "A",
-      "text": "What's the idea behind it?"
+      "text": "That's WearTrailsExperiments. It's a set of browser prototypes, published under ETSim, that turn the contact between a sliding body and the ground into persistent wear and flow maps. They explore, in JavaScript, the idea behind Antoine's master's research at ÉTS on wear in texture space."
     },
     {
       "speaker": "B",
-      "text": "It comes from his master's research at ÉTS on wear in texture space. Instead of a heavy simulator, contact, sliding speed and traction get written straight into a texture, exactly where contact happened."
+      "text": "What's the core idea?"
     },
     {
       "speaker": "A",
-      "text": "So you drop a shape and watch?"
+      "text": "Contact patches, tangential velocity and traction get written into a texture where contact actually happened. So wear comes from the simulated contact itself, not from a mask someone painted."
     },
     {
       "speaker": "B",
-      "text": "Yes. A cube, sphere, puck, cone or your own model falls on a plane, with gravity, friction and speed you choose. Eight small views show the contact patch, velocity and traction, and the ground gradually records the wear."
+      "text": "What can I drop on the ground?"
     },
     {
       "speaker": "A",
-      "text": "Can you keep the result?"
+      "text": "A cube, a soft volumetric cube, a sphere, a torus puck, a cylinder puck, a cone, or your own GLB model. You choose gravity, friction, restitution, speed and force, press Start, and it runs on the Ammo.js physics engine with three.js drawing it."
     },
     {
       "speaker": "B",
-      "text": "You can export the wear map as an image. It runs with three.js and a physics engine, plus nine single-page experiments. It's open, for graphics researchers who want to try the ideas. The written page has the details."
+      "text": "And how do you see the wear?"
+    },
+    {
+      "speaker": "A",
+      "text": "The page shows eight small picture-in-picture views at once. Contact masks, tangential velocity, instant traction, accumulated sliding distance, local wear, and more. The wear accumulates on the ground as traction times velocity, and it keeps a sliding direction that is smoothed over time."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it just make a gray smudge?"
+    },
+    {
+      "speaker": "A",
+      "text": "No, it can drive the look of the ground too. A GLB ground with material variants gets blended according to the wear map, with textures rotating along the flow direction. And you can export the wear maps and stamps as PNG."
+    },
+    {
+      "speaker": "B",
+      "text": "Is that all in one app?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's the modular application, plus nine standalone experiment pages. Contact masks, dynamic paint with UV trails, slip vector fields, multi-layer paint, directional and hardness-based wear, and blending with flow fields."
+    },
+    {
+      "speaker": "B",
+      "text": "And it needs nothing native?"
+    },
+    {
+      "speaker": "A",
+      "text": "Just a local web server, since the pages use ES modules, and an internet connection for the libraries. That's the point: graphics researchers can try the ideas without building a native simulator. The written page lists every module and each of the eight views."
     }
   ],
-  "audio_hash": "abc3cc0e6ed2108f",
-  "duration_seconds": 66,
-  "source_hash": "90971ce51ee3a482"
+  "audio_hash": "b1cad11da2737e0c",
+  "duration_seconds": 139
 }

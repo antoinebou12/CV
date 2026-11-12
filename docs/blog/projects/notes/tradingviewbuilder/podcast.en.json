@@ -1,44 +1,67 @@
 {
-  "title": "TradingViewBuilder: readable trading rules in Pine Script",
+  "title": "TradingViewBuilder: ready-to-paste chart scripts",
   "lines": [
     {
       "speaker": "A",
-      "text": "Moving averages, RSI, Bollinger Bands: what do those classic trading rules look like as actual code?"
+      "text": "Say you want to see where two moving averages cross on a stock chart. You could spend an evening writing the script, or you could paste one that already exists."
     },
     {
       "speaker": "B",
-      "text": "I'd guess a lot of them are buried in long scripts."
+      "text": "I'd go for the second one. Where would I find it?"
     },
     {
       "speaker": "A",
-      "text": "This repository goes the other way. It's a collection of TradingView indicators and strategies in Pine Script, one file per technique, small enough to read in a sitting. It's an AlgoÉTS project."
+      "text": "In TradingViewBuilder. It's a collection of TradingView scripts written in Pine Script, one file per technique. It's an AlgoÉTS repository, for traders who want readable starting points they can adjust."
     },
     {
       "speaker": "B",
-      "text": "What's the difference between an indicator and a strategy?"
+      "text": "What kind of techniques are we talking about?"
     },
     {
       "speaker": "A",
-      "text": "An indicator just plots values on the chart. A strategy adds entry orders. For example, the RSI strategy goes long when the fourteen-period RSI crosses above thirty, and short when it crosses below seventy."
+      "text": "The classics. Moving average crossovers, MACD, RSI, Bollinger Bands, a linear regression channel, the Relative Vigor Index, and bands built from standard deviation. Eight in all."
     },
     {
       "speaker": "B",
-      "text": "How do I use one?"
+      "text": "And is each one a chart overlay, or something that trades?"
     },
     {
       "speaker": "A",
-      "text": "Nothing to install. Paste a file into the Pine Editor in TradingView, add it to the chart, and change lengths and levels from the gear icon to compare the trades."
+      "text": "Both, for most of them. An indicator file only plots values on the chart. A strategy file adds entry rules on top, like going long when a short average crosses above a longer one, and short on the opposite cross."
     },
     {
       "speaker": "B",
-      "text": "Eight classic techniques are covered, plus a draft of a time-series momentum idea across sixty futures contracts."
+      "text": "So the indicator is the picture, and the strategy is the picture plus the decision."
     },
     {
       "speaker": "A",
-      "text": "The written page lists each technique and rule."
+      "text": "Exactly. The RSI one, for example, goes long when the index climbs back above 30 and short when it drops below 70. The Bollinger one watches the close against bands set at two standard deviations over twenty bars."
+    },
+    {
+      "speaker": "B",
+      "text": "What do I have to install?"
+    },
+    {
+      "speaker": "A",
+      "text": "Nothing. You log in to TradingView, open the Pine Editor under a chart, paste a file, and click Add to Chart. Save it if you want to keep it under a name."
+    },
+    {
+      "speaker": "B",
+      "text": "Can I change the numbers without touching the code?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. Every length, multiplier and threshold is an input. The gear icon next to the script name lets you change periods, sources, levels and colours, and the bands, averages and signal lines show up right on the chart."
+    },
+    {
+      "speaker": "B",
+      "text": "Is there anything more ambitious in there?"
+    },
+    {
+      "speaker": "A",
+      "text": "One file sketches a time-series momentum idea. It lists sixty futures contracts, measures each one's return over twelve times twenty-one bars, goes long the winners and short the losers, and sizes positions with a volatility target and a leverage cap. That's it. The written page has the full table of techniques and the setup steps if you want to try one."
     }
   ],
-  "audio_hash": "15dd5b25cab45dd8",
-  "duration_seconds": 63,
-  "source_hash": "604118264ccd7c0f"
+  "audio_hash": "21e3aca6c4573f87",
+  "duration_seconds": 129
 }

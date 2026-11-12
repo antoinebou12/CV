@@ -3,50 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Tu as aimé Matrix. Comment un ordinateur trouve-t-il d'autres films du même genre, sans simplement comparer des titres ?"
+      "text": "Tu viens de voir The Matrix et tu veux quelque chose qui y ressemble. Pas juste la même étiquette de genre, la même impression. Comment un ordinateur peut-il trouver ça ?"
     },
     {
       "speaker": "B",
-      "text": "Avec une sorte de score de similarité ?"
+      "text": "Je dirais en comparant des mots-clés. C’est ça ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. SimilityVectorEmbedding regroupe des carnets Jupyter d'AlgoÉTS qui transforment un catalogue de films en vecteurs, des listes de nombres qui captent le sens, puis les parcourent."
+      "text": "C’est une façon de faire, et le projet l’essaie aussi. Mais l’idée centrale est autre. SimilityVectorEmbedding, ce sont des carnets Jupyter d’AlgoÉTS qui transforment un catalogue de films en vecteurs, c’est-à-dire des listes de nombres où les films semblables se retrouvent proches."
     },
     {
       "speaker": "B",
-      "text": "Qu'est-ce qu'on met pour chaque film ?"
+      "text": "Comment on réduit un film à des nombres ?"
     },
     {
       "speaker": "A",
-      "text": "Un texte par film : titre, année, genres, acteurs, réalisateur et synopsis. Un modèle sentence-transformers l'encode en vecteur, stocké dans PostgreSQL avec pgvector. L'exécution enregistrée charge 631 films."
+      "text": "D’abord, on compose un texte par film : titre, année, genres, acteurs, réalisateur, résumé, pays, langue et scénaristes. Dans l’exécution enregistrée, il y a 631 films. Un petit modèle appelé MiniLM lit ce texte et produit un vecteur de 384 nombres."
     },
     {
       "speaker": "B",
-      "text": "Et la recherche ?"
+      "text": "Et ces vecteurs vont dans une base de données ?"
     },
     {
       "speaker": "A",
-      "text": "On tape un titre, il est reconnu même approximatif, et le reste du catalogue est classé par similarité cosinus. Il y a aussi une page Gradio pour essayer un titre, plusieurs, ou des titres notés."
+      "text": "Oui, dans PostgreSQL avec l’extension pgvector. Quand tu tapes un titre, même approximatif, le système retrouve le titre réel le plus proche en comparant des morceaux de trois lettres. Ensuite, il classe tous les autres films par similarité cosinus, qui mesure en gros à quel point deux vecteurs pointent dans la même direction."
     },
     {
       "speaker": "B",
-      "text": "Une seule base de données ?"
+      "text": "Qu’est-ce que ça donne pour The Matrix ?"
     },
     {
       "speaker": "A",
-      "text": "Non, et c'est ce qui est intéressant. Chaque dossier associe un carnet à une autre approche : Qdrant pour les vecteurs, BM25 pour les mots-clés, Neo4j pour un graphe de genres et de personnes, et même un modèle de langage local avec Ollama."
+      "text": "Les deux suites arrivent en tête, à environ 75 et 73 pour cent. Puis viennent The Mummy, Speed et Con Air, au milieu de la cinquantaine."
     },
     {
       "speaker": "B",
-      "text": "On compare donc comment chacune voit le même catalogue."
+      "text": "On peut chercher avec plus d’un film ?"
     },
     {
       "speaker": "A",
-      "text": "Exactement. L'article et la page écrite donnent le détail."
+      "text": "Oui. Avec plusieurs titres, le système fait la moyenne de leurs vecteurs : une trilogie oriente donc la recherche vers ce que les trois films ont en commun. Tu peux aussi noter les titres, et les notes pondèrent le mélange. Avec The Matrix et Toy Story 2 bien notés et The Lion King noté un, la requête vient surtout des deux premiers."
+    },
+    {
+      "speaker": "B",
+      "text": "Tout se passe dans PostgreSQL, ou le projet explore d’autres outils ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il en compare plusieurs. La même idée tourne sur Qdrant, il y a une version par mots-clés avec BM25, et un graphe Neo4j qui relie les films par leurs genres et leurs personnes en commun. On peut aussi poser des questions en mots simples à un modèle de langage local, et une page Gradio affiche les affiches et les scores."
+    },
+    {
+      "speaker": "B",
+      "text": "C’est donc une visite guidée de la recherche par similarité."
+    },
+    {
+      "speaker": "A",
+      "text": "Exactement. L’article d’accompagnement raconte le tout comme une histoire, avec les animations de démonstration d’origine."
     }
   ],
-  "audio_hash": "7f4c4279ab66d979",
-  "duration_seconds": 83,
-  "source_hash": "c3424be4f181533c"
+  "audio_hash": "672964156ebb3dbd",
+  "duration_seconds": 149
 }

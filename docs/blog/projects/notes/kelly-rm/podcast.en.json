@@ -3,46 +3,57 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "You win a bet half the time, and it pays one and a half times your stake. How much of your money should you wager each round?"
+      "text": "You win a bet half the time, and it pays one and a half times your stake. How much of your money should you put down each round? Too little and you leave growth on the table. Too much and you can lose even though the odds favour you."
     },
     {
       "speaker": "B",
-      "text": "The Kelly criterion has an answer. It sets the bet size from the chance of winning and the payoff ratio. Kelly_RM, an AlgoÉTS research repository, lets you watch it work."
+      "text": "That sounds backwards. Is there an actual answer?"
     },
     {
       "speaker": "A",
-      "text": "How?"
+      "text": "There is, and it's called the Kelly criterion. It sets the bet size from two things, the probability of winning and the payoff ratio. Kelly_RM is an AlgoÉTS research repository that lets you watch the rule at work."
     },
     {
       "speaker": "B",
-      "text": "First, a coin-flip game. A biased coin, repeated bets, and four strategies side by side. One bets the Kelly fraction, one learns the odds after ten flips, one bets a fixed amount, and one bets big after three tails."
+      "text": "Watch it how?"
     },
     {
       "speaker": "A",
-      "text": "What does the Kelly bettor do?"
+      "text": "First with a coin-flip game. A biased coin, repeated bets, and four bettors side by side. One bets the Kelly fraction. One waits ten flips, then bets on the frequency it has observed. One bets a fixed amount. And one bets big after three tails in a row."
     },
     {
       "speaker": "B",
-      "text": "In the notebook's example, about one sixth of its wealth. Bet more, and growth shrinks. At twice the Kelly fraction, growth drops to zero."
+      "text": "So what happens to the Kelly bettor?"
     },
     {
       "speaker": "A",
-      "text": "Then it goes to real markets?"
+      "text": "In the notebook's example, with five hundred dollars to start and ten flips, the Kelly fraction works out to one sixth. So the first bet is about eighty-three dollars. Growth per flip is around two percent."
     },
     {
       "speaker": "B",
-      "text": "Yes. A second notebook downloads price histories, optimizes an R S I strategy with backtesting dot py, measures the win probability for each ticker, and turns that into a Kelly fraction."
+      "text": "And if you bet more than that?"
     },
     {
       "speaker": "A",
-      "text": "So you see the formula first on coins, then on trades."
+      "text": "That's the surprise. At twice the Kelly fraction, growth falls to zero. Beyond that, wealth shrinks over time, even though every single flip has a positive expected value."
     },
     {
       "speaker": "B",
-      "text": "Exactly. The full write-up has the charts and the worked example."
+      "text": "Then it moves to real markets?"
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. A second notebook downloads price histories, uses the first three years to optimise an RSI strategy for each ticker, then keeps the unseen data apart. From the trades, it works out each ticker's win probability and the size of its wins and losses, and plugs them into the Kelly formula."
+    },
+    {
+      "speaker": "B",
+      "text": "So coins first, trades second."
+    },
+    {
+      "speaker": "A",
+      "text": "Right. The coin game is described as companion code for a video on the Kelly criterion, which makes it a gentle way in. The written page has the growth table and the flow from ticker to Kelly fraction."
     }
   ],
-  "audio_hash": "9b964f1d6348052e",
-  "duration_seconds": 70,
-  "source_hash": "dae35da506c33eec"
+  "audio_hash": "bc7cd636d84c5df2",
+  "duration_seconds": 114
 }

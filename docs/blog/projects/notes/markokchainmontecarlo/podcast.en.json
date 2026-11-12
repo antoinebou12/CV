@@ -7,46 +7,61 @@
     },
     {
       "speaker": "B",
-      "text": "Prices that haven't happened? How?"
+      "text": "Prices that haven't happened? How would that work?"
     },
     {
       "speaker": "A",
-      "text": "By simulating them. The notebooks download Apple's full daily price history, and split it at the start of 2023: an earlier part to learn from, a later part to hold back."
+      "text": "By simulating them. The notebooks download Apple's full daily price history and split it at the start of 2023. The earlier part is for learning from, the later part is held back."
     },
     {
       "speaker": "B",
-      "text": "And the simulation?"
+      "text": "And the simulation itself?"
     },
     {
       "speaker": "A",
-      "text": "Two ways. A Monte Carlo model estimates the drift and volatility from past returns, then draws random shocks to build many possible price paths. The notebooks run 364 days ahead, with thousands of paths."
+      "text": "There are two. The first is a Monte Carlo model. It looks at the daily log returns in the training data, estimates a drift and a volatility, then pushes the price forward day after day with random shocks. Run that many times and you get a fan of possible paths."
     },
     {
       "speaker": "B",
-      "text": "And the second?"
+      "text": "How many paths?"
     },
     {
       "speaker": "A",
-      "text": "A Markov chain. Prices are cut into ten-dollar bins, the notebook counts how often the price moves from one bin to another, and then samples a sequence from those odds."
+      "text": "The notebooks project three hundred and sixty-four days ahead, with a thousand or ten thousand paths. There are variants too, with rolling volatility and occasional extreme moves."
     },
     {
       "speaker": "B",
-      "text": "What do you do with the simulations?"
+      "text": "And the second simulation?"
     },
     {
       "speaker": "A",
-      "text": "Use them inside a strategy. It buys when the last simulated state is zero, and exits on a five percent stop loss or a take-profit price taken from a simulated path. It's compared with plain buy and hold, starting from ten thousand in cash."
+      "text": "A Markov chain. Training prices are cut into ten-dollar bins. The notebook counts how often a price in one bin is followed by a price in another, and turns that into probabilities. Then it walks the chain, drawing the next state from the current row."
     },
     {
       "speaker": "B",
-      "text": "So a full loop, from data to backtest."
+      "text": "Can you give a tiny example?"
     },
     {
       "speaker": "A",
-      "text": "Yes, all in Python notebooks with backtesting dot py. The written page walks through each step."
+      "text": "Say six closes land in two bins, one around one forty to one fifty and one above. Count the five moves between them, divide by the totals, and you have the odds of staying put or moving. That's the whole idea."
+    },
+    {
+      "speaker": "B",
+      "text": "And what do you do with all that?"
+    },
+    {
+      "speaker": "A",
+      "text": "You use it inside a strategy built with backtesting dot py. It buys on a simulated state, and exits on a five percent stop or on a take-profit price drawn from a simulated path. It's compared with plain buy and hold, both starting from ten thousand in cash with a two tenths of a percent commission."
+    },
+    {
+      "speaker": "B",
+      "text": "So a full loop, from raw data to a scored strategy."
+    },
+    {
+      "speaker": "A",
+      "text": "Yes. The forward Monte Carlo part also has its own step-by-step article, and the written page walks through the formulas."
     }
   ],
-  "audio_hash": "73e5b38112e3d240",
-  "duration_seconds": 80,
-  "source_hash": "fd3e5132debcfb4f"
+  "audio_hash": "759d700778116532",
+  "duration_seconds": 122
 }

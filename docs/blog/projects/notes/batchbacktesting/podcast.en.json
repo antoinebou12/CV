@@ -1,56 +1,67 @@
 {
-  "title": "Backtesting a whole market in one batch",
+  "title": "BatchBacktesting: one strategy, many instruments",
   "lines": [
     {
       "speaker": "A",
-      "text": "You've got a trading idea. Does it work on one stock, or on five hundred?"
+      "text": "Say you have a trading idea and you want to know how it behaves on a dozen different instruments, not just the first one you tried. Doing that by hand is tedious. BatchBacktesting turns it into a single repeatable run."
     },
     {
       "speaker": "B",
-      "text": "BatchBacktesting is built to answer that. It turns a backtest into a repeatable batch, from the AlgoÉTS club."
+      "text": "Repeatable how? What's the recipe?"
     },
     {
       "speaker": "A",
-      "text": "Walk me through it."
+      "text": "Four steps. Choose your instruments, fetch and clean their prices, run a strategy on each, and save results you can compare. It's an AlgoÉTS repository, written in Python, and it keeps every step visible instead of hiding it behind a dashboard."
     },
     {
       "speaker": "B",
-      "text": "You pick your instruments, for example the S and P five hundred list pulled from Wikipedia, or a set of crypto pairs. The project downloads daily prices, cleans them, then runs a strategy on every ticker."
+      "text": "So where does the work happen?"
     },
     {
       "speaker": "A",
-      "text": "Every ticker, at once?"
+      "text": "In a runner. For each instrument it picks a price adapter, stock or crypto, cleans the observations, and builds a backtest. The instruments run in parallel through a pool of workers, four by default."
     },
     {
       "speaker": "B",
-      "text": "In parallel, with a thread pool. For each one it saves a CSV of results, and optionally an interactive HTML chart of the trades."
+      "text": "And every run uses the same assumptions?"
     },
     {
       "speaker": "A",
-      "text": "What strategies are included?"
+      "text": "That's the point. The defaults are one hundred thousand in starting cash and a commission of two tenths of a percent. Each result is tagged with the instrument and the strategy name, so comparisons stay fair."
     },
     {
       "speaker": "B",
-      "text": "Twenty-three of them, from moving-average crossovers to R S I, MACD and Bollinger Bands. The default is an EMA crossover, where a fast average crossing a slow one triggers a trade, with a stop and a target around it."
+      "text": "What does a strategy look like?"
     },
     {
       "speaker": "A",
-      "text": "And then you compare?"
+      "text": "The default one is a moving average crossover. It tracks a fast average over twenty periods and a slow one over eighty. When the fast one crosses above the slow one, it closes any position and buys, with a stop ten percent below and a target twenty-five percent above. The mirror image sells short."
     },
     {
       "speaker": "B",
-      "text": "A notebook ranks the instruments by return and plots the best five against simply buying and holding."
+      "text": "Only one strategy, then?"
     },
     {
       "speaker": "A",
-      "text": "So every step stays visible in Python, not hidden behind a dashboard."
+      "text": "No, the strategy file defines twenty-three, built on indicators like RSI, Bollinger Bands and MACD. Most follow the same pattern, so swapping one for another is easy."
     },
     {
       "speaker": "B",
-      "text": "That's the charm. The full write-up has the walkthrough."
+      "text": "What do you get at the end?"
+    },
+    {
+      "speaker": "A",
+      "text": "A CSV per instrument, an aggregate CSV per strategy, and optionally an HTML chart. There are helpers to rank the instruments, and a published example chart for Apple covering five years, from April 2018 to April 2023."
+    },
+    {
+      "speaker": "B",
+      "text": "And if someone is new to all this?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's a set of beginner notebooks called Workshop1 that leads right into this runner. The written page has the flow diagram and the details of the crossover maths."
     }
   ],
-  "audio_hash": "8f944f602d85d6e3",
-  "duration_seconds": 75,
-  "source_hash": "edc7a6a36343c2e3"
+  "audio_hash": "20a4ee3912ea7f54",
+  "duration_seconds": 125
 }

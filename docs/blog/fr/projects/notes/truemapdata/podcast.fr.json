@@ -3,38 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Un scanner mesure une surface jusqu'aux plus petits reliefs. Comment réutiliser ça dans un moteur de jeu ou un rapport de labo ?"
+      "text": "Un scanner mesure une pièce de monnaie jusqu’à ses plus petites aspérités. Comment réutiliser cette même mesure dans un rapport de laboratoire et dans un moteur de jeu ?"
     },
     {
       "speaker": "B",
-      "text": "C'est TrueMapData, une bibliothèque Python et un outil en ligne de commande qu'Antoine maintient sous ETSim."
+      "text": "Ça ressemble à deux mondes différents. Il y a une réponse pour les deux ?"
     },
     {
       "speaker": "A",
-      "text": "Qu'est-ce qu'elle lit ?"
+      "text": "C’est l’idée de TrueMapData. C’est une bibliothèque Python et un outil en ligne de commande, maintenus sous ETSim, pour les cartes de hauteur TrueMap et GelSight. Elle les lit comme des tableaux NumPy : une seule représentation sert à la fois la métrologie et l’infographie."
     },
     {
       "speaker": "B",
-      "text": "Les cartes de hauteur des scanners TrueMap et GelSight, sous forme de tableaux NumPy. Une seule représentation sert donc à la métrologie et au graphisme."
+      "text": "Une carte de hauteur, c’est quoi exactement ?"
     },
     {
       "speaker": "A",
-      "text": "Et qu'en fait-on ?"
+      "text": "Une grille où chaque case dit à quelle hauteur se trouve la surface à cet endroit, avec l’espacement entre les cases. On garde donc l’échelle physique. Le format de fichier de la bibliothèque tient en un petit en-tête, ces métadonnées spatiales et la grille de hauteurs."
     },
     {
       "speaker": "B",
-      "text": "On exporte des cartes de normales, des cartes de déplacement ou des maillages en STL, OBJ ou glTF, en gardant l'échelle physique. On mesure la rugosité, et on trace surfaces et profils."
+      "text": "Une fois chargée, on en fait quoi ?"
     },
     {
       "speaker": "A",
-      "text": "Et elle suit aussi l'usure ?"
+      "text": "D’abord on la regarde. Une carte de chaleur en 2D, une surface en 3D, des profils le long d’une ligne ou d’une colonne, des contours, et même des comparaisons entre fichiers. Ensuite on en tire des cartes de normales et de déplacement pour l’infographie, ou on exporte un maillage, en conservant l’échelle."
     },
     {
       "speaker": "B",
-      "text": "Oui. À partir de scans alignés d'un échantillon usé, elle calcule des courbes de portance et le volume perdu entre deux images. L'article compare deux captures en exemple."
+      "text": "C’est seulement pour faire des images ? Tu parlais de métrologie."
+    },
+    {
+      "speaker": "A",
+      "text": "Non, elle mesure aussi. Un module optionnel calcule la rugosité surfacique selon la norme ISO 25178. Et une deuxième commande, tmd-wear, compare des captures de la même surface dans le temps."
+    },
+    {
+      "speaker": "B",
+      "text": "L’usure, comme une surface qui s’égratigne peu à peu ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Oui. Le dépôt contient trois captures GelSight prises après zéro, cent cinquante et trois cents millimètres de glissement à cent grammes. Une commande les compare et donne la perte de matière par rapport à la première capture."
+    },
+    {
+      "speaker": "B",
+      "text": "Comment l’essayer ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Elle est sur PyPI sous le nom truemapdata, avec une licence MIT. On l’installe avec pip, et la page propose un court script qui construit en mémoire une carte de deux cents sur deux cents, l’enregistre, la relit et la recadre. Pas besoin de fichier de capture."
+    },
+    {
+      "speaker": "B",
+      "text": "Donc on retient un seul format de surface, du microscope jusqu’au rendu."
+    },
+    {
+      "speaker": "A",
+      "text": "Voilà. L’article complet a les figures d’exemple et la liste des modules optionnels."
     }
   ],
-  "audio_hash": "1185ff736ec85abe",
-  "duration_seconds": 57,
-  "source_hash": "ec15518e6e12d2a9"
+  "audio_hash": "c8e29373e82282aa",
+  "duration_seconds": 139
 }

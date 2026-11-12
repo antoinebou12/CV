@@ -3,15 +3,15 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "Would a LEGO set from 1965 have been a good investment? Antoine's project treats LEGO as a market to find out."
+      "text": "Would a LEGO set from 1965 have been a good investment? LegosTracker looks at LEGO sets the way you'd look at a market, to find out."
     },
     {
       "speaker": "B",
-      "text": "Ha. Where does the data come from?"
+      "text": "Ha, I like it. Where does the data come from?"
     },
     {
       "speaker": "A",
-      "text": "Two places. The Rebrickable catalog says which sets, parts and themes exist, and a scraper adds the prices sets fetch over time from BrickEconomy."
+      "text": "Two places. The Rebrickable catalog says which sets, parts and themes exist, and a scraper adds the prices those sets fetch over time from BrickEconomy. It's an AlgoÉTS data project, all in Python and Jupyter notebooks."
     },
     {
       "speaker": "B",
@@ -19,22 +19,49 @@
     },
     {
       "speaker": "A",
-      "text": "It reads a list of set numbers, drives a visible Chromium window with Playwright, and opens each set's page. It pulls the chart data out of the page and saves value history and price bands as CSV files, plus details like pricing and predictions into one table."
+      "text": "It reads a list of set numbers and drives a visible Chromium window with Playwright. For each set, it searches BrickEconomy, opens the matching page and pulls out the chart data hidden in the page's script."
     },
     {
       "speaker": "B",
-      "text": "And then the data science part?"
+      "text": "And what does it save?"
     },
     {
       "speaker": "A",
-      "text": "Notebooks explore the catalog, then fit regressions on the price history of set zero zero one dash one, project it to 2030 and run a Monte Carlo simulation. Another notebook updates the values of your own collection."
+      "text": "The value history goes into one file per set, and when a four-band price series exists, that gets its own file. Then it reads the details, pricing, quick buy, predictions and facts panels into structured models and adds them all to one big table."
     },
     {
       "speaker": "B",
-      "text": "It's for collectors and data curious people. The article on the blog tells the story with charts."
+      "text": "So that's the collecting. What about the analysis?"
+    },
+    {
+      "speaker": "A",
+      "text": "One notebook explores the Rebrickable tables, colours, parts, sets and themes, and plots counts. Another cleans the scraped prices and focuses on set zero zero one dash one, the one from 1965. It fits a linear model and a gradient boosting model on its price history and projects both to 2030."
+    },
+    {
+      "speaker": "B",
+      "text": "Is that the only forecast?"
+    },
+    {
+      "speaker": "A",
+      "text": "There's also a Monte Carlo simulation on the log returns, and charts of yearly gains and of the four price bands. It's a nice little tour of different ways to think about the same price curve."
+    },
+    {
+      "speaker": "B",
+      "text": "Does it work for someone's own bricks, too?"
+    },
+    {
+      "speaker": "A",
+      "text": "It does. A third notebook takes a personal collection file, looks up each set's retail price and current value on BrickEconomy, and writes an updated file."
+    },
+    {
+      "speaker": "B",
+      "text": "So collectors and data-curious people both get something."
+    },
+    {
+      "speaker": "A",
+      "text": "That's the idea. The blog article tells the story with charts, and the project page lists every notebook."
     }
   ],
-  "audio_hash": "47465a14d5686d12",
-  "duration_seconds": 60,
-  "source_hash": "b8aca9260c9075ec"
+  "audio_hash": "fb751878652f298c",
+  "duration_seconds": 111
 }

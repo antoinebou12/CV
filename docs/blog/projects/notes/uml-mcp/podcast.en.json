@@ -3,58 +3,65 @@
   "lines": [
     {
       "speaker": "A",
-      "text": "You're chatting with an AI assistant and you say, draw me a sequence diagram of a user logging in through an API gateway. A moment later, the diagram appears in the chat."
+      "text": "You type one sentence into a chat, something like draw me a sequence diagram of a user logging in through an API gateway, and a finished diagram appears right in the conversation. How does that work?"
     },
     {
       "speaker": "B",
-      "text": "How does it pull that off?"
+      "text": "I'd have guessed the AI just draws a picture. Is that not it?"
     },
     {
       "speaker": "A",
-      "text": "That's uml-mcp, a Model Context Protocol server. The assistant writes the diagram source in PlantUML, Mermaid, D2, Graphviz and more, calls one of the server's tools, and gets back an image, a link to the rendered file and an editable playground link."
+      "text": "Not quite. The assistant writes the diagram as text, in a notation like PlantUML, Mermaid or D2. Then it calls a tool, and that tool is uml-mcp, a Model Context Protocol server. It sends back an image, a link to the rendered file and a link to an editable playground."
     },
     {
       "speaker": "B",
-      "text": "Who does the drawing?"
+      "text": "So the AI writes the recipe and the server cooks it."
     },
     {
       "speaker": "A",
-      "text": "Mostly Kroki. The source is compressed, put into a URL, and rendered there. If Kroki fails, the server can fall back to other renderers, and results are cached so repeat calls are quick."
+      "text": "That's a good way to say it. In clients that support MCP Apps, the diagram even opens in a viewer inside the chat. In the demo, one batch call returns four diagrams as tabs, and you switch between them or re-render one in another format."
     },
     {
       "speaker": "B",
-      "text": "What tools does the assistant get?"
+      "text": "How many kinds of diagrams are we talking about?"
     },
     {
       "speaker": "A",
-      "text": "Five. Render one diagram, render one as an inline image, validate the source before rendering so the assistant can fix mistakes, list the diagram types, and render a batch in one call. The README counts 46 diagram types."
+      "text": "The README counts forty-six types. Thirty-seven are rendered by Kroki, a diagram service, and nine come from four bundled plugins, including architecture and workflow diagrams and cloud diagrams with real logos."
     },
     {
       "speaker": "B",
-      "text": "Does the user get more than a picture?"
+      "text": "And what does the assistant actually get to call?"
     },
     {
       "speaker": "A",
-      "text": "In clients that support MCP Apps, the diagram opens in a viewer inside the chat. You can zoom, edit the source, change the theme and export to SVG, PNG or PDF."
+      "text": "Five tools. One renders a diagram, one returns it as an inline image, one validates the source first with errors that say how to fix it, one lists the available types, and one renders several diagrams in a single call."
     },
     {
       "speaker": "B",
-      "text": "And running it?"
+      "text": "What happens behind the scenes when I ask for a diagram?"
     },
     {
       "speaker": "A",
-      "text": "Use the hosted endpoint on Vercel, or install it from PyPI, or self-host with Docker or Helm. There are ready configurations for Cursor, VS Code and Claude Desktop."
+      "text": "The server checks the type and the arguments, then looks in a cache so a repeated request comes back fast. If it isn't cached, it renders it. Kroki types go through the service, plugin types render locally. And if Kroki fails, PlantUML and Mermaid sources can be retried on other renderers."
     },
     {
       "speaker": "B",
-      "text": "So diagrams become part of the conversation."
+      "text": "Can I run it myself?"
     },
     {
       "speaker": "A",
-      "text": "That's it. The full write-up has the step-by-step pipeline and the demo recording."
+      "text": "Yes. It's on PyPI as uml-mcp, there's a hosted endpoint on Vercel, and you can self-host with Docker or Helm. The repository has ready-made configurations for Cursor, VS Code, Claude Desktop and others."
+    },
+    {
+      "speaker": "B",
+      "text": "There's even an admin side, right?"
+    },
+    {
+      "speaker": "A",
+      "text": "A web console with live logs, metrics and rate limits. So you describe the diagram and it shows up in the chat. The full write-up has the demo video and the step by step pipeline."
     }
   ],
-  "audio_hash": "905b1202234c5628",
-  "duration_seconds": 98,
-  "source_hash": "8296196a0edfc5e9"
+  "audio_hash": "c0e2a76418a7c0c7",
+  "duration_seconds": 139
 }

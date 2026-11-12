@@ -1,44 +1,67 @@
 {
-  "title": "Simulateur : un jeu de bourse avec un marché en direct",
+  "title": "Un marché boursier à jouer entre amis",
   "lines": [
     {
       "speaker": "A",
-      "text": "Imagine une classe d'équipes qui échangent des actions fictives pendant que les prix bougent en temps réel. C'est Simulateur."
+      "text": "Imagine une bourse où les entreprises sont fictives, où les nouvelles sont scénarisées, et où une équipe d’amis échange contre la tienne pendant que les cours bougent sous tes yeux. C’est Simulateur."
     },
     {
       "speaker": "B",
-      "text": "Un jeu de bourse. Qui le prépare ?"
+      "text": "Un jeu de bourse, donc. Ça s’adresse à qui ?"
     },
     {
       "speaker": "A",
-      "text": "Un administrateur. Dans un tableau de bord en cinq étapes, il définit les réglages, crée des entreprises et des actions fictives, forme les équipes, ajoute des nouvelles et des événements, puis révise le scénario. C'est fait avec Django pour AlgoÉTS, pour les groupes qui veulent jouer ensemble."
+      "text": "À des groupes qui veulent animer un jeu de marché ensemble. C’est un projet d’AlgoÉTS construit avec Django. Un administrateur prépare un scénario avec des entreprises fictives, des actualités et des événements, puis des équipes de joueurs échangent les actions simulées."
     },
     {
       "speaker": "B",
-      "text": "Et comment bougent les prix si les entreprises sont inventées ?"
+      "text": "D’où viennent les prix, si les entreprises n’existent pas ?"
     },
     {
       "speaker": "A",
-      "text": "Un moteur de prix génère une nouvelle bougie par action à chaque pas de temps, avec un modèle de bruit au choix : mouvement brownien, bruit de Perlin ou Monte Carlo. Chaque bougie est enregistrée et envoyée aux joueurs par WebSocket, en direct."
+      "text": "D’un moteur de prix. À chaque pas de temps, il prend le dernier cours de chaque action et demande à un modèle de bruit une nouvelle chandelle : ouverture, haut, bas et clôture. L’administrateur choisit le modèle, par exemple le mouvement brownien, une marche au hasard, ou le bruit de Perlin, qui dérive par vagues douces, ou encore un modèle Monte-Carlo qui fait la moyenne de cent trajectoires simulées."
     },
     {
       "speaker": "B",
-      "text": "Que peuvent faire les joueurs ?"
+      "text": "Et les joueurs voient ces chandelles en direct ?"
     },
     {
       "speaker": "A",
-      "text": "Rejoindre une équipe avec un lien, acheter et vendre au dernier prix, suivre leurs positions et regarder les classements. L'administrateur peut même demander à un modèle Ollama local de rédiger des nouvelles, des événements ou des scénarios entiers."
+      "text": "Oui. Chaque chandelle est enregistrée, puis poussée par WebSocket, avec Django Channels et Redis, vers le tableau de jeu, en même temps que les actualités, les événements et les déclencheurs. Le graphique se redessine à mesure que les données arrivent."
     },
     {
       "speaker": "B",
-      "text": "Il y a aussi une application de test de stratégies, et un seul script installe tout et lance la démo."
+      "text": "Qu’est-ce qu’un joueur peut faire ?"
     },
     {
       "speaker": "A",
-      "text": "L'article complet explique les modèles de prix en détail."
+      "text": "Acheter et vendre selon le solde de son portefeuille, puis suivre ses positions et son rendement. Il y a des classements pour les joueurs et les équipes, et on peut inviter d’autres joueurs avec un lien d’équipe."
+    },
+    {
+      "speaker": "B",
+      "text": "Et celui qui anime la partie ?"
+    },
+    {
+      "speaker": "A",
+      "text": "Il a un tableau de bord d’administration en cinq étapes : réglages, entreprises et actions, équipes, événements, puis révision. Une simulation passe par des états, de créée et publiée à en cours, et l’administrateur peut la mettre en pause, la reprendre ou la terminer d’un clic."
+    },
+    {
+      "speaker": "B",
+      "text": "Inventer toutes ces entreprises et ces nouvelles, ça fait du travail."
+    },
+    {
+      "speaker": "A",
+      "text": "Ça peut se faire à ta place. Un modèle Ollama local peut rédiger actualités, événements, déclencheurs, entreprises ou même des scénarios complets. Les joueurs se connectent avec un compte local ou avec Google, GitHub, Microsoft et Notion."
+    },
+    {
+      "speaker": "B",
+      "text": "C’est tout un petit marché dans une boîte."
+    },
+    {
+      "speaker": "A",
+      "text": "On peut le dire comme ça. L’article complet a les schémas des modèles de prix et des mises à jour en direct, ainsi que des captures de chaque tableau de bord."
     }
   ],
-  "audio_hash": "3a724844d988e710",
-  "duration_seconds": 75,
-  "source_hash": "b5b7c4c2a9597cf3"
+  "audio_hash": "6dead681f00f0a98",
+  "duration_seconds": 145
 }
