@@ -22,7 +22,11 @@
 {{- end -}}
 {{- if not $items -}}{{- errorf "shortcode demos: no demo lines in %s" .Position -}}{{- end -}}
 {{- $first := index $items 0 -}}
-{{- $host := (urls.Parse $first.url).Host -}}
+{{- $hosts := slice -}}
+{{- range $items }}{{ $hosts = $hosts | append (urls.Parse .url).Host }}{{ end -}}
+{{- $host := delimit (uniq $hosts) ", " -}}
+{{- /* Optional note="…" adds a requirement line, e.g. WebGPU for 3D demos. */ -}}
+{{- $note := .Get "note" -}}
 {{- $id := printf "live-demos-%d" .Ordinal -}}
 <section class="live-demos not-prose" data-live-demos aria-labelledby="{{ $id }}-title">
   <div class="live-demos__head">
@@ -41,7 +45,7 @@
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
         <span>{{ if $fr }}Lancer la démo{{ else }}Start the demo{{ end }}</span>
       </button>
-      <p class="live-demos__note">{{ if $fr }}Se charge depuis {{ $host }} seulement quand vous cliquez. WebAssembly ; les démos 3D demandent un navigateur avec WebGPU.{{ else }}Loads from {{ $host }} only when you press start. WebAssembly; the 3D demos need a browser with WebGPU.{{ end }}</p>
+      <p class="live-demos__note">{{ if $fr }}Se charge depuis {{ $host }} seulement quand vous cliquez.{{ else }}Loads from {{ $host }} only when you press start.{{ end }}{{ with $note }} {{ . }}{{ end }}</p>
     </div>
   </div>
   <div class="live-demos__foot">

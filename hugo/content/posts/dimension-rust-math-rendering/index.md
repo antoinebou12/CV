@@ -40,7 +40,7 @@ The application supplies geometry and transforms. The scene layer organizes enti
 
 The same crates compile to WebAssembly, and the repository publishes each demo as a static page. Pick one below and press start: it runs in your browser, with nothing to install.
 
-{{< demos title="Dimension running in your browser" height="640" >}}
+{{< demos title="Dimension running in your browser" height="640" note="WebAssembly; the 3D demos need a browser with WebGPU." >}}
 Render | https://antoinebou12.github.io/Dimension/render/ | A cube, a tetrahedron and a cylinder drawn by the wgpu renderer, with a transform gizmo and object picking.
 Geometry | https://antoinebou12.github.io/Dimension/geometry/ | Mesh demos from the geometry crate.
 Mathlib | https://antoinebou12.github.io/Dimension/mathlib/ | Linear algebra, graphs, optimization, noise, transforms and camera maths from mathlib.

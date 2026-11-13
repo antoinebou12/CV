@@ -18,7 +18,10 @@ Geometry | https://antoinebou12.github.io/Dimension/geometry/ | Mesh demos from 
 ```
 
 - One demo per line: `Label | https://url | short description`.
-- `title` and `height` (pixels, default 600) are optional.
+- `title` and `height` (pixels, default 600) are optional. `note` adds a
+  requirement line under the start button, for example
+  `note="WebAssembly; the 3D demos need a browser with WebGPU."`.
+- The panel names every host the demos load from.
 - Only `https://` addresses are accepted; the build fails on anything else.
 - The frame is sandboxed (`allow-scripts allow-same-origin allow-popups
   allow-pointer-lock`). A demo hosted on the site's own origin loses

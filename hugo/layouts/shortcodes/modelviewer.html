@@ -13,6 +13,8 @@
   {{- .Page.Scratch.Set "modelviewer-script" true -}}
   {{- /* jsDelivr is already allowed by the site CSP; the hash pins the exact 3.5.0 build. */ -}}
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js" integrity="sha384-Ftcjj/GNLxPvzNDftO/oryXB9aGxsGZY9JGqsXG0uUKgQDl9RfDgsx9NJ/4IVNPe" crossorigin="anonymous"></script>
+  {{- /* Readers who ask for reduced motion get a still model. */ -}}
+  <script>if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('model-viewer[auto-rotate]').forEach(m=>m.removeAttribute('auto-rotate')))</script>
 {{- end -}}
 <figure class="modelviewer-wrap not-prose" style="--modelviewer-height: {{ $height }}px">
   <model-viewer

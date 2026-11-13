@@ -27,6 +27,11 @@
     const load = () => {
       const url = safeUrl(current.dataset.demoUrl);
       if (!url) return;
+      // The sandbox is fixed when a frame is created: start a fresh frame when the origin changes.
+      if (frame && frame.dataset.origin !== url.origin) {
+        frame.remove();
+        frame = null;
+      }
       if (!frame) {
         frame = document.createElement('iframe');
         frame.loading = 'eager';
@@ -36,6 +41,7 @@
         frame.setAttribute('sandbox', `allow-scripts${sameOrigin} allow-popups allow-pointer-lock`);
         frame.setAttribute('allow', 'fullscreen; gamepad');
         frame.setAttribute('allowfullscreen', '');
+        frame.dataset.origin = url.origin;
         stage.append(frame);
       }
       frame.title = current.textContent.trim();

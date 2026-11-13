@@ -13,7 +13,7 @@
     const apply = rate => {
       audio.defaultPlaybackRate = rate;
       audio.playbackRate = rate;
-      button.textContent = `${String(rate).replace('.', button.lang === 'fr' ? ',' : '.')}×`;
+      button.textContent = `${String(rate).replace('.', button.lang.startsWith('fr') ? ',' : '.')}×`;
     };
     button.lang = document.documentElement.lang || 'en';
     button.hidden = false;

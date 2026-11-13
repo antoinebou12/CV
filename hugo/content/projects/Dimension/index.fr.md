@@ -15,7 +15,7 @@ draft: false
 
 ## Démos en direct
 
-{{< demos title="Dimension dans votre navigateur" height="640" >}}
+{{< demos title="Dimension dans votre navigateur" height="640" note="WebAssembly ; les démos 3D demandent un navigateur avec WebGPU." >}}
 Rendu | https://antoinebou12.github.io/Dimension/render/ | Un cube, un tétraèdre et un cylindre dessinés par le moteur wgpu, avec un gizmo de transformation et la sélection d’objets.
 Géométrie | https://antoinebou12.github.io/Dimension/geometry/ | Démos de maillages de la crate geometry.
 Mathlib | https://antoinebou12.github.io/Dimension/mathlib/ | Algèbre linéaire, graphes, optimisation, bruit, transformations et calculs de caméra de mathlib.
