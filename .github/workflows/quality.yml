@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: "3.14"
+          python-version: "3.15"
 
       - name: Install spell tools
         run: |
@@ -70,7 +70,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: "3.14"
+          python-version: "3.15"
 
       - name: Install CI dependencies
         run: pip install -r requirements-ci.txt
@@ -104,9 +104,9 @@ jobs:
           node-version: "24"
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
+        uses: peaceiris/actions-hugo@d1c81a15d4e6dca7086a17b9c2565cb70fd576bf # v3
         with:
-          hugo-version: "0.160.1"
+          hugo-version: "0.170.1"
           extended: true
 
       - name: Build Hugo blog
@@ -134,9 +134,9 @@ jobs:
           cache-dependency-path: tools/ux-audit/package-lock.json
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
+        uses: peaceiris/actions-hugo@d1c81a15d4e6dca7086a17b9c2565cb70fd576bf # v3
         with:
-          hugo-version: "0.160.1"
+          hugo-version: "0.170.1"
           extended: true
 
       - name: Install Playwright
